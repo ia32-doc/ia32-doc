@@ -76,8 +76,6 @@ Also, by looking at other yaml files, you should get the idea.
 - ?? Add doxygen main page
 - ??? Add AMD
 - Find what else is missing
-- Remove trailing whitespaces from the output
-- Add logging
 - Fix 32/64 bitfields for MSR registers
 - Add possibility for bitfields to have both UINT32/UINT64 members
 - EPT/PAGE_TABLEs

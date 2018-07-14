@@ -5,6 +5,8 @@ import os
 import re
 import yaml
 
+from .log import log
+
 int_types_c = {
      8 : 'unsigned char',
     16 : 'unsigned short',
@@ -49,12 +51,26 @@ MAXPHYADDR = 48
 
 
 class Doc(object):
+    doc_cache = { }
+
     @staticmethod
     def parse(path: str, parent: DocBase=None) -> List[DocBase]:
-        doc_list = yaml.load(open(path, encoding='utf-8').read())
+        log_message = f'Parsing "{path}"...' if not parent else \
+                      f'Parsing "{path}" (included from "{parent.path}")...'
 
-        for doc in doc_list:
-            doc['Path'] = path
+        if path in Doc.doc_cache:
+            log_message += f'(cached)'
+            log(log_message)
+
+            doc_list = Doc.doc_cache[path]
+        else:
+            log(log_message)
+            doc_list = yaml.load(open(path, encoding='utf-8').read())
+
+            for doc in doc_list:
+                doc['Path'] = path
+
+            Doc.doc_cache[path] = doc_list
 
         return [ Doc.map_class(field, parent) for field in doc_list ]
 
@@ -63,6 +79,7 @@ class Doc(object):
         doc_base = DocBase(doc, parent)
 
         if doc_base.type == 'Group':
+            #log(f'Processing group "{doc_base.short_name_standalone}"')
             return DocGroup(doc, parent)
         elif doc_base.type == 'Definition':
             return DocDefinition(doc, parent)
