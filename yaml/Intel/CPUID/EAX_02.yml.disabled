@@ -1,0 +1,706 @@
+- ShortName: EAX_02
+  LongName: EAX_02
+  ShortDescription: TLB/Cache/Prefetch Information Returned in EAX, EBX, ECX, EDX
+  LongDescription: |
+    When CPUID executes with EAX set to 02H, the processor returns information about the processor’s internal TLBs,
+    cache and prefetch hardware in the EAX, EBX, ECX, and EDX registers. The information is reported in encoded form
+    and fall into the following categories:
+
+    - The least-significant byte in register EAX (register AL) will always return 01H. Software should ignore this value
+      and not interpret it as an informational descriptor.
+
+    - The most significant bit (bit 31) of each register indicates whether the register contains valid information (set
+      to 0) or is reserved (set to 1).
+
+    - If a register contains valid information, the information is contained in 1 byte descriptors. There are four types
+      of encoding values for the byte descriptor.
+  Note: |
+    The order of descriptors in the EAX, EBX, ECX, and EDX
+    registers is not defined; that is, specific bytes are not designated to contain descriptors for specific cache,
+    prefetch, or TLB types. The descriptors may appear in any order. Note also a processor may report a general
+    descriptor type (FFH) and not report any byte descriptor of “cache type” via CPUID leaf 2.
+  Tag: |
+    Type: Struct
+  Fields:
+  - Value: 0x00
+    Tag: |
+      Type: General
+    Description: |
+      Null descriptor, this byte contains no information.
+  
+  - Value: 0x01
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte pages, 4-way set associative, 32 entries.
+  
+  - Value: 0x02
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 MByte pages, fully associative, 2 entries.
+  
+  - Value: 0x03
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte pages, 4-way set associative, 64 entries.
+  
+  - Value: 0x04
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 MByte pages, 4-way set associative, 8 entries.
+  
+  - Value: 0x05
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB1: 4 MByte pages, 4-way set associative, 32 entries.
+  
+  - Value: 0x06
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level instruction cache: 8 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x08
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level instruction cache: 16 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x09
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level instruction cache: 32KBytes, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x0A
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 8 KBytes, 2-way set associative, 32 byte line size.
+  
+  - Value: 0x0B
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 MByte pages, 4-way set associative, 4 entries.
+  
+  - Value: 0x0C
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 16 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x0D
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 16 KBytes, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x0E
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 24 KBytes, 6-way set associative, 64 byte line size.
+  
+  - Value: 0x1D
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 128 KBytes, 2-way set associative, 64 byte line size.
+  
+  - Value: 0x21
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 256 KBytes, 8-way set associative, 64 byte line size.
+  
+  - Value: 0x22
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 512 KBytes, 4-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x23
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 1 MBytes, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x24
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MBytes, 16-way set associative, 64 byte line size.
+  
+  - Value: 0x25
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 2 MBytes, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x29
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 4 MBytes, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x2C
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 32 KBytes, 8-way set associative, 64 byte line size.
+  
+  - Value: 0x30
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level instruction cache: 32 KBytes, 8-way set associative, 64 byte line size.
+  
+  - Value: 0x40
+    Tag: |
+      Type: Cache
+    Description: |
+      No 2nd-level cache or, if processor contains a valid 2nd-level cache, no 3rd-level cache.
+  
+  - Value: 0x41
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 128 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x42
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 256 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x43
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KBytes, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x44
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MByte, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x45
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 2 MByte, 4-way set associative, 32 byte line size.
+  
+  - Value: 0x46
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 4 MByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x47
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 8 MByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0x48
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 3MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0x49
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 4MB, 16-way set associative, 64-byte line size (Intel Xeon processor MP, Family 0FH, Model
+      06H);
+      2nd-level cache: 4 MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0x4A
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 6MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0x4B
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 8MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0x4C
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 12MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0x4D
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 16MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0x4E
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 6MByte, 24-way set associative, 64 byte line size.
+  
+  - Value: 0x4F
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte pages, 32 entries.
+  
+  - Value: 0x50
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte and 2-MByte or 4-MByte pages, 64 entries.
+  
+  - Value: 0x51
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte and 2-MByte or 4-MByte pages, 128 entries.
+  
+  - Value: 0x52
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte and 2-MByte or 4-MByte pages, 256 entries..
+  
+  - Value: 0x55
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 2-MByte or 4-MByte pages, fully associative, 7 entries.
+  
+  - Value: 0x56
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB0: 4 MByte pages, 4-way set associative, 16 entries.
+  
+  - Value: 0x57
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB0: 4 KByte pages, 4-way associative, 16 entries.
+  
+  - Value: 0x59
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB0: 4 KByte pages, fully associative, 16 entries.
+  
+  - Value: 0x5A
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB0: 2 MByte or 4 MByte pages, 4-way set associative, 32 entries.
+  
+  - Value: 0x5B
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte and 4 MByte pages, 64 entries.
+  
+  - Value: 0x5C
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte and 4 MByte pages,128 entries.
+  
+  - Value: 0x5D
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte and 4 MByte pages,256 entries.
+  
+  - Value: 0x60
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 16 KByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0x61
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte pages, fully associative, 48 entries.
+  
+  - Value: 0x63
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 2 MByte or 4 MByte pages, 4-way set associative, 32 entries and a separate array with 1 GByte
+      pages, 4-way set associative, 4 entries.
+  
+  - Value: 0x64
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte pages, 4-way set associative, 512 entries.
+  
+  - Value: 0x66
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 8 KByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x67
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 16 KByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x68
+    Tag: |
+      Type: Cache
+    Description: |
+      1st-level data cache: 32 KByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x6A
+    Tag: |
+      Type: Cache
+    Description: |
+      uTLB: 4 KByte pages, 8-way set associative, 64 entries.
+  
+  - Value: 0x6B
+    Tag: |
+      Type: Cache
+    Description: |
+      DTLB: 4 KByte pages, 8-way set associative, 256 entries.
+  
+  - Value: 0x6C
+    Tag: |
+      Type: Cache
+    Description: |
+      DTLB: 2M/4M pages, 8-way set associative, 128 entries.
+  
+  - Value: 0x6D
+    Tag: |
+      Type: Cache
+    Description: |
+      DTLB: 1 GByte pages, fully associative, 16 entries.
+  
+  - Value: 0x70
+    Tag: |
+      Type: Cache
+    Description: |
+      Trace cache: 12 K-μop, 8-way set associative.
+  
+  - Value: 0x71
+    Tag: |
+      Type: Cache
+    Description: |
+      Trace cache: 16 K-μop, 8-way set associative.
+  
+  - Value: 0x72
+    Tag: |
+      Type: Cache
+    Description: |
+      Trace cache: 32 K-μop, 8-way set associative.
+  
+  - Value: 0x76
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 2M/4M pages, fully associative, 8 entries.
+  
+  - Value: 0x78
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MByte, 4-way set associative, 64byte line size.
+  
+  - Value: 0x79
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 128 KByte, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x7A
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 256 KByte, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x7B
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KByte, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x7C
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MByte, 8-way set associative, 64 byte line size, 2 lines per sector.
+  
+  - Value: 0x7D
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 2 MByte, 8-way set associative, 64byte line size.
+  
+  - Value: 0x7F
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KByte, 2-way set associative, 64-byte line size.
+  
+  - Value: 0x80
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KByte, 8-way set associative, 64-byte line size.
+  
+  - Value: 0x82
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 256 KByte, 8-way set associative, 32 byte line size.
+  
+  - Value: 0x83
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KByte, 8-way set associative, 32 byte line size.
+  
+  - Value: 0x84
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MByte, 8-way set associative, 32 byte line size.
+  
+  - Value: 0x85
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 2 MByte, 8-way set associative, 32 byte line size.
+  
+  - Value: 0x86
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 512 KByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0x87
+    Tag: |
+      Type: Cache
+    Description: |
+      2nd-level cache: 1 MByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0xA0
+    Tag: |
+      Type: DTLB
+    Description: |
+      DTLB: 4k pages, fully associative, 32 entries.
+  
+  - Value: 0xB0
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4 KByte pages, 4-way set associative, 128 entries.
+  
+  - Value: 0xB1
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 2M pages, 4-way, 8 entries or 4M pages, 4-way, 4 entries.
+  
+  - Value: 0xB2
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4KByte pages, 4-way set associative, 64 entries.
+  
+  - Value: 0xB3
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte pages, 4-way set associative, 128 entries.
+  
+  - Value: 0xB4
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB1: 4 KByte pages, 4-way associative, 256 entries.
+  
+  - Value: 0xB5
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4KByte pages, 8-way set associative, 64 entries.
+  
+  - Value: 0xB6
+    Tag: |
+      Type: TLB
+    Description: |
+      Instruction TLB: 4KByte pages, 8-way set associative, 128 entries.
+  
+  - Value: 0xBA
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB1: 4 KByte pages, 4-way associative, 64 entries.
+  
+  - Value: 0xC0
+    Tag: |
+      Type: TLB
+    Description: |
+      Data TLB: 4 KByte and 4 MByte pages, 4-way associative, 8 entries.
+  
+  - Value: 0xC1
+    Tag: |
+      Type: STLB
+    Description: |
+      Shared 2nd-Level TLB: 4 KByte/2MByte pages, 8-way associative, 1024 entries.
+  
+  - Value: 0xC2
+    Tag: |
+      Type: DTLB
+    Description: |
+      DTLB: 4 KByte/2 MByte pages, 4-way associative, 16 entries.
+  
+  - Value: 0xC3
+    Tag: |
+      Type: STLB
+    Description: |
+      Shared 2nd-Level TLB: 4 KByte /2 MByte pages, 6-way associative, 1536 entries. Also 1GBbyte pages, 4-way,
+      16 entries.
+  
+  - Value: 0xC4
+    Tag: |
+      Type: DTLB
+    Description: |
+      DTLB: 2M/4M Byte pages, 4-way associative, 32 entries.
+  
+  - Value: 0xCA
+    Tag: |
+      Type: STLB
+    Description: |
+      Shared 2nd-Level TLB: 4 KByte pages, 4-way associative, 512 entries.
+  
+  - Value: 0xD0
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 512 KByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0xD1
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 1 MByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0xD2
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 2 MByte, 4-way set associative, 64 byte line size.
+  
+  - Value: 0xD6
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 1 MByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0xD7
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 2 MByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0xD8
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 4 MByte, 8-way set associative, 64 byte line size.
+  
+  - Value: 0xDC
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 1.5 MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0xDD
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 3 MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0xDE
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 6 MByte, 12-way set associative, 64 byte line size.
+  
+  - Value: 0xE2
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 2 MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0xE3
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 4 MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0xE4
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 8 MByte, 16-way set associative, 64 byte line size.
+  
+  - Value: 0xEA
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 12MByte, 24-way set associative, 64 byte line size.
+  
+  - Value: 0xEB
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 18MByte, 24-way set associative, 64 byte line size.
+  
+  - Value: 0xEC
+    Tag: |
+      Type: Cache
+    Description: |
+      3rd-level cache: 24MByte, 24-way set associative, 64 byte line size.
+  
+  - Value: 0xF0
+    Tag: |
+      Type: Prefetch
+    Description: |
+      64-Byte prefetching.
+  
+  - Value: 0xF1
+    Tag: |
+      Type: Prefetch
+    Description: |
+      128-Byte prefetching.
+  
+  - Value: 0xFE
+    Tag: |
+      Type: General
+    Description: |
+      CPUID leaf 2 does not report TLB descriptor information; use CPUID leaf 18H to query TLB and other address
+      translation parameters.
+
+  - Value: 0xFF
+    Tag: |
+      Type: General
+    Description: |
+      CPUID leaf 2 does not report cache descriptor information, use CPUID leaf 4 to query cache parameters.

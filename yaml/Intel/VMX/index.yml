@@ -1,0 +1,1170 @@
+- Name: VMX
+  ShortDescription: VMX
+  Todo: Long description
+  Type: Group
+  Fields:
+  - Name: VMX_BASIC_EXIT_REASONS
+    Description: VMX Basic Exit Reasons.
+    ChildrenNameWithPrefix: VMX_EXIT_REASON # Just EXIT_REASON ?
+    Type: Group
+    Reference: Vol3D[C(VMX BASIC EXIT REASONS)]
+    Fields:
+    - Value: 0
+      ShortName: XCPT_OR_NMI
+      LongName: EXCEPTION_OR_NMI
+      ShortDescription: Exception or non-maskable interrupt (NMI)
+      LongDescription: |
+        Either:
+
+        -# Guest software caused an exception and the bit in the exception bitmap associated with exception’s vector was
+           1. This case includes executions of BOUND that cause #BR, executions of INT1 (they cause #DB), executions of
+           INT3 (they cause #BP), executions of INTO that cause #OF, and executions of UD0, UD1, and UD2 (they cause
+           #UD).
+
+        -# An NMI was delivered to the logical processor and the “NMI exiting” VM-execution control was 1.
+
+    - Value: 1
+      ShortName: EXT_INT
+      LongName: EXTERNAL_INTERRUPT
+      ShortDescription: External interrupt
+      LongDescription: |
+        An external interrupt arrived and the “external-interrupt exiting” VM-execution control was 1.
+
+    - Value: 2
+      ShortName: TRIPLE_FAULT
+      LongName: TRIPLE_FAULT
+      ShortDescription: Triple fault
+      LongDescription: |
+        The logical processor encountered an exception while attempting to call the double-fault handler and
+        that exception did not itself cause a VM exit due to the exception bitmap.
+
+    - Value: 3
+      ShortName: INIT_SIGNAL
+      LongName: INIT_SIGNAL
+      ShortDescription: INIT signal
+      LongDescription: |
+        An INIT signal arrived.
+
+    - Value: 4
+      ShortName: SIPI
+      LongName: STARTUP_IPI
+      ShortDescription: Start-up IPI (SIPI)
+      LongDescription: |
+        A SIPI arrived while the logical processor was in the “wait-for-SIPI” state.
+
+    - Value: 5
+      ShortName: IO_SMI
+      LongName: IO_SMI
+      ShortDescription: I/O system-management interrupt (SMI)
+      LongDescription: |
+        An SMI arrived immediately after retirement of an I/O instruction and
+        caused an SMM VM exit.
+      SeeAlso: Vol3C[34.15.2(SMM VM Exits)]
+
+    - Value: 6
+      ShortName: SMI
+      LongName: SMI
+      ShortDescription: Other SMI
+      LongDescription: |
+        An SMI arrived and caused an SMM VM exit but not immediately after retirement of an I/O instruction.
+      SeeAlso: Vol3C[34.15.2(SMM VM Exits)]
+
+    - Value: 7
+      ShortName: INT_WINDOW
+      LongName: INTERRUPT_WINDOW
+      ShortDescription: Interrupt window exiting
+      LongDescription: |
+        At the beginning of an instruction, RFLAGS.IF was 1; events were not blocked by STI or by MOV
+        SS; and the “interrupt-window exiting” VM-execution control was 1.
+
+    - Value: 8
+      ShortName: NMI_WINDOW
+      LongName: NMI_WINDOW
+      ShortDescription: NMI window exiting
+      LongDescription: |
+        At the beginning of an instruction, there was no virtual-NMI blocking; events were not blocked by MOV
+        SS; and the “NMI-window exiting” VM-execution control was 1.
+
+    - Value: 9
+      ShortName: TASK_SWITCH
+      LongName: TASK_SWITCH
+      ShortDescription: Task switch
+      LongDescription: |
+        Guest software attempted a task switch.
+
+    - Value: 10
+      ShortName: CPUID
+      LongName: EXECUTE_CPUID
+      ShortDescription: CPUID
+      LongDescription: |
+        Guest software attempted to execute CPUID.
+
+    - Value: 11
+      ShortName: GETSEC
+      LongName: EXECUTE_GETSEC
+      ShortDescription: GETSEC
+      LongDescription: |
+        Guest software attempted to execute GETSEC.
+
+    - Value: 12
+      ShortName: HLT
+      LongName: EXECUTE_HLT
+      ShortDescription: HLT
+      LongDescription: |
+        Guest software attempted to execute HLT and the “HLT exiting” VM-execution control was 1.
+
+    - Value: 13
+      ShortName: INVD
+      LongName: EXECUTE_INVD
+      ShortDescription: INVD
+      LongDescription: |
+        Guest software attempted to execute INVD.
+
+    - Value: 14
+      ShortName: INVLPG
+      LongName: EXECUTE_INVLPG
+      ShortDescription: INVLPG
+      LongDescription: |
+        Guest software attempted to execute INVLPG and the “INVLPG exiting” VM-execution control was 1.
+
+    - Value: 15
+      ShortName: RDPMC
+      LongName: EXECUTE_RDPMC
+      ShortDescription: RDPMC
+      LongDescription: |
+        Guest software attempted to execute RDPMC and the “RDPMC exiting” VM-execution control was 1.
+
+    - Value: 16
+      ShortName: RDTSC
+      LongName: EXECUTE_RDTSC
+      ShortDescription: RDTSC
+      LongDescription: |
+        Guest software attempted to execute RDTSC and the “RDTSC exiting” VM-execution control was 1.
+
+    - Value: 17
+      ShortName: RSM
+      LongName: EXECUTE_RSM_IN_SMM
+      ShortDescription: RSM in SMM
+      LongDescription: |
+        Guest software attempted to execute RSM in SMM.
+
+    - Value: 18
+      ShortName: VMCALL
+      LongName: EXECUTE_VMCALL
+      ShortDescription: VMCALL
+      LongDescription: |
+        VMCALL was executed either by guest software (causing an ordinary VM exit) or by the executive monitor
+        (causing an SMM VM exit).
+      SeeAlso: Vol3C[34.15.2(SMM VM Exits)]
+
+    - Value: 19
+      ShortName: VMCLEAR
+      LongName: EXECUTE_VMCLEAR
+      ShortDescription: VMCLEAR
+      LongDescription: |
+        Guest software attempted to execute VMCLEAR.
+
+    - Value: 20
+      ShortName: VMLAUNCH
+      LongName: EXECUTE_VMLAUNCH
+      ShortDescription: VMLAUNCH
+      LongDescription: |
+        Guest software attempted to execute VMLAUNCH.
+
+    - Value: 21
+      ShortName: VMPTRLD
+      LongName: EXECUTE_VMPTRLD
+      ShortDescription: VMPTRLD
+      LongDescription: |
+        Guest software attempted to execute VMPTRLD.
+
+    - Value: 22
+      ShortName: VMPTRST
+      LongName: EXECUTE_VMPTRST
+      ShortDescription: VMPTRST
+      LongDescription: |
+        Guest software attempted to execute VMPTRST.
+
+    - Value: 23
+      ShortName: VMREAD
+      LongName: EXECUTE_VMREAD
+      ShortDescription: VMREAD
+      LongDescription: |
+        Guest software attempted to execute VMREAD.
+
+    - Value: 24
+      ShortName: VMRESUME
+      LongName: EXECUTE_VMRESUME
+      ShortDescription: VMRESUME
+      LongDescription: |
+        Guest software attempted to execute VMRESUME.
+
+    - Value: 25
+      ShortName: VMWRITE
+      LongName: EXECUTE_VMWRITE
+      ShortDescription: VMWRITE
+      LongDescription: |
+        Guest software attempted to execute VMWRITE.
+
+    - Value: 26
+      ShortName: VMXOFF
+      LongName: EXECUTE_VMXOFF
+      ShortDescription: VMXOFF
+      LongDescription: |
+        Guest software attempted to execute VMXOFF.
+
+    - Value: 27
+      ShortName: VMXON
+      LongName: EXECUTE_VMXON
+      ShortDescription: VMXON
+      LongDescription: |
+        Guest software attempted to execute VMXON.
+
+    - Value: 28
+      ShortName: MOV_CRX
+      LongName: EXECUTE_MOV_CRX
+      AlternativeName: MOV_CR
+      ShortDescription: Control-register accesses
+      LongDescription: |
+        Guest software attempted to access CR0, CR3, CR4, or CR8 using CLTS, LMSW, or
+        MOV CR and the VM-execution control fields indicate that a VM exit should occur. This
+        basic exit reason is not used for trap-like VM exits following executions of the MOV to CR8 instruction when the “use
+        TPR shadow” VM-execution control is 1. Such VM exits instead use basic exit reason 43.
+      SeeAlso: Vol3C[25.1(INSTRUCTIONS THAT CAUSE VM EXITS)]
+
+    - Value: 29
+      ShortName: MOV_DRX
+      LongName: EXECUTE_MOV_DRX
+      AlternativeName: MOV_DR
+      ShortDescription: Debug-register accesses
+      LongDescription: |
+        Guest software attempted a MOV to or from a debug register and the “MOV-DR exiting” VM-execution
+        control was 1.
+
+    - Value: 30
+      ShortName: IO_INSTR
+      LongName: EXECUTE_IO_INSTRUCTION
+      ShortDescription: I/O instruction
+      LongDescription: |
+        Guest software attempted to execute an I/O instruction and either:
+
+        -# The “use I/O bitmaps” VM-execution control was 0 and the “unconditional I/O exiting” VM-execution control was 1.
+
+        -# The “use I/O bitmaps” VM-execution control was 1 and a bit in the I/O bitmap associated with one of the ports
+           accessed by the I/O instruction was 1.
+
+    - Value: 31
+      ShortName: RDMSR
+      LongName: EXECUTE_RDMSR
+      ShortDescription: RDMSR
+      LongDescription: |
+        Guest software attempted to execute RDMSR and either:
+
+        -# The “use MSR bitmaps” VM-execution control was 0.
+
+        -# The value of RCX is neither in the range 00000000H – 00001FFFH nor in the range C0000000H – C0001FFFH.
+
+        -# The value of RCX was in the range 00000000H – 00001FFFH and the nth bit in read bitmap for low MSRs is 1,
+           where n was the value of RCX.
+
+        -# The value of RCX is in the range C0000000H – C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where
+           n is the value of RCX & 00001FFFH.
+
+    - Value: 32
+      ShortName: WRMSR
+      LongName: EXECUTE_WRMSR
+      ShortDescription: WRMSR
+      LongDescription: |
+        Guest software attempted to execute WRMSR and either:
+
+        -# The “use MSR bitmaps” VM-execution control was 0.
+
+        -# The value of RCX is neither in the range 00000000H – 00001FFFH nor in the range C0000000H – C0001FFFH.
+
+        -# The value of RCX was in the range 00000000H – 00001FFFH and the nth bit in write bitmap for low MSRs is 1,
+        where n was the value of RCX.
+
+        -# The value of RCX is in the range C0000000H – C0001FFFH and the nth bit in write bitmap for high MSRs is 1,
+           where n is the value of RCX & 00001FFFH.
+
+    - Value: 33
+      ShortName: ERR_INVALID_GUEST_STATE
+      LongName: ERROR_INVALID_GUEST_STATE
+      ShortDescription: VM-entry failure due to invalid guest state
+      LongDescription: |
+        A VM entry failed one of the checks identified in Section 26.3.1.
+
+    - Value: 34
+      ShortName: ERR_MSR_LOAD
+      LongName: ERROR_MSR_LOAD
+      ShortDescription: VM-entry failure due to MSR loading
+      LongDescription: |
+        A VM entry failed in an attempt to load MSRs. See Section 26.4.
+
+    - Value: 36
+      ShortName: MWAIT
+      LongName: EXECUTE_MWAIT
+      ShortDescription: Guest software executed MWAIT
+      LongDescription: |
+        Guest software attempted to execute MWAIT and the “MWAIT exiting” VM-execution control was 1.
+
+    - Value: 37
+      ShortName: MTF
+      LongName: MONITOR_TRAP_FLAG
+      ShortDescription: VM-exit due to monitor trap flag
+      LongDescription: |
+        A VM entry occurred due to the 1-setting of the “monitor trap flag” VM-execution control and
+        injection of an MTF VM exit as part of VM entry.
+      SeeAlso: Vol3C[25.5.2(Monitor Trap Flag)]
+
+    - Value: 39
+      ShortName: MONITOR
+      LongName: EXECUTE_MONITOR
+      ShortDescription: Guest software attempted to execute MONITOR
+      LongDescription: |
+        Guest software attempted to execute MONITOR and the “MONITOR exiting” VM-execution control was 1.
+
+    - Value: 40
+      ShortName: PAUSE
+      LongName: EXECUTE_PAUSE
+      ShortDescription: Guest software attempted to execute PAUSE
+      LongDescription: |
+        Either guest software attempted to execute PAUSE and the “PAUSE exiting” VM-execution control was 1 or
+        the “PAUSE-loop exiting” VM-execution control was 1 and guest software executed a PAUSE loop with execution
+        time exceeding PLE_Window.
+      SeeAlso: Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
+
+    - Value: 41
+      ShortName: ERR_MACHINE_CHECK
+      LongName: ERROR_MACHINE_CHECK
+      ShortDescription: VM-entry failure due to machine-check
+      LongDescription: |
+        A machine-check event occurred during VM entry.
+      SeeAlso: Vol3C[26.8(MACHINE-CHECK EVENTS DURING VM ENTRY)]
+
+    - Value: 43
+      ShortName: TPR_BELOW_THRESHOLD
+      LongName: TPR_BELOW_THRESHOLD
+      ShortDescription: TPR below threshold
+      LongDescription: |
+        The logical processor determined that the value of bits 7:4 of the byte at offset 080H on the
+        virtual-APIC page was below that of the TPR threshold VM-execution control field while the “use TPR shadow” VMexecution
+        control was 1 either as part of TPR virtualization or VM entry.
+      SeeAlso:
+      - Vol3C[29.1.2(TPR Virtualization)]
+      - Vol3C[26.6.7(VM Exits Induced by the TPR Threshold)]
+
+    - Value: 44
+      ShortName: APIC_ACCESS
+      LongName: APIC_ACCESS
+      ShortDescription: APIC access
+      LongDescription: |
+        Guest software attempted to access memory at a physical address on the APIC-access page and the
+        “virtualize APIC accesses” VM-execution control was 1.
+      SeeAlso: Vol3C[29.4(VIRTUALIZING MEMORY-MAPPED APIC ACCESSES)]
+
+    - Value: 45
+      ShortName: VIRTUALIZED_EOI
+      LongName: VIRTUALIZED_EOI
+      ShortDescription: Virtualized EOI
+      LongDescription: |
+        EOI virtualization was performed for a virtual interrupt whose vector indexed a bit set in the EOIexit
+        bitmap.
+
+    - Value: 46
+      ShortName: XDTR_ACCESS
+      LongName: GDTR_IDTR_ACCESS
+      ShortDescription: Access to GDTR or IDTR
+      LongDescription: |
+        Guest software attempted to execute LGDT, LIDT, SGDT, or SIDT and the “descriptor-table
+        exiting” VM-execution control was 1.
+
+    - Value: 47
+      ShortName: TR_ACCESS
+      LongName: LDTR_TR_ACCESS
+      ShortDescription: Access to LDTR or TR
+      LongDescription: |
+        Guest software attempted to execute LLDT, LTR, SLDT, or STR and the “descriptor-table
+        exiting” VM-execution control was 1.
+
+    - Value: 48
+      ShortName: EPT_VIOLATION
+      LongName: EPT_VIOLATION
+      ShortDescription: EPT violation
+      LongDescription: |
+        An attempt to access memory with a guest-physical address was disallowed by the configuration of
+        the EPT paging structures.
+
+    - Value: 49
+      ShortName: EPT_MISCONFIG
+      LongName: EPT_MISCONFIGURATION
+      ShortDescription: EPT misconfiguration
+      LongDescription: |
+        An attempt to access memory with a guest-physical address encountered a misconfigured
+        EPT paging-structure entry.
+
+    - Value: 50
+      ShortName: INVEPT
+      LongName: EXECUTE_INVEPT
+      ShortDescription: INVEPT
+      LongDescription: |
+        Guest software attempted to execute INVEPT.
+
+    - Value: 51
+      ShortName: RDTSCP
+      LongName: EXECUTE_RDTSCP
+      ShortDescription: RDTSCP
+      LongDescription: |
+        Guest software attempted to execute RDTSCP and the “enable RDTSCP” and “RDTSC exiting” VM-execution
+        controls were both 1.
+
+    - Value: 52
+      ShortName: PREEMPT_TIMER
+      LongName: VMX_PREEMPTION_TIMER_EXPIRED
+      ShortDescription: VMX-preemption timer expired
+      LongDescription: |
+         The preemption timer counted down to zero.
+
+    - Value: 53
+      ShortName: INVVPID
+      LongName: EXECUTE_INVVPID
+      ShortDescription: INVVPID
+      LongDescription: |
+        Guest software attempted to execute INVVPID.
+
+    - Value: 54
+      ShortName: WBINVD
+      LongName: EXECUTE_WBINVD
+      ShortDescription: WBINVD
+      LongDescription: |
+        Guest software attempted to execute WBINVD and the “WBINVD exiting” VM-execution control was 1.
+
+    - Value: 55
+      ShortName: XSETBV
+      LongName: EXECUTE_XSETBV
+      ShortDescription: XSETBV - Guest software attempted to execute XSETBV
+      LongDescription: |
+        Guest software attempted to execute XSETBV.
+
+    - Value: 56
+      ShortName: APIC_WRITE
+      LongName: APIC_WRITE
+      ShortDescription: APIC write
+      LongDescription: |
+        Guest software completed a write to the virtual-APIC page that must be virtualized by VMM software.
+      SeeAlso: Vol3C[29.4.3.3(APIC-Write VM Exits)]
+
+    - Value: 57
+      ShortName: RDRAND
+      LongName: EXECUTE_RDRAND
+      ShortDescription: RDRAND
+      LongDescription: |
+        Guest software attempted to execute RDRAND and the “RDRAND exiting” VM-execution control was 1.
+
+    - Value: 58
+      ShortName: INVPCID
+      LongName: EXECUTE_INVPCID
+      ShortDescription: INVPCID
+      LongDescription: |
+        Guest software attempted to execute INVPCID and the “enable INVPCID” and “INVLPG exiting”
+        VM-execution controls were both 1.
+
+    - Value: 59
+      ShortName: VMFUNC
+      LongName: EXECUTE_VMFUNC
+      ShortDescription: VMFUNC
+      LongDescription: |
+        Guest software invoked a VM function with the VMFUNC instruction and the VM function either was not
+        enabled or generated a function-specific condition causing a VM exit.
+
+    - Value: 60
+      ShortName: ENCLS
+      LongName: EXECUTE_ENCLS
+      ShortDescription: ENCLS
+      LongDescription: |
+        Guest software attempted to execute ENCLS and “enable ENCLS exiting” VM-execution control was 1 and
+        either:
+
+        -# EAX < 63 and the corresponding bit in the ENCLS-exiting bitmap is 1; or
+
+        -# EAX ≥ 63 and bit 63 in the ENCLS-exiting bitmap is 1.
+
+    - Value: 61
+      ShortName: RDSEED
+      LongName: EXECUTE_RDSEED
+      ShortDescription: RDSEED
+      LongDescription: |
+        Guest software attempted to execute RDSEED and the “RDSEED exiting” VM-execution control was 1.
+
+    - Value: 62
+      ShortName: PML_FULL
+      LongName: PAGE_MODIFICATION_LOG_FULL
+      ShortDescription: Page-modification log full
+      LongDescription: |
+        The processor attempted to create a page-modification log entry and the value of the
+        PML index was not in the range 0–511.
+
+    - Value: 63
+      ShortName: XSAVES
+      LongName: EXECUTE_XSAVES
+      ShortDescription: XSAVES
+      LongDescription: |
+        Guest software attempted to execute XSAVES, the “enable XSAVES/XRSTORS” was 1, and a bit was set in
+        the logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
+
+    - Value: 64
+      ShortName: XRSTORS
+      LongName: EXECUTE_XRSTORS
+      ShortDescription: XRSTORS
+      LongDescription: |
+        Guest software attempted to execute XRSTORS, the “enable XSAVES/XRSTORS” was 1, and a bit was set
+        in the logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
+
+  - Name: VMX_INSTRUCTION_ERROR_NUMBERS
+    Description: VM Instruction Error Numbers.
+    ChildrenNameWithPrefix: VMX_ERROR
+    Type: Group
+    Reference: Vol3C[30.4(VM INSTRUCTION ERROR NUMBERS)]
+    Fields:
+    - Value: 1
+      ShortName: VMCALL
+      LongName: VMCALL_IN_VMX_ROOT_OPERATION
+      Description: VMCALL executed in VMX root operation.
+
+    - Value: 2
+      ShortName: VMCLEAR_INVALID_PHYS_ADDR
+      LongName: VMCLEAR_INVALID_PHYSICAL_ADDRESS
+      Description: VMCLEAR with invalid physical address.
+
+    - Value: 3
+      ShortName: VMCLEAR_INVALID_VMXON_PTR
+      LongName: VMCLEAR_INVALID_VMXON_POINTER
+      Description: VMCLEAR with VMXON pointer.
+
+    - Value: 4
+      ShortName: VMLAUCH_NON_CLEAR_VMCS
+      LongName: VMLAUCH_NON_CLEAR_VMCS
+      Description: VMLAUNCH with non-clear VMCS.
+
+    - Value: 5
+      ShortName: VMRESUME_NON_LAUNCHED_VMCS
+      LongName: VMRESUME_NON_LAUNCHED_VMCS
+      Description: VMRESUME with non-launched VMCS.
+
+    - Value: 6
+      ShortName: VMRESUME_CORRUPTED_VMCS
+      LongName: VMRESUME_CORRUPTED_VMCS
+      AlternativeName: VMRESUME_AFTER_VMXOFF
+      Description: VMRESUME after VMXOFF (VMXOFF and VMXON between VMLAUNCH and VMRESUME).
+
+    - Value: 7
+      ShortName: VMENTRY_INVALID_CONTROL_FIELDS
+      LongName: VMENTRY_INVALID_CONTROL_FIELDS
+      Description: VM entry with invalid control field(s).
+
+    - Value: 8
+      ShortName: VMENTRY_INVALID_HOST_STATE
+      LongName: VMENTRY_INVALID_HOST_STATE
+      Description: VM entry with invalid host-state field(s).
+
+    - Value: 9
+      ShortName: VMPTRLD_INVALID_PHYS_ADDR
+      LongName: VMPTRLD_INVALID_PHYSICAL_ADDRESS
+      Description: VMPTRLD with invalid physical address.
+
+    - Value: 10
+      ShortName: VMPTRLD_VMXON_PTR
+      LongName: VMPTRLD_VMXON_POINTER
+      Description: VMPTRLD with VMXON pointer.
+
+    - Value: 11
+      ShortName: VMPTRLD_WRONG_VMCS_REVISION
+      LongName: VMPTRLD_INCORRECT_VMCS_REVISION_ID
+      Description: VMPTRLD with incorrect VMCS revision identifier.
+
+    - Value: 12
+      ShortName: VMREAD_VMWRITE_INVALID_COMPONENT
+      LongName: VMREAD_VMWRITE_INVALID_COMPONENT
+      Description: VMREAD/VMWRITE from/to unsupported VMCS component.
+
+    - Value: 13
+      ShortName: VMWRITE_READONLY_COMPONENT
+      LongName: VMWRITE_READONLY_COMPONENT
+      Description: VMWRITE to read-only VMCS component.
+
+    - Value: 15
+      ShortName: VMXON_IN_VMX_ROOT_OP
+      LongName: VMXON_IN_VMX_ROOT_OP
+      Description: VMXON executed in VMX root operation.
+
+    - Value: 16
+      ShortName: VMENTRY_INVALID_VMCS_EXEC_PTR
+      LongName: VMENTRY_INVALID_VMCS_EXECUTIVE_POINTER
+      Description: VM entry with invalid executive-VMCS pointer.
+
+    - Value: 17
+      ShortName: VMENTRY_NON_LAUNCHED_EXEC_VMCS
+      LongName: VMENTRY_NON_LAUNCHED_EXECUTIVE_VMCS
+      Description: VM entry with non-launched executive VMCS.
+
+    - Value: 18
+      ShortName: VMENTRY_EXEC_VMCS_PTR
+      LongName: VMENTRY_EXECUTIVE_VMCS_PTR
+      Description: VM entry with executive-VMCS pointer not VMXON pointer (when attempting to deactivate the dual-monitor treatment of SMIs and SMM).
+
+    - Value: 19
+      ShortName: VMCALL_NON_CLEAR_VMCS
+      LongName: VMCALL_NON_CLEAR_VMCS
+      Description: VMCALL with non-clear VMCS (when attempting to activate the dual-monitor treatment of SMIs and SMM).
+
+    - Value: 20
+      ShortName: VMCALL_INVALID_VMEXIT_FIELDS
+      LongName: VMCALL_INVALID_VMEXIT_FIELDS
+      Description: VMCALL with invalid VM-exit control fields.
+
+    - Value: 22
+      ShortName: VMCALL_INVALID_MSEG_REVISION
+      LongName: VMCALL_INVALID_MSEG_REVISION_ID
+      Description: VMCALL with incorrect MSEG revision identifier (when attempting to activate the dual-monitor treatment of SMIs and SMM).
+
+    - Value: 23
+      ShortName: VMXOFF_DUAL_MONITOR
+      LongName: VMXOFF_DUAL_MONITOR
+      Description: VMXOFF under dual-monitor treatment of SMIs and SMM.
+
+    - Value: 24
+      ShortName: VMCALL_INVALID_SMM_MONITOR
+      LongName: VMCALL_INVALID_SMM_MONITOR
+      Description: VMCALL with invalid SMM-monitor features (when attempting to activate the dual-monitor treatment of SMIs and SMM).
+
+    - Value: 25
+      ShortName: VMENTRY_INVALID_VM_EXEC_CTRL
+      LongName: VMENTRY_INVALID_VM_EXECUTION_CONTROL
+      Description: VM entry with invalid VM-execution control fields in executive VMCS (when attempting to return from SMM).
+
+    - Value: 26
+      ShortName: VMENTRY_MOV_SS
+      LongName: VMENTRY_MOV_SS
+      Description: VM entry with events blocked by MOV SS.
+
+    - Value: 28
+      ShortName: INVEPTVPID_INVALID_OPERAND
+      LongName: INVEPT_INVVPID_INVALID_OPERAND
+      Description: Invalid operand to INVEPT/INVVPID.
+
+  - Name: VMX_EXCEPTIONS
+    Description: Virtualization Exceptions.
+    Type: Group
+    Reference: Vol3C[25.5.6(Virtualization Exceptions)]
+    Fields:
+    - ShortName: VE_EXCEPT_INFO
+      LongName: VIRTUALIZATION_EXCEPTION_INFORMATION
+      Type: Struct
+      Fields:
+      - Size: 32
+        ShortName: REASON
+        LongName: REASON
+        LongDescription: |
+          The 32-bit value that would have been saved into the VMCS as an exit reason had a VM exit occurred
+          instead of the virtualization exception. For EPT violations, this value is 48 (00000030H).
+
+      - Size: 32
+        ShortName: EXCEPT_MASK
+        LongName: EXCEPTION_MASK
+        Description: FFFFFFFFH
+
+      - Size: 64
+        ShortName: EXIT
+        LongName: EXIT
+        LongDescription: |
+          The 64-bit value that would have been saved into the VMCS as an exit qualification had a VM exit
+          occurred instead of the virtualization exception.
+
+      - Size: 64
+        ShortName: GLA
+        LongName: GUEST_LINEAR_ADDRESS
+        LongDescription: |
+          The 64-bit value that would have been saved into the VMCS as a guest-linear address had a VM exit
+          occurred instead of the virtualization exception.
+
+      - Size: 64
+        ShortName: GPA
+        LongName: GUEST_PHYSICAL_ADDRESS
+        LongDescription: |
+          The 64-bit value that would have been saved into the VMCS as a guest-physical address had a VM
+          exit occurred instead of the virtualization exception.
+
+      - Size: 16
+        ShortName: EPTP
+        LongName: CURRENT_EPTP_INDEX
+        LongDescription: |
+          The current 16-bit value of the EPTP index VM-execution control.
+        SeeAlso:
+        - Vol3C[24.6.18(Controls for Virtualization Exceptions)]
+        - Vol3C[25.5.5.3(EPTP Switching)]
+
+  - Name: VMX_BASIC_EXIT_INFORMATION
+    Description: Basic VM-Exit Information.
+    ChildrenNameWithPrefix: VMX_EXIT_QUALIFICATION
+    Type: Group
+    Reference: Vol3C[27.2.1(Basic VM-Exit Information)]
+    Fields:
+    - Name: DEBUG_EXCEPTION
+      Description: Exit Qualification for Debug Exceptions.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-3
+        Name: BREAKPOINT_CONDITION
+        ShortDescription: B3 – B0
+        LongDescription: |
+          When set, each of these bits indicates that the corresponding breakpoint condition was met. Any of
+          these bits may be set even if its corresponding enabling bit in DR7 is not set.
+
+      - Bit: 13
+        ShortName: BD
+        LongName: DEBUG_REGISTER_ACCESS_DETECTED
+        ShortDescription: BD
+        LongDescription: |
+          When set, this bit indicates that the cause of the debug exception is “debug register access detected.”
+
+      - Bit: 14
+        ShortName: BS
+        LongName: SINGLE_INSTRUCTION
+        ShortDescription: BS
+        LongDescription: |
+          When set, this bit indicates that the cause of the debug exception is either the execution of a single
+          instruction (if RFLAGS.TF = 1 and IA32_DEBUGCTL.BTF = 0) or a taken branch (if
+          RFLAGS.TF = DEBUGCTL.BTF = 1).
+
+    - Name: TASK_SWITCH
+      Description: Exit Qualification for Task Switch.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-15
+        Name: SELECTOR
+        Description: |
+          Selector of task-state segment (TSS) to which the guest attempted to switch.
+
+      - Bit: 30-31
+        Name: TYPE
+        AlternativeName: SOURCE
+        Description: Source of task switch initiation.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          ShortName: CALL
+          LongName: CALL_INSTRUCTION
+        - Value: 1
+          ShortName: IRET
+          LongName: IRET_INSTRUCTION
+        - Value: 2
+          ShortName: JMP
+          LongName: JMP_INSTRUCTION
+        - Value: 3
+          ShortName: IDT
+          LongName: TASK_GATE_IN_IDT
+
+    - ShortName: CR_ACCESS
+      LongName: CONTROL_REGISTER_ACCESS
+      AlternativeName: MOV_CR
+      Description: Exit Qualification for Control-Register Accesses.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-3
+        Name: REGISTER
+        LongName: CR_NUMBER
+        AlternativeName: CONTROL_REGISTER
+        Description: |
+          Number of control register (0 for CLTS and LMSW). Bit 3 is always 0 on processors that do not support Intel 64
+          architecture as they do not support CR8.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: CR0
+        - Value: 2
+          Name: CR2
+        - Value: 3
+          Name: CR3
+        - Value: 4
+          Name: CR4
+        - Value: 8
+          Name: CR8
+
+      - Bit: 4-5
+        ShortName: ACCESS
+        LongName: ACCESS_TYPE
+        Description: Access type.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: MOV_TO_CR
+        - Value: 1
+          Name: MOV_FROM_CR
+        - Value: 2
+          Name: CLTS
+        - Value: 3
+          Name: LMSW
+
+      - Bit: 6
+        ShortName: LMSW_OP
+        LongName: LMSW_OPERAND_TYPE
+        Description: LMSW operand type. For CLTS and MOV CR, cleared to 0.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: REGISTER
+        - Value: 1
+          Name: MEMORY
+
+      - Bit: 8-11
+        ShortName: GENREG
+        LongName: GP_REGISTER
+        LongName: GENERAL_PURPOSE_REGISTER
+        Description: For MOV CR, the general-purpose register.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: RAX
+        - Value: 1
+          Name: RCX
+        - Value: 2
+          Name: RDX
+        - Value: 3
+          Name: RBX
+        - Value: 4
+          Name: RSP
+        - Value: 5
+          Name: RBP
+        - Value: 6
+          Name: RSI
+        - Value: 7
+          Name: RDI
+        - Value: 8
+          Name: R8
+        - Value: 9
+          Name: R9
+        - Value: 10
+          Name: R10
+        - Value: 11
+          Name: R11
+        - Value: 12
+          Name: R12
+        - Value: 13
+          Name: R13
+        - Value: 14
+          Name: R14
+        - Value: 15
+          Name: R15
+
+      - Bit: 16-31
+        ShortName: LMSW_DATA
+        LongName: LMSW_SOURCE_DATA
+        Description: |
+          For LMSW, the LMSW source data.
+          For CLTS and MOV CR, cleared to 0.
+
+    - ShortName: DR_ACCESS
+      LongName: DEBUG_REGISTER_ACCESS
+      AlternativeName: MOV_DR
+      Description: Exit Qualification for MOV DR
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-2
+        Name: REGISTER
+        LongName: DR_NUMBER
+        AlternativeName: DEBUG_REGISTER
+        Description: Number of debug register.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: DR0
+        - Value: 1
+          Name: DR1
+        - Value: 2
+          Name: DR2
+        - Value: 3
+          Name: DR3
+        - Value: 6
+          Name: DR6
+        - Value: 7
+          Name: DR7
+
+      - Bit: 4
+        ShortName: DIRECTION
+        LongName: DIRECTION_OF_ACCESS
+        Description: Direction of access (0 = MOV to DR; 1 = MOV from DR).
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: MOV_TO_DR
+        - Value: 1
+          Name: MOV_FROM_DR
+
+      - Bit: 8-11
+        ShortName: GENREG
+        LongName: GP_REGISTER
+        AlternativeName: GENERAL_PURPOSE_REGISTER
+        Description: General-purpose register.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: RAX
+        - Value: 1
+          Name: RCX
+        - Value: 2
+          Name: RDX
+        - Value: 3
+          Name: RBX
+        - Value: 4
+          Name: RSP
+        - Value: 5
+          Name: RBP
+        - Value: 6
+          Name: RSI
+        - Value: 7
+          Name: RDI
+        - Value: 8
+          Name: R8
+        - Value: 9
+          Name: R9
+        - Value: 10
+          Name: R10
+        - Value: 11
+          Name: R11
+        - Value: 12
+          Name: R12
+        - Value: 13
+          Name: R13
+        - Value: 14
+          Name: R14
+        - Value: 15
+          Name: R15
+
+    - ShortName: IO_INST
+      LongName: IO_INSTRUCTION
+      Description: Exit Qualification for I/O Instructions.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-2
+        ShortName: WIDTH
+        LongName: SIZE_OF_ACCESS
+        Description: Size of access.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          ShortName: 1B
+          LongName: 1_BYTE
+        - Value: 1
+          ShortName: 2B
+          LongName: 2_BYTE
+        - Value: 3
+          ShortName: 4B
+          LongName: 4_BYTE
+
+      - Bit: 3
+        ShortName: DIRECTION
+        LongName: DIRECTION_OF_ACCESS
+        Description: Direction of the attempted access (0 = OUT, 1 = IN).
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: OUT
+        - Value: 1
+          Name: IN
+
+      - Bit: 4
+        ShortName: IS_STRING
+        LongName: STRING_INSTRUCTION
+        Description: String instruction (0 = not string; 1 = string).
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: NOT_STRING
+        - Value: 1
+          Name: STRING
+
+      - Bit: 5
+        ShortName: IS_REP
+        LongName: REP_PREFIXED
+        Description: REP prefixed (0 = not REP; 1 = REP).
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: NOT_REP
+        - Value: 1
+          Name: REP
+
+      - Bit: 6
+        ShortName: ENCODING
+        LongName: OPERAND_ENCODING
+        Description: Operand encoding (0 = DX, 1 = immediate).
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: DX
+        - Value: 1
+          ShortName: IMM
+          LongName: IMMEDIATE
+
+      - Bit: 16-31
+        ShortName: PORT
+        LongName: PORT_NUMBER
+        Description: Port number (as specified in DX or in an immediate operand).
+
+    - Name: APIC_ACCESS
+      Description: Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physical Accesses.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0-11
+        ShortName: OFFSET
+        LongName: PAGE_OFFSET
+        Description: |
+          - If the APIC-access VM exit is due to a linear access, the offset of access within the APIC page.
+
+          - Undefined if the APIC-access VM exit is due a guest-physical access.
+
+      - Bit: 12-15
+        ShortName: TYPE
+        LongName: ACCESS_TYPE
+        Description: Access type.
+        ChildrenNameWithPrefix: $
+        Fields:
+        - Value: 0
+          Name: LINEAR_READ
+          Description: Linear access for a data read during instruction execution.
+        - Value: 1
+          Name: LINEAR_WRITE
+          Description: Linear access for a data write during instruction execution.
+        - Value: 2
+          ShortName: LINEAR_INSTR_FETCH
+          LongName: LINEAR_INSTRUCTION_FETCH
+          Description: Linear access for an instruction fetch.
+        - Value: 3
+          Name: LINEAR_EVENT_DELIVERY
+          Description: Linear access (read or write) during event delivery.
+        - Value: 10
+          Name: PHYSICAL_EVENT_DELIVERY
+          Description: Guest-physical access during event delivery.
+        - Value: 15
+          ShortName: PHYSICAL_INSTR
+          LongName: PHYSICAL_INSTRUCTION_FETCH
+          Description: Guest-physical access for an instruction fetch or during instruction execution.
+
+    - Name: EPT_VIOLATION
+      Description: Exit Qualification for EPT Violations.
+      Type: Bitfield
+      Size: 64
+      Fields:
+      - Bit: 0
+        Name: DATA_READ
+        AlternativeName: READ_ACCESS
+        Description: Set if the access causing the EPT violation was a data read.
+
+      - Bit: 1
+        Name: DATA_WRITE
+        AlternativeName: WRITE_ACCESS
+        Description: Set if the access causing the EPT violation was a data write.
+
+      - Bit: 2
+        ShortName: INSTR_FETCH
+        LongName: INSTRUCTION_FETCH
+        AlternativeName: EXECUTE_ACCESS # FETCH_ACCESS
+        Description: Set if the access causing the EPT violation was an instruction fetch.
+
+      - Bit: 3
+        Name: ENTRY_PRESENT
+        AlternativeName: EPT_READABLE
+        Description: |
+          The logical-AND of bit 0 in the EPT paging-structure entries used to translate the guest-physical address of the
+          access causing the EPT violation (indicates whether the guest-physical address was readable).
+
+      - Bit: 4
+        Name: ENTRY_WRITE
+        AlternativeName: EPT_WRITEABLE
+        Description: |
+          The logical-AND of bit 1 in the EPT paging-structure entries used to translate the guest-physical address of the
+          access causing the EPT violation (indicates whether the guest-physical address was writeable).
+
+      - Bit: 5
+        Name: ENTRY_EXECUTE
+        AlternativeName: EPT_EXECUTABLE
+        Description: |
+          The logical-AND of bit 2 in the EPT paging-structure entries used to translate the guest-physical address of the
+          access causing the EPT violation.
+
+          If the “mode-based execute control for EPT” VM-execution control is 0, this indicates whether the guest-physical
+          address was executable. If that control is 1, this indicates whether the guest-physical address was executable
+          for supervisor-mode linear addresses.
+
+      - Bit: 6
+        ShortName: ENTRY_EXECUTE_UM
+        LongName: ENTRY_EXECUTE_FOR_USER_MODE
+        AlternativeName: EPT_EXECUTABLE_FOR_USER_MODE
+        Description: |
+          If the “mode-based execute control” VM-execution control is 0, the value of this bit is undefined. If that control is
+          1, this bit is the logical-AND of bit 10 in the EPT paging-structures entries used to translate the guest-physical
+          address of the access causing the EPT violation. In this case, it indicates whether the guest-physical address was
+          executable for user-mode linear addresses.
+
+      - Bit: 7
+        ShortName: GUEST_ADDR_VALID
+        LongName: VALID_GUEST_LINEAR_ADDRESS
+        Description: |
+          Set if the guest linear-address field is valid.
+          The guest linear-address field is valid for all EPT violations except those resulting from an attempt to load the
+          guest PDPTEs as part of the execution of the MOV CR instruction.
+
+      - Bit: 8
+        Name: EPT_TRANSLATED_ACCESS
+        AlternativeName: CAUSED_BY_TRANSLATION
+        Description: |
+          If bit 7 is 1:
+
+          - Set if the access causing the EPT violation is to a guest-physical address that is the translation of a linear
+            address.
+
+          - Clear if the access causing the EPT violation is to a paging-structure entry as part of a page walk or the
+            update of an accessed or dirty bit.
+
+          Reserved if bit 7 is 0 (cleared to 0).
+
+      - Bit: 9
+        Name: USER_MODE_LINEAR_ADDRESS
+        Description: |
+          This bit is 0 if the linear address is a supervisor-mode linear address and 1 if it is a user-mode linear address.
+          Otherwise, this bit is undefined.
+        Remarks: |
+          If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations.
+          (If CR0.PG = 0, the translation of every linear address is a user-mode linear address and thus this bit will be 1.)
+
+      - Bit: 10
+        Name: READABLE_WRITABLE_PAGE
+        Description: |
+          This bit is 0 if paging translates the linear address to a read-only page and 1 if it translates to a read/write page.
+          Otherwise, this bit is undefined
+        Remarks: |
+          If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations.
+          (If CR0.PG = 0, every linear address is read/write and thus this bit will be 1.)
+
+      - Bit: 11
+        Name: EXECUTE_DISABLE_PAGE
+        Description: |
+          This bit is 0 if paging translates the linear address to an executable page and 1 if it translates to an execute-disable page.
+          Otherwise, this bit is undefined.
+        Remarks: |
+          If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations.
+          (If CR0.PG = 0, CR4.PAE = 0, or IA32_EFER.NXE = 0, every linear address is executable and thus this bit will be 0.)
+
+      - Bit: 12
+        Name: NMI_UNBLOCKING
+        Description: |
+          NMI unblocking due to IRET.
+
+  Include:
+  - VMCS

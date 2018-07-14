@@ -1,0 +1,71 @@
+- ShortName: EAX_0D_ECX_00
+  LongName: EAX_0D_ECX_00
+  Description: Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0).
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Description: Reports the supported bits of the lower 32 bits of XCR0. XCR0[n] can be set to 1 only if EAX[n] is 1.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: X87_STATE
+      Description: x87 state.
+
+    - Bit: 1
+      Name: SSE_STATE
+      Description: SSE state.
+
+    - Bit: 2
+      Name: AVX_STATE
+      Description: AVX state.
+
+    - Bit: 3-4
+      Name: MPX_STATE
+      Description: MPX state.
+
+    - Bit: 5-7
+      Name: AVX_512_STATE
+      Description: AVX-512 state.
+
+    - Bit: 8
+      Name: USED_FOR_IA32_XSS_1
+      Description: Used for IA32_XSS.
+
+    - Bit: 9
+      Name: PKRU_STATE
+      Description: PKRU state.
+
+    - Bit: 13
+      Name: USED_FOR_IA32_XSS_2
+      Description: Used for IA32_XSS.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: MAX_SIZE_REQUIRED_BY_ENABLED_FEATURES_IN_XCR0
+      Description: |
+        Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) required by
+        enabled features in XCR0. May be different than ECX if some features at the end of the XSAVE save area
+        are not enabled.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: MAX_SIZE_OF_XSAVE_XRSTOR_SAVE_AREA
+      Description: |
+        Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) of the
+        XSAVE/XRSTOR save area required by all supported features in the processor, i.e., all the valid bit fields in
+        XCR0.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: XCR0_SUPPORTED_BITS
+      Description: Reports the supported bits of the upper 32 bits of XCR0. XCR0[n+32] can be set to 1 only if EDX[n] is 1.

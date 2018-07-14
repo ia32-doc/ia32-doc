@@ -1,0 +1,61 @@
+- ShortName: EAX_80000006
+  LongName: EAX_80000006
+  Description: Extended Function CPUID Information.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EAX is reserved.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EBX is reserved.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-7
+      Name: CACHE_LINE_SIZE_IN_BYTES
+      Description: Cache Line size in bytes.
+
+    - Bit: 12-15
+      Name: L2_ASSOCIATIVITY_FIELD
+      Description: |
+        L2 Associativity field.
+
+        L2 associativity field encodings:
+
+        - 00H - Disabled.
+
+        - 01H - Direct mapped.
+
+        - 02H - 2-way.
+
+        - 04H - 4-way.
+
+        - 06H - 8-way.
+
+        - 08H - 16-way.
+
+        - 0FH - Fully associative.
+
+    - Bit: 16-31
+      Name: CACHE_SIZE_IN_1K_UNITS
+      Description: Cache size in 1K units.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

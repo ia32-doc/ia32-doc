@@ -1,0 +1,60 @@
+- ShortName: EAX_0D_ECX_N
+  LongName: EAX_0D_ECX_N
+  Description: Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1).
+  Note: |
+    Leaf 0DH output depends on the initial value in ECX.
+    Each sub-leaf index (starting at position 2) is supported if it corresponds to a supported bit in either the
+    XCR0 register or the IA32_XSS MSR.
+
+    If ECX contains an invalid sub-leaf index, EAX/EBX/ECX/EDX return 0. Sub-leaf n (0 ≤ n ≤ 31) is invalid
+    if sub-leaf 0 returns 0 in EAX[n] and sub-leaf 1 returns 0 in ECX[n]. Sub-leaf n (32 ≤ n ≤ 63) is invalid if
+    sub-leaf 0 returns 0 in EDX[n-32] and sub-leaf 1 returns 0 in EDX[n-32].
+  Todo: Long names
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: IA32_PLATFORM_DCA_CAP
+      Description: |
+        The size in bytes (from the offset specified in EBX) of the save area for an extended state
+        feature associated with a valid sub-leaf index, n.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: |
+        The offset in bytes of this extended state component’s save area from the beginning of the
+        XSAVE/XRSTOR area.
+
+        This field reports 0 if the sub-leaf index, n, does not map to a valid bit in the XCR0 register.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: ECX_2 # TODO
+      Description: |
+        Is set if the bit n (corresponding to the sub-leaf index) is supported in the IA32_XSS MSR; it is clear
+        if bit n is instead supported in XCR0.
+
+    - Bit: 1
+      Name: ECX_1 # TODO
+      Description: |
+        Is set if, when the compacted format of an XSAVE area is used, this extended state component
+        located on the next 64-byte boundary following the preceding state component (otherwise, it is located
+        immediately following the preceding state component).
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: This field reports 0 if the sub-leaf index, n, is invalid; otherwise it is reserved.

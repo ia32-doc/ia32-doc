@@ -1,0 +1,57 @@
+- ShortName: EAX_0D_ECX_01
+  LongName: EAX_0D_ECX_01
+  Description: Direct Cache Access Information Leaf.
+  Todo: Long names
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 1
+      Name: SUPPORTS_XSAVEC_AND_COMPACTED_XRSTOR
+      Description: Supports XSAVEC and the compacted form of XRSTOR if set.
+
+    - Bit: 2
+      Name: SUPPORTS_XGETBV_WITH_ECX_1
+      Description: Supports XGETBV with ECX = 1 if set.
+
+    - Bit: 3
+      Name: SUPPORTS_XSAVE_XRSTOR_AND_IA32_XSS
+      Description: Supports XSAVES/XRSTORS and IA32_XSS if set.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: SIZE_OF_XSAVE_AREAD
+      Description: The size in bytes of the XSAVE area containing all states enabled by XCRO | IA32_XSS.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-7
+      Name: USED_FOR_XCR0_1
+      Description: Used for XCR0.
+
+    - Bit: 8
+      Name: PT_STATE
+      Description: PT state.
+
+    - Bit: 9
+      Name: USED_FOR_XCR0_2
+      Description: Used for XCR0.
+
+    - Bit: 13
+      Name: HWP_STATE
+      Description: HWP state.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

@@ -1,0 +1,38 @@
+- ShortName: EAX_10_ECX_02
+  LongName: EAX_10_ECX_02
+  Description: L2 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 2).
+  Note: |
+    Leaf 10H output depends on the initial value in ECX.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-4
+      Name: LENGTH_OF_CAPACITY_BIT_MASK
+      Description: Length of the capacity bit mask for the corresponding ResID using minus-one notation.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: EBX_0 # TODO
+      Description: Bit-granular map of isolation/contention of allocation units.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: ECX is reserved.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: HIGHEST_COS_NUMBER_SUPPORTED
+      Description: Highest COS number supported for this ResID.

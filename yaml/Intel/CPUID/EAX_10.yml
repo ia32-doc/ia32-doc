@@ -1,0 +1,18 @@
+- ShortName: EAX_10
+  LongName: EAX_10
+  ShortDescription: EAX = 0x10
+  LongDescription: |
+    When CPUID executes with EAX set to 10H and ECX = 0, the processor returns information about the bit-vector
+    representation of QoS Enforcement resource types that are supported in the processor. Each bit, starting from bit
+    1, corresponds to a specific resource type if the bit is set. The bit position corresponds to the sub-leaf index (or
+    ResID) that software must use to query QoS enforcement capability available for that type.
+
+    When CPUID executes with EAX set to 10H and ECX = n (n >= 1, and is a valid ResID), the processor returns information
+    about available classes of service and range of QoS mask MSRs that software can use to configure each
+    class of services using capability bit masks in the QoS Mask registers, IA32_resourceType_Mask_n.
+  Type: Group
+  Include:
+  - EAX_10_ECX_00
+  - EAX_10_ECX_01
+  - EAX_10_ECX_02
+  - EAX_10_ECX_03

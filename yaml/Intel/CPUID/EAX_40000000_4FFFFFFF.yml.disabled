@@ -1,0 +1,6 @@
+Unimplemented CPUID Leaf Functions
+
+0x40000000-0x4FFFFFFF
+
+Invalid. No existing or future CPU will return processor identification or feature information if the initial
+EAX value is in the range 40000000H to 4FFFFFFFH.

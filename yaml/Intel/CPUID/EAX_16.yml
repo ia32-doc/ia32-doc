@@ -1,0 +1,48 @@
+- ShortName: EAX_16
+  LongName: EAX_16
+  ShortDescription: Processor Frequency Information Leaf
+  LongDescription: |
+    When CPUID executes with EAX set to 16H, the processor returns information about Processor Frequency Information.
+  Note: |
+    Data is returned from this interface in accordance with the processor's specification and does not reflect
+    actual values. Suitable use of this data includes the display of processor information in like manner to the
+    processor brand string and for determining the appropriate range to use when displaying processor
+    information e.g. frequency history graphs. The returned information should not be used for any other
+    purpose as the returned information does not accurately correlate to information / counters returned by
+    other processor interfaces.
+
+    While a processor may support the Processor Frequency Information leaf, fields that return a value of
+    zero are not supported.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: PROCESOR_BASE_FREQUENCY_MHZ
+      Description: Processor Base Frequency (in MHz).
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: PROCESSOR_MAXIMUM_FREQUENCY_MHZ
+      Description: Maximum Frequency (in MHz).
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: BUS_FREQUENCY_MHZ
+      Description: Bus (Reference) Frequency (in MHz).
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

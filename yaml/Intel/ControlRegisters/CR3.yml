@@ -1,0 +1,24 @@
+- Name: CR3
+  Type: Bitfield
+  Size: 32
+  SeeAlso: Vol3A[4(PAGING)]
+  Fields:
+  - Bit: 3
+    ShortName: PWT
+    LongName: PAGE_LEVEL_WRITE_THROUGH
+    ShortDescription: Page-level Write-Through
+    LongDescription: |
+      Controls the memory type used to access the first paging
+      structure of the current paging-structure hierarchy. This bit is not used if paging is disabled,
+      with PAE paging, or with 4-level paging if CR4.PCIDE=1.
+    SeeAlso: Vol3A[4.9(PAGING AND MEMORY TYPING)]
+
+  - Bit: 4
+    ShortName: PCD
+    LongName: PAGE_LEVEL_CACHE_DISABLE
+    ShortDescription: Page-level Cache Disable
+    LongDescription: |
+      Controls the memory type used to access the first paging
+      structure of the current paging-structure hierarchy. This bit is not used if paging is disabled,
+      with PAE paging, or with 4-level paging2 if CR4.PCIDE=1.
+    SeeAlso: Vol3A[4.9(PAGING AND MEMORY TYPING)]

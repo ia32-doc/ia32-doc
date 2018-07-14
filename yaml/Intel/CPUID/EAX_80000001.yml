@@ -1,0 +1,63 @@
+- ShortName: EAX_80000001
+  LongName: EAX_80000001
+  Description: Extended Function CPUID Information.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EAX is reserved.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EBX is reserved.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: LAHF_SAHF_AVAILABLE_IN_64_BIT_MODE
+      Description: LAHF/SAHF available in 64-bit mode.
+
+    - Bit: 5
+      Name: LZCNT
+      Description: LZCNT.
+
+    - Bit: 8
+      Name: PREFETCHW
+      Description: PREFETCHW.
+
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 11
+      Name: SYSCALL_SYSRET_AVAILABLE_IN_64_BIT_MODE
+      Description: SYSCALL/SYSRET available in 64-bit mode.
+
+    - Bit: 20
+      ShortName: XD_AVAILABLE # NX_AVAILABLE
+      LongName: EXECUTE_DISABLE_BIT_AVAILABLE
+      Description: Execute Disable Bit available.
+
+    - Bit: 26
+      Name: PAGES_1GB_AVAILABLE
+      Description: 1-GByte pages are available if 1.
+
+    - Bit: 27
+      Name: RDTSCP_AVAILABLE
+      Description: RDTSCP and IA32_TSC_AUX are available if 1.
+
+    - Bit: 29
+      Name: IA64_AVAILABLE
+      Description: Intel® 64 Architecture available if 1.
+

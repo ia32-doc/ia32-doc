@@ -1,0 +1,9 @@
+- Name: SEGMENT_DESCRIPTORS
+  ShortDescription: Segment descriptors
+  Todo: Long description
+  Type: Group
+  Include:
+  - Descriptor
+  - SegmentDescriptor
+  - SegmentDescriptorTypes
+  - SegmentSelector

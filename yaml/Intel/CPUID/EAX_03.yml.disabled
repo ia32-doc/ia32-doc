@@ -1,0 +1,4 @@
+#
+# Processor serial number (PSN) is not supported in the Pentium 4 processor or later. On all models, use
+# the PSN flag (returned using CPUID) to check for PSN support before accessing the feature.
+#

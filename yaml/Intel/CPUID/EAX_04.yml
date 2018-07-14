@@ -1,0 +1,133 @@
+- ShortName: EAX_04
+  LongName: EAX_04
+  ShortDescription: Deterministic Cache Parameters Leaf
+  LongDescription: |
+    When CPUID executes with EAX set to 04H and ECX contains an index value, the processor returns encoded data
+    that describe a set of deterministic cache parameters (for the cache level associated with the input in ECX). Valid
+    index values start from 0.
+
+    Software can enumerate the deterministic cache parameters for each level of the cache hierarchy starting with an
+    index value of 0, until the parameters report the value associated with the cache type field is 0. The architecturally
+    defined fields reported by deterministic cache parameters are documented in Table 3-8.
+
+    This Cache Size in Bytes
+
+    - = (Ways + 1) * (Partitions + 1) * (Line_Size + 1) * (Sets + 1)
+
+    - = (EBX[31:22] + 1) * (EBX[21:12] + 1) * (EBX[11:0] + 1) * (ECX + 1)
+
+    The CPUID leaf 04H also reports data that can be used to derive the topology of processor cores in a physical
+    package. This information is constant for all valid index values. Software can query the raw data reported by
+    executing CPUID with EAX=04H and ECX=0 and use it as part of the topology enumeration algorithm.
+  Type: Struct
+  SeeAlso: Vol3A[8(Multiple-Processor Management)]
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-4
+      Name: CACHE_TYPE_FIELD
+      Todo: Create definitions
+      Description: |
+        - 0 = Null - No more caches.
+        - 1 = Data Cache.
+        - 2 = Instruction Cache.
+        - 3 = Unified Cache.
+        - 4-31 = Reserved.
+
+    - Bit: 5-7
+      Name: CACHE_LEVEL
+      Description: Cache Level (starts at 1).
+
+    - Bit: 8
+      Name: SELF_INITIALIZING_CACHE_LEVEL
+      Description: Self Initializing cache level (does not need SW initialization).
+
+    - Bit: 9
+      Name: FULLY_ASSOCIATIVE_CACHE
+      Description: Fully Associative cache.
+
+    - Bit: 14-25
+      Name: MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE
+      Description: Maximum number of addressable IDs for logical processors sharing this cache.
+      Note: |
+        Add one to the return value to get the result.
+
+        The nearest power-of-2 integer that is not smaller than (1 + EAX[25:14]) is the number of unique initial
+        APIC IDs reserved for addressing different logical processors sharing this cache.
+
+    - Bit: 26-31
+      Name: MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE
+      Description: Maximum number of addressable IDs for processor cores in the physical package.
+      Note: |
+        Add one to the return value to get the result.
+
+        The nearest power-of-2 integer that is not smaller than (1 + EAX[31:26]) is the number of unique
+        Core_IDs reserved for addressing different processor cores in a physical package. Core ID is a subset of
+        bits of the initial APIC ID.
+
+        The returned value is constant for valid initial values in ECX. Valid ECX values start from 0.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-11
+      ShortName: L
+      LongName: SYSTEM_COHERENCY_LINE_SIZE
+      Description: System Coherency Line Size.
+      Note: Add one to the return value to get the result.
+
+    - Bit: 12-21
+      ShortName: P
+      LongName: PHYSICAL_LINE_PARTITIONS
+      Description: Physical Line partitions.
+      Note: Add one to the return value to get the result.
+
+    - Bit: 22-31
+      ShortName: W
+      LongName: WAYS_OF_ASSOCIATIVITY # TODO: resolve name conflict
+      Description: Ways of associativity.
+      Note: Add one to the return value to get the result.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      ShortName: S
+      LongName: NUMBER_OF_SETS
+      Description: Number of Sets.
+      Note: Add one to the return value to get the result.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      ShortName: WBINVD_INVD
+      LongName: WRITE_BACK_INVALIDATE
+      ShortDescription: Write-Back Invalidate/Invalidate
+      LongDescription: |
+        - 0 = WBINVD/INVD from threads sharing this cache acts upon lower level caches for threads sharing this
+          cache.
+
+        - 1 = WBINVD/INVD is not guaranteed to act upon lower level caches of non-originating threads sharing
+          this cache.
+
+    - Bit: 1
+      Name: CACHE_INCLUSIVENESS
+      ShortDescription: Cache Inclusiveness
+      LongDescription: |
+        - 0 = Cache is not inclusive of lower cache levels.
+
+        - 1 = Cache is inclusive of lower cache levels.
+
+    - Bit: 2
+      Name: COMPLEX_CACHE_INDEXING
+      ShortDescription: Complex Cache Indexing
+      LongDescription: |
+        - 0 = Direct mapped cache.
+
+        - 1 = A complex function is used to index the cache, potentially using all address bits.

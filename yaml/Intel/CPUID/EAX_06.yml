@@ -1,0 +1,124 @@
+- ShortName: EAX_06
+  LongName: EAX_06
+  ShortDescription: Thermal and Power Management Leaf
+  LongDescription: |
+    When CPUID executes with EAX set to 06H, the processor returns information about thermal and power management
+    features.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: TEMPERATURE_SENSOR_SUPPORTED
+      Description: Digital temperature sensor is supported if set.
+
+    - Bit: 1
+      Name: INTEL_TURBO_BOOST_TECHNOLOGY_AVAILABLE
+      Description: Intel Turbo Boost Technology available (see description of IA32_MISC_ENABLE[38]).
+
+    - Bit: 2
+      ShortName: ARAT
+      LongName: APIC_TIMER_ALWAYS_RUNNING
+      Description: ARAT. APIC-Timer-always-running feature is supported if set.
+
+    - Bit: 4
+      ShortName: PLN
+      LongName: POWER_LIMIT_NOTIFICATION
+      Description: PLN. Power limit notification controls are supported if set.
+
+    - Bit: 5
+      ShortName: ECMD
+      LongName: CLOCK_MODULATION_DUTY
+      Description: ECMD. Clock modulation duty cycle extension is supported if set.
+
+    - Bit: 6
+      ShortName: PTM
+      LongName: PACKAGE_THERMAL_MANAGEMENT
+      Description: PTM. Package thermal management is supported if set.
+
+    - Bit: 7
+      ShortName: HWP
+      LongName: HWP_BASE_REGISTERS
+      Description: |
+        HWP. HWP base registers (IA32_PM_ENABLE[bit 0], IA32_HWP_CAPABILITIES,
+        IA32_HWP_REQUEST, IA32_HWP_STATUS) are supported if set.
+
+    - Bit: 8
+      Name: HWP_NOTIFICATION
+      Description: HWP_Notification. IA32_HWP_INTERRUPT MSR is supported if set.
+
+    - Bit: 9
+      Name: HWP_ACTIVITY_WINDOW
+      Description: HWP_Activity_Window. IA32_HWP_REQUEST[bits 41:32] is supported if set.
+
+    - Bit: 10
+      Name: HWP_ENERGY_PERFORMANCE_PREFERENCE
+      Description: HWP_Energy_Performance_Preference. IA32_HWP_REQUEST[bits 31:24] is supported if set.
+
+    - Bit: 11
+      Name: HWP_PACKAGE_LEVEL_REQUEST
+      Description: HWP_Package_Level_Request. IA32_HWP_REQUEST_PKG MSR is supported if set.
+
+    - Bit: 13
+      Name: HDC
+      Description: HDC. HDC base registers IA32_PKG_HDC_CTL, IA32_PM_CTL1, IA32_THREAD_STALL MSRs are supported if set.
+
+    - Bit: 14
+      Name: INTEL_TURBO_BOOST_MAX_TECHNOLOGY_3_AVAILABLE
+      Description: Intel® Turbo Boost Max Technology 3.0 available.
+
+    - Bit: 15
+      Name: HWP_CAPABILITIES
+      Description: HWP Capabilities. Highest Performance change is supported if set.
+
+    - Bit: 16
+      Name: HWP_PECI_OVERRIDE
+      Description: HWP PECI override is supported if set.
+
+    - Bit: 17
+      Name: FLEXIBLE_HWP
+      Description: Flexible HWP is supported if set.
+
+    - Bit: 18
+      Name: FAST_ACCESS_MODE_FOR_HWP_REQUEST_MSR
+      Description: Fast access mode for the IA32_HWP_REQUEST MSR is supported if set.
+
+    - Bit: 20
+      Name: IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST
+      Description: Ignoring Idle Logical Processor HWP request is supported if set.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-3
+      ShortName: NUMBER_OF_INTERRUPT_THRESHOLDS
+      LongName: NUMBER_OF_INTERRUPT_THRESHOLDS_IN_THERMAL_SENSOR
+      Description: Number of Interrupt Thresholds in Digital Thermal Sensor.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: HARDWARE_COORDINATION_FEEDBACK_CAPABILITY
+      Description: |
+        Hardware Coordination Feedback Capability (Presence of IA32_MPERF and IA32_APERF). The
+        capability to provide a measure of delivered processor performance (since last reset of the counters), as
+        a percentage of the expected processor performance when running at the TSC frequency.
+
+    - Bit: 3
+      Name: PERFORMANCE_ENERGY_BIAS_PREFERENCE
+      Description: |
+        The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set
+        and it also implies the presence of a new architectural MSR called IA32_ENERGY_PERF_BIAS (1B0H).
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

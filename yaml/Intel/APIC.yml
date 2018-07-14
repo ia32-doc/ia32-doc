@@ -1,0 +1,358 @@
+- ShortName: APIC
+  LongName: LOCAL_APIC
+  ChildrenNameWithPrefix: APIC
+  ShortDescription: Advanced Programmable Interrupt Controller (APIC)
+  LongDescription: |
+    Software interacts with the local APIC by reading
+    and writing its registers. APIC registers are memory-mapped to a 4-KByte region of the processor’s physical
+    address space with an initial starting address of FEE00000H. For correct APIC operation, this address space must
+    be mapped to an area of memory that has been designated as strong uncacheable (UC).
+  Remarks: |
+    Registers are 32 bits,
+    64 bits, or 256 bits in width; all are aligned on 128-bit boundaries. All 32-bit registers should be accessed using
+    128-bit aligned 32-bit loads or stores. Some processors may support loads and stores of less than 32 bits to some
+    of the APIC registers. This is model specific behavior and is not guaranteed to work on all processors. Any
+    FP/MMX/SSE access to an APIC register, or any access that touches bytes 4 through 15 of an APIC register may
+    cause undefined behavior and must not be executed. This undefined behavior could include hangs, incorrect results
+    or unexpected exceptions, including machine checks, and may vary between implementations. Wider registers
+    (64-bit or 256-bit) must be accessed using multiple 32-bit loads or stores, with all accesses being 128-bit aligned.
+  Type: Group
+  Size: 32
+  Reference: Vol3A[10.4.1(The Local APIC Block Diagram)]
+  Fields:
+  - Value: 0xFEE00000
+    ShortName: BASE
+    LongName: BASE_ADDRESS
+    Description: Local APIC Base Address.
+    Remarks: Reserved.
+
+  - Value: 0xFEE00020
+    ShortName: ID
+    LongName: ID_REGISTER
+    AlternativeName: ID
+    Description: Local APIC ID Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00030
+    ShortName: VERSION
+    LongName: VERSION_REGISTER
+    AlternativeName: VERSION
+    Description: Local APIC Version Register.
+    Access: Read Only
+
+  - Value: 0xFEE00080
+    ShortName: TPR
+    LongName: TASK_PRIORITY_REGISTER
+    AlternativeName: TASK_PRIORITY
+    Description: Task Priority Register (TPR).
+    Access: Read/Write
+
+  - Value: 0xFEE00090
+    ShortName: APR
+    LongName: ARBITRATION_PRIORITY_REGISTER
+    AlternativeName: ARBITRATION_PRIORITY
+    Description: Arbitration Priority Register (APR).
+    Access: Read Only
+
+  - Value: 0xFEE000A0
+    ShortName: PPR
+    LongName: PROCESSOR_PRIORITY_REGISTER
+    AlternativeName: PROCESSOR_PRIORITY
+    Description: Processor Priority Register (PPR).
+    Access: Read Only
+
+  - Value: 0xFEE000B0
+    ShortName: EOI
+    LongName: EOI_REGISTER
+    AlternativeName: EOI
+    Description: EOI Register.
+    Access: Write Only
+
+  - Value: 0xFEE000C0
+    ShortName: REMOTE_READ
+    LongName: REMOTE_READ_REGISTER
+    AlternativeName: REMOTE_READ
+    Description: Remote Read Register (RRD).
+    Access: Read Only
+
+  - Value: 0xFEE000D0
+    ShortName: LOGICAL_DESTINATION
+    LongName: LOGICAL_DESTINATION_REGISTER
+    AlternativeName: LOGICAL_DESTINATION
+    Description: Logical Destination Register.
+    Access: Read/Write
+
+  - Value: 0xFEE000E0
+    ShortName: DESTINATION_FORMAT
+    LongName: DESTINATION_FORMAT_REGISTER
+    AlternativeName: DESTINATION_FORMAT
+    Description: Destination Format Register.
+    Access: Read/Write
+    SeeAlso: Vol3A[10.6.2.2(Logical Destination Mode)]
+
+  - Value: 0xFEE000F0
+    ShortName: SIV
+    LongName: SPURIOUS_INTERRUPT_VECTOR_REGISTER
+    AlternativeName: SPURIOUS_INTERRUPT_VECTOR
+    Description: Spurious Interrupt Vector Register.
+    Access: Read/Write
+    SeeAlso: Vol3A[10.9(SPURIOUS INTERRUPT)]
+
+  - Value: 0xFEE00100
+    ShortName: ISR_31_0
+    LongName: IN_SERVICE_REGISTER_BITS_31_0
+    AlternativeName: IN_SERVICE_BITS_31_0
+    Description: In-Service Register (ISR); bits 31:0.
+    Access: Read Only
+
+  - Value: 0xFEE00110
+    ShortName: ISR_63_32
+    LongName: IN_SERVICE_REGISTER_BITS_63_32
+    AlternativeName: IN_SERVICE_BITS_63_32
+    Description: In-Service Register (ISR); bits 63:32.
+    Access: Read Only
+
+  - Value: 0xFEE00120
+    ShortName: ISR_95_64
+    LongName: IN_SERVICE_REGISTER_BITS_95_64
+    AlternativeName: IN_SERVICE_BITS_95_64
+    Description: In-Service Register (ISR); bits 95:64.
+    Access: Read Only
+
+  - Value: 0xFEE00130
+    ShortName: ISR_127_96
+    LongName: IN_SERVICE_REGISTER_BITS_127_96
+    AlternativeName: IN_SERVICE_BITS_127_96
+    Description: In-Service Register (ISR); bits 127:96.
+    Access: Read Only
+
+  - Value: 0xFEE00140
+    ShortName: ISR_159_128
+    LongName: IN_SERVICE_REGISTER_BITS_159_128
+    AlternativeName: IN_SERVICE_BITS_159_128
+    Description: In-Service Register (ISR); bits 159:128.
+    Access: Read Only
+
+  - Value: 0xFEE00150
+    ShortName: ISR_191_160
+    LongName: IN_SERVICE_REGISTER_BITS_191_160
+    AlternativeName: IN_SERVICE_BITS_191_160
+    Description: In-Service Register (ISR); bits 191:160.
+    Access: Read Only
+
+  - Value: 0xFEE00160
+    ShortName: ISR_223_192
+    LongName: IN_SERVICE_REGISTER_BITS_223_192
+    AlternativeName: IN_SERVICE_BITS_223_192
+    Description: In-Service Register (ISR); bits 223:192.
+    Access: Read Only
+
+  - Value: 0xFEE00170
+    ShortName: ISR_255_224
+    LongName: IN_SERVICE_REGISTER_BITS_255_224
+    AlternativeName: IN_SERVICE_BITS_255_224
+    Description: In-Service Register (ISR); bits 255:224.
+    Access: Read Only
+
+  - Value: 0xFEE00180
+    ShortName: TMR_31_0
+    LongName: TRIGGER_MODE_REGISTER_BITS_31_0
+    AlternativeName: TRIGGER_MODE_BITS_31_0
+    Description: Trigger Mode Register (TMR); bits 31:0.
+    Access: Read Only
+
+  - Value: 0xFEE00190
+    ShortName: TMR_63_32
+    LongName: TRIGGER_MODE_REGISTER_BITS_63_32
+    AlternativeName: TRIGGER_MODE_BITS_63_32
+    Description: Trigger Mode Register (TMR); bits 63:32.
+    Access: Read Only
+
+  - Value: 0xFEE001A0
+    ShortName: TMR_95_64
+    LongName: TRIGGER_MODE_REGISTER_BITS_95_64
+    AlternativeName: TRIGGER_MODE_BITS_95_64
+    Description: Trigger Mode Register (TMR); bits 95:64.
+    Access: Read Only
+
+  - Value: 0xFEE001B0
+    ShortName: TMR_127_96
+    LongName: TRIGGER_MODE_REGISTER_BITS_127_96
+    AlternativeName: TRIGGER_MODE_BITS_127_96
+    Description: Trigger Mode Register (TMR); bits 127:96.
+    Access: Read Only
+
+  - Value: 0xFEE001C0
+    ShortName: TMR_159_128
+    LongName: TRIGGER_MODE_REGISTER_BITS_159_128
+    AlternativeName: TRIGGER_MODE_BITS_159_128
+    Description: Trigger Mode Register (TMR); bits 159:128.
+    Access: Read Only
+
+  - Value: 0xFEE001D0
+    ShortName: TMR_191_160
+    LongName: TRIGGER_MODE_REGISTER_BITS_191_160
+    AlternativeName: TRIGGER_MODE_BITS_191_160
+    Description: Trigger Mode Register (TMR); bits 191:160.
+    Access: Read Only
+
+  - Value: 0xFEE001E0
+    ShortName: TMR_223_192
+    LongName: TRIGGER_MODE_REGISTER_BITS_223_192
+    AlternativeName: TRIGGER_MODE_BITS_223_192
+    Description: Trigger Mode Register (TMR); bits 223:192.
+    Access: Read Only
+
+  - Value: 0xFEE001F0
+    ShortName: TMR_255_224
+    LongName: TRIGGER_MODE_REGISTER_BITS_255_224
+    AlternativeName: TRIGGER_MODE_BITS_255_224
+    Description: Trigger Mode Register (TMR); bits 255:224.
+    Access: Read Only
+
+  - Value: 0xFEE00200
+    ShortName: IRR_31_0
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_31_0
+    AlternativeName: INTERRUPT_REQUEST_BITS_31_0
+    Description: Interrupt Request Register (IRR); bits 31:0.
+    Access: Read Only
+
+  - Value: 0xFEE00210
+    ShortName: IRR_63_32
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_63_32
+    AlternativeName: INTERRUPT_REQUEST_BITS_63_32
+    Description: Interrupt Request Register (IRR); bits 63:32.
+    Access: Read Only
+
+  - Value: 0xFEE00220
+    ShortName: IRR_95_64
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_95_64
+    AlternativeName: INTERRUPT_REQUEST_BITS_95_64
+    Description: Interrupt Request Register (IRR); bits 95:64.
+    Access: Read Only
+
+  - Value: 0xFEE00230
+    ShortName: IRR_127_96
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_127_96
+    AlternativeName: INTERRUPT_REQUEST_BITS_127_96
+    Description: Interrupt Request Register (IRR); bits 127:96.
+    Access: Read Only
+
+  - Value: 0xFEE00240
+    ShortName: IRR_159_128
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_159_128
+    AlternativeName: INTERRUPT_REQUEST_BITS_159_128
+    Description: Interrupt Request Register (IRR); bits 159:128.
+    Access: Read Only
+
+  - Value: 0xFEE00250
+    ShortName: IRR_191_160
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_191_160
+    AlternativeName: INTERRUPT_REQUEST_BITS_191_160
+    Description: Interrupt Request Register (IRR); bits 191:160.
+    Access: Read Only
+
+  - Value: 0xFEE00260
+    ShortName: IRR_223_192
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_223_192
+    AlternativeName: INTERRUPT_REQUEST_BITS_223_192
+    Description: Interrupt Request Register (IRR); bits 223:192.
+    Access: Read Only
+
+  - Value: 0xFEE00270
+    ShortName: IRR_255_224
+    LongName: INTERRUPT_REQUEST_REGISTER_BITS_255_224
+    AlternativeName: INTERRUPT_REQUEST_BITS_255_224
+    Description: Interrupt Request Register (IRR); bits 255:224.
+    Access: Read Only
+
+  - Value: 0xFEE00280
+    ShortName: ERROR_STATUS
+    LongName: ERROR_STATUS_REGISTER
+    AlternativeName: ERROR_STATUS
+    Description: Error Status Register.
+    Access: Read Only
+
+  - Value: 0xFEE002F0
+    ShortName: CMCI
+    LongName: LVT_CORRECTED_MACHINE_CHECK_INTERRUPT_REGISTER
+    AlternativeName: LVT_CORRECTED_MACHINE_CHECK_INTERRUPT
+    Description: LVT Corrected Machine Check Interrupt (CMCI) Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00300
+    ShortName: ICR_0_31
+    LongName: INTERRUPT_COMMAND_REGISTER_BITS_0_31
+    AlternativeName: INTERRUPT_COMMAND_BITS_0_31
+    Description: Interrupt Command Register (ICR); bits 0-31.
+    Access: Read/Write
+
+  - Value: 0xFEE00310
+    ShortName: ICR_32_63
+    LongName: INTERRUPT_COMMAND_REGISTER_BITS_32_63
+    AlternativeName: INTERRUPT_COMMAND_BITS_32_63
+    Description: Interrupt Command Register (ICR); bits 32-63.
+    Access: Read/Write
+
+  - Value: 0xFEE00320
+    ShortName: LVT_TIMER
+    LongName: LVT_TIMER_REGISTER
+    AlternativeName: LVT_TIMER
+    Description: LVT Timer Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00330
+    ShortName: LVT_THERMAL_SENSOR
+    LongName: LVT_THERMAL_SENSOR_REGISTER
+    AlternativeName: LVT_THERMAL_SENSOR
+    Description: LVT Thermal Sensor Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00340
+    ShortName: LVT_PERFORMANCE_MONITORING_COUNTERS
+    LongName: LVT_PERFORMANCE_MONITORING_COUNTERS_REGISTER
+    AlternativeName: LVT_PERFORMANCE_MONITORING_COUNTERS
+    Description: LVT Performance Monitoring Counters Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00350
+    ShortName: LVT_LINT0
+    LongName: LVT_LINT0_REGISTER
+    AlternativeName: LVT_LINT0
+    Description: LVT LINT0 Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00360
+    ShortName: LVT_LINT1
+    LongName: LVT_LINT1_REGISTER
+    AlternativeName: LVT_LINT1
+    Description: LVT LINT1 Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00370
+    ShortName: LVT_ERROR
+    LongName: LVT_ERROR_REGISTER
+    AlternativeName: LVT_ERROR
+    Description: LVT Error Register.
+    Access: Read/Write
+
+  - Value: 0xFEE00380
+    ShortName: INITIAL_COUNT
+    LongName: INITIAL_COUNT_REGISTER
+    AlternativeName: INITIAL_COUNT
+    Description: Initial Count Register (for Timer).
+    Access: Read/Write
+
+  - Value: 0xFEE00390
+    ShortName: CURRENT_COUNT
+    LongName: CURRENT_COUNT_REGISTER
+    AlternativeName: CURRENT_COUNT
+    Description: Current Count Register (for Timer).
+    Access: Read Only
+
+  - Value: 0xFEE003E0
+    ShortName: DIVIDE_CONFIGURATION
+    LongName: DIVIDE_CONFIGURATION_REGISTER
+    AlternativeName: DIVIDE_CONFIGURATION
+    Description: Divide Configuration Register (for Timer).
+    Access: Read/Write

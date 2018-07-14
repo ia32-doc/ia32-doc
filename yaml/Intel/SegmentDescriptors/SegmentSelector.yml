@@ -1,0 +1,32 @@
+- ShortName: SELECTOR
+  LongName: SELECTOR
+  Description: |
+    A segment selector is a 16-bit identifier for a segment. It does not point directly to the segment,
+    but instead points to the segment descriptor that defines the segment.
+  Type: Bitfield
+  Size: 16
+  Reference: Vol3A[3.4.2(Segment Selectors)]
+  Fields:
+  - Bit: 0-1
+    ShortName: RPL
+    LongName: REQUEST_PRIVILEGE_LEVEL
+    Description: |
+      Specifies the privilege level of the selector. The privilege level can range from 0 to
+      3, with 0 being the most privileged level.
+    SeeAlso: Vol3A[5.5(Privilege Levels)]
+
+  - Bit: 2
+    ShortName: TI
+    LongName: TABLE_INDICATOR
+    AlternativeName: TABLE
+    Description: |
+      Specifies the descriptor table to use: clearing this flag selects the GDT; setting this flag
+      selects the current LDT.
+
+  - Bit: 3-16
+    ShortName: INDEX
+    LongName: INDEX
+    Description: |
+      Selects one of 8192 descriptors in the GDT or LDT. The processor multiplies
+      the index value by 8 (the number of bytes in a segment descriptor) and adds the result to the base
+      address of the GDT or LDT (from the GDTR or LDTR register, respectively).

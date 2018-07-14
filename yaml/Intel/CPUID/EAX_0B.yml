@@ -1,0 +1,76 @@
+- ShortName: EAX_0B
+  LongName: EAX_0B
+  ShortDescription: Extended Topology Enumeration Leaf
+  LongDescription: |
+    When CPUID executes with EAX set to 0BH, the processor returns information about extended topology enumeration
+    data. Software must detect the presence of CPUID leaf 0BH by verifying
+
+    - the highest leaf index supported by CPUID is >= 0BH, and
+
+    - CPUID.0BH:EBX[15:0] reports a non-zero value.
+  Note: |
+    Most of Leaf 0BH output depends on the initial value in ECX.
+    The EDX output of leaf 0BH is always valid and does not vary with input value in ECX.
+    Output value in ECX[7:0] always equals input value in ECX[7:0].
+    Sub-leaf index 0 enumerates SMT level. Each subsequent higher sub-leaf index enumerates a higherlevel
+    topological entity in hierarchical order.
+    For sub-leaves that return an invalid level-type of 0 in ECX[15:8]; EAX and EBX will return 0.
+    If an input value n in ECX returns the invalid level-type of 0 in ECX[15:8], other input values with ECX > n
+    also return 0 in ECX[15:8].
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-4
+      Name: X2APIC_ID_TO_UNIQUE_TOPOLOGY_ID_SHIFT
+      Description: |
+        Number of bits to shift right on x2APIC ID to get a unique topology ID of the next level type.
+        All logical processors with the same next level ID share current level.
+      Note: Software should use this field (EAX[4:0]) to enumerate processor topology of the system.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: NUMBER_OF_LOGICAL_PROCESSORS_AT_THIS_LEVEL_TYPE
+      Description: |
+        Number of logical processors at this level type. The number reflects configuration as shipped by Intel.
+      Note: |
+        Software must not use EBX[15:0] to enumerate processor topology of the system. This value in this
+        field (EBX[15:0]) is only intended for display/diagnostic purposes. The actual number of logical processors
+        available to BIOS/OS/Applications may be different from the value of EBX[15:0], depending on software
+        and platform hardware configurations.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-7
+      Name: LEVEL_NUMBER
+      Description: Level number. Same value in ECX input.
+
+    - Bit: 8-15
+      Name: LEVEL_TYPE
+      Description: Level type.
+      Note: |
+        The value of the “level type” field is not related to level numbers in any way, higher “level type” values
+        do not mean higher levels. Level type field has the following encoding:
+
+        - 0: Invalid.
+
+        - 1: SMT.
+
+        - 2: Core.
+
+        - 3-255: Reserved.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: X2APIC_ID
+      Description: x2APIC ID the current logical processor.

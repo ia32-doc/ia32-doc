@@ -1,0 +1,40 @@
+- ShortName: EAX_80000000
+  LongName: EAX_80000000
+  ShortDescription: Extended Function CPUID Information
+  LongDescription: |
+    When CPUID executes with EAX set to 80000000H, the processor returns the highest value the processor recognizes
+    for returning extended processor information. The value is returned in the EAX register and is processor
+    specific.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: MAX_EXTENDED_FUNCTIONS
+      Description: Maximum Input Value for Extended Function CPUID Information.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EBX is reserved.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: ECX is reserved.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

@@ -1,0 +1,16 @@
+- ShortName: EAX_12
+  LongName: EAX_12
+  ShortDescription: EAX = 0x12
+  LongDescription: |
+    When CPUID executes with EAX set to 12H and ECX = 0H, the processor returns information about Intel SGX capabilities.
+
+    When CPUID executes with EAX set to 12H and ECX = 1H, the processor returns information about Intel SGX attributes.
+
+    When CPUID executes with EAX set to 12H and ECX = n (n > 1), the processor returns information about Intel SGX
+    Enclave Page Cache.
+  Type: Group
+  Include:
+  - EAX_12_ECX_00
+  - EAX_12_ECX_01
+  - EAX_12_ECX_02P_SLT_0
+  - EAX_12_ECX_02P_SLT_1

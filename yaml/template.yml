@@ -1,0 +1,75 @@
+
+
+YamlObject:
+- ShortName: WC                           # General short name
+  LongName: WC_SUPPORTED                  # General long name
+  OriginalShortName: Wc                   # Suggested short name (by document/manual)
+  OriginalLongName: (Wc)_Supported        # Suggested long name (by document/manual)
+                                          #   Note that text in parentheses is used as hint
+                                          #   to keep case-sensitivity
+  AlternativeShortName: WRITE_COMBINED    # Author's subjective best (descriptive) short name
+  AlternativeLongName: WRITE_COMBINED     # Author's subjective best (descriptive) long name
+
+  NameWithPostfix: REGISTER               # Appended to parent's name (used in groups)
+
+  ShortDescription: Description doesn't end with dot
+  LongDescription: |
+    Description ends with dot.
+  Description: Description is used as both long/short. Ends with dot.
+
+  ChildrenNameWithPrefix: GUEST           # Prepend to children's name (used in groups)
+  ChildrenNameWithPostfix: REGISTER       # Appended to children's name (used in groups)
+                                          # Use '$' for "Name".
+
+  Note:                                   # Additional notes.
+
+  #
+  # Note:
+  #   Name, OriginalName, AlternativeName and Description expand to
+  #   both Short* and Long* versions.
+  #
+  # Note2:
+  #   If *Name (except OriginalNames) contains ABC(XXX)DEF pattern -
+  #   text in parentheses, it can be used as hint; eg. in numbering.
+  #   Example: IA32_PMC(n)
+  #
+
+  Access: RO                              # Access tag
+  Todo: REVIEW!!!                         # Todo tag
+  Tag: BOOKMARK                           # General tag
+
+  Type: [Group|Definition|Enum|Struct|Bitfield] # Type of the object
+  AlternativeType: [Struct|Bitfield]      # Alternative type of the object
+
+  Size: [Bytes|Bits]                      # Size of the object
+
+  Remarks: 06_01H                         # Additional notes
+  SeeAlso: Vol3A[4.6(ACCESS RIGHTS)]      # Additional references in Description
+  Reference: VolXY[A.B.C(Chapter Name)]   # Where the Name/Description can be found.
+
+  #
+  # List of children fields.
+  #
+  Fields:
+    [...YamlObject]
+    Bits: N-M
+
+  #
+  # Include these (appended to Fields).
+  #
+  Include:
+  - FilenameWithoutExt1
+  - FilenameWithoutExt2
+
+DefinitionField:
+  Value: 0xABCD
+  [...YamlObject]
+
+StructField:
+  Size: N # Bytes
+  [...YamlObject]
+
+BitfieldField:
+  Bit: [N|N-M] # Bit or bit range
+  [...YamlObject]
+

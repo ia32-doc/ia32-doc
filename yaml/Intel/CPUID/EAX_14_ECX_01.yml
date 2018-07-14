@@ -1,0 +1,45 @@
+- ShortName: EAX_14_ECX_01
+  LongName: EAX_14_ECX_01
+  Description: Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1).
+  Todo: Names
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-2
+      Name: NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING
+      Description: Number of configurable Address Ranges for filtering.
+
+    - Bit: 16-31
+      Name: BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS
+      Description: Bitmap of supported MTC period encodings.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS
+      Description: Bitmap of supported Cycle Threshold value encodings.
+
+    - Bit: 16-31
+      Name: BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS
+      Description: Bitmap of supported Configurable PSB frequency encodings.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: ECX is reserved.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

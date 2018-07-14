@@ -1,0 +1,7 @@
+- Name: MODEL_SPECIFIC_REGISTERS
+  ShortDescription: Model Specific Registers
+  Todo: Long description
+  Type: Group
+  Reference: Vol2A[3.2(CPUID)]
+  Include:
+  - ArchitecturalMsr

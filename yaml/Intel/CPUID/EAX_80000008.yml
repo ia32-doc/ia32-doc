@@ -1,0 +1,44 @@
+- ShortName: EAX_80000008
+  LongName: EAX_80000008
+  Description: Extended Function CPUID Information.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Description: Linear/Physical Address size.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-7
+      Name: NUMBER_OF_PHYSICAL_ADDRESS_BITS
+      Description: Number of Physical Address Bits.
+      Notes: |
+        If CPUID.80000008H:EAX[7:0] is supported, the maximum physical address number supported should
+        come from this field.
+
+    - Bit: 8-15
+      Name: NUMBER_OF_LINEAR_ADDRESS_BITS
+      Description: Number of Linear Address Bits.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EBX is reserved.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: ECX is reserved.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

@@ -1,0 +1,40 @@
+- ShortName: EAX_10_ECX_03
+  LongName: EAX_10_ECX_03
+  Description: Memory Bandwidth Allocation Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 3).
+  Note: |
+    Leaf 10H output depends on the initial value in ECX.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-11
+      Name: MAX_MBA_THROTTLING_VALUE
+      Description: |
+        Reports the maximum MBA throttling value supported for the corresponding ResID using
+        minus-one notation.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EBX is reserved.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 2
+      Name: RESPONSE_OF_DELAY_IS_LINEAR
+      Description: Reports whether the response of the delay values is linear.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-15
+      Name: HIGHEST_COS_NUMBER_SUPPORTED
+      Description: Highest COS number supported for this ResID.

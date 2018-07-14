@@ -1,0 +1,35 @@
+- ShortName: DESCRIPTOR_32
+  LongName: DESCRIPTOR_32
+  Description: Pseudo-Descriptor Format (32-bit).
+  Type: Struct
+  Tag: Packed
+  Size: 48
+  Reference: Vol3A[3.5.1(Segment Descriptor Tables)]
+  Fields:
+  - Size: 16
+    ShortName: LIMIT
+    LongName: LIMIT
+    Description: Limit.
+
+  - Size: 32
+    ShortName: BASE_ADDRESS
+    LongName: BASE_ADDRESS
+    Description: Base Address.
+
+- ShortName: DESCRIPTOR_64
+  LongName: DESCRIPTOR_64
+  Description: Pseudo-Descriptor Format (64-bit).
+  Type: Struct
+  Tag: Packed
+  Size: 80
+  Reference: Vol3A[3.5.1(Segment Descriptor Tables)]
+  Fields:
+  - Size: 16
+    ShortName: LIMIT
+    LongName: LIMIT
+    Description: Limit.
+
+  - Size: 64
+    ShortName: BASE
+    LongName: BASE_ADDRESS
+    Description: Base Address.

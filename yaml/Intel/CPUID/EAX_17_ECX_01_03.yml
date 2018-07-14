@@ -1,0 +1,41 @@
+- ShortName: EAX_17_ECX_01_03
+  LongName: EAX_17_ECX_01_03
+  Description: System-On-Chip Vendor Attribute Enumeration Sub-leaf (EAX = 17H, ECX = 1..3).
+  Note: |
+    Leaf 17H output depends on the initial value in ECX.
+    SOC Vendor Brand String is a UTF-8 encoded string padded with trailing bytes of 00H.
+    The complete SOC Vendor Brand String is constructed by concatenating in ascending order of
+    EAX:EBX:ECX:EDX and from the sub-leaf 1 fragment towards sub-leaf 3.
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: SOC_VENDOR_BRAND_STRING
+      Description: SOC Vendor Brand String. UTF-8 encoded string.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: SOC_VENDOR_BRAND_STRING
+      Description: SOC Vendor Brand String. UTF-8 encoded string.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: SOC_VENDOR_BRAND_STRING
+      Description: SOC Vendor Brand String. UTF-8 encoded string.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: SOC_VENDOR_BRAND_STRING
+      Description: SOC Vendor Brand String. UTF-8 encoded string.

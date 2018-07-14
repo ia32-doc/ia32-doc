@@ -1,0 +1,192 @@
+- ShortName: EAX_07
+  LongName: EAX_07
+  ShortDescription: Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
+  LongDescription: |
+    When CPUID executes with EAX set to 07H and ECX = 0, the processor returns information about the maximum
+    input value for sub-leaves that contain extended feature flags.
+
+    When CPUID executes with EAX set to 07H and the input value of ECX is invalid (see leaf 07H entry in Table 3-8),
+    the processor returns 0 in EAX/EBX/ECX/EDX. In subleaf 0, EAX returns the maximum input value of the highest
+    leaf 7 sub-leaf, and EBX, ECX & EDX contain information of extended feature flags.
+  Todo: Long names
+  Type: Struct
+  Fields:
+  - Name: EAX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: NUMBER_OF_SUB_LEAVES
+      Description: Reports the maximum input value for supported leaf 7 sub-leaves.
+
+  - Name: EBX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: FSGSBASE
+      Description: Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1.
+
+    - Bit: 1
+      Name: IA32_TSC_ADJUST_MSR
+      Description: IA32_TSC_ADJUST MSR is supported if 1.
+
+    - Bit: 2
+      Name: SGX
+      Description: Supports Intel® Software Guard Extensions (Intel® SGX Extensions) if 1.
+
+    - Bit: 3
+      Name: BMI1
+      Description: BMI1.
+
+    - Bit: 4
+      Name: HLE
+      Description: HLE.
+
+    - Bit: 5
+      Name: AVX2
+      Description: AVX2.
+
+    - Bit: 6
+      Name: FDP_EXCPTN_ONLY
+      Description: x87 FPU Data Pointer updated only on x87 exceptions if 1.
+
+    - Bit: 7
+      Name: SMEP
+      Description: Supports Supervisor-Mode Execution Prevention if 1.
+
+    - Bit: 8
+      Name: BMI2
+      Description: BMI2.
+
+    - Bit: 9
+      Name: ENHANCED_REP_MOVSB_STOSB
+      Description: Supports Enhanced REP MOVSB/STOSB if 1.
+
+    - Bit: 10
+      Name: INVPCID
+      Description: If 1, supports INVPCID instruction for system software that manages process-context identifiers.
+
+    - Bit: 11
+      Name: RTM
+      Description: RTM.
+
+    - Bit: 12
+      Name: RDT_M
+      Description: Supports Intel® Resource Director Technology (Intel® RDT) Monitoring capability if 1.
+
+    - Bit: 13
+      Name: Deprecates
+      Description: Deprecates FPU CS and FPU DS values if 1.
+
+    - Bit: 14
+      Name: MPX
+      Description: Supports Intel® Memory Protection Extensions if 1.
+
+    - Bit: 15
+      Name: RDT
+      Description: Supports Intel® Resource Director Technology (Intel® RDT) Allocation capability if 1.
+
+    - Bit: 16
+      Name: AVX512F
+      Description: AVX512F.
+
+    - Bit: 17
+      Name: AVX512DQ
+      Description: AVX512DQ.
+
+    - Bit: 18
+      Name: RDSEED
+      Description: RDSEED.
+
+    - Bit: 19
+      Name: ADX
+      Description: ADX.
+
+    - Bit: 20
+      Name: SMAP
+      Description: Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1.
+
+    - Bit: 21
+      Name: AVX512_IFMA
+      Description: AVX512_IFMA.
+
+    - Bit: 23
+      Name: CLFLUSHOPT
+      Description: CLFLUSHOPT.
+
+    - Bit: 24
+      Name: CLWB
+      Description: CLWB.
+
+    - Bit: 25
+      Name: Intel
+      Description: Intel Processor Trace.
+
+    - Bit: 26
+      Name: AVX512PF
+      Description: (Intel® Xeon Phi™ only).
+
+    - Bit: 27
+      Name: AVX512ER
+      Description: (Intel® Xeon Phi™ only).
+
+    - Bit: 28
+      Name: AVX512CD
+      Description: AVX512CD.
+
+    - Bit: 29
+      Name: SHA
+      Description: Supports Intel® Secure Hash Algorithm Extensions (Intel® SHA Extensions) if 1.
+
+    - Bit: 30
+      Name: AVX512BW
+      Description: AVX512BW.
+
+    - Bit: 31
+      Name: AVX512VL
+      Description: AVX512VL.
+
+  - Name: ECX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      Name: PREFETCHWT1
+      Description: (Intel® Xeon Phi™ only).
+
+    - Bit: 1
+      Name: AVX512_VBMI
+      Description: AVX512_VBMI.
+
+    - Bit: 2
+      Name: UMIP
+      Description: Supports user-mode instruction prevention if 1.
+
+    - Bit: 3
+      Name: PKU
+      Description: Supports protection keys for user-mode pages if 1.
+
+    - Bit: 4
+      Name: OSPKE
+      Description: If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
+
+    - Bit: 17-21
+      Name: MAWAU
+      Description: The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
+
+    - Bit: 22
+      Name: RDPID
+      Description: RDPID and IA32_TSC_AUX are available if 1.
+
+    - Bit: 30
+      Name: SGX_LC
+      Description: Supports SGX Launch Configuration if 1.
+
+  - Name: EDX
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0-31
+      Name: RESERVED
+      Description: EDX is reserved.

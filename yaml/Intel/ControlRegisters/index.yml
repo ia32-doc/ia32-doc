@@ -1,0 +1,57 @@
+- Name: CONTROL_REGISTERS
+  ShortDescription: Control registers
+  LongDescription: |
+    Control registers (CR0, CR1, CR2, CR3, and CR4) determine operating mode of the processor and
+    the characteristics of the currently executing task. These registers are 32 bits in all 32-bit modes and compatibility
+    mode.
+
+    In 64-bit mode, control registers are expanded to 64 bits. The MOV CRn instructions are used to manipulate the
+    register bits. Operand-size prefixes for these instructions are ignored. The following is also true:
+
+    - The control registers can be read and loaded (or modified) using the move-to-or-from-control-registers forms
+      of the MOV instruction. In protected mode, the MOV instructions allow the control registers to be read or loaded
+      (at privilege level 0 only). This restriction means that application programs or operating-system procedures
+      (running at privilege levels 1, 2, or 3) are prevented from reading or loading the control registers.
+
+    - Bits 63:32 of CR0 and CR4 are reserved and must be written with zeros. Writing a nonzero value to any of the
+      upper 32 bits results in a general-protection exception, #GP(0).
+
+    - All 64 bits of CR2 are writable by software.
+
+    - Bits 51:40 of CR3 are reserved and must be 0.
+
+    - The MOV CRn instructions do not check that addresses written to CR2 and CR3 are within the linear-address or
+      physical-address limitations of the implementation.
+
+    - Register CR8 is available in 64-bit mode only.
+      The control registers are summarized below, and each architecturally defined control field in these control registers
+      is described individually.
+
+    - CR0 — Contains system control flags that control operating mode and states of the processor.
+
+    - CR1 — Reserved.
+
+    - CR2 — Contains the page-fault linear address (the linear address that caused a page fault).
+
+    - CR3 — Contains the physical address of the base of the paging-structure hierarchy and two flags (PCD and
+      PWT). Only the most-significant bits (less the lower 12 bits) of the base address are specified; the lower 12 bits
+      of the address are assumed to be 0. The first paging structure must thus be aligned to a page (4-KByte)
+      boundary. The PCD and PWT flags control caching of that paging structure in the processor’s internal data
+      caches (they do not control TLB caching of page-directory information).
+      When using the physical address extension, the CR3 register contains the base address of the page-directorypointer
+      table. In IA-32e mode, the CR3 register contains the base address of the PML4 table.
+
+    - CR4 — Contains a group of flags that enable several architectural extensions, and indicate operating system or
+      executive support for specific processor capabilities.
+
+    - CR8 — Provides read and write access to the Task Priority Register (TPR). It specifies the priority threshold
+      value that operating systems use to control the priority class of external interrupts allowed to interrupt the
+      processor. This register is available only in 64-bit mode. However, interrupt filtering continues to apply in
+      compatibility mode.
+  Type: Group
+  Reference: Vol3A[2.5(CONTROL REGISTERS)]
+  Include:
+  - CR0
+  - CR3
+  - CR4
+  - CR8

@@ -1,0 +1,24 @@
+- ShortName: EAX_0D
+  LongName: EAX_0D
+  ShortDescription: EAX = 0x0D
+  LongDescription: |
+    When CPUID executes with EAX set to 0DH and ECX = 0, the processor returns information about the bit-vector
+    representation of all processor state extensions that are supported in the processor and storage size requirements
+    of the XSAVE/XRSTOR area.
+
+    When CPUID executes with EAX set to 0DH and ECX = n (n > 1, and is a valid sub-leaf index), the processor returns
+    information about the size and offset of each processor extended state save area within the XSAVE/XRSTOR area.
+    Software can use the forward-extendable technique depicted below to query the valid sub-leaves
+    and obtain size and offset information for each processor extended state save area:
+
+    <pre>
+    For i = 2 to 62 // sub-leaf 1 is reserved
+      IF (CPUID.(EAX=0DH, ECX=0):VECTOR[i] = 1) // VECTOR is the 64-bit value of EDX:EAX
+        Execute CPUID.(EAX=0DH, ECX = i) to examine size and offset for sub-leaf i;
+      FI;
+    </pre>
+  Type: Group
+  Include:
+  - EAX_0D_ECX_00
+  - EAX_0D_ECX_01
+  - EAX_0D_ECX_N

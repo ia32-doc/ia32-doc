@@ -1,0 +1,11 @@
+- ShortName: EAX_17
+  LongName: EAX_17
+  ShortDescription: EAX = 0x17
+  LongDescription: |
+    When CPUID executes with EAX set to 17H, the processor returns information about the System-On-Chip Vendor
+    Attribute Enumeration.
+  Type: Group
+  Include:
+  - EAX_17_ECX_00
+  - EAX_17_ECX_01_03
+  - EAX_17_ECX_N

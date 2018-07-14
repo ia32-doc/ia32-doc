@@ -1,0 +1,45 @@
+- ShortName: EAX_00
+  LongName: EAX_00
+  ShortDescription: Returns CPUID’s Highest Value for Basic Processor Information and the Vendor Identification String
+  LongDescription: |
+    When CPUID executes with EAX set to 0, the processor returns the highest value the CPUID recognizes for
+    returning basic processor information. The value is returned in the EAX register and is processor specific.
+
+    A vendor identification string is also returned in EBX, EDX, and ECX. For Intel processors, the string is “GenuineIntel”
+    and is expressed:
+
+    - EBX ← 756e6547h (* “Genu”, with G in the low eight bits of BL *)
+
+    - EDX ← 49656e69h (* “ineI”, with i in the low eight bits of DL *)
+
+    - ECX ← 6c65746eh (* “ntel”, with n in the low eight bits of CL *)
+  Type: Struct
+  Fields:
+  - Size: 32
+    ShortName: MaxCpuidInput
+    LongName: MAX_CPUID_INPUT_VALUE
+    ShortDescription: EAX
+    LongDescription: |
+      Maximum Input Value for Basic CPUID Information.
+
+  - Size: 32
+    ShortName: ValueGenu
+    LongName: EBX_VALUE_GENU
+    ShortDescription: EBX
+    LongDescription: |
+      “Genu”
+
+  - Size: 32
+    ShortName: ValueNtel
+    LongName: ECX_VALUE_NTEL
+    ShortDescription: ECX
+    LongDescription: |
+      “ntel”
+
+  - Size: 32
+    ShortName: ValueInei
+    LongName: EDX_VALUE_INEI
+    ShortDescription: EDX
+    LongDescription: |
+      “ineI”
+
