@@ -47,6 +47,14 @@ DOC_VALID_TYPES = [
     'BitfieldField',
 ]
 
+'''
+No processors supporting the Intel 64 architecture support more than 48 physical-address bits. Thus, no such processor can produce
+a guest-physical address with more than 48 bits. An attempt to use such an address causes a page fault. An attempt to load
+CR3 with such an address causes a general-protection fault. If PAE paging is being used, an attempt to load CR3 that would load a
+PDPTE with such an address causes a general-protection fault.
+
+(Vol3C[28.2.2(EPT Translation Mechanism)]
+'''
 MAXPHYADDR = 48
 
 

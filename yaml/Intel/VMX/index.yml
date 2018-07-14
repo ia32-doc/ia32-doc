@@ -1167,4 +1167,5 @@
           NMI unblocking due to IRET.
 
   Include:
+  - EPT
   - VMCS
