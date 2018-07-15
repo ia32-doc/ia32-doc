@@ -46,10 +46,12 @@ Look into [yaml/Intel](yaml/Intel) directory. Currently there are transcribed:
 - Control registers (CR0, CR3, CR4, CR8)
 - CPUID for every EAX/ECX function found in current Intel Manual
 - MSRs (Model Specific Registers)
+- Paging related stuff (PML4E/PDPTE/PDE/PTE, both 32/64 bit)
 - Segment descriptors (GDT/LDT/IDT/TSS)
-- VMX-related definitions (VMCS)
+- VMX-related definitions (EPT/VMCS)
 - APIC
 - EFLAGS
+- Memory types (UC/WC/WT/WP/WB)
 
 ##### I don't like the use of UINT*/CamelCase/Doxygen, what should I do?
 To change naming of integers, use `int_types` in [ia32doc/doc.py](ia32doc/doc.py).
