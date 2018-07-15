@@ -9,6 +9,7 @@
   - ControlRegisters
   - CPUID
   - ModelSpecificRegisters
+  - Paging
   - SegmentDescriptors
   - VMX
   - APIC

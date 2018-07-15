@@ -1,6 +1,6 @@
 - Name: CR3
   Type: Bitfield
-  Size: 32
+  Size: [ 32, 64 ]
   SeeAlso: Vol3A[4(PAGING)]
   Fields:
   - Bit: 3
@@ -22,3 +22,15 @@
       structure of the current paging-structure hierarchy. This bit is not used if paging is disabled,
       with PAE paging, or with 4-level paging2 if CR4.PCIDE=1.
     SeeAlso: Vol3A[4.9(PAGING AND MEMORY TYPING)]
+
+  - Bit: 12-(MAXPHYADDR-1)
+    ShortName: PD_PHYS_ADDR
+    LongName: ADDRESS_OF_PAGE_DIRECTORY
+    ShortDescription: Address of page directory
+    Description: |
+      Physical address of the 4-KByte aligned page directory (32-bit paging) or PML4 table (64-bit paging)
+      used for linear-address translation.
+
+    SeeAlso:
+    - Vol3A[4.3(32-BIT PAGING)]
+    - Vol3A[4.5(4-LEVEL PAGING)]

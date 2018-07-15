@@ -153,9 +153,9 @@
       SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
 
     - Bit: 7
-      ShortName: MUST_BE_1
-      LongName: MUST_BE_1
-      AlternativeName: LARGE
+      ShortName: LARGE
+      LongName: LARGE_PAGE
+      AlternativeName: LARGE_PAGE
       Description: Must be 1 (otherwise, this entry references an EPT page directory).
 
     - Bit: 8
@@ -282,9 +282,9 @@
       SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
 
     - Bit: 7
-      ShortName: MUST_BE_1
-      LongName: MUST_BE_1
-      AlternativeName: LARGE
+      ShortName: LARGE
+      LongName: LARGE_PAGE
+      AlternativeName: LARGE_PAGE
       Description: Must be 1 (otherwise, this entry references an EPT page table).
 
     - Bit: 8
@@ -479,7 +479,7 @@
 
     - Bit: 7
       ShortName: LARGE
-      LongName: LARGE
+      LongName: LARGE_PAGE
 
     - Bit: 8
       ShortName: ACCESSED

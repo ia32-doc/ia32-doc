@@ -1,7 +1,7 @@
 # IA32-doc
 
 IA32-doc is a project which aims to put as many definitions from the _Intel Manual_
-into machine-processable format (in this case: **yaml**).
+into machine-processable format (in this case: **yaml**) as possible.
 
 ### Why?
 

@@ -63,7 +63,7 @@ typedef union
      *
      * @see Vol3A[9.9(Mode Switching)]
      */
-    UINT32 ProtectionEnable                                        : 1;
+    UINT64 ProtectionEnable                                        : 1;
 #define CR0_PROTECTION_ENABLE_BIT                                    0
 #define CR0_PROTECTION_ENABLE_MASK                                   0x01
 #define CR0_PROTECTION_ENABLE(_)                                     (((_) >> 0) & 0x01)
@@ -75,7 +75,7 @@ typedef union
      * WAIT instruction generates a device-not-available exception (\#NM) if the TS flag is also set. If the MP flag is clear,
      * the WAIT instruction ignores the setting of the TS flag.
      */
-    UINT32 MonitorCoprocessor                                      : 1;
+    UINT64 MonitorCoprocessor                                      : 1;
 #define CR0_MONITOR_COPROCESSOR_BIT                                  1
 #define CR0_MONITOR_COPROCESSOR_MASK                                 0x01
 #define CR0_MONITOR_COPROCESSOR(_)                                   (((_) >> 1) & 0x01)
@@ -96,7 +96,7 @@ typedef union
      * execution of these extensions. SSE/SSE2/SSE3/SSSE3/SSE4 instructions not affected by the EM flag include: PAUSE,
      * PREFETCHh, SFENCE, LFENCE, MFENCE, MOVNTI, CLFLUSH, CRC32, and POPCNT.
      */
-    UINT32 EmulateFpu                                              : 1;
+    UINT64 EmulateFpu                                              : 1;
 #define CR0_EMULATE_FPU_BIT                                          2
 #define CR0_EMULATE_FPU_MASK                                         0x01
 #define CR0_EMULATE_FPU(_)                                           (((_) >> 2) & 0x01)
@@ -122,7 +122,7 @@ typedef union
      *   the context of the x87 FPU, XMM, and MXCSR registers. If the task never encounters an x87
      *   FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instruction, the x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 context is never saved.
      */
-    UINT32 TaskSwitched                                            : 1;
+    UINT64 TaskSwitched                                            : 1;
 #define CR0_TASK_SWITCHED_BIT                                        3
 #define CR0_TASK_SWITCHED_MASK                                       0x01
 #define CR0_TASK_SWITCHED(_)                                         (((_) >> 3) & 0x01)
@@ -134,7 +134,7 @@ typedef union
      * processors, this flag is hardcoded to 1. In the Intel386 and Intel486 processors, this flag indicates support of Intel
      * 387 DX math coprocessor instructions when set.
      */
-    UINT32 ExtensionType                                           : 1;
+    UINT64 ExtensionType                                           : 1;
 #define CR0_EXTENSION_TYPE_BIT                                       4
 #define CR0_EXTENSION_TYPE_MASK                                      0x01
 #define CR0_EXTENSION_TYPE(_)                                        (((_) >> 4) & 0x01)
@@ -156,11 +156,11 @@ typedef union
      * @see Vol1[8.7(Handling x87 FPU Exceptions in Software)]
      * @see Vol1[A.1(APPENDIX A | EFLAGS Cross-Reference)]
      */
-    UINT32 NumericError                                            : 1;
+    UINT64 NumericError                                            : 1;
 #define CR0_NUMERIC_ERROR_BIT                                        5
 #define CR0_NUMERIC_ERROR_MASK                                       0x01
 #define CR0_NUMERIC_ERROR(_)                                         (((_) >> 5) & 0x01)
-    UINT32 Reserved1                                               : 10;
+    UINT64 Reserved1                                               : 10;
 
     /**
      * @brief Write Protect
@@ -172,11 +172,11 @@ typedef union
      * @see Vol3A[4.1.3(Paging-Mode Modifiers)]
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT32 WriteProtect                                            : 1;
+    UINT64 WriteProtect                                            : 1;
 #define CR0_WRITE_PROTECT_BIT                                        16
 #define CR0_WRITE_PROTECT_MASK                                       0x01
 #define CR0_WRITE_PROTECT(_)                                         (((_) >> 16) & 0x01)
-    UINT32 Reserved2                                               : 1;
+    UINT64 Reserved2                                               : 1;
 
     /**
      * @brief Alignment Mask
@@ -185,11 +185,11 @@ typedef union
      * only when the AM flag is set, the AC flag in the EFLAGS register is set, CPL is 3, and the processor is operating in
      * either protected or virtual-8086 mode.
      */
-    UINT32 AlignmentMask                                           : 1;
+    UINT64 AlignmentMask                                           : 1;
 #define CR0_ALIGNMENT_MASK_BIT                                       18
 #define CR0_ALIGNMENT_MASK_MASK                                      0x01
 #define CR0_ALIGNMENT_MASK(_)                                        (((_) >> 18) & 0x01)
-    UINT32 Reserved3                                               : 10;
+    UINT64 Reserved3                                               : 10;
 
     /**
      * @brief Not Write-through
@@ -197,7 +197,7 @@ typedef union
      * When the NW and CD flags are clear, write-back (for Pentium 4, Intel Xeon, P6 family, and Pentium processors) or
      * write-through (for Intel486 processors) is enabled for writes that hit the cache and invalidation cycles are enabled.
      */
-    UINT32 NotWriteThrough                                         : 1;
+    UINT64 NotWriteThrough                                         : 1;
 #define CR0_NOT_WRITE_THROUGH_BIT                                    29
 #define CR0_NOT_WRITE_THROUGH_MASK                                   0x01
 #define CR0_NOT_WRITE_THROUGH(_)                                     (((_) >> 29) & 0x01)
@@ -213,7 +213,7 @@ typedef union
      * @see Vol3A[11.5.3(Preventing Caching)]
      * @see Vol3A[11.5(CACHE CONTROL)]
      */
-    UINT32 CacheDisable                                            : 1;
+    UINT64 CacheDisable                                            : 1;
 #define CR0_CACHE_DISABLE_BIT                                        30
 #define CR0_CACHE_DISABLE_MASK                                       0x01
 #define CR0_CACHE_DISABLE(_)                                         (((_) >> 30) & 0x01)
@@ -228,20 +228,21 @@ typedef union
      *
      * @see Vol3A[4(PAGING)]
      */
-    UINT32 PagingEnable                                            : 1;
+    UINT64 PagingEnable                                            : 1;
 #define CR0_PAGING_ENABLE_BIT                                        31
 #define CR0_PAGING_ENABLE_MASK                                       0x01
 #define CR0_PAGING_ENABLE(_)                                         (((_) >> 31) & 0x01)
   };
 
-  UINT32 Flags;
+  UINT32 Flags32;
+  UINT64 Flags64;
 } CR0;
 
 typedef union
 {
   struct
   {
-    UINT32 Reserved1                                               : 3;
+    UINT64 Reserved1                                               : 3;
 
     /**
      * @brief Page-level Write-Through
@@ -251,7 +252,7 @@ typedef union
      *
      * @see Vol3A[4.9(PAGING AND MEMORY TYPING)]
      */
-    UINT32 PageLevelWriteThrough                                   : 1;
+    UINT64 PageLevelWriteThrough                                   : 1;
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_MASK                            0x01
 #define CR3_PAGE_LEVEL_WRITE_THROUGH(_)                              (((_) >> 3) & 0x01)
@@ -264,13 +265,29 @@ typedef union
      *
      * @see Vol3A[4.9(PAGING AND MEMORY TYPING)]
      */
-    UINT32 PageLevelCacheDisable                                   : 1;
+    UINT64 PageLevelCacheDisable                                   : 1;
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_MASK                            0x01
 #define CR3_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
+    UINT64 Reserved2                                               : 7;
+
+    /**
+     * @brief Address of page directory
+     *
+     * Physical address of the 4-KByte aligned page directory (32-bit paging) or PML4 table (64-bit paging) used for
+     * linear-address translation.
+     *
+     * @see Vol3A[4.3(32-BIT PAGING)]
+     * @see Vol3A[4.5(4-LEVEL PAGING)]
+     */
+    UINT64 AddressOfPageDirectory                                  : 36;
+#define CR3_ADDRESS_OF_PAGE_DIRECTORY_BIT                            12
+#define CR3_ADDRESS_OF_PAGE_DIRECTORY_MASK                           0xFFFFFFFFF
+#define CR3_ADDRESS_OF_PAGE_DIRECTORY(_)                             (((_) >> 12) & 0xFFFFFFFFF)
   };
 
-  UINT32 Flags;
+  UINT32 Flags32;
+  UINT64 Flags64;
 } CR3;
 
 typedef union
@@ -289,7 +306,7 @@ typedef union
      *
      * @see Vol3B[20.3(INTERRUPT AND EXCEPTION HANDLING IN VIRTUAL-8086 MODE)]
      */
-    UINT32 VirtualModeExtensions                                   : 1;
+    UINT64 VirtualModeExtensions                                   : 1;
 #define CR4_VIRTUAL_MODE_EXTENSIONS_BIT                              0
 #define CR4_VIRTUAL_MODE_EXTENSIONS_MASK                             0x01
 #define CR4_VIRTUAL_MODE_EXTENSIONS(_)                               (((_) >> 0) & 0x01)
@@ -302,7 +319,7 @@ typedef union
      *
      * @see Vol3B[20.4(PROTECTED-MODE VIRTUAL INTERRUPTS)]
      */
-    UINT32 ProtectedModeVirtualInterrupts                          : 1;
+    UINT64 ProtectedModeVirtualInterrupts                          : 1;
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_BIT                    1
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_MASK                   0x01
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS(_)                     (((_) >> 1) & 0x01)
@@ -314,7 +331,7 @@ typedef union
      * instruction to be executed at any privilege level when clear. This bit also applies to the RDTSCP instruction if
      * supported (if CPUID.80000001H:EDX[27] = 1).
      */
-    UINT32 TimestampDisable                                        : 1;
+    UINT64 TimestampDisable                                        : 1;
 #define CR4_TIMESTAMP_DISABLE_BIT                                    2
 #define CR4_TIMESTAMP_DISABLE_MASK                                   0x01
 #define CR4_TIMESTAMP_DISABLE(_)                                     (((_) >> 2) & 0x01)
@@ -328,7 +345,7 @@ typedef union
      *
      * @see Vol3B[17.2.2(Debug Registers DR4 and DR5)]
      */
-    UINT32 DebuggingExtensions                                     : 1;
+    UINT64 DebuggingExtensions                                     : 1;
 #define CR4_DEBUGGING_EXTENSIONS_BIT                                 3
 #define CR4_DEBUGGING_EXTENSIONS_MASK                                0x01
 #define CR4_DEBUGGING_EXTENSIONS(_)                                  (((_) >> 3) & 0x01)
@@ -340,7 +357,7 @@ typedef union
      *
      * @see Vol3A[4.3(32-BIT PAGING)]
      */
-    UINT32 PageSizeExtensions                                      : 1;
+    UINT64 PageSizeExtensions                                      : 1;
 #define CR4_PAGE_SIZE_EXTENSIONS_BIT                                 4
 #define CR4_PAGE_SIZE_EXTENSIONS_MASK                                0x01
 #define CR4_PAGE_SIZE_EXTENSIONS(_)                                  (((_) >> 4) & 0x01)
@@ -353,7 +370,7 @@ typedef union
      *
      * @see Vol3A[4(PAGING)]
      */
-    UINT32 PhysicalAddressExtension                                : 1;
+    UINT64 PhysicalAddressExtension                                : 1;
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_BIT                           5
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_MASK                          0x01
 #define CR4_PHYSICAL_ADDRESS_EXTENSION(_)                            (((_) >> 5) & 0x01)
@@ -365,7 +382,7 @@ typedef union
      *
      * @see Vol3B[15(MACHINE-CHECK ARCHITECTURE)]
      */
-    UINT32 MachineCheckEnable                                      : 1;
+    UINT64 MachineCheckEnable                                      : 1;
 #define CR4_MACHINE_CHECK_ENABLE_BIT                                 6
 #define CR4_MACHINE_CHECK_ENABLE_MASK                                0x01
 #define CR4_MACHINE_CHECK_ENABLE(_)                                  (((_) >> 6) & 0x01)
@@ -382,7 +399,7 @@ typedef union
      *
      * @see Vol3A[4.10(CACHING TRANSLATION INFORMATION)]
      */
-    UINT32 PageGlobalEnable                                        : 1;
+    UINT64 PageGlobalEnable                                        : 1;
 #define CR4_PAGE_GLOBAL_ENABLE_BIT                                   7
 #define CR4_PAGE_GLOBAL_ENABLE_MASK                                  0x01
 #define CR4_PAGE_GLOBAL_ENABLE(_)                                    (((_) >> 7) & 0x01)
@@ -393,7 +410,7 @@ typedef union
      * Enables execution of the RDPMC instruction for programs or procedures running at any protection level when set; RDPMC
      * instruction can be executed only at protection level 0 when clear.
      */
-    UINT32 PerformanceMonitoringCounterEnable                      : 1;
+    UINT64 PerformanceMonitoringCounterEnable                      : 1;
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_BIT                8
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_MASK               0x01
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE(_)                 (((_) >> 8) & 0x01)
@@ -418,7 +435,7 @@ typedef union
      *          MXCSR registers. Consequently OSFXSR bit indicates that the operating system provides context switch support for
      *          SSE/SSE2/SSE3/SSSE3/SSE4.
      */
-    UINT32 OsFxsaveFxrstorSupport                                  : 1;
+    UINT64 OsFxsaveFxrstorSupport                                  : 1;
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_BIT                            9
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_MASK                           0x01
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT(_)                             (((_) >> 9) & 0x01)
@@ -433,7 +450,7 @@ typedef union
      * The operating system or executive must explicitly set this flag. If this flag is not set, the processor will generate an
      * invalid opcode exception (\#UD) whenever it detects an unmasked SIMD floating-point exception.
      */
-    UINT32 OsXmmExceptionSupport                                   : 1;
+    UINT64 OsXmmExceptionSupport                                   : 1;
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_BIT                             10
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_MASK                            0x01
 #define CR4_OS_XMM_EXCEPTION_SUPPORT(_)                              (((_) >> 10) & 0x01)
@@ -444,11 +461,11 @@ typedef union
      * When set, the following instructions cannot be executed if CPL > 0: SGDT, SIDT, SLDT, SMSW, and STR. An attempt at such
      * execution causes a generalprotection exception (\#GP).
      */
-    UINT32 UsermodeInstructionPrevention                           : 1;
+    UINT64 UsermodeInstructionPrevention                           : 1;
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_BIT                      11
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_MASK                     0x01
 #define CR4_USERMODE_INSTRUCTION_PREVENTION(_)                       (((_) >> 11) & 0x01)
-    UINT32 Reserved1                                               : 1;
+    UINT64 Reserved1                                               : 1;
 
     /**
      * @brief VMX-Enable
@@ -457,7 +474,7 @@ typedef union
      *
      * @see Vol3C[23(INTRODUCTION TO VIRTUAL MACHINE EXTENSIONS)]
      */
-    UINT32 VmxEnable                                               : 1;
+    UINT64 VmxEnable                                               : 1;
 #define CR4_VMX_ENABLE_BIT                                           13
 #define CR4_VMX_ENABLE_MASK                                          0x01
 #define CR4_VMX_ENABLE(_)                                            (((_) >> 13) & 0x01)
@@ -469,18 +486,18 @@ typedef union
      *
      * @see Vol2[6(SAFER MODE EXTENSIONS REFERENCE)]
      */
-    UINT32 SmxEnable                                               : 1;
+    UINT64 SmxEnable                                               : 1;
 #define CR4_SMX_ENABLE_BIT                                           14
 #define CR4_SMX_ENABLE_MASK                                          0x01
 #define CR4_SMX_ENABLE(_)                                            (((_) >> 14) & 0x01)
-    UINT32 Reserved2                                               : 1;
+    UINT64 Reserved2                                               : 1;
 
     /**
      * @brief FSGSBASE-Enable
      *
      * Enables the instructions RDFSBASE, RDGSBASE, WRFSBASE, and WRGSBASE.
      */
-    UINT32 FsgsbaseEnable                                          : 1;
+    UINT64 FsgsbaseEnable                                          : 1;
 #define CR4_FSGSBASE_ENABLE_BIT                                      16
 #define CR4_FSGSBASE_ENABLE_MASK                                     0x01
 #define CR4_FSGSBASE_ENABLE(_)                                       (((_) >> 16) & 0x01)
@@ -492,7 +509,7 @@ typedef union
      *
      * @see Vol3A[4.10.1(Process-Context Identifiers (PCIDs))]
      */
-    UINT32 PcidEnable                                              : 1;
+    UINT64 PcidEnable                                              : 1;
 #define CR4_PCID_ENABLE_BIT                                          17
 #define CR4_PCID_ENABLE_MASK                                         0x01
 #define CR4_PCID_ENABLE(_)                                           (((_) >> 17) & 0x01)
@@ -510,11 +527,11 @@ typedef union
      * @see Vol3A[2.6(EXTENDED CONTROL REGISTERS (INCLUDING XCR0))]
      * @see Vol3A[13(SYSTEM PROGRAMMING FOR INSTRUCTION SET EXTENSIONS AND PROCESSOR EXTENDED)]
      */
-    UINT32 OsXsave                                                 : 1;
+    UINT64 OsXsave                                                 : 1;
 #define CR4_OS_XSAVE_BIT                                             18
 #define CR4_OS_XSAVE_MASK                                            0x01
 #define CR4_OS_XSAVE(_)                                              (((_) >> 18) & 0x01)
-    UINT32 Reserved3                                               : 1;
+    UINT64 Reserved3                                               : 1;
 
     /**
      * @brief SMEP-Enable
@@ -523,7 +540,7 @@ typedef union
      *
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT32 SmepEnable                                              : 1;
+    UINT64 SmepEnable                                              : 1;
 #define CR4_SMEP_ENABLE_BIT                                          20
 #define CR4_SMEP_ENABLE_MASK                                         0x01
 #define CR4_SMEP_ENABLE(_)                                           (((_) >> 20) & 0x01)
@@ -535,7 +552,7 @@ typedef union
      *
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT32 SmapEnable                                              : 1;
+    UINT64 SmapEnable                                              : 1;
 #define CR4_SMAP_ENABLE_BIT                                          21
 #define CR4_SMAP_ENABLE_MASK                                         0x01
 #define CR4_SMAP_ENABLE(_)                                           (((_) >> 21) & 0x01)
@@ -547,13 +564,14 @@ typedef union
      * protection key, whether user-mode linear addresses with that protection key can be read or written. This bit also
      * enables access to the PKRU register using the RDPKRU and WRPKRU instructions.
      */
-    UINT32 ProtectionKeyEnable                                     : 1;
+    UINT64 ProtectionKeyEnable                                     : 1;
 #define CR4_PROTECTION_KEY_ENABLE_BIT                                22
 #define CR4_PROTECTION_KEY_ENABLE_MASK                               0x01
 #define CR4_PROTECTION_KEY_ENABLE(_)                                 (((_) >> 22) & 0x01)
   };
 
-  UINT32 Flags;
+  UINT32 Flags32;
+  UINT64 Flags64;
 } CR4;
 
 typedef union
@@ -582,7 +600,8 @@ typedef union
 #define CR8_RESERVED(_)                                              (((_) >> 4) & 0xFFFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT32 Flags32;
+  UINT64 Flags64;
 } CR8;
 
 /**
@@ -11239,6 +11258,824 @@ typedef union
  */
 
 /**
+ * @defgroup PAGING \
+ *           Paging
+ * @{
+ */
+/**
+ * @defgroup PAGING_64 \
+ *           64-Bit (4-Level Paging)
+ *
+ * A logical processor uses 4-level paging if CR0.PG = 1, CR4.PAE = 1, and IA32_EFER.LME = 1. With 4-level paging, linear
+ * address are translated using a hierarchy of in-memory paging structures located using the contents of CR3. 4-level
+ * paging translates 48-bit linear addresses to 52-bit physical addresses. Although 52 bits corresponds to 4 PBytes, linear
+ * addresses are limited to 48 bits; at most 256 TBytes of linear-address space may be accessed at any given time.
+ * 4-level paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to
+ * locate the first paging-structure, the PML4 table. Use of CR3 with 4-level paging depends on whether processcontext
+ * identifiers (PCIDs) have been enabled by setting CR4.PCIDE.
+ *
+ * @see Vol3A[4.5(4-LEVEL PAGING)] (reference)
+ * @{
+ */
+/**
+ * @brief Format of a 4-Level PML4 Entry (PML4E) that References a Page-Directory-Pointer Table
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to reference a page-directory-pointer table.
+     */
+    UINT64 Present                                                 : 1;
+#define PML4E_PRESENT_BIT                                            0
+#define PML4E_PRESENT_MASK                                           0x01
+#define PML4E_PRESENT(_)                                             (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 512-GByte region controlled by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PML4E_WRITE_BIT                                              1
+#define PML4E_WRITE_MASK                                             0x01
+#define PML4E_WRITE(_)                                               (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 512-GByte region controlled by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PML4E_SUPERVISOR_BIT                                         2
+#define PML4E_SUPERVISOR_MASK                                        0x01
+#define PML4E_SUPERVISOR(_)                                          (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the page-directory-pointer table
+     * referenced by this entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PML4E_PAGE_LEVEL_WRITE_THROUGH_BIT                           3
+#define PML4E_PAGE_LEVEL_WRITE_THROUGH_MASK                          0x01
+#define PML4E_PAGE_LEVEL_WRITE_THROUGH(_)                            (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the page-directory-pointer table
+     * referenced by this entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PML4E_PAGE_LEVEL_CACHE_DISABLE_BIT                           4
+#define PML4E_PAGE_LEVEL_CACHE_DISABLE_MASK                          0x01
+#define PML4E_PAGE_LEVEL_CACHE_DISABLE(_)                            (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether this entry has been used for linear-address translation.
+     */
+    UINT64 Accessed                                                : 1;
+#define PML4E_ACCESSED_BIT                                           5
+#define PML4E_ACCESSED_MASK                                          0x01
+#define PML4E_ACCESSED(_)                                            (((_) >> 5) & 0x01)
+    UINT64 Reserved1                                               : 1;
+
+    /**
+     * Reserved (must be 0).
+     */
+    UINT64 MustBeZero                                              : 1;
+#define PML4E_MUST_BE_ZERO_BIT                                       7
+#define PML4E_MUST_BE_ZERO_MASK                                      0x01
+#define PML4E_MUST_BE_ZERO(_)                                        (((_) >> 7) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 4;
+#define PML4E_IGNORED_1_BIT                                          8
+#define PML4E_IGNORED_1_MASK                                         0x0F
+#define PML4E_IGNORED_1(_)                                           (((_) >> 8) & 0x0F)
+
+    /**
+     * Physical address of 4-KByte aligned page-directory-pointer table referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define PML4E_PAGE_FRAME_NUMBER_BIT                                  12
+#define PML4E_PAGE_FRAME_NUMBER_MASK                                 0xFFFFFFFFF
+#define PML4E_PAGE_FRAME_NUMBER(_)                                   (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved2                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 11;
+#define PML4E_IGNORED_2_BIT                                          52
+#define PML4E_IGNORED_2_MASK                                         0x7FF
+#define PML4E_IGNORED_2(_)                                           (((_) >> 52) & 0x7FF)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 512-GByte region controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PML4E_EXECUTE_DISABLE_BIT                                    63
+#define PML4E_EXECUTE_DISABLE_MASK                                   0x01
+#define PML4E_EXECUTE_DISABLE(_)                                     (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PML4E;
+
+/**
+ * @brief Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to map a 1-GByte page.
+     */
+    UINT64 Present                                                 : 1;
+#define PDPTE_1GB_PRESENT_BIT                                        0
+#define PDPTE_1GB_PRESENT_MASK                                       0x01
+#define PDPTE_1GB_PRESENT(_)                                         (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 1-GByte page referenced by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PDPTE_1GB_WRITE_BIT                                          1
+#define PDPTE_1GB_WRITE_MASK                                         0x01
+#define PDPTE_1GB_WRITE(_)                                           (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte page referenced by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PDPTE_1GB_SUPERVISOR_BIT                                     2
+#define PDPTE_1GB_SUPERVISOR_MASK                                    0x01
+#define PDPTE_1GB_SUPERVISOR(_)                                      (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the 1-GByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PDPTE_1GB_PAGE_LEVEL_WRITE_THROUGH_BIT                       3
+#define PDPTE_1GB_PAGE_LEVEL_WRITE_THROUGH_MASK                      0x01
+#define PDPTE_1GB_PAGE_LEVEL_WRITE_THROUGH(_)                        (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the 1-GByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PDPTE_1GB_PAGE_LEVEL_CACHE_DISABLE_BIT                       4
+#define PDPTE_1GB_PAGE_LEVEL_CACHE_DISABLE_MASK                      0x01
+#define PDPTE_1GB_PAGE_LEVEL_CACHE_DISABLE(_)                        (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether software has accessed the 1-GByte page referenced by this entry.
+     */
+    UINT64 Accessed                                                : 1;
+#define PDPTE_1GB_ACCESSED_BIT                                       5
+#define PDPTE_1GB_ACCESSED_MASK                                      0x01
+#define PDPTE_1GB_ACCESSED(_)                                        (((_) >> 5) & 0x01)
+
+    /**
+     * Dirty; indicates whether software has written to the 1-GByte page referenced by this entry.
+     */
+    UINT64 Dirty                                                   : 1;
+#define PDPTE_1GB_DIRTY_BIT                                          6
+#define PDPTE_1GB_DIRTY_MASK                                         0x01
+#define PDPTE_1GB_DIRTY(_)                                           (((_) >> 6) & 0x01)
+
+    /**
+     * Page size; must be 1 (otherwise, this entry references a page directory).
+     */
+    UINT64 LargePage                                               : 1;
+#define PDPTE_1GB_LARGE_PAGE_BIT                                     7
+#define PDPTE_1GB_LARGE_PAGE_MASK                                    0x01
+#define PDPTE_1GB_LARGE_PAGE(_)                                      (((_) >> 7) & 0x01)
+
+    /**
+     * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     */
+    UINT64 Global                                                  : 1;
+#define PDPTE_1GB_GLOBAL_BIT                                         8
+#define PDPTE_1GB_GLOBAL_MASK                                        0x01
+#define PDPTE_1GB_GLOBAL(_)                                          (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 3;
+#define PDPTE_1GB_IGNORED_1_BIT                                      9
+#define PDPTE_1GB_IGNORED_1_MASK                                     0x07
+#define PDPTE_1GB_IGNORED_1(_)                                       (((_) >> 9) & 0x07)
+
+    /**
+     * Indirectly determines the memory type used to access the 1-GByte page referenced by this entry.
+     */
+    UINT64 Pat                                                     : 1;
+#define PDPTE_1GB_PAT_BIT                                            12
+#define PDPTE_1GB_PAT_MASK                                           0x01
+#define PDPTE_1GB_PAT(_)                                             (((_) >> 12) & 0x01)
+    UINT64 Reserved1                                               : 17;
+
+    /**
+     * Physical address of the 1-GByte page referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 18;
+#define PDPTE_1GB_PAGE_FRAME_NUMBER_BIT                              30
+#define PDPTE_1GB_PAGE_FRAME_NUMBER_MASK                             0x3FFFF
+#define PDPTE_1GB_PAGE_FRAME_NUMBER(_)                               (((_) >> 30) & 0x3FFFF)
+    UINT64 Reserved2                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 7;
+#define PDPTE_1GB_IGNORED_2_BIT                                      52
+#define PDPTE_1GB_IGNORED_2_MASK                                     0x7F
+#define PDPTE_1GB_IGNORED_2(_)                                       (((_) >> 52) & 0x7F)
+
+    /**
+     * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     */
+    UINT64 ProtectionKey                                           : 4;
+#define PDPTE_1GB_PROTECTION_KEY_BIT                                 59
+#define PDPTE_1GB_PROTECTION_KEY_MASK                                0x0F
+#define PDPTE_1GB_PROTECTION_KEY(_)                                  (((_) >> 59) & 0x0F)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PDPTE_1GB_EXECUTE_DISABLE_BIT                                63
+#define PDPTE_1GB_EXECUTE_DISABLE_MASK                               0x01
+#define PDPTE_1GB_EXECUTE_DISABLE(_)                                 (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PDPTE_1GB;
+
+/**
+ * @brief Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that References a Page Directory
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to reference a page directory.
+     */
+    UINT64 Present                                                 : 1;
+#define PDPTE_PRESENT_BIT                                            0
+#define PDPTE_PRESENT_MASK                                           0x01
+#define PDPTE_PRESENT(_)                                             (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 1-GByte region controlled by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PDPTE_WRITE_BIT                                              1
+#define PDPTE_WRITE_MASK                                             0x01
+#define PDPTE_WRITE(_)                                               (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte region controlled by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PDPTE_SUPERVISOR_BIT                                         2
+#define PDPTE_SUPERVISOR_MASK                                        0x01
+#define PDPTE_SUPERVISOR(_)                                          (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the page directory referenced by this
+     * entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PDPTE_PAGE_LEVEL_WRITE_THROUGH_BIT                           3
+#define PDPTE_PAGE_LEVEL_WRITE_THROUGH_MASK                          0x01
+#define PDPTE_PAGE_LEVEL_WRITE_THROUGH(_)                            (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the page directory referenced by this
+     * entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PDPTE_PAGE_LEVEL_CACHE_DISABLE_BIT                           4
+#define PDPTE_PAGE_LEVEL_CACHE_DISABLE_MASK                          0x01
+#define PDPTE_PAGE_LEVEL_CACHE_DISABLE(_)                            (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether this entry has been used for linear-address translation.
+     */
+    UINT64 Accessed                                                : 1;
+#define PDPTE_ACCESSED_BIT                                           5
+#define PDPTE_ACCESSED_MASK                                          0x01
+#define PDPTE_ACCESSED(_)                                            (((_) >> 5) & 0x01)
+    UINT64 Reserved1                                               : 1;
+
+    /**
+     * Page size; must be 0 (otherwise, this entry maps a 1-GByte page).
+     */
+    UINT64 LargePage                                               : 1;
+#define PDPTE_LARGE_PAGE_BIT                                         7
+#define PDPTE_LARGE_PAGE_MASK                                        0x01
+#define PDPTE_LARGE_PAGE(_)                                          (((_) >> 7) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 4;
+#define PDPTE_IGNORED_1_BIT                                          8
+#define PDPTE_IGNORED_1_MASK                                         0x0F
+#define PDPTE_IGNORED_1(_)                                           (((_) >> 8) & 0x0F)
+
+    /**
+     * Physical address of 4-KByte aligned page directory referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define PDPTE_PAGE_FRAME_NUMBER_BIT                                  12
+#define PDPTE_PAGE_FRAME_NUMBER_MASK                                 0xFFFFFFFFF
+#define PDPTE_PAGE_FRAME_NUMBER(_)                                   (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved2                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 11;
+#define PDPTE_IGNORED_2_BIT                                          52
+#define PDPTE_IGNORED_2_MASK                                         0x7FF
+#define PDPTE_IGNORED_2(_)                                           (((_) >> 52) & 0x7FF)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte region controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PDPTE_EXECUTE_DISABLE_BIT                                    63
+#define PDPTE_EXECUTE_DISABLE_MASK                                   0x01
+#define PDPTE_EXECUTE_DISABLE(_)                                     (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PDPTE;
+
+/**
+ * @brief Format of a 4-Level Page-Directory Entry that Maps a 2-MByte Page
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to map a 2-MByte page.
+     */
+    UINT64 Present                                                 : 1;
+#define PDE_2MB_PRESENT_BIT                                          0
+#define PDE_2MB_PRESENT_MASK                                         0x01
+#define PDE_2MB_PRESENT(_)                                           (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 2-MByte page referenced by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PDE_2MB_WRITE_BIT                                            1
+#define PDE_2MB_WRITE_MASK                                           0x01
+#define PDE_2MB_WRITE(_)                                             (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte page referenced by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PDE_2MB_SUPERVISOR_BIT                                       2
+#define PDE_2MB_SUPERVISOR_MASK                                      0x01
+#define PDE_2MB_SUPERVISOR(_)                                        (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the 2-MByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PDE_2MB_PAGE_LEVEL_WRITE_THROUGH_BIT                         3
+#define PDE_2MB_PAGE_LEVEL_WRITE_THROUGH_MASK                        0x01
+#define PDE_2MB_PAGE_LEVEL_WRITE_THROUGH(_)                          (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the 2-MByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PDE_2MB_PAGE_LEVEL_CACHE_DISABLE_BIT                         4
+#define PDE_2MB_PAGE_LEVEL_CACHE_DISABLE_MASK                        0x01
+#define PDE_2MB_PAGE_LEVEL_CACHE_DISABLE(_)                          (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether software has accessed the 2-MByte page referenced by this entry.
+     */
+    UINT64 Accessed                                                : 1;
+#define PDE_2MB_ACCESSED_BIT                                         5
+#define PDE_2MB_ACCESSED_MASK                                        0x01
+#define PDE_2MB_ACCESSED(_)                                          (((_) >> 5) & 0x01)
+
+    /**
+     * Dirty; indicates whether software has written to the 2-MByte page referenced by this entry.
+     */
+    UINT64 Dirty                                                   : 1;
+#define PDE_2MB_DIRTY_BIT                                            6
+#define PDE_2MB_DIRTY_MASK                                           0x01
+#define PDE_2MB_DIRTY(_)                                             (((_) >> 6) & 0x01)
+
+    /**
+     * Page size; must be 1 (otherwise, this entry references a page directory).
+     */
+    UINT64 LargePage                                               : 1;
+#define PDE_2MB_LARGE_PAGE_BIT                                       7
+#define PDE_2MB_LARGE_PAGE_MASK                                      0x01
+#define PDE_2MB_LARGE_PAGE(_)                                        (((_) >> 7) & 0x01)
+
+    /**
+     * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     */
+    UINT64 Global                                                  : 1;
+#define PDE_2MB_GLOBAL_BIT                                           8
+#define PDE_2MB_GLOBAL_MASK                                          0x01
+#define PDE_2MB_GLOBAL(_)                                            (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 3;
+#define PDE_2MB_IGNORED_1_BIT                                        9
+#define PDE_2MB_IGNORED_1_MASK                                       0x07
+#define PDE_2MB_IGNORED_1(_)                                         (((_) >> 9) & 0x07)
+
+    /**
+     * Indirectly determines the memory type used to access the 2-MByte page referenced by this entry.
+     */
+    UINT64 Pat                                                     : 1;
+#define PDE_2MB_PAT_BIT                                              12
+#define PDE_2MB_PAT_MASK                                             0x01
+#define PDE_2MB_PAT(_)                                               (((_) >> 12) & 0x01)
+    UINT64 Reserved1                                               : 17;
+
+    /**
+     * Physical address of the 1-GByte page referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 18;
+#define PDE_2MB_PAGE_FRAME_NUMBER_BIT                                30
+#define PDE_2MB_PAGE_FRAME_NUMBER_MASK                               0x3FFFF
+#define PDE_2MB_PAGE_FRAME_NUMBER(_)                                 (((_) >> 30) & 0x3FFFF)
+    UINT64 Reserved2                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 7;
+#define PDE_2MB_IGNORED_2_BIT                                        52
+#define PDE_2MB_IGNORED_2_MASK                                       0x7F
+#define PDE_2MB_IGNORED_2(_)                                         (((_) >> 52) & 0x7F)
+
+    /**
+     * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     */
+    UINT64 ProtectionKey                                           : 4;
+#define PDE_2MB_PROTECTION_KEY_BIT                                   59
+#define PDE_2MB_PROTECTION_KEY_MASK                                  0x0F
+#define PDE_2MB_PROTECTION_KEY(_)                                    (((_) >> 59) & 0x0F)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PDE_2MB_EXECUTE_DISABLE_BIT                                  63
+#define PDE_2MB_EXECUTE_DISABLE_MASK                                 0x01
+#define PDE_2MB_EXECUTE_DISABLE(_)                                   (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PDE_2MB;
+
+/**
+ * @brief Format of a 4-Level Page-Directory Entry that References a Page Table
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to reference a page table.
+     */
+    UINT64 Present                                                 : 1;
+#define PDE_PRESENT_BIT                                              0
+#define PDE_PRESENT_MASK                                             0x01
+#define PDE_PRESENT(_)                                               (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 2-MByte region controlled by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PDE_WRITE_BIT                                                1
+#define PDE_WRITE_MASK                                               0x01
+#define PDE_WRITE(_)                                                 (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte region controlled by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PDE_SUPERVISOR_BIT                                           2
+#define PDE_SUPERVISOR_MASK                                          0x01
+#define PDE_SUPERVISOR(_)                                            (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the page table referenced by this entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PDE_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
+#define PDE_PAGE_LEVEL_WRITE_THROUGH_MASK                            0x01
+#define PDE_PAGE_LEVEL_WRITE_THROUGH(_)                              (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PDE_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
+#define PDE_PAGE_LEVEL_CACHE_DISABLE_MASK                            0x01
+#define PDE_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether this entry has been used for linear-address translation.
+     */
+    UINT64 Accessed                                                : 1;
+#define PDE_ACCESSED_BIT                                             5
+#define PDE_ACCESSED_MASK                                            0x01
+#define PDE_ACCESSED(_)                                              (((_) >> 5) & 0x01)
+    UINT64 Reserved1                                               : 1;
+
+    /**
+     * Page size; must be 0 (otherwise, this entry maps a 2-MByte page).
+     */
+    UINT64 LargePage                                               : 1;
+#define PDE_LARGE_PAGE_BIT                                           7
+#define PDE_LARGE_PAGE_MASK                                          0x01
+#define PDE_LARGE_PAGE(_)                                            (((_) >> 7) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 4;
+#define PDE_IGNORED_1_BIT                                            8
+#define PDE_IGNORED_1_MASK                                           0x0F
+#define PDE_IGNORED_1(_)                                             (((_) >> 8) & 0x0F)
+
+    /**
+     * Physical address of 4-KByte aligned page table referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define PDE_PAGE_FRAME_NUMBER_BIT                                    12
+#define PDE_PAGE_FRAME_NUMBER_MASK                                   0xFFFFFFFFF
+#define PDE_PAGE_FRAME_NUMBER(_)                                     (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved2                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 11;
+#define PDE_IGNORED_2_BIT                                            52
+#define PDE_IGNORED_2_MASK                                           0x7FF
+#define PDE_IGNORED_2(_)                                             (((_) >> 52) & 0x7FF)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 2-MByte region controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PDE_EXECUTE_DISABLE_BIT                                      63
+#define PDE_EXECUTE_DISABLE_MASK                                     0x01
+#define PDE_EXECUTE_DISABLE(_)                                       (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PDE;
+
+/**
+ * @brief Format of a 4-Level Page-Table Entry that Maps a 4-KByte Page
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to map a 4-KByte page.
+     */
+    UINT64 Present                                                 : 1;
+#define PTE_PRESENT_BIT                                              0
+#define PTE_PRESENT_MASK                                             0x01
+#define PTE_PRESENT(_)                                               (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry.
+     */
+    UINT64 Write                                                   : 1;
+#define PTE_WRITE_BIT                                                1
+#define PTE_WRITE_MASK                                               0x01
+#define PTE_WRITE(_)                                                 (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry.
+     */
+    UINT64 Supervisor                                              : 1;
+#define PTE_SUPERVISOR_BIT                                           2
+#define PTE_SUPERVISOR_MASK                                          0x01
+#define PTE_SUPERVISOR(_)                                            (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PTE_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
+#define PTE_PAGE_LEVEL_WRITE_THROUGH_MASK                            0x01
+#define PTE_PAGE_LEVEL_WRITE_THROUGH(_)                              (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
+     * entry.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PTE_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
+#define PTE_PAGE_LEVEL_CACHE_DISABLE_MASK                            0x01
+#define PTE_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry.
+     */
+    UINT64 Accessed                                                : 1;
+#define PTE_ACCESSED_BIT                                             5
+#define PTE_ACCESSED_MASK                                            0x01
+#define PTE_ACCESSED(_)                                              (((_) >> 5) & 0x01)
+
+    /**
+     * Dirty; indicates whether software has written to the 4-KByte page referenced by this entry.
+     */
+    UINT64 Dirty                                                   : 1;
+#define PTE_DIRTY_BIT                                                6
+#define PTE_DIRTY_MASK                                               0x01
+#define PTE_DIRTY(_)                                                 (((_) >> 6) & 0x01)
+
+    /**
+     * Indirectly determines the memory type used to access the 4-KByte page referenced by this entry.
+     */
+    UINT64 Pat                                                     : 1;
+#define PTE_PAT_BIT                                                  7
+#define PTE_PAT_MASK                                                 0x01
+#define PTE_PAT(_)                                                   (((_) >> 7) & 0x01)
+
+    /**
+     * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     */
+    UINT64 Global                                                  : 1;
+#define PTE_GLOBAL_BIT                                               8
+#define PTE_GLOBAL_MASK                                              0x01
+#define PTE_GLOBAL(_)                                                (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 3;
+#define PTE_IGNORED_1_BIT                                            9
+#define PTE_IGNORED_1_MASK                                           0x07
+#define PTE_IGNORED_1(_)                                             (((_) >> 9) & 0x07)
+
+    /**
+     * Physical address of the 4-KByte page referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define PTE_PAGE_FRAME_NUMBER_BIT                                    12
+#define PTE_PAGE_FRAME_NUMBER_MASK                                   0xFFFFFFFFF
+#define PTE_PAGE_FRAME_NUMBER(_)                                     (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved1                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 7;
+#define PTE_IGNORED_2_BIT                                            52
+#define PTE_IGNORED_2_MASK                                           0x7F
+#define PTE_IGNORED_2(_)                                             (((_) >> 52) & 0x7F)
+
+    /**
+     * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     */
+    UINT64 ProtectionKey                                           : 4;
+#define PTE_PROTECTION_KEY_BIT                                       59
+#define PTE_PROTECTION_KEY_MASK                                      0x0F
+#define PTE_PROTECTION_KEY(_)                                        (((_) >> 59) & 0x0F)
+
+    /**
+     * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
+     * this entry); otherwise, reserved (must be 0).
+     */
+    UINT64 ExecuteDisable                                          : 1;
+#define PTE_EXECUTE_DISABLE_BIT                                      63
+#define PTE_EXECUTE_DISABLE_MASK                                     0x01
+#define PTE_EXECUTE_DISABLE(_)                                       (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PTE;
+
+/**
+ * @brief Format of a common Page-Table Entry
+ */
+typedef union
+{
+  struct
+  {
+    UINT64 Present                                                 : 1;
+#define PT_ENTRY_PRESENT_BIT                                         0
+#define PT_ENTRY_PRESENT_MASK                                        0x01
+#define PT_ENTRY_PRESENT(_)                                          (((_) >> 0) & 0x01)
+    UINT64 Write                                                   : 1;
+#define PT_ENTRY_WRITE_BIT                                           1
+#define PT_ENTRY_WRITE_MASK                                          0x01
+#define PT_ENTRY_WRITE(_)                                            (((_) >> 1) & 0x01)
+    UINT64 Supervisor                                              : 1;
+#define PT_ENTRY_SUPERVISOR_BIT                                      2
+#define PT_ENTRY_SUPERVISOR_MASK                                     0x01
+#define PT_ENTRY_SUPERVISOR(_)                                       (((_) >> 2) & 0x01)
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define PT_ENTRY_PAGE_LEVEL_WRITE_THROUGH_BIT                        3
+#define PT_ENTRY_PAGE_LEVEL_WRITE_THROUGH_MASK                       0x01
+#define PT_ENTRY_PAGE_LEVEL_WRITE_THROUGH(_)                         (((_) >> 3) & 0x01)
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define PT_ENTRY_PAGE_LEVEL_CACHE_DISABLE_BIT                        4
+#define PT_ENTRY_PAGE_LEVEL_CACHE_DISABLE_MASK                       0x01
+#define PT_ENTRY_PAGE_LEVEL_CACHE_DISABLE(_)                         (((_) >> 4) & 0x01)
+    UINT64 Accessed                                                : 1;
+#define PT_ENTRY_ACCESSED_BIT                                        5
+#define PT_ENTRY_ACCESSED_MASK                                       0x01
+#define PT_ENTRY_ACCESSED(_)                                         (((_) >> 5) & 0x01)
+    UINT64 Dirty                                                   : 1;
+#define PT_ENTRY_DIRTY_BIT                                           6
+#define PT_ENTRY_DIRTY_MASK                                          0x01
+#define PT_ENTRY_DIRTY(_)                                            (((_) >> 6) & 0x01)
+    UINT64 LargePage                                               : 1;
+#define PT_ENTRY_LARGE_PAGE_BIT                                      7
+#define PT_ENTRY_LARGE_PAGE_MASK                                     0x01
+#define PT_ENTRY_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
+    UINT64 Global                                                  : 1;
+#define PT_ENTRY_GLOBAL_BIT                                          8
+#define PT_ENTRY_GLOBAL_MASK                                         0x01
+#define PT_ENTRY_GLOBAL(_)                                           (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored1                                                : 3;
+#define PT_ENTRY_IGNORED_1_BIT                                       9
+#define PT_ENTRY_IGNORED_1_MASK                                      0x07
+#define PT_ENTRY_IGNORED_1(_)                                        (((_) >> 9) & 0x07)
+
+    /**
+     * Physical address of the 4-KByte page referenced by this entry.
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define PT_ENTRY_PAGE_FRAME_NUMBER_BIT                               12
+#define PT_ENTRY_PAGE_FRAME_NUMBER_MASK                              0xFFFFFFFFF
+#define PT_ENTRY_PAGE_FRAME_NUMBER(_)                                (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved1                                               : 4;
+
+    /**
+     * Ignored.
+     */
+    UINT64 Ignored2                                                : 7;
+#define PT_ENTRY_IGNORED_2_BIT                                       52
+#define PT_ENTRY_IGNORED_2_MASK                                      0x7F
+#define PT_ENTRY_IGNORED_2(_)                                        (((_) >> 52) & 0x7F)
+    UINT64 ProtectionKey                                           : 4;
+#define PT_ENTRY_PROTECTION_KEY_BIT                                  59
+#define PT_ENTRY_PROTECTION_KEY_MASK                                 0x0F
+#define PT_ENTRY_PROTECTION_KEY(_)                                   (((_) >> 59) & 0x0F)
+    UINT64 ExecuteDisable                                          : 1;
+#define PT_ENTRY_EXECUTE_DISABLE_BIT                                 63
+#define PT_ENTRY_EXECUTE_DISABLE_MASK                                0x01
+#define PT_ENTRY_EXECUTE_DISABLE(_)                                  (((_) >> 63) & 0x01)
+  };
+
+  UINT64 Flags;
+} PT_ENTRY;
+
+/**
+ * @}
+ */
+
+/**
+ * @}
+ */
+
+/**
  * @defgroup SEGMENT_DESCRIPTORS \
  *           Segment descriptors
  * @{
@@ -12973,10 +13810,10 @@ typedef union
     /**
      * Must be 1 (otherwise, this entry references an EPT page directory).
      */
-    UINT64 Large                                                   : 1;
-#define EPDPTE_1GB_LARGE_BIT                                         7
-#define EPDPTE_1GB_LARGE_MASK                                        0x01
-#define EPDPTE_1GB_LARGE(_)                                          (((_) >> 7) & 0x01)
+    UINT64 LargePage                                               : 1;
+#define EPDPTE_1GB_LARGE_PAGE_BIT                                    7
+#define EPDPTE_1GB_LARGE_PAGE_MASK                                   0x01
+#define EPDPTE_1GB_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
 
     /**
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page referenced by
@@ -13151,10 +13988,10 @@ typedef union
     /**
      * Must be 1 (otherwise, this entry references an EPT page table).
      */
-    UINT64 Large                                                   : 1;
-#define EPDE_2MB_LARGE_BIT                                           7
-#define EPDE_2MB_LARGE_MASK                                          0x01
-#define EPDE_2MB_LARGE(_)                                            (((_) >> 7) & 0x01)
+    UINT64 LargePage                                               : 1;
+#define EPDE_2MB_LARGE_PAGE_BIT                                      7
+#define EPDE_2MB_LARGE_PAGE_MASK                                     0x01
+#define EPDE_2MB_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
 
     /**
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page referenced by
@@ -13406,10 +14243,10 @@ typedef union
 #define EPT_ENTRY_IGNORE_PAT_BIT                                     6
 #define EPT_ENTRY_IGNORE_PAT_MASK                                    0x01
 #define EPT_ENTRY_IGNORE_PAT(_)                                      (((_) >> 6) & 0x01)
-    UINT64 Large                                                   : 1;
-#define EPT_ENTRY_LARGE_BIT                                          7
-#define EPT_ENTRY_LARGE_MASK                                         0x01
-#define EPT_ENTRY_LARGE(_)                                           (((_) >> 7) & 0x01)
+    UINT64 LargePage                                               : 1;
+#define EPT_ENTRY_LARGE_PAGE_BIT                                     7
+#define EPT_ENTRY_LARGE_PAGE_MASK                                    0x01
+#define EPT_ENTRY_LARGE_PAGE(_)                                      (((_) >> 7) & 0x01)
     UINT64 Accessed                                                : 1;
 #define EPT_ENTRY_ACCESSED_BIT                                       8
 #define EPT_ENTRY_ACCESSED_MASK                                      0x01
