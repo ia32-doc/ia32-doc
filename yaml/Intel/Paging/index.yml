@@ -3,4 +3,5 @@
   Todo: Long description
   Type: Group
   Include:
+  - 32bit
   - 64bit

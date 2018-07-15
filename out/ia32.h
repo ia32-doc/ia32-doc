@@ -11263,6 +11263,398 @@ typedef union
  * @{
  */
 /**
+ * @defgroup PAGING_32 \
+ *           32-Bit Paging
+ *
+ * logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear addresses to
+ * 40-bit physical addresses.1 Although 40 bits corresponds to 1 TByte, linear addresses are limited to 32 bits; at most 4
+ * GBytes of linear-address space may be accessed at any given time.
+ * 32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to locate
+ * the first paging-structure, the page directory. Table 4-3 illustrates how CR3 is used with 32-bit paging. 32-bit paging
+ * may map linear addresses to either 4-KByte pages or 4-MByte pages.
+ *
+ * @see Vol3A[4.5(4-LEVEL PAGING)] (reference)
+ * @{
+ */
+/**
+ * @brief Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to map a 4-MByte page.
+     */
+    UINT32 Present                                                 : 1;
+#define PDE_4MB_32_PRESENT_BIT                                       0
+#define PDE_4MB_32_PRESENT_MASK                                      0x01
+#define PDE_4MB_32_PRESENT(_)                                        (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by this entry.
+     */
+    UINT32 Write                                                   : 1;
+#define PDE_4MB_32_WRITE_BIT                                         1
+#define PDE_4MB_32_WRITE_MASK                                        0x01
+#define PDE_4MB_32_WRITE(_)                                          (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page referenced by this entry.
+     */
+    UINT32 Supervisor                                              : 1;
+#define PDE_4MB_32_SUPERVISOR_BIT                                    2
+#define PDE_4MB_32_SUPERVISOR_MASK                                   0x01
+#define PDE_4MB_32_SUPERVISOR(_)                                     (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the 4-MByte page referenced by this
+     * entry.
+     */
+    UINT32 PageLevelWriteThrough                                   : 1;
+#define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH_BIT                      3
+#define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH_MASK                     0x01
+#define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH(_)                       (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the 4-MByte page referenced by this
+     * entry.
+     */
+    UINT32 PageLevelCacheDisable                                   : 1;
+#define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE_BIT                      4
+#define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE_MASK                     0x01
+#define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE(_)                       (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether software has accessed the 4-MByte page referenced by this entry.
+     */
+    UINT32 Accessed                                                : 1;
+#define PDE_4MB_32_ACCESSED_BIT                                      5
+#define PDE_4MB_32_ACCESSED_MASK                                     0x01
+#define PDE_4MB_32_ACCESSED(_)                                       (((_) >> 5) & 0x01)
+
+    /**
+     * Dirty; indicates whether software has written to the 4-MByte page referenced by this entry.
+     */
+    UINT32 Dirty                                                   : 1;
+#define PDE_4MB_32_DIRTY_BIT                                         6
+#define PDE_4MB_32_DIRTY_MASK                                        0x01
+#define PDE_4MB_32_DIRTY(_)                                          (((_) >> 6) & 0x01)
+
+    /**
+     * Page size; must be 1 (otherwise, this entry references a page table).
+     */
+    UINT32 LargePage                                               : 1;
+#define PDE_4MB_32_LARGE_PAGE_BIT                                    7
+#define PDE_4MB_32_LARGE_PAGE_MASK                                   0x01
+#define PDE_4MB_32_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
+
+    /**
+     * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     */
+    UINT32 Global                                                  : 1;
+#define PDE_4MB_32_GLOBAL_BIT                                        8
+#define PDE_4MB_32_GLOBAL_MASK                                       0x01
+#define PDE_4MB_32_GLOBAL(_)                                         (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT32 Ignored1                                                : 3;
+#define PDE_4MB_32_IGNORED_1_BIT                                     9
+#define PDE_4MB_32_IGNORED_1_MASK                                    0x07
+#define PDE_4MB_32_IGNORED_1(_)                                      (((_) >> 9) & 0x07)
+
+    /**
+     * Indirectly determines the memory type used to access the 4-MByte page referenced by this entry.
+     */
+    UINT32 Pat                                                     : 1;
+#define PDE_4MB_32_PAT_BIT                                           12
+#define PDE_4MB_32_PAT_MASK                                          0x01
+#define PDE_4MB_32_PAT(_)                                            (((_) >> 12) & 0x01)
+
+    /**
+     * Bits (M-1):32 of physical address of the 4-MByte page referenced by this entry.
+     */
+    UINT32 PageFrameNumberLow                                      : 8;
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_LOW_BIT                         13
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_LOW_MASK                        0xFF
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_LOW(_)                          (((_) >> 13) & 0xFF)
+    UINT32 Reserved1                                               : 1;
+
+    /**
+     * Bits 31:22 of physical address of the 4-MByte page referenced by this entry.
+     */
+    UINT32 PageFrameNumberHigh                                     : 10;
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH_BIT                        22
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH_MASK                       0x3FF
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH(_)                         (((_) >> 22) & 0x3FF)
+  };
+
+  UINT32 Flags;
+} PDE_4MB_32;
+
+/**
+ * @brief Format of a 32-Bit Page-Directory Entry that References a Page Table
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to reference a page table.
+     */
+    UINT32 Present                                                 : 1;
+#define PDE_32_PRESENT_BIT                                           0
+#define PDE_32_PRESENT_MASK                                          0x01
+#define PDE_32_PRESENT(_)                                            (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by this entry.
+     */
+    UINT32 Write                                                   : 1;
+#define PDE_32_WRITE_BIT                                             1
+#define PDE_32_WRITE_MASK                                            0x01
+#define PDE_32_WRITE(_)                                              (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region controlled by this entry.
+     */
+    UINT32 Supervisor                                              : 1;
+#define PDE_32_SUPERVISOR_BIT                                        2
+#define PDE_32_SUPERVISOR_MASK                                       0x01
+#define PDE_32_SUPERVISOR(_)                                         (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the page table referenced by this entry.
+     */
+    UINT32 PageLevelWriteThrough                                   : 1;
+#define PDE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PDE_32_PAGE_LEVEL_WRITE_THROUGH_MASK                         0x01
+#define PDE_32_PAGE_LEVEL_WRITE_THROUGH(_)                           (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this entry.
+     */
+    UINT32 PageLevelCacheDisable                                   : 1;
+#define PDE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PDE_32_PAGE_LEVEL_CACHE_DISABLE_MASK                         0x01
+#define PDE_32_PAGE_LEVEL_CACHE_DISABLE(_)                           (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether this entry has been used for linear-address translation.
+     */
+    UINT32 Accessed                                                : 1;
+#define PDE_32_ACCESSED_BIT                                          5
+#define PDE_32_ACCESSED_MASK                                         0x01
+#define PDE_32_ACCESSED(_)                                           (((_) >> 5) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT32 Ignored1                                                : 1;
+#define PDE_32_IGNORED_1_BIT                                         6
+#define PDE_32_IGNORED_1_MASK                                        0x01
+#define PDE_32_IGNORED_1(_)                                          (((_) >> 6) & 0x01)
+
+    /**
+     * If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise, ignored.
+     */
+    UINT32 LargePage                                               : 1;
+#define PDE_32_LARGE_PAGE_BIT                                        7
+#define PDE_32_LARGE_PAGE_MASK                                       0x01
+#define PDE_32_LARGE_PAGE(_)                                         (((_) >> 7) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT32 Ignored2                                                : 4;
+#define PDE_32_IGNORED_2_BIT                                         8
+#define PDE_32_IGNORED_2_MASK                                        0x0F
+#define PDE_32_IGNORED_2(_)                                          (((_) >> 8) & 0x0F)
+
+    /**
+     * Physical address of 4-KByte aligned page table referenced by this entry.
+     */
+    UINT32 PageFrameNumber                                         : 20;
+#define PDE_32_PAGE_FRAME_NUMBER_BIT                                 12
+#define PDE_32_PAGE_FRAME_NUMBER_MASK                                0xFFFFF
+#define PDE_32_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFF)
+  };
+
+  UINT32 Flags;
+} PDE_32;
+
+/**
+ * @brief Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * Present; must be 1 to map a 4-KByte page.
+     */
+    UINT32 Present                                                 : 1;
+#define PTE_32_PRESENT_BIT                                           0
+#define PTE_32_PRESENT_MASK                                          0x01
+#define PTE_32_PRESENT(_)                                            (((_) >> 0) & 0x01)
+
+    /**
+     * Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry.
+     */
+    UINT32 Write                                                   : 1;
+#define PTE_32_WRITE_BIT                                             1
+#define PTE_32_WRITE_MASK                                            0x01
+#define PTE_32_WRITE(_)                                              (((_) >> 1) & 0x01)
+
+    /**
+     * User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry.
+     */
+    UINT32 Supervisor                                              : 1;
+#define PTE_32_SUPERVISOR_BIT                                        2
+#define PTE_32_SUPERVISOR_MASK                                       0x01
+#define PTE_32_SUPERVISOR(_)                                         (((_) >> 2) & 0x01)
+
+    /**
+     * Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by this
+     * entry.
+     */
+    UINT32 PageLevelWriteThrough                                   : 1;
+#define PTE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PTE_32_PAGE_LEVEL_WRITE_THROUGH_MASK                         0x01
+#define PTE_32_PAGE_LEVEL_WRITE_THROUGH(_)                           (((_) >> 3) & 0x01)
+
+    /**
+     * Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
+     * entry.
+     */
+    UINT32 PageLevelCacheDisable                                   : 1;
+#define PTE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PTE_32_PAGE_LEVEL_CACHE_DISABLE_MASK                         0x01
+#define PTE_32_PAGE_LEVEL_CACHE_DISABLE(_)                           (((_) >> 4) & 0x01)
+
+    /**
+     * Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry.
+     */
+    UINT32 Accessed                                                : 1;
+#define PTE_32_ACCESSED_BIT                                          5
+#define PTE_32_ACCESSED_MASK                                         0x01
+#define PTE_32_ACCESSED(_)                                           (((_) >> 5) & 0x01)
+
+    /**
+     * Dirty; indicates whether software has written to the 4-KByte page referenced by this entry.
+     */
+    UINT32 Dirty                                                   : 1;
+#define PTE_32_DIRTY_BIT                                             6
+#define PTE_32_DIRTY_MASK                                            0x01
+#define PTE_32_DIRTY(_)                                              (((_) >> 6) & 0x01)
+
+    /**
+     * Indirectly determines the memory type used to access the 4-KByte page referenced by this entry.
+     */
+    UINT32 Pat                                                     : 1;
+#define PTE_32_PAT_BIT                                               7
+#define PTE_32_PAT_MASK                                              0x01
+#define PTE_32_PAT(_)                                                (((_) >> 7) & 0x01)
+
+    /**
+     * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     */
+    UINT32 Global                                                  : 1;
+#define PTE_32_GLOBAL_BIT                                            8
+#define PTE_32_GLOBAL_MASK                                           0x01
+#define PTE_32_GLOBAL(_)                                             (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT32 Ignored1                                                : 3;
+#define PTE_32_IGNORED_1_BIT                                         9
+#define PTE_32_IGNORED_1_MASK                                        0x07
+#define PTE_32_IGNORED_1(_)                                          (((_) >> 9) & 0x07)
+
+    /**
+     * Physical address of 4-KByte aligned page table referenced by this entry.
+     */
+    UINT32 PageFrameNumber                                         : 20;
+#define PTE_32_PAGE_FRAME_NUMBER_BIT                                 12
+#define PTE_32_PAGE_FRAME_NUMBER_MASK                                0xFFFFF
+#define PTE_32_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFF)
+  };
+
+  UINT32 Flags;
+} PTE_32;
+
+/**
+ * @brief Format of a common Page-Table Entry
+ */
+typedef union
+{
+  struct
+  {
+    UINT32 Present                                                 : 1;
+#define PT_ENTRY_32_PRESENT_BIT                                      0
+#define PT_ENTRY_32_PRESENT_MASK                                     0x01
+#define PT_ENTRY_32_PRESENT(_)                                       (((_) >> 0) & 0x01)
+    UINT32 Write                                                   : 1;
+#define PT_ENTRY_32_WRITE_BIT                                        1
+#define PT_ENTRY_32_WRITE_MASK                                       0x01
+#define PT_ENTRY_32_WRITE(_)                                         (((_) >> 1) & 0x01)
+    UINT32 Supervisor                                              : 1;
+#define PT_ENTRY_32_SUPERVISOR_BIT                                   2
+#define PT_ENTRY_32_SUPERVISOR_MASK                                  0x01
+#define PT_ENTRY_32_SUPERVISOR(_)                                    (((_) >> 2) & 0x01)
+    UINT32 PageLevelWriteThrough                                   : 1;
+#define PT_ENTRY_32_PAGE_LEVEL_WRITE_THROUGH_BIT                     3
+#define PT_ENTRY_32_PAGE_LEVEL_WRITE_THROUGH_MASK                    0x01
+#define PT_ENTRY_32_PAGE_LEVEL_WRITE_THROUGH(_)                      (((_) >> 3) & 0x01)
+    UINT32 PageLevelCacheDisable                                   : 1;
+#define PT_ENTRY_32_PAGE_LEVEL_CACHE_DISABLE_BIT                     4
+#define PT_ENTRY_32_PAGE_LEVEL_CACHE_DISABLE_MASK                    0x01
+#define PT_ENTRY_32_PAGE_LEVEL_CACHE_DISABLE(_)                      (((_) >> 4) & 0x01)
+    UINT32 Accessed                                                : 1;
+#define PT_ENTRY_32_ACCESSED_BIT                                     5
+#define PT_ENTRY_32_ACCESSED_MASK                                    0x01
+#define PT_ENTRY_32_ACCESSED(_)                                      (((_) >> 5) & 0x01)
+    UINT32 Dirty                                                   : 1;
+#define PT_ENTRY_32_DIRTY_BIT                                        6
+#define PT_ENTRY_32_DIRTY_MASK                                       0x01
+#define PT_ENTRY_32_DIRTY(_)                                         (((_) >> 6) & 0x01)
+    UINT32 LargePage                                               : 1;
+#define PT_ENTRY_32_LARGE_PAGE_BIT                                   7
+#define PT_ENTRY_32_LARGE_PAGE_MASK                                  0x01
+#define PT_ENTRY_32_LARGE_PAGE(_)                                    (((_) >> 7) & 0x01)
+    UINT32 Global                                                  : 1;
+#define PT_ENTRY_32_GLOBAL_BIT                                       8
+#define PT_ENTRY_32_GLOBAL_MASK                                      0x01
+#define PT_ENTRY_32_GLOBAL(_)                                        (((_) >> 8) & 0x01)
+
+    /**
+     * Ignored.
+     */
+    UINT32 Ignored1                                                : 3;
+#define PT_ENTRY_32_IGNORED_1_BIT                                    9
+#define PT_ENTRY_32_IGNORED_1_MASK                                   0x07
+#define PT_ENTRY_32_IGNORED_1(_)                                     (((_) >> 9) & 0x07)
+
+    /**
+     * Physical address of the 4-KByte page referenced by this entry.
+     */
+    UINT32 PageFrameNumber                                         : 20;
+#define PT_ENTRY_32_PAGE_FRAME_NUMBER_BIT                            12
+#define PT_ENTRY_32_PAGE_FRAME_NUMBER_MASK                           0xFFFFF
+#define PT_ENTRY_32_PAGE_FRAME_NUMBER(_)                             (((_) >> 12) & 0xFFFFF)
+  };
+
+  UINT32 Flags;
+} PT_ENTRY_32;
+
+/**
+ * @}
+ */
+
+/**
  * @defgroup PAGING_64 \
  *           64-Bit (4-Level Paging)
  *

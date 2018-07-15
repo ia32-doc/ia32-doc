@@ -1,0 +1,277 @@
+- Name: PAGING_32
+  ShortDescription: 32-Bit Paging
+  LongDescription: |
+    logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear
+    addresses to 40-bit physical addresses.1 Although 40 bits corresponds to 1 TByte, linear addresses are limited to
+    32 bits; at most 4 GBytes of linear-address space may be accessed at any given time.
+
+    32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to
+    locate the first paging-structure, the page directory. Table 4-3 illustrates how CR3 is used with 32-bit paging.
+    32-bit paging may map linear addresses to either 4-KByte pages or 4-MByte pages.
+  ChildrenNameWithPostfix: 32
+  Type: Group
+  Reference: Vol3A[4.5(4-LEVEL PAGING)]
+  Fields:
+  - Name: PDE_4MB
+    Description: Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      ShortName: P
+      LongName: PRESENT
+      Description: Present; must be 1 to map a 4-MByte page.
+
+    - Bit: 1
+      ShortName: RW
+      LongName: WRITE
+      Description: Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 2
+      ShortName: US
+      LongName: SUPERVISOR
+      Description: User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page referenced by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 3
+      ShortName: PWT
+      LongName: PAGE_LEVEL_WRITE_THROUGH
+      Description: |
+        Page-level write-through; indirectly determines the memory type used to access the 4-MByte page referenced by
+        this entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 4
+      ShortName: PCD
+      LongName: PAGE_LEVEL_CACHE_DISABLE
+      Description: |
+        Page-level cache disable; indirectly determines the memory type used to access the 4-MByte page referenced by
+        this entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 5
+      ShortName: A
+      LongName: ACCESSED
+      Description: Accessed; indicates whether software has accessed the 4-MByte page referenced by this entry.
+      SeeAlso: Vol3A[4.8(Accessed and Dirty Flags)]
+
+    - Bit: 6
+      ShortName: D
+      LongName: DIRTY
+      Description: Dirty; indicates whether software has written to the 4-MByte page referenced by this entry.
+      SeeAlso: Vol3A[4.8(Accessed and Dirty Flags)]
+
+    - Bit: 7
+      ShortName: LARGE
+      LongName: LARGE_PAGE
+      Description: Page size; must be 1 (otherwise, this entry references a page table).
+
+    - Bit: 8
+      ShortName: G
+      LongName: GLOBAL
+      Description: Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+      SeeAlso: Vol3A[4.10(Caching Translation Information)]
+
+    - Bit: 9-11
+      Name: IGNORED_1
+      Description: Ignored.
+
+    - Bit: 12
+      ShortName: PAT
+      LongName: PAT
+      Description: Indirectly determines the memory type used to access the 4-MByte page referenced by this entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 13-20
+      ShortName: PFN_LOW
+      LongName: PAGE_FRAME_NUMBER_LOW
+      Description: Bits (M–1):32 of physical address of the 4-MByte page referenced by this entry.
+
+    - Bit: 22-31
+      ShortName: PFN_HIGH
+      LongName: PAGE_FRAME_NUMBER_HIGH
+      Description: Bits 31:22 of physical address of the 4-MByte page referenced by this entry.
+
+  - Name: PDE
+    Description: Format of a 32-Bit Page-Directory Entry that References a Page Table.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      ShortName: P
+      LongName: PRESENT
+      Description: Present; must be 1 to reference a page table.
+
+    - Bit: 1
+      ShortName: RW
+      LongName: WRITE
+      Description: Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 2
+      ShortName: US
+      LongName: SUPERVISOR
+      Description: User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region controlled by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 3
+      ShortName: PWT
+      LongName: PAGE_LEVEL_WRITE_THROUGH
+      Description: |
+        Page-level write-through; indirectly determines the memory type used to access the page table referenced by this
+        entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 4
+      ShortName: PCD
+      LongName: PAGE_LEVEL_CACHE_DISABLE
+      Description: |
+        Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this
+        entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 5
+      ShortName: A
+      LongName: ACCESSED
+      Description: Accessed; indicates whether this entry has been used for linear-address translation.
+      SeeAlso: Vol3A[4.8(Accessed and Dirty Flags)]
+
+    - Bit: 6
+      Name: IGNORED_1
+      Description: Ignored.
+
+    - Bit: 7
+      ShortName: LARGE
+      LongName: LARGE_PAGE
+      Description: If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise, ignored.
+
+    - Bit: 8-11
+      Name: IGNORED_2
+      Description: Ignored.
+
+    - Bit: 12-31
+      ShortName: PFN
+      LongName: PAGE_FRAME_NUMBER
+      Description: Physical address of 4-KByte aligned page table referenced by this entry.
+
+  - Name: PTE
+    Description: Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      ShortName: P
+      LongName: PRESENT
+      Description: Present; must be 1 to map a 4-KByte page.
+
+    - Bit: 1
+      ShortName: RW
+      LongName: WRITE
+      Description: Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 2
+      ShortName: US
+      LongName: SUPERVISOR
+      Description: User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry.
+      SeeAlso: Vol3A[4.6(Access Rights)]
+
+    - Bit: 3
+      ShortName: PWT
+      LongName: PAGE_LEVEL_WRITE_THROUGH
+      Description: |
+        Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by
+        this entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 4
+      ShortName: PCD
+      LongName: PAGE_LEVEL_CACHE_DISABLE
+      Description: |
+        Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
+        entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 5
+      ShortName: A
+      LongName: ACCESSED
+      Description: Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry.
+      SeeAlso: Vol3A[4.8(Accessed and Dirty Flags)]
+
+    - Bit: 6
+      ShortName: D
+      LongName: DIRTY
+      Description: Dirty; indicates whether software has written to the 4-KByte page referenced by this entry.
+      SeeAlso: Vol3A[4.8(Accessed and Dirty Flags)]
+
+    - Bit: 7
+      ShortName: PAT
+      LongName: PAT
+      Description: Indirectly determines the memory type used to access the 4-KByte page referenced by this entry.
+      SeeAlso: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
+
+    - Bit: 8
+      ShortName: G
+      LongName: GLOBAL
+      Description: Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+      SeeAlso: Vol3A[4.10(Caching Translation Information)]
+
+    - Bit: 9-11
+      Name: IGNORED_1
+      Description: Ignored.
+
+    - Bit: 12-31
+      ShortName: PFN
+      LongName: PAGE_FRAME_NUMBER
+      Description: Physical address of 4-KByte aligned page table referenced by this entry.
+
+  - Name: PT_ENTRY
+    Description: Format of a common Page-Table Entry.
+    Type: Bitfield
+    Size: 32
+    Fields:
+    - Bit: 0
+      ShortName: P
+      LongName: PRESENT
+
+    - Bit: 1
+      ShortName: RW
+      LongName: WRITE
+
+    - Bit: 2
+      ShortName: US
+      LongName: SUPERVISOR
+
+    - Bit: 3
+      ShortName: PWT
+      LongName: PAGE_LEVEL_WRITE_THROUGH
+
+    - Bit: 4
+      ShortName: PCD
+      LongName: PAGE_LEVEL_CACHE_DISABLE
+
+    - Bit: 5
+      ShortName: A
+      LongName: ACCESSED
+
+    - Bit: 6
+      ShortName: D
+      LongName: DIRTY
+
+    - Bit: 7
+      ShortName: LARGE
+      LongName: LARGE_PAGE
+
+    - Bit: 8
+      ShortName: G
+      LongName: GLOBAL
+
+    - Bit: 9-11
+      Name: IGNORED_1
+      Description: Ignored.
+
+    - Bit: 12-31
+      ShortName: PFN
+      LongName: PAGE_FRAME_NUMBER
+      Description: Physical address of the 4-KByte page referenced by this entry.

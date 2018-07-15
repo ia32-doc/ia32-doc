@@ -78,7 +78,6 @@ Also, by looking at other yaml files, you should get the idea.
 - Find what else is missing
 - Fix 32/64 bitfields for MSR registers
 - Add possibility for bitfields to have both UINT32/UINT64 members
-- PAGE_TABLEs
 
 ### License
 
