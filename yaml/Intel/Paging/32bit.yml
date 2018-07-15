@@ -1,8 +1,8 @@
 - Name: PAGING_32
   ShortDescription: 32-Bit Paging
   LongDescription: |
-    logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear
-    addresses to 40-bit physical addresses.1 Although 40 bits corresponds to 1 TByte, linear addresses are limited to
+    A logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear
+    addresses to 40-bit physical addresses. Although 40 bits corresponds to 1 TByte, linear addresses are limited to
     32 bits; at most 4 GBytes of linear-address space may be accessed at any given time.
 
     32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to

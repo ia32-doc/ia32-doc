@@ -11266,9 +11266,9 @@ typedef union
  * @defgroup PAGING_32 \
  *           32-Bit Paging
  *
- * logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear addresses to
- * 40-bit physical addresses.1 Although 40 bits corresponds to 1 TByte, linear addresses are limited to 32 bits; at most 4
- * GBytes of linear-address space may be accessed at any given time.
+ * A logical processor uses 32-bit paging if CR0.PG = 1 and CR4.PAE = 0. 32-bit paging translates 32-bit linear addresses
+ * to 40-bit physical addresses. Although 40 bits corresponds to 1 TByte, linear addresses are limited to 32 bits; at most
+ * 4 GBytes of linear-address space may be accessed at any given time.
  * 32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to locate
  * the first paging-structure, the page directory. Table 4-3 illustrates how CR3 is used with 32-bit paging. 32-bit paging
  * may map linear addresses to either 4-KByte pages or 4-MByte pages.
