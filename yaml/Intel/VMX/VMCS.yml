@@ -12,7 +12,7 @@
   Type: Group
   Reference: Vol3D[B(APPENDIX B FIELD ENCODING IN VMCS)]
   Fields:
-  - Name: VMCS_COMPONENT_ENCODING
+  - Name: COMPONENT_ENCODING
     Tag: OPTIONAL
     Type: Bitfield
     Size: 16
@@ -59,13 +59,13 @@
 
         3: natural-width
 
-  - Name: VMCS_16_BIT
+  - Name: 16_BIT
     Description: 16-Bit Fields.
     # ChildrenNameWithPrefix: 16
     Type: Group
     Reference: Vol3D[B.1(16-BIT FIELDS)]
     Fields:
-    - Name: VMCS_16_BIT_CONTROL_FIELDS
+    - Name: 16_BIT_CONTROL_FIELDS
       Description: 16-Bit Control Fields.
       ChildrenNameWithPrefix: CTRL
       Type: Group
@@ -92,7 +92,7 @@
         Remarks: |
           This field exists only on processors that support the 1-setting of the “EPT-violation #VE” VM-execution control.
 
-    - Name: VMCS_16_BIT_GUEST_STATE_FIELDS
+    - Name: 16_BIT_GUEST_STATE_FIELDS
       Description: 16-Bit Guest-State Fields.
       ChildrenNameWithPrefix: GUEST
       Type: Group
@@ -151,7 +151,7 @@
         Remarks: |
           This field exists only on processors that support the 1-setting of the “enable PML” VM-execution control.
 
-    - Name: VMCS_16_BIT_HOST_STATE_FIELDS
+    - Name: 16_BIT_HOST_STATE_FIELDS
       Description: 16-Bit Host-State Fields.
       ChildrenNameWithPrefix: HOST
       Type: Group
@@ -191,13 +191,13 @@
         LongName: TR_SELECTOR
         Description: Host TR selector.
 
-  - Name: VMCS_64_BIT
+  - Name: 64_BIT
     Description: 64-Bit Fields.
     # ChildrenNameWithPrefix: 64
     Type: Group
     Reference: Vol3D[B.2(64-BIT FIELDS)]
     Fields:
-      - Name: VMCS_64_BIT_CONTROL_FIELDS
+      - Name: 64_BIT_CONTROL_FIELDS
         Description: 64-Bit Control Fields.
         ChildrenNameWithPrefix: CTRL
         Type: Group
@@ -331,7 +331,7 @@
           LongName: TSC_MULTIPLIER
           Description: TSC multiplier.
 
-      - Name: VMCS_64_BIT_READ_ONLY_DATA_FIELDS
+      - Name: 64_BIT_READ_ONLY_DATA_FIELDS
         Description: 64-Bit Read-Only Data Field.
         # ChildrenNameWithPrefix: RO
         Type: Group
@@ -341,7 +341,7 @@
           LongName: GUEST_PHYSICAL_ADDRESS
           Description: Guest-physical address.
 
-      - Name: VMCS_64_BIT_GUEST_STATE_FIELDS
+      - Name: 64_BIT_GUEST_STATE_FIELDS
         Description: 64-Bit Guest-State Fields.
         ChildrenNameWithPrefix: GUEST
         Type: Group
@@ -391,7 +391,7 @@
           LongName: PDPTE3
           Description: Guest PDPTE3.
 
-      - Name: VMCS_64_BIT_HOST_STATE_FIELDS
+      - Name: 64_BIT_HOST_STATE_FIELDS
         Description: 64-Bit Host-State Fields.
         ChildrenNameWithPrefix: HOST
         Type: Group
@@ -411,13 +411,13 @@
           LongName: PERF_GLOBAL_CTRL
           Description: Host IA32_PERF_GLOBAL_CTRL.
 
-  - Name: VMCS_32_BIT
+  - Name: 32_BIT
     Description: 32-Bit Fields.
     # ChildrenNameWithPrefix: 32
     Type: Group
     Reference: Vol3D[B.3(32-BIT FIELDS)]
     Fields:
-      - Name: VMCS_32_BIT_CONTROL_FIELDS
+      - Name: 32_BIT_CONTROL_FIELDS
         Description: 32-Bit Control Fields.
         ChildrenNameWithPrefix: CTRL
         Type: Group
@@ -512,7 +512,7 @@
           LongName: PLE_WINDOW
           Description: PLE_Window.
 
-      - Name: VMCS_32_BIT_READ_ONLY_DATA_FIELDS
+      - Name: 32_BIT_READ_ONLY_DATA_FIELDS
         Description: 32-Bit Read-Only Data Fields.
         # ChildrenNameWithPrefix: RO
         Type: Group
@@ -557,7 +557,7 @@
           LongName: VMEXIT_INSTRUCTION_INFO
           Description: VM-exit instruction information.
 
-      - Name: VMCS_32_BIT_GUEST_STATE_FIELDS
+      - Name: 32_BIT_GUEST_STATE_FIELDS
         Description: 32-Bit Guest-State Fields.
         ChildrenNameWithPrefix: GUEST
         Type: Group
@@ -677,7 +677,7 @@
           LongName: VMX_PREEMPTION_TIMER_VALUE
           Description: VMX-preemption timer value.
 
-      - Name: VMCS_32_BIT_HOST_STATE_FIELDS
+      - Name: 32_BIT_HOST_STATE_FIELDS
         Description: 32-Bit Host-State Field.
         Type: Group
         Fields:
@@ -686,13 +686,13 @@
           LongName: SYSENTER_CS
           Description: Host IA32_SYSENTER_CS.
 
-  - Name: VMCS_NATURAL_WIDTH
+  - Name: NATURAL_WIDTH
     Description: Natural-Width Fields.
     # ChildrenNameWithPrefix:
     Type: Group
     Reference: Vol3D[B.4(NATURAL-WIDTH FIELDS)]
     Fields:
-      - Name: VMCS_NATURAL_WIDTH_CONTROL_FIELDS
+      - Name: NATURAL_WIDTH_CONTROL_FIELDS
         Description: Natural-Width Control Fields
         ChildrenNameWithPrefix: CTRL
         Type: Group
@@ -737,7 +737,7 @@
           LongName: CR3_TARGET_VALUE_3
           Description: CR3-target value 3.
 
-      - Name: VMCS_NATURAL_WIDTH_READ_ONLY_DATA_FIELDS
+      - Name: NATURAL_WIDTH_READ_ONLY_DATA_FIELDS
         Description: Natural-Width Read-Only Data Fields.
         # ChildrenNameWithPrefix: RO
         Type: Group
@@ -772,7 +772,7 @@
           LongName: EXIT_GUEST_LINEAR_ADDRESS
           Description: Guest-linear address.
 
-      - Name: VMCS_NATURAL_WIDTH_GUEST_STATE_FIELDS
+      - Name: NATURAL_WIDTH_GUEST_STATE_FIELDS
         Description: Natural-Width Guest-State Fields.
         ChildrenNameWithPrefix: GUEST
         Type: Group
@@ -877,7 +877,7 @@
           LongName: SYSENTER_EIP
           Description: Guest IA32_SYSENTER_EIP.
 
-      - Name: VMCS_NATURAL_WIDTH_HOST_STATE_FIELDS
+      - Name: NATURAL_WIDTH_HOST_STATE_FIELDS
         Description: Natural-Width Host-State Fields.
         ChildrenNameWithPrefix: HOST
         Type: Group

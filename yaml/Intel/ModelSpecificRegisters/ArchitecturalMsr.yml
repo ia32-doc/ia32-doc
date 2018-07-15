@@ -9,7 +9,7 @@
 # * https://github.com/tianocore/edk2/blob/master/UefiCpuPkg/Include/Register/ArchitecturalMsr.h
 #
 
-- Name: IA32_P5_MC
+- Name: P5_MC
   ShortDescription: IA32_P5_MC_(x)
   LongDescription: |
     When machine-check exceptions are enabled for the Pentium processor (MCE flag is set in control register CR4),
@@ -20,34 +20,34 @@
   Reference: Vol3B[15.10.2(Pentium Processor Machine-Check Exception Handling)]
   Fields:
   - Value: 0x0
-    Name: IA32_P5_MC_ADDR
+    Name: P5_MC_ADDR
     Description: Machine-check exception address.
     Remarks: 05_01H
     SeeAlso: Vol4[2.22(MSRS IN PENTIUM PROCESSORS)]
 
   - Value: 0x1
-    Name: IA32_P5_MC_TYPE
+    Name: P5_MC_TYPE
     Description: Machine-check exception type.
     Remarks: 05_01H
     SeeAlso: Vol4[2.22(MSRS IN PENTIUM PROCESSORS)]
 
 - Value: 0x6
-  Name: IA32_MONITOR_FILTER_SIZE
-  AlternativeName: IA32_MONITOR_FILTER_LINE_SIZE
+  Name: MONITOR_FILTER_SIZE
+  AlternativeName: MONITOR_FILTER_LINE_SIZE
   Description: System coherence line size.
   Remarks: 0F_03H
   SeeAlso: Vol3A[8.10.5(Monitor/Mwait Address Range Determination)]
   Reference: Vol3A[8.10.5(Monitor/Mwait Address Range Determination)]
 
 - Value: 0x10
-  Name: IA32_TIME_STAMP_COUNTER
+  Name: TIME_STAMP_COUNTER
   Description: Value as returned by instruction RDTSC.
   Access: R/W
   Remarks: 05_01H
   SeeAlso: Vol3B[17.17(TIME-STAMP COUNTER)]
 
 - Value: 0x17
-  Name: IA32_PLATFORM_ID
+  Name: PLATFORM_ID
   Description: |
     The operating system can use this MSR to determine “slot” information for the
     processor and the proper microcode update to load.
@@ -88,7 +88,7 @@
       Access: RO
 
 - Value: 0x1B
-  Name: IA32_APIC_BASE
+  Name: APIC_BASE
   Description: |
     This register holds the APIC base address, permitting the relocation of the APIC
     memory map.
@@ -124,7 +124,7 @@
       Access: R/W
 
 - Value: 0x3A
-  Name: IA32_FEATURE_CONTROL
+  Name: FEATURE_CONTROL
   Description: Control Features in Intel 64 Processor.
   Access: R/W
   Remarks: If any one enumeration condition for defined bit field holds.
@@ -234,7 +234,7 @@
         If IA32_MCG_CAP[27] = 1
 
 - Value: 0x3B
-  Name: IA32_TSC_ADJUST
+  Name: TSC_ADJUST
   Description: Per Logical Processor TSC Adjust.
   Access: R/Write to clear
   Remarks: |
@@ -251,9 +251,9 @@
         content of IA32_TSC, but does not affect the internal invariant TSC hardware.
 
 - Value: 0x79
-  ShortName: IA32_BIOS_UPDT_TRIG
-  LongName: IA32_BIOS_UPDATE_TRIGGER
-  AlternativeName: IA32_BIOS_UPDATE_TRIGGER
+  ShortName: BIOS_UPDT_TRIG
+  LongName: BIOS_UPDATE_TRIGGER
+  AlternativeName: BIOS_UPDATE_TRIGGER
   ShortDescription: BIOS Update Trigger
   LongDescription: |
     Executing a WRMSR instruction to this MSR causes a microcode update
@@ -264,9 +264,9 @@
   SeeAlso: Vol3A[9.11.6(Microcode Update Loader)]
 
 - Value: 0x8B
-  ShortName: IA32_BIOS_SIGN_ID
-  LongName: IA32_BIOS_UPDATE_SIGNATURE
-  AlternativeName: IA32_BIOS_UPDATE_SIGNATURE
+  ShortName: BIOS_SIGN_ID
+  LongName: BIOS_UPDATE_SIGNATURE
+  AlternativeName: BIOS_UPDATE_SIGNATURE
   ShortDescription: BIOS Update Signature
   LongDescription: |
     Returns the microcode update signature
@@ -293,7 +293,7 @@
         no microcode update loaded. Another nonzero value will be the signature.
       Reference: Vol3A[9.11.7.1(Determining the Signature)]
 
-- Name: IA32_SGXLEPUBKEYHASH
+- Name: SGXLEPUBKEYHASH
   ShortDescription: IA32_SGXLEPUBKEYHASH[(64*n+63):(64*n)]
   LongDescription: |
     Bits (64*n+63):(64*n) of the
@@ -308,16 +308,16 @@
       EAX[0]=1 && IA32_FEATURE_CONTROL[17] = 1 && IA32_FEATURE_CONTROL[0] = 1.
   Fields:
   - Value: 0x8C
-    Name: IA32_SGXLEPUBKEYHASH0
+    Name: SGXLEPUBKEYHASH0
   - Value: 0x8D
-    Name: IA32_SGXLEPUBKEYHASH1
+    Name: SGXLEPUBKEYHASH1
   - Value: 0x8E
-    Name: IA32_SGXLEPUBKEYHASH2
+    Name: SGXLEPUBKEYHASH2
   - Value: 0x8F
-    Name: IA32_SGXLEPUBKEYHASH3
+    Name: SGXLEPUBKEYHASH3
 
 - Value: 0x9B
-  Name: IA32_SMM_MONITOR_CTL
+  Name: SMM_MONITOR_CTL
   Description: SMM Monitor Configuration.
   Access: R/W
   Remarks: |
@@ -419,13 +419,13 @@
   #  Description: Pad header so total size is 2KB.
 
 - Value: 0x9E
-  Name: IA32_SMBASE
+  Name: SMBASE
   Description: Base address of the logical processor’s SMRAM image.
   Access: RO, SMM only
   Remarks: |
     If IA32_VMX_MISC[15]
 
-- Name: IA32_PMC
+- Name: PMC
   ShortDescription: IA32_PMC(n)
   LongDescription: General Performance Counters.
   Access: R/W
@@ -434,24 +434,24 @@
     If CPUID.0AH: EAX[15:8] > n
   Fields:
   - Value: 0xC1
-    Name: IA32_PMC0
+    Name: PMC0
   - Value: 0xC2
-    Name: IA32_PMC1
+    Name: PMC1
   - Value: 0xC3
-    Name: IA32_PMC2
+    Name: PMC2
   - Value: 0xC4
-    Name: IA32_PMC3
+    Name: PMC3
   - Value: 0xC5
-    Name: IA32_PMC4
+    Name: PMC4
   - Value: 0xC6
-    Name: IA32_PMC5
+    Name: PMC5
   - Value: 0xC7
-    Name: IA32_PMC6
+    Name: PMC6
   - Value: 0xC8
-    Name: IA32_PMC7
+    Name: PMC7
 
 - Value: 0xE7
-  Name: IA32_MPERF
+  Name: MPERF
   Description: TSC Frequency Clock Counter.
   Access: R/Write to clear
   Remarks: |
@@ -469,7 +469,7 @@
         IA32_APERF.
 
 - Value: 0xE8
-  Name: IA32_APERF
+  Name: APERF
   Description: Actual Performance Clock Counter
   Access: R/Write to clear
   Remarks: |
@@ -487,9 +487,9 @@
         Cleared upon overflow / wrap-around of IA32_MPERF.
 
 - Value: 0xFE
-  ShortName: IA32_MTRRCAP
-  LongName: IA32_MTRR_CAPABILITIES
-  AlternativeName: IA32_MTRR_CAPABILITIES
+  ShortName: MTRRCAP
+  LongName: MTRR_CAPABILITIES
+  AlternativeName: MTRR_CAPABILITIES
   Description: MTRR Capability.
   Access: RO
   SeeAlso: Vol3A[11.11.2.1(IA32_MTRR_DEF_TYPE MSR)]
@@ -542,7 +542,7 @@
 #                                                                                           #
 
 - Value: 0x174
-  Name: IA32_SYSENTER_CS
+  Name: SYSENTER_CS
   ShortDescription: SYSENTER_CS_MSR
   LongDescription: |
     The lower 16 bits of this MSR are the segment selector for the
@@ -576,7 +576,7 @@
       Remarks: Writes ignored; reads return zero.
 
 - Value: 0x175
-  Name: IA32_SYSENTER_ESP
+  Name: SYSENTER_ESP
   ShortDescription: SYSENTER_ESP_MSR
   LongDescription: |
     The value of this MSR is loaded into RSP (thus, this value
@@ -587,7 +587,7 @@
   Reference: Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)]
 
 - Value: 0x176
-  Name: IA32_SYSENTER_EIP
+  Name: SYSENTER_EIP
   ShortDescription: SYSENTER_EIP_MSR
   LongDescription: |
     The value of this MSR is loaded into RIP (thus, this value
@@ -599,7 +599,7 @@
 
 
 - Value: 0x179
-  Name: IA32_MCG_CAP
+  Name: MCG_CAP
   Description: Global Machine Check Capability.
   Access: RO
   Todo: LongNames/ShortNames/Description
@@ -657,7 +657,7 @@
       Remarks: 06_3EH
 
 - Value: 0x17A
-  Name: IA32_MCG_STATUS
+  Name: MCG_STATUS
   Description: Global Machine Check Status.
   Access: R/W0
   Todo: LongNames/ShortNames/Description
@@ -687,13 +687,13 @@
       Description: If IA32_MCG_CAP.LMCE_P[27] = 1.
 
 - Value: 0x17B
-  Name: IA32_MCG_CTL
+  Name: MCG_CTL
   Description: Global Machine Check Control.
   Access: R/W
   Todo: More description
   Remarks: If IA32_MCG_CAP.CTL_P[8] = 1
 
-- Name: IA32_PERFEVTSEL
+- Name: PERFEVTSEL
   ShortDescription: IA32_PERFEVTSEL(n)
   LongDescription: Performance Event Select Register n.
   Access: R/W
@@ -702,13 +702,13 @@
     If CPUID.0AH: EAX[15:8] > n
   Fields:
   - Value: 0x186
-    Name: IA32_PERFEVTSEL0
+    Name: PERFEVTSEL0
   - Value: 0x187
-    Name: IA32_PERFEVTSEL1
+    Name: PERFEVTSEL1
   - Value: 0x188
-    Name: IA32_PERFEVTSEL2
+    Name: PERFEVTSEL2
   - Value: 0x189
-    Name: IA32_PERFEVTSEL3
+    Name: PERFEVTSEL3
 
   - NameWithPostfix: REGISTER
     Type: Bitfield
@@ -716,31 +716,32 @@
     Fields:
     - Bit: 0-7
       Name: EVENT_SELECT
-      Description: |
-        Selects a performance event logic unit.
+      Description: Selects a performance event logic unit.
+
     - Bit: 8-15
       Name: U_MASK
-      Description: |
-        Qualifies the microarchitectural condition to detect on the selected event
-        logic.
+      Description: Qualifies the microarchitectural condition to detect on the selected event logic.
+
     - Bit: 16
       Name: USR
       Description: Counts while in privilege level is not ring 0.
+
     - Bit: 17
       Name: OS
       Description: Counts while in privilege level is ring 0.
+
     - Bit: 18
       Name: EDGE
-      Description: |
-        Enables edge detection if set.
+      Description: Enables edge detection if set.
+
     - Bit: 19
       Name: PC
-      Description: |
-        Enables pin control.
+      Description: Enables pin control.
+
     - Bit: 20
       Name: INT
-      Description: |
-        Enables interrupt on counter overflow.
+      Description: Enables interrupt on counter overflow.
+
     - Bit: 21
       Name: ANY_THREAD
       Description: |
@@ -748,14 +749,17 @@
         occurring across all logical processors sharing a processor core. When set to 0, the
         counter only increments the associated event conditions occurring in the logical
         processor which programmed the MSR.
+
     - Bit: 22
       Name: EN
       Description: |
         Enables the corresponding performance counter to commence counting when this
         bit is set.
+
     - Bit: 23
       Name: INV
       Description: Invert the CMASK.
+
     - Bit: 24-31
       Name: CMASK
       Description: |
@@ -763,7 +767,7 @@
         increments each cycle if the event count is greater than or equal to the CMASK.
 
 - Value: 0x198
-  Name: IA32_PERF_STATUS
+  Name: PERF_STATUS
   Description: Current Performance Status.
   Access: RO
   Remarks: 0F_03H
@@ -782,7 +786,7 @@
       Description: Current performance State Value.
 
 - Value: 0x199
-  Name: IA32_PERF_CTL
+  Name: PERF_CTL
   ShortDescription: Performance Control
   LongDescription: |
     Performance Control. Software makes a request for a new
@@ -810,7 +814,7 @@
       Remarks: 06_0FH (Mobile only)
 
 - Value: 0x19A
-  Name: IA32_CLOCK_MODULATION
+  Name: CLOCK_MODULATION
   Description: Clock Modulation Control.
   Access: R/W
   Remarks: |
@@ -845,7 +849,7 @@
         If CPUID.01H:EDX[22] = 1
 
 - Value: 0x19B
-  Name: IA32_THERM_INTERRUPT
+  Name: THERM_INTERRUPT
   ShortDescription: Thermal Interrupt Control
   LongDescription: |
     Thermal Interrupt Control. Enables and disables the generation of an
@@ -940,7 +944,7 @@
         If CPUID.06H:EAX[4] = 1
 
 - Value: 0x19C
-  Name: IA32_THERM_STATUS
+  Name: THERM_STATUS
   ShortDescription: Thermal Status Information
   LongDescription: |
     Thermal Status Information. Contains status information about the
@@ -1109,7 +1113,7 @@
         If CPUID.06H:EAX[0] = 1
 
 - Value: 0x1A0
-  Name: IA32_MISC_ENABLE
+  Name: MISC_ENABLE
   ShortDescription: Enable Misc. Processor Features
   LongDescription: |
      Allows a variety of processor functions to be enabled and disabled.
@@ -1255,7 +1259,7 @@
         If CPUID.80000001H:EDX[20] = 1
 
 - Value: 0x1B0
-  Name: IA32_ENERGY_PERF_BIAS
+  Name: ENERGY_PERF_BIAS
   Description: Performance Energy Bias Hint.
   Access: R/W
   Todo: More description
@@ -1275,7 +1279,7 @@
         - 15 indicates preference to maximize energy saving.
 
 - Value: 0x1B1
-  Name: IA32_PACKAGE_THERM_STATUS
+  Name: PACKAGE_THERM_STATUS
   ShortDescription: Package Thermal Status Information
   LongDescription: |
     Package Thermal Status Information. Contains status information about the
@@ -1370,7 +1374,7 @@
       Access: RO
 
 - Value: 0x1B2
-  Name: IA32_PACKAGE_THERM_INTERRUPT
+  Name: PACKAGE_THERM_INTERRUPT
   ShortDescription: Package Thermal Interrupt Control
   LongDescription: |
     Enables and disables the generation of an
@@ -1439,7 +1443,7 @@
         Pkg Power Limit Notification Enable.
 
 - Value: 0x1D9
-  Name: IA32_DEBUGCTL
+  Name: DEBUGCTL
   Description: Trace/Profile Resource Control.
   Access: R/W
   Remarks: 06_0EH
@@ -1539,7 +1543,7 @@
         If (CPUID.(EAX=07H, ECX=0):EBX[11] = 1)
 
 - Value: 0x1F2
-  Name: IA32_SMRR_PHYSBASE
+  Name: SMRR_PHYSBASE
   ShortDescription: SMRR Base Address
   LongDescription: |
     SMRR Base Address. Base address of SMM memory range.
@@ -1564,7 +1568,7 @@
       Description: SMRR physical Base Address.
 
 - Value: 0x1F3
-  Name: IA32_SMRR_PHYSMASK
+  Name: SMRR_PHYSMASK
   ShortDescription: SMRR Range Mask
   LongDescription: |
     Range Mask of SMM memory range.
@@ -1587,20 +1591,20 @@
       Description: SMRR address range mask.
 
 - Value: 0x1F8
-  Name: IA32_PLATFORM_DCA_CAP
+  Name: PLATFORM_DCA_CAP
   Description: DCA Capability.
   Access: R
   Remarks: |
     If CPUID.01H: ECX[18] = 1
 
 - Value: 0x1F9
-  Name: IA32_CPU_DCA_CAP
+  Name: CPU_DCA_CAP
   Description: If set, CPU supports Prefetch-Hint type.
   Remarks: |
     If CPUID.01H: ECX[18] = 1
 
 - Value: 0x1FA
-  Name: IA32_DCA_0_CAP
+  Name: DCA_0_CAP
   Description: DCA type 0 Status and Control register.
   Remarks: |
     If CPUID.01H: ECX[18] = 1
@@ -1643,7 +1647,7 @@
 # ######################################################################################### #
 #                                                                                           #
 
-- Name: IA32_MTRR_PHYSBASE
+- Name: MTRR_PHYSBASE
   ShortDescription: IA32_MTRR_PHYSBASE(n)
   LongDescription: IA32_MTRR_PHYSBASE(0-9).
   Type: Group
@@ -1652,31 +1656,31 @@
   SeeAlso: Vol3A[11.11.2.3(Variable Range MTRRs)]
   Fields:
   - Value: 0x200
-    Name: IA32_MTRR_PHYSBASE0
+    Name: MTRR_PHYSBASE0
   - Value: 0x202
-    Name: IA32_MTRR_PHYSBASE1
+    Name: MTRR_PHYSBASE1
   - Value: 0x204
-    Name: IA32_MTRR_PHYSBASE2
+    Name: MTRR_PHYSBASE2
   - Value: 0x206
-    Name: IA32_MTRR_PHYSBASE3
+    Name: MTRR_PHYSBASE3
   - Value: 0x208
-    Name: IA32_MTRR_PHYSBASE4
+    Name: MTRR_PHYSBASE4
   - Value: 0x20A
-    Name: IA32_MTRR_PHYSBASE5
+    Name: MTRR_PHYSBASE5
   - Value: 0x20C
-    Name: IA32_MTRR_PHYSBASE6
+    Name: MTRR_PHYSBASE6
   - Value: 0x20E
-    Name: IA32_MTRR_PHYSBASE7
+    Name: MTRR_PHYSBASE7
   - Value: 0x210
-    Name: IA32_MTRR_PHYSBASE8
+    Name: MTRR_PHYSBASE8
     Remarks: |
       IA32_MTRRCAP[7:0] > 8
   - Value: 0x212
-    Name: IA32_MTRR_PHYSBASE9
+    Name: MTRR_PHYSBASE9
     Remarks: |
       IA32_MTRRCAP[7:0] > 9
 
-- Name: IA32_MTRR_PHYSMASK
+- Name: MTRR_PHYSMASK
   ShortDescription: IA32_MTRR_PHYSMASK(n)
   LongDescription: IA32_MTRR_PHYSMASK(0-9).
   Type: Group
@@ -1685,108 +1689,108 @@
   SeeAlso: Vol3A[11.11.2.3(Variable Range MTRRs)]
   Fields:
   - Value: 0x201
-    Name: IA32_MTRR_PHYSMASK0
+    Name: MTRR_PHYSMASK0
   - Value: 0x203
-    Name: IA32_MTRR_PHYSMASK1
+    Name: MTRR_PHYSMASK1
   - Value: 0x205
-    Name: IA32_MTRR_PHYSMASK2
+    Name: MTRR_PHYSMASK2
   - Value: 0x207
-    Name: IA32_MTRR_PHYSMASK3
+    Name: MTRR_PHYSMASK3
   - Value: 0x209
-    Name: IA32_MTRR_PHYSMASK4
+    Name: MTRR_PHYSMASK4
   - Value: 0x20B
-    Name: IA32_MTRR_PHYSMASK5
+    Name: MTRR_PHYSMASK5
   - Value: 0x20D
-    Name: IA32_MTRR_PHYSMASK6
+    Name: MTRR_PHYSMASK6
   - Value: 0x20F
-    Name: IA32_MTRR_PHYSMASK7
+    Name: MTRR_PHYSMASK7
   - Value: 0x211
-    Name: IA32_MTRR_PHYSMASK8
+    Name: MTRR_PHYSMASK8
     Remarks: |
       IA32_MTRRCAP[7:0] > 8
   - Value: 0x213
-    Name: IA32_MTRR_PHYSMASK9
+    Name: MTRR_PHYSMASK9
     Remarks: |
       IA32_MTRRCAP[7:0] > 9
 
-- Name: IA32_MTRR_FIX
+- Name: MTRR_FIX
   Description: IA32_MTRR_FIX(x).
   Type: Group
   Remarks: |
     If CPUID.01H: EDX.MTRR[12] = 1
   SeeAlso: Vol3A[11.11.2.2(Fixed Range MTRRs)]
   Fields:
-  - Name: IA32_MTRR_FIX64K
+  - Name: MTRR_FIX64K
     Description: IA32_MTRR_FIX64K(x).
     Type: Group
     Fields:
-    - Name: IA32_MTRR_FIX64K_BASE
+    - Name: MTRR_FIX64K_BASE
       Value: 0
       Tag: Custom
-    - Name: IA32_MTRR_FIX64K_SIZE
+    - Name: MTRR_FIX64K_SIZE
       Value: 0x10000
       Tag: Custom
 
     - Value: 0x250
-      Name: IA32_MTRR_FIX64K_00000
+      Name: MTRR_FIX64K_00000
 
-  - Name: IA32_MTRR_FIX16K
+  - Name: MTRR_FIX16K
     Description: IA32_MTRR_FIX16K(x).
     Type: Group
     Fields:
-    - Name: IA32_MTRR_FIX16K_BASE
+    - Name: MTRR_FIX16K_BASE
       Value: 0x80000
       Tag: Custom
-    - Name: IA32_MTRR_FIX16K_SIZE
+    - Name: MTRR_FIX16K_SIZE
       Value: 0x4000
       Tag: Custom
 
     - Value: 0x258
-      Name: IA32_MTRR_FIX16K_80000
+      Name: MTRR_FIX16K_80000
     - Value: 0x259
-      Name: IA32_MTRR_FIX16K_A0000
+      Name: MTRR_FIX16K_A0000
 
-  - Name: IA32_MTRR_FIX4K
+  - Name: MTRR_FIX4K
     Description: IA32_MTRR_FIX4K(x).
     Type: Group
     Fields:
-    - Name: IA32_MTRR_FIX4K_BASE
+    - Name: MTRR_FIX4K_BASE
       Value: 0xC0000
       Tag: Custom
-    - Name: IA32_MTRR_FIX4K_SIZE
+    - Name: MTRR_FIX4K_SIZE
       Value: 0x1000
       Tag: Custom
 
     - Value: 0x268
-      Name: IA32_MTRR_FIX4K_C0000
+      Name: MTRR_FIX4K_C0000
     - Value: 0x269
-      Name: IA32_MTRR_FIX4K_C8000
+      Name: MTRR_FIX4K_C8000
     - Value: 0x26A
-      Name: IA32_MTRR_FIX4K_D0000
+      Name: MTRR_FIX4K_D0000
     - Value: 0x26B
-      Name: IA32_MTRR_FIX4K_D8000
+      Name: MTRR_FIX4K_D8000
     - Value: 0x26C
-      Name: IA32_MTRR_FIX4K_E0000
+      Name: MTRR_FIX4K_E0000
     - Value: 0x26D
-      Name: IA32_MTRR_FIX4K_E8000
+      Name: MTRR_FIX4K_E8000
     - Value: 0x26E
-      Name: IA32_MTRR_FIX4K_F0000
+      Name: MTRR_FIX4K_F0000
     - Value: 0x26F
-      Name: IA32_MTRR_FIX4K_F8000
+      Name: MTRR_FIX4K_F8000
 
-  - Name: IA32_MTRR_FIX_COUNT
+  - Name: MTRR_FIX_COUNT
     Description: |
       Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k).
     Tag: Custom
     Value: (1 + 2 + 8)
 
-  - Name: IA32_MTRR_VARIABLE_COUNT
+  - Name: MTRR_VARIABLE_COUNT
     Description: |
       Architecture defined number of variable range MTRRs.
     Tag: Custom
     Value: 255
 
-  - Name: IA32_MTRR_COUNT
+  - Name: MTRR_COUNT
     Description: |
       A size of array to store all possible MTRRs.
     Tag: Custom
@@ -1797,7 +1801,7 @@
 #
 
 - Value: 0x277
-  Name: IA32_PAT
+  Name: PAT
   Description: IA32_PAT.
   Access: R/W
   Todo: More description
@@ -1840,8 +1844,8 @@
       Name: PA7
       Description: PA7.
 
-- Name: IA32_MCn_CTL2
-  ShortDescription: IA32_MC(n)_CTL2
+- Name: MC_CTL2
+  ShortDescription: IA32_MC(i)_CTL2
   LongDescription: MSR to enable/disable CMCI capability for bank n.
   Access: R/W
   Todo: More description
@@ -1851,69 +1855,69 @@
   SeeAlso: Vol3B[15.3.2.5(IA32_MCi_CTL2 MSRs)]
   Fields:
   - Value: 0x280
-    Name: IA32_MC0_CTL2
+    Name: MC0_CTL2
   - Value: 0x281
-    Name: IA32_MC1_CTL2
+    Name: MC1_CTL2
   - Value: 0x282
-    Name: IA32_MC2_CTL2
+    Name: MC2_CTL2
   - Value: 0x283
-    Name: IA32_MC3_CTL2
+    Name: MC3_CTL2
   - Value: 0x284
-    Name: IA32_MC4_CTL2
+    Name: MC4_CTL2
   - Value: 0x285
-    Name: IA32_MC5_CTL2
+    Name: MC5_CTL2
   - Value: 0x286
-    Name: IA32_MC6_CTL2
+    Name: MC6_CTL2
   - Value: 0x287
-    Name: IA32_MC7_CTL2
+    Name: MC7_CTL2
   - Value: 0x288
-    Name: IA32_MC8_CTL2
+    Name: MC8_CTL2
   - Value: 0x289
-    Name: IA32_MC9_CTL2
+    Name: MC9_CTL2
   - Value: 0x28A
-    Name: IA32_MC10_CTL2
+    Name: MC10_CTL2
   - Value: 0x28B
-    Name: IA32_MC11_CTL2
+    Name: MC11_CTL2
   - Value: 0x28C
-    Name: IA32_MC12_CTL2
+    Name: MC12_CTL2
   - Value: 0x28D
-    Name: IA32_MC13_CTL2
+    Name: MC13_CTL2
   - Value: 0x28E
-    Name: IA32_MC14_CTL2
+    Name: MC14_CTL2
   - Value: 0x28F
-    Name: IA32_MC15_CTL2
+    Name: MC15_CTL2
   - Value: 0x290
-    Name: IA32_MC16_CTL2
+    Name: MC16_CTL2
   - Value: 0x291
-    Name: IA32_MC17_CTL2
+    Name: MC17_CTL2
   - Value: 0x292
-    Name: IA32_MC18_CTL2
+    Name: MC18_CTL2
   - Value: 0x293
-    Name: IA32_MC19_CTL2
+    Name: MC19_CTL2
   - Value: 0x294
-    Name: IA32_MC20_CTL2
+    Name: MC20_CTL2
   - Value: 0x295
-    Name: IA32_MC21_CTL2
+    Name: MC21_CTL2
   - Value: 0x296
-    Name: IA32_MC22_CTL2
+    Name: MC22_CTL2
   - Value: 0x297
-    Name: IA32_MC23_CTL2
+    Name: MC23_CTL2
   - Value: 0x298
-    Name: IA32_MC24_CTL2
+    Name: MC24_CTL2
   - Value: 0x299
-    Name: IA32_MC25_CTL2
+    Name: MC25_CTL2
   - Value: 0x29A
-    Name: IA32_MC26_CTL2
+    Name: MC26_CTL2
   - Value: 0x29B
-    Name: IA32_MC27_CTL2
+    Name: MC27_CTL2
   - Value: 0x29C
-    Name: IA32_MC28_CTL2
+    Name: MC28_CTL2
   - Value: 0x29D
-    Name: IA32_MC29_CTL2
+    Name: MC29_CTL2
   - Value: 0x29E
-    Name: IA32_MC30_CTL2
+    Name: MC30_CTL2
   - Value: 0x29F
-    Name: IA32_MC31_CTL2
+    Name: MC31_CTL2
 
   - NameWithPostfix: REGISTER
     Type: Bitfield
@@ -1927,7 +1931,7 @@
       Description: CMCI_EN.
 
 - Value: 0x2FF
-  Name: IA32_MTRR_DEF_TYPE
+  Name: MTRR_DEF_TYPE
   Description: IA32_MTRR_DEF_TYPE.
   Access: R/W
   Todo: More description
@@ -1959,7 +1963,7 @@
 # ######################################################################################### #
 #                                                                                           #
 
-- Name: IA32_FIXED_CTR
+- Name: FIXED_CTR
   ShortDescription: IA32_FIXED_CTR(n)
   LongDescription: Fixed-Function Performance Counter n.
   Access: R/W
@@ -1969,17 +1973,17 @@
     If CPUID.0AH: EDX[4:0] > n
   Fields:
   - Value: 0x309
-    Name: IA32_FIXED_CTR0
+    Name: FIXED_CTR0
     Description: Counts Instr_Retired.Any.
   - Value: 0x30A
-    Name: IA32_FIXED_CTR1
+    Name: FIXED_CTR1
     Description: Counts CPU_CLK_Unhalted.Core
   - Value: 0x30B
-    Name: IA32_FIXED_CTR2
+    Name: FIXED_CTR2
     Description: Counts CPU_CLK_Unhalted.Ref
 
 - Value: 0x345
-  Name: IA32_PERF_CAPABILITIES
+  Name: PERF_CAPABILITIES
   Description: |
     Read Only MSR that enumerates the existence of performance monitoring features.
   Access: RO
@@ -2022,7 +2026,7 @@
       Description: Full width of counter writable via IA32_A_PMCx.
 
 - Value: 0x38D
-  Name: IA32_FIXED_CTR_CTRL
+  Name: FIXED_CTR_CTRL
   ShortDescription: Fixed-Function Performance Counter Control
   LongDescription: |
     Fixed-Function Performance Counter Control. Counter increments while the results of
@@ -2118,7 +2122,7 @@
 #
 
 - Value: 0x38E
-  Name: IA32_PERF_GLOBAL_STATUS
+  Name: PERF_GLOBAL_STATUS
   Description: Global Performance Counter Status.
   Access: RO
   Remarks: |
@@ -2238,7 +2242,7 @@
         If CPUID.0AH: EAX[7:0] > 0
 
 - Value: 0x38F
-  Name: IA32_PERF_GLOBAL_CTRL
+  Name: PERF_GLOBAL_CTRL
   ShortDescription: Global Performance Counter Control
   LongDescription: |
       Global Performance Counter Control.
@@ -2270,7 +2274,7 @@
         If CPUID.0AH: EDX[4:0] > n
 
 - Value: 0x390
-  Name: IA32_PERF_GLOBAL_STATUS_RESET
+  Name: PERF_GLOBAL_STATUS_RESET
   Description: Global Performance Counter Overflow Reset Control.
   Access: R/W
   Remarks: |
@@ -2348,7 +2352,7 @@
         If CPUID.0AH: EAX[7:0] > 0
 
 - Value: 0x391
-  Name: IA32_PERF_GLOBAL_STATUS_SET
+  Name: PERF_GLOBAL_STATUS_SET
   Description: Global Performance Counter Overflow Set Control.
   Access: R/W
   Remarks: |
@@ -2411,7 +2415,7 @@
         If CPUID.0AH: EAX[7:0] > 3
 
 - Value: 0x392
-  Name: IA32_PERF_GLOBAL_INUSE
+  Name: PERF_GLOBAL_INUSE
   Description: Indicator that core perfmon interface is in use.
   Access: RO
   Remarks: |
@@ -2422,7 +2426,7 @@
     Size: 64
     Fields:
     - Bit: 0-31
-      ShortName: PERFEVTSEL(n)
+      ShortName: IA32_PERFEVTSEL(n)
       LongName: IA32_PERFEVTSEL(n)_IN_USE
       Description: |
         IA32_PERFEVTSEL(n) in use. Status bitmask. Only the first n-1 bits are valid.
@@ -2431,7 +2435,7 @@
         If CPUID.0AH: EAX[15:8] > n
 
     - Bit: 32-34
-      ShortName: FIXED_CTR(n)
+      ShortName: IA32_FIXED_CTR(n)
       LongName: IA32_FIXED_CTR(n)_IN_USE
       Description: |
         IA32_FIXED_CTR(n) in use. Status bitmask. Only the first n-1 bits are valid.
@@ -2443,7 +2447,7 @@
       Description: PMI in use.
 
 - Value: 0x3F1
-  Name: IA32_PEBS_ENABLE
+  Name: PEBS_ENABLE
   Description: PEBS Control.
   Access: R/W
   Remarks: |
@@ -2473,269 +2477,269 @@
 # ######################################################################################### #
 #                                                                                           #
 
-- Name: IA32_MCn_CTL
-  ShortDescription: IA32_MC(n)_CTL
+- Name: MC_CTL
+  ShortDescription: IA32_MC(i)_CTL
   LongDescription: IA32_MC(0-28)_CTL.
   Type: Group
   Remarks: |
     If IA32_MCG_CAP.CNT > n
   Fields:
   - Value: 0x400
-    Name: IA32_MC0_CTL
+    Name: MC0_CTL
   - Value: 0x404
-    Name: IA32_MC1_CTL
+    Name: MC1_CTL
   - Value: 0x408
-    Name: IA32_MC2_CTL
+    Name: MC2_CTL
   - Value: 0x40C
-    Name: IA32_MC3_CTL
+    Name: MC3_CTL
   - Value: 0x410
-    Name: IA32_MC4_CTL
+    Name: MC4_CTL
   - Value: 0x414
-    Name: IA32_MC5_CTL
+    Name: MC5_CTL
   - Value: 0x418
-    Name: IA32_MC6_CTL
+    Name: MC6_CTL
   - Value: 0x41C
-    Name: IA32_MC7_CTL
+    Name: MC7_CTL
   - Value: 0x420
-    Name: IA32_MC8_CTL
+    Name: MC8_CTL
   - Value: 0x424
-    Name: IA32_MC9_CTL
+    Name: MC9_CTL
   - Value: 0x428
-    Name: IA32_MC10_CTL
+    Name: MC10_CTL
   - Value: 0x42C
-    Name: IA32_MC11_CTL
+    Name: MC11_CTL
   - Value: 0x430
-    Name: IA32_MC12_CTL
+    Name: MC12_CTL
   - Value: 0x434
-    Name: IA32_MC13_CTL
+    Name: MC13_CTL
   - Value: 0x438
-    Name: IA32_MC14_CTL
+    Name: MC14_CTL
   - Value: 0x43C
-    Name: IA32_MC15_CTL
+    Name: MC15_CTL
   - Value: 0x440
-    Name: IA32_MC16_CTL
+    Name: MC16_CTL
   - Value: 0x444
-    Name: IA32_MC17_CTL
+    Name: MC17_CTL
   - Value: 0x448
-    Name: IA32_MC18_CTL
+    Name: MC18_CTL
   - Value: 0x44C
-    Name: IA32_MC19_CTL
+    Name: MC19_CTL
   - Value: 0x450
-    Name: IA32_MC20_CTL
+    Name: MC20_CTL
   - Value: 0x454
-    Name: IA32_MC21_CTL
+    Name: MC21_CTL
   - Value: 0x458
-    Name: IA32_MC22_CTL
+    Name: MC22_CTL
   - Value: 0x45C
-    Name: IA32_MC23_CTL
+    Name: MC23_CTL
   - Value: 0x460
-    Name: IA32_MC24_CTL
+    Name: MC24_CTL
   - Value: 0x464
-    Name: IA32_MC25_CTL
+    Name: MC25_CTL
   - Value: 0x468
-    Name: IA32_MC26_CTL
+    Name: MC26_CTL
   - Value: 0x46C
-    Name: IA32_MC27_CTL
+    Name: MC27_CTL
   - Value: 0x470
-    Name: IA32_MC28_CTL
+    Name: MC28_CTL
 
-- Name: IA32_MCn_STATUS
-  ShortDescription: IA32_MC(n)_STATUS
+- Name: MC_STATUS
+  ShortDescription: IA32_MC(i)_STATUS
   LongDescription: IA32_MC(0-28)_STATUS.
   Type: Group
   Remarks: |
     If IA32_MCG_CAP.CNT > n
   Fields:
   - Value: 0x401
-    Name: IA32_MC0_STATUS
+    Name: MC0_STATUS
   - Value: 0x405
-    Name: IA32_MC1_STATUS
+    Name: MC1_STATUS
   - Value: 0x409
-    Name: IA32_MC2_STATUS
+    Name: MC2_STATUS
   - Value: 0x40D
-    Name: IA32_MC3_STATUS
+    Name: MC3_STATUS
   - Value: 0x411
-    Name: IA32_MC4_STATUS
+    Name: MC4_STATUS
   - Value: 0x415
-    Name: IA32_MC5_STATUS
+    Name: MC5_STATUS
   - Value: 0x419
-    Name: IA32_MC6_STATUS
+    Name: MC6_STATUS
   - Value: 0x41D
-    Name: IA32_MC7_STATUS
+    Name: MC7_STATUS
   - Value: 0x421
-    Name: IA32_MC8_STATUS
+    Name: MC8_STATUS
   - Value: 0x425
-    Name: IA32_MC9_STATUS
+    Name: MC9_STATUS
   - Value: 0x429
-    Name: IA32_MC10_STATUS
+    Name: MC10_STATUS
   - Value: 0x42D
-    Name: IA32_MC11_STATUS
+    Name: MC11_STATUS
   - Value: 0x431
-    Name: IA32_MC12_STATUS
+    Name: MC12_STATUS
   - Value: 0x435
-    Name: IA32_MC13_STATUS
+    Name: MC13_STATUS
   - Value: 0x439
-    Name: IA32_MC14_STATUS
+    Name: MC14_STATUS
   - Value: 0x43D
-    Name: IA32_MC15_STATUS
+    Name: MC15_STATUS
   - Value: 0x441
-    Name: IA32_MC16_STATUS
+    Name: MC16_STATUS
   - Value: 0x445
-    Name: IA32_MC17_STATUS
+    Name: MC17_STATUS
   - Value: 0x449
-    Name: IA32_MC18_STATUS
+    Name: MC18_STATUS
   - Value: 0x44D
-    Name: IA32_MC19_STATUS
+    Name: MC19_STATUS
   - Value: 0x451
-    Name: IA32_MC20_STATUS
+    Name: MC20_STATUS
   - Value: 0x455
-    Name: IA32_MC21_STATUS
+    Name: MC21_STATUS
   - Value: 0x459
-    Name: IA32_MC22_STATUS
+    Name: MC22_STATUS
   - Value: 0x45D
-    Name: IA32_MC23_STATUS
+    Name: MC23_STATUS
   - Value: 0x461
-    Name: IA32_MC24_STATUS
+    Name: MC24_STATUS
   - Value: 0x465
-    Name: IA32_MC25_STATUS
+    Name: MC25_STATUS
   - Value: 0x469
-    Name: IA32_MC26_STATUS
+    Name: MC26_STATUS
   - Value: 0x46D
-    Name: IA32_MC27_STATUS
+    Name: MC27_STATUS
   - Value: 0x471
-    Name: IA32_MC28_STATUS
+    Name: MC28_STATUS
 
-- Name: IA32_MC_ADDR
-  ShortDescription: IA32_MC(n)_ADDR
+- Name: MC_ADDR
+  ShortDescription: IA32_MC(i)_ADDR
   LongDescription: IA32_MC(0-28)_ADDR.
   Type: Group
   Remarks: |
     If IA32_MCG_CAP.CNT > n
   Fields:
   - Value: 0x402
-    Name: IA32_MC0_ADDR
+    Name: MC0_ADDR
   - Value: 0x406
-    Name: IA32_MC1_ADDR
+    Name: MC1_ADDR
   - Value: 0x40A
-    Name: IA32_MC2_ADDR
+    Name: MC2_ADDR
   - Value: 0x40E
-    Name: IA32_MC3_ADDR
+    Name: MC3_ADDR
   - Value: 0x412
-    Name: IA32_MC4_ADDR
+    Name: MC4_ADDR
   - Value: 0x416
-    Name: IA32_MC5_ADDR
+    Name: MC5_ADDR
   - Value: 0x41A
-    Name: IA32_MC6_ADDR
+    Name: MC6_ADDR
   - Value: 0x41E
-    Name: IA32_MC7_ADDR
+    Name: MC7_ADDR
   - Value: 0x422
-    Name: IA32_MC8_ADDR
+    Name: MC8_ADDR
   - Value: 0x426
-    Name: IA32_MC9_ADDR
+    Name: MC9_ADDR
   - Value: 0x42A
-    Name: IA32_MC10_ADDR
+    Name: MC10_ADDR
   - Value: 0x42E
-    Name: IA32_MC11_ADDR
+    Name: MC11_ADDR
   - Value: 0x432
-    Name: IA32_MC12_ADDR
+    Name: MC12_ADDR
   - Value: 0x436
-    Name: IA32_MC13_ADDR
+    Name: MC13_ADDR
   - Value: 0x43A
-    Name: IA32_MC14_ADDR
+    Name: MC14_ADDR
   - Value: 0x43E
-    Name: IA32_MC15_ADDR
+    Name: MC15_ADDR
   - Value: 0x442
-    Name: IA32_MC16_ADDR
+    Name: MC16_ADDR
   - Value: 0x446
-    Name: IA32_MC17_ADDR
+    Name: MC17_ADDR
   - Value: 0x44A
-    Name: IA32_MC18_ADDR
+    Name: MC18_ADDR
   - Value: 0x44E
-    Name: IA32_MC19_ADDR
+    Name: MC19_ADDR
   - Value: 0x452
-    Name: IA32_MC20_ADDR
+    Name: MC20_ADDR
   - Value: 0x456
-    Name: IA32_MC21_ADDR
+    Name: MC21_ADDR
   - Value: 0x45A
-    Name: IA32_MC22_ADDR
+    Name: MC22_ADDR
   - Value: 0x45E
-    Name: IA32_MC23_ADDR
+    Name: MC23_ADDR
   - Value: 0x462
-    Name: IA32_MC24_ADDR
+    Name: MC24_ADDR
   - Value: 0x466
-    Name: IA32_MC25_ADDR
+    Name: MC25_ADDR
   - Value: 0x46A
-    Name: IA32_MC26_ADDR
+    Name: MC26_ADDR
   - Value: 0x46E
-    Name: IA32_MC27_ADDR
+    Name: MC27_ADDR
   - Value: 0x472
-    Name: IA32_MC28_ADDR
+    Name: MC28_ADDR
 
-- Name: IA32_MC_MISC
-  ShortDescription: IA32_MC(n)_MISC
+- Name: MC_MISC
+  ShortDescription: IA32_MC(i)_MISC
   LongDescription: IA32_MC(0-28)_MISC.
   Type: Group
   Remarks: |
     If IA32_MCG_CAP.CNT > n
   Fields:
   - Value: 0x403
-    Name: IA32_MC0_MISC
+    Name: MC0_MISC
   - Value: 0x407
-    Name: IA32_MC1_MISC
+    Name: MC1_MISC
   - Value: 0x40B
-    Name: IA32_MC2_MISC
+    Name: MC2_MISC
   - Value: 0x40F
-    Name: IA32_MC3_MISC
+    Name: MC3_MISC
   - Value: 0x413
-    Name: IA32_MC4_MISC
+    Name: MC4_MISC
   - Value: 0x417
-    Name: IA32_MC5_MISC
+    Name: MC5_MISC
   - Value: 0x41B
-    Name: IA32_MC6_MISC
+    Name: MC6_MISC
   - Value: 0x41F
-    Name: IA32_MC7_MISC
+    Name: MC7_MISC
   - Value: 0x423
-    Name: IA32_MC8_MISC
+    Name: MC8_MISC
   - Value: 0x427
-    Name: IA32_MC9_MISC
+    Name: MC9_MISC
   - Value: 0x42B
-    Name: IA32_MC10_MISC
+    Name: MC10_MISC
   - Value: 0x42F
-    Name: IA32_MC11_MISC
+    Name: MC11_MISC
   - Value: 0x433
-    Name: IA32_MC12_MISC
+    Name: MC12_MISC
   - Value: 0x437
-    Name: IA32_MC13_MISC
+    Name: MC13_MISC
   - Value: 0x43B
-    Name: IA32_MC14_MISC
+    Name: MC14_MISC
   - Value: 0x43F
-    Name: IA32_MC15_MISC
+    Name: MC15_MISC
   - Value: 0x443
-    Name: IA32_MC16_MISC
+    Name: MC16_MISC
   - Value: 0x447
-    Name: IA32_MC17_MISC
+    Name: MC17_MISC
   - Value: 0x44B
-    Name: IA32_MC18_MISC
+    Name: MC18_MISC
   - Value: 0x44F
-    Name: IA32_MC19_MISC
+    Name: MC19_MISC
   - Value: 0x453
-    Name: IA32_MC20_MISC
+    Name: MC20_MISC
   - Value: 0x457
-    Name: IA32_MC21_MISC
+    Name: MC21_MISC
   - Value: 0x45B
-    Name: IA32_MC22_MISC
+    Name: MC22_MISC
   - Value: 0x45F
-    Name: IA32_MC23_MISC
+    Name: MC23_MISC
   - Value: 0x463
-    Name: IA32_MC24_MISC
+    Name: MC24_MISC
   - Value: 0x467
-    Name: IA32_MC25_MISC
+    Name: MC25_MISC
   - Value: 0x46B
-    Name: IA32_MC26_MISC
+    Name: MC26_MISC
   - Value: 0x46F
-    Name: IA32_MC27_MISC
+    Name: MC27_MISC
   - Value: 0x473
-    Name: IA32_MC28_MISC
+    Name: MC28_MISC
 
 #
 # TODO: Merge above into single group?
@@ -2747,7 +2751,7 @@
 #
 
 - Value: 0x480
-  Name: IA32_VMX_BASIC
+  Name: VMX_BASIC
   Description: Reporting Register of Basic VMX Capabilities.
   Access: R/O
   Remarks: |
@@ -2849,7 +2853,7 @@
       - Vol3D[A.5(VM-ENTRY CONTROLS)]
 
 - Value: 0x481
-  Name: IA32_VMX_PINBASED_CTLS
+  Name: VMX_PINBASED_CTLS
   Description: Capability Reporting Register of Pin-Based VM-Execution Controls.
   Access: R/O
   Remarks: |
@@ -2914,7 +2918,7 @@
       - Vol3C[29.6(POSTED-INTERRUPT PROCESSING)]
 
 - Value: 0x482
-  Name: IA32_VMX_PROCBASED_CTLS
+  Name: VMX_PROCBASED_CTLS
   Description: Capability Reporting Register of Primary Processor-Based VM-Execution Controls.
   Access: R/O
   Remarks: |
@@ -3095,7 +3099,7 @@
         VM-execution controls were also 0.
 
 - Value: 0x483
-  Name: IA32_VMX_EXIT_CTLS
+  Name: VMX_EXIT_CTLS
   Description: Capability Reporting Register of VM-Exit Controls.
   Access: R/O
   Remarks: |
@@ -3200,7 +3204,7 @@
       SeeAlso: Vol3C[35(INTEL® PROCESSOR TRACE)]
 
 - Value: 0x484
-  Name: IA32_VMX_ENTRY_CTLS
+  Name: VMX_ENTRY_CTLS
   Description: Capability Reporting Register of VM-Entry Controls.
   Access: R/O
   Remarks: |
@@ -3281,7 +3285,7 @@
       SeeAlso: Vol3C[35(INTEL® PROCESSOR TRACE)]
 
 - Value: 0x485
-  Name: IA32_VMX_MISC
+  Name: VMX_MISC
   Description: Reporting Register of Miscellaneous VMX Capabilities.
   Access: R/O
   Remarks: |
@@ -3399,7 +3403,7 @@
         Report the 32-bit MSEG revision identifier used by the processor.
 
 - Value: 0x486
-  Name: IA32_VMX_CR0_FIXED0
+  Name: VMX_CR0_FIXED0
   Description: Capability Reporting Register of CR0 Bits Fixed to 0.
   Access: R/O
   Remarks: |
@@ -3408,7 +3412,7 @@
   Reference: Vol3D[A.7(VMX-Fixed Bits in CR0)]
 
 - Value: 0x487
-  Name: IA32_VMX_CR0_FIXED1
+  Name: VMX_CR0_FIXED1
   Description: Capability Reporting Register of CR0 Bits Fixed to 1.
   Access: R/O
   Remarks: |
@@ -3417,7 +3421,7 @@
   Reference: Vol3D[A.7(VMX-Fixed Bits in CR0)]
 
 - Value: 0x488
-  Name: IA32_VMX_CR4_FIXED0
+  Name: VMX_CR4_FIXED0
   Description: Capability Reporting Register of CR4 Bits Fixed to 0.
   Access: R/O
   Remarks: |
@@ -3426,7 +3430,7 @@
   Reference: Vol3D[A.8(VMX-Fixed Bits in CR4)]
 
 - Value: 0x489
-  Name: IA32_VMX_CR4_FIXED1
+  Name: VMX_CR4_FIXED1
   Description: Capability Reporting Register of CR4 Bits Fixed to 1.
   Access: R/O
   Remarks: |
@@ -3435,7 +3439,7 @@
   Reference: Vol3D[A.8(VMX-Fixed Bits in CR4)]
 
 - Value: 0x48A
-  Name: IA32_VMX_VMCS_ENUM
+  Name: VMX_VMCS_ENUM
   Description: Capability Reporting Register of VMCS Field Enumeration.
   Access: R/O
   Remarks: |
@@ -3465,7 +3469,7 @@
       Description: Indicate the field’s width.
 
 - Value: 0x48B
-  Name: IA32_VMX_PROCBASED_CTLS2
+  Name: VMX_PROCBASED_CTLS2
   Description: Capability Reporting Register of Secondary Processor-Based VM-Execution Controls.
   Access: R/O
   Remarks: |
@@ -3676,7 +3680,7 @@
       - Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
 
 - Value: 0x48C
-  Name: IA32_VMX_EPT_VPID_CAP
+  Name: VMX_EPT_VPID_CAP
   Description: Capability Reporting Register of EPT and VPID.
   Access: R/O
   Remarks: |
@@ -3796,7 +3800,7 @@
       LongName: INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS
       Description: When set to 1, the single-context-retaining-globals INVVPID type is supported.
 
-- Name: IA32_VMX_TRUE_CTLS
+- Name: VMX_TRUE_CTLS
   ShortDescription: IA32_VMX_TRUE_(x)_CTLS
   LongDescription: |
     Capability Reporting Register of Pin-Based VM-Execution Flex Controls,
@@ -3818,13 +3822,13 @@
   - Vol3D[A.5(VM-Entry Controls)]
   Fields:
   - Value: 0x48D
-    Name: IA32_VMX_TRUE_PINBASED_CTLS
+    Name: VMX_TRUE_PINBASED_CTLS
   - Value: 0x48E
-    Name: IA32_VMX_TRUE_PROCBASED_CTLS
+    Name: VMX_TRUE_PROCBASED_CTLS
   - Value: 0x48F
-    Name: IA32_VMX_TRUE_EXIT_CTLS
+    Name: VMX_TRUE_EXIT_CTLS
   - Value: 0x490
-    Name: IA32_VMX_TRUE_ENTRY_CTLS
+    Name: VMX_TRUE_ENTRY_CTLS
 
   #
   # Result struct.
@@ -3847,7 +3851,7 @@
         the MSR is set to 1; if bit 32+X in the MSR is cleared to 0, VM entry fails if control X is 1.
 
 - Value: 0x491
-  Name: IA32_VMX_VMFUNC
+  Name: VMX_VMFUNC
   Description: Capability Reporting Register of VMFunction Controls.
   Access: R/O
   Remarks: |
@@ -3868,7 +3872,7 @@
 # END-OF-VMX
 #
 
-- Name: IA32_A_PMC
+- Name: A_PMC
   ShortDescription: IA32_A_PMC(n)
   LongDescription: Full Width Writable IA32_PMC(n) Alias.
   Access: R/W
@@ -3877,24 +3881,24 @@
     (If CPUID.0AH: EAX[15:8] > 0) && IA32_PERF_CAPABILITIES[13] = 1
   Fields:
   - Value: 0x4C1
-    Name: IA32_A_PMC0
+    Name: A_PMC0
   - Value: 0x4C2
-    Name: IA32_A_PMC1
+    Name: A_PMC1
   - Value: 0x4C3
-    Name: IA32_A_PMC2
+    Name: A_PMC2
   - Value: 0x4C4
-    Name: IA32_A_PMC3
+    Name: A_PMC3
   - Value: 0x4C5
-    Name: IA32_A_PMC4
+    Name: A_PMC4
   - Value: 0x4C6
-    Name: IA32_A_PMC5
+    Name: A_PMC5
   - Value: 0x4C7
-    Name: IA32_A_PMC6
+    Name: A_PMC6
   - Value: 0x4C8
-    Name: IA32_A_PMC7
+    Name: A_PMC7
 
 - Value: 0x4D0
-  Name: IA32_MCG_EXT_CTL
+  Name: MCG_EXT_CTL
   Description: Allows software to signal some MCEs to only a single logical processor in the system.
   Access: R/W
   Todo: More description
@@ -3916,7 +3920,7 @@
 #                                                                                           #
 
 - Value: 0x500
-  Name: IA32_SGX_SVN_STATUS
+  Name: SGX_SVN_STATUS
   ShortDescription: Status and SVN Threshold of SGX Support for ACM.
   LongDescription: |
     Intel SGX only allows launching ACMs with an Intel SGX SVN that is at the same level or higher than the expected
@@ -3956,7 +3960,7 @@
       SeeAlso: Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))]
 
 - Value: 0x560
-  Name: IA32_RTIT_OUTPUT_BASE
+  Name: RTIT_OUTPUT_BASE
   Description: Trace Output Base Register.
   Access: R/W
   Remarks: |
@@ -3989,7 +3993,7 @@
       - Vol3C[35.2.6.2(Table of Physical Addresses (ToPA))]
 
 - Value: 0x561
-  Name: IA32_RTIT_OUTPUT_MASK_PTRS
+  Name: RTIT_OUTPUT_MASK_PTRS
   Description: Trace Output Mask Pointers Register.
   Access: R/W
   Remarks: |
@@ -4044,7 +4048,7 @@
       - Vol3C[35.3.9(Operational Errors)]
 
 - Value: 0x570
-  Name: IA32_RTIT_CTL
+  Name: RTIT_CTL
   Description: Trace Control Register.
   Access: R/W
   Remarks: |
@@ -4367,7 +4371,7 @@
       SeeAlso: Vol3C[35.2.7.4(IA32_RTIT_STATUS MSR)]
 
 - Value: 0x571
-  Name: IA32_RTIT_STATUS
+  Name: RTIT_STATUS
   Description: Tracing Status Register.
   Access: R/W
   Remarks: |
@@ -4469,7 +4473,7 @@
       SeeAlso: Vol3C[35.4.2.17(Packet Stream Boundary (PSB) Packet)]
 
 - Value: 0x572
-  Name: IA32_RTIT_CR3_MATCH
+  Name: RTIT_CR3_MATCH
   ShortDescription: Trace Filter CR3 Match Register.
   LongDescription: |
     The IA32_RTIT_CR3_MATCH register is compared against CR3 when IA32_RTIT_CTL.CR3Filter is 1. Bits 63:5 hold
@@ -4489,7 +4493,7 @@
       LongName: CR3_VALUE_TO_MATCH
       Description: CR3[63:5] value to match.
 
-- Name: IA32_RTIT_ADDR
+- Name: RTIT_ADDR
   ShortDescription: IA32_RTIT_ADDR(x)
   LongDescription: |
     The role of the IA32_RTIT_ADDRn_A/B register pairs, for each n, is determined by the corresponding ADDRn_CFG
@@ -4501,7 +4505,7 @@
   SeeAlso: Vol3C[35.2.7.2(IA32_RTIT_CTL MSR)]
   Reference: Vol3C[35.2.7.5(IA32_RTIT_ADDRn_A and IA32_RTIT_ADDRn_B MSRs)]
   Fields:
-  - Name: IA32_RTIT_ADDR_A
+  - Name: RTIT_ADDR_A
     ShortDescription: IA32_RTIT_ADDR(n)_A
     LongDescription: Region n Start Address.
     Access: R/W
@@ -4510,15 +4514,15 @@
       If (CPUID.(EAX=07H, ECX=1):EAX[2:0] > n)
     Fields:
     - Value: 0x580
-      Name: IA32_RTIT_ADDR0_A
+      Name: RTIT_ADDR0_A
     - Value: 0x582
-      Name: IA32_RTIT_ADDR1_A
+      Name: RTIT_ADDR1_A
     - Value: 0x584
-      Name: IA32_RTIT_ADDR2_A
+      Name: RTIT_ADDR2_A
     - Value: 0x586
-      Name: IA32_RTIT_ADDR3_A
+      Name: RTIT_ADDR3_A
 
-  - Name: IA32_RTIT_ADDR_B
+  - Name: RTIT_ADDR_B
     ShortDescription: IA32_RTIT_ADDR(n)_B
     LongDescription: Region n End Address.
     Access: R/W
@@ -4527,13 +4531,13 @@
       If (CPUID.(EAX=07H, ECX=1):EAX[2:0] > n)
     Fields:
     - Value: 0x581
-      Name: IA32_RTIT_ADDR0_B
+      Name: RTIT_ADDR0_B
     - Value: 0x583
-      Name: IA32_RTIT_ADDR1_B
+      Name: RTIT_ADDR1_B
     - Value: 0x585
-      Name: IA32_RTIT_ADDR2_B
+      Name: RTIT_ADDR2_B
     - Value: 0x587
-      Name: IA32_RTIT_ADDR3_B
+      Name: RTIT_ADDR3_B
 
   - NameWithPostfix: REGISTER
     Type: Bitfield
@@ -4554,7 +4558,7 @@
 #                                                                                           #
 
 - Value: 0x600
-  Name: IA32_DS_AREA
+  Name: DS_AREA
   Description: |
     DS Save Area. Points to the linear address of the first byte of the
     DS buffer management area, which is used to manage the BTS and PEBS buffers.
@@ -4573,7 +4577,7 @@
   SeeAlso: Vol3B[18.6.3.4(Debug Store (DS) Mechanism)]
 
 - Value: 0x6E0
-  Name: IA32_TSC_DEADLINE
+  Name: TSC_DEADLINE
   Description: TSC Target of Local APIC’s TSC Deadline Mode.
   Access: R/W
   Todo: More description
@@ -4587,7 +4591,7 @@
 #                                                                                           #
 
 - Value: 0x770
-  Name: IA32_PM_ENABLE
+  Name: PM_ENABLE
   Description: Enable/disable HWP.
   Access: R/W
   Todo: More description
@@ -4607,7 +4611,7 @@
       SeeAlso: Vol3B[14.4.2(Enabling HWP)]
 
 - Value: 0x771
-  Name: IA32_HWP_CAPABILITIES
+  Name: HWP_CAPABILITIES
   Description: HWP Performance Range Enumeration.
   Access: RO
   Todo: More description + AlternativeType Struct
@@ -4648,7 +4652,7 @@
 
 
 - Value: 0x772
-  Name: IA32_HWP_REQUEST_PKG
+  Name: HWP_REQUEST_PKG
   Description: Power Management Control Hints for All Logical Processors in a Package.
   Access: R/W
   Todo: More description + AlternativeType Struct
@@ -4695,7 +4699,7 @@
       SeeAlso: Vol3B[14.4.4(Managing HWP)]
 
 - Value: 0x773
-  Name: IA32_HWP_INTERRUPT
+  Name: HWP_INTERRUPT
   Description: Control HWP Native Interrupts.
   Access: R/W
   Todo: More description
@@ -4721,7 +4725,7 @@
       SeeAlso: Vol3B[14.4.6(HWP Notifications)]
 
 - Value: 0x774
-  Name: IA32_HWP_REQUEST
+  Name: HWP_REQUEST
   Description: Power Management Control Hints to a Logical Processor.
   Access: R/W
   Todo: More description + AlternativeType Struct
@@ -4775,7 +4779,7 @@
       SeeAlso: Vol3B[14.4.4(Managing HWP)]
 
 - Value: 0x777
-  Name: IA32_HWP_STATUS
+  Name: HWP_STATUS
   Description: Log bits indicating changes to Guaranteed & excursions to Minimum.
   Access: R/W
   Todo: More description
@@ -4809,7 +4813,7 @@
 #                                                                                           #
 
 - Value: 0x802
-  Name: IA32_X2APIC_APICID
+  Name: X2APIC_APICID
   Description: x2APIC ID Register.
   Access: R/O
   Remarks: |
@@ -4817,48 +4821,48 @@
   SeeAlso: Vol3A[10.12(EXTENDED XAPIC (X2APIC))]
 
 - Value: 0x803
-  Name: IA32_X2APIC_VERSION
+  Name: X2APIC_VERSION
   Description: x2APIC Version Register.
   Access: R/O
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x808
-  Name: IA32_X2APIC_TPR
+  Name: X2APIC_TPR
   Description: x2APIC Task Priority Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x80A
-  Name: IA32_X2APIC_PPR
+  Name: X2APIC_PPR
   Description: x2APIC Processor Priority Register.
   Access: R/O
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x80B
-  Name: IA32_X2APIC_EOI
+  Name: X2APIC_EOI
   Description: x2APIC EOI Register.
   Access: W/O
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x80D
-  Name: IA32_X2APIC_LDR
+  Name: X2APIC_LDR
   Description: x2APIC Logical Destination Register.
   Access: R/O
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x80F
-  Name: IA32_X2APIC_SIVR
+  Name: X2APIC_SIVR
   Description: x2APIC Spurious Interrupt Vector Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
-- Name: IA32_X2APIC_ISR
+- Name: X2APIC_ISR
   ShortDescription: IA32_X2APIC_ISR(n)
   LongDescription: x2APIC In-Service Register Bits (n * 32 + 31):(n * 32).
   Access: R/O
@@ -4867,23 +4871,23 @@
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
   Fields:
   - Value: 0x810
-    Name: IA32_X2APIC_ISR0
+    Name: X2APIC_ISR0
   - Value: 0x811
-    Name: IA32_X2APIC_ISR1
+    Name: X2APIC_ISR1
   - Value: 0x812
-    Name: IA32_X2APIC_ISR2
+    Name: X2APIC_ISR2
   - Value: 0x813
-    Name: IA32_X2APIC_ISR3
+    Name: X2APIC_ISR3
   - Value: 0x814
-    Name: IA32_X2APIC_ISR4
+    Name: X2APIC_ISR4
   - Value: 0x815
-    Name: IA32_X2APIC_ISR5
+    Name: X2APIC_ISR5
   - Value: 0x816
-    Name: IA32_X2APIC_ISR6
+    Name: X2APIC_ISR6
   - Value: 0x817
-    Name: IA32_X2APIC_ISR7
+    Name: X2APIC_ISR7
 
-- Name: IA32_X2APIC_TMR
+- Name: X2APIC_TMR
   ShortDescription: IA32_X2APIC_TMR(n)
   LongDescription: x2APIC Trigger Mode Register Bits (n * 32 + 31):(n * 32).
   Access: R/O
@@ -4892,23 +4896,23 @@
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
   Fields:
   - Value: 0x818
-    Name: IA32_X2APIC_TMR0
+    Name: X2APIC_TMR0
   - Value: 0x819
-    Name: IA32_X2APIC_TMR1
+    Name: X2APIC_TMR1
   - Value: 0x81A
-    Name: IA32_X2APIC_TMR2
+    Name: X2APIC_TMR2
   - Value: 0x81B
-    Name: IA32_X2APIC_TMR3
+    Name: X2APIC_TMR3
   - Value: 0x81C
-    Name: IA32_X2APIC_TMR4
+    Name: X2APIC_TMR4
   - Value: 0x81D
-    Name: IA32_X2APIC_TMR5
+    Name: X2APIC_TMR5
   - Value: 0x81E
-    Name: IA32_X2APIC_TMR6
+    Name: X2APIC_TMR6
   - Value: 0x81F
-    Name: IA32_X2APIC_TMR7
+    Name: X2APIC_TMR7
 
-- Name: IA32_X2APIC_IRR
+- Name: X2APIC_IRR
   ShortDescription: IA32_X2APIC_IRR(n)
   LongDescription: x2APIC Interrupt Request Register Bits (n * 32 + 31):(n * 32).
   Access: R/O
@@ -4917,108 +4921,108 @@
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
   Fields:
   - Value: 0x820
-    Name: IA32_X2APIC_IRR0
+    Name: X2APIC_IRR0
   - Value: 0x821
-    Name: IA32_X2APIC_IRR1
+    Name: X2APIC_IRR1
   - Value: 0x822
-    Name: IA32_X2APIC_IRR2
+    Name: X2APIC_IRR2
   - Value: 0x823
-    Name: IA32_X2APIC_IRR3
+    Name: X2APIC_IRR3
   - Value: 0x824
-    Name: IA32_X2APIC_IRR4
+    Name: X2APIC_IRR4
   - Value: 0x825
-    Name: IA32_X2APIC_IRR5
+    Name: X2APIC_IRR5
   - Value: 0x826
-    Name: IA32_X2APIC_IRR6
+    Name: X2APIC_IRR6
   - Value: 0x827
-    Name: IA32_X2APIC_IRR7
+    Name: X2APIC_IRR7
 
 - Value: 0x828
-  Name: IA32_X2APIC_ESR
+  Name: X2APIC_ESR
   Description: x2APIC Error Status Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x82F
-  Name: IA32_X2APIC_LVT_CMCI
+  Name: X2APIC_LVT_CMCI
   Description: x2APIC LVT Corrected Machine Check Interrupt Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x830
-  Name: IA32_X2APIC_ICR
+  Name: X2APIC_ICR
   Description: x2APIC Interrupt Command Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x832
-  Name: IA32_X2APIC_LVT_TIMER
+  Name: X2APIC_LVT_TIMER
   Description: x2APIC LVT Timer Interrupt Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x833
-  Name: IA32_X2APIC_LVT_THERMAL
+  Name: X2APIC_LVT_THERMAL
   Description: x2APIC LVT Thermal Sensor Interrupt Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x834
-  Name: IA32_X2APIC_LVT_PMI
+  Name: X2APIC_LVT_PMI
   Description: x2APIC LVT Performance Monitor Interrupt Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x835
-  Name: IA32_X2APIC_LVT_LINT0
+  Name: X2APIC_LVT_LINT0
   Description: x2APIC LVT LINT0 Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x836
-  Name: IA32_X2APIC_LVT_LINT1
+  Name: X2APIC_LVT_LINT1
   Description: x2APIC LVT LINT1 Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x837
-  Name: IA32_X2APIC_LVT_ERROR
+  Name: X2APIC_LVT_ERROR
   Description: x2APIC LVT Error Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x838
-  Name: IA32_X2APIC_INIT_COUNT
+  Name: X2APIC_INIT_COUNT
   Description: x2APIC Initial Count Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x839
-  Name: IA32_X2APIC_CUR_COUNT
+  Name: X2APIC_CUR_COUNT
   Description: x2APIC Current Count Register.
   Access: R/O
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x83E
-  Name: IA32_X2APIC_DIV_CONF
+  Name: X2APIC_DIV_CONF
   Description: x2APIC Divide Configuration Register.
   Access: R/W
   Remarks: |
     If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
 
 - Value: 0x83F
-  Name: IA32_X2APIC_SELF_IPI
+  Name: X2APIC_SELF_IPI
   Description: x2APIC Self IPI Register.
   Access: W/O
   Remarks: |
@@ -5031,7 +5035,7 @@
 #                                                                                           #
 
 - Value: 0xC80
-  Name: IA32_DEBUG_INTERFACE
+  Name: DEBUG_INTERFACE
   Description: Silicon Debug Feature Control.
   Access: R/W
   Remarks: |
@@ -5071,7 +5075,7 @@
 
 
 - Value: 0xC81
-  Name: IA32_L3_QOS_CFG
+  Name: L3_QOS_CFG
   Description: L3 QOS Configuration.
   Access: R/W
   Remarks: |
@@ -5089,7 +5093,7 @@
       Access: R/W
 
 - Value: 0xC82
-  Name: IA32_L2_QOS_CFG
+  Name: L2_QOS_CFG
   Description: L2 QOS Configuration.
   Access: R/W
   Remarks: |
@@ -5107,7 +5111,7 @@
       Access: R/W
 
 - Value: 0xC8D
-  Name: IA32_QM_EVTSEL
+  Name: QM_EVTSEL
   Description: Monitoring Event Select Register.
   Access: R/W
   Remarks: |
@@ -5133,7 +5137,7 @@
         N = Ceil (Log2 (CPUID.(EAX= 0FH,ECX=0H).EBX[31:0] + 1))
 
 - Value: 0xC8E
-  Name: IA32_QM_CTR
+  Name: QM_CTR
   Description: Monitoring Counter Register.
   Access: R/O
   Remarks: |
@@ -5161,7 +5165,7 @@
         If 1, indicates an unsupported RMID or event type was written to IA32_PQR_QM_EVTSEL.
 
 - Value: 0xC8F
-  Name: IA32_PQR_ASSOC
+  Name: PQR_ASSOC
   Description: Resource Association Register.
   Access: R/W
   Remarks: |
@@ -5205,7 +5209,7 @@
 #                                                                                           #
 
 - Value: 0xD90
-  Name: IA32_BNDCFGS
+  Name: BNDCFGS
   Description: Supervisor State of MPX Configuration.
   Access: R/W
   Remarks: |
@@ -5232,7 +5236,7 @@
       Description: Base Address of Bound Directory.
 
 - Value: 0xDA0
-  Name: IA32_XSS
+  Name: XSS
   Description: Extended Supervisor State Mask.
   Access: R/W
   Remarks: |
@@ -5248,7 +5252,7 @@
       Access: R/W
 
 - Value: 0xDB0
-  Name: IA32_PKG_HDC_CTL
+  Name: PKG_HDC_CTL
   Description: Package Level Enable/disable HDC.
   Access: R/W
   Remarks: |
@@ -5269,7 +5273,7 @@
       SeeAlso: Vol3B[14.5.2(Package level Enabling HDC)]
 
 - Value: 0xDB1
-  Name: IA32_PM_CTL1
+  Name: PM_CTL1
   Description: Enable/disable HWP.
   Access: R/W
   Remarks: |
@@ -5290,7 +5294,7 @@
       SeeAlso: Vol3B[14.5.3(Logical-Processor Level HDC Control)]
 
 - Value: 0xDB2
-  Name: IA32_THREAD_STALL
+  Name: THREAD_STALL
   Description: Per-Logical_Processor HDC Idle Residency.
   Access: R/0
   Remarks: |
@@ -5323,7 +5327,7 @@
 #                                                                                           #
 
 - Value: 0xC0000080
-  Name: IA32_EFER
+  Name: EFER
   Description: Extended Feature Enables.
   Remarks: |
     If CPUID.06H:EAX.[13] = 1
@@ -5360,14 +5364,14 @@
       Access: R/W
 
 - Value: 0xC0000081
-  Name: IA32_STAR
+  Name: STAR
   Description: System Call Target Address.
   Access: R/W
   Remarks: |
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000082
-  Name: IA32_LSTAR
+  Name: LSTAR
   ShortDescription: IA-32e Mode System Call Target Address
   LongDescription: |
     Target RIP for the called procedure when SYSCALL is executed in 64-bit mode.
@@ -5376,7 +5380,7 @@
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000083
-  Name: IA32_CSTAR
+  Name: CSTAR
   ShortDescription: IA-32e Mode System Call Target Address
   LongDescription: |
     Not used, as the SYSCALL instruction is not recognized in compatibility mode.
@@ -5385,35 +5389,35 @@
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000084
-  Name: IA32_FMASK
+  Name: FMASK
   Description: System Call Flag Mask.
   Access: R/W
   Remarks: |
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000100
-  Name: IA32_FS_BASE
+  Name: FS_BASE
   Description: Map of BASE Address of FS.
   Access: R/W
   Remarks: |
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000101
-  Name: IA32_GS_BASE
+  Name: GS_BASE
   Description: Map of BASE Address of GS.
   Access: R/W
   Remarks: |
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000102
-  Name: IA32_KERNEL_GS_BASE
+  Name: KERNEL_GS_BASE
   Description: Swap Target of BASE Address of GS.
   Access: R/W
   Remarks: |
     If CPUID.80000001:EDX.[29] = 1
 
 - Value: 0xC0000103
-  Name: IA32_TSC_AUX
+  Name: TSC_AUX
   Description: Auxiliary TSC.
   Access: RW
   Remarks: |

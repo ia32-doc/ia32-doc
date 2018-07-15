@@ -2591,7 +2591,7 @@ typedef struct
 } CPUID_EAX_0B;
 
 /**
- * @defgroup EAX_0D \
+ * @defgroup CPUID_EAX_0D \
  *           EAX = 0x0D
  *
  * When CPUID executes with EAX set to 0DH and ECX = 0, the processor returns information about the bit-vector
@@ -2941,7 +2941,7 @@ typedef struct
  */
 
 /**
- * @defgroup EAX_0F \
+ * @defgroup CPUID_EAX_0F \
  *           EAX = 0x0F
  *
  * When CPUID executes with EAX set to 0FH and ECX = 0, the processor returns information about the bit-vector
@@ -3118,7 +3118,7 @@ typedef struct
  */
 
 /**
- * @defgroup EAX_10 \
+ * @defgroup CPUID_EAX_10 \
  *           EAX = 0x10
  *
  * When CPUID executes with EAX set to 10H and ECX = 0, the processor returns information about the bit-vector
@@ -3441,7 +3441,7 @@ typedef struct
  */
 
 /**
- * @defgroup EAX_12 \
+ * @defgroup CPUID_EAX_12 \
  *           EAX = 0x12
  *
  * When CPUID executes with EAX set to 12H and ECX = 0H, the processor returns information about Intel SGX capabilities.
@@ -3794,7 +3794,7 @@ typedef struct
  */
 
 /**
- * @defgroup EAX_14 \
+ * @defgroup CPUID_EAX_14 \
  *           EAX = 0x14
  *
  * When CPUID executes with EAX set to 14H and ECX = 0H, the processor returns information about Intel Processor Trace
@@ -4191,7 +4191,7 @@ typedef struct
 } CPUID_EAX_16;
 
 /**
- * @defgroup EAX_17 \
+ * @defgroup CPUID_EAX_17 \
  *           EAX = 0x17
  *
  * When CPUID executes with EAX set to 17H, the processor returns information about the System-On-Chip Vendor Attribute
@@ -4425,7 +4425,7 @@ typedef struct
  */
 
 /**
- * @defgroup EAX_18 \
+ * @defgroup CPUID_EAX_18 \
  *           EAX = 0x18
  *
  * When CPUID executes with EAX set to 18H, the processor returns information about the Deterministic Address Translation
@@ -5744,7 +5744,7 @@ typedef struct
   /**
    * @brief Define values for the MonitorFeatures field of MSEG_HEADER.
    */
-#define STM_FEATURES_IA32E                                           0x00000001
+#define IA32_STM_FEATURES_IA32E                                      0x00000001
 
   UINT32 GdtrLimit;
   UINT32 GdtrBaseOffset;
@@ -5752,7 +5752,7 @@ typedef struct
   UINT32 EipOffset;
   UINT32 EspOffset;
   UINT32 Cr3Offset;
-} MSEG_HEADER;
+} IA32_MSEG_HEADER;
 
 /**
  * @brief Base address of the logical processor's SMRAM image. <b>(RO, SMM only)</b>
@@ -7366,8 +7366,8 @@ typedef union
 } IA32_PAT_REGISTER;
 
 /**
- * @defgroup IA32_MCn_CTL2 \
- *           IA32_MC(n)_CTL2
+ * @defgroup IA32_MC_CTL2 \
+ *           IA32_MC(i)_CTL2
  *
  * MSR to enable/disable CMCI capability for bank n.
  *
@@ -7415,23 +7415,23 @@ typedef union
      * Corrected error count threshold.
      */
     UINT64 CorrectedErrorCountThreshold                            : 15;
-#define IA32_MCn_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_BIT   0
-#define IA32_MCn_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_MASK  0x7FFF
-#define IA32_MCn_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD(_)    (((_) >> 0) & 0x7FFF)
+#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_BIT    0
+#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_MASK   0x7FFF
+#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD(_)     (((_) >> 0) & 0x7FFF)
     UINT64 Reserved1                                               : 15;
 
     /**
      * CMCI_EN.
      */
     UINT64 CmciEn                                                  : 1;
-#define IA32_MCn_CTL2_REGISTER_CMCI_EN_BIT                           30
-#define IA32_MCn_CTL2_REGISTER_CMCI_EN_MASK                          0x01
-#define IA32_MCn_CTL2_REGISTER_CMCI_EN(_)                            (((_) >> 30) & 0x01)
+#define IA32_MC_CTL2_REGISTER_CMCI_EN_BIT                            30
+#define IA32_MC_CTL2_REGISTER_CMCI_EN_MASK                           0x01
+#define IA32_MC_CTL2_REGISTER_CMCI_EN(_)                             (((_) >> 30) & 0x01)
   };
 
   UINT32 Flags32;
   UINT64 Flags64;
-} IA32_MCn_CTL2_REGISTER;
+} IA32_MC_CTL2_REGISTER;
 
 /**
  * @}
@@ -8071,8 +8071,8 @@ typedef union
 } IA32_PEBS_ENABLE_REGISTER;
 
 /**
- * @defgroup IA32_MCn_CTL \
- *           IA32_MC(n)_CTL
+ * @defgroup IA32_MC_CTL \
+ *           IA32_MC(i)_CTL
  *
  * IA32_MC(0-28)_CTL.
  *
@@ -8113,8 +8113,8 @@ typedef union
  */
 
 /**
- * @defgroup IA32_MCn_STATUS \
- *           IA32_MC(n)_STATUS
+ * @defgroup IA32_MC_STATUS \
+ *           IA32_MC(i)_STATUS
  *
  * IA32_MC(0-28)_STATUS.
  *
@@ -8156,7 +8156,7 @@ typedef union
 
 /**
  * @defgroup IA32_MC_ADDR \
- *           IA32_MC(n)_ADDR
+ *           IA32_MC(i)_ADDR
  *
  * IA32_MC(0-28)_ADDR.
  *
@@ -8198,7 +8198,7 @@ typedef union
 
 /**
  * @defgroup IA32_MC_MISC \
- *           IA32_MC(n)_MISC
+ *           IA32_MC(i)_MISC
  *
  * IA32_MC(0-28)_MISC.
  *
@@ -14756,17 +14756,17 @@ typedef union
      * Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields.
      */
     UINT16 AccessType                                              : 1;
-#define VMCS_VMCS_COMPONENT_ENCODING_ACCESS_TYPE_BIT                 0
-#define VMCS_VMCS_COMPONENT_ENCODING_ACCESS_TYPE_MASK                0x01
-#define VMCS_VMCS_COMPONENT_ENCODING_ACCESS_TYPE(_)                  (((_) >> 0) & 0x01)
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_BIT                      0
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_MASK                     0x01
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE(_)                       (((_) >> 0) & 0x01)
 
     /**
      * Index.
      */
     UINT16 Index                                                   : 9;
-#define VMCS_VMCS_COMPONENT_ENCODING_INDEX_BIT                       1
-#define VMCS_VMCS_COMPONENT_ENCODING_INDEX_MASK                      0x1FF
-#define VMCS_VMCS_COMPONENT_ENCODING_INDEX(_)                        (((_) >> 1) & 0x1FF)
+#define VMCS_COMPONENT_ENCODING_INDEX_BIT                            1
+#define VMCS_COMPONENT_ENCODING_INDEX_MASK                           0x1FF
+#define VMCS_COMPONENT_ENCODING_INDEX(_)                             (((_) >> 1) & 0x1FF)
 
     /**
      * Type:
@@ -14776,17 +14776,17 @@ typedef union
      * 3: host state
      */
     UINT16 Type                                                    : 2;
-#define VMCS_VMCS_COMPONENT_ENCODING_TYPE_BIT                        10
-#define VMCS_VMCS_COMPONENT_ENCODING_TYPE_MASK                       0x03
-#define VMCS_VMCS_COMPONENT_ENCODING_TYPE(_)                         (((_) >> 10) & 0x03)
+#define VMCS_COMPONENT_ENCODING_TYPE_BIT                             10
+#define VMCS_COMPONENT_ENCODING_TYPE_MASK                            0x03
+#define VMCS_COMPONENT_ENCODING_TYPE(_)                              (((_) >> 10) & 0x03)
 
     /**
      * Reserved (must be 0).
      */
     UINT16 MustBeZero                                              : 1;
-#define VMCS_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_BIT                12
-#define VMCS_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_MASK               0x01
-#define VMCS_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO(_)                 (((_) >> 12) & 0x01)
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_BIT                     12
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_MASK                    0x01
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO(_)                      (((_) >> 12) & 0x01)
 
     /**
      * Width:
@@ -14796,13 +14796,13 @@ typedef union
      * 3: natural-width
      */
     UINT16 Width                                                   : 2;
-#define VMCS_VMCS_COMPONENT_ENCODING_WIDTH_BIT                       13
-#define VMCS_VMCS_COMPONENT_ENCODING_WIDTH_MASK                      0x03
-#define VMCS_VMCS_COMPONENT_ENCODING_WIDTH(_)                        (((_) >> 13) & 0x03)
+#define VMCS_COMPONENT_ENCODING_WIDTH_BIT                            13
+#define VMCS_COMPONENT_ENCODING_WIDTH_MASK                           0x03
+#define VMCS_COMPONENT_ENCODING_WIDTH(_)                             (((_) >> 13) & 0x03)
   };
 
   UINT16 Flags;
-} VMCS_VMCS_COMPONENT_ENCODING;
+} VMCS_COMPONENT_ENCODING;
 
 /**
  * @defgroup VMCS_16_BIT \

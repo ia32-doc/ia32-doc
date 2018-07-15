@@ -1,5 +1,6 @@
 - Name: MODEL_SPECIFIC_REGISTERS
   ShortDescription: Model Specific Registers
+  ChildrenNameWithPrefix: IA32
   Todo: Long description
   Type: Group
   Reference: Vol2A[3.2(CPUID)]

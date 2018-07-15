@@ -286,7 +286,7 @@ class DocBase(object):
         return self._doc['Path']
 
     def _make_name(self, name: str) -> str:
-        if self.type in ['Definition', 'Struct', 'Bitfield']:
+        if 'NameWithPostfix' not in self._doc and self.type in ['Definition', 'Group', 'Struct', 'Bitfield']:
             parent = self._parent
 
             while parent:
