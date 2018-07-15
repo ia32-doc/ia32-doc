@@ -2422,7 +2422,7 @@
     Size: 64
     Fields:
     - Bit: 0-31
-      ShortName: IA32_PERFEVTSEL(n)
+      ShortName: PERFEVTSEL(n)
       LongName: IA32_PERFEVTSEL(n)_IN_USE
       Description: |
         IA32_PERFEVTSEL(n) in use. Status bitmask. Only the first n-1 bits are valid.
@@ -2431,7 +2431,7 @@
         If CPUID.0AH: EAX[15:8] > n
 
     - Bit: 32-34
-      ShortName: IA32_FIXED_CTR(n)
+      ShortName: FIXED_CTR(n)
       LongName: IA32_FIXED_CTR(n)_IN_USE
       Description: |
         IA32_FIXED_CTR(n) in use. Status bitmask. Only the first n-1 bits are valid.
@@ -2605,7 +2605,7 @@
   - Value: 0x471
     Name: IA32_MC28_STATUS
 
-- Name: IA32_MC(n)_ADDR
+- Name: IA32_MC_ADDR
   ShortDescription: IA32_MC(n)_ADDR
   LongDescription: IA32_MC(0-28)_ADDR.
   Type: Group
@@ -2671,7 +2671,7 @@
   - Value: 0x472
     Name: IA32_MC28_ADDR
 
-- Name: IA32_MC(n)_MISC
+- Name: IA32_MC_MISC
   ShortDescription: IA32_MC(n)_MISC
   LongDescription: IA32_MC(0-28)_MISC.
   Type: Group

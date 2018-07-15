@@ -8136,7 +8136,7 @@ typedef union
  */
 
 /**
- * @defgroup IA32_MC(n)_ADDR \
+ * @defgroup IA32_MC_ADDR \
  *           IA32_MC(n)_ADDR
  *
  * IA32_MC(0-28)_ADDR.
@@ -8178,7 +8178,7 @@ typedef union
  */
 
 /**
- * @defgroup IA32_MC(n)_MISC \
+ * @defgroup IA32_MC_MISC \
  *           IA32_MC(n)_MISC
  *
  * IA32_MC(0-28)_MISC.
@@ -11849,475 +11849,6 @@ typedef union
  */
 
 /**
- * @defgroup APIC \
- *           Advanced Programmable Interrupt Controller (APIC)
- *
- * Software interacts with the local APIC by reading and writing its registers. APIC registers are memory-mapped to a
- * 4-KByte region of the processor's physical address space with an initial starting address of FEE00000H. For correct APIC
- * operation, this address space must be mapped to an area of memory that has been designated as strong uncacheable (UC).
- *
- * @remarks Registers are 32 bits, 64 bits, or 256 bits in width; all are aligned on 128-bit boundaries. All 32-bit
- *          registers should be accessed using 128-bit aligned 32-bit loads or stores. Some processors may support loads and stores
- *          of less than 32 bits to some of the APIC registers. This is model specific behavior and is not guaranteed to work on all
- *          processors. Any FP/MMX/SSE access to an APIC register, or any access that touches bytes 4 through 15 of an APIC register
- *          may cause undefined behavior and must not be executed. This undefined behavior could include hangs, incorrect results or
- *          unexpected exceptions, including machine checks, and may vary between implementations. Wider registers (64-bit or
- *          256-bit) must be accessed using multiple 32-bit loads or stores, with all accesses being 128-bit aligned.
- * @see Vol3A[10.4.1(The Local APIC Block Diagram)] (reference)
- * @{
- */
-/**
- * @brief Local APIC Base Address.
- */
-#define APIC_BASE_ADDRESS                                            0xFEE00000
-
-/**
- * @brief Local APIC ID Register. <b>(Read/Write)</b>
- */
-#define APIC_ID                                                      0xFEE00020
-
-/**
- * @brief Local APIC Version Register. <b>(Read Only)</b>
- */
-#define APIC_VERSION                                                 0xFEE00030
-
-/**
- * @brief Task Priority Register (TPR). <b>(Read/Write)</b>
- */
-#define APIC_TASK_PRIORITY                                           0xFEE00080
-
-/**
- * @brief Arbitration Priority Register (APR). <b>(Read Only)</b>
- */
-#define APIC_ARBITRATION_PRIORITY                                    0xFEE00090
-
-/**
- * @brief Processor Priority Register (PPR). <b>(Read Only)</b>
- */
-#define APIC_PROCESSOR_PRIORITY                                      0xFEE000A0
-
-/**
- * @brief EOI Register. <b>(Write Only)</b>
- */
-#define APIC_EOI                                                     0xFEE000B0
-
-/**
- * @brief Remote Read Register (RRD). <b>(Read Only)</b>
- */
-#define APIC_REMOTE_READ                                             0xFEE000C0
-
-/**
- * @brief Logical Destination Register. <b>(Read/Write)</b>
- */
-#define APIC_LOGICAL_DESTINATION                                     0xFEE000D0
-
-/**
- * @brief Destination Format Register. <b>(Read/Write)</b>
- */
-#define APIC_DESTINATION_FORMAT                                      0xFEE000E0
-
-/**
- * @brief Spurious Interrupt Vector Register. <b>(Read/Write)</b>
- */
-#define APIC_SPURIOUS_INTERRUPT_VECTOR                               0xFEE000F0
-
-/**
- * @brief In-Service Register (ISR); bits 31:0. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_31_0                                    0xFEE00100
-
-/**
- * @brief In-Service Register (ISR); bits 63:32. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_63_32                                   0xFEE00110
-
-/**
- * @brief In-Service Register (ISR); bits 95:64. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_95_64                                   0xFEE00120
-
-/**
- * @brief In-Service Register (ISR); bits 127:96. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_127_96                                  0xFEE00130
-
-/**
- * @brief In-Service Register (ISR); bits 159:128. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_159_128                                 0xFEE00140
-
-/**
- * @brief In-Service Register (ISR); bits 191:160. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_191_160                                 0xFEE00150
-
-/**
- * @brief In-Service Register (ISR); bits 223:192. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_223_192                                 0xFEE00160
-
-/**
- * @brief In-Service Register (ISR); bits 255:224. <b>(Read Only)</b>
- */
-#define APIC_IN_SERVICE_BITS_255_224                                 0xFEE00170
-
-/**
- * @brief Trigger Mode Register (TMR); bits 31:0. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_31_0                                  0xFEE00180
-
-/**
- * @brief Trigger Mode Register (TMR); bits 63:32. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_63_32                                 0xFEE00190
-
-/**
- * @brief Trigger Mode Register (TMR); bits 95:64. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_95_64                                 0xFEE001A0
-
-/**
- * @brief Trigger Mode Register (TMR); bits 127:96. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_127_96                                0xFEE001B0
-
-/**
- * @brief Trigger Mode Register (TMR); bits 159:128. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_159_128                               0xFEE001C0
-
-/**
- * @brief Trigger Mode Register (TMR); bits 191:160. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_191_160                               0xFEE001D0
-
-/**
- * @brief Trigger Mode Register (TMR); bits 223:192. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_223_192                               0xFEE001E0
-
-/**
- * @brief Trigger Mode Register (TMR); bits 255:224. <b>(Read Only)</b>
- */
-#define APIC_TRIGGER_MODE_BITS_255_224                               0xFEE001F0
-
-/**
- * @brief Interrupt Request Register (IRR); bits 31:0. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_31_0                             0xFEE00200
-
-/**
- * @brief Interrupt Request Register (IRR); bits 63:32. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_63_32                            0xFEE00210
-
-/**
- * @brief Interrupt Request Register (IRR); bits 95:64. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_95_64                            0xFEE00220
-
-/**
- * @brief Interrupt Request Register (IRR); bits 127:96. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_127_96                           0xFEE00230
-
-/**
- * @brief Interrupt Request Register (IRR); bits 159:128. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_159_128                          0xFEE00240
-
-/**
- * @brief Interrupt Request Register (IRR); bits 191:160. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_191_160                          0xFEE00250
-
-/**
- * @brief Interrupt Request Register (IRR); bits 223:192. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_223_192                          0xFEE00260
-
-/**
- * @brief Interrupt Request Register (IRR); bits 255:224. <b>(Read Only)</b>
- */
-#define APIC_INTERRUPT_REQUEST_BITS_255_224                          0xFEE00270
-
-/**
- * @brief Error Status Register. <b>(Read Only)</b>
- */
-#define APIC_ERROR_STATUS                                            0xFEE00280
-
-/**
- * @brief LVT Corrected Machine Check Interrupt (CMCI) Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_CORRECTED_MACHINE_CHECK_INTERRUPT                   0xFEE002F0
-
-/**
- * @brief Interrupt Command Register (ICR); bits 0-31. <b>(Read/Write)</b>
- */
-#define APIC_INTERRUPT_COMMAND_BITS_0_31                             0xFEE00300
-
-/**
- * @brief Interrupt Command Register (ICR); bits 32-63. <b>(Read/Write)</b>
- */
-#define APIC_INTERRUPT_COMMAND_BITS_32_63                            0xFEE00310
-
-/**
- * @brief LVT Timer Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_TIMER                                               0xFEE00320
-
-/**
- * @brief LVT Thermal Sensor Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_THERMAL_SENSOR                                      0xFEE00330
-
-/**
- * @brief LVT Performance Monitoring Counters Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_PERFORMANCE_MONITORING_COUNTERS                     0xFEE00340
-
-/**
- * @brief LVT LINT0 Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_LINT0                                               0xFEE00350
-
-/**
- * @brief LVT LINT1 Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_LINT1                                               0xFEE00360
-
-/**
- * @brief LVT Error Register. <b>(Read/Write)</b>
- */
-#define APIC_LVT_ERROR                                               0xFEE00370
-
-/**
- * @brief Initial Count Register (for Timer). <b>(Read/Write)</b>
- */
-#define APIC_INITIAL_COUNT                                           0xFEE00380
-
-/**
- * @brief Current Count Register (for Timer). <b>(Read Only)</b>
- */
-#define APIC_CURRENT_COUNT                                           0xFEE00390
-
-/**
- * @brief Divide Configuration Register (for Timer). <b>(Read/Write)</b>
- */
-#define APIC_DIVIDE_CONFIGURATION                                    0xFEE003E0
-
-/**
- * @}
- */
-
-typedef union
-{
-  struct
-  {
-    /**
-     * @brief Carry flag
-     *
-     * Set if an arithmetic operation generates a carry or a borrow out of the mostsignificant bit of the result; cleared
-     * otherwise. This flag indicates an overflow condition for unsigned-integer arithmetic. It is also used in
-     * multiple-precision arithmetic.
-     */
-    UINT32 CarryFlag                                               : 1;
-#define EFLAGS_CARRY_FLAG_BIT                                        0
-#define EFLAGS_CARRY_FLAG_MASK                                       0x01
-#define EFLAGS_CARRY_FLAG(_)                                         (((_) >> 0) & 0x01)
-
-    /**
-     * Reserved - always 1
-     */
-    UINT32 ReadAs1                                                 : 1;
-#define EFLAGS_READ_AS_1_BIT                                         1
-#define EFLAGS_READ_AS_1_MASK                                        0x01
-#define EFLAGS_READ_AS_1(_)                                          (((_) >> 1) & 0x01)
-
-    /**
-     * @brief Parity flag
-     *
-     * Set if the least-significant byte of the result contains an even number of 1 bits; cleared otherwise.
-     */
-    UINT32 ParityFlag                                              : 1;
-#define EFLAGS_PARITY_FLAG_BIT                                       2
-#define EFLAGS_PARITY_FLAG_MASK                                      0x01
-#define EFLAGS_PARITY_FLAG(_)                                        (((_) >> 2) & 0x01)
-    UINT32 Reserved1                                               : 1;
-
-    /**
-     * @brief Auxiliary Carry flag
-     *
-     * Set if an arithmetic operation generates a carry or a borrow out of bit 3 of the result; cleared otherwise. This flag is
-     * used in binary-coded decimal (BCD) arithmetic.
-     */
-    UINT32 AuxiliaryCarryFlag                                      : 1;
-#define EFLAGS_AUXILIARY_CARRY_FLAG_BIT                              4
-#define EFLAGS_AUXILIARY_CARRY_FLAG_MASK                             0x01
-#define EFLAGS_AUXILIARY_CARRY_FLAG(_)                               (((_) >> 4) & 0x01)
-    UINT32 Reserved2                                               : 1;
-
-    /**
-     * @brief Zero flag
-     *
-     * Set if the result is zero; cleared otherwise.
-     */
-    UINT32 ZeroFlag                                                : 1;
-#define EFLAGS_ZERO_FLAG_BIT                                         6
-#define EFLAGS_ZERO_FLAG_MASK                                        0x01
-#define EFLAGS_ZERO_FLAG(_)                                          (((_) >> 6) & 0x01)
-
-    /**
-     * @brief Sign flag
-     *
-     * Set equal to the most-significant bit of the result, which is the sign bit of a signed integer. (0 indicates a positive
-     * value and 1 indicates a negative value.)
-     */
-    UINT32 SignFlag                                                : 1;
-#define EFLAGS_SIGN_FLAG_BIT                                         7
-#define EFLAGS_SIGN_FLAG_MASK                                        0x01
-#define EFLAGS_SIGN_FLAG(_)                                          (((_) >> 7) & 0x01)
-
-    /**
-     * @brief Trap flag
-     *
-     * Set to enable single-step mode for debugging; clear to disable single-step mode.
-     */
-    UINT32 TrapFlag                                                : 1;
-#define EFLAGS_TRAP_FLAG_BIT                                         8
-#define EFLAGS_TRAP_FLAG_MASK                                        0x01
-#define EFLAGS_TRAP_FLAG(_)                                          (((_) >> 8) & 0x01)
-
-    /**
-     * @brief Interrupt enable flag
-     *
-     * Controls the response of the processor to maskable interrupt requests. Set to respond to maskable interrupts; cleared to
-     * inhibit maskable interrupts.
-     */
-    UINT32 InterruptEnableFlag                                     : 1;
-#define EFLAGS_INTERRUPT_ENABLE_FLAG_BIT                             9
-#define EFLAGS_INTERRUPT_ENABLE_FLAG_MASK                            0x01
-#define EFLAGS_INTERRUPT_ENABLE_FLAG(_)                              (((_) >> 9) & 0x01)
-
-    /**
-     * @brief Direction flag
-     *
-     * Controls string instructions (MOVS, CMPS, SCAS, LODS, and STOS). Setting the DF flag causes the string instructions to
-     * auto-decrement (to process strings from high addresses to low addresses). Clearing the DF flag causes the string
-     * instructions to auto-increment (process strings from low addresses to high addresses).
-     */
-    UINT32 DirectionFlag                                           : 1;
-#define EFLAGS_DIRECTION_FLAG_BIT                                    10
-#define EFLAGS_DIRECTION_FLAG_MASK                                   0x01
-#define EFLAGS_DIRECTION_FLAG(_)                                     (((_) >> 10) & 0x01)
-
-    /**
-     * @brief Overflow flag
-     *
-     * Set if the integer result is too large a positive number or too small a negative number (excluding the sign-bit) to fit
-     * in the destination operand; cleared otherwise. This flag indicates an overflow condition for signed-integer (two's
-     * complement) arithmetic.
-     */
-    UINT32 OverflowFlag                                            : 1;
-#define EFLAGS_OVERFLOW_FLAG_BIT                                     11
-#define EFLAGS_OVERFLOW_FLAG_MASK                                    0x01
-#define EFLAGS_OVERFLOW_FLAG(_)                                      (((_) >> 11) & 0x01)
-
-    /**
-     * @brief I/O privilege level field
-     *
-     * Indicates the I/O privilege level of the currently running program or task. The current privilege level (CPL) of the
-     * currently running program or task must be less than or equal to the I/O privilege level to access the I/O address space.
-     * The POPF and IRET instructions can modify this field only when operating at a CPL of 0.
-     */
-    UINT32 IoPrivilegeLevel                                        : 2;
-#define EFLAGS_IO_PRIVILEGE_LEVEL_BIT                                12
-#define EFLAGS_IO_PRIVILEGE_LEVEL_MASK                               0x03
-#define EFLAGS_IO_PRIVILEGE_LEVEL(_)                                 (((_) >> 12) & 0x03)
-
-    /**
-     * @brief Nested task flag
-     *
-     * Controls the chaining of interrupted and called tasks. Set when the current task is linked to the previously executed
-     * task; cleared when the current task is not linked to another task.
-     */
-    UINT32 NestedTaskFlag                                          : 1;
-#define EFLAGS_NESTED_TASK_FLAG_BIT                                  14
-#define EFLAGS_NESTED_TASK_FLAG_MASK                                 0x01
-#define EFLAGS_NESTED_TASK_FLAG(_)                                   (((_) >> 14) & 0x01)
-    UINT32 Reserved3                                               : 1;
-
-    /**
-     * @brief Resume flag
-     *
-     * Controls the processor's response to debug exceptions.
-     */
-    UINT32 ResumeFlag                                              : 1;
-#define EFLAGS_RESUME_FLAG_BIT                                       16
-#define EFLAGS_RESUME_FLAG_MASK                                      0x01
-#define EFLAGS_RESUME_FLAG(_)                                        (((_) >> 16) & 0x01)
-
-    /**
-     * @brief Virtual-8086 mode flag
-     *
-     * Set to enable virtual-8086 mode; clear to return to protected mode without virtual-8086 mode semantics.
-     */
-    UINT32 Virtual8086ModeFlag                                     : 1;
-#define EFLAGS_VIRTUAL_8086_MODE_FLAG_BIT                            17
-#define EFLAGS_VIRTUAL_8086_MODE_FLAG_MASK                           0x01
-#define EFLAGS_VIRTUAL_8086_MODE_FLAG(_)                             (((_) >> 17) & 0x01)
-
-    /**
-     * @brief Alignment check (or access control) flag
-     *
-     * If the AM bit is set in the CR0 register, alignment checking of user-mode data accesses is enabled if and only if this
-     * flag is 1. If the SMAP bit is set in the CR4 register, explicit supervisor-mode data accesses to user-mode pages are
-     * allowed if and only if this bit is 1.
-     *
-     * @see Vol3A[4.6(ACCESS RIGHTS)]
-     */
-    UINT32 AlignmentCheckFlag                                      : 1;
-#define EFLAGS_ALIGNMENT_CHECK_FLAG_BIT                              18
-#define EFLAGS_ALIGNMENT_CHECK_FLAG_MASK                             0x01
-#define EFLAGS_ALIGNMENT_CHECK_FLAG(_)                               (((_) >> 18) & 0x01)
-
-    /**
-     * @brief Virtual interrupt flag
-     *
-     * Virtual image of the IF flag. Used in conjunction with the VIP flag. (To use this flag and the VIP flag the virtual mode
-     * extensions are enabled by setting the VME flag in control register CR4.)
-     */
-    UINT32 VirtualInterruptFlag                                    : 1;
-#define EFLAGS_VIRTUAL_INTERRUPT_FLAG_BIT                            19
-#define EFLAGS_VIRTUAL_INTERRUPT_FLAG_MASK                           0x01
-#define EFLAGS_VIRTUAL_INTERRUPT_FLAG(_)                             (((_) >> 19) & 0x01)
-
-    /**
-     * @brief Virtual interrupt pending flag
-     *
-     * Set to indicate that an interrupt is pending; clear when no interrupt is pending. (Software sets and clears this flag;
-     * the processor only reads it.) Used in conjunction with the VIF flag.
-     */
-    UINT32 VirtualInterruptPendingFlag                             : 1;
-#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_BIT                    20
-#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_MASK                   0x01
-#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG(_)                     (((_) >> 20) & 0x01)
-
-    /**
-     * @brief Identification flag
-     *
-     * The ability of a program to set or clear this flag indicates support for the CPUID instruction.
-     */
-    UINT32 IdentificationFlag                                      : 1;
-#define EFLAGS_IDENTIFICATION_FLAG_BIT                               21
-#define EFLAGS_IDENTIFICATION_FLAG_MASK                              0x01
-#define EFLAGS_IDENTIFICATION_FLAG(_)                                (((_) >> 21) & 0x01)
-  };
-
-  UINT32 Flags;
-} EFLAGS;
-
-/**
  * @defgroup VMX \
  *           VMX
  * @{
@@ -13949,23 +13480,26 @@ typedef union
  * - The EPT memory type is specified in bits 5:3 of the last EPT paging-structure entry: 0 = UC; 1 = WC; 4 = WT; 5 = WP;
  * and 6 = WB. Other values are reserved and cause EPT misconfigurations.
  * - If CR0.CD = 0, the effective memory type depends upon the value of bit 6 of the last EPT paging-structure entry:
- *   * If the value is 0, the effective memory type is the combination of the EPT memory type and the PAT memory type
- *   specified in Table 11-7 in Section 11.5.2.2, using the EPT memory type in place of the MTRR memory type.
+ *   * If the value is 0, the effective memory type is the combination of the EPT memory type and the PAT memory type,
+ *   using the EPT memory type in place of the MTRR memory type.
  *   * If the value is 1, the memory type used for the access is the EPT memory type. The PAT memory type is ignored.
  * - If CR0.CD = 1, the effective memory type is UC.
  *   The MTRRs have no effect on the memory type used for an access to a guest-physical address.
  *
+ * @see MemoryType.yml
+ * @see Vol3A[11.5.2.2(Selecting Memory Types for Pentium III and More Recent Processor Families)]
  * @see Vol3A[11.12.3(Selecting a Memory Type from the PAT)]
  * @see Vol3C[28.2.3(EPT-Induced VM Exits)]
+ * @see Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))] (reference)
  * @{
  */
-#define UNCACHEABLE                                                  0x00000000
-#define WRITE_COMBINING                                              0x00000001
-#define WRITE_THROUGH                                                0x00000004
-#define WRITE_PROTECTED                                              0x00000005
-#define WRITE_BACK                                                   0x00000006
-#define UNCACHED                                                     0x00000007
-#define INVALID                                                      0x000000FF
+#define EPT_MEMORY_TYPE_UNCACHEABLE                                  0x00000000
+#define EPT_MEMORY_TYPE_WRITE_COMBINING                              0x00000001
+#define EPT_MEMORY_TYPE_WRITE_THROUGH                                0x00000004
+#define EPT_MEMORY_TYPE_WRITE_PROTECTED                              0x00000005
+#define EPT_MEMORY_TYPE_WRITE_BACK                                   0x00000006
+#define EPT_MEMORY_TYPE_UNCACHED                                     0x00000007
+#define EPT_MEMORY_TYPE_INVALID                                      0x000000FF
 /**
  * @}
  */
@@ -15032,6 +14566,532 @@ typedef union
  * @}
  */
 
+/**
+ * @}
+ */
+
+/**
+ * @defgroup APIC \
+ *           Advanced Programmable Interrupt Controller (APIC)
+ *
+ * Software interacts with the local APIC by reading and writing its registers. APIC registers are memory-mapped to a
+ * 4-KByte region of the processor's physical address space with an initial starting address of FEE00000H. For correct APIC
+ * operation, this address space must be mapped to an area of memory that has been designated as strong uncacheable (UC).
+ *
+ * @remarks Registers are 32 bits, 64 bits, or 256 bits in width; all are aligned on 128-bit boundaries. All 32-bit
+ *          registers should be accessed using 128-bit aligned 32-bit loads or stores. Some processors may support loads and stores
+ *          of less than 32 bits to some of the APIC registers. This is model specific behavior and is not guaranteed to work on all
+ *          processors. Any FP/MMX/SSE access to an APIC register, or any access that touches bytes 4 through 15 of an APIC register
+ *          may cause undefined behavior and must not be executed. This undefined behavior could include hangs, incorrect results or
+ *          unexpected exceptions, including machine checks, and may vary between implementations. Wider registers (64-bit or
+ *          256-bit) must be accessed using multiple 32-bit loads or stores, with all accesses being 128-bit aligned.
+ * @see Vol3A[10.4.1(The Local APIC Block Diagram)] (reference)
+ * @{
+ */
+/**
+ * @brief Local APIC Base Address.
+ */
+#define APIC_BASE_ADDRESS                                            0xFEE00000
+
+/**
+ * @brief Local APIC ID Register. <b>(Read/Write)</b>
+ */
+#define APIC_ID                                                      0xFEE00020
+
+/**
+ * @brief Local APIC Version Register. <b>(Read Only)</b>
+ */
+#define APIC_VERSION                                                 0xFEE00030
+
+/**
+ * @brief Task Priority Register (TPR). <b>(Read/Write)</b>
+ */
+#define APIC_TASK_PRIORITY                                           0xFEE00080
+
+/**
+ * @brief Arbitration Priority Register (APR). <b>(Read Only)</b>
+ */
+#define APIC_ARBITRATION_PRIORITY                                    0xFEE00090
+
+/**
+ * @brief Processor Priority Register (PPR). <b>(Read Only)</b>
+ */
+#define APIC_PROCESSOR_PRIORITY                                      0xFEE000A0
+
+/**
+ * @brief EOI Register. <b>(Write Only)</b>
+ */
+#define APIC_EOI                                                     0xFEE000B0
+
+/**
+ * @brief Remote Read Register (RRD). <b>(Read Only)</b>
+ */
+#define APIC_REMOTE_READ                                             0xFEE000C0
+
+/**
+ * @brief Logical Destination Register. <b>(Read/Write)</b>
+ */
+#define APIC_LOGICAL_DESTINATION                                     0xFEE000D0
+
+/**
+ * @brief Destination Format Register. <b>(Read/Write)</b>
+ */
+#define APIC_DESTINATION_FORMAT                                      0xFEE000E0
+
+/**
+ * @brief Spurious Interrupt Vector Register. <b>(Read/Write)</b>
+ */
+#define APIC_SPURIOUS_INTERRUPT_VECTOR                               0xFEE000F0
+
+/**
+ * @brief In-Service Register (ISR); bits 31:0. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_31_0                                    0xFEE00100
+
+/**
+ * @brief In-Service Register (ISR); bits 63:32. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_63_32                                   0xFEE00110
+
+/**
+ * @brief In-Service Register (ISR); bits 95:64. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_95_64                                   0xFEE00120
+
+/**
+ * @brief In-Service Register (ISR); bits 127:96. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_127_96                                  0xFEE00130
+
+/**
+ * @brief In-Service Register (ISR); bits 159:128. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_159_128                                 0xFEE00140
+
+/**
+ * @brief In-Service Register (ISR); bits 191:160. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_191_160                                 0xFEE00150
+
+/**
+ * @brief In-Service Register (ISR); bits 223:192. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_223_192                                 0xFEE00160
+
+/**
+ * @brief In-Service Register (ISR); bits 255:224. <b>(Read Only)</b>
+ */
+#define APIC_IN_SERVICE_BITS_255_224                                 0xFEE00170
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 31:0. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_31_0                                  0xFEE00180
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 63:32. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_63_32                                 0xFEE00190
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 95:64. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_95_64                                 0xFEE001A0
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 127:96. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_127_96                                0xFEE001B0
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 159:128. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_159_128                               0xFEE001C0
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 191:160. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_191_160                               0xFEE001D0
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 223:192. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_223_192                               0xFEE001E0
+
+/**
+ * @brief Trigger Mode Register (TMR); bits 255:224. <b>(Read Only)</b>
+ */
+#define APIC_TRIGGER_MODE_BITS_255_224                               0xFEE001F0
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 31:0. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_31_0                             0xFEE00200
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 63:32. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_63_32                            0xFEE00210
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 95:64. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_95_64                            0xFEE00220
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 127:96. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_127_96                           0xFEE00230
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 159:128. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_159_128                          0xFEE00240
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 191:160. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_191_160                          0xFEE00250
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 223:192. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_223_192                          0xFEE00260
+
+/**
+ * @brief Interrupt Request Register (IRR); bits 255:224. <b>(Read Only)</b>
+ */
+#define APIC_INTERRUPT_REQUEST_BITS_255_224                          0xFEE00270
+
+/**
+ * @brief Error Status Register. <b>(Read Only)</b>
+ */
+#define APIC_ERROR_STATUS                                            0xFEE00280
+
+/**
+ * @brief LVT Corrected Machine Check Interrupt (CMCI) Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_CORRECTED_MACHINE_CHECK_INTERRUPT                   0xFEE002F0
+
+/**
+ * @brief Interrupt Command Register (ICR); bits 0-31. <b>(Read/Write)</b>
+ */
+#define APIC_INTERRUPT_COMMAND_BITS_0_31                             0xFEE00300
+
+/**
+ * @brief Interrupt Command Register (ICR); bits 32-63. <b>(Read/Write)</b>
+ */
+#define APIC_INTERRUPT_COMMAND_BITS_32_63                            0xFEE00310
+
+/**
+ * @brief LVT Timer Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_TIMER                                               0xFEE00320
+
+/**
+ * @brief LVT Thermal Sensor Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_THERMAL_SENSOR                                      0xFEE00330
+
+/**
+ * @brief LVT Performance Monitoring Counters Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_PERFORMANCE_MONITORING_COUNTERS                     0xFEE00340
+
+/**
+ * @brief LVT LINT0 Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_LINT0                                               0xFEE00350
+
+/**
+ * @brief LVT LINT1 Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_LINT1                                               0xFEE00360
+
+/**
+ * @brief LVT Error Register. <b>(Read/Write)</b>
+ */
+#define APIC_LVT_ERROR                                               0xFEE00370
+
+/**
+ * @brief Initial Count Register (for Timer). <b>(Read/Write)</b>
+ */
+#define APIC_INITIAL_COUNT                                           0xFEE00380
+
+/**
+ * @brief Current Count Register (for Timer). <b>(Read Only)</b>
+ */
+#define APIC_CURRENT_COUNT                                           0xFEE00390
+
+/**
+ * @brief Divide Configuration Register (for Timer). <b>(Read/Write)</b>
+ */
+#define APIC_DIVIDE_CONFIGURATION                                    0xFEE003E0
+
+/**
+ * @}
+ */
+
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Carry flag
+     *
+     * Set if an arithmetic operation generates a carry or a borrow out of the mostsignificant bit of the result; cleared
+     * otherwise. This flag indicates an overflow condition for unsigned-integer arithmetic. It is also used in
+     * multiple-precision arithmetic.
+     */
+    UINT32 CarryFlag                                               : 1;
+#define EFLAGS_CARRY_FLAG_BIT                                        0
+#define EFLAGS_CARRY_FLAG_MASK                                       0x01
+#define EFLAGS_CARRY_FLAG(_)                                         (((_) >> 0) & 0x01)
+
+    /**
+     * Reserved - always 1
+     */
+    UINT32 ReadAs1                                                 : 1;
+#define EFLAGS_READ_AS_1_BIT                                         1
+#define EFLAGS_READ_AS_1_MASK                                        0x01
+#define EFLAGS_READ_AS_1(_)                                          (((_) >> 1) & 0x01)
+
+    /**
+     * @brief Parity flag
+     *
+     * Set if the least-significant byte of the result contains an even number of 1 bits; cleared otherwise.
+     */
+    UINT32 ParityFlag                                              : 1;
+#define EFLAGS_PARITY_FLAG_BIT                                       2
+#define EFLAGS_PARITY_FLAG_MASK                                      0x01
+#define EFLAGS_PARITY_FLAG(_)                                        (((_) >> 2) & 0x01)
+    UINT32 Reserved1                                               : 1;
+
+    /**
+     * @brief Auxiliary Carry flag
+     *
+     * Set if an arithmetic operation generates a carry or a borrow out of bit 3 of the result; cleared otherwise. This flag is
+     * used in binary-coded decimal (BCD) arithmetic.
+     */
+    UINT32 AuxiliaryCarryFlag                                      : 1;
+#define EFLAGS_AUXILIARY_CARRY_FLAG_BIT                              4
+#define EFLAGS_AUXILIARY_CARRY_FLAG_MASK                             0x01
+#define EFLAGS_AUXILIARY_CARRY_FLAG(_)                               (((_) >> 4) & 0x01)
+    UINT32 Reserved2                                               : 1;
+
+    /**
+     * @brief Zero flag
+     *
+     * Set if the result is zero; cleared otherwise.
+     */
+    UINT32 ZeroFlag                                                : 1;
+#define EFLAGS_ZERO_FLAG_BIT                                         6
+#define EFLAGS_ZERO_FLAG_MASK                                        0x01
+#define EFLAGS_ZERO_FLAG(_)                                          (((_) >> 6) & 0x01)
+
+    /**
+     * @brief Sign flag
+     *
+     * Set equal to the most-significant bit of the result, which is the sign bit of a signed integer. (0 indicates a positive
+     * value and 1 indicates a negative value.)
+     */
+    UINT32 SignFlag                                                : 1;
+#define EFLAGS_SIGN_FLAG_BIT                                         7
+#define EFLAGS_SIGN_FLAG_MASK                                        0x01
+#define EFLAGS_SIGN_FLAG(_)                                          (((_) >> 7) & 0x01)
+
+    /**
+     * @brief Trap flag
+     *
+     * Set to enable single-step mode for debugging; clear to disable single-step mode.
+     */
+    UINT32 TrapFlag                                                : 1;
+#define EFLAGS_TRAP_FLAG_BIT                                         8
+#define EFLAGS_TRAP_FLAG_MASK                                        0x01
+#define EFLAGS_TRAP_FLAG(_)                                          (((_) >> 8) & 0x01)
+
+    /**
+     * @brief Interrupt enable flag
+     *
+     * Controls the response of the processor to maskable interrupt requests. Set to respond to maskable interrupts; cleared to
+     * inhibit maskable interrupts.
+     */
+    UINT32 InterruptEnableFlag                                     : 1;
+#define EFLAGS_INTERRUPT_ENABLE_FLAG_BIT                             9
+#define EFLAGS_INTERRUPT_ENABLE_FLAG_MASK                            0x01
+#define EFLAGS_INTERRUPT_ENABLE_FLAG(_)                              (((_) >> 9) & 0x01)
+
+    /**
+     * @brief Direction flag
+     *
+     * Controls string instructions (MOVS, CMPS, SCAS, LODS, and STOS). Setting the DF flag causes the string instructions to
+     * auto-decrement (to process strings from high addresses to low addresses). Clearing the DF flag causes the string
+     * instructions to auto-increment (process strings from low addresses to high addresses).
+     */
+    UINT32 DirectionFlag                                           : 1;
+#define EFLAGS_DIRECTION_FLAG_BIT                                    10
+#define EFLAGS_DIRECTION_FLAG_MASK                                   0x01
+#define EFLAGS_DIRECTION_FLAG(_)                                     (((_) >> 10) & 0x01)
+
+    /**
+     * @brief Overflow flag
+     *
+     * Set if the integer result is too large a positive number or too small a negative number (excluding the sign-bit) to fit
+     * in the destination operand; cleared otherwise. This flag indicates an overflow condition for signed-integer (two's
+     * complement) arithmetic.
+     */
+    UINT32 OverflowFlag                                            : 1;
+#define EFLAGS_OVERFLOW_FLAG_BIT                                     11
+#define EFLAGS_OVERFLOW_FLAG_MASK                                    0x01
+#define EFLAGS_OVERFLOW_FLAG(_)                                      (((_) >> 11) & 0x01)
+
+    /**
+     * @brief I/O privilege level field
+     *
+     * Indicates the I/O privilege level of the currently running program or task. The current privilege level (CPL) of the
+     * currently running program or task must be less than or equal to the I/O privilege level to access the I/O address space.
+     * The POPF and IRET instructions can modify this field only when operating at a CPL of 0.
+     */
+    UINT32 IoPrivilegeLevel                                        : 2;
+#define EFLAGS_IO_PRIVILEGE_LEVEL_BIT                                12
+#define EFLAGS_IO_PRIVILEGE_LEVEL_MASK                               0x03
+#define EFLAGS_IO_PRIVILEGE_LEVEL(_)                                 (((_) >> 12) & 0x03)
+
+    /**
+     * @brief Nested task flag
+     *
+     * Controls the chaining of interrupted and called tasks. Set when the current task is linked to the previously executed
+     * task; cleared when the current task is not linked to another task.
+     */
+    UINT32 NestedTaskFlag                                          : 1;
+#define EFLAGS_NESTED_TASK_FLAG_BIT                                  14
+#define EFLAGS_NESTED_TASK_FLAG_MASK                                 0x01
+#define EFLAGS_NESTED_TASK_FLAG(_)                                   (((_) >> 14) & 0x01)
+    UINT32 Reserved3                                               : 1;
+
+    /**
+     * @brief Resume flag
+     *
+     * Controls the processor's response to debug exceptions.
+     */
+    UINT32 ResumeFlag                                              : 1;
+#define EFLAGS_RESUME_FLAG_BIT                                       16
+#define EFLAGS_RESUME_FLAG_MASK                                      0x01
+#define EFLAGS_RESUME_FLAG(_)                                        (((_) >> 16) & 0x01)
+
+    /**
+     * @brief Virtual-8086 mode flag
+     *
+     * Set to enable virtual-8086 mode; clear to return to protected mode without virtual-8086 mode semantics.
+     */
+    UINT32 Virtual8086ModeFlag                                     : 1;
+#define EFLAGS_VIRTUAL_8086_MODE_FLAG_BIT                            17
+#define EFLAGS_VIRTUAL_8086_MODE_FLAG_MASK                           0x01
+#define EFLAGS_VIRTUAL_8086_MODE_FLAG(_)                             (((_) >> 17) & 0x01)
+
+    /**
+     * @brief Alignment check (or access control) flag
+     *
+     * If the AM bit is set in the CR0 register, alignment checking of user-mode data accesses is enabled if and only if this
+     * flag is 1. If the SMAP bit is set in the CR4 register, explicit supervisor-mode data accesses to user-mode pages are
+     * allowed if and only if this bit is 1.
+     *
+     * @see Vol3A[4.6(ACCESS RIGHTS)]
+     */
+    UINT32 AlignmentCheckFlag                                      : 1;
+#define EFLAGS_ALIGNMENT_CHECK_FLAG_BIT                              18
+#define EFLAGS_ALIGNMENT_CHECK_FLAG_MASK                             0x01
+#define EFLAGS_ALIGNMENT_CHECK_FLAG(_)                               (((_) >> 18) & 0x01)
+
+    /**
+     * @brief Virtual interrupt flag
+     *
+     * Virtual image of the IF flag. Used in conjunction with the VIP flag. (To use this flag and the VIP flag the virtual mode
+     * extensions are enabled by setting the VME flag in control register CR4.)
+     */
+    UINT32 VirtualInterruptFlag                                    : 1;
+#define EFLAGS_VIRTUAL_INTERRUPT_FLAG_BIT                            19
+#define EFLAGS_VIRTUAL_INTERRUPT_FLAG_MASK                           0x01
+#define EFLAGS_VIRTUAL_INTERRUPT_FLAG(_)                             (((_) >> 19) & 0x01)
+
+    /**
+     * @brief Virtual interrupt pending flag
+     *
+     * Set to indicate that an interrupt is pending; clear when no interrupt is pending. (Software sets and clears this flag;
+     * the processor only reads it.) Used in conjunction with the VIF flag.
+     */
+    UINT32 VirtualInterruptPendingFlag                             : 1;
+#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_BIT                    20
+#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_MASK                   0x01
+#define EFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG(_)                     (((_) >> 20) & 0x01)
+
+    /**
+     * @brief Identification flag
+     *
+     * The ability of a program to set or clear this flag indicates support for the CPUID instruction.
+     */
+    UINT32 IdentificationFlag                                      : 1;
+#define EFLAGS_IDENTIFICATION_FLAG_BIT                               21
+#define EFLAGS_IDENTIFICATION_FLAG_MASK                              0x01
+#define EFLAGS_IDENTIFICATION_FLAG(_)                                (((_) >> 21) & 0x01)
+  };
+
+  UINT32 Flags;
+} EFLAGS;
+
+/**
+ * @defgroup MEMORY_TYPE \
+ *           Memory caching type
+ *
+ * The processor allows any area of system memory to be cached in the L1, L2, and L3 caches. In individual pages or regions
+ * of system memory, it allows the type of caching (also called memory type) to be specified
+ *
+ * @see Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
+ * @see Vol3A[11.5(CACHE CONTROL)]
+ * @see Vol3A[11.3(METHODS OF CACHING AVAILABLE)] (reference)
+ * @{
+ */
+/**
+ * @brief System memory locations are not cached. All reads and writes appear on the system bus and are executed in program
+ *        order without reordering. No speculative memory accesses, pagetable walks, or prefetches of speculated branch targets
+ *        are made. This type of cache-control is useful for memory-mapped I/O devices. When used with normal RAM, it greatly
+ *        reduces processor performance.
+ */
+#define MEMORY_TYPE_UNCACHEABLE                                      0x00000000
+
+/**
+ * @brief System memory locations are not cached (as with uncacheable memory) and coherency is not enforced by the
+ *        processor's bus coherency protocol. Speculative reads are allowed. Writes may be delayed and combined in the write
+ *        combining buffer (WC buffer) to reduce memory accesses. If the WC buffer is partially filled, the writes may be delayed
+ *        until the next occurrence of a serializing event; such as, an SFENCE or MFENCE instruction, CPUID execution, a read or
+ *        write to uncached memory, an interrupt occurrence, or a LOCK instruction execution. This type of cache-control is
+ *        appropriate for video frame buffers, where the order of writes is unimportant as long as the writes update memory so
+ *        they can be seen on the graphics display. This memory type is available in the Pentium Pro and Pentium II processors by
+ *        programming the MTRRs; or in processor families starting from the Pentium III processors by programming the MTRRs or by
+ *        selecting it through the PAT.
+ */
+#define MEMORY_TYPE_WRITE_COMBINING                                  0x00000001
+
+/**
+ * @brief Writes and reads to and from system memory are cached. Reads come from cache lines on cache hits; read misses
+ *        cause cache fills. Speculative reads are allowed. All writes are written to a cache line (when possible) and through to
+ *        system memory. When writing through to memory, invalid cache lines are never filled, and valid cache lines are either
+ *        filled or invalidated. Write combining is allowed. This type of cache-control is appropriate for frame buffers or when
+ *        there are devices on the system bus that access system memory, but do not perform snooping of memory accesses. It
+ *        enforces coherency between caches in the processors and system memory.
+ */
+#define MEMORY_TYPE_WRITE_THROUGH                                    0x00000004
+
+#define MEMORY_TYPE_WRITE_PROTECTED                                  0x00000005
+/**
+ * @brief Reads come from cache lines when possible, and read misses cause cache fills. Writes are propagated to the system
+ *        bus and cause corresponding cache lines on all processors on the bus to be invalidated. Speculative reads are allowed.
+ *        This memory type is available in processor families starting from the P6 family processors by programming the MTRRs.
+ */
+#define MEMORY_TYPE_WRITE_BACK                                       0x00000006
+
+#define MEMORY_TYPE_UNCACHED                                         0x00000007
+#define MEMORY_TYPE_INVALID                                          0x000000FF
 /**
  * @}
  */

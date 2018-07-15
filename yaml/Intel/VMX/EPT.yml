@@ -534,7 +534,7 @@
     - Value: 512
       Name: PDE_ENTRY_COUNT
 
-  - Name: EPT_MEMORY_TYPE
+  - Name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
     ShortDescription: EPT memory type.
     LongDescription: |
       The effective memory type of a memory access using a guest-physical address (an access that is translated
@@ -555,7 +555,7 @@
         entry:
 
         * If the value is 0, the effective memory type is the combination of the EPT memory type and the PAT
-          memory type specified in Table 11-7 in Section 11.5.2.2, using the EPT memory type in place of the MTRR
+          memory type, using the EPT memory type in place of the MTRR
           memory type.
 
         * If the value is 1, the memory type used for the access is the EPT memory type. The PAT memory type is
@@ -564,10 +564,14 @@
       - If CR0.CD = 1, the effective memory type is UC.
 
         The MTRRs have no effect on the memory type used for an access to a guest-physical address.
+    ChildrenNameWithPrefix: EPT_MEMORY_TYPE
     Type: Group
     SeeAlso:
+    - MemoryType.yml
+    - Vol3A[11.5.2.2(Selecting Memory Types for Pentium III and More Recent Processor Families)]
     - Vol3A[11.12.3(Selecting a Memory Type from the PAT)]
     - Vol3C[28.2.3(EPT-Induced VM Exits)]
+    Reference: Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
     Fields:
     - Value: 0
       ShortName: UC

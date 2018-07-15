@@ -10,6 +10,7 @@
   - CPUID
   - ModelSpecificRegisters
   - SegmentDescriptors
+  - VMX
   - APIC
   - EFLAGS
-  - VMX
+  - MemoryType
