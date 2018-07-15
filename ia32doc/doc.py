@@ -63,12 +63,13 @@ class Doc(object):
 
     @staticmethod
     def parse(path: str, parent: DocBase=None) -> List[DocBase]:
-        log_message = f'Parsing "{path}"...' if not parent else \
-                      f'Parsing "{path}" (included from "{parent.path}")...'
+        log_message = f'Parsing "{path}"...'
+        #if not parent else \
+        #f'Parsing "{path}" (included from "{parent.path}")...'
 
         if path in Doc.doc_cache:
             log_message += f'(cached)'
-            log(log_message)
+            #log(log_message)
 
             doc_list = Doc.doc_cache[path]
         else:
