@@ -2,7 +2,7 @@
   ShortDescription: Memory caching type.
   LongDescription: |
     The processor allows any area of system memory to be cached in the L1, L2, and L3 caches. In individual pages or
-    regions of system memory, it allows the type of caching (also called memory type) to be specified
+    regions of system memory, it allows the type of caching (also called memory type) to be specified.
   ChildrenNameWithPrefix: MEMORY_TYPE
   Type: Group
   SeeAlso:
