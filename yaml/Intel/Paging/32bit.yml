@@ -6,7 +6,7 @@
     32 bits; at most 4 GBytes of linear-address space may be accessed at any given time.
 
     32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to
-    locate the first paging-structure, the page directory. Table 4-3 illustrates how CR3 is used with 32-bit paging.
+    locate the first paging-structure, the page directory.
     32-bit paging may map linear addresses to either 4-KByte pages or 4-MByte pages.
   ChildrenNameWithPostfix: 32
   Type: Group
