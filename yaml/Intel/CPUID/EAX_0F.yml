@@ -1,7 +1,7 @@
-- ShortName: EAX_0F
-  LongName: EAX_0F
-  ShortDescription: EAX = 0x0F
-  LongDescription: |
+- short_name: EAX_0F
+  long_name: EAX_0F
+  short_description: EAX = 0x0F
+  long_description: |
     When CPUID executes with EAX set to 0FH and ECX = 0, the processor returns information about the bit-vector
     representation of QoS monitoring resource types that are supported in the processor and maximum range of RMID
     values the processor can use to monitor of any supported resource types. Each bit, starting from bit 1, corresponds
@@ -11,7 +11,7 @@
     When CPUID executes with EAX set to 0FH and ECX = n (n >= 1, and is a valid ResID), the processor returns information
     software can use to program IA32_PQR_ASSOC, IA32_QM_EVTSEL MSRs before reading QoS data from the
     IA32_QM_CTR MSR.
-  Type: Group
-  Include:
+  type: group
+  include:
   - EAX_0F_ECX_00
   - EAX_0F_ECX_01

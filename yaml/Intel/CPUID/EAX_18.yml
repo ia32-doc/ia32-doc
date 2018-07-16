@@ -1,10 +1,10 @@
-- ShortName: EAX_18
-  LongName: EAX_18
-  ShortDescription: EAX = 0x18
-  LongDescription: |
+- short_name: EAX_18
+  long_name: EAX_18
+  short_description: EAX = 0x18
+  long_description: |
     When CPUID executes with EAX set to 18H, the processor returns information about the Deterministic Address
     Translation Parameters.
-  Type: Group
-  Include:
+  type: group
+  include:
   - EAX_18_ECX_00
   - EAX_18_ECX_01P

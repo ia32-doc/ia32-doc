@@ -15,6 +15,11 @@ but you can expect limited set of definitions which are often poorly documented 
 **[For this](out/ia32.h)**. For your hobby OS. For your hobby hypervisor. For your experiments
 with APIC, various MSRs, SGX, performance counters, you name it.
 
+### Usage
+```
+$ python3 main.py -c conf/default.yml -f yaml/Intel/index.yml
+```
+
 ### FAQ
 
 ##### Are there definitions for 32-bit or 64-bit CPU?
@@ -54,10 +59,11 @@ Look into [yaml/Intel](yaml/Intel) directory. Currently there are transcribed:
 - Memory types (UC/WC/WT/WP/WB)
 
 ##### I don't like the use of UINT*/CamelCase/Doxygen, what should I do?
-To change naming of integers, use `int_types` in [ia32doc/doc.py](ia32doc/doc.py).
+To change naming of integers, change `int_type_*` values in [conf/default.yml](conf/default.yml).
 
-To change anything related to the output file, you have to modify [`DocProcessor` class](ia32doc/processor.py).
-I agree that application with command-line switches for this purpose would be awesome.
+To change anything related to the output file, you have to modify [`DocCProcessor` class](ia32doc/processors/c_processor.py).
+
+To create new "yaml document processor" (e.g. for Rust), derive [`DocProcessor` class](ia32doc/processors/base.py).
 
 ##### I'd like to add new yaml definitions, what should I do?
 Look at [yaml/template.yml](yaml/template.yml) to better understand the format.

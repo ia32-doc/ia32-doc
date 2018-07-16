@@ -1,45 +1,45 @@
-- ShortName: EAX_14_ECX_01
-  LongName: EAX_14_ECX_01
-  Description: Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1).
-  Todo: Names
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-2
-      Name: NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING
-      Description: Number of configurable Address Ranges for filtering.
+- short_name: EAX_14_ECX_01
+  long_name: EAX_14_ECX_01
+  description: Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1).
+  todo: Names
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-2
+      name: NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING
+      description: Number of configurable Address Ranges for filtering.
 
-    - Bit: 16-31
-      Name: BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS
-      Description: Bitmap of supported MTC period encodings.
+    - bit: 16-31
+      name: BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS
+      description: Bitmap of supported MTC period encodings.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS
-      Description: Bitmap of supported Cycle Threshold value encodings.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS
+      description: Bitmap of supported Cycle Threshold value encodings.
 
-    - Bit: 16-31
-      Name: BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS
-      Description: Bitmap of supported Configurable PSB frequency encodings.
+    - bit: 16-31
+      name: BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS
+      description: Bitmap of supported Configurable PSB frequency encodings.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: ECX is reserved.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: ECX is reserved.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.

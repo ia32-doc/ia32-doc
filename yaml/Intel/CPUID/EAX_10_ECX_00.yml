@@ -1,48 +1,48 @@
-- ShortName: EAX_10_ECX_00
-  LongName: EAX_10_ECX_00
-  Description: Intel Resource Director Technology (Intel RDT) Allocation Enumeration Sub-leaf (EAX = 10H, ECX = 0).
-  Note: |
+- short_name: EAX_10_ECX_00
+  long_name: EAX_10_ECX_00
+  description: Intel Resource Director Technology (Intel RDT) Allocation Enumeration Sub-leaf (EAX = 10H, ECX = 0).
+  note: |
     Leaf 10H output depends on the initial value in ECX.
     Sub-leaf index 0 reports valid resource identification (ResID) starting at bit position 1 of EBX.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: IA32_PLATFORM_DCA_CAP
-      Description: Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H).
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: IA32_PLATFORM_DCA_CAP
+      description: Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H).
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 1
-      Name: SUPPORTS_L3_CACHE_ALLOCATION_TECHNOLOGY
-      Description: Supports L3 Cache Allocation Technology if 1.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 1
+      name: SUPPORTS_L3_CACHE_ALLOCATION_TECHNOLOGY
+      description: Supports L3 Cache Allocation Technology if 1.
 
-    - Bit: 2
-      Name: SUPPORTS_L2_CACHE_ALLOCATION_TECHNOLOGY
-      Description: Supports L2 Cache Allocation Technology if 1.
+    - bit: 2
+      name: SUPPORTS_L2_CACHE_ALLOCATION_TECHNOLOGY
+      description: Supports L2 Cache Allocation Technology if 1.
 
-    - Bit: 3
-      Name: SUPPORTS_MEMORY_BANDWIDTH_ALLOCATION
-      Description: Supports Memory Bandwidth Allocation if 1.
+    - bit: 3
+      name: SUPPORTS_MEMORY_BANDWIDTH_ALLOCATION
+      description: Supports Memory Bandwidth Allocation if 1.
 
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: ECX is reserved.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: ECX is reserved.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.

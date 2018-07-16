@@ -1,27 +1,41 @@
+#
+# Guidelines for writing YAML documents.
+# ======================================
+#
+#   - Try to keep ordering of the fields as is presented here
+#     in this document.
+#
+#
 
+#
+# Base type
+# ---------
+#
+#   - These fields are common for each YAML object type.
+#
 
-YamlObject:
-- ShortName: WC                           # General short name
-  LongName: WC_SUPPORTED                  # General long name
-  OriginalShortName: Wc                   # Suggested short name (by document/manual)
-  OriginalLongName: (Wc)_Supported        # Suggested long name (by document/manual)
+- short_name: WC                           # General short name
+  long_name: WC_SUPPORTED                  # General long name
+  original_short_name: Wc                   # Suggested short name (by document/manual)
+  original_long_name: (Wc)_Supported        # Suggested long name (by document/manual)
                                           #   Note that text in parentheses is used as hint
                                           #   to keep case-sensitivity
-  AlternativeShortName: WRITE_COMBINED    # Author's subjective best (descriptive) short name
-  AlternativeLongName: WRITE_COMBINED     # Author's subjective best (descriptive) long name
+  alternative_short_name: WRITE_COMBINED    # Author's subjective best (descriptive) short name
+  alternative_long_name: WRITE_COMBINED     # Author's subjective best (descriptive) long name
 
-  NameWithPostfix: REGISTER               # Appended to parent's name (used in groups)
+  name_with_postfix: REGISTER               # Appended to parent's name (used in groups)
 
-  ShortDescription: Description doesn't end with dot
-  LongDescription: |
-    Description ends with dot.
-  Description: Description is used as both long/short. Ends with dot.
+  short_description: Description doesn't end with dot
+  long_description: |
+    Description must end with dot.
+  description: Description is used as both long/short. Can be multiline. Must end with dot.
 
-  ChildrenNameWithPrefix: GUEST           # Prepend to children's name (used in groups)
-  ChildrenNameWithPostfix: REGISTER       # Appended to children's name (used in groups)
+  children_name_with_prefix: GUEST           # Prepend to children's name (used in groups)
+  children_name_with_postfix: REGISTER       # Appended to children's name (used in groups)
                                           # Use '$' for "Name".
 
-  Note:                                   # Additional notes.
+  note: |                                 # Additional notes.
+    Add one to the return value to get the result.
 
   #
   # Note:
@@ -34,42 +48,42 @@ YamlObject:
   #   Example: IA32_PMC(n)
   #
 
-  Access: RO                              # Access tag
-  Todo: REVIEW!!!                         # Todo tag
-  Tag: BOOKMARK                           # General tag
+  access: RO                              # Access tag
+  todo: REVIEW!!!                         # Todo tag
+  tag: BOOKMARK                           # General tag
 
-  Type: [Group|Definition|Enum|Struct|Bitfield] # Type of the object
-  AlternativeType: [Struct|Bitfield]      # Alternative type of the object
+  type: [group|definition|enum|struct|bitfield] # Type of the object
+  alternative_type: [Struct|Bitfield]      # Alternative type of the object
 
-  Size: [Bytes|Bits]                      # Size of the object
+  size: [Bytes|Bits]                      # Size of the object
 
-  Remarks: 06_01H                         # Additional notes
-  SeeAlso: Vol3A[4.6(ACCESS RIGHTS)]      # Additional references in Description
-  Reference: VolXY[A.B.C(Chapter Name)]   # Where the Name/Description can be found.
+  remarks: 06_01H                         # Additional notes
+  see: Vol3A[4.6(ACCESS RIGHTS)]      # Additional references in Description
+  reference: VolXY[A.B.C(Chapter Name)]   # Where the Name/Description can be found.
 
   #
   # List of children fields.
   #
-  Fields:
+  fields:
     [...YamlObject]
-    Bits: N-M
+    bit: N-M
 
   #
   # Include these (appended to Fields).
   #
-  Include:
+  include:
   - FilenameWithoutExt1
   - FilenameWithoutExt2
 
 DefinitionField:
-  Value: 0xABCD
+  value: 0xABCD
   [...YamlObject]
 
 StructField:
-  Size: N # Bytes
+  size: N # Bytes
   [...YamlObject]
 
 BitfieldField:
-  Bit: [N|N-M] # Bit or bit range
+  bit: [N|N-M] # Bit or bit range
   [...YamlObject]
 

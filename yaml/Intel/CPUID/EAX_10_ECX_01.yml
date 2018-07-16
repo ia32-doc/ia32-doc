@@ -1,38 +1,38 @@
-- ShortName: EAX_10_ECX_01
-  LongName: EAX_10_ECX_01
-  Description: L3 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 1).
-  Note: |
+- short_name: EAX_10_ECX_01
+  long_name: EAX_10_ECX_01
+  description: L3 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 1).
+  note: |
     Leaf 10H output depends on the initial value in ECX.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-4
-      Name: LENGTH_OF_CAPACITY_BIT_MASK
-      Description: Length of the capacity bit mask for the corresponding ResID using minus-one notation.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-4
+      name: LENGTH_OF_CAPACITY_BIT_MASK
+      description: Length of the capacity bit mask for the corresponding ResID using minus-one notation.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: EBX_0 # TODO
-      Description: Bit-granular map of isolation/contention of allocation units.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: EBX_0 # TODO
+      description: Bit-granular map of isolation/contention of allocation units.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 2
-      Name: CODE_AND_DATA_PRIORIZATION_TECHNOLOGY_SUPPORTED
-      Description: Code and Data Prioritization Technology supported if 1.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 2
+      name: CODE_AND_DATA_PRIORIZATION_TECHNOLOGY_SUPPORTED
+      description: Code and Data Prioritization Technology supported if 1.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: HIGHEST_COS_NUMBER_SUPPORTED
-      Description: Highest COS number supported for this ResID.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: HIGHEST_COS_NUMBER_SUPPORTED
+      description: Highest COS number supported for this ResID.

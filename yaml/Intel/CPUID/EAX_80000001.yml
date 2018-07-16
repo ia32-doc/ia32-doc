@@ -1,63 +1,63 @@
-- ShortName: EAX_80000001
-  LongName: EAX_80000001
-  Description: Extended Function CPUID Information.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EAX is reserved.
+- short_name: EAX_80000001
+  long_name: EAX_80000001
+  description: Extended Function CPUID Information.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EAX is reserved.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EBX is reserved.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EBX is reserved.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: LAHF_SAHF_AVAILABLE_IN_64_BIT_MODE
-      Description: LAHF/SAHF available in 64-bit mode.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: LAHF_SAHF_AVAILABLE_IN_64_BIT_MODE
+      description: LAHF/SAHF available in 64-bit mode.
 
-    - Bit: 5
-      Name: LZCNT
-      Description: LZCNT.
+    - bit: 5
+      name: LZCNT
+      description: LZCNT.
 
-    - Bit: 8
-      Name: PREFETCHW
-      Description: PREFETCHW.
+    - bit: 8
+      name: PREFETCHW
+      description: PREFETCHW.
 
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 11
-      Name: SYSCALL_SYSRET_AVAILABLE_IN_64_BIT_MODE
-      Description: SYSCALL/SYSRET available in 64-bit mode.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 11
+      name: SYSCALL_SYSRET_AVAILABLE_IN_64_BIT_MODE
+      description: SYSCALL/SYSRET available in 64-bit mode.
 
-    - Bit: 20
-      ShortName: XD_AVAILABLE # NX_AVAILABLE
-      LongName: EXECUTE_DISABLE_BIT_AVAILABLE
-      Description: Execute Disable Bit available.
+    - bit: 20
+      short_name: XD_AVAILABLE # NX_AVAILABLE
+      long_name: EXECUTE_DISABLE_BIT_AVAILABLE
+      description: Execute Disable Bit available.
 
-    - Bit: 26
-      Name: PAGES_1GB_AVAILABLE
-      Description: 1-GByte pages are available if 1.
+    - bit: 26
+      name: PAGES_1GB_AVAILABLE
+      description: 1-GByte pages are available if 1.
 
-    - Bit: 27
-      Name: RDTSCP_AVAILABLE
-      Description: RDTSCP and IA32_TSC_AUX are available if 1.
+    - bit: 27
+      name: RDTSCP_AVAILABLE
+      description: RDTSCP and IA32_TSC_AUX are available if 1.
 
-    - Bit: 29
-      Name: IA64_AVAILABLE
-      Description: Intel® 64 Architecture available if 1.
+    - bit: 29
+      name: IA64_AVAILABLE
+      description: Intel® 64 Architecture available if 1.
 

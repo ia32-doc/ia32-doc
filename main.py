@@ -1,27 +1,33 @@
-from contextlib import redirect_stdout
+import argparse
 
 from ia32doc.doc import Doc
-from ia32doc.processor import DocProcessor
+from ia32doc.processors.c_processor import DocCProcessor
+from ia32doc.options import DocProcessorOptions
 
 
 def main():
-    processor = DocProcessor()
+    parser = argparse.ArgumentParser()
 
-    doc_list = Doc.parse('yaml/Intel/index.yml')
-    #doc_list = Doc.parse('yaml/Intel/CPUID/index.yml')
-    #doc_list = Doc.parse('yaml/Intel/VMX/index.yml')
+    parser.add_argument('-c', '--config',
+                        type=str, required=False,
+                        default='conf/default.yml',
+                        help='Configuration file')
 
-    with open('out/ia32.h', 'w') as f:
-        with redirect_stdout(f):
-            print(f'/** @file */')
-            print(f'#pragma once')
-            print(f'typedef unsigned char       UINT8;')
-            print(f'typedef unsigned short      UINT16;')
-            print(f'typedef unsigned int        UINT32;')
-            print(f'typedef unsigned long long  UINT64;')
-            print(f'')
+    parser.add_argument('-f', '--file',
+                        type=str, required=True,
+                        help='YAML file to process')
 
-            processor.process(doc_list)
+    args = parser.parse_args()
+
+    # doc_list = Doc.parse('yaml/Intel/index.yml')
+    # doc_list = Doc.parse('yaml/Intel/CPUID/index.yml')
+    # doc_list = Doc.parse('yaml/Intel/VMX/index.yml')
+    doc_list = Doc.parse(args.file)
+
+    processor = DocCProcessor()
+    options = DocProcessorOptions(file=args.config)
+    with processor.opt.push(options):
+        processor.run(doc_list)
 
 
 if __name__ == '__main__':

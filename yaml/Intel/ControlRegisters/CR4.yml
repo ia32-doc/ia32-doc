@@ -1,12 +1,12 @@
-- Name: CR4
-  Type: Bitfield
-  Size: [ 32, 64 ]
-  Fields:
-  - Bit: 0
-    ShortName: VME
-    LongName: VIRTUAL_MODE_EXTENSIONS
-    ShortDescription: Virtual-8086 Mode Extensions
-    LongDescription: |
+- name: CR4
+  type: bitfield
+  size: [ 32, 64 ]
+  fields:
+  - bit: 0
+    short_name: VME
+    long_name: VIRTUAL_MODE_EXTENSIONS
+    short_description: Virtual-8086 Mode Extensions
+    long_description: |
       Enables interrupt- and exception-handling extensions
       in virtual-8086 mode when set; disables the extensions when clear. Use of the virtual mode extensions can
       improve the performance of virtual-8086 applications by eliminating the overhead of calling the virtual-
@@ -14,69 +14,69 @@
       instead, redirecting the interrupts and exceptions back to the 8086 program’s handlers. It also provides
       hardware support for a virtual interrupt flag (VIF) to improve reliability of running 8086 programs in multitasking
       and multiple-processor environments.
-    SeeAlso: Vol3B[20.3(INTERRUPT AND EXCEPTION HANDLING IN VIRTUAL-8086 MODE)]
+    see: Vol3B[20.3(INTERRUPT AND EXCEPTION HANDLING IN VIRTUAL-8086 MODE)]
 
-  - Bit: 1
-    ShortName: PVI
-    LongName: PROTECTED_MODE_VIRTUAL_INTERRUPTS
-    ShortDescription: Protected-Mode Virtual Interrupts
-    LongDescription: |
+  - bit: 1
+    short_name: PVI
+    long_name: PROTECTED_MODE_VIRTUAL_INTERRUPTS
+    short_description: Protected-Mode Virtual Interrupts
+    long_description: |
       Enables hardware support for a virtual interrupt
       flag (VIF) in protected mode when set; disables the VIF flag in protected mode when clear.
-    SeeAlso: Vol3B[20.4(PROTECTED-MODE VIRTUAL INTERRUPTS)]
+    see: Vol3B[20.4(PROTECTED-MODE VIRTUAL INTERRUPTS)]
 
-  - Bit: 2
-    ShortName: TSD
-    LongName: TIMESTAMP_DISABLE
-    ShortDescription: Time Stamp Disable
-    LongDescription: |
+  - bit: 2
+    short_name: TSD
+    long_name: TIMESTAMP_DISABLE
+    short_description: Time Stamp Disable
+    long_description: |
       Restricts the execution of the RDTSC instruction to procedures
       running at privilege level 0 when set; allows RDTSC instruction to be executed at any privilege level when
       clear. This bit also applies to the RDTSCP instruction if supported (if CPUID.80000001H:EDX[27] = 1).
 
-  - Bit: 3
-    ShortName: DE
-    LongName: DEBUGGING_EXTENSIONS
-    ShortDescription: Debugging Extensions
-    LongDescription: |
+  - bit: 3
+    short_name: DE
+    long_name: DEBUGGING_EXTENSIONS
+    short_description: Debugging Extensions
+    long_description: |
       References to debug registers DR4 and DR5 cause an undefined
       opcode (#UD) exception to be generated when set; when clear, processor aliases references to registers
       DR4 and DR5 for compatibility with software written to run on earlier IA-32 processors.
-    SeeAlso: Vol3B[17.2.2(Debug Registers DR4 and DR5)]
+    see: Vol3B[17.2.2(Debug Registers DR4 and DR5)]
 
-  - Bit: 4
-    ShortName: PSE
-    LongName: PAGE_SIZE_EXTENSIONS
-    ShortDescription: Page Size Extensions
-    LongDescription: |
+  - bit: 4
+    short_name: PSE
+    long_name: PAGE_SIZE_EXTENSIONS
+    short_description: Page Size Extensions
+    long_description: |
       Enables 4-MByte pages with 32-bit paging when set; restricts
       32-bit paging to pages of 4 KBytes when clear.
-    SeeAlso: Vol3A[4.3(32-BIT PAGING)]
+    see: Vol3A[4.3(32-BIT PAGING)]
 
-  - Bit: 5
-    ShortName: PAE
-    LongName: PHYSICAL_ADDRESS_EXTENSION
-    ShortDescription: Physical Address Extension
-    LongDescription: |
+  - bit: 5
+    short_name: PAE
+    long_name: PHYSICAL_ADDRESS_EXTENSION
+    short_description: Physical Address Extension
+    long_description: |
       When set, enables paging to produce physical addresses
       with more than 32 bits. When clear, restricts physical addresses to 32 bits. PAE must be set before entering
       IA-32e mode.
-    SeeAlso: Vol3A[4(PAGING)]
+    see: Vol3A[4(PAGING)]
 
-  - Bit: 6
-    ShortName: MCE
-    LongName: MACHINE_CHECK_ENABLE
-    ShortDescription: Machine-Check Enable
-    LongDescription: |
+  - bit: 6
+    short_name: MCE
+    long_name: MACHINE_CHECK_ENABLE
+    short_description: Machine-Check Enable
+    long_description: |
       Enables the machine-check exception when set; disables the
       machine-check exception when clear.
-    SeeAlso: Vol3B[15(MACHINE-CHECK ARCHITECTURE)]
+    see: Vol3B[15(MACHINE-CHECK ARCHITECTURE)]
 
-  - Bit: 7
-    ShortName: PGE
-    LongName: PAGE_GLOBAL_ENABLE
-    ShortDescription: Page Global Enable
-    LongDescription: |
+  - bit: 7
+    short_name: PGE
+    long_name: PAGE_GLOBAL_ENABLE
+    short_description: Page Global Enable
+    long_description: |
       (Introduced in the P6 family processors.) Enables the global page
       feature when set; disables the global page feature when clear. The global page feature allows frequently
       used or shared pages to be marked as global to all users (done with the global flag, bit 8, in a page-directory
@@ -85,22 +85,22 @@
       When enabling the global page feature, paging must be enabled (by setting the PG flag in control register
       CR0) before the PGE flag is set. Reversing this sequence may affect program correctness, and processor
       performance will be impacted.
-    SeeAlso: Vol3A[4.10(CACHING TRANSLATION INFORMATION)]
+    see: Vol3A[4.10(CACHING TRANSLATION INFORMATION)]
 
-  - Bit: 8
-    ShortName: PCE
-    LongName: PERFORMANCE_MONITORING_COUNTER_ENABLE
-    ShortDescription: Performance-Monitoring Counter Enable
-    LongDescription: |
+  - bit: 8
+    short_name: PCE
+    long_name: PERFORMANCE_MONITORING_COUNTER_ENABLE
+    short_description: Performance-Monitoring Counter Enable
+    long_description: |
       Enables execution of the RDPMC instruction
       for programs or procedures running at any protection level when set; RDPMC instruction can be
       executed only at protection level 0 when clear.
 
-  - Bit: 9
-    ShortName: OSFXSR
-    LongName: OS_FXSAVE_FXRSTOR_SUPPORT
-    ShortDescription: Operating System Support for FXSAVE and FXRSTOR instructions
-    LongDescription: |
+  - bit: 9
+    short_name: OSFXSR
+    long_name: OS_FXSAVE_FXRSTOR_SUPPORT
+    short_description: Operating System Support for FXSAVE and FXRSTOR instructions
+    long_description: |
       When set, this flag:
 
       -# indicates to software that the operating system supports the use of the FXSAVE and FXRSTOR
@@ -117,17 +117,17 @@
       the processor will generate an invalid opcode exception (#UD) if it attempts to execute any
       SSE/SSE2/SSE3 instruction, with the exception of PAUSE, PREFETCHh, SFENCE, LFENCE, MFENCE,
       MOVNTI, CLFLUSH, CRC32, and POPCNT. The operating system or executive must explicitly set this flag.
-    Remarks: |
+    remarks: |
       CPUID feature flag FXSR indicates availability of the FXSAVE/FXRSTOR instructions. The OSFXSR
       bit provides operating system software with a means of enabling FXSAVE/FXRSTOR to save/restore
       the contents of the X87 FPU, XMM and MXCSR registers. Consequently OSFXSR bit indicates that
       the operating system provides context switch support for SSE/SSE2/SSE3/SSSE3/SSE4.
 
-  - Bit: 10
-    ShortName: OSXMMEXCPT
-    LongName: OS_XMM_EXCEPTION_SUPPORT
-    ShortDescription: Operating System Support for Unmasked SIMD Floating-Point Exceptions
-    LongDescription: |
+  - bit: 10
+    short_name: OSXMMEXCPT
+    long_name: OS_XMM_EXCEPTION_SUPPORT
+    short_description: Operating System Support for Unmasked SIMD Floating-Point Exceptions
+    long_description: |
       Operating System Support for Unmasked SIMD Floating-Point Exceptions —
       When set, indicates that the operating system supports the handling of unmasked SIMD floating-point
       exceptions through an exception handler that is invoked when a SIMD floating-point exception (#XM) is
@@ -137,53 +137,53 @@
       The operating system or executive must explicitly set this flag. If this flag is not set, the processor will
       generate an invalid opcode exception (#UD) whenever it detects an unmasked SIMD floating-point exception.
 
-  - Bit: 11
-    ShortName: UMIP
-    LongName: USERMODE_INSTRUCTION_PREVENTION
-    ShortDescription: User-Mode Instruction Prevention
-    LongDescription: |
+  - bit: 11
+    short_name: UMIP
+    long_name: USERMODE_INSTRUCTION_PREVENTION
+    short_description: User-Mode Instruction Prevention
+    long_description: |
       When set, the following instructions cannot be
       executed if CPL > 0: SGDT, SIDT, SLDT, SMSW, and STR. An attempt at such execution causes a generalprotection
       exception (#GP).
 
-  - Bit: 13
-    ShortName: VMXE
-    LongName: VMX_ENABLE
-    ShortDescription: VMX-Enable
-    LongDescription: |
+  - bit: 13
+    short_name: VMXE
+    long_name: VMX_ENABLE
+    short_description: VMX-Enable
+    long_description: |
       Enables VMX operation when set.
-    SeeAlso: Vol3C[23(INTRODUCTION TO VIRTUAL MACHINE EXTENSIONS)]
+    see: Vol3C[23(INTRODUCTION TO VIRTUAL MACHINE EXTENSIONS)]
 
-  - Bit: 14
-    ShortName: SMXE
-    LongName: SMX_ENABLE
-    ShortDescription: SMX-Enable
-    LongDescription: |
+  - bit: 14
+    short_name: SMXE
+    long_name: SMX_ENABLE
+    short_description: SMX-Enable
+    long_description: |
       Enables SMX operation when set.
-    SeeAlso: Vol2[6(SAFER MODE EXTENSIONS REFERENCE)]
+    see: Vol2[6(SAFER MODE EXTENSIONS REFERENCE)]
 
-  - Bit: 16
-    ShortName: FSGSBASE
-    LongName: FSGSBASE_ENABLE
-    ShortDescription: FSGSBASE-Enable
-    LongDescription: |
+  - bit: 16
+    short_name: FSGSBASE
+    long_name: FSGSBASE_ENABLE
+    short_description: FSGSBASE-Enable
+    long_description: |
       Enables the instructions RDFSBASE, RDGSBASE, WRFSBASE,
       and WRGSBASE.
 
-  - Bit: 17
-    ShortName: PCIDE
-    LongName: PCID_ENABLE
-    ShortDescription: PCID-Enable
-    LongDescription: |
+  - bit: 17
+    short_name: PCIDE
+    long_name: PCID_ENABLE
+    short_description: PCID-Enable
+    long_description: |
       Enables process-context identifiers (PCIDs) when set.
       Can be set only in IA-32e mode (if IA32_EFER.LMA = 1).
-    SeeAlso: Vol3A[4.10.1(Process-Context Identifiers (PCIDs))]
+    see: Vol3A[4.10.1(Process-Context Identifiers (PCIDs))]
 
-  - Bit: 18
-    ShortName: OSXSAVE
-    LongName: OS_XSAVE
-    ShortDescription: XSAVE and Processor Extended States-Enable
-    LongDescription: |
+  - bit: 18
+    short_name: OSXSAVE
+    long_name: OS_XSAVE
+    short_description: XSAVE and Processor Extended States-Enable
+    long_description: |
       When set, this flag:
 
       -# indicates (via CPUID.01H:ECX.OSXSAVE[bit 27]) that the operating system supports
@@ -195,31 +195,31 @@
 
       -# enables the processor to execute XGETBV and XSETBV instructions in order to read
          and write XCR0.
-    SeeAlso:
+    see:
     - Vol3A[2.6(EXTENDED CONTROL REGISTERS (INCLUDING XCR0))]
     - Vol3A[13(SYSTEM PROGRAMMING FOR INSTRUCTION SET EXTENSIONS AND PROCESSOR EXTENDED)]
 
-  - Bit: 20
-    ShortName: SMEP
-    LongName: SMEP_ENABLE
-    ShortDescription: SMEP-Enable
-    LongDescription: |
+  - bit: 20
+    short_name: SMEP
+    long_name: SMEP_ENABLE
+    short_description: SMEP-Enable
+    long_description: |
       Enables supervisor-mode execution prevention (SMEP) when set.
-    SeeAlso: Vol3A[4.6(ACCESS RIGHTS)]
+    see: Vol3A[4.6(ACCESS RIGHTS)]
 
-  - Bit: 21
-    ShortName: SMAP
-    LongName: SMAP_ENABLE
-    ShortDescription: SMAP-Enable
-    LongDescription: |
+  - bit: 21
+    short_name: SMAP
+    long_name: SMAP_ENABLE
+    short_description: SMAP-Enable
+    long_description: |
       Enables supervisor-mode access prevention (SMAP) when set.
-    SeeAlso: Vol3A[4.6(ACCESS RIGHTS)]
+    see: Vol3A[4.6(ACCESS RIGHTS)]
 
-  - Bit: 22
-    ShortName: PKE
-    LongName: PROTECTION_KEY_ENABLE
-    ShortDescription: Protection-Key-Enable
-    LongDescription: |
+  - bit: 22
+    short_name: PKE
+    long_name: PROTECTION_KEY_ENABLE
+    short_description: Protection-Key-Enable
+    long_description: |
       Enables 4-level paging to associate each linear address
       with a protection key. The PKRU register specifies, for each protection key, whether user-mode linear
       addresses with that protection key can be read or written. This bit also enables access to the PKRU register

@@ -1,39 +1,39 @@
-- ShortName: EAX_0F_ECX_00
-  LongName: EAX_0F_ECX_00
-  Description: Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0).
-  Note: |
+- short_name: EAX_0F_ECX_00
+  long_name: EAX_0F_ECX_00
+  description: Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0).
+  note: |
     Leaf 0FH output depends on the initial value in ECX.
     Sub-leaf index 0 reports valid resource type starting at bit position 1 of EDX.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EAX is reserved.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EAX is reserved.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RMID_MAX_RANGE
-      Description: Maximum range (zero-based) of RMID within this physical processor of all types.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RMID_MAX_RANGE
+      description: Maximum range (zero-based) of RMID within this physical processor of all types.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: ECX is reserved.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: ECX is reserved.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 1
-      Name: SUPPORTS_L3_CACHE_INTEL_RDT_MONITORING
-      Description: Supports L3 Cache Intel RDT Monitoring if 1.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 1
+      name: SUPPORTS_L3_CACHE_INTEL_RDT_MONITORING
+      description: Supports L3 Cache Intel RDT Monitoring if 1.

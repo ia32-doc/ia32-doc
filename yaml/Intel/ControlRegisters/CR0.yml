@@ -1,31 +1,31 @@
-- Name: CR0
-  Type: Bitfield
-  Size: [ 32, 64 ]
-  Fields:
-  - Bit: 0
-    ShortName: PE
-    LongName: PROTECTION_ENABLE
-    ShortDescription: Protection Enable
-    LongDescription: |
+- name: CR0
+  type: bitfield
+  size: [ 32, 64 ]
+  fields:
+  - bit: 0
+    short_name: PE
+    long_name: PROTECTION_ENABLE
+    short_description: Protection Enable
+    long_description: |
       Enables protected mode when set; enables real-address mode when
       clear. This flag does not enable paging directly. It only enables segment-level protection. To enable paging,
       both the PE and PG flags must be set.
-    SeeAlso: Vol3A[9.9(Mode Switching)]
+    see: Vol3A[9.9(Mode Switching)]
 
-  - Bit: 1
-    ShortName: MP
-    LongName: MONITOR_COPROCESSOR
-    ShortDescription: Monitor Coprocessor
-    LongDescription: |
+  - bit: 1
+    short_name: MP
+    long_name: MONITOR_COPROCESSOR
+    short_description: Monitor Coprocessor
+    long_description: |
       Controls the interaction of the WAIT (or FWAIT) instruction with
       the TS flag (bit 3 of CR0). If the MP flag is set, a WAIT instruction generates a device-not-available exception
       (#NM) if the TS flag is also set. If the MP flag is clear, the WAIT instruction ignores the setting of the TS flag.
 
-  - Bit: 2
-    ShortName: EM
-    LongName: EMULATE_FPU
-    ShortDescription: FPU Emulation
-    LongDescription: |
+  - bit: 2
+    short_name: EM
+    long_name: EMULATE_FPU
+    short_description: FPU Emulation
+    long_description: |
       Indicates that the processor does not have an internal or external x87 FPU
       when set; indicates an x87 FPU is present when clear. This flag also affects the execution of
       MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instructions.
@@ -45,11 +45,11 @@
       instructions not affected by the EM flag include: PAUSE, PREFETCHh, SFENCE, LFENCE, MFENCE, MOVNTI,
       CLFLUSH, CRC32, and POPCNT.
 
-  - Bit: 3
-    ShortName: TS
-    LongName: TASK_SWITCHED
-    ShortDescription: Task Switched
-    LongDescription: |
+  - bit: 3
+    short_name: TS
+    long_name: TASK_SWITCHED
+    short_description: Task Switched
+    long_description: |
       Allows the saving of the x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4
       context on a task switch to be delayed until an x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instruction is
       actually executed by the new task. The processor sets this flag on every task switch and tests it when
@@ -75,21 +75,21 @@
         FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instruction, the x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4
         context is never saved.
 
-  - Bit: 4
-    ShortName: ET
-    LongName: EXTENSION_TYPE
-    ShortDescription: Extension Type
-    LongDescription: |
+  - bit: 4
+    short_name: ET
+    long_name: EXTENSION_TYPE
+    short_description: Extension Type
+    long_description: |
       Reserved in the Pentium 4, Intel Xeon, P6 family, and Pentium processors.
       In the Pentium 4, Intel Xeon, and P6 family processors, this flag is hardcoded to 1. In the Intel386
       and Intel486 processors, this flag indicates support of Intel 387 DX math coprocessor instructions when
       set.
 
-  - Bit: 5
-    ShortName: NE
-    LongName: NUMERIC_ERROR
-    ShortDescription: Numeric Error
-    LongDescription: |
+  - bit: 5
+    short_name: NE
+    long_name: NUMERIC_ERROR
+    short_description: Numeric Error
+    long_description: |
       Enables the native (internal) mechanism for reporting x87 FPU errors
       when set; enables the PC-style x87 FPU error reporting mechanism when clear. When the NE flag is clear
       and the IGNNE# input is asserted, x87 FPU errors are ignored. When the NE flag is clear and the IGNNE#
@@ -102,64 +102,64 @@
       pin are used with external logic to implement PC-style error reporting. Using FERR# and IGNNE# to handle
       floating-point exceptions is deprecated by modern operating systems; this non-native approach also limits
       newer processors to operate with one logical processor active.
-    SeeAlso:
+    see:
     - Vol1[8.7(Handling x87 FPU Exceptions in Software)]
     - Vol1[A.1(APPENDIX A | EFLAGS Cross-Reference)]
 
-  - Bit: 16
-    ShortName: WP
-    LongName: WRITE_PROTECT
-    ShortDescription: Write Protect
-    LongDescription: |
+  - bit: 16
+    short_name: WP
+    long_name: WRITE_PROTECT
+    short_description: Write Protect
+    long_description: |
       When set, inhibits supervisor-level procedures from writing into readonly
       pages; when clear, allows supervisor-level procedures to write into read-only pages (regardless of the
       U/S bit setting). This flag facilitates implementation of the copy-onwrite
       method of creating a new process (forking) used by operating systems such as UNIX.
-    SeeAlso:
+    see:
     - Vol3A[4.1.3(Paging-Mode Modifiers)]
     - Vol3A[4.6(ACCESS RIGHTS)]
 
-  - Bit: 18
-    ShortName: AM
-    LongName: ALIGNMENT_MASK
-    ShortDescription: Alignment Mask
-    LongDescription: |
+  - bit: 18
+    short_name: AM
+    long_name: ALIGNMENT_MASK
+    short_description: Alignment Mask
+    long_description: |
       Enables automatic alignment checking when set; disables alignment
       checking when clear. Alignment checking is performed only when the AM flag is set, the AC flag in the
       EFLAGS register is set, CPL is 3, and the processor is operating in either protected or virtual-8086 mode.
 
-  - Bit: 29
-    ShortName: NW
-    LongName: NOT_WRITE_THROUGH
-    ShortDescription: Not Write-through
-    LongDescription: |
+  - bit: 29
+    short_name: NW
+    long_name: NOT_WRITE_THROUGH
+    short_description: Not Write-through
+    long_description: |
       When the NW and CD flags are clear, write-back (for Pentium 4,
       Intel Xeon, P6 family, and Pentium processors) or write-through (for Intel486 processors) is enabled for
       writes that hit the cache and invalidation cycles are enabled.
 
-  - Bit: 30
-    ShortName: CD
-    LongName: CACHE_DISABLE
-    ShortDescription: Cache Disable
-    LongDescription: |
+  - bit: 30
+    short_name: CD
+    long_name: CACHE_DISABLE
+    short_description: Cache Disable
+    long_description: |
       When the CD and NW flags are clear, caching of memory locations for
       the whole of physical memory in the processor’s internal (and external) caches is enabled. When the CD
       flag is set, caching is restricted. To prevent the processor from accessing and
       updating its caches, the CD flag must be set and the caches must be invalidated so that no cache hits can
       occur.
-    SeeAlso:
+    see:
     - Vol3A[11.5.3(Preventing Caching)]
     - Vol3A[11.5(CACHE CONTROL)]
 
-  - Bit: 31
-    ShortName: PG
-    LongName: PAGING_ENABLE
-    ShortDescription: Paging Enable
-    LongDescription: |
+  - bit: 31
+    short_name: PG
+    long_name: PAGING_ENABLE
+    short_description: Paging Enable
+    long_description: |
       Enables paging when set; disables paging when clear. When paging is
       disabled, all linear addresses are treated as physical addresses. The PG flag has no effect if the PE flag (bit
       0 of register CR0) is not also set; setting the PG flag when the PE flag is clear causes a general-protection
       exception (#GP).
 
       On Intel 64 processors, enabling and disabling IA-32e mode operation also requires modifying CR0.PG.
-    SeeAlso: Vol3A[4(PAGING)]
+    see: Vol3A[4(PAGING)]

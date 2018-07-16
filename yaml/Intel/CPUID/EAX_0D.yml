@@ -1,7 +1,7 @@
-- ShortName: EAX_0D
-  LongName: EAX_0D
-  ShortDescription: EAX = 0x0D
-  LongDescription: |
+- short_name: EAX_0D
+  long_name: EAX_0D
+  short_description: EAX = 0x0D
+  long_description: |
     When CPUID executes with EAX set to 0DH and ECX = 0, the processor returns information about the bit-vector
     representation of all processor state extensions that are supported in the processor and storage size requirements
     of the XSAVE/XRSTOR area.
@@ -17,8 +17,8 @@
         Execute CPUID.(EAX=0DH, ECX = i) to examine size and offset for sub-leaf i;
       FI;
     </pre>
-  Type: Group
-  Include:
+  type: group
+  include:
   - EAX_0D_ECX_00
   - EAX_0D_ECX_01
   - EAX_0D_ECX_N

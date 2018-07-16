@@ -1,72 +1,72 @@
-- ShortName: EAX_05
-  LongName: EAX_05
-  ShortDescription: MONITOR/MWAIT Leaf
-  LongDescription: |
+- short_name: EAX_05
+  long_name: EAX_05
+  short_description: MONITOR/MWAIT Leaf
+  long_description: |
     When CPUID executes with EAX set to 05H, the processor returns information about features available to
     MONITOR/MWAIT instructions. The MONITOR instruction is used for address-range monitoring in conjunction with
     MWAIT instruction. The MWAIT instruction optionally provides additional extensions for advanced power management.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: SMALLEST_MONITOR_LINE_SIZE
-      Description: Smallest monitor-line size in bytes (default is processor's monitor granularity).
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: SMALLEST_MONITOR_LINE_SIZE
+      description: Smallest monitor-line size in bytes (default is processor's monitor granularity).
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: LARGEST_MONITOR_LINE_SIZE
-      Description: Largest monitor-line size in bytes (default is processor's monitor granularity).
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: LARGEST_MONITOR_LINE_SIZE
+      description: Largest monitor-line size in bytes (default is processor's monitor granularity).
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS
-      Description: Enumeration of Monitor-Mwait extensions (beyond EAX and EBX registers) supported.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS
+      description: Enumeration of Monitor-Mwait extensions (beyond EAX and EBX registers) supported.
 
-    - Bit: 1
-      Name: SUPPORTS_TREATING_INTERRUPTS_AS_BREAK_EVENT_FOR_MWAIT
-      Description: Supports treating interrupts as break-event for MWAIT, even when interrupts disabled.
+    - bit: 1
+      name: SUPPORTS_TREATING_INTERRUPTS_AS_BREAK_EVENT_FOR_MWAIT
+      description: Supports treating interrupts as break-event for MWAIT, even when interrupts disabled.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-3
-      Name: NUMBER_OF_C0_SUB_C_STATES
-      Description: Number of C0 sub C-states supported using MWAIT.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-3
+      name: NUMBER_OF_C0_SUB_C_STATES
+      description: Number of C0 sub C-states supported using MWAIT.
 
-    - Bit: 4-7
-      Name: NUMBER_OF_C1_SUB_C_STATES
-      Description: Number of C1 sub C-states supported using MWAIT.
+    - bit: 4-7
+      name: NUMBER_OF_C1_SUB_C_STATES
+      description: Number of C1 sub C-states supported using MWAIT.
 
-    - Bit: 8-11
-      Name: NUMBER_OF_C2_SUB_C_STATES
-      Description: Number of C2 sub C-states supported using MWAIT.
+    - bit: 8-11
+      name: NUMBER_OF_C2_SUB_C_STATES
+      description: Number of C2 sub C-states supported using MWAIT.
 
-    - Bit: 12-15
-      Name: NUMBER_OF_C3_SUB_C_STATES
-      Description: Number of C3 sub C-states supported using MWAIT.
+    - bit: 12-15
+      name: NUMBER_OF_C3_SUB_C_STATES
+      description: Number of C3 sub C-states supported using MWAIT.
 
-    - Bit: 16-19
-      Name: NUMBER_OF_C4_SUB_C_STATES
-      Description: Number of C4 sub C-states supported using MWAIT.
+    - bit: 16-19
+      name: NUMBER_OF_C4_SUB_C_STATES
+      description: Number of C4 sub C-states supported using MWAIT.
 
-    - Bit: 20-23
-      Name: NUMBER_OF_C5_SUB_C_STATES
-      Description: Number of C5 sub C-states supported using MWAIT.
+    - bit: 20-23
+      name: NUMBER_OF_C5_SUB_C_STATES
+      description: Number of C5 sub C-states supported using MWAIT.
 
-    - Bit: 24-27
-      Name: NUMBER_OF_C6_SUB_C_STATES
-      Description: Number of C6 sub C-states supported using MWAIT.
+    - bit: 24-27
+      name: NUMBER_OF_C6_SUB_C_STATES
+      description: Number of C6 sub C-states supported using MWAIT.
 
-    - Bit: 28-31
-      Name: NUMBER_OF_C7_SUB_C_STATES
-      Description: Number of C7 sub C-states supported using MWAIT.
+    - bit: 28-31
+      name: NUMBER_OF_C7_SUB_C_STATES
+      description: Number of C7 sub C-states supported using MWAIT.

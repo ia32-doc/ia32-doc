@@ -1,16 +1,17 @@
-from .doc import *
-from .processor_ctx import DocProcessorContextStack
+from ..doc import *
+from ..options import DocProcessorOptionsStack
 
 
 class DocIndent(object):
-    def __init__(self):
+    def __init__(self, ctx: DocProcessorOptionsStack):
         self.indent = 0
+        self.ctx = ctx
 
     def __enter__(self):
-        self.indent += 2
+        self.indent += self.ctx.indent
 
     def __exit__(self, type, value, traceback):
-        self.indent -= 2
+        self.indent -= self.ctx.indent
 
     def __str__(self):
         return ' ' * self.indent
@@ -23,17 +24,26 @@ class DocIndent(object):
         return indent if indent_only else f'{text}{indent}'
 
 
-class DocProcessorBase(object):
+class DocProcessor(object):
     def __init__(self):
-        self.indent = DocIndent()
-        self.ctx = DocProcessorContextStack()
+        self.opt = DocProcessorOptionsStack()
+        self.indent = DocIndent(self.opt)
         self.last_new_line_count = 0
+
+    def run(self, doc_list: List[DocBase]) -> None:
+        from contextlib import redirect_stdout
+
+        with open(self.opt.output_filename, 'w') as f:
+            with redirect_stdout(f):
+                print(self.opt.output_prepend)
+                self.process(doc_list)
+                print(self.opt.output_append)
 
     def print(self, text: str) -> None:
         if text:
             for line in text.splitlines():
                 if line:
-                    if line.startswith('#') and self.ctx.definition_no_indent and self.indent.indent > 0:
+                    if line.startswith('#') and self.opt.definition_no_indent and self.indent.indent > 0:
                         keyword = re.match(r'(#\w*)\s*(.*)', line).group(1)
                         line = re.sub(r'(#\w*)\s*(.*)', rf'\1{self.indent(keyword)}\2', line)
                         print(f'{self._fix_text(line)}')
@@ -56,14 +66,8 @@ class DocProcessorBase(object):
 
     def process(self, doc_list: List[DocBase]) -> None:
         for doc in doc_list:
-            if doc.type == 'Group':
-                self.process_group(doc)
-            elif isinstance(doc, DocDefinition):
-                self.process_definition(doc)
-            elif isinstance(doc, DocStruct):
-                self.process_struct(doc)
-            elif isinstance(doc, DocBitfield):
-                self.process_bitfield(doc)
+            assert doc.type in [ DOC_GROUP, DOC_DEFINITION, DOC_STRUCT, DOC_BITFIELD ]
+            getattr(self, f'process_{doc.type}')(doc)
 
     def process_group(self, doc: DocBase) -> None:
         pass
@@ -84,6 +88,9 @@ class DocProcessorBase(object):
     def process_struct_field(self, doc: DocStructField) -> None:
         pass
 
+    def make_size_type(self, size) -> str:
+        return getattr(self.opt, f'int_type_{size}')
+
     @staticmethod
     def _fix_text(text: str) -> str:
         text = text.replace('“', '"')
@@ -94,6 +101,7 @@ class DocProcessorBase(object):
         text = text.replace('’', '\'')
         text = text.replace('•', '*')
         text = text.replace('≥', '>=')
+        text = text.replace('≤', '<=')
         text = text.replace('™', '(TM)')
         text = text.replace('←', '<-')
 

@@ -1,0 +1,118 @@
+#
+# Default configuration. Prints everything.
+#
+
+align: 60
+
+indent: 2
+
+brace_on_next_line: true
+
+group_defgroup: true
+
+definition_no_indent: true
+
+bitfield_field_reserved_prefix: 'Reserved'
+bitfield_field_flags_name: 'Flags'
+
+bitfield_field_with_defines: true
+# bitfield_field_with_define_bit: true
+# bitfield_field_with_define_get: true
+# bitfield_field_with_define_mask: true
+bitfield_field_with_define_bit_suffix: '_BIT'
+bitfield_field_with_define_mask_suffix: '_MASK'
+bitfield_field_with_define_get_macro_argument_name: '_'
+
+comments: true
+# group_comments: true
+#   group_short_description: true
+#   group_long_description: true
+#   group_note: true
+#   group_access: true
+#   group_remarks: true
+#   group_see: true
+#   group_reference: true
+#
+# definition_comments: true
+#   definition_short_description: true
+#   definition_long_description: true
+#   definition_note: true
+#   definition_access: true
+#   definition_remarks: true
+#   definition_see: true
+#   definition_reference: true
+#
+# struct_comments: true
+#   struct_short_description: true
+#   struct_long_description: true
+#   struct_note: true
+#   struct_access: true
+#   struct_remarks: true
+#   struct_see: true
+#   struct_reference: true
+#
+# struct_field_comments: true
+#   struct_field_short_description: true
+#   struct_field_long_description: true
+#   struct_field_note: true
+#   struct_field_access: true
+#   struct_field_remarks: true
+#   struct_field_see: true
+#   struct_field_reference: true
+#
+# bitfield_comments: true
+#   bitfield_short_description: true
+#   bitfield_long_description: true
+#   bitfield_note: true
+#   bitfield_access: true
+#   bitfield_remarks: true
+#   bitfield_see: true
+#   bitfield_reference: true
+#
+# bitfield_field_comments: true
+#   bitfield_field_short_description: true
+#   bitfield_field_long_description: true
+#   bitfield_field_note: true
+#   bitfield_field_access: true
+#   bitfield_field_remarks: true
+#   bitfield_field_see: true
+#   bitfield_field_reference: true
+
+prefer_long_names: true
+# group_prefer_long_names: true
+# definition_prefer_long_names: true
+# struct_prefer_long_names: true
+# struct_field_prefer_long_names: true
+# bitfield_prefer_long_names: true
+# bitfield_field_prefer_long_names: true
+
+prefer_alternative_names: true
+# group_prefer_alternative_names: true
+# definition_prefer_alternative_names: true
+# struct_prefer_alternative_names: true
+# struct_field_prefer_alternative_names: true
+# bitfield_prefer_alternative_names: true
+# bitfield_field_prefer_alternative_names: true
+
+group_name_letter_case: snake_case_upper
+definition_name_letter_case: snake_case_upper
+struct_name_letter_case: snake_case_upper
+struct_field_name_letter_case: camel_case
+bitfield_name_letter_case: snake_case_upper
+bitfield_field_name_letter_case: camel_case
+
+int_type_8:  'UINT8'
+int_type_16: 'UINT16'
+int_type_32: 'UINT32'
+int_type_64: 'UINT64'
+
+output_prepend: |
+  /** @file */
+  #pragma once
+  typedef unsigned char       UINT8;
+  typedef unsigned short      UINT16;
+  typedef unsigned int        UINT32;
+  typedef unsigned long long  UINT64;
+
+output_append: ''
+output_filename: out/ia32.h

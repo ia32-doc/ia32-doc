@@ -1,69 +1,69 @@
-- ShortName: EAX_18_ECX_00
-  LongName: EAX_18_ECX_00
-  Description: Deterministic Address Translation Parameters Main Leaf (EAX = 18H, ECX = 0).
-  Note: |
+- short_name: EAX_18_ECX_00
+  long_name: EAX_18_ECX_00
+  description: Deterministic Address Translation Parameters Main Leaf (EAX = 18H, ECX = 0).
+  note: |
     Each sub-leaf enumerates a different address translation structure.
 
     If ECX contains an invalid sub-leaf index, EAX/EBX/ECX/EDX return 0. Sub-leaf index n is invalid if n
     exceeds the value that sub-leaf 0 returns in EAX. A sub-leaf index is also invalid if EDX[4:0] returns 0.
     Valid sub-leaves do not need to be contiguous or in any particular order. A valid sub-leaf may be in a
     higher input ECX value than an invalid sub-leaf or than a valid sub-leaf of a higher or lower-level structure.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: MAX_SUB_LEAF
-      Description: Reports the maximum input value of supported sub-leaf in leaf 18H.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: MAX_SUB_LEAF
+      description: Reports the maximum input value of supported sub-leaf in leaf 18H.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: PAGE_ENTRIES_4KB_SUPPORTED
-      Description: 4K page size entries supported by this structure.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: PAGE_ENTRIES_4KB_SUPPORTED
+      description: 4K page size entries supported by this structure.
 
-    - Bit: 1
-      Name: PAGE_ENTRIES_2MB_SUPPORTED
-      Description: 2MB page size entries supported by this structure.
+    - bit: 1
+      name: PAGE_ENTRIES_2MB_SUPPORTED
+      description: 2MB page size entries supported by this structure.
 
-    - Bit: 2
-      Name: PAGE_ENTRIES_4MB_SUPPORTED
-      Description: 4MB page size entries supported by this structure.
+    - bit: 2
+      name: PAGE_ENTRIES_4MB_SUPPORTED
+      description: 4MB page size entries supported by this structure.
 
-    - Bit: 3
-      Name: PAGE_ENTRIES_1GB_SUPPORTED
-      Description: 1 GB page size entries supported by this structure.
+    - bit: 3
+      name: PAGE_ENTRIES_1GB_SUPPORTED
+      description: 1 GB page size entries supported by this structure.
 
-    - Bit: 8-10
-      Name: PARTITIONING
-      Description: |
+    - bit: 8-10
+      name: PARTITIONING
+      description: |
         Partitioning (0: Soft partitioning between the logical processors sharing this structure).
 
-    - Bit: 16-31
-      ShortName: W
-      LongName: WAYS_OF_ASSOCIATIVITY_00 # TODO: resolve name conflict
-      Description: W = Ways of associativity.
+    - bit: 16-31
+      short_name: W
+      long_name: WAYS_OF_ASSOCIATIVITY_00 # TODO: resolve name conflict
+      description: W = Ways of associativity.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      ShortName: S
-      LongName: NUMBER_OF_SETS
-      Description: Number of Sets.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      short_name: S
+      long_name: NUMBER_OF_SETS
+      description: Number of Sets.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-4
-      Name: TRANSLATION_CACHE_TYPE_FIELD
-      Description: |
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-4
+      name: TRANSLATION_CACHE_TYPE_FIELD
+      description: |
         Translation cache type field.
 
         - 00000b: Null (indicates this sub-leaf is not valid).
@@ -75,21 +75,21 @@
         - 00011b: Unified TLB.
 
         All other encodings are reserved.
-      Note: |
+      note: |
         Some unified TLBs will allow a single TLB entry to satisfy data read/write and instruction fetches.
         Others will require separate entries (e.g., one loaded on data read/write and another loaded on an
         instruction fetch) . Please see the Intel® 64 and IA-32 Architectures Optimization Reference Manual for
         details of a particular product.
 
-    - Bit: 5-7
-      Name: TRANSLATION_CACHE_LEVEL
-      Description: Translation cache level (starts at 1).
+    - bit: 5-7
+      name: TRANSLATION_CACHE_LEVEL
+      description: Translation cache level (starts at 1).
 
-    - Bit: 8
-      Name: FULLY_ASSOCIATIVE_STRUCTURE
-      Description: Fully associative structure.
+    - bit: 8
+      name: FULLY_ASSOCIATIVE_STRUCTURE
+      description: Fully associative structure.
 
-    - Bit: 14-25
-      Name: MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS
-      Description: Maximum number of addressable IDs for logical processors sharing this translation cache.
-      Note: Add one to the return value to get the result.
+    - bit: 14-25
+      name: MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS
+      description: Maximum number of addressable IDs for logical processors sharing this translation cache.
+      note: Add one to the return value to get the result.

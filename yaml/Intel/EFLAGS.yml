@@ -1,179 +1,179 @@
-- ShortName: EFL
-  LongName: EFLAGS
-  LongDescription: |
+- short_name: EFL
+  long_name: EFLAGS
+  long_description: |
     The 32-bit EFLAGS register contains a group of status flags, a control flag, and a group of system flags.
     The status flags (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic instructions,
     such as the ADD, SUB, MUL, and DIV instructions.
 
     The system flags and IOPL field in the EFLAGS register control operating-system or executive operations.
-  Type: Bitfield
-  Size: 32
-  Reference: Vol1[3.4.3(EFLAGS)]
-  Fields:
-  - Bit: 0
+  type: bitfield
+  size: 32
+  reference: Vol1[3.4.3(EFLAGS)]
+  fields:
+  - bit: 0
     Category: Status
-    ShortName: CF
-    LongName: CARRY_FLAG
-    ShortDescription: Carry flag
-    LongDescription: |
+    short_name: CF
+    long_name: CARRY_FLAG
+    short_description: Carry flag
+    long_description: |
       Set if an arithmetic operation generates a carry or a borrow out of the mostsignificant
       bit of the result; cleared otherwise. This flag indicates an overflow condition for
       unsigned-integer arithmetic. It is also used in multiple-precision arithmetic.
 
-  - Bit: 1
+  - bit: 1
     Category:
-    ShortName: RA1
-    LongName: READ_AS_1
-    Description: Reserved - always 1
+    short_name: RA1
+    long_name: READ_AS_1
+    description: Reserved - always 1
 
-  - Bit: 2
+  - bit: 2
     Category: Status
-    ShortName: PF
-    LongName: PARITY_FLAG
-    ShortDescription: Parity flag
-    LongDescription: |
+    short_name: PF
+    long_name: PARITY_FLAG
+    short_description: Parity flag
+    long_description: |
       Set if the least-significant byte of the result contains an even number of 1 bits;
       cleared otherwise.
 
-  - Bit: 4
+  - bit: 4
     Category: Status
-    ShortName: AF
-    LongName: AUXILIARY_CARRY_FLAG
-    ShortDescription: Auxiliary Carry flag
-    LongDescription: |
+    short_name: AF
+    long_name: AUXILIARY_CARRY_FLAG
+    short_description: Auxiliary Carry flag
+    long_description: |
       Set if an arithmetic operation generates a carry or a borrow out of bit
       3 of the result; cleared otherwise. This flag is used in binary-coded decimal (BCD) arithmetic.
 
-  - Bit: 6
+  - bit: 6
     Category: Status
-    ShortName: ZF
-    LongName: ZERO_FLAG
-    ShortDescription: Zero flag
-    LongDescription: |
+    short_name: ZF
+    long_name: ZERO_FLAG
+    short_description: Zero flag
+    long_description: |
       Set if the result is zero; cleared otherwise.
 
-  - Bit: 7
+  - bit: 7
     Category: Status
-    ShortName: SF
-    LongName: SIGN_FLAG
-    ShortDescription: Sign flag
-    LongDescription: |
+    short_name: SF
+    long_name: SIGN_FLAG
+    short_description: Sign flag
+    long_description: |
       Set equal to the most-significant bit of the result, which is the sign bit of a signed
       integer. (0 indicates a positive value and 1 indicates a negative value.)
 
-  - Bit: 8
+  - bit: 8
     Category: System
-    ShortName: TF
-    LongName: TRAP_FLAG
-    ShortDescription: Trap flag
-    LongDescription: |
+    short_name: TF
+    long_name: TRAP_FLAG
+    short_description: Trap flag
+    long_description: |
       Set to enable single-step mode for debugging; clear to disable single-step mode.
 
-  - Bit: 9
+  - bit: 9
     Category: System
-    ShortName: IF
-    LongName: INTERRUPT_ENABLE_FLAG
-    ShortDescription: Interrupt enable flag
-    LongDescription: |
+    short_name: IF
+    long_name: INTERRUPT_ENABLE_FLAG
+    short_description: Interrupt enable flag
+    long_description: |
       Controls the response of the processor to maskable interrupt
       requests. Set to respond to maskable interrupts; cleared to inhibit maskable interrupts.
 
-  - Bit: 10
+  - bit: 10
     Category: Control
-    ShortName: DF
-    LongName: DIRECTION_FLAG
-    ShortDescription: Direction flag
-    LongDescription: |
+    short_name: DF
+    long_name: DIRECTION_FLAG
+    short_description: Direction flag
+    long_description: |
       Controls string instructions (MOVS, CMPS, SCAS, LODS, and STOS). Setting the DF flag
       causes the string instructions to auto-decrement (to process strings from high addresses to low addresses).
       Clearing the DF flag causes the string instructions to auto-increment (process strings from low addresses
       to high addresses).
 
-  - Bit: 11
+  - bit: 11
     Category: Status
-    ShortName: OF
-    LongName: OVERFLOW_FLAG
-    ShortDescription: Overflow flag
-    LongDescription: |
+    short_name: OF
+    long_name: OVERFLOW_FLAG
+    short_description: Overflow flag
+    long_description: |
       Set if the integer result is too large a positive number or too small a negative
       number (excluding the sign-bit) to fit in the destination operand; cleared otherwise. This flag
       indicates an overflow condition for signed-integer (two’s complement) arithmetic.
 
-  - Bit: 12-13
+  - bit: 12-13
     Category: System
-    ShortName: IOPL
-    LongName: IO_PRIVILEGE_LEVEL
-    ShortDescription: I/O privilege level field
-    LongDescription: |
+    short_name: IOPL
+    long_name: IO_PRIVILEGE_LEVEL
+    short_description: I/O privilege level field
+    long_description: |
       Indicates the I/O privilege level of the currently running program
       or task. The current privilege level (CPL) of the currently running program or task must be less
       than or equal to the I/O privilege level to access the I/O address space. The POPF and IRET
       instructions can modify this field only when operating at a CPL of 0.
 
-  - Bit: 14
+  - bit: 14
     Category: System
-    ShortName: NT
-    LongName: NESTED_TASK_FLAG
-    ShortDescription: Nested task flag
-    LongDescription: |
+    short_name: NT
+    long_name: NESTED_TASK_FLAG
+    short_description: Nested task flag
+    long_description: |
       Controls the chaining of interrupted and called tasks. Set when the
       current task is linked to the previously executed task; cleared when the current task is not
       linked to another task.
 
-  - Bit: 16
+  - bit: 16
     Category: System
-    ShortName: RF
-    LongName: RESUME_FLAG
-    ShortDescription: Resume flag
-    LongDescription: |
+    short_name: RF
+    long_name: RESUME_FLAG
+    short_description: Resume flag
+    long_description: |
       Controls the processor’s response to debug exceptions.
 
-  - Bit: 17
+  - bit: 17
     Category: System
-    ShortName: VM
-    LongName: VIRTUAL_8086_MODE_FLAG
-    ShortDescription: Virtual-8086 mode flag
-    LongDescription: |
+    short_name: VM
+    long_name: VIRTUAL_8086_MODE_FLAG
+    short_description: Virtual-8086 mode flag
+    long_description: |
       Set to enable virtual-8086 mode; clear to return to protected
       mode without virtual-8086 mode semantics.
 
-  - Bit: 18
+  - bit: 18
     Category: System
-    ShortName: AC
-    LongName: ALIGNMENT_CHECK_FLAG
-    ShortDescription: Alignment check (or access control) flag
-    LongDescription: |
+    short_name: AC
+    long_name: ALIGNMENT_CHECK_FLAG
+    short_description: Alignment check (or access control) flag
+    long_description: |
       If the AM bit is set in the CR0 register, alignment
       checking of user-mode data accesses is enabled if and only if this flag is 1.
       If the SMAP bit is set in the CR4 register, explicit supervisor-mode data accesses to user-mode
       pages are allowed if and only if this bit is 1.
-    SeeAlso: Vol3A[4.6(ACCESS RIGHTS)]
+    see: Vol3A[4.6(ACCESS RIGHTS)]
 
-  - Bit: 19
+  - bit: 19
     Category: System
-    ShortName: VIF
-    LongName: VIRTUAL_INTERRUPT_FLAG
-    ShortDescription: Virtual interrupt flag
-    LongDescription: |
+    short_name: VIF
+    long_name: VIRTUAL_INTERRUPT_FLAG
+    short_description: Virtual interrupt flag
+    long_description: |
       Virtual image of the IF flag. Used in conjunction with the VIP flag.
       (To use this flag and the VIP flag the virtual mode extensions are enabled by setting the VME
       flag in control register CR4.)
 
-  - Bit: 20
+  - bit: 20
     Category: System
-    ShortName: VIP
-    LongName: VIRTUAL_INTERRUPT_PENDING_FLAG
-    ShortDescription: Virtual interrupt pending flag
-    LongDescription: |
+    short_name: VIP
+    long_name: VIRTUAL_INTERRUPT_PENDING_FLAG
+    short_description: Virtual interrupt pending flag
+    long_description: |
       Set to indicate that an interrupt is pending; clear when no
       interrupt is pending. (Software sets and clears this flag; the processor only reads it.) Used in
       conjunction with the VIF flag.
 
-  - Bit: 21
+  - bit: 21
     Category: System
-    ShortName: IF
-    LongName: IDENTIFICATION_FLAG
-    ShortDescription: Identification flag
-    LongDescription: |
+    short_name: IF
+    long_name: IDENTIFICATION_FLAG
+    short_description: Identification flag
+    long_description: |
       The ability of a program to set or clear this flag indicates support for
       the CPUID instruction.

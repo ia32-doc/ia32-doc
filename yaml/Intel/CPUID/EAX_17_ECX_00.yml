@@ -1,48 +1,48 @@
-- ShortName: EAX_17_ECX_00
-  LongName: EAX_17_ECX_00
-  Description: System-On-Chip Vendor Attribute Enumeration Main Leaf (EAX = 17H, ECX = 0).
-  Note: |
+- short_name: EAX_17_ECX_00
+  long_name: EAX_17_ECX_00
+  description: System-On-Chip Vendor Attribute Enumeration Main Leaf (EAX = 17H, ECX = 0).
+  note: |
     Leaf 17H main leaf (ECX = 0).
     Leaf 17H output depends on the initial value in ECX.
     Leaf 17H sub-leaves 1 through 3 reports SOC Vendor Brand String.
     Leaf 17H is valid if MaxSOCID_Index >= 3.
     Leaf 17H sub-leaves 4 and above are reserved.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: MAX_SOC_ID_INDEX
-      Description: Reports the maximum input value of supported sub-leaf in leaf 17H.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: MAX_SOC_ID_INDEX
+      description: Reports the maximum input value of supported sub-leaf in leaf 17H.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: SOC_VENDOR_ID
-      Description: SOC Vendor ID.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: SOC_VENDOR_ID
+      description: SOC Vendor ID.
 
-    - Bit: 16
-      Name: IS_VENDOR_SCHEME
-      Description: |
+    - bit: 16
+      name: IS_VENDOR_SCHEME
+      description: |
         If 1, the SOC Vendor ID field is assigned via an industry standard enumeration
         scheme. Otherwise, the SOC Vendor ID field is assigned by Intel.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: PROJECT_ID
-      Description: A unique number an SOC vendor assigns to its SOC projects.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: PROJECT_ID
+      description: A unique number an SOC vendor assigns to its SOC projects.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: STEPPING_ID
-      Description: A unique number within an SOC project that an SOC vendor assigns.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: STEPPING_ID
+      description: A unique number within an SOC project that an SOC vendor assigns.

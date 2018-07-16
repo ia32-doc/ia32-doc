@@ -1,36 +1,36 @@
-- Name: CR3
-  Type: Bitfield
-  Size: [ 32, 64 ]
-  SeeAlso: Vol3A[4(PAGING)]
-  Fields:
-  - Bit: 3
-    ShortName: PWT
-    LongName: PAGE_LEVEL_WRITE_THROUGH
-    ShortDescription: Page-level Write-Through
-    LongDescription: |
+- name: CR3
+  type: bitfield
+  size: [ 32, 64 ]
+  see: Vol3A[4(PAGING)]
+  fields:
+  - bit: 3
+    short_name: PWT
+    long_name: PAGE_LEVEL_WRITE_THROUGH
+    short_description: Page-level Write-Through
+    long_description: |
       Controls the memory type used to access the first paging
       structure of the current paging-structure hierarchy. This bit is not used if paging is disabled,
       with PAE paging, or with 4-level paging if CR4.PCIDE=1.
-    SeeAlso: Vol3A[4.9(PAGING AND MEMORY TYPING)]
+    see: Vol3A[4.9(PAGING AND MEMORY TYPING)]
 
-  - Bit: 4
-    ShortName: PCD
-    LongName: PAGE_LEVEL_CACHE_DISABLE
-    ShortDescription: Page-level Cache Disable
-    LongDescription: |
+  - bit: 4
+    short_name: PCD
+    long_name: PAGE_LEVEL_CACHE_DISABLE
+    short_description: Page-level Cache Disable
+    long_description: |
       Controls the memory type used to access the first paging
       structure of the current paging-structure hierarchy. This bit is not used if paging is disabled,
       with PAE paging, or with 4-level paging2 if CR4.PCIDE=1.
-    SeeAlso: Vol3A[4.9(PAGING AND MEMORY TYPING)]
+    see: Vol3A[4.9(PAGING AND MEMORY TYPING)]
 
-  - Bit: 12-(MAXPHYADDR-1)
-    ShortName: PD_PHYS_ADDR
-    LongName: ADDRESS_OF_PAGE_DIRECTORY
-    ShortDescription: Address of page directory
-    Description: |
+  - bit: 12-(MAXPHYADDR-1)
+    short_name: PD_PHYS_ADDR
+    long_name: ADDRESS_OF_PAGE_DIRECTORY
+    short_description: Address of page directory
+    description: |
       Physical address of the 4-KByte aligned page directory (32-bit paging) or PML4 table (64-bit paging)
       used for linear-address translation.
 
-    SeeAlso:
+    see:
     - Vol3A[4.3(32-BIT PAGING)]
     - Vol3A[4.5(4-LEVEL PAGING)]

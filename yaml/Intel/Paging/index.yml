@@ -1,7 +1,7 @@
-- Name: PAGING
-  ShortDescription: Paging
-  Todo: Long description
-  Type: Group
-  Include:
+- name: PAGING
+  short_description: Paging
+  todo: Long description
+  type: group
+  include:
   - 32bit
   - 64bit

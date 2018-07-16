@@ -1,10 +1,10 @@
-- Name: CPUID
-  ShortDescription: CPUID
-  Todo: Long description
-  ChildrenNameWithPrefix: CPUID
-  Type: Group
-  Reference: Vol2A[3.2(CPUID)]
-  Include:
+- name: CPUID
+  short_description: CPUID
+  todo: Long description
+  children_name_with_prefix: CPUID
+  type: group
+  reference: Vol2A[3.2(CPUID)]
+  include:
   - EAX_00
   - EAX_01
   - EAX_04

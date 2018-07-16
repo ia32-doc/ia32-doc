@@ -1,38 +1,38 @@
-- ShortName: EAX_12_ECX_01
-  LongName: EAX_12_ECX_01
-  Description: Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1).
-  Note: |
+- short_name: EAX_12_ECX_01
+  long_name: EAX_12_ECX_01
+  description: Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1).
+  note: |
     Leaf 12H sub-leaf 1 (ECX = 1) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: VALID_SECS_ATTRIBUTES_0
-      Description: Reports the valid bits of SECS.ATTRIBUTES[31:0] that software can set with ECREATE.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: VALID_SECS_ATTRIBUTES_0
+      description: Reports the valid bits of SECS.ATTRIBUTES[31:0] that software can set with ECREATE.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: VALID_SECS_ATTRIBUTES_1
-      Description: Reports the valid bits of SECS.ATTRIBUTES[63:32] that software can set with ECREATE.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: VALID_SECS_ATTRIBUTES_1
+      description: Reports the valid bits of SECS.ATTRIBUTES[63:32] that software can set with ECREATE.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: VALID_SECS_ATTRIBUTES_2
-      Description: Reports the valid bits of SECS.ATTRIBUTES[95:64] that software can set with ECREATE.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: VALID_SECS_ATTRIBUTES_2
+      description: Reports the valid bits of SECS.ATTRIBUTES[95:64] that software can set with ECREATE.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: VALID_SECS_ATTRIBUTES_3
-      Description: Reports the valid bits of SECS.ATTRIBUTES[127:96] that software can set with ECREATE.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: VALID_SECS_ATTRIBUTES_3
+      description: Reports the valid bits of SECS.ATTRIBUTES[127:96] that software can set with ECREATE.

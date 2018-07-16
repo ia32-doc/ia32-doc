@@ -1,20 +1,20 @@
-- Name: CR8
-  Type: Bitfield
-  Size: [ 32, 64 ]
-  Reference: Vol3A[10.8.6(Task Priority in IA-32e Mode)]
-  Fields:
-  - Bit: 0-3
-    ShortName: TPL
-    LongName: TASK_PRIORITY_LEVEL
-    ShortDescription: Task Priority Level
-    LongDescription: |
+- name: CR8
+  type: bitfield
+  size: [ 32, 64 ]
+  reference: Vol3A[10.8.6(Task Priority in IA-32e Mode)]
+  fields:
+  - bit: 0-3
+    short_name: TPL
+    long_name: TASK_PRIORITY_LEVEL
+    short_description: Task Priority Level
+    long_description: |
       This sets the threshold value corresponding to the highestpriority
       interrupt to be blocked. A value of 0 means all interrupts are enabled. This field is available in 64-
       bit mode. A value of 15 means all interrupts will be disabled.
 
-  - Bit: 4-63
-    ShortName: Reserved
-    LongName: RESERVED
-    ShortDescription: Reserved
-    LongDescription: |
+  - bit: 4-63
+    short_name: Reserved
+    long_name: RESERVED
+    short_description: Reserved
+    long_description: |
       Reserved and must be written with zeros. Failure to do this causes a general-protection exception.

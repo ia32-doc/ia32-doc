@@ -1,86 +1,86 @@
-- ShortName: EAX_14_ECX_00
-  LongName: EAX_14_ECX_00
-  Description: Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0).
-  Note: Leaf 14H main leaf (ECX = 0).
-  Todo: Names
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: MAX_SUB_LEAF
-      Description: Reports the maximum sub-leaf supported in leaf 14H.
+- short_name: EAX_14_ECX_00
+  long_name: EAX_14_ECX_00
+  description: Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0).
+  note: Leaf 14H main leaf (ECX = 0).
+  todo: Names
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: MAX_SUB_LEAF
+      description: Reports the maximum sub-leaf supported in leaf 14H.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: Flag0
-      Description: |
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: Flag0
+      description: |
         If 1, indicates that IA32_RTIT_CTL.CR3Filter can be set to 1, and that IA32_RTIT_CR3_MATCH MSR can be accessed.
 
-    - Bit: 1
-      Name: Flag1
-      Description: |
+    - bit: 1
+      name: Flag1
+      description: |
         If 1, indicates support of Configurable PSB and Cycle-Accurate Mode.
 
-    - Bit: 2
-      Name: Flag2
-      Description: |
+    - bit: 2
+      name: Flag2
+      description: |
         If 1, indicates support of IP Filtering, TraceStop filtering, and preservation of Intel PT MSRs across warm reset.
 
-    - Bit: 3
-      Name: Flag3
-      Description: |
+    - bit: 3
+      name: Flag3
+      description: |
         If 1, indicates support of MTC timing packet and suppression of COFI-based packets.
 
-    - Bit: 4
-      Name: Flag4
-      Description: |
+    - bit: 4
+      name: Flag4
+      description: |
         If 1, indicates support of PTWRITE. Writes can set IA32_RTIT_CTL[12] (PTWEn) and IA32_RTIT_CTL[5] (FUPonPTW), and PTWRITE can generate packets.
 
-    - Bit: 5
-      Name: Flag5
-      Description: |
+    - bit: 5
+      name: Flag5
+      description: |
         If 1, indicates support of Power Event Trace. Writes can set IA32_RTIT_CTL[4] (PwrEvtEn), enabling Power Event Trace packet generation.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: Flag0
-      Description: |
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: Flag0
+      description: |
         If 1, Tracing can be enabled with IA32_RTIT_CTL.ToPA = 1, hence utilizing the ToPA output scheme; IA32_RTIT_OUTPUT_BASE and IA32_RTIT_OUTPUT_MASK_PTRS MSRs can be accessed.
 
-    - Bit: 1
-      Name: Flag1
-      Description: |
+    - bit: 1
+      name: Flag1
+      description: |
         If 1, ToPA tables can hold any number of output entries, up to the maximum allowed by the MaskOrTableOffset field of IA32_RTIT_OUTPUT_MASK_PTRS.
 
-    - Bit: 2
-      Name: Flag2
-      Description: |
+    - bit: 2
+      name: Flag2
+      description: |
         If 1, indicates support of Single-Range Output scheme.
 
-    - Bit: 3
-      Name: Flag3
-      Description: |
+    - bit: 3
+      name: Flag3
+      description: |
         If 1, indicates support of output to Trace Transport subsystem.
 
-    - Bit: 31
-      Name: Flag31
-      Description: |
+    - bit: 31
+      name: Flag31
+      description: |
         If 1, generated packets which contain IP payloads have LIP values, which include the CS base component.
 
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.

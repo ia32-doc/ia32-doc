@@ -1,46 +1,46 @@
-- ShortName: EAX_0F_ECX_01
-  LongName: EAX_0F_ECX_01
-  Description: L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1).
-  Note: |
+- short_name: EAX_0F_ECX_01
+  long_name: EAX_0F_ECX_01
+  description: L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1).
+  note: |
     Leaf 0FH output depends on the initial value in ECX.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EAX is reserved.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EAX is reserved.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: CONVERSION_FACTOR
-      Description: Conversion factor from reported IA32_QM_CTR value to occupancy metric (bytes).
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: CONVERSION_FACTOR
+      description: Conversion factor from reported IA32_QM_CTR value to occupancy metric (bytes).
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RMID_MAX_RANGE
-      Description: Maximum range (zero-based) of RMID within this physical processor of all types.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RMID_MAX_RANGE
+      description: Maximum range (zero-based) of RMID within this physical processor of all types.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: SUPPORTS_L3_OCCUPANCY_MONITORING
-      Description: Supports L3 occupancy monitoring if 1.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: SUPPORTS_L3_OCCUPANCY_MONITORING
+      description: Supports L3 occupancy monitoring if 1.
 
-    - Bit: 1
-      Name: SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING
-      Description: Supports L3 Total Bandwidth monitoring if 1.
+    - bit: 1
+      name: SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING
+      description: Supports L3 Total Bandwidth monitoring if 1.
 
-    - Bit: 2
-      Name: SUPPORTS_L3_LOCAL_BANDWIDTH_MONITORING
-      Description: Supports L3 Local Bandwidth monitoring if 1.
+    - bit: 2
+      name: SUPPORTS_L3_LOCAL_BANDWIDTH_MONITORING
+      description: Supports L3 Local Bandwidth monitoring if 1.

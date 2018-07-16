@@ -1,42 +1,42 @@
-- ShortName: EAX_12_ECX_02P_SLT_1
-  LongName: EAX_12_ECX_02P_SLT_1
-  Description: Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
-  Note: |
+- short_name: EAX_12_ECX_02P_SLT_1
+  long_name: EAX_12_ECX_02P_SLT_1
+  description: Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
+  note: |
     Leaf 12H sub-leaf 2 or higher (ECX >= 2) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
 
     This structure describes sub-leaf type 1.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-3
-      Name: SUB_LEAF_TYPE
-      Description: |
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-3
+      name: SUB_LEAF_TYPE
+      description: |
         Sub-leaf Type 1. This sub-leaf enumerates an EPC section. EBX:EAX and EDX:ECX provide information on the
         Enclave Page Cache (EPC) section.
 
-    - Bit: 12-31
-      Name: EPC_BASE_PHYSICAL_ADDRESS_1
-      Description: |
+    - bit: 12-31
+      name: EPC_BASE_PHYSICAL_ADDRESS_1
+      description: |
         Bits 31:12 of the physical address of the base of the EPC section.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-19
-      Name: EPC_BASE_PHYSICAL_ADDRESS_2
-      Description: Bits 51:32 of the physical address of the base of the EPC section.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-19
+      name: EPC_BASE_PHYSICAL_ADDRESS_2
+      description: Bits 51:32 of the physical address of the base of the EPC section.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-3
-      Name: EPC_SECTION_PROPERTY
-      Description: |
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-3
+      name: EPC_SECTION_PROPERTY
+      description: |
         EPC section property encoding defined as follows:
 
         - If EAX[3:0] 0000b, then all bits of the EDX:ECX pair are enumerated as 0.
@@ -45,16 +45,16 @@
 
         All other encodings are reserved.
 
-    - Bit: 12-31
-      Name: EPC_SIZE_1
-      Description: |
+    - bit: 12-31
+      name: EPC_SIZE_1
+      description: |
         Bits 31:12 of the size of the corresponding EPC section within the Processor Reserved Memory.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-19
-      Name: EPC_SIZE_2
-      Description: |
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-19
+      name: EPC_SIZE_2
+      description: |
         Bits 51:32 of the size of the corresponding EPC section within the Processor Reserved Memory.

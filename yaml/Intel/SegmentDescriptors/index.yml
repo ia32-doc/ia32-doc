@@ -1,8 +1,8 @@
-- Name: SEGMENT_DESCRIPTORS
-  ShortDescription: Segment descriptors
-  Todo: Long description
-  Type: Group
-  Include:
+- name: SEGMENT_DESCRIPTORS
+  short_description: Segment descriptors
+  todo: Long description
+  type: group
+  include:
   - Descriptor
   - SegmentDescriptor
   - SegmentDescriptorTypes

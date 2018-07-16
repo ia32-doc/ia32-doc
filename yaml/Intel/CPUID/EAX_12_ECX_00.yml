@@ -1,54 +1,54 @@
-- ShortName: EAX_12_ECX_00
-  LongName: EAX_12_ECX_00
-  Description: Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0).
-  Note: |
+- short_name: EAX_12_ECX_00
+  long_name: EAX_12_ECX_00
+  description: Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0).
+  note: |
     Leaf 12H sub-leaf 0 (ECX = 0) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: SGX1
-      Description: If 1, Indicates Intel SGX supports the collection of SGX1 leaf functions.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: SGX1
+      description: If 1, Indicates Intel SGX supports the collection of SGX1 leaf functions.
 
-    - Bit: 1
-      Name: SGX2
-      Description: If 1, Indicates Intel SGX supports the collection of SGX2 leaf functions.
+    - bit: 1
+      name: SGX2
+      description: If 1, Indicates Intel SGX supports the collection of SGX2 leaf functions.
 
-    - Bit: 5
-      Name: SGX_ENCLV_ADVANCED
-      Description: If 1, indicates Intel SGX supports ENCLV instruction leaves EINCVIRTCHILD, EDECVIRTCHILD, and ESETCONTEXT.
+    - bit: 5
+      name: SGX_ENCLV_ADVANCED
+      description: If 1, indicates Intel SGX supports ENCLV instruction leaves EINCVIRTCHILD, EDECVIRTCHILD, and ESETCONTEXT.
 
-    - Bit: 6
-      Name: SGX_ENCLS_ADVANCED
-      Description: If 1, indicates Intel SGX supports ENCLS instruction leaves ETRACKC, ERDINFO, ELDBC, and ELDUC.
+    - bit: 6
+      name: SGX_ENCLS_ADVANCED
+      description: If 1, indicates Intel SGX supports ENCLS instruction leaves ETRACKC, ERDINFO, ELDBC, and ELDUC.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: MISCSELECT
-      Description: Bit vector of supported extended SGX features.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: MISCSELECT
+      description: Bit vector of supported extended SGX features.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: ECX is reserved.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: ECX is reserved.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-7
-      Name: MAX_ENCLAVE_SIZE_NOT64
-      Description: The maximum supported enclave size in non-64-bit mode is 2^(EDX[7:0]).
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-7
+      name: MAX_ENCLAVE_SIZE_NOT64
+      description: The maximum supported enclave size in non-64-bit mode is 2^(EDX[7:0]).
 
-    - Bit: 8-15
-      Name: MAX_ENCLAVE_SIZE_64
-      Description: The maximum supported enclave size in 64-bit mode is 2^(EDX[15:8]).
+    - bit: 8-15
+      name: MAX_ENCLAVE_SIZE_64
+      description: The maximum supported enclave size in 64-bit mode is 2^(EDX[15:8]).

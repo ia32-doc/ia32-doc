@@ -1,6 +1,6 @@
-- Name: CONTROL_REGISTERS
-  ShortDescription: Control registers
-  LongDescription: |
+- name: CONTROL_REGISTERS
+  short_description: Control registers
+  long_description: |
     Control registers (CR0, CR1, CR2, CR3, and CR4) determine operating mode of the processor and
     the characteristics of the currently executing task. These registers are 32 bits in all 32-bit modes and compatibility
     mode.
@@ -48,9 +48,9 @@
       value that operating systems use to control the priority class of external interrupts allowed to interrupt the
       processor. This register is available only in 64-bit mode. However, interrupt filtering continues to apply in
       compatibility mode.
-  Type: Group
-  Reference: Vol3A[2.5(CONTROL REGISTERS)]
-  Include:
+  type: group
+  reference: Vol3A[2.5(CONTROL REGISTERS)]
+  include:
   - CR0
   - CR3
   - CR4

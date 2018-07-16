@@ -1,41 +1,41 @@
-- ShortName: EAX_12_ECX_02P_SLT_0
-  LongName: EAX_12_ECX_02P_SLT_0
-  Description: Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
-  Note: |
+- short_name: EAX_12_ECX_02P_SLT_0
+  long_name: EAX_12_ECX_02P_SLT_0
+  description: Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
+  note: |
     Leaf 12H sub-leaf 2 or higher (ECX >= 2) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
 
     This structure describes sub-leaf type 0.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-3
-      Name: SUB_LEAF_TYPE
-      Description: |
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-3
+      name: SUB_LEAF_TYPE
+      description: |
         Sub-leaf Type 0. Indicates this sub-leaf is invalid.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: ZERO
-      Description: EBX is zero.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: ZERO
+      description: EBX is zero.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: ZERO
-      Description: ECX is zero.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: ZERO
+      description: ECX is zero.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: ZERO
-      Description: EDX is zero.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: ZERO
+      description: EDX is zero.

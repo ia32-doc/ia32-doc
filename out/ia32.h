@@ -646,6 +646,8 @@ typedef struct
 {
   /**
    * @brief When CPUID executes with EAX set to 01H, version information is returned in EAX
+   *
+   * When CPUID executes with EAX set to 01H, version information is returned in EAX.
    */
   union
   {
@@ -677,6 +679,8 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
+       * @brief The Extended Model ID needs to be examined only when the Family ID is 06H or 0FH
+       *
        * The Extended Model ID needs to be examined only when the Family ID is 06H or 0FH.
        */
       UINT32 ExtendedModelId                                       : 4;
@@ -685,6 +689,8 @@ typedef struct
 #define CPUID_VERSION_INFORMATION_EXTENDED_MODEL_ID(_)               (((_) >> 16) & 0x0F)
 
       /**
+       * @brief The Extended Family ID needs to be examined only when the Family ID is 0FH
+       *
        * The Extended Family ID needs to be examined only when the Family ID is 0FH.
        */
       UINT32 ExtendedFamilyId                                      : 8;
@@ -698,6 +704,8 @@ typedef struct
 
   /**
    * @brief When CPUID executes with EAX set to 01H, additional information is returned to the EBX register
+   *
+   * When CPUID executes with EAX set to 01H, additional information is returned to the EBX register.
    */
   struct
   {
@@ -709,6 +717,8 @@ typedef struct
 
   /**
    * @brief When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX
+   *
+   * When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX.
    */
   union
   {
@@ -1030,6 +1040,8 @@ typedef struct
 
   /**
    * @brief When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX
+   *
+   * When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX.
    */
   union
   {
@@ -1376,6 +1388,8 @@ typedef struct
  * The CPUID leaf 04H also reports data that can be used to derive the topology of processor cores in a physical package.
  * This information is constant for all valid index values. Software can query the raw data reported by executing CPUID
  * with EAX=04H and ECX=0 and use it as part of the topology enumeration algorithm.
+ *
+ * @see Vol3A[8(Multiple-Processor Management)]
  */
 typedef struct
 {
@@ -1384,6 +1398,8 @@ typedef struct
     struct
     {
       /**
+       * @brief - 0 = Null - No more caches. - 1 = Data Cache. - 2 = Instruction Cache. - 3 = Unified Cache. - 4-31 = Reserved
+       *
        * - 0 = Null - No more caches. - 1 = Data Cache. - 2 = Instruction Cache. - 3 = Unified Cache. - 4-31 = Reserved.
        */
       UINT32 CacheTypeField                                        : 5;
@@ -1392,6 +1408,8 @@ typedef struct
 #define CPUID_EAX_CACHE_TYPE_FIELD(_)                                (((_) >> 0) & 0x1F)
 
       /**
+       * @brief Cache Level (starts at 1)
+       *
        * Cache Level (starts at 1).
        */
       UINT32 CacheLevel                                            : 3;
@@ -1400,6 +1418,8 @@ typedef struct
 #define CPUID_EAX_CACHE_LEVEL(_)                                     (((_) >> 5) & 0x07)
 
       /**
+       * @brief Self Initializing cache level (does not need SW initialization)
+       *
        * Self Initializing cache level (does not need SW initialization).
        */
       UINT32 SelfInitializingCacheLevel                            : 1;
@@ -1408,6 +1428,8 @@ typedef struct
 #define CPUID_EAX_SELF_INITIALIZING_CACHE_LEVEL(_)                   (((_) >> 8) & 0x01)
 
       /**
+       * @brief Fully Associative cache
+       *
        * Fully Associative cache.
        */
       UINT32 FullyAssociativeCache                                 : 1;
@@ -1417,7 +1439,13 @@ typedef struct
       UINT32 Reserved1                                             : 4;
 
       /**
+       * @brief Maximum number of addressable IDs for logical processors sharing this cache
+       *
        * Maximum number of addressable IDs for logical processors sharing this cache.
+       *
+       * @note Add one to the return value to get the result.
+       *       The nearest power-of-2 integer that is not smaller than (1 + EAX[25:14]) is the number of unique initial APIC IDs
+       *       reserved for addressing different logical processors sharing this cache.
        */
       UINT32 MaxAddressableIdsForLogicalProcessorsSharingThisCache : 12;
 #define CPUID_EAX_MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE_BIT 14
@@ -1425,7 +1453,14 @@ typedef struct
 #define CPUID_EAX_MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE(_) (((_) >> 14) & 0xFFF)
 
       /**
+       * @brief Maximum number of addressable IDs for processor cores in the physical package
+       *
        * Maximum number of addressable IDs for processor cores in the physical package.
+       *
+       * @note Add one to the return value to get the result.
+       *       The nearest power-of-2 integer that is not smaller than (1 + EAX[31:26]) is the number of unique Core_IDs reserved for
+       *       addressing different processor cores in a physical package. Core ID is a subset of bits of the initial APIC ID.
+       *       The returned value is constant for valid initial values in ECX. Valid ECX values start from 0.
        */
       UINT32 MaxAddressableIdsForProcessorCoresInPhysicalPackage   : 6;
 #define CPUID_EAX_MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE_BIT 26
@@ -1441,7 +1476,11 @@ typedef struct
     struct
     {
       /**
+       * @brief System Coherency Line Size
+       *
        * System Coherency Line Size.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 SystemCoherencyLineSize                               : 12;
 #define CPUID_EBX_SYSTEM_COHERENCY_LINE_SIZE_BIT                     0
@@ -1449,7 +1488,11 @@ typedef struct
 #define CPUID_EBX_SYSTEM_COHERENCY_LINE_SIZE(_)                      (((_) >> 0) & 0xFFF)
 
       /**
+       * @brief Physical Line partitions
+       *
        * Physical Line partitions.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 PhysicalLinePartitions                                : 10;
 #define CPUID_EBX_PHYSICAL_LINE_PARTITIONS_BIT                       12
@@ -1457,7 +1500,11 @@ typedef struct
 #define CPUID_EBX_PHYSICAL_LINE_PARTITIONS(_)                        (((_) >> 12) & 0x3FF)
 
       /**
+       * @brief Ways of associativity
+       *
        * Ways of associativity.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 WaysOfAssociativity                                   : 10;
 #define CPUID_EBX_WAYS_OF_ASSOCIATIVITY_BIT                          22
@@ -1473,7 +1520,11 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of Sets
+       *
        * Number of Sets.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 NumberOfSets                                          : 32;
 #define CPUID_ECX_NUMBER_OF_SETS_BIT                                 0
@@ -1541,6 +1592,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Smallest monitor-line size in bytes (default is processor's monitor granularity)
+       *
        * Smallest monitor-line size in bytes (default is processor's monitor granularity).
        */
       UINT32 SmallestMonitorLineSize                               : 16;
@@ -1557,6 +1610,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Largest monitor-line size in bytes (default is processor's monitor granularity)
+       *
        * Largest monitor-line size in bytes (default is processor's monitor granularity).
        */
       UINT32 LargestMonitorLineSize                                : 16;
@@ -1573,6 +1628,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Enumeration of Monitor-Mwait extensions (beyond EAX and EBX registers) supported
+       *
        * Enumeration of Monitor-Mwait extensions (beyond EAX and EBX registers) supported.
        */
       UINT32 EnumerationOfMonitorMwaitExtensions                   : 1;
@@ -1581,6 +1638,8 @@ typedef struct
 #define CPUID_ECX_ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS(_)         (((_) >> 0) & 0x01)
 
       /**
+       * @brief Supports treating interrupts as break-event for MWAIT, even when interrupts disabled
+       *
        * Supports treating interrupts as break-event for MWAIT, even when interrupts disabled.
        */
       UINT32 SupportsTreatingInterruptsAsBreakEventForMwait        : 1;
@@ -1597,6 +1656,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of C0 sub C-states supported using MWAIT
+       *
        * Number of C0 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC0SubCStates                                  : 4;
@@ -1605,6 +1666,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C0_SUB_C_STATES(_)                       (((_) >> 0) & 0x0F)
 
       /**
+       * @brief Number of C1 sub C-states supported using MWAIT
+       *
        * Number of C1 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC1SubCStates                                  : 4;
@@ -1613,6 +1676,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C1_SUB_C_STATES(_)                       (((_) >> 4) & 0x0F)
 
       /**
+       * @brief Number of C2 sub C-states supported using MWAIT
+       *
        * Number of C2 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC2SubCStates                                  : 4;
@@ -1621,6 +1686,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C2_SUB_C_STATES(_)                       (((_) >> 8) & 0x0F)
 
       /**
+       * @brief Number of C3 sub C-states supported using MWAIT
+       *
        * Number of C3 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC3SubCStates                                  : 4;
@@ -1629,6 +1696,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C3_SUB_C_STATES(_)                       (((_) >> 12) & 0x0F)
 
       /**
+       * @brief Number of C4 sub C-states supported using MWAIT
+       *
        * Number of C4 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC4SubCStates                                  : 4;
@@ -1637,6 +1706,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C4_SUB_C_STATES(_)                       (((_) >> 16) & 0x0F)
 
       /**
+       * @brief Number of C5 sub C-states supported using MWAIT
+       *
        * Number of C5 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC5SubCStates                                  : 4;
@@ -1645,6 +1716,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C5_SUB_C_STATES(_)                       (((_) >> 20) & 0x0F)
 
       /**
+       * @brief Number of C6 sub C-states supported using MWAIT
+       *
        * Number of C6 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC6SubCStates                                  : 4;
@@ -1653,6 +1726,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C6_SUB_C_STATES(_)                       (((_) >> 24) & 0x0F)
 
       /**
+       * @brief Number of C7 sub C-states supported using MWAIT
+       *
        * Number of C7 sub C-states supported using MWAIT.
        */
       UINT32 NumberOfC7SubCStates                                  : 4;
@@ -1678,6 +1753,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Digital temperature sensor is supported if set
+       *
        * Digital temperature sensor is supported if set.
        */
       UINT32 TemperatureSensorSupported                            : 1;
@@ -1686,6 +1763,8 @@ typedef struct
 #define CPUID_EAX_TEMPERATURE_SENSOR_SUPPORTED(_)                    (((_) >> 0) & 0x01)
 
       /**
+       * @brief Intel Turbo Boost Technology available (see description of IA32_MISC_ENABLE[38])
+       *
        * Intel Turbo Boost Technology available (see description of IA32_MISC_ENABLE[38]).
        */
       UINT32 IntelTurboBoostTechnologyAvailable                    : 1;
@@ -1694,6 +1773,8 @@ typedef struct
 #define CPUID_EAX_INTEL_TURBO_BOOST_TECHNOLOGY_AVAILABLE(_)          (((_) >> 1) & 0x01)
 
       /**
+       * @brief ARAT. APIC-Timer-always-running feature is supported if set
+       *
        * ARAT. APIC-Timer-always-running feature is supported if set.
        */
       UINT32 ApicTimerAlwaysRunning                                : 1;
@@ -1703,6 +1784,8 @@ typedef struct
       UINT32 Reserved1                                             : 1;
 
       /**
+       * @brief PLN. Power limit notification controls are supported if set
+       *
        * PLN. Power limit notification controls are supported if set.
        */
       UINT32 PowerLimitNotification                                : 1;
@@ -1711,6 +1794,8 @@ typedef struct
 #define CPUID_EAX_POWER_LIMIT_NOTIFICATION(_)                        (((_) >> 4) & 0x01)
 
       /**
+       * @brief ECMD. Clock modulation duty cycle extension is supported if set
+       *
        * ECMD. Clock modulation duty cycle extension is supported if set.
        */
       UINT32 ClockModulationDuty                                   : 1;
@@ -1719,6 +1804,8 @@ typedef struct
 #define CPUID_EAX_CLOCK_MODULATION_DUTY(_)                           (((_) >> 5) & 0x01)
 
       /**
+       * @brief PTM. Package thermal management is supported if set
+       *
        * PTM. Package thermal management is supported if set.
        */
       UINT32 PackageThermalManagement                              : 1;
@@ -1727,6 +1814,9 @@ typedef struct
 #define CPUID_EAX_PACKAGE_THERMAL_MANAGEMENT(_)                      (((_) >> 6) & 0x01)
 
       /**
+       * @brief HWP. HWP base registers (IA32_PM_ENABLE[bit 0], IA32_HWP_CAPABILITIES, IA32_HWP_REQUEST, IA32_HWP_STATUS) are
+       *        supported if set
+       *
        * HWP. HWP base registers (IA32_PM_ENABLE[bit 0], IA32_HWP_CAPABILITIES, IA32_HWP_REQUEST, IA32_HWP_STATUS) are supported
        * if set.
        */
@@ -1736,6 +1826,8 @@ typedef struct
 #define CPUID_EAX_HWP_BASE_REGISTERS(_)                              (((_) >> 7) & 0x01)
 
       /**
+       * @brief HWP_Notification. IA32_HWP_INTERRUPT MSR is supported if set
+       *
        * HWP_Notification. IA32_HWP_INTERRUPT MSR is supported if set.
        */
       UINT32 HwpNotification                                       : 1;
@@ -1744,6 +1836,8 @@ typedef struct
 #define CPUID_EAX_HWP_NOTIFICATION(_)                                (((_) >> 8) & 0x01)
 
       /**
+       * @brief HWP_Activity_Window. IA32_HWP_REQUEST[bits 41:32] is supported if set
+       *
        * HWP_Activity_Window. IA32_HWP_REQUEST[bits 41:32] is supported if set.
        */
       UINT32 HwpActivityWindow                                     : 1;
@@ -1752,6 +1846,8 @@ typedef struct
 #define CPUID_EAX_HWP_ACTIVITY_WINDOW(_)                             (((_) >> 9) & 0x01)
 
       /**
+       * @brief HWP_Energy_Performance_Preference. IA32_HWP_REQUEST[bits 31:24] is supported if set
+       *
        * HWP_Energy_Performance_Preference. IA32_HWP_REQUEST[bits 31:24] is supported if set.
        */
       UINT32 HwpEnergyPerformancePreference                        : 1;
@@ -1760,6 +1856,8 @@ typedef struct
 #define CPUID_EAX_HWP_ENERGY_PERFORMANCE_PREFERENCE(_)               (((_) >> 10) & 0x01)
 
       /**
+       * @brief HWP_Package_Level_Request. IA32_HWP_REQUEST_PKG MSR is supported if set
+       *
        * HWP_Package_Level_Request. IA32_HWP_REQUEST_PKG MSR is supported if set.
        */
       UINT32 HwpPackageLevelRequest                                : 1;
@@ -1769,6 +1867,8 @@ typedef struct
       UINT32 Reserved2                                             : 1;
 
       /**
+       * @brief HDC. HDC base registers IA32_PKG_HDC_CTL, IA32_PM_CTL1, IA32_THREAD_STALL MSRs are supported if set
+       *
        * HDC. HDC base registers IA32_PKG_HDC_CTL, IA32_PM_CTL1, IA32_THREAD_STALL MSRs are supported if set.
        */
       UINT32 Hdc                                                   : 1;
@@ -1777,6 +1877,8 @@ typedef struct
 #define CPUID_EAX_HDC(_)                                             (((_) >> 13) & 0x01)
 
       /**
+       * @brief Intel(R) Turbo Boost Max Technology 3.0 available
+       *
        * Intel(R) Turbo Boost Max Technology 3.0 available.
        */
       UINT32 IntelTurboBoostMaxTechnology3Available                : 1;
@@ -1785,6 +1887,8 @@ typedef struct
 #define CPUID_EAX_INTEL_TURBO_BOOST_MAX_TECHNOLOGY_3_AVAILABLE(_)    (((_) >> 14) & 0x01)
 
       /**
+       * @brief HWP Capabilities. Highest Performance change is supported if set
+       *
        * HWP Capabilities. Highest Performance change is supported if set.
        */
       UINT32 HwpCapabilities                                       : 1;
@@ -1793,6 +1897,8 @@ typedef struct
 #define CPUID_EAX_HWP_CAPABILITIES(_)                                (((_) >> 15) & 0x01)
 
       /**
+       * @brief HWP PECI override is supported if set
+       *
        * HWP PECI override is supported if set.
        */
       UINT32 HwpPeciOverride                                       : 1;
@@ -1801,6 +1907,8 @@ typedef struct
 #define CPUID_EAX_HWP_PECI_OVERRIDE(_)                               (((_) >> 16) & 0x01)
 
       /**
+       * @brief Flexible HWP is supported if set
+       *
        * Flexible HWP is supported if set.
        */
       UINT32 FlexibleHwp                                           : 1;
@@ -1809,6 +1917,8 @@ typedef struct
 #define CPUID_EAX_FLEXIBLE_HWP(_)                                    (((_) >> 17) & 0x01)
 
       /**
+       * @brief Fast access mode for the IA32_HWP_REQUEST MSR is supported if set
+       *
        * Fast access mode for the IA32_HWP_REQUEST MSR is supported if set.
        */
       UINT32 FastAccessModeForHwpRequestMsr                        : 1;
@@ -1818,6 +1928,8 @@ typedef struct
       UINT32 Reserved3                                             : 1;
 
       /**
+       * @brief Ignoring Idle Logical Processor HWP request is supported if set
+       *
        * Ignoring Idle Logical Processor HWP request is supported if set.
        */
       UINT32 IgnoringIdleLogicalProcessorHwpRequest                : 1;
@@ -1834,6 +1946,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of Interrupt Thresholds in Digital Thermal Sensor
+       *
        * Number of Interrupt Thresholds in Digital Thermal Sensor.
        */
       UINT32 NumberOfInterruptThresholdsInThermalSensor            : 4;
@@ -1850,6 +1964,10 @@ typedef struct
     struct
     {
       /**
+       * @brief Hardware Coordination Feedback Capability (Presence of IA32_MPERF and IA32_APERF). The capability to provide a
+       *        measure of delivered processor performance (since last reset of the counters), as a percentage of the expected processor
+       *        performance when running at the TSC frequency
+       *
        * Hardware Coordination Feedback Capability (Presence of IA32_MPERF and IA32_APERF). The capability to provide a measure
        * of delivered processor performance (since last reset of the counters), as a percentage of the expected processor
        * performance when running at the TSC frequency.
@@ -1861,6 +1979,9 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
+       * @brief The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set and it also
+       *        implies the presence of a new architectural MSR called IA32_ENERGY_PERF_BIAS (1B0H)
+       *
        * The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set and it also implies the
        * presence of a new architectural MSR called IA32_ENERGY_PERF_BIAS (1B0H).
        */
@@ -1878,6 +1999,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -1907,6 +2030,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the maximum input value for supported leaf 7 sub-leaves
+       *
        * Reports the maximum input value for supported leaf 7 sub-leaves.
        */
       UINT32 NumberOfSubLeaves                                     : 32;
@@ -1923,6 +2048,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1
+       *
        * Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1.
        */
       UINT32 Fsgsbase                                              : 1;
@@ -1931,6 +2058,8 @@ typedef struct
 #define CPUID_EBX_FSGSBASE(_)                                        (((_) >> 0) & 0x01)
 
       /**
+       * @brief IA32_TSC_ADJUST MSR is supported if 1
+       *
        * IA32_TSC_ADJUST MSR is supported if 1.
        */
       UINT32 Ia32TscAdjustMsr                                      : 1;
@@ -1939,6 +2068,8 @@ typedef struct
 #define CPUID_EBX_IA32_TSC_ADJUST_MSR(_)                             (((_) >> 1) & 0x01)
 
       /**
+       * @brief Supports Intel(R) Software Guard Extensions (Intel(R) SGX Extensions) if 1
+       *
        * Supports Intel(R) Software Guard Extensions (Intel(R) SGX Extensions) if 1.
        */
       UINT32 Sgx                                                   : 1;
@@ -1947,6 +2078,8 @@ typedef struct
 #define CPUID_EBX_SGX(_)                                             (((_) >> 2) & 0x01)
 
       /**
+       * @brief BMI1
+       *
        * BMI1.
        */
       UINT32 Bmi1                                                  : 1;
@@ -1955,6 +2088,8 @@ typedef struct
 #define CPUID_EBX_BMI1(_)                                            (((_) >> 3) & 0x01)
 
       /**
+       * @brief HLE
+       *
        * HLE.
        */
       UINT32 Hle                                                   : 1;
@@ -1963,6 +2098,8 @@ typedef struct
 #define CPUID_EBX_HLE(_)                                             (((_) >> 4) & 0x01)
 
       /**
+       * @brief AVX2
+       *
        * AVX2.
        */
       UINT32 Avx2                                                  : 1;
@@ -1971,6 +2108,8 @@ typedef struct
 #define CPUID_EBX_AVX2(_)                                            (((_) >> 5) & 0x01)
 
       /**
+       * @brief x87 FPU Data Pointer updated only on x87 exceptions if 1
+       *
        * x87 FPU Data Pointer updated only on x87 exceptions if 1.
        */
       UINT32 FdpExcptnOnly                                         : 1;
@@ -1979,6 +2118,8 @@ typedef struct
 #define CPUID_EBX_FDP_EXCPTN_ONLY(_)                                 (((_) >> 6) & 0x01)
 
       /**
+       * @brief Supports Supervisor-Mode Execution Prevention if 1
+       *
        * Supports Supervisor-Mode Execution Prevention if 1.
        */
       UINT32 Smep                                                  : 1;
@@ -1987,6 +2128,8 @@ typedef struct
 #define CPUID_EBX_SMEP(_)                                            (((_) >> 7) & 0x01)
 
       /**
+       * @brief BMI2
+       *
        * BMI2.
        */
       UINT32 Bmi2                                                  : 1;
@@ -1995,6 +2138,8 @@ typedef struct
 #define CPUID_EBX_BMI2(_)                                            (((_) >> 8) & 0x01)
 
       /**
+       * @brief Supports Enhanced REP MOVSB/STOSB if 1
+       *
        * Supports Enhanced REP MOVSB/STOSB if 1.
        */
       UINT32 EnhancedRepMovsbStosb                                 : 1;
@@ -2003,6 +2148,8 @@ typedef struct
 #define CPUID_EBX_ENHANCED_REP_MOVSB_STOSB(_)                        (((_) >> 9) & 0x01)
 
       /**
+       * @brief If 1, supports INVPCID instruction for system software that manages process-context identifiers
+       *
        * If 1, supports INVPCID instruction for system software that manages process-context identifiers.
        */
       UINT32 Invpcid                                               : 1;
@@ -2011,6 +2158,8 @@ typedef struct
 #define CPUID_EBX_INVPCID(_)                                         (((_) >> 10) & 0x01)
 
       /**
+       * @brief RTM
+       *
        * RTM.
        */
       UINT32 Rtm                                                   : 1;
@@ -2019,6 +2168,8 @@ typedef struct
 #define CPUID_EBX_RTM(_)                                             (((_) >> 11) & 0x01)
 
       /**
+       * @brief Supports Intel(R) Resource Director Technology (Intel(R) RDT) Monitoring capability if 1
+       *
        * Supports Intel(R) Resource Director Technology (Intel(R) RDT) Monitoring capability if 1.
        */
       UINT32 RdtM                                                  : 1;
@@ -2027,6 +2178,8 @@ typedef struct
 #define CPUID_EBX_RDT_M(_)                                           (((_) >> 12) & 0x01)
 
       /**
+       * @brief Deprecates FPU CS and FPU DS values if 1
+       *
        * Deprecates FPU CS and FPU DS values if 1.
        */
       UINT32 Deprecates                                            : 1;
@@ -2035,6 +2188,8 @@ typedef struct
 #define CPUID_EBX_DEPRECATES(_)                                      (((_) >> 13) & 0x01)
 
       /**
+       * @brief Supports Intel(R) Memory Protection Extensions if 1
+       *
        * Supports Intel(R) Memory Protection Extensions if 1.
        */
       UINT32 Mpx                                                   : 1;
@@ -2043,6 +2198,8 @@ typedef struct
 #define CPUID_EBX_MPX(_)                                             (((_) >> 14) & 0x01)
 
       /**
+       * @brief Supports Intel(R) Resource Director Technology (Intel(R) RDT) Allocation capability if 1
+       *
        * Supports Intel(R) Resource Director Technology (Intel(R) RDT) Allocation capability if 1.
        */
       UINT32 Rdt                                                   : 1;
@@ -2051,6 +2208,8 @@ typedef struct
 #define CPUID_EBX_RDT(_)                                             (((_) >> 15) & 0x01)
 
       /**
+       * @brief AVX512F
+       *
        * AVX512F.
        */
       UINT32 Avx512F                                               : 1;
@@ -2059,6 +2218,8 @@ typedef struct
 #define CPUID_EBX_AVX512F(_)                                         (((_) >> 16) & 0x01)
 
       /**
+       * @brief AVX512DQ
+       *
        * AVX512DQ.
        */
       UINT32 Avx512Dq                                              : 1;
@@ -2067,6 +2228,8 @@ typedef struct
 #define CPUID_EBX_AVX512DQ(_)                                        (((_) >> 17) & 0x01)
 
       /**
+       * @brief RDSEED
+       *
        * RDSEED.
        */
       UINT32 Rdseed                                                : 1;
@@ -2075,6 +2238,8 @@ typedef struct
 #define CPUID_EBX_RDSEED(_)                                          (((_) >> 18) & 0x01)
 
       /**
+       * @brief ADX
+       *
        * ADX.
        */
       UINT32 Adx                                                   : 1;
@@ -2083,6 +2248,8 @@ typedef struct
 #define CPUID_EBX_ADX(_)                                             (((_) >> 19) & 0x01)
 
       /**
+       * @brief Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1
+       *
        * Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1.
        */
       UINT32 Smap                                                  : 1;
@@ -2091,6 +2258,8 @@ typedef struct
 #define CPUID_EBX_SMAP(_)                                            (((_) >> 20) & 0x01)
 
       /**
+       * @brief AVX512_IFMA
+       *
        * AVX512_IFMA.
        */
       UINT32 Avx512Ifma                                            : 1;
@@ -2100,6 +2269,8 @@ typedef struct
       UINT32 Reserved1                                             : 1;
 
       /**
+       * @brief CLFLUSHOPT
+       *
        * CLFLUSHOPT.
        */
       UINT32 Clflushopt                                            : 1;
@@ -2108,6 +2279,8 @@ typedef struct
 #define CPUID_EBX_CLFLUSHOPT(_)                                      (((_) >> 23) & 0x01)
 
       /**
+       * @brief CLWB
+       *
        * CLWB.
        */
       UINT32 Clwb                                                  : 1;
@@ -2116,6 +2289,8 @@ typedef struct
 #define CPUID_EBX_CLWB(_)                                            (((_) >> 24) & 0x01)
 
       /**
+       * @brief Intel Processor Trace
+       *
        * Intel Processor Trace.
        */
       UINT32 Intel                                                 : 1;
@@ -2124,6 +2299,8 @@ typedef struct
 #define CPUID_EBX_INTEL(_)                                           (((_) >> 25) & 0x01)
 
       /**
+       * @brief (Intel(R) Xeon Phi(TM) only)
+       *
        * (Intel(R) Xeon Phi(TM) only).
        */
       UINT32 Avx512Pf                                              : 1;
@@ -2132,6 +2309,8 @@ typedef struct
 #define CPUID_EBX_AVX512PF(_)                                        (((_) >> 26) & 0x01)
 
       /**
+       * @brief (Intel(R) Xeon Phi(TM) only)
+       *
        * (Intel(R) Xeon Phi(TM) only).
        */
       UINT32 Avx512Er                                              : 1;
@@ -2140,6 +2319,8 @@ typedef struct
 #define CPUID_EBX_AVX512ER(_)                                        (((_) >> 27) & 0x01)
 
       /**
+       * @brief AVX512CD
+       *
        * AVX512CD.
        */
       UINT32 Avx512Cd                                              : 1;
@@ -2148,6 +2329,8 @@ typedef struct
 #define CPUID_EBX_AVX512CD(_)                                        (((_) >> 28) & 0x01)
 
       /**
+       * @brief Supports Intel(R) Secure Hash Algorithm Extensions (Intel(R) SHA Extensions) if 1
+       *
        * Supports Intel(R) Secure Hash Algorithm Extensions (Intel(R) SHA Extensions) if 1.
        */
       UINT32 Sha                                                   : 1;
@@ -2156,6 +2339,8 @@ typedef struct
 #define CPUID_EBX_SHA(_)                                             (((_) >> 29) & 0x01)
 
       /**
+       * @brief AVX512BW
+       *
        * AVX512BW.
        */
       UINT32 Avx512Bw                                              : 1;
@@ -2164,6 +2349,8 @@ typedef struct
 #define CPUID_EBX_AVX512BW(_)                                        (((_) >> 30) & 0x01)
 
       /**
+       * @brief AVX512VL
+       *
        * AVX512VL.
        */
       UINT32 Avx512Vl                                              : 1;
@@ -2180,6 +2367,8 @@ typedef struct
     struct
     {
       /**
+       * @brief (Intel(R) Xeon Phi(TM) only)
+       *
        * (Intel(R) Xeon Phi(TM) only).
        */
       UINT32 Prefetchwt1                                           : 1;
@@ -2188,6 +2377,8 @@ typedef struct
 #define CPUID_ECX_PREFETCHWT1(_)                                     (((_) >> 0) & 0x01)
 
       /**
+       * @brief AVX512_VBMI
+       *
        * AVX512_VBMI.
        */
       UINT32 Avx512Vbmi                                            : 1;
@@ -2196,6 +2387,8 @@ typedef struct
 #define CPUID_ECX_AVX512_VBMI(_)                                     (((_) >> 1) & 0x01)
 
       /**
+       * @brief Supports user-mode instruction prevention if 1
+       *
        * Supports user-mode instruction prevention if 1.
        */
       UINT32 Umip                                                  : 1;
@@ -2204,6 +2397,8 @@ typedef struct
 #define CPUID_ECX_UMIP(_)                                            (((_) >> 2) & 0x01)
 
       /**
+       * @brief Supports protection keys for user-mode pages if 1
+       *
        * Supports protection keys for user-mode pages if 1.
        */
       UINT32 Pku                                                   : 1;
@@ -2212,6 +2407,8 @@ typedef struct
 #define CPUID_ECX_PKU(_)                                             (((_) >> 3) & 0x01)
 
       /**
+       * @brief If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions)
+       *
        * If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
        */
       UINT32 Ospke                                                 : 1;
@@ -2221,6 +2418,8 @@ typedef struct
       UINT32 Reserved1                                             : 12;
 
       /**
+       * @brief The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode
+       *
        * The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
        */
       UINT32 Mawau                                                 : 5;
@@ -2229,6 +2428,8 @@ typedef struct
 #define CPUID_ECX_MAWAU(_)                                           (((_) >> 17) & 0x1F)
 
       /**
+       * @brief RDPID and IA32_TSC_AUX are available if 1
+       *
        * RDPID and IA32_TSC_AUX are available if 1.
        */
       UINT32 Rdpid                                                 : 1;
@@ -2238,6 +2439,8 @@ typedef struct
       UINT32 Reserved2                                             : 7;
 
       /**
+       * @brief Supports SGX Launch Configuration if 1
+       *
        * Supports SGX Launch Configuration if 1.
        */
       UINT32 SgxLc                                                 : 1;
@@ -2254,6 +2457,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2279,6 +2484,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H)
+       *
        * Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H).
        */
       UINT32 Ia32PlatformDcaCap                                    : 32;
@@ -2295,6 +2502,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2311,6 +2520,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2327,6 +2538,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2347,6 +2560,8 @@ typedef struct
  * monitoring capabilities. Architectural performance monitoring is supported if the version ID is greater than Pn 0. For
  * each version of architectural performance monitoring capability, software must enumerate this leaf to discover the
  * programming facilities and the architectural performance events available in the processor.
+ *
+ * @see Vol3C[23(Introduction to Virtual-Machine Extensions)]
  */
 typedef struct
 {
@@ -2355,6 +2570,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Version ID of architectural performance monitoring
+       *
        * Version ID of architectural performance monitoring.
        */
       UINT32 VersionIdOfArchitecturalPerformanceMonitoring         : 8;
@@ -2363,6 +2580,8 @@ typedef struct
 #define CPUID_EAX_VERSION_ID_OF_ARCHITECTURAL_PERFORMANCE_MONITORING(_) (((_) >> 0) & 0xFF)
 
       /**
+       * @brief Number of general-purpose performance monitoring counter per logical processor
+       *
        * Number of general-purpose performance monitoring counter per logical processor.
        */
       UINT32 NumberOfPerformanceMonitoringCounterPerLogicalProcessor: 8;
@@ -2371,6 +2590,8 @@ typedef struct
 #define CPUID_EAX_NUMBER_OF_PERFORMANCE_MONITORING_COUNTER_PER_LOGICAL_PROCESSOR(_) (((_) >> 8) & 0xFF)
 
       /**
+       * @brief Bit width of general-purpose, performance monitoring counter
+       *
        * Bit width of general-purpose, performance monitoring counter.
        */
       UINT32 BitWidthOfPerformanceMonitoringCounter                : 8;
@@ -2379,6 +2600,8 @@ typedef struct
 #define CPUID_EAX_BIT_WIDTH_OF_PERFORMANCE_MONITORING_COUNTER(_)     (((_) >> 16) & 0xFF)
 
       /**
+       * @brief Length of EBX bit vector to enumerate architectural performance monitoring events
+       *
        * Length of EBX bit vector to enumerate architectural performance monitoring events.
        */
       UINT32 EbxBitVectorLength                                    : 8;
@@ -2395,6 +2618,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Core cycle event not available if 1
+       *
        * Core cycle event not available if 1.
        */
       UINT32 CoreCycleEventNotAvailable                            : 1;
@@ -2403,6 +2628,8 @@ typedef struct
 #define CPUID_EBX_CORE_CYCLE_EVENT_NOT_AVAILABLE(_)                  (((_) >> 0) & 0x01)
 
       /**
+       * @brief Instruction retired event not available if 1
+       *
        * Instruction retired event not available if 1.
        */
       UINT32 InstructionRetiredEventNotAvailable                   : 1;
@@ -2411,6 +2638,8 @@ typedef struct
 #define CPUID_EBX_INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE(_)         (((_) >> 1) & 0x01)
 
       /**
+       * @brief Reference cycles event not available if 1
+       *
        * Reference cycles event not available if 1.
        */
       UINT32 ReferenceCyclesEventNotAvailable                      : 1;
@@ -2419,6 +2648,8 @@ typedef struct
 #define CPUID_EBX_REFERENCE_CYCLES_EVENT_NOT_AVAILABLE(_)            (((_) >> 2) & 0x01)
 
       /**
+       * @brief Last-level cache reference event not available if 1
+       *
        * Last-level cache reference event not available if 1.
        */
       UINT32 LastLevelCacheReferenceEventNotAvailable              : 1;
@@ -2427,6 +2658,8 @@ typedef struct
 #define CPUID_EBX_LAST_LEVEL_CACHE_REFERENCE_EVENT_NOT_AVAILABLE(_)  (((_) >> 3) & 0x01)
 
       /**
+       * @brief Last-level cache misses event not available if 1
+       *
        * Last-level cache misses event not available if 1.
        */
       UINT32 LastLevelCacheMissesEventNotAvailable                 : 1;
@@ -2435,6 +2668,8 @@ typedef struct
 #define CPUID_EBX_LAST_LEVEL_CACHE_MISSES_EVENT_NOT_AVAILABLE(_)     (((_) >> 4) & 0x01)
 
       /**
+       * @brief Branch instruction retired event not available if 1
+       *
        * Branch instruction retired event not available if 1.
        */
       UINT32 BranchInstructionRetiredEventNotAvailable             : 1;
@@ -2443,6 +2678,8 @@ typedef struct
 #define CPUID_EBX_BRANCH_INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE(_)  (((_) >> 5) & 0x01)
 
       /**
+       * @brief Branch mispredict retired event not available if 1
+       *
        * Branch mispredict retired event not available if 1.
        */
       UINT32 BranchMispredictRetiredEventNotAvailable              : 1;
@@ -2459,6 +2696,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2475,6 +2714,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of fixed-function performance counters (if Version ID > 1)
+       *
        * Number of fixed-function performance counters (if Version ID > 1).
        */
       UINT32 NumberOfFixedFunctionPerformanceCounters              : 5;
@@ -2483,6 +2724,8 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS(_)   (((_) >> 0) & 0x1F)
 
       /**
+       * @brief Bit width of fixed-function performance counters (if Version ID > 1)
+       *
        * Bit width of fixed-function performance counters (if Version ID > 1).
        */
       UINT32 BitWidthOfFixedFunctionPerformanceCounters            : 8;
@@ -2492,6 +2735,8 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
+       * @brief AnyThread deprecation
+       *
        * AnyThread deprecation.
        */
       UINT32 AnyThreadDeprecation                                  : 1;
@@ -2512,6 +2757,12 @@ typedef struct
  * Software must detect the presence of CPUID leaf 0BH by verifying
  * - the highest leaf index supported by CPUID is >= 0BH, and
  * - CPUID.0BH:EBX[15:0] reports a non-zero value.
+ *
+ * @note Most of Leaf 0BH output depends on the initial value in ECX. The EDX output of leaf 0BH is always valid and does
+ *       not vary with input value in ECX. Output value in ECX[7:0] always equals input value in ECX[7:0]. Sub-leaf index 0
+ *       enumerates SMT level. Each subsequent higher sub-leaf index enumerates a higherlevel topological entity in hierarchical
+ *       order. For sub-leaves that return an invalid level-type of 0 in ECX[15:8]; EAX and EBX will return 0. If an input value
+ *       n in ECX returns the invalid level-type of 0 in ECX[15:8], other input values with ECX > n also return 0 in ECX[15:8].
  */
 typedef struct
 {
@@ -2520,8 +2771,13 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of bits to shift right on x2APIC ID to get a unique topology ID of the next level type. All logical
+       *        processors with the same next level ID share current level
+       *
        * Number of bits to shift right on x2APIC ID to get a unique topology ID of the next level type. All logical processors
        * with the same next level ID share current level.
+       *
+       * @note Software should use this field (EAX[4:0]) to enumerate processor topology of the system.
        */
       UINT32 X2ApicIdToUniqueTopologyIdShift                       : 5;
 #define CPUID_EAX_X2APIC_ID_TO_UNIQUE_TOPOLOGY_ID_SHIFT_BIT          0
@@ -2537,7 +2793,14 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of logical processors at this level type. The number reflects configuration as shipped by Intel
+       *
        * Number of logical processors at this level type. The number reflects configuration as shipped by Intel.
+       *
+       * @note Software must not use EBX[15:0] to enumerate processor topology of the system. This value in this field
+       *       (EBX[15:0]) is only intended for display/diagnostic purposes. The actual number of logical processors available to
+       *       BIOS/OS/Applications may be different from the value of EBX[15:0], depending on software and platform hardware
+       *       configurations.
        */
       UINT32 NumberOfLogicalProcessorsAtThisLevelType              : 16;
 #define CPUID_EBX_NUMBER_OF_LOGICAL_PROCESSORS_AT_THIS_LEVEL_TYPE_BIT 0
@@ -2553,6 +2816,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Level number. Same value in ECX input
+       *
        * Level number. Same value in ECX input.
        */
       UINT32 LevelNumber                                           : 8;
@@ -2561,7 +2826,16 @@ typedef struct
 #define CPUID_ECX_LEVEL_NUMBER(_)                                    (((_) >> 0) & 0xFF)
 
       /**
+       * @brief Level type
+       *
        * Level type.
+       *
+       * @note The value of the "level type" field is not related to level numbers in any way, higher "level type" values do not
+       *       mean higher levels. Level type field has the following encoding:
+       *       - 0: Invalid.
+       *       - 1: SMT.
+       *       - 2: Core.
+       *       - 3-255: Reserved.
        */
       UINT32 LevelType                                             : 8;
 #define CPUID_ECX_LEVEL_TYPE_BIT                                     8
@@ -2577,6 +2851,8 @@ typedef struct
     struct
     {
       /**
+       * @brief x2APIC ID the current logical processor
+       *
        * x2APIC ID the current logical processor.
        */
       UINT32 X2ApicId                                              : 32;
@@ -2607,17 +2883,23 @@ typedef struct
  */
 /**
  * @brief Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)
+ *
+ * Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0).
  */
 typedef struct
 {
   /**
    * @brief Reports the supported bits of the lower 32 bits of XCR0. XCR0[n] can be set to 1 only if EAX[n] is 1
+   *
+   * Reports the supported bits of the lower 32 bits of XCR0. XCR0[n] can be set to 1 only if EAX[n] is 1.
    */
   union
   {
     struct
     {
       /**
+       * @brief x87 state
+       *
        * x87 state.
        */
       UINT32 X87State                                              : 1;
@@ -2626,6 +2908,8 @@ typedef struct
 #define CPUID_EAX_X87_STATE(_)                                       (((_) >> 0) & 0x01)
 
       /**
+       * @brief SSE state
+       *
        * SSE state.
        */
       UINT32 SseState                                              : 1;
@@ -2634,6 +2918,8 @@ typedef struct
 #define CPUID_EAX_SSE_STATE(_)                                       (((_) >> 1) & 0x01)
 
       /**
+       * @brief AVX state
+       *
        * AVX state.
        */
       UINT32 AvxState                                              : 1;
@@ -2642,6 +2928,8 @@ typedef struct
 #define CPUID_EAX_AVX_STATE(_)                                       (((_) >> 2) & 0x01)
 
       /**
+       * @brief MPX state
+       *
        * MPX state.
        */
       UINT32 MpxState                                              : 2;
@@ -2650,6 +2938,8 @@ typedef struct
 #define CPUID_EAX_MPX_STATE(_)                                       (((_) >> 3) & 0x03)
 
       /**
+       * @brief AVX-512 state
+       *
        * AVX-512 state.
        */
       UINT32 Avx512State                                           : 3;
@@ -2658,6 +2948,8 @@ typedef struct
 #define CPUID_EAX_AVX_512_STATE(_)                                   (((_) >> 5) & 0x07)
 
       /**
+       * @brief Used for IA32_XSS
+       *
        * Used for IA32_XSS.
        */
       UINT32 UsedForIa32Xss1                                       : 1;
@@ -2666,6 +2958,8 @@ typedef struct
 #define CPUID_EAX_USED_FOR_IA32_XSS_1(_)                             (((_) >> 8) & 0x01)
 
       /**
+       * @brief PKRU state
+       *
        * PKRU state.
        */
       UINT32 PkruState                                             : 1;
@@ -2675,6 +2969,8 @@ typedef struct
       UINT32 Reserved1                                             : 3;
 
       /**
+       * @brief Used for IA32_XSS
+       *
        * Used for IA32_XSS.
        */
       UINT32 UsedForIa32Xss2                                       : 1;
@@ -2691,6 +2987,9 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) required by enabled features in XCR0. May
+       *        be different than ECX if some features at the end of the XSAVE save area are not enabled
+       *
        * Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) required by enabled features in XCR0. May be
        * different than ECX if some features at the end of the XSAVE save area are not enabled.
        */
@@ -2708,6 +3007,9 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) of the XSAVE/XRSTOR save area required by
+       *        all supported features in the processor, i.e., all the valid bit fields in XCR0
+       *
        * Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) of the XSAVE/XRSTOR save area required by all
        * supported features in the processor, i.e., all the valid bit fields in XCR0.
        */
@@ -2725,6 +3027,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the supported bits of the upper 32 bits of XCR0. XCR0[n+32] can be set to 1 only if EDX[n] is 1
+       *
        * Reports the supported bits of the upper 32 bits of XCR0. XCR0[n+32] can be set to 1 only if EDX[n] is 1.
        */
       UINT32 Xcr0SupportedBits                                     : 32;
@@ -2740,6 +3044,8 @@ typedef struct
 
 /**
  * @brief Direct Cache Access Information Leaf
+ *
+ * Direct Cache Access Information Leaf.
  */
 typedef struct
 {
@@ -2750,6 +3056,8 @@ typedef struct
       UINT32 Reserved1                                             : 1;
 
       /**
+       * @brief Supports XSAVEC and the compacted form of XRSTOR if set
+       *
        * Supports XSAVEC and the compacted form of XRSTOR if set.
        */
       UINT32 SupportsXsavecAndCompactedXrstor                      : 1;
@@ -2758,6 +3066,8 @@ typedef struct
 #define CPUID_EAX_SUPPORTS_XSAVEC_AND_COMPACTED_XRSTOR(_)            (((_) >> 1) & 0x01)
 
       /**
+       * @brief Supports XGETBV with ECX = 1 if set
+       *
        * Supports XGETBV with ECX = 1 if set.
        */
       UINT32 SupportsXgetbvWithEcx1                                : 1;
@@ -2766,6 +3076,8 @@ typedef struct
 #define CPUID_EAX_SUPPORTS_XGETBV_WITH_ECX_1(_)                      (((_) >> 2) & 0x01)
 
       /**
+       * @brief Supports XSAVES/XRSTORS and IA32_XSS if set
+       *
        * Supports XSAVES/XRSTORS and IA32_XSS if set.
        */
       UINT32 SupportsXsaveXrstorAndIa32Xss                         : 1;
@@ -2782,6 +3094,8 @@ typedef struct
     struct
     {
       /**
+       * @brief The size in bytes of the XSAVE area containing all states enabled by XCRO | IA32_XSS
+       *
        * The size in bytes of the XSAVE area containing all states enabled by XCRO | IA32_XSS.
        */
       UINT32 SizeOfXsaveAread                                      : 32;
@@ -2798,6 +3112,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Used for XCR0
+       *
        * Used for XCR0.
        */
       UINT32 UsedForXcr01                                          : 8;
@@ -2806,6 +3122,8 @@ typedef struct
 #define CPUID_ECX_USED_FOR_XCR0_1(_)                                 (((_) >> 0) & 0xFF)
 
       /**
+       * @brief PT state
+       *
        * PT state.
        */
       UINT32 PtState                                               : 1;
@@ -2814,6 +3132,8 @@ typedef struct
 #define CPUID_ECX_PT_STATE(_)                                        (((_) >> 8) & 0x01)
 
       /**
+       * @brief Used for XCR0
+       *
        * Used for XCR0.
        */
       UINT32 UsedForXcr02                                          : 1;
@@ -2823,6 +3143,8 @@ typedef struct
       UINT32 Reserved1                                             : 3;
 
       /**
+       * @brief HWP state
+       *
        * HWP state.
        */
       UINT32 HwpState                                              : 1;
@@ -2839,6 +3161,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2854,6 +3178,14 @@ typedef struct
 
 /**
  * @brief Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)
+ *
+ * Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1).
+ *
+ * @note Leaf 0DH output depends on the initial value in ECX. Each sub-leaf index (starting at position 2) is supported if
+ *       it corresponds to a supported bit in either the XCR0 register or the IA32_XSS MSR.
+ *       If ECX contains an invalid sub-leaf index, EAX/EBX/ECX/EDX return 0. Sub-leaf n (0 <= n <= 31) is invalid if sub-leaf 0
+ *       returns 0 in EAX[n] and sub-leaf 1 returns 0 in ECX[n]. Sub-leaf n (32 <= n <= 63) is invalid if sub-leaf 0 returns 0 in
+ *       EDX[n-32] and sub-leaf 1 returns 0 in EDX[n-32].
  */
 typedef struct
 {
@@ -2862,6 +3194,9 @@ typedef struct
     struct
     {
       /**
+       * @brief The size in bytes (from the offset specified in EBX) of the save area for an extended state feature associated
+       *        with a valid sub-leaf index, n
+       *
        * The size in bytes (from the offset specified in EBX) of the save area for an extended state feature associated with a
        * valid sub-leaf index, n.
        */
@@ -2879,6 +3214,9 @@ typedef struct
     struct
     {
       /**
+       * @brief The offset in bytes of this extended state component's save area from the beginning of the XSAVE/XRSTOR area.
+       *        This field reports 0 if the sub-leaf index, n, does not map to a valid bit in the XCR0 register
+       *
        * The offset in bytes of this extended state component's save area from the beginning of the XSAVE/XRSTOR area.
        * This field reports 0 if the sub-leaf index, n, does not map to a valid bit in the XCR0 register.
        */
@@ -2896,6 +3234,9 @@ typedef struct
     struct
     {
       /**
+       * @brief Is set if the bit n (corresponding to the sub-leaf index) is supported in the IA32_XSS MSR; it is clear if bit n
+       *        is instead supported in XCR0
+       *
        * Is set if the bit n (corresponding to the sub-leaf index) is supported in the IA32_XSS MSR; it is clear if bit n is
        * instead supported in XCR0.
        */
@@ -2905,6 +3246,10 @@ typedef struct
 #define CPUID_ECX_ECX_2(_)                                           (((_) >> 0) & 0x01)
 
       /**
+       * @brief Is set if, when the compacted format of an XSAVE area is used, this extended state component located on the next
+       *        64-byte boundary following the preceding state component (otherwise, it is located immediately following the preceding
+       *        state component)
+       *
        * Is set if, when the compacted format of an XSAVE area is used, this extended state component located on the next 64-byte
        * boundary following the preceding state component (otherwise, it is located immediately following the preceding state
        * component).
@@ -2923,6 +3268,8 @@ typedef struct
     struct
     {
       /**
+       * @brief This field reports 0 if the sub-leaf index, n, is invalid; otherwise it is reserved
+       *
        * This field reports 0 if the sub-leaf index, n, is invalid; otherwise it is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2955,6 +3302,11 @@ typedef struct
  */
 /**
  * @brief Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0)
+ *
+ * Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0).
+ *
+ * @note Leaf 0FH output depends on the initial value in ECX. Sub-leaf index 0 reports valid resource type starting at bit
+ *       position 1 of EDX.
  */
 typedef struct
 {
@@ -2963,6 +3315,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -2979,6 +3333,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum range (zero-based) of RMID within this physical processor of all types
+       *
        * Maximum range (zero-based) of RMID within this physical processor of all types.
        */
       UINT32 RmidMaxRange                                          : 32;
@@ -2995,6 +3351,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3013,6 +3371,8 @@ typedef struct
       UINT32 Reserved1                                             : 1;
 
       /**
+       * @brief Supports L3 Cache Intel RDT Monitoring if 1
+       *
        * Supports L3 Cache Intel RDT Monitoring if 1.
        */
       UINT32 SupportsL3CacheIntelRdtMonitoring                     : 1;
@@ -3028,6 +3388,10 @@ typedef struct
 
 /**
  * @brief L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1)
+ *
+ * L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1).
+ *
+ * @note Leaf 0FH output depends on the initial value in ECX.
  */
 typedef struct
 {
@@ -3036,6 +3400,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3052,6 +3418,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Conversion factor from reported IA32_QM_CTR value to occupancy metric (bytes)
+       *
        * Conversion factor from reported IA32_QM_CTR value to occupancy metric (bytes).
        */
       UINT32 ConversionFactor                                      : 32;
@@ -3068,6 +3436,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum range (zero-based) of RMID within this physical processor of all types
+       *
        * Maximum range (zero-based) of RMID within this physical processor of all types.
        */
       UINT32 RmidMaxRange                                          : 32;
@@ -3084,6 +3454,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Supports L3 occupancy monitoring if 1
+       *
        * Supports L3 occupancy monitoring if 1.
        */
       UINT32 SupportsL3OccupancyMonitoring                         : 1;
@@ -3092,6 +3464,8 @@ typedef struct
 #define CPUID_EDX_SUPPORTS_L3_OCCUPANCY_MONITORING(_)                (((_) >> 0) & 0x01)
 
       /**
+       * @brief Supports L3 Total Bandwidth monitoring if 1
+       *
        * Supports L3 Total Bandwidth monitoring if 1.
        */
       UINT32 SupportsL3TotalBandwidthMonitoring                    : 1;
@@ -3100,6 +3474,8 @@ typedef struct
 #define CPUID_EDX_SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING(_)          (((_) >> 1) & 0x01)
 
       /**
+       * @brief Supports L3 Local Bandwidth monitoring if 1
+       *
        * Supports L3 Local Bandwidth monitoring if 1.
        */
       UINT32 SupportsL3LocalBandwidthMonitoring                    : 1;
@@ -3132,6 +3508,11 @@ typedef struct
  */
 /**
  * @brief Intel Resource Director Technology (Intel RDT) Allocation Enumeration Sub-leaf (EAX = 10H, ECX = 0)
+ *
+ * Intel Resource Director Technology (Intel RDT) Allocation Enumeration Sub-leaf (EAX = 10H, ECX = 0).
+ *
+ * @note Leaf 10H output depends on the initial value in ECX. Sub-leaf index 0 reports valid resource identification
+ *       (ResID) starting at bit position 1 of EBX.
  */
 typedef struct
 {
@@ -3140,6 +3521,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H)
+       *
        * Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H).
        */
       UINT32 Ia32PlatformDcaCap                                    : 32;
@@ -3158,6 +3541,8 @@ typedef struct
       UINT32 Reserved1                                             : 1;
 
       /**
+       * @brief Supports L3 Cache Allocation Technology if 1
+       *
        * Supports L3 Cache Allocation Technology if 1.
        */
       UINT32 SupportsL3CacheAllocationTechnology                   : 1;
@@ -3166,6 +3551,8 @@ typedef struct
 #define CPUID_EBX_SUPPORTS_L3_CACHE_ALLOCATION_TECHNOLOGY(_)         (((_) >> 1) & 0x01)
 
       /**
+       * @brief Supports L2 Cache Allocation Technology if 1
+       *
        * Supports L2 Cache Allocation Technology if 1.
        */
       UINT32 SupportsL2CacheAllocationTechnology                   : 1;
@@ -3174,6 +3561,8 @@ typedef struct
 #define CPUID_EBX_SUPPORTS_L2_CACHE_ALLOCATION_TECHNOLOGY(_)         (((_) >> 2) & 0x01)
 
       /**
+       * @brief Supports Memory Bandwidth Allocation if 1
+       *
        * Supports Memory Bandwidth Allocation if 1.
        */
       UINT32 SupportsMemoryBandwidthAllocation                     : 1;
@@ -3190,6 +3579,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3206,6 +3597,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3221,6 +3614,10 @@ typedef struct
 
 /**
  * @brief L3 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 1)
+ *
+ * L3 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 1).
+ *
+ * @note Leaf 10H output depends on the initial value in ECX.
  */
 typedef struct
 {
@@ -3229,6 +3626,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Length of the capacity bit mask for the corresponding ResID using minus-one notation
+       *
        * Length of the capacity bit mask for the corresponding ResID using minus-one notation.
        */
       UINT32 LengthOfCapacityBitMask                               : 5;
@@ -3245,6 +3644,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bit-granular map of isolation/contention of allocation units
+       *
        * Bit-granular map of isolation/contention of allocation units.
        */
       UINT32 Ebx0                                                  : 32;
@@ -3263,6 +3664,8 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
+       * @brief Code and Data Prioritization Technology supported if 1
+       *
        * Code and Data Prioritization Technology supported if 1.
        */
       UINT32 CodeAndDataPriorizationTechnologySupported            : 1;
@@ -3279,6 +3682,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Highest COS number supported for this ResID
+       *
        * Highest COS number supported for this ResID.
        */
       UINT32 HighestCosNumberSupported                             : 16;
@@ -3294,6 +3699,10 @@ typedef struct
 
 /**
  * @brief L2 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 2)
+ *
+ * L2 Cache Allocation Technology Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 2).
+ *
+ * @note Leaf 10H output depends on the initial value in ECX.
  */
 typedef struct
 {
@@ -3302,6 +3711,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Length of the capacity bit mask for the corresponding ResID using minus-one notation
+       *
        * Length of the capacity bit mask for the corresponding ResID using minus-one notation.
        */
       UINT32 LengthOfCapacityBitMask                               : 5;
@@ -3318,6 +3729,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bit-granular map of isolation/contention of allocation units
+       *
        * Bit-granular map of isolation/contention of allocation units.
        */
       UINT32 Ebx0                                                  : 32;
@@ -3334,6 +3747,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3350,6 +3765,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Highest COS number supported for this ResID
+       *
        * Highest COS number supported for this ResID.
        */
       UINT32 HighestCosNumberSupported                             : 16;
@@ -3365,6 +3782,10 @@ typedef struct
 
 /**
  * @brief Memory Bandwidth Allocation Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 3)
+ *
+ * Memory Bandwidth Allocation Enumeration Sub-leaf (EAX = 10H, ECX = ResID = 3).
+ *
+ * @note Leaf 10H output depends on the initial value in ECX.
  */
 typedef struct
 {
@@ -3373,6 +3794,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the maximum MBA throttling value supported for the corresponding ResID using minus-one notation
+       *
        * Reports the maximum MBA throttling value supported for the corresponding ResID using minus-one notation.
        */
       UINT32 MaxMbaThrottlingValue                                 : 12;
@@ -3389,6 +3812,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3407,6 +3832,8 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
+       * @brief Reports whether the response of the delay values is linear
+       *
        * Reports whether the response of the delay values is linear.
        */
       UINT32 ResponseOfDelayIsLinear                               : 1;
@@ -3423,6 +3850,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Highest COS number supported for this ResID
+       *
        * Highest COS number supported for this ResID.
        */
       UINT32 HighestCosNumberSupported                             : 16;
@@ -3452,6 +3881,10 @@ typedef struct
  */
 /**
  * @brief Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)
+ *
+ * Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0).
+ *
+ * @note Leaf 12H sub-leaf 0 (ECX = 0) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
  */
 typedef struct
 {
@@ -3460,6 +3893,8 @@ typedef struct
     struct
     {
       /**
+       * @brief If 1, Indicates Intel SGX supports the collection of SGX1 leaf functions
+       *
        * If 1, Indicates Intel SGX supports the collection of SGX1 leaf functions.
        */
       UINT32 Sgx1                                                  : 1;
@@ -3468,6 +3903,8 @@ typedef struct
 #define CPUID_EAX_SGX1(_)                                            (((_) >> 0) & 0x01)
 
       /**
+       * @brief If 1, Indicates Intel SGX supports the collection of SGX2 leaf functions
+       *
        * If 1, Indicates Intel SGX supports the collection of SGX2 leaf functions.
        */
       UINT32 Sgx2                                                  : 1;
@@ -3477,6 +3914,8 @@ typedef struct
       UINT32 Reserved1                                             : 3;
 
       /**
+       * @brief If 1, indicates Intel SGX supports ENCLV instruction leaves EINCVIRTCHILD, EDECVIRTCHILD, and ESETCONTEXT
+       *
        * If 1, indicates Intel SGX supports ENCLV instruction leaves EINCVIRTCHILD, EDECVIRTCHILD, and ESETCONTEXT.
        */
       UINT32 SgxEnclvAdvanced                                      : 1;
@@ -3485,6 +3924,8 @@ typedef struct
 #define CPUID_EAX_SGX_ENCLV_ADVANCED(_)                              (((_) >> 5) & 0x01)
 
       /**
+       * @brief If 1, indicates Intel SGX supports ENCLS instruction leaves ETRACKC, ERDINFO, ELDBC, and ELDUC
+       *
        * If 1, indicates Intel SGX supports ENCLS instruction leaves ETRACKC, ERDINFO, ELDBC, and ELDUC.
        */
       UINT32 SgxEnclsAdvanced                                      : 1;
@@ -3501,6 +3942,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bit vector of supported extended SGX features
+       *
        * Bit vector of supported extended SGX features.
        */
       UINT32 Miscselect                                            : 32;
@@ -3517,6 +3960,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3533,6 +3978,8 @@ typedef struct
     struct
     {
       /**
+       * @brief The maximum supported enclave size in non-64-bit mode is 2^(EDX[7:0])
+       *
        * The maximum supported enclave size in non-64-bit mode is 2^(EDX[7:0]).
        */
       UINT32 MaxEnclaveSizeNot64                                   : 8;
@@ -3541,6 +3988,8 @@ typedef struct
 #define CPUID_EDX_MAX_ENCLAVE_SIZE_NOT64(_)                          (((_) >> 0) & 0xFF)
 
       /**
+       * @brief The maximum supported enclave size in 64-bit mode is 2^(EDX[15:8])
+       *
        * The maximum supported enclave size in 64-bit mode is 2^(EDX[15:8]).
        */
       UINT32 MaxEnclaveSize64                                      : 8;
@@ -3556,6 +4005,10 @@ typedef struct
 
 /**
  * @brief Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)
+ *
+ * Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1).
+ *
+ * @note Leaf 12H sub-leaf 1 (ECX = 1) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
  */
 typedef struct
 {
@@ -3564,6 +4017,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the valid bits of SECS.ATTRIBUTES[31:0] that software can set with ECREATE
+       *
        * Reports the valid bits of SECS.ATTRIBUTES[31:0] that software can set with ECREATE.
        */
       UINT32 ValidSecsAttributes0                                  : 32;
@@ -3580,6 +4035,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the valid bits of SECS.ATTRIBUTES[63:32] that software can set with ECREATE
+       *
        * Reports the valid bits of SECS.ATTRIBUTES[63:32] that software can set with ECREATE.
        */
       UINT32 ValidSecsAttributes1                                  : 32;
@@ -3596,6 +4053,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the valid bits of SECS.ATTRIBUTES[95:64] that software can set with ECREATE
+       *
        * Reports the valid bits of SECS.ATTRIBUTES[95:64] that software can set with ECREATE.
        */
       UINT32 ValidSecsAttributes2                                  : 32;
@@ -3612,6 +4071,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the valid bits of SECS.ATTRIBUTES[127:96] that software can set with ECREATE
+       *
        * Reports the valid bits of SECS.ATTRIBUTES[127:96] that software can set with ECREATE.
        */
       UINT32 ValidSecsAttributes3                                  : 32;
@@ -3627,6 +4088,11 @@ typedef struct
 
 /**
  * @brief Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)
+ *
+ * Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
+ *
+ * @note Leaf 12H sub-leaf 2 or higher (ECX >= 2) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
+ *       This structure describes sub-leaf type 0.
  */
 typedef struct
 {
@@ -3635,6 +4101,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Sub-leaf Type 0. Indicates this sub-leaf is invalid
+       *
        * Sub-leaf Type 0. Indicates this sub-leaf is invalid.
        */
       UINT32 SubLeafType                                           : 4;
@@ -3651,6 +4119,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is zero
+       *
        * EBX is zero.
        */
       UINT32 Zero                                                  : 32;
@@ -3667,6 +4137,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is zero
+       *
        * ECX is zero.
        */
       UINT32 Zero                                                  : 32;
@@ -3683,6 +4155,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is zero
+       *
        * EDX is zero.
        */
       UINT32 Zero                                                  : 32;
@@ -3698,6 +4172,11 @@ typedef struct
 
 /**
  * @brief Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)
+ *
+ * Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher).
+ *
+ * @note Leaf 12H sub-leaf 2 or higher (ECX >= 2) is supported if CPUID.(EAX=07H, ECX=0H):EBX[SGX] = 1.
+ *       This structure describes sub-leaf type 1.
  */
 typedef struct
 {
@@ -3706,6 +4185,9 @@ typedef struct
     struct
     {
       /**
+       * @brief Sub-leaf Type 1. This sub-leaf enumerates an EPC section. EBX:EAX and EDX:ECX provide information on the Enclave
+       *        Page Cache (EPC) section
+       *
        * Sub-leaf Type 1. This sub-leaf enumerates an EPC section. EBX:EAX and EDX:ECX provide information on the Enclave Page
        * Cache (EPC) section.
        */
@@ -3716,6 +4198,8 @@ typedef struct
       UINT32 Reserved1                                             : 8;
 
       /**
+       * @brief Bits 31:12 of the physical address of the base of the EPC section
+       *
        * Bits 31:12 of the physical address of the base of the EPC section.
        */
       UINT32 EpcBasePhysicalAddress1                               : 20;
@@ -3732,6 +4216,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bits 51:32 of the physical address of the base of the EPC section
+       *
        * Bits 51:32 of the physical address of the base of the EPC section.
        */
       UINT32 EpcBasePhysicalAddress2                               : 20;
@@ -3748,6 +4234,11 @@ typedef struct
     struct
     {
       /**
+       * @brief EPC section property encoding defined as follows:
+       *        - If EAX[3:0] 0000b, then all bits of the EDX:ECX pair are enumerated as 0.
+       *        - If EAX[3:0] 0001b, then this section has confidentiality and integrity protection.
+       *        All other encodings are reserved
+       *
        * EPC section property encoding defined as follows:
        * - If EAX[3:0] 0000b, then all bits of the EDX:ECX pair are enumerated as 0.
        * - If EAX[3:0] 0001b, then this section has confidentiality and integrity protection.
@@ -3760,6 +4251,8 @@ typedef struct
       UINT32 Reserved1                                             : 8;
 
       /**
+       * @brief Bits 31:12 of the size of the corresponding EPC section within the Processor Reserved Memory
+       *
        * Bits 31:12 of the size of the corresponding EPC section within the Processor Reserved Memory.
        */
       UINT32 EpcSize1                                              : 20;
@@ -3776,6 +4269,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bits 51:32 of the size of the corresponding EPC section within the Processor Reserved Memory
+       *
        * Bits 51:32 of the size of the corresponding EPC section within the Processor Reserved Memory.
        */
       UINT32 EpcSize2                                              : 20;
@@ -3805,6 +4300,10 @@ typedef struct
  */
 /**
  * @brief Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)
+ *
+ * Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0).
+ *
+ * @note Leaf 14H main leaf (ECX = 0).
  */
 typedef struct
 {
@@ -3813,6 +4312,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the maximum sub-leaf supported in leaf 14H
+       *
        * Reports the maximum sub-leaf supported in leaf 14H.
        */
       UINT32 MaxSubLeaf                                            : 32;
@@ -3829,6 +4330,8 @@ typedef struct
     struct
     {
       /**
+       * @brief If 1, indicates that IA32_RTIT_CTL.CR3Filter can be set to 1, and that IA32_RTIT_CR3_MATCH MSR can be accessed
+       *
        * If 1, indicates that IA32_RTIT_CTL.CR3Filter can be set to 1, and that IA32_RTIT_CR3_MATCH MSR can be accessed.
        */
       UINT32 Flag0                                                 : 1;
@@ -3837,6 +4340,8 @@ typedef struct
 #define CPUID_EBX_FLAG0(_)                                           (((_) >> 0) & 0x01)
 
       /**
+       * @brief If 1, indicates support of Configurable PSB and Cycle-Accurate Mode
+       *
        * If 1, indicates support of Configurable PSB and Cycle-Accurate Mode.
        */
       UINT32 Flag1                                                 : 1;
@@ -3845,6 +4350,8 @@ typedef struct
 #define CPUID_EBX_FLAG1(_)                                           (((_) >> 1) & 0x01)
 
       /**
+       * @brief If 1, indicates support of IP Filtering, TraceStop filtering, and preservation of Intel PT MSRs across warm reset
+       *
        * If 1, indicates support of IP Filtering, TraceStop filtering, and preservation of Intel PT MSRs across warm reset.
        */
       UINT32 Flag2                                                 : 1;
@@ -3853,6 +4360,8 @@ typedef struct
 #define CPUID_EBX_FLAG2(_)                                           (((_) >> 2) & 0x01)
 
       /**
+       * @brief If 1, indicates support of MTC timing packet and suppression of COFI-based packets
+       *
        * If 1, indicates support of MTC timing packet and suppression of COFI-based packets.
        */
       UINT32 Flag3                                                 : 1;
@@ -3861,6 +4370,9 @@ typedef struct
 #define CPUID_EBX_FLAG3(_)                                           (((_) >> 3) & 0x01)
 
       /**
+       * @brief If 1, indicates support of PTWRITE. Writes can set IA32_RTIT_CTL[12] (PTWEn) and IA32_RTIT_CTL[5] (FUPonPTW), and
+       *        PTWRITE can generate packets
+       *
        * If 1, indicates support of PTWRITE. Writes can set IA32_RTIT_CTL[12] (PTWEn) and IA32_RTIT_CTL[5] (FUPonPTW), and
        * PTWRITE can generate packets.
        */
@@ -3870,6 +4382,9 @@ typedef struct
 #define CPUID_EBX_FLAG4(_)                                           (((_) >> 4) & 0x01)
 
       /**
+       * @brief If 1, indicates support of Power Event Trace. Writes can set IA32_RTIT_CTL[4] (PwrEvtEn), enabling Power Event
+       *        Trace packet generation
+       *
        * If 1, indicates support of Power Event Trace. Writes can set IA32_RTIT_CTL[4] (PwrEvtEn), enabling Power Event Trace
        * packet generation.
        */
@@ -3887,6 +4402,9 @@ typedef struct
     struct
     {
       /**
+       * @brief If 1, Tracing can be enabled with IA32_RTIT_CTL.ToPA = 1, hence utilizing the ToPA output scheme;
+       *        IA32_RTIT_OUTPUT_BASE and IA32_RTIT_OUTPUT_MASK_PTRS MSRs can be accessed
+       *
        * If 1, Tracing can be enabled with IA32_RTIT_CTL.ToPA = 1, hence utilizing the ToPA output scheme; IA32_RTIT_OUTPUT_BASE
        * and IA32_RTIT_OUTPUT_MASK_PTRS MSRs can be accessed.
        */
@@ -3896,6 +4414,9 @@ typedef struct
 #define CPUID_ECX_FLAG0(_)                                           (((_) >> 0) & 0x01)
 
       /**
+       * @brief If 1, ToPA tables can hold any number of output entries, up to the maximum allowed by the MaskOrTableOffset field
+       *        of IA32_RTIT_OUTPUT_MASK_PTRS
+       *
        * If 1, ToPA tables can hold any number of output entries, up to the maximum allowed by the MaskOrTableOffset field of
        * IA32_RTIT_OUTPUT_MASK_PTRS.
        */
@@ -3905,6 +4426,8 @@ typedef struct
 #define CPUID_ECX_FLAG1(_)                                           (((_) >> 1) & 0x01)
 
       /**
+       * @brief If 1, indicates support of Single-Range Output scheme
+       *
        * If 1, indicates support of Single-Range Output scheme.
        */
       UINT32 Flag2                                                 : 1;
@@ -3913,6 +4436,8 @@ typedef struct
 #define CPUID_ECX_FLAG2(_)                                           (((_) >> 2) & 0x01)
 
       /**
+       * @brief If 1, indicates support of output to Trace Transport subsystem
+       *
        * If 1, indicates support of output to Trace Transport subsystem.
        */
       UINT32 Flag3                                                 : 1;
@@ -3922,6 +4447,8 @@ typedef struct
       UINT32 Reserved1                                             : 27;
 
       /**
+       * @brief If 1, generated packets which contain IP payloads have LIP values, which include the CS base component
+       *
        * If 1, generated packets which contain IP payloads have LIP values, which include the CS base component.
        */
       UINT32 Flag31                                                : 1;
@@ -3938,6 +4465,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -3953,6 +4482,8 @@ typedef struct
 
 /**
  * @brief Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)
+ *
+ * Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1).
  */
 typedef struct
 {
@@ -3961,6 +4492,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of configurable Address Ranges for filtering
+       *
        * Number of configurable Address Ranges for filtering.
        */
       UINT32 NumberOfConfigurableAddressRangesForFiltering         : 3;
@@ -3970,6 +4503,8 @@ typedef struct
       UINT32 Reserved1                                             : 13;
 
       /**
+       * @brief Bitmap of supported MTC period encodings
+       *
        * Bitmap of supported MTC period encodings.
        */
       UINT32 BitmapOfSupportedMtcPeriodEncodings                   : 16;
@@ -3986,6 +4521,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bitmap of supported Cycle Threshold value encodings
+       *
        * Bitmap of supported Cycle Threshold value encodings.
        */
       UINT32 BitmapOfSupportedCycleThresholdValueEncodings         : 16;
@@ -3994,6 +4531,8 @@ typedef struct
 #define CPUID_EBX_BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS(_) (((_) >> 0) & 0xFFFF)
 
       /**
+       * @brief Bitmap of supported Configurable PSB frequency encodings
+       *
        * Bitmap of supported Configurable PSB frequency encodings.
        */
       UINT32 BitmapOfSupportedConfigurablePsbFrequencyEncodings    : 16;
@@ -4010,6 +4549,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4026,6 +4567,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4048,6 +4591,11 @@ typedef struct
  *
  * When CPUID executes with EAX set to 15H and ECX = 0H, the processor returns information about Time Stamp Counter and
  * Core Crystal Clock.
+ *
+ * @note If EBX[31:0] is 0, the TSC/"core crystal clock" ratio is not enumerated. EBX[31:0]/EAX[31:0] indicates the ratio
+ *       of the TSC frequency and the core crystal clock frequency.
+ *       If ECX is 0, the nominal core crystal clock frequency is not enumerated. "TSC frequency" = "core crystal clock
+ *       frequency" * EBX/EAX.
  */
 typedef struct
 {
@@ -4056,6 +4604,8 @@ typedef struct
     struct
     {
       /**
+       * @brief An unsigned integer which is the denominator of the TSC/"core crystal clock" ratio
+       *
        * An unsigned integer which is the denominator of the TSC/"core crystal clock" ratio.
        */
       UINT32 Denominator                                           : 32;
@@ -4072,6 +4622,8 @@ typedef struct
     struct
     {
       /**
+       * @brief An unsigned integer which is the numerator of the TSC/"core crystal clock" ratio
+       *
        * An unsigned integer which is the numerator of the TSC/"core crystal clock" ratio.
        */
       UINT32 Numerator                                             : 32;
@@ -4088,6 +4640,8 @@ typedef struct
     struct
     {
       /**
+       * @brief An unsigned integer which is the nominal frequency of the core crystal clock in Hz
+       *
        * An unsigned integer which is the nominal frequency of the core crystal clock in Hz.
        */
       UINT32 NominalFrequency                                      : 32;
@@ -4104,6 +4658,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4121,6 +4677,14 @@ typedef struct
  * @brief Processor Frequency Information Leaf
  *
  * When CPUID executes with EAX set to 16H, the processor returns information about Processor Frequency Information.
+ *
+ * @note Data is returned from this interface in accordance with the processor's specification and does not reflect actual
+ *       values. Suitable use of this data includes the display of processor information in like manner to the processor brand
+ *       string and for determining the appropriate range to use when displaying processor information e.g. frequency history
+ *       graphs. The returned information should not be used for any other purpose as the returned information does not
+ *       accurately correlate to information / counters returned by other processor interfaces.
+ *       While a processor may support the Processor Frequency Information leaf, fields that return a value of zero are not
+ *       supported.
  */
 typedef struct
 {
@@ -4129,6 +4693,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Base Frequency (in MHz)
+       *
        * Processor Base Frequency (in MHz).
        */
       UINT32 ProcesorBaseFrequencyMhz                              : 16;
@@ -4145,6 +4711,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum Frequency (in MHz)
+       *
        * Maximum Frequency (in MHz).
        */
       UINT32 ProcessorMaximumFrequencyMhz                          : 16;
@@ -4161,6 +4729,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Bus (Reference) Frequency (in MHz)
+       *
        * Bus (Reference) Frequency (in MHz).
        */
       UINT32 BusFrequencyMhz                                       : 16;
@@ -4177,6 +4747,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4200,6 +4772,11 @@ typedef struct
  */
 /**
  * @brief System-On-Chip Vendor Attribute Enumeration Main Leaf (EAX = 17H, ECX = 0)
+ *
+ * System-On-Chip Vendor Attribute Enumeration Main Leaf (EAX = 17H, ECX = 0).
+ *
+ * @note Leaf 17H main leaf (ECX = 0). Leaf 17H output depends on the initial value in ECX. Leaf 17H sub-leaves 1 through 3
+ *       reports SOC Vendor Brand String. Leaf 17H is valid if MaxSOCID_Index >= 3. Leaf 17H sub-leaves 4 and above are reserved.
  */
 typedef struct
 {
@@ -4208,6 +4785,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the maximum input value of supported sub-leaf in leaf 17H
+       *
        * Reports the maximum input value of supported sub-leaf in leaf 17H.
        */
       UINT32 MaxSocIdIndex                                         : 32;
@@ -4224,6 +4803,8 @@ typedef struct
     struct
     {
       /**
+       * @brief SOC Vendor ID
+       *
        * SOC Vendor ID.
        */
       UINT32 SocVendorId                                           : 16;
@@ -4232,6 +4813,9 @@ typedef struct
 #define CPUID_EBX_SOC_VENDOR_ID(_)                                   (((_) >> 0) & 0xFFFF)
 
       /**
+       * @brief If 1, the SOC Vendor ID field is assigned via an industry standard enumeration scheme. Otherwise, the SOC Vendor
+       *        ID field is assigned by Intel
+       *
        * If 1, the SOC Vendor ID field is assigned via an industry standard enumeration scheme. Otherwise, the SOC Vendor ID
        * field is assigned by Intel.
        */
@@ -4249,6 +4833,8 @@ typedef struct
     struct
     {
       /**
+       * @brief A unique number an SOC vendor assigns to its SOC projects
+       *
        * A unique number an SOC vendor assigns to its SOC projects.
        */
       UINT32 ProjectId                                             : 32;
@@ -4265,6 +4851,8 @@ typedef struct
     struct
     {
       /**
+       * @brief A unique number within an SOC project that an SOC vendor assigns
+       *
        * A unique number within an SOC project that an SOC vendor assigns.
        */
       UINT32 SteppingId                                            : 32;
@@ -4280,6 +4868,12 @@ typedef struct
 
 /**
  * @brief System-On-Chip Vendor Attribute Enumeration Sub-leaf (EAX = 17H, ECX = 1..3)
+ *
+ * System-On-Chip Vendor Attribute Enumeration Sub-leaf (EAX = 17H, ECX = 1..3).
+ *
+ * @note Leaf 17H output depends on the initial value in ECX. SOC Vendor Brand String is a UTF-8 encoded string padded with
+ *       trailing bytes of 00H. The complete SOC Vendor Brand String is constructed by concatenating in ascending order of
+ *       EAX:EBX:ECX:EDX and from the sub-leaf 1 fragment towards sub-leaf 3.
  */
 typedef struct
 {
@@ -4288,6 +4882,8 @@ typedef struct
     struct
     {
       /**
+       * @brief SOC Vendor Brand String. UTF-8 encoded string
+       *
        * SOC Vendor Brand String. UTF-8 encoded string.
        */
       UINT32 SocVendorBrandString                                  : 32;
@@ -4304,6 +4900,8 @@ typedef struct
     struct
     {
       /**
+       * @brief SOC Vendor Brand String. UTF-8 encoded string
+       *
        * SOC Vendor Brand String. UTF-8 encoded string.
        */
       UINT32 SocVendorBrandString                                  : 32;
@@ -4320,6 +4918,8 @@ typedef struct
     struct
     {
       /**
+       * @brief SOC Vendor Brand String. UTF-8 encoded string
+       *
        * SOC Vendor Brand String. UTF-8 encoded string.
        */
       UINT32 SocVendorBrandString                                  : 32;
@@ -4336,6 +4936,8 @@ typedef struct
     struct
     {
       /**
+       * @brief SOC Vendor Brand String. UTF-8 encoded string
+       *
        * SOC Vendor Brand String. UTF-8 encoded string.
        */
       UINT32 SocVendorBrandString                                  : 32;
@@ -4351,6 +4953,10 @@ typedef struct
 
 /**
  * @brief System-On-Chip Vendor Attribute Enumeration Sub-leaves (EAX = 17H, ECX > MaxSOCID_Index)
+ *
+ * System-On-Chip Vendor Attribute Enumeration Sub-leaves (EAX = 17H, ECX > MaxSOCID_Index).
+ *
+ * @note Leaf 17H output depends on the initial value in ECX.
  */
 typedef struct
 {
@@ -4359,6 +4965,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reserved = 0
+       *
        * Reserved = 0.
        */
       UINT32 Reserved                                              : 32;
@@ -4375,6 +4983,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reserved = 0
+       *
        * Reserved = 0.
        */
       UINT32 Reserved                                              : 32;
@@ -4391,6 +5001,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reserved = 0
+       *
        * Reserved = 0.
        */
       UINT32 Reserved                                              : 32;
@@ -4407,6 +5019,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reserved = 0
+       *
        * Reserved = 0.
        */
       UINT32 Reserved                                              : 32;
@@ -4434,6 +5048,14 @@ typedef struct
  */
 /**
  * @brief Deterministic Address Translation Parameters Main Leaf (EAX = 18H, ECX = 0)
+ *
+ * Deterministic Address Translation Parameters Main Leaf (EAX = 18H, ECX = 0).
+ *
+ * @note Each sub-leaf enumerates a different address translation structure.
+ *       If ECX contains an invalid sub-leaf index, EAX/EBX/ECX/EDX return 0. Sub-leaf index n is invalid if n exceeds the value
+ *       that sub-leaf 0 returns in EAX. A sub-leaf index is also invalid if EDX[4:0] returns 0. Valid sub-leaves do not need to
+ *       be contiguous or in any particular order. A valid sub-leaf may be in a higher input ECX value than an invalid sub-leaf
+ *       or than a valid sub-leaf of a higher or lower-level structure.
  */
 typedef struct
 {
@@ -4442,6 +5064,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Reports the maximum input value of supported sub-leaf in leaf 18H
+       *
        * Reports the maximum input value of supported sub-leaf in leaf 18H.
        */
       UINT32 MaxSubLeaf                                            : 32;
@@ -4458,6 +5082,8 @@ typedef struct
     struct
     {
       /**
+       * @brief 4K page size entries supported by this structure
+       *
        * 4K page size entries supported by this structure.
        */
       UINT32 PageEntries4KbSupported                               : 1;
@@ -4466,6 +5092,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_4KB_SUPPORTED(_)                      (((_) >> 0) & 0x01)
 
       /**
+       * @brief 2MB page size entries supported by this structure
+       *
        * 2MB page size entries supported by this structure.
        */
       UINT32 PageEntries2MbSupported                               : 1;
@@ -4474,6 +5102,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_2MB_SUPPORTED(_)                      (((_) >> 1) & 0x01)
 
       /**
+       * @brief 4MB page size entries supported by this structure
+       *
        * 4MB page size entries supported by this structure.
        */
       UINT32 PageEntries4MbSupported                               : 1;
@@ -4482,6 +5112,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_4MB_SUPPORTED(_)                      (((_) >> 2) & 0x01)
 
       /**
+       * @brief 1 GB page size entries supported by this structure
+       *
        * 1 GB page size entries supported by this structure.
        */
       UINT32 PageEntries1GbSupported                               : 1;
@@ -4491,6 +5123,8 @@ typedef struct
       UINT32 Reserved1                                             : 4;
 
       /**
+       * @brief Partitioning (0: Soft partitioning between the logical processors sharing this structure)
+       *
        * Partitioning (0: Soft partitioning between the logical processors sharing this structure).
        */
       UINT32 Partitioning                                          : 3;
@@ -4500,6 +5134,8 @@ typedef struct
       UINT32 Reserved2                                             : 5;
 
       /**
+       * @brief W = Ways of associativity
+       *
        * W = Ways of associativity.
        */
       UINT32 WaysOfAssociativity00                                 : 16;
@@ -4516,6 +5152,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of Sets
+       *
        * Number of Sets.
        */
       UINT32 NumberOfSets                                          : 32;
@@ -4532,12 +5170,23 @@ typedef struct
     struct
     {
       /**
+       * @brief Translation cache type field.
+       *        - 00000b: Null (indicates this sub-leaf is not valid).
+       *        - 00001b: Data TLB.
+       *        - 00010b: Instruction TLB.
+       *        - 00011b: Unified TLB.
+       *        All other encodings are reserved
+       *
        * Translation cache type field.
        * - 00000b: Null (indicates this sub-leaf is not valid).
        * - 00001b: Data TLB.
        * - 00010b: Instruction TLB.
        * - 00011b: Unified TLB.
        * All other encodings are reserved.
+       *
+       * @note Some unified TLBs will allow a single TLB entry to satisfy data read/write and instruction fetches. Others will
+       *       require separate entries (e.g., one loaded on data read/write and another loaded on an instruction fetch) . Please see
+       *       the Intel(R) 64 and IA-32 Architectures Optimization Reference Manual for details of a particular product.
        */
       UINT32 TranslationCacheTypeField                             : 5;
 #define CPUID_EDX_TRANSLATION_CACHE_TYPE_FIELD_BIT                   0
@@ -4545,6 +5194,8 @@ typedef struct
 #define CPUID_EDX_TRANSLATION_CACHE_TYPE_FIELD(_)                    (((_) >> 0) & 0x1F)
 
       /**
+       * @brief Translation cache level (starts at 1)
+       *
        * Translation cache level (starts at 1).
        */
       UINT32 TranslationCacheLevel                                 : 3;
@@ -4553,6 +5204,8 @@ typedef struct
 #define CPUID_EDX_TRANSLATION_CACHE_LEVEL(_)                         (((_) >> 5) & 0x07)
 
       /**
+       * @brief Fully associative structure
+       *
        * Fully associative structure.
        */
       UINT32 FullyAssociativeStructure                             : 1;
@@ -4562,7 +5215,11 @@ typedef struct
       UINT32 Reserved1                                             : 5;
 
       /**
+       * @brief Maximum number of addressable IDs for logical processors sharing this translation cache
+       *
        * Maximum number of addressable IDs for logical processors sharing this translation cache.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 MaxAddressableIdsForLogicalProcessors                 : 12;
 #define CPUID_EDX_MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_BIT     14
@@ -4577,6 +5234,14 @@ typedef struct
 
 /**
  * @brief Deterministic Address Translation Parameters Sub-leaf (EAX = 18H, ECX >= 1)
+ *
+ * Deterministic Address Translation Parameters Sub-leaf (EAX = 18H, ECX >= 1).
+ *
+ * @note Each sub-leaf enumerates a different address translation structure.
+ *       If ECX contains an invalid sub-leaf index, EAX/EBX/ECX/EDX return 0. Sub-leaf index n is invalid if n exceeds the value
+ *       that sub-leaf 0 returns in EAX. A sub-leaf index is also invalid if EDX[4:0] returns 0. Valid sub-leaves do not need to
+ *       be contiguous or in any particular order. A valid sub-leaf may be in a higher input ECX value than an invalid sub-leaf
+ *       or than a valid sub-leaf of a higher or lower-level structure.
  */
 typedef struct
 {
@@ -4585,6 +5250,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4601,6 +5268,8 @@ typedef struct
     struct
     {
       /**
+       * @brief 4K page size entries supported by this structure
+       *
        * 4K page size entries supported by this structure.
        */
       UINT32 PageEntries4KbSupported                               : 1;
@@ -4609,6 +5278,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_4KB_SUPPORTED(_)                      (((_) >> 0) & 0x01)
 
       /**
+       * @brief 2MB page size entries supported by this structure
+       *
        * 2MB page size entries supported by this structure.
        */
       UINT32 PageEntries2MbSupported                               : 1;
@@ -4617,6 +5288,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_2MB_SUPPORTED(_)                      (((_) >> 1) & 0x01)
 
       /**
+       * @brief 4MB page size entries supported by this structure
+       *
        * 4MB page size entries supported by this structure.
        */
       UINT32 PageEntries4MbSupported                               : 1;
@@ -4625,6 +5298,8 @@ typedef struct
 #define CPUID_EBX_PAGE_ENTRIES_4MB_SUPPORTED(_)                      (((_) >> 2) & 0x01)
 
       /**
+       * @brief 1 GB page size entries supported by this structure
+       *
        * 1 GB page size entries supported by this structure.
        */
       UINT32 PageEntries1GbSupported                               : 1;
@@ -4634,6 +5309,8 @@ typedef struct
       UINT32 Reserved1                                             : 4;
 
       /**
+       * @brief Partitioning (0: Soft partitioning between the logical processors sharing this structure)
+       *
        * Partitioning (0: Soft partitioning between the logical processors sharing this structure).
        */
       UINT32 Partitioning                                          : 3;
@@ -4643,6 +5320,8 @@ typedef struct
       UINT32 Reserved2                                             : 5;
 
       /**
+       * @brief W = Ways of associativity
+       *
        * W = Ways of associativity.
        */
       UINT32 WaysOfAssociativity01                                 : 16;
@@ -4659,6 +5338,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Number of Sets
+       *
        * Number of Sets.
        */
       UINT32 NumberOfSets                                          : 32;
@@ -4675,12 +5356,23 @@ typedef struct
     struct
     {
       /**
+       * @brief Translation cache type field.
+       *        - 00000b: Null (indicates this sub-leaf is not valid).
+       *        - 00001b: Data TLB.
+       *        - 00010b: Instruction TLB.
+       *        - 00011b: Unified TLB.
+       *        All other encodings are reserved
+       *
        * Translation cache type field.
        * - 00000b: Null (indicates this sub-leaf is not valid).
        * - 00001b: Data TLB.
        * - 00010b: Instruction TLB.
        * - 00011b: Unified TLB.
        * All other encodings are reserved.
+       *
+       * @note Some unified TLBs will allow a single TLB entry to satisfy data read/write and instruction fetches. Others will
+       *       require separate entries (e.g., one loaded on data read/write and another loaded on an instruction fetch) . Please see
+       *       the Intel(R) 64 and IA-32 Architectures Optimization Reference Manual for details of a particular product.
        */
       UINT32 TranslationCacheTypeField                             : 5;
 #define CPUID_EDX_TRANSLATION_CACHE_TYPE_FIELD_BIT                   0
@@ -4688,6 +5380,8 @@ typedef struct
 #define CPUID_EDX_TRANSLATION_CACHE_TYPE_FIELD(_)                    (((_) >> 0) & 0x1F)
 
       /**
+       * @brief Translation cache level (starts at 1)
+       *
        * Translation cache level (starts at 1).
        */
       UINT32 TranslationCacheLevel                                 : 3;
@@ -4696,6 +5390,8 @@ typedef struct
 #define CPUID_EDX_TRANSLATION_CACHE_LEVEL(_)                         (((_) >> 5) & 0x07)
 
       /**
+       * @brief Fully associative structure
+       *
        * Fully associative structure.
        */
       UINT32 FullyAssociativeStructure                             : 1;
@@ -4705,7 +5401,11 @@ typedef struct
       UINT32 Reserved1                                             : 5;
 
       /**
+       * @brief Maximum number of addressable IDs for logical processors sharing this translation cache
+       *
        * Maximum number of addressable IDs for logical processors sharing this translation cache.
+       *
+       * @note Add one to the return value to get the result.
        */
       UINT32 MaxAddressableIdsForLogicalProcessors                 : 12;
 #define CPUID_EDX_MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_BIT     14
@@ -4735,6 +5435,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Maximum Input Value for Extended Function CPUID Information
+       *
        * Maximum Input Value for Extended Function CPUID Information.
        */
       UINT32 MaxExtendedFunctions                                  : 32;
@@ -4751,6 +5453,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4767,6 +5471,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4783,6 +5489,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4798,6 +5506,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -4806,6 +5516,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4822,6 +5534,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -4838,6 +5552,8 @@ typedef struct
     struct
     {
       /**
+       * @brief LAHF/SAHF available in 64-bit mode
+       *
        * LAHF/SAHF available in 64-bit mode.
        */
       UINT32 LahfSahfAvailableIn64BitMode                          : 1;
@@ -4847,6 +5563,8 @@ typedef struct
       UINT32 Reserved1                                             : 4;
 
       /**
+       * @brief LZCNT
+       *
        * LZCNT.
        */
       UINT32 Lzcnt                                                 : 1;
@@ -4856,6 +5574,8 @@ typedef struct
       UINT32 Reserved2                                             : 2;
 
       /**
+       * @brief PREFETCHW
+       *
        * PREFETCHW.
        */
       UINT32 Prefetchw                                             : 1;
@@ -4874,6 +5594,8 @@ typedef struct
       UINT32 Reserved1                                             : 11;
 
       /**
+       * @brief SYSCALL/SYSRET available in 64-bit mode
+       *
        * SYSCALL/SYSRET available in 64-bit mode.
        */
       UINT32 SyscallSysretAvailableIn64BitMode                     : 1;
@@ -4883,6 +5605,8 @@ typedef struct
       UINT32 Reserved2                                             : 8;
 
       /**
+       * @brief Execute Disable Bit available
+       *
        * Execute Disable Bit available.
        */
       UINT32 ExecuteDisableBitAvailable                            : 1;
@@ -4892,6 +5616,8 @@ typedef struct
       UINT32 Reserved3                                             : 5;
 
       /**
+       * @brief 1-GByte pages are available if 1
+       *
        * 1-GByte pages are available if 1.
        */
       UINT32 Pages1GbAvailable                                     : 1;
@@ -4900,6 +5626,8 @@ typedef struct
 #define CPUID_EDX_PAGES_1GB_AVAILABLE(_)                             (((_) >> 26) & 0x01)
 
       /**
+       * @brief RDTSCP and IA32_TSC_AUX are available if 1
+       *
        * RDTSCP and IA32_TSC_AUX are available if 1.
        */
       UINT32 RdtscpAvailable                                       : 1;
@@ -4909,6 +5637,8 @@ typedef struct
       UINT32 Reserved4                                             : 1;
 
       /**
+       * @brief Intel(R) 64 Architecture available if 1
+       *
        * Intel(R) 64 Architecture available if 1.
        */
       UINT32 Ia64Available                                         : 1;
@@ -4924,6 +5654,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -4932,6 +5664,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String
+       *
        * Processor Brand String.
        */
       UINT32 ProcessorBrandString1                                 : 32;
@@ -4948,6 +5682,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString2                                 : 32;
@@ -4964,6 +5700,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString3                                 : 32;
@@ -4980,6 +5718,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString4                                 : 32;
@@ -4995,6 +5735,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -5003,6 +5745,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString5                                 : 32;
@@ -5019,6 +5763,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString6                                 : 32;
@@ -5035,6 +5781,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString7                                 : 32;
@@ -5051,6 +5799,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString8                                 : 32;
@@ -5066,6 +5816,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -5074,6 +5826,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString9                                 : 32;
@@ -5090,6 +5844,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString10                                : 32;
@@ -5106,6 +5862,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString11                                : 32;
@@ -5122,6 +5880,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Processor Brand String Continued
+       *
        * Processor Brand String Continued.
        */
       UINT32 ProcessorBrandString12                                : 32;
@@ -5137,6 +5897,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -5145,6 +5907,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5161,6 +5925,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5177,6 +5943,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5193,6 +5961,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5208,6 +5978,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -5216,6 +5988,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5232,6 +6006,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5248,6 +6024,8 @@ typedef struct
     struct
     {
       /**
+       * @brief Cache Line size in bytes
+       *
        * Cache Line size in bytes.
        */
       UINT32 CacheLineSizeInBytes                                  : 8;
@@ -5257,6 +6035,16 @@ typedef struct
       UINT32 Reserved1                                             : 4;
 
       /**
+       * @brief L2 Associativity field.
+       *        L2 associativity field encodings:
+       *        - 00H - Disabled.
+       *        - 01H - Direct mapped.
+       *        - 02H - 2-way.
+       *        - 04H - 4-way.
+       *        - 06H - 8-way.
+       *        - 08H - 16-way.
+       *        - 0FH - Fully associative
+       *
        * L2 Associativity field.
        * L2 associativity field encodings:
        * - 00H - Disabled.
@@ -5273,6 +6061,8 @@ typedef struct
 #define CPUID_ECX_L2_ASSOCIATIVITY_FIELD(_)                          (((_) >> 12) & 0x0F)
 
       /**
+       * @brief Cache size in 1K units
+       *
        * Cache size in 1K units.
        */
       UINT32 CacheSizeIn1KUnits                                    : 16;
@@ -5289,6 +6079,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EDX is reserved
+       *
        * EDX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5304,6 +6096,8 @@ typedef struct
 
 /**
  * @brief Extended Function CPUID Information
+ *
+ * Extended Function CPUID Information.
  */
 typedef struct
 {
@@ -5312,6 +6106,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EAX is reserved
+       *
        * EAX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5328,6 +6124,8 @@ typedef struct
     struct
     {
       /**
+       * @brief EBX is reserved
+       *
        * EBX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5344,6 +6142,8 @@ typedef struct
     struct
     {
       /**
+       * @brief ECX is reserved
+       *
        * ECX is reserved.
        */
       UINT32 Reserved                                              : 32;
@@ -5362,6 +6162,8 @@ typedef struct
       UINT32 Reserved1                                             : 8;
 
       /**
+       * @brief Invariant TSC available if 1
+       *
        * Invariant TSC available if 1.
        */
       UINT32 InvariantTscAvailable                                 : 1;
@@ -5399,12 +6201,22 @@ typedef struct
  * @{
  */
 /**
- * @brief Machine-check exception address.
+ * @brief Machine-check exception address
+ *
+ * Machine-check exception address.
+ *
+ * @remarks 05_01H
+ * @see Vol4[2.22(MSRS IN PENTIUM PROCESSORS)]
  */
 #define IA32_P5_MC_ADDR                                              0x00000000
 
 /**
- * @brief Machine-check exception type.
+ * @brief Machine-check exception type
+ *
+ * Machine-check exception type.
+ *
+ * @remarks 05_01H
+ * @see Vol4[2.22(MSRS IN PENTIUM PROCESSORS)]
  */
 #define IA32_P5_MC_TYPE                                              0x00000001
 
@@ -5413,18 +6225,34 @@ typedef struct
  */
 
 /**
- * @brief System coherence line size.
+ * @brief System coherence line size
+ *
+ * System coherence line size.
+ *
+ * @remarks 0F_03H
+ * @see Vol3A[8.10.5(Monitor/Mwait Address Range Determination)]
+ * @see Vol3A[8.10.5(Monitor/Mwait Address Range Determination)] (reference)
  */
 #define IA32_MONITOR_FILTER_LINE_SIZE                                0x00000006
 
 /**
- * @brief Value as returned by instruction RDTSC. <b>(R/W)</b>
+ * @brief Value as returned by instruction RDTSC <b>(R/W)</b>
+ *
+ * Value as returned by instruction RDTSC.
+ *
+ * @remarks 05_01H
+ * @see Vol3B[17.17(TIME-STAMP COUNTER)]
  */
 #define IA32_TIME_STAMP_COUNTER                                      0x00000010
 
 /**
  * @brief The operating system can use this MSR to determine "slot" information for the processor and the proper microcode
- *        update to load. <b>(RO)</b>
+ *        update to load <b>(RO)</b>
+ *
+ * The operating system can use this MSR to determine "slot" information for the processor and the proper microcode update
+ * to load.
+ *
+ * @remarks 06_01H
  */
 #define IA32_PLATFORM_ID                                             0x00000017
 
@@ -5461,7 +6289,13 @@ typedef union
 } IA32_PLATFORM_ID_REGISTER;
 
 /**
- * @brief This register holds the APIC base address, permitting the relocation of the APIC memory map.
+ * @brief This register holds the APIC base address, permitting the relocation of the APIC memory map
+ *
+ * This register holds the APIC base address, permitting the relocation of the APIC memory map.
+ *
+ * @remarks 06_01H
+ * @see Vol3A[10.4.4(Local APIC Status and Location)]
+ * @see Vol3A[10.4.5(Relocating the Local APIC Registers)]
  */
 #define IA32_APIC_BASE                                               0x0000001B
 
@@ -5472,6 +6306,8 @@ typedef union
     UINT64 Reserved1                                               : 8;
 
     /**
+     * @brief BSP flag <b>(R/W)</b>
+     *
      * BSP flag.
      */
     UINT64 BspFlag                                                 : 1;
@@ -5481,6 +6317,8 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Enable x2APIC mode
+     *
      * Enable x2APIC mode.
      */
     UINT64 EnableX2ApicMode                                        : 1;
@@ -5489,6 +6327,8 @@ typedef union
 #define IA32_APIC_BASE_REGISTER_ENABLE_X2APIC_MODE(_)                (((_) >> 10) & 0x01)
 
     /**
+     * @brief APIC Global Enable <b>(R/W)</b>
+     *
      * APIC Global Enable.
      */
     UINT64 ApicGlobalEnable                                        : 1;
@@ -5497,6 +6337,8 @@ typedef union
 #define IA32_APIC_BASE_REGISTER_APIC_GLOBAL_ENABLE(_)                (((_) >> 11) & 0x01)
 
     /**
+     * @brief APIC Base <b>(R/W)</b>
+     *
      * APIC Base.
      */
     UINT64 ApicBase                                                : 36;
@@ -5510,7 +6352,11 @@ typedef union
 } IA32_APIC_BASE_REGISTER;
 
 /**
- * @brief Control Features in Intel 64 Processor. <b>(R/W)</b>
+ * @brief Control Features in Intel 64 Processor <b>(R/W)</b>
+ *
+ * Control Features in Intel 64 Processor.
+ *
+ * @remarks If any one enumeration condition for defined bit field holds.
  */
 #define IA32_FEATURE_CONTROL                                         0x0000003A
 
@@ -5632,7 +6478,11 @@ typedef union
 } IA32_FEATURE_CONTROL_REGISTER;
 
 /**
- * @brief Per Logical Processor TSC Adjust. <b>(R/Write to clear)</b>
+ * @brief Per Logical Processor TSC Adjust <b>(R/Write to clear)</b>
+ *
+ * Per Logical Processor TSC Adjust.
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H): EBX[1] = 1
  */
 #define IA32_TSC_ADJUST                                              0x0000003B
 
@@ -5642,14 +6492,23 @@ typedef struct
 } IA32_TSC_ADJUST_REGISTER;
 
 /**
- * @brief Executing a WRMSR instruction to this MSR causes a microcode update to be loaded into the processor. A processor
- *        may prevent writing to this MSR when loading guest states on VM entries or saving guest states on VM exits. <b>(W)</b>
+ * @brief BIOS Update Trigger <b>(W)</b>
+ *
+ * Executing a WRMSR instruction to this MSR causes a microcode update to be loaded into the processor. A processor may
+ * prevent writing to this MSR when loading guest states on VM entries or saving guest states on VM exits.
+ *
+ * @remarks 06_01H
+ * @see Vol3A[9.11.6(Microcode Update Loader)]
  */
 #define IA32_BIOS_UPDATE_TRIGGER                                     0x00000079
 
 /**
- * @brief Returns the microcode update signature following the execution of CPUID.01H. A processor may prevent writing to
- *        this MSR when loading guest states on VM entries or saving guest states on VM exits. <b>(RO)</b>
+ * @brief BIOS Update Signature <b>(RO)</b>
+ *
+ * Returns the microcode update signature following the execution of CPUID.01H. A processor may prevent writing to this MSR
+ * when loading guest states on VM entries or saving guest states on VM exits.
+ *
+ * @remarks 06_01H
  */
 #define IA32_BIOS_UPDATE_SIGNATURE                                   0x0000008B
 
@@ -5679,7 +6538,11 @@ typedef struct
  */
 
 /**
- * @brief SMM Monitor Configuration. <b>(R/W)</b>
+ * @brief SMM Monitor Configuration <b>(R/W)</b>
+ *
+ * SMM Monitor Configuration.
+ *
+ * @remarks If CPUID.01H: ECX[5]=1 || CPUID.01H: ECX[6] = 1
  */
 #define IA32_SMM_MONITOR_CTL                                         0x0000009B
 
@@ -5742,7 +6605,9 @@ typedef struct
   UINT32 MonitorFeatures;
 
   /**
-   * @brief Define values for the MonitorFeatures field of MSEG_HEADER.
+   * @brief Define values for the MonitorFeatures field of MSEG_HEADER
+   *
+   * Define values for the MonitorFeatures field of MSEG_HEADER.
    */
 #define IA32_STM_FEATURES_IA32E                                      0x00000001
 
@@ -5755,7 +6620,11 @@ typedef struct
 } IA32_MSEG_HEADER;
 
 /**
- * @brief Base address of the logical processor's SMRAM image. <b>(RO, SMM only)</b>
+ * @brief Base address of the logical processor's SMRAM image <b>(RO, SMM only)</b>
+ *
+ * Base address of the logical processor's SMRAM image.
+ *
+ * @remarks If IA32_VMX_MISC[15]
  */
 #define IA32_SMBASE                                                  0x0000009E
 
@@ -5781,7 +6650,11 @@ typedef struct
  */
 
 /**
- * @brief TSC Frequency Clock Counter. <b>(R/Write to clear)</b>
+ * @brief TSC Frequency Clock Counter <b>(R/Write to clear)</b>
+ *
+ * TSC Frequency Clock Counter.
+ *
+ * @remarks If CPUID.06H: ECX[0] = 1
  */
 #define IA32_MPERF                                                   0x000000E7
 
@@ -5791,7 +6664,9 @@ typedef struct
 } IA32_MPERF_REGISTER;
 
 /**
- * @brief Actual Performance Clock Counter <b>(R/Write to clear)</b>
+ * Actual Performance Clock Counter
+ *
+ * @remarks If CPUID.06H: ECX[0] = 1
  */
 #define IA32_APERF                                                   0x000000E8
 
@@ -5801,7 +6676,12 @@ typedef struct
 } IA32_APERF_REGISTER;
 
 /**
- * @brief MTRR Capability. <b>(RO)</b>
+ * @brief MTRR Capability <b>(RO)</b>
+ *
+ * MTRR Capability.
+ *
+ * @see Vol3A[11.11.2.1(IA32_MTRR_DEF_TYPE MSR)]
+ * @see Vol3A[11.11.1(MTRR Feature Identification)] (reference)
  */
 #define IA32_MTRR_CAPABILITIES                                       0x000000FE
 
@@ -5858,9 +6738,13 @@ typedef union
 } IA32_MTRR_CAPABILITIES_REGISTER;
 
 /**
- * @brief The lower 16 bits of this MSR are the segment selector for the privilege level 0 code segment. This value is also
- *        used to determine the segment selector of the privilege level 0 stack segment. This value cannot indicate a null
- *        selector. <b>(R/W)</b>
+ * @brief SYSENTER_CS_MSR <b>(R/W)</b>
+ *
+ * The lower 16 bits of this MSR are the segment selector for the privilege level 0 code segment. This value is also used
+ * to determine the segment selector of the privilege level 0 stack segment. This value cannot indicate a null selector.
+ *
+ * @remarks 06_01H
+ * @see Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)] (reference)
  */
 #define IA32_SYSENTER_CS                                             0x00000174
 
@@ -5872,19 +6756,33 @@ typedef struct
 } IA32_SYSENTER_CS_REGISTER;
 
 /**
- * @brief The value of this MSR is loaded into RSP (thus, this value contains the stack pointer for the privilege level 0
- *        stack). This value cannot represent a non-canonical address. In protected mode, only bits 31:0 are loaded. <b>(R/W)</b>
+ * @brief SYSENTER_ESP_MSR <b>(R/W)</b>
+ *
+ * The value of this MSR is loaded into RSP (thus, this value contains the stack pointer for the privilege level 0 stack).
+ * This value cannot represent a non-canonical address. In protected mode, only bits 31:0 are loaded.
+ *
+ * @remarks 06_01H
+ * @see Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)] (reference)
  */
 #define IA32_SYSENTER_ESP                                            0x00000175
 
 /**
- * @brief The value of this MSR is loaded into RIP (thus, this value references the first instruction of the selected
- *        operating procedure or routine). In protected mode, only bits 31:0 are loaded. <b>(R/W)</b>
+ * @brief SYSENTER_EIP_MSR <b>(R/W)</b>
+ *
+ * The value of this MSR is loaded into RIP (thus, this value references the first instruction of the selected operating
+ * procedure or routine). In protected mode, only bits 31:0 are loaded.
+ *
+ * @remarks 06_01H
+ * @see Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)] (reference)
  */
 #define IA32_SYSENTER_EIP                                            0x00000176
 
 /**
- * @brief Global Machine Check Capability. <b>(RO)</b>
+ * @brief Global Machine Check Capability <b>(RO)</b>
+ *
+ * Global Machine Check Capability.
+ *
+ * @remarks 06_01H
  */
 #define IA32_MCG_CAP                                                 0x00000179
 
@@ -5893,6 +6791,8 @@ typedef union
   struct
   {
     /**
+     * @brief Number of reporting banks
+     *
      * Number of reporting banks.
      */
     UINT64 Count                                                   : 8;
@@ -5901,6 +6801,8 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_COUNT(_)                               (((_) >> 0) & 0xFF)
 
     /**
+     * @brief IA32_MCG_CTL is present if this bit is set
+     *
      * IA32_MCG_CTL is present if this bit is set.
      */
     UINT64 McgCtlP                                                 : 1;
@@ -5909,6 +6811,8 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_MCG_CTL_P(_)                           (((_) >> 8) & 0x01)
 
     /**
+     * @brief Extended machine check state registers are present if this bit is set
+     *
      * Extended machine check state registers are present if this bit is set.
      */
     UINT64 McgExtP                                                 : 1;
@@ -5917,7 +6821,11 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_MCG_EXT_P(_)                           (((_) >> 9) & 0x01)
 
     /**
+     * @brief Support for corrected MC error event is present
+     *
      * Support for corrected MC error event is present.
+     *
+     * @remarks 06_01H
      */
     UINT64 McpCmciP                                                : 1;
 #define IA32_MCG_CAP_REGISTER_MCP_CMCI_P_BIT                         10
@@ -5925,6 +6833,8 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_MCP_CMCI_P(_)                          (((_) >> 10) & 0x01)
 
     /**
+     * @brief Threshold-based error status register are present if this bit is set
+     *
      * Threshold-based error status register are present if this bit is set.
      */
     UINT64 McgTesP                                                 : 1;
@@ -5934,6 +6844,8 @@ typedef union
     UINT64 Reserved1                                               : 4;
 
     /**
+     * @brief Number of extended machine check state registers present
+     *
      * Number of extended machine check state registers present.
      */
     UINT64 McgExtCnt                                               : 8;
@@ -5942,6 +6854,8 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_MCG_EXT_CNT(_)                         (((_) >> 16) & 0xFF)
 
     /**
+     * @brief The processor supports software error recovery if this bit is set
+     *
      * The processor supports software error recovery if this bit is set.
      */
     UINT64 McgSerP                                                 : 1;
@@ -5951,9 +6865,15 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Indicates that the processor allows platform firmware to be invoked when an error is detected so that it may
+     *        provide additional platform specific information in an ACPI format "Generic Error Data Entry" that augments the data
+     *        included in machine check bank registers
+     *
      * Indicates that the processor allows platform firmware to be invoked when an error is detected so that it may provide
      * additional platform specific information in an ACPI format "Generic Error Data Entry" that augments the data included in
      * machine check bank registers.
+     *
+     * @remarks 06_3EH
      */
     UINT64 McgElogP                                                : 1;
 #define IA32_MCG_CAP_REGISTER_MCG_ELOG_P_BIT                         26
@@ -5961,8 +6881,13 @@ typedef union
 #define IA32_MCG_CAP_REGISTER_MCG_ELOG_P(_)                          (((_) >> 26) & 0x01)
 
     /**
+     * @brief Indicates that the processor supports extended state in IA32_MCG_STATUS and associated MSR necessary to configure
+     *        Local Machine Check Exception (LMCE)
+     *
      * Indicates that the processor supports extended state in IA32_MCG_STATUS and associated MSR necessary to configure Local
      * Machine Check Exception (LMCE).
+     *
+     * @remarks 06_3EH
      */
     UINT64 McgLmceP                                                : 1;
 #define IA32_MCG_CAP_REGISTER_MCG_LMCE_P_BIT                         27
@@ -5975,7 +6900,11 @@ typedef union
 } IA32_MCG_CAP_REGISTER;
 
 /**
- * @brief Global Machine Check Status. <b>(R/W0)</b>
+ * @brief Global Machine Check Status <b>(R/W0)</b>
+ *
+ * Global Machine Check Status.
+ *
+ * @remarks 06_01H
  */
 #define IA32_MCG_STATUS                                              0x0000017A
 
@@ -5984,7 +6913,11 @@ typedef union
   struct
   {
     /**
+     * @brief Restart IP valid
+     *
      * Restart IP valid.
+     *
+     * @remarks 06_01H
      */
     UINT64 Ripv                                                    : 1;
 #define IA32_MCG_STATUS_REGISTER_RIPV_BIT                            0
@@ -5992,7 +6925,11 @@ typedef union
 #define IA32_MCG_STATUS_REGISTER_RIPV(_)                             (((_) >> 0) & 0x01)
 
     /**
+     * @brief Error IP valid
+     *
      * Error IP valid.
+     *
+     * @remarks 06_01H
      */
     UINT64 Eipv                                                    : 1;
 #define IA32_MCG_STATUS_REGISTER_EIPV_BIT                            1
@@ -6000,7 +6937,11 @@ typedef union
 #define IA32_MCG_STATUS_REGISTER_EIPV(_)                             (((_) >> 1) & 0x01)
 
     /**
+     * @brief Machine check in progress
+     *
      * Machine check in progress.
+     *
+     * @remarks 06_01H
      */
     UINT64 Mcip                                                    : 1;
 #define IA32_MCG_STATUS_REGISTER_MCIP_BIT                            2
@@ -6008,6 +6949,8 @@ typedef union
 #define IA32_MCG_STATUS_REGISTER_MCIP(_)                             (((_) >> 2) & 0x01)
 
     /**
+     * @brief If IA32_MCG_CAP.LMCE_P[27] = 1
+     *
      * If IA32_MCG_CAP.LMCE_P[27] = 1.
      */
     UINT64 LmceS                                                   : 1;
@@ -6021,7 +6964,11 @@ typedef union
 } IA32_MCG_STATUS_REGISTER;
 
 /**
- * @brief Global Machine Check Control. <b>(R/W)</b>
+ * @brief Global Machine Check Control <b>(R/W)</b>
+ *
+ * Global Machine Check Control.
+ *
+ * @remarks If IA32_MCG_CAP.CTL_P[8] = 1
  */
 #define IA32_MCG_CTL                                                 0x0000017B
 
@@ -6043,6 +6990,8 @@ typedef union
   struct
   {
     /**
+     * @brief Selects a performance event logic unit
+     *
      * Selects a performance event logic unit.
      */
     UINT64 EventSelect                                             : 8;
@@ -6051,6 +7000,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_EVENT_SELECT(_)                     (((_) >> 0) & 0xFF)
 
     /**
+     * @brief Qualifies the microarchitectural condition to detect on the selected event logic
+     *
      * Qualifies the microarchitectural condition to detect on the selected event logic.
      */
     UINT64 UMask                                                   : 8;
@@ -6059,6 +7010,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_U_MASK(_)                           (((_) >> 8) & 0xFF)
 
     /**
+     * @brief Counts while in privilege level is not ring 0
+     *
      * Counts while in privilege level is not ring 0.
      */
     UINT64 Usr                                                     : 1;
@@ -6067,6 +7020,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_USR(_)                              (((_) >> 16) & 0x01)
 
     /**
+     * @brief Counts while in privilege level is ring 0
+     *
      * Counts while in privilege level is ring 0.
      */
     UINT64 Os                                                      : 1;
@@ -6075,6 +7030,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_OS(_)                               (((_) >> 17) & 0x01)
 
     /**
+     * @brief Enables edge detection if set
+     *
      * Enables edge detection if set.
      */
     UINT64 Edge                                                    : 1;
@@ -6083,6 +7040,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_EDGE(_)                             (((_) >> 18) & 0x01)
 
     /**
+     * @brief Enables pin control
+     *
      * Enables pin control.
      */
     UINT64 Pc                                                      : 1;
@@ -6091,14 +7050,20 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_PC(_)                               (((_) >> 19) & 0x01)
 
     /**
+     * @brief Enables interrupt on counter overflow
+     *
      * Enables interrupt on counter overflow.
      */
-    UINT64 Int                                                     : 1;
-#define IA32_PERFEVTSEL_REGISTER_INT_BIT                             20
-#define IA32_PERFEVTSEL_REGISTER_INT_MASK                            0x01
-#define IA32_PERFEVTSEL_REGISTER_INT(_)                              (((_) >> 20) & 0x01)
+    UINT64 Intr                                                    : 1;
+#define IA32_PERFEVTSEL_REGISTER_INTR_BIT                            20
+#define IA32_PERFEVTSEL_REGISTER_INTR_MASK                           0x01
+#define IA32_PERFEVTSEL_REGISTER_INTR(_)                             (((_) >> 20) & 0x01)
 
     /**
+     * @brief When set to 1, it enables counting the associated event conditions occurring across all logical processors
+     *        sharing a processor core. When set to 0, the counter only increments the associated event conditions occurring in the
+     *        logical processor which programmed the MSR
+     *
      * When set to 1, it enables counting the associated event conditions occurring across all logical processors sharing a
      * processor core. When set to 0, the counter only increments the associated event conditions occurring in the logical
      * processor which programmed the MSR.
@@ -6109,6 +7074,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_ANY_THREAD(_)                       (((_) >> 21) & 0x01)
 
     /**
+     * @brief Enables the corresponding performance counter to commence counting when this bit is set
+     *
      * Enables the corresponding performance counter to commence counting when this bit is set.
      */
     UINT64 En                                                      : 1;
@@ -6117,6 +7084,8 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_EN(_)                               (((_) >> 22) & 0x01)
 
     /**
+     * @brief Invert the CMASK
+     *
      * Invert the CMASK.
      */
     UINT64 Inv                                                     : 1;
@@ -6125,6 +7094,9 @@ typedef union
 #define IA32_PERFEVTSEL_REGISTER_INV(_)                              (((_) >> 23) & 0x01)
 
     /**
+     * @brief When CMASK is not zero, the corresponding performance counter increments each cycle if the event count is greater
+     *        than or equal to the CMASK
+     *
      * When CMASK is not zero, the corresponding performance counter increments each cycle if the event count is greater than
      * or equal to the CMASK.
      */
@@ -6143,7 +7115,12 @@ typedef union
  */
 
 /**
- * @brief Current Performance Status. <b>(RO)</b>
+ * @brief Current Performance Status <b>(RO)</b>
+ *
+ * Current Performance Status.
+ *
+ * @remarks 0F_03H
+ * @see Vol3B[14.1.1(Software Interface For Initiating Performance State Transitions)]
  */
 #define IA32_PERF_STATUS                                             0x00000198
 
@@ -6153,7 +7130,12 @@ typedef struct
 } IA32_PERF_STATUS_REGISTER;
 
 /**
- * @brief Performance Control. Software makes a request for a new Performance state (P-State) by writing this MSR. <b>(R/W)</b>
+ * @brief Performance Control <b>(R/W)</b>
+ *
+ * Performance Control. Software makes a request for a new Performance state (P-State) by writing this MSR.
+ *
+ * @remarks 0F_03H
+ * @see Vol3B[14.1.1(Software Interface For Initiating Performance State Transitions)]
  */
 #define IA32_PERF_CTL                                                0x00000199
 
@@ -6162,6 +7144,8 @@ typedef union
   struct
   {
     /**
+     * @brief Target performance State Value
+     *
      * Target performance State Value.
      */
     UINT64 TargetStateValue                                        : 16;
@@ -6171,7 +7155,11 @@ typedef union
     UINT64 Reserved1                                               : 16;
 
     /**
+     * @brief IDA Engage <b>(R/W)</b>
+     *
      * IDA Engage.
+     *
+     * @remarks 06_0FH (Mobile only)
      */
     UINT64 IdaEngage                                               : 1;
 #define IA32_PERF_CTL_REGISTER_IDA_ENGAGE_BIT                        32
@@ -6184,7 +7172,12 @@ typedef union
 } IA32_PERF_CTL_REGISTER;
 
 /**
- * @brief Clock Modulation Control. <b>(R/W)</b>
+ * @brief Clock Modulation Control <b>(R/W)</b>
+ *
+ * Clock Modulation Control.
+ *
+ * @remarks If CPUID.01H:EDX[22] = 1
+ * @see Vol3B[14.7.3(Software Controlled Clock Modulation)]
  */
 #define IA32_CLOCK_MODULATION                                        0x0000019A
 
@@ -6193,7 +7186,11 @@ typedef union
   struct
   {
     /**
+     * @brief Extended On-Demand Clock Modulation Duty Cycle
+     *
      * Extended On-Demand Clock Modulation Duty Cycle.
+     *
+     * @remarks If CPUID.06H:EAX[5] = 1
      */
     UINT64 ExtendedOnDemandClockModulationDutyCycle                : 1;
 #define IA32_CLOCK_MODULATION_REGISTER_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 0
@@ -6230,8 +7227,13 @@ typedef union
 } IA32_CLOCK_MODULATION_REGISTER;
 
 /**
- * @brief Thermal Interrupt Control. Enables and disables the generation of an interrupt on temperature transitions
- *        detected with the processor's thermal sensors and thermal monitor. <b>(R/W)</b>
+ * @brief Thermal Interrupt Control <b>(R/W)</b>
+ *
+ * Thermal Interrupt Control. Enables and disables the generation of an interrupt on temperature transitions detected with
+ * the processor's thermal sensors and thermal monitor.
+ *
+ * @remarks If CPUID.01H:EDX[22] = 1
+ * @see Vol3B[14.7.2(Thermal Monitor)]
  */
 #define IA32_THERM_INTERRUPT                                         0x0000019B
 
@@ -6240,7 +7242,11 @@ typedef union
   struct
   {
     /**
+     * @brief High-Temperature Interrupt Enable
+     *
      * High-Temperature Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 HighTemperatureInterruptEnable                          : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
@@ -6248,7 +7254,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 0) & 0x01)
 
     /**
+     * @brief Low-Temperature Interrupt Enable
+     *
      * Low-Temperature Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 LowTemperatureInterruptEnable                           : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
@@ -6256,7 +7266,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 1) & 0x01)
 
     /**
+     * @brief PROCHOT\# Interrupt Enable
+     *
      * PROCHOT\# Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotInterruptEnable                                  : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE_BIT   2
@@ -6264,7 +7278,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE(_)    (((_) >> 2) & 0x01)
 
     /**
+     * @brief FORCEPR\# Interrupt Enable
+     *
      * FORCEPR\# Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ForceprInterruptEnable                                  : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_FORCEPR_INTERRUPT_ENABLE_BIT   3
@@ -6272,7 +7290,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_FORCEPR_INTERRUPT_ENABLE(_)    (((_) >> 3) & 0x01)
 
     /**
+     * @brief Critical Temperature Interrupt Enable
+     *
      * Critical Temperature Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureInterruptEnable                      : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_BIT 4
@@ -6282,6 +7304,8 @@ typedef union
 
     /**
      * Threshold \#1 Value
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold1Value                                         : 7;
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE_BIT           8
@@ -6289,7 +7313,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE(_)            (((_) >> 8) & 0x7F)
 
     /**
+     * @brief Threshold \#1 Interrupt Enable
+     *
      * Threshold \#1 Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold1InterruptEnable                               : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
@@ -6297,7 +7325,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE(_) (((_) >> 15) & 0x01)
 
     /**
+     * @brief Threshold \#2 Value
+     *
      * Threshold \#2 Value.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold2Value                                         : 7;
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE_BIT           16
@@ -6305,7 +7337,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE(_)            (((_) >> 16) & 0x7F)
 
     /**
+     * @brief Threshold \#2 Interrupt Enable
+     *
      * Threshold \#2 Interrupt Enable.
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold2InterruptEnable                               : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
@@ -6313,7 +7349,11 @@ typedef union
 #define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE(_) (((_) >> 23) & 0x01)
 
     /**
+     * @brief Power Limit Notification Enable
+     *
      * Power Limit Notification Enable.
+     *
+     * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitNotificationEnable                            : 1;
 #define IA32_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
@@ -6326,8 +7366,13 @@ typedef union
 } IA32_THERM_INTERRUPT_REGISTER;
 
 /**
- * @brief Thermal Status Information. Contains status information about the processor's thermal sensor and automatic
- *        thermal monitoring facilities. <b>(RO)</b>
+ * @brief Thermal Status Information <b>(RO)</b>
+ *
+ * Thermal Status Information. Contains status information about the processor's thermal sensor and automatic thermal
+ * monitoring facilities.
+ *
+ * @remarks If CPUID.01H:EDX[22] = 1
+ * @see Vol3B[14.7.2(Thermal Monitor)]
  */
 #define IA32_THERM_STATUS                                            0x0000019C
 
@@ -6337,6 +7382,8 @@ typedef union
   {
     /**
      * Thermal Status
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ThermalStatus                                           : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_BIT                0
@@ -6345,6 +7392,8 @@ typedef union
 
     /**
      * Thermal Status Log
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ThermalStatusLog                                        : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG_BIT            1
@@ -6353,6 +7402,8 @@ typedef union
 
     /**
      * PROCHOT \# or FORCEPR\# event
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotForceprEvent                                     : 1;
 #define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_EVENT_BIT         2
@@ -6361,6 +7412,8 @@ typedef union
 
     /**
      * PROCHOT \# or FORCEPR\# log
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotForceprLog                                       : 1;
 #define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_LOG_BIT           3
@@ -6369,6 +7422,8 @@ typedef union
 
     /**
      * Critical Temperature Status
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureStatus                               : 1;
 #define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_BIT   4
@@ -6377,6 +7432,8 @@ typedef union
 
     /**
      * Critical Temperature Status log
+     *
+     * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureStatusLog                            : 1;
 #define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
@@ -6385,6 +7442,8 @@ typedef union
 
     /**
      * Thermal Threshold \#1 Status
+     *
+     * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold1Status                                 : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS_BIT     6
@@ -6393,6 +7452,8 @@ typedef union
 
     /**
      * Thermal Threshold \#1 log
+     *
+     * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold1Log                                    : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG_BIT        7
@@ -6401,6 +7462,8 @@ typedef union
 
     /**
      * Thermal Threshold \#2 Status
+     *
+     * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold2Status                                 : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS_BIT     8
@@ -6409,6 +7472,8 @@ typedef union
 
     /**
      * Thermal Threshold \#2 log
+     *
+     * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold2Log                                    : 1;
 #define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG_BIT        9
@@ -6417,6 +7482,8 @@ typedef union
 
     /**
      * Power Limitation Status
+     *
+     * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitationStatus                                   : 1;
 #define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS_BIT       10
@@ -6425,6 +7492,8 @@ typedef union
 
     /**
      * Power Limitation log
+     *
+     * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitationLog                                      : 1;
 #define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG_BIT          11
@@ -6433,6 +7502,8 @@ typedef union
 
     /**
      * Current Limit Status
+     *
+     * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CurrentLimitStatus                                      : 1;
 #define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_STATUS_BIT          12
@@ -6441,6 +7512,8 @@ typedef union
 
     /**
      * Current Limit log
+     *
+     * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CurrentLimitLog                                         : 1;
 #define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_LOG_BIT             13
@@ -6449,6 +7522,8 @@ typedef union
 
     /**
      * Cross Domain Limit Status
+     *
+     * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CrossDomainLimitStatus                                  : 1;
 #define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_STATUS_BIT     14
@@ -6457,6 +7532,8 @@ typedef union
 
     /**
      * Cross Domain Limit log
+     *
+     * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CrossDomainLimitLog                                     : 1;
 #define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_LOG_BIT        15
@@ -6465,6 +7542,8 @@ typedef union
 
     /**
      * Digital Readout
+     *
+     * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 DigitalReadout                                          : 7;
 #define IA32_THERM_STATUS_REGISTER_DIGITAL_READOUT_BIT               16
@@ -6474,6 +7553,8 @@ typedef union
 
     /**
      * Resolution in Degrees Celsius
+     *
+     * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 ResolutionInDegreesCelsius                              : 4;
 #define IA32_THERM_STATUS_REGISTER_RESOLUTION_IN_DEGREES_CELSIUS_BIT 27
@@ -6482,6 +7563,8 @@ typedef union
 
     /**
      * Reading Valid
+     *
+     * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 ReadingValid                                            : 1;
 #define IA32_THERM_STATUS_REGISTER_READING_VALID_BIT                 31
@@ -6494,7 +7577,9 @@ typedef union
 } IA32_THERM_STATUS_REGISTER;
 
 /**
- * @brief Allows a variety of processor functions to be enabled and disabled. <b>(R/W)</b>
+ * @brief Enable Misc. Processor Features <b>(R/W)</b>
+ *
+ * Allows a variety of processor functions to be enabled and disabled.
  */
 #define IA32_MISC_ENABLE                                             0x000001A0
 
@@ -6660,7 +7745,11 @@ typedef union
 } IA32_MISC_ENABLE_REGISTER;
 
 /**
- * @brief Performance Energy Bias Hint. <b>(R/W)</b>
+ * @brief Performance Energy Bias Hint <b>(R/W)</b>
+ *
+ * Performance Energy Bias Hint.
+ *
+ * @remarks If CPUID.6H:ECX[3] = 1
  */
 #define IA32_ENERGY_PERF_BIAS                                        0x000001B0
 
@@ -6685,7 +7774,12 @@ typedef union
 } IA32_ENERGY_PERF_BIAS_REGISTER;
 
 /**
- * @brief Package Thermal Status Information. Contains status information about the package's thermal sensor. <b>(RO)</b>
+ * @brief Package Thermal Status Information <b>(RO)</b>
+ *
+ * Package Thermal Status Information. Contains status information about the package's thermal sensor.
+ *
+ * @remarks If CPUID.06H: EAX[6] = 1
+ * @see Vol3B[14.8(PACKAGE LEVEL THERMAL MANAGEMENT)]
  */
 #define IA32_PACKAGE_THERM_STATUS                                    0x000001B1
 
@@ -6804,8 +7898,13 @@ typedef union
 } IA32_PACKAGE_THERM_STATUS_REGISTER;
 
 /**
- * @brief Enables and disables the generation of an interrupt on temperature transitions detected with the package's
- *        thermal sensor. <b>(RO)</b>
+ * @brief Package Thermal Interrupt Control <b>(RO)</b>
+ *
+ * Enables and disables the generation of an interrupt on temperature transitions detected with the package's thermal
+ * sensor.
+ *
+ * @remarks If CPUID.06H: EAX[6] = 1
+ * @see Vol3B[14.8(PACKAGE LEVEL THERMAL MANAGEMENT)]
  */
 #define IA32_PACKAGE_THERM_INTERRUPT                                 0x000001B2
 
@@ -6814,6 +7913,8 @@ typedef union
   struct
   {
     /**
+     * @brief Pkg High-Temperature Interrupt Enable
+     *
      * Pkg High-Temperature Interrupt Enable.
      */
     UINT64 HighTemperatureInterruptEnable                          : 1;
@@ -6822,6 +7923,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 0) & 0x01)
 
     /**
+     * @brief Pkg Low-Temperature Interrupt Enable
+     *
      * Pkg Low-Temperature Interrupt Enable.
      */
     UINT64 LowTemperatureInterruptEnable                           : 1;
@@ -6830,6 +7933,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 1) & 0x01)
 
     /**
+     * @brief Pkg PROCHOT\# Interrupt Enable
+     *
      * Pkg PROCHOT\# Interrupt Enable.
      */
     UINT64 ProchotInterruptEnable                                  : 1;
@@ -6839,6 +7944,8 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Pkg Overheat Interrupt Enable
+     *
      * Pkg Overheat Interrupt Enable.
      */
     UINT64 OverheatInterruptEnable                                 : 1;
@@ -6856,6 +7963,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE(_)    (((_) >> 8) & 0x7F)
 
     /**
+     * @brief Pkg Threshold \#1 Interrupt Enable
+     *
      * Pkg Threshold \#1 Interrupt Enable.
      */
     UINT64 Threshold1InterruptEnable                               : 1;
@@ -6864,6 +7973,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE(_) (((_) >> 15) & 0x01)
 
     /**
+     * @brief Pkg Threshold \#2 Value
+     *
      * Pkg Threshold \#2 Value.
      */
     UINT64 Threshold2Value                                         : 7;
@@ -6872,6 +7983,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE(_)    (((_) >> 16) & 0x7F)
 
     /**
+     * @brief Pkg Threshold \#2 Interrupt Enable
+     *
      * Pkg Threshold \#2 Interrupt Enable.
      */
     UINT64 Threshold2InterruptEnable                               : 1;
@@ -6880,6 +7993,8 @@ typedef union
 #define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE(_) (((_) >> 23) & 0x01)
 
     /**
+     * @brief Pkg Power Limit Notification Enable
+     *
      * Pkg Power Limit Notification Enable.
      */
     UINT64 PowerLimitNotificationEnable                            : 1;
@@ -6893,7 +8008,11 @@ typedef union
 } IA32_PACKAGE_THERM_INTERRUPT_REGISTER;
 
 /**
- * @brief Trace/Profile Resource Control. <b>(R/W)</b>
+ * @brief Trace/Profile Resource Control <b>(R/W)</b>
+ *
+ * Trace/Profile Resource Control.
+ *
+ * @remarks 06_0EH
  */
 #define IA32_DEBUGCTL                                                0x000001D9
 
@@ -6902,8 +8021,13 @@ typedef union
   struct
   {
     /**
+     * @brief Setting this bit to 1 enables the processor to record a running trace of the most recent branches taken by the
+     *        processor in the LBR stack
+     *
      * Setting this bit to 1 enables the processor to record a running trace of the most recent branches taken by the processor
      * in the LBR stack.
+     *
+     * @remarks 06_01H
      */
     UINT64 Lbr                                                     : 1;
 #define IA32_DEBUGCTL_REGISTER_LBR_BIT                               0
@@ -6911,8 +8035,13 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_LBR(_)                                (((_) >> 0) & 0x01)
 
     /**
+     * @brief Setting this bit to 1 enables the processor to treat EFLAGS.TF as single-step on branches instead of single-step
+     *        on instructions
+     *
      * Setting this bit to 1 enables the processor to treat EFLAGS.TF as single-step on branches instead of single-step on
      * instructions.
+     *
+     * @remarks 06_01H
      */
     UINT64 Btf                                                     : 1;
 #define IA32_DEBUGCTL_REGISTER_BTF_BIT                               1
@@ -6921,7 +8050,11 @@ typedef union
     UINT64 Reserved1                                               : 4;
 
     /**
+     * @brief Setting this bit to 1 enables branch trace messages to be sent
+     *
      * Setting this bit to 1 enables branch trace messages to be sent.
+     *
+     * @remarks 06_0EH
      */
     UINT64 Tr                                                      : 1;
 #define IA32_DEBUGCTL_REGISTER_TR_BIT                                6
@@ -6929,7 +8062,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_TR(_)                                 (((_) >> 6) & 0x01)
 
     /**
+     * @brief Setting this bit enables branch trace messages (BTMs) to be logged in a BTS buffer
+     *
      * Setting this bit enables branch trace messages (BTMs) to be logged in a BTS buffer.
+     *
+     * @remarks 06_0EH
      */
     UINT64 Bts                                                     : 1;
 #define IA32_DEBUGCTL_REGISTER_BTS_BIT                               7
@@ -6937,8 +8074,13 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_BTS(_)                                (((_) >> 7) & 0x01)
 
     /**
+     * @brief When clear, BTMs are logged in a BTS buffer in circular fashion. When this bit is set, an interrupt is generated
+     *        by the BTS facility when the BTS buffer is full
+     *
      * When clear, BTMs are logged in a BTS buffer in circular fashion. When this bit is set, an interrupt is generated by the
      * BTS facility when the BTS buffer is full.
+     *
+     * @remarks 06_0EH
      */
     UINT64 Btint                                                   : 1;
 #define IA32_DEBUGCTL_REGISTER_BTINT_BIT                             8
@@ -6946,7 +8088,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_BTINT(_)                              (((_) >> 8) & 0x01)
 
     /**
+     * @brief When set, BTS or BTM is skipped if CPL = 0
+     *
      * When set, BTS or BTM is skipped if CPL = 0.
+     *
+     * @remarks 06_0FH
      */
     UINT64 BtsOffOs                                                : 1;
 #define IA32_DEBUGCTL_REGISTER_BTS_OFF_OS_BIT                        9
@@ -6954,7 +8100,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_BTS_OFF_OS(_)                         (((_) >> 9) & 0x01)
 
     /**
+     * @brief When set, BTS or BTM is skipped if CPL > 0
+     *
      * When set, BTS or BTM is skipped if CPL > 0.
+     *
+     * @remarks 06_0FH
      */
     UINT64 BtsOffUsr                                               : 1;
 #define IA32_DEBUGCTL_REGISTER_BTS_OFF_USR_BIT                       10
@@ -6962,7 +8112,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_BTS_OFF_USR(_)                        (((_) >> 10) & 0x01)
 
     /**
+     * @brief When set, the LBR stack is frozen on a PMI request
+     *
      * When set, the LBR stack is frozen on a PMI request.
+     *
+     * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 FreezeLbrsOnPmi                                         : 1;
 #define IA32_DEBUGCTL_REGISTER_FREEZE_LBRS_ON_PMI_BIT                11
@@ -6970,7 +8124,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_FREEZE_LBRS_ON_PMI(_)                 (((_) >> 11) & 0x01)
 
     /**
+     * @brief When set, each ENABLE bit of the global counter control MSR are frozen (address 38FH) on a PMI request
+     *
      * When set, each ENABLE bit of the global counter control MSR are frozen (address 38FH) on a PMI request.
+     *
+     * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 FreezePerfmonOnPmi                                      : 1;
 #define IA32_DEBUGCTL_REGISTER_FREEZE_PERFMON_ON_PMI_BIT             12
@@ -6978,7 +8136,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_FREEZE_PERFMON_ON_PMI(_)              (((_) >> 12) & 0x01)
 
     /**
+     * @brief When set, enables the logical processor to receive and generate PMI on behalf of the uncore
+     *
      * When set, enables the logical processor to receive and generate PMI on behalf of the uncore.
+     *
+     * @remarks 06_1AH
      */
     UINT64 EnableUncorePmi                                         : 1;
 #define IA32_DEBUGCTL_REGISTER_ENABLE_UNCORE_PMI_BIT                 13
@@ -6986,7 +8148,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_ENABLE_UNCORE_PMI(_)                  (((_) >> 13) & 0x01)
 
     /**
+     * @brief When set, freezes perfmon and trace messages while in SMM
+     *
      * When set, freezes perfmon and trace messages while in SMM.
+     *
+     * @remarks If IA32_PERF_CAPABILITIES[12] = 1
      */
     UINT64 FreezeWhileSmm                                          : 1;
 #define IA32_DEBUGCTL_REGISTER_FREEZE_WHILE_SMM_BIT                  14
@@ -6994,7 +8160,11 @@ typedef union
 #define IA32_DEBUGCTL_REGISTER_FREEZE_WHILE_SMM(_)                   (((_) >> 14) & 0x01)
 
     /**
+     * @brief When set, enables DR7 debug bit on XBEGIN
+     *
      * When set, enables DR7 debug bit on XBEGIN.
+     *
+     * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[11] = 1)
      */
     UINT64 RtmDebug                                                : 1;
 #define IA32_DEBUGCTL_REGISTER_RTM_DEBUG_BIT                         15
@@ -7007,7 +8177,11 @@ typedef union
 } IA32_DEBUGCTL_REGISTER;
 
 /**
- * @brief SMRR Base Address. Base address of SMM memory range. <b>(Writeable only in SMM)</b>
+ * @brief SMRR Base Address <b>(Writeable only in SMM)</b>
+ *
+ * SMRR Base Address. Base address of SMM memory range.
+ *
+ * @remarks If IA32_MTRRCAP.SMRR[11] = 1
  */
 #define IA32_SMRR_PHYSBASE                                           0x000001F2
 
@@ -7027,6 +8201,8 @@ typedef union
     UINT64 Reserved1                                               : 4;
 
     /**
+     * @brief SMRR physical Base Address
+     *
      * SMRR physical Base Address.
      */
     UINT64 SmrrPhysicalBaseAddress                                 : 20;
@@ -7040,7 +8216,11 @@ typedef union
 } IA32_SMRR_PHYSBASE_REGISTER;
 
 /**
- * @brief Range Mask of SMM memory range. <b>(Writeable only in SMM)</b>
+ * @brief SMRR Range Mask <b>(Writeable only in SMM)</b>
+ *
+ * Range Mask of SMM memory range.
+ *
+ * @remarks If IA32_MTRRCAP[SMRR] = 1
  */
 #define IA32_SMRR_PHYSMASK                                           0x000001F3
 
@@ -7051,6 +8231,8 @@ typedef union
     UINT64 Reserved1                                               : 11;
 
     /**
+     * @brief Enable range mask
+     *
      * Enable range mask.
      */
     UINT64 EnableRangeMask                                         : 1;
@@ -7059,6 +8241,8 @@ typedef union
 #define IA32_SMRR_PHYSMASK_REGISTER_ENABLE_RANGE_MASK(_)             (((_) >> 11) & 0x01)
 
     /**
+     * @brief SMRR address range mask
+     *
      * SMRR address range mask.
      */
     UINT64 SmrrAddressRangeMask                                    : 20;
@@ -7072,17 +8256,29 @@ typedef union
 } IA32_SMRR_PHYSMASK_REGISTER;
 
 /**
- * @brief DCA Capability. <b>(R)</b>
+ * @brief DCA Capability <b>(R)</b>
+ *
+ * DCA Capability.
+ *
+ * @remarks If CPUID.01H: ECX[18] = 1
  */
 #define IA32_PLATFORM_DCA_CAP                                        0x000001F8
 
 /**
- * @brief If set, CPU supports Prefetch-Hint type.
+ * @brief If set, CPU supports Prefetch-Hint type
+ *
+ * If set, CPU supports Prefetch-Hint type.
+ *
+ * @remarks If CPUID.01H: ECX[18] = 1
  */
 #define IA32_CPU_DCA_CAP                                             0x000001F9
 
 /**
- * @brief DCA type 0 Status and Control register.
+ * @brief DCA type 0 Status and Control register
+ *
+ * DCA type 0 Status and Control register.
+ *
+ * @remarks If CPUID.01H: ECX[18] = 1
  */
 #define IA32_DCA_0_CAP                                               0x000001FA
 
@@ -7091,6 +8287,8 @@ typedef union
   struct
   {
     /**
+     * @brief Set by HW when DCA is fuseenabled and no defeatures are set
+     *
      * Set by HW when DCA is fuseenabled and no defeatures are set.
      */
     UINT64 DcaActive                                               : 1;
@@ -7099,6 +8297,8 @@ typedef union
 #define IA32_DCA_0_CAP_REGISTER_DCA_ACTIVE(_)                        (((_) >> 0) & 0x01)
 
     /**
+     * @brief TRANSACTION
+     *
      * TRANSACTION.
      */
     UINT64 Transaction                                             : 2;
@@ -7107,6 +8307,8 @@ typedef union
 #define IA32_DCA_0_CAP_REGISTER_TRANSACTION(_)                       (((_) >> 1) & 0x03)
 
     /**
+     * @brief DCA_TYPE
+     *
      * DCA_TYPE.
      */
     UINT64 DcaType                                                 : 4;
@@ -7115,6 +8317,8 @@ typedef union
 #define IA32_DCA_0_CAP_REGISTER_DCA_TYPE(_)                          (((_) >> 3) & 0x0F)
 
     /**
+     * @brief DCA_QUEUE_SIZE
+     *
      * DCA_QUEUE_SIZE.
      */
     UINT64 DcaQueueSize                                            : 4;
@@ -7124,6 +8328,8 @@ typedef union
     UINT64 Reserved1                                               : 2;
 
     /**
+     * @brief Writes will update the register but have no HW side-effect
+     *
      * Writes will update the register but have no HW side-effect.
      */
     UINT64 DcaDelay                                                : 4;
@@ -7133,6 +8339,8 @@ typedef union
     UINT64 Reserved2                                               : 7;
 
     /**
+     * @brief SW can request DCA block by setting this bit
+     *
      * SW can request DCA block by setting this bit.
      */
     UINT64 SwBlock                                                 : 1;
@@ -7142,6 +8350,8 @@ typedef union
     UINT64 Reserved3                                               : 1;
 
     /**
+     * @brief Set when DCA is blocked by HW (e.g. CR0.CD = 1)
+     *
      * Set when DCA is blocked by HW (e.g. CR0.CD = 1).
      */
     UINT64 HwBlock                                                 : 1;
@@ -7263,17 +8473,23 @@ typedef union
  */
 
 /**
- * @brief Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k).
+ * @brief Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k)
+ *
+ * Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k).
  */
 #define IA32_MTRR_FIX_COUNT                                          (1 + 2 + 8)
 
 /**
- * @brief Architecture defined number of variable range MTRRs.
+ * @brief Architecture defined number of variable range MTRRs
+ *
+ * Architecture defined number of variable range MTRRs.
  */
 #define IA32_MTRR_VARIABLE_COUNT                                     0x000000FF
 
 /**
- * @brief A size of array to store all possible MTRRs.
+ * @brief A size of array to store all possible MTRRs
+ *
+ * A size of array to store all possible MTRRs.
  */
 #define IA32_MTRR_COUNT                                              (IA32_MTRR_FIX_COUNT + IA32_MTRR_VARIABLE_COUNT)
 
@@ -7282,7 +8498,11 @@ typedef union
  */
 
 /**
- * @brief IA32_PAT. <b>(R/W)</b>
+ * @brief IA32_PAT <b>(R/W)</b>
+ *
+ * IA32_PAT.
+ *
+ * @remarks If CPUID.01H: EDX.MTRR[16] = 1
  */
 #define IA32_PAT                                                     0x00000277
 
@@ -7291,6 +8511,8 @@ typedef union
   struct
   {
     /**
+     * @brief PA0
+     *
      * PA0.
      */
     UINT64 Pa0                                                     : 3;
@@ -7300,6 +8522,8 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief PA1
+     *
      * PA1.
      */
     UINT64 Pa1                                                     : 3;
@@ -7309,6 +8533,8 @@ typedef union
     UINT64 Reserved2                                               : 5;
 
     /**
+     * @brief PA2
+     *
      * PA2.
      */
     UINT64 Pa2                                                     : 3;
@@ -7318,6 +8544,8 @@ typedef union
     UINT64 Reserved3                                               : 5;
 
     /**
+     * @brief PA3
+     *
      * PA3.
      */
     UINT64 Pa3                                                     : 3;
@@ -7327,6 +8555,8 @@ typedef union
     UINT64 Reserved4                                               : 5;
 
     /**
+     * @brief PA4
+     *
      * PA4.
      */
     UINT64 Pa4                                                     : 3;
@@ -7336,6 +8566,8 @@ typedef union
     UINT64 Reserved5                                               : 5;
 
     /**
+     * @brief PA5
+     *
      * PA5.
      */
     UINT64 Pa5                                                     : 3;
@@ -7345,6 +8577,8 @@ typedef union
     UINT64 Reserved6                                               : 5;
 
     /**
+     * @brief PA6
+     *
      * PA6.
      */
     UINT64 Pa6                                                     : 3;
@@ -7354,6 +8588,8 @@ typedef union
     UINT64 Reserved7                                               : 5;
 
     /**
+     * @brief PA7
+     *
      * PA7.
      */
     UINT64 Pa7                                                     : 3;
@@ -7412,6 +8648,8 @@ typedef union
   struct
   {
     /**
+     * @brief Corrected error count threshold
+     *
      * Corrected error count threshold.
      */
     UINT64 CorrectedErrorCountThreshold                            : 15;
@@ -7421,6 +8659,8 @@ typedef union
     UINT64 Reserved1                                               : 15;
 
     /**
+     * @brief CMCI_EN
+     *
      * CMCI_EN.
      */
     UINT64 CmciEn                                                  : 1;
@@ -7438,7 +8678,11 @@ typedef union
  */
 
 /**
- * @brief IA32_MTRR_DEF_TYPE. <b>(R/W)</b>
+ * @brief IA32_MTRR_DEF_TYPE <b>(R/W)</b>
+ *
+ * IA32_MTRR_DEF_TYPE.
+ *
+ * @remarks If CPUID.01H: EDX.MTRR[12] = 1
  */
 #define IA32_MTRR_DEF_TYPE                                           0x000002FF
 
@@ -7447,6 +8691,8 @@ typedef union
   struct
   {
     /**
+     * @brief Default Memory Type
+     *
      * Default Memory Type.
      */
     UINT64 DefaultMemoryType                                       : 3;
@@ -7456,6 +8702,8 @@ typedef union
     UINT64 Reserved1                                               : 7;
 
     /**
+     * @brief Fixed Range MTRR Enable
+     *
      * Fixed Range MTRR Enable.
      */
     UINT64 FixedRangeMtrrEnable                                    : 1;
@@ -7464,6 +8712,8 @@ typedef union
 #define IA32_MTRR_DEF_TYPE_REGISTER_FIXED_RANGE_MTRR_ENABLE(_)       (((_) >> 10) & 0x01)
 
     /**
+     * @brief MTRR Enable
+     *
      * MTRR Enable.
      */
     UINT64 MtrrEnable                                              : 1;
@@ -7486,17 +8736,19 @@ typedef union
  * @{
  */
 /**
- * @brief Counts Instr_Retired.Any.
+ * @brief Counts Instr_Retired.Any
+ *
+ * Counts Instr_Retired.Any.
  */
 #define IA32_FIXED_CTR0                                              0x00000309
 
 /**
- * @brief Counts CPU_CLK_Unhalted.Core
+ * Counts CPU_CLK_Unhalted.Core
  */
 #define IA32_FIXED_CTR1                                              0x0000030A
 
 /**
- * @brief Counts CPU_CLK_Unhalted.Ref
+ * Counts CPU_CLK_Unhalted.Ref
  */
 #define IA32_FIXED_CTR2                                              0x0000030B
 
@@ -7505,7 +8757,11 @@ typedef union
  */
 
 /**
- * @brief Read Only MSR that enumerates the existence of performance monitoring features. <b>(RO)</b>
+ * @brief Read Only MSR that enumerates the existence of performance monitoring features <b>(RO)</b>
+ *
+ * Read Only MSR that enumerates the existence of performance monitoring features.
+ *
+ * @remarks If CPUID.01H: ECX[15] = 1
  */
 #define IA32_PERF_CAPABILITIES                                       0x00000345
 
@@ -7514,6 +8770,8 @@ typedef union
   struct
   {
     /**
+     * @brief LBR format
+     *
      * LBR format.
      */
     UINT64 LbrFormat                                               : 6;
@@ -7522,6 +8780,8 @@ typedef union
 #define IA32_PERF_CAPABILITIES_REGISTER_LBR_FORMAT(_)                (((_) >> 0) & 0x3F)
 
     /**
+     * @brief PEBS Trap
+     *
      * PEBS Trap.
      */
     UINT64 PebsTrap                                                : 1;
@@ -7530,6 +8790,8 @@ typedef union
 #define IA32_PERF_CAPABILITIES_REGISTER_PEBS_TRAP(_)                 (((_) >> 6) & 0x01)
 
     /**
+     * @brief PEBSSaveArchRegs
+     *
      * PEBSSaveArchRegs.
      */
     UINT64 PebsSaveArchRegs                                        : 1;
@@ -7538,6 +8800,8 @@ typedef union
 #define IA32_PERF_CAPABILITIES_REGISTER_PEBS_SAVE_ARCH_REGS(_)       (((_) >> 7) & 0x01)
 
     /**
+     * @brief PEBS Record Format
+     *
      * PEBS Record Format.
      */
     UINT64 PebsRecordFormat                                        : 4;
@@ -7546,6 +8810,8 @@ typedef union
 #define IA32_PERF_CAPABILITIES_REGISTER_PEBS_RECORD_FORMAT(_)        (((_) >> 8) & 0x0F)
 
     /**
+     * @brief Freeze while SMM is supported
+     *
      * Freeze while SMM is supported.
      */
     UINT64 FreezeWhileSmmIsSupported                               : 1;
@@ -7554,6 +8820,8 @@ typedef union
 #define IA32_PERF_CAPABILITIES_REGISTER_FREEZE_WHILE_SMM_IS_SUPPORTED(_) (((_) >> 12) & 0x01)
 
     /**
+     * @brief Full width of counter writable via IA32_A_PMCx
+     *
      * Full width of counter writable via IA32_A_PMCx.
      */
     UINT64 FullWidthCounterWrite                                   : 1;
@@ -7567,8 +8835,12 @@ typedef union
 } IA32_PERF_CAPABILITIES_REGISTER;
 
 /**
- * @brief Fixed-Function Performance Counter Control. Counter increments while the results of ANDing respective enable bit
- *        in IA32_PERF_GLOBAL_CTRL with the corresponding OS or USR bits in this MSR is true. <b>(R/W)</b>
+ * @brief Fixed-Function Performance Counter Control <b>(R/W)</b>
+ *
+ * Fixed-Function Performance Counter Control. Counter increments while the results of ANDing respective enable bit in
+ * IA32_PERF_GLOBAL_CTRL with the corresponding OS or USR bits in this MSR is true.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 1
  */
 #define IA32_FIXED_CTR_CTRL                                          0x0000038D
 
@@ -7577,6 +8849,8 @@ typedef union
   struct
   {
     /**
+     * @brief EN0_OS: Enable Fixed Counter 0 to count while CPL = 0
+     *
      * EN0_OS: Enable Fixed Counter 0 to count while CPL = 0.
      */
     UINT64 En0Os                                                   : 1;
@@ -7585,6 +8859,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN0_OS(_)                       (((_) >> 0) & 0x01)
 
     /**
+     * @brief EN0_Usr: Enable Fixed Counter 0 to count while CPL > 0
+     *
      * EN0_Usr: Enable Fixed Counter 0 to count while CPL > 0.
      */
     UINT64 En0Usr                                                  : 1;
@@ -7593,6 +8869,10 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN0_USR(_)                      (((_) >> 1) & 0x01)
 
     /**
+     * @brief AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
+     *        processors sharing a processor core. When set to 0, the counter only increments the associated event conditions
+     *        occurring in the logical processor which programmed the MSR
+     *
      * AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical processors
      * sharing a processor core. When set to 0, the counter only increments the associated event conditions occurring in the
      * logical processor which programmed the MSR.
@@ -7603,6 +8883,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD0(_)                  (((_) >> 2) & 0x01)
 
     /**
+     * @brief EN0_PMI: Enable PMI when fixed counter 0 overflows
+     *
      * EN0_PMI: Enable PMI when fixed counter 0 overflows.
      */
     UINT64 En0Pmi                                                  : 1;
@@ -7611,6 +8893,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN0_PMI(_)                      (((_) >> 3) & 0x01)
 
     /**
+     * @brief EN1_OS: Enable Fixed Counter 1 to count while CPL = 0
+     *
      * EN1_OS: Enable Fixed Counter 1 to count while CPL = 0.
      */
     UINT64 En1Os                                                   : 1;
@@ -7619,6 +8903,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN1_OS(_)                       (((_) >> 4) & 0x01)
 
     /**
+     * @brief EN1_Usr: Enable Fixed Counter 1 to count while CPL > 0
+     *
      * EN1_Usr: Enable Fixed Counter 1 to count while CPL > 0.
      */
     UINT64 En1Usr                                                  : 1;
@@ -7627,9 +8913,15 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN1_USR(_)                      (((_) >> 5) & 0x01)
 
     /**
+     * @brief AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
+     *        processors sharing a processor core. When set to 0, the counter only increments the associated event conditions
+     *        occurring in the logical processor which programmed the MSR
+     *
      * AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical processors
      * sharing a processor core. When set to 0, the counter only increments the associated event conditions occurring in the
      * logical processor which programmed the MSR.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 AnyThread1                                              : 1;
 #define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD1_BIT                 6
@@ -7637,6 +8929,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD1(_)                  (((_) >> 6) & 0x01)
 
     /**
+     * @brief EN1_PMI: Enable PMI when fixed counter 1 overflows
+     *
      * EN1_PMI: Enable PMI when fixed counter 1 overflows.
      */
     UINT64 En1Pmi                                                  : 1;
@@ -7645,6 +8939,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN1_PMI(_)                      (((_) >> 7) & 0x01)
 
     /**
+     * @brief EN2_OS: Enable Fixed Counter 2 to count while CPL = 0
+     *
      * EN2_OS: Enable Fixed Counter 2 to count while CPL = 0.
      */
     UINT64 En2Os                                                   : 1;
@@ -7653,6 +8949,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN2_OS(_)                       (((_) >> 8) & 0x01)
 
     /**
+     * @brief EN2_Usr: Enable Fixed Counter 2 to count while CPL > 0
+     *
      * EN2_Usr: Enable Fixed Counter 2 to count while CPL > 0.
      */
     UINT64 En2Usr                                                  : 1;
@@ -7661,9 +8959,15 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_EN2_USR(_)                      (((_) >> 9) & 0x01)
 
     /**
+     * @brief AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
+     *        processors sharing a processor core. When set to 0, the counter only increments the associated event conditions
+     *        occurring in the logical processor which programmed the MSR
+     *
      * AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical processors
      * sharing a processor core. When set to 0, the counter only increments the associated event conditions occurring in the
      * logical processor which programmed the MSR.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 AnyThread2                                              : 1;
 #define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD2_BIT                 10
@@ -7671,6 +8975,8 @@ typedef union
 #define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD2(_)                  (((_) >> 10) & 0x01)
 
     /**
+     * @brief EN2_PMI: Enable PMI when fixed counter 2 overflows
+     *
      * EN2_PMI: Enable PMI when fixed counter 2 overflows.
      */
     UINT64 En2Pmi                                                  : 1;
@@ -7684,7 +8990,11 @@ typedef union
 } IA32_FIXED_CTR_CTRL_REGISTER;
 
 /**
- * @brief Global Performance Counter Status. <b>(RO)</b>
+ * @brief Global Performance Counter Status <b>(RO)</b>
+ *
+ * Global Performance Counter Status.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 0
  */
 #define IA32_PERF_GLOBAL_STATUS                                      0x0000038E
 
@@ -7693,7 +9003,11 @@ typedef union
   struct
   {
     /**
+     * @brief Ovf_PMC0: Overflow status of IA32_PMC0
+     *
      * Ovf_PMC0: Overflow status of IA32_PMC0.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > 0
      */
     UINT64 OvfPmc0                                                 : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC0_BIT                0
@@ -7701,7 +9015,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC0(_)                 (((_) >> 0) & 0x01)
 
     /**
+     * @brief Ovf_PMC1: Overflow status of IA32_PMC1
+     *
      * Ovf_PMC1: Overflow status of IA32_PMC1.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > 1
      */
     UINT64 OvfPmc1                                                 : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC1_BIT                1
@@ -7709,7 +9027,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC1(_)                 (((_) >> 1) & 0x01)
 
     /**
+     * @brief Ovf_PMC2: Overflow status of IA32_PMC2
+     *
      * Ovf_PMC2: Overflow status of IA32_PMC2.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > 2
      */
     UINT64 OvfPmc2                                                 : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC2_BIT                2
@@ -7717,7 +9039,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC2(_)                 (((_) >> 2) & 0x01)
 
     /**
+     * @brief Ovf_PMC3: Overflow status of IA32_PMC3
+     *
      * Ovf_PMC3: Overflow status of IA32_PMC3.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > 3
      */
     UINT64 OvfPmc3                                                 : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC3_BIT                3
@@ -7726,7 +9052,11 @@ typedef union
     UINT64 Reserved1                                               : 28;
 
     /**
+     * @brief Ovf_FixedCtr0: Overflow status of IA32_FIXED_CTR0
+     *
      * Ovf_FixedCtr0: Overflow status of IA32_FIXED_CTR0.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr0                                            : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR0_BIT           32
@@ -7734,7 +9064,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR0(_)            (((_) >> 32) & 0x01)
 
     /**
+     * @brief Ovf_FixedCtr1: Overflow status of IA32_FIXED_CTR1
+     *
      * Ovf_FixedCtr1: Overflow status of IA32_FIXED_CTR1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr1                                            : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR1_BIT           33
@@ -7742,7 +9076,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR1(_)            (((_) >> 33) & 0x01)
 
     /**
+     * @brief Ovf_FixedCtr2: Overflow status of IA32_FIXED_CTR2
+     *
      * Ovf_FixedCtr2: Overflow status of IA32_FIXED_CTR2.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr2                                            : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR2_BIT           34
@@ -7751,7 +9089,11 @@ typedef union
     UINT64 Reserved2                                               : 20;
 
     /**
+     * @brief Trace_ToPA_PMI: A PMI occurred due to a ToPA entry memory buffer that was completely filled
+     *
      * Trace_ToPA_PMI: A PMI occurred due to a ToPA entry memory buffer that was completely filled.
+     *
+     * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && IA32_RTIT_CTL.ToPA = 1
      */
     UINT64 TraceTopaPmi                                            : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_TRACE_TOPA_PMI_BIT          55
@@ -7760,9 +9102,15 @@ typedef union
     UINT64 Reserved3                                               : 2;
 
     /**
+     * @brief LBR_Frz. LBRs are frozen due to:
+     *        * IA32_DEBUGCTL.FREEZE_LBR_ON_PMI=1.
+     *        * The LBR stack overflowed
+     *
      * LBR_Frz. LBRs are frozen due to:
      * * IA32_DEBUGCTL.FREEZE_LBR_ON_PMI=1.
      * * The LBR stack overflowed.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 LbrFrz                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_LBR_FRZ_BIT                 58
@@ -7770,9 +9118,15 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_LBR_FRZ(_)                  (((_) >> 58) & 0x01)
 
     /**
+     * @brief CTR_Frz. Performance counters in the core PMU are frozen due to:
+     *        * IA32_DEBUGCTL.FREEZE_PERFMON_ON_PMI=1.
+     *        * One or more core PMU counters overflowed
+     *
      * CTR_Frz. Performance counters in the core PMU are frozen due to:
      * * IA32_DEBUGCTL.FREEZE_PERFMON_ON_PMI=1.
      * * One or more core PMU counters overflowed.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 CtrFrz                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_CTR_FRZ_BIT                 59
@@ -7780,8 +9134,13 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_CTR_FRZ(_)                  (((_) >> 59) & 0x01)
 
     /**
+     * @brief ASCI: Data in the performance counters in the core PMU may include contributions from the direct or indirect
+     *        operation Intel SGX to protect an enclave
+     *
      * ASCI: Data in the performance counters in the core PMU may include contributions from the direct or indirect operation
      * Intel SGX to protect an enclave.
+     *
+     * @remarks If CPUID.(EAX=07H, ECX=0):EBX[2] = 1
      */
     UINT64 Asci                                                    : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_ASCI_BIT                    60
@@ -7789,7 +9148,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_ASCI(_)                     (((_) >> 60) & 0x01)
 
     /**
+     * @brief Uncore counter overflow status
+     *
      * Uncore counter overflow status.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 OvfUncore                                               : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_UNCORE_BIT              61
@@ -7797,7 +9160,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_UNCORE(_)               (((_) >> 61) & 0x01)
 
     /**
+     * @brief OvfBuf: DS SAVE area Buffer overflow status
+     *
      * OvfBuf: DS SAVE area Buffer overflow status.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 OvfBuf                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_BUF_BIT                 62
@@ -7805,7 +9172,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_BUF(_)                  (((_) >> 62) & 0x01)
 
     /**
+     * @brief CondChgd: Status bits of this register have changed
+     *
      * CondChgd: Status bits of this register have changed.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 CondChgd                                                : 1;
 #define IA32_PERF_GLOBAL_STATUS_REGISTER_COND_CHGD_BIT               63
@@ -7817,8 +9188,12 @@ typedef union
 } IA32_PERF_GLOBAL_STATUS_REGISTER;
 
 /**
- * @brief Global Performance Counter Control. Counter increments while the result of ANDing the respective enable bit in
- *        this MSR with the corresponding OS or USR bits in the general-purpose or fixed counter control MSR is true. <b>(R/W)</b>
+ * @brief Global Performance Counter Control <b>(R/W)</b>
+ *
+ * Global Performance Counter Control. Counter increments while the result of ANDing the respective enable bit in this MSR
+ * with the corresponding OS or USR bits in the general-purpose or fixed counter control MSR is true.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 0
  */
 #define IA32_PERF_GLOBAL_CTRL                                        0x0000038F
 
@@ -7829,7 +9204,11 @@ typedef struct
 } IA32_PERF_GLOBAL_CTRL_REGISTER;
 
 /**
- * @brief Global Performance Counter Overflow Reset Control. <b>(R/W)</b>
+ * @brief Global Performance Counter Overflow Reset Control <b>(R/W)</b>
+ *
+ * Global Performance Counter Overflow Reset Control.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_STATUS_RESET                                0x00000390
 
@@ -7838,7 +9217,11 @@ typedef union
   struct
   {
     /**
+     * @brief Set 1 to clear Ovf_PMC(n) bit. Clear bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * Set 1 to clear Ovf_PMC(n) bit. Clear bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 ClearOvfPmcn                                            : 32;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_PMCN_BIT    0
@@ -7846,7 +9229,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_PMCN(_)     (((_) >> 0) & 0xFFFFFFFF)
 
     /**
+     * @brief Set 1 to clear Ovf_FIXED_CTR(n) bit. Clear bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * Set 1 to clear Ovf_FIXED_CTR(n) bit. Clear bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EDX[4:0] > n
      */
     UINT64 ClearOvfFixedCtrn                                       : 3;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_FIXED_CTRN_BIT 32
@@ -7855,7 +9242,11 @@ typedef union
     UINT64 Reserved1                                               : 20;
 
     /**
+     * @brief Set 1 to clear Trace_ToPA_PMI bit
+     *
      * Set 1 to clear Trace_ToPA_PMI bit.
+     *
+     * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && IA32_RTIT_CTL.ToPA = 1
      */
     UINT64 ClearTraceTopaPmi                                       : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_TRACE_TOPA_PMI_BIT 55
@@ -7864,7 +9255,11 @@ typedef union
     UINT64 Reserved2                                               : 2;
 
     /**
+     * @brief Set 1 to clear LBR_Frz bit
+     *
      * Set 1 to clear LBR_Frz bit.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearLbrFrz                                             : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_LBR_FRZ_BIT     58
@@ -7872,7 +9267,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_LBR_FRZ(_)      (((_) >> 58) & 0x01)
 
     /**
+     * @brief Set 1 to clear CTR_Frz bit
+     *
      * Set 1 to clear CTR_Frz bit.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearCtrFrz                                             : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_CTR_FRZ_BIT     59
@@ -7880,7 +9279,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_CTR_FRZ(_)      (((_) >> 59) & 0x01)
 
     /**
+     * @brief Set 1 to clear ASCI bit
+     *
      * Set 1 to clear ASCI bit.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearAsci                                               : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_ASCI_BIT        60
@@ -7888,7 +9291,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_ASCI(_)         (((_) >> 60) & 0x01)
 
     /**
+     * @brief Set 1 to clear Ovf_Uncore bit
+     *
      * Set 1 to clear Ovf_Uncore bit.
+     *
+     * @remarks 06_2EH
      */
     UINT64 ClearOvfUncore                                          : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_UNCORE_BIT  61
@@ -7896,7 +9303,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_UNCORE(_)   (((_) >> 61) & 0x01)
 
     /**
+     * @brief Set 1 to clear OvfBuf bit
+     *
      * Set 1 to clear OvfBuf bit.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 ClearOvfBuf                                             : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_BUF_BIT     62
@@ -7904,7 +9315,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_BUF(_)      (((_) >> 62) & 0x01)
 
     /**
+     * @brief Set 1 to clear CondChgd bit
+     *
      * Set 1 to clear CondChgd bit.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 ClearCondChgd                                           : 1;
 #define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_COND_CHGD_BIT   63
@@ -7916,7 +9331,11 @@ typedef union
 } IA32_PERF_GLOBAL_STATUS_RESET_REGISTER;
 
 /**
- * @brief Global Performance Counter Overflow Set Control. <b>(R/W)</b>
+ * @brief Global Performance Counter Overflow Set Control <b>(R/W)</b>
+ *
+ * Global Performance Counter Overflow Set Control.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_STATUS_SET                                  0x00000391
 
@@ -7925,7 +9344,11 @@ typedef union
   struct
   {
     /**
+     * @brief Set 1 to cause Ovf_PMC(n) = 1. Set bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * Set 1 to cause Ovf_PMC(n) = 1. Set bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 OvfPmcn                                                 : 32;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_PMCN_BIT            0
@@ -7933,7 +9356,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_PMCN(_)             (((_) >> 0) & 0xFFFFFFFF)
 
     /**
+     * @brief Set 1 to cause Ovf_FIXED_CTR(n) = 1. Set bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * Set 1 to cause Ovf_FIXED_CTR(n) = 1. Set bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EDX[4:0] > n
      */
     UINT64 OvfFixedCtrn                                            : 3;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_FIXED_CTRN_BIT      32
@@ -7942,7 +9369,11 @@ typedef union
     UINT64 Reserved1                                               : 20;
 
     /**
+     * @brief Set 1 to cause Trace_ToPA_PMI = 1
+     *
      * Set 1 to cause Trace_ToPA_PMI = 1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 TraceTopaPmi                                            : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_TRACE_TOPA_PMI_BIT      55
@@ -7951,7 +9382,11 @@ typedef union
     UINT64 Reserved2                                               : 2;
 
     /**
+     * @brief Set 1 to cause LBR_Frz = 1
+     *
      * Set 1 to cause LBR_Frz = 1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 LbrFrz                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_LBR_FRZ_BIT             58
@@ -7959,7 +9394,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_LBR_FRZ(_)              (((_) >> 58) & 0x01)
 
     /**
+     * @brief Set 1 to cause CTR_Frz = 1
+     *
      * Set 1 to cause CTR_Frz = 1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 CtrFrz                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_CTR_FRZ_BIT             59
@@ -7967,7 +9406,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_CTR_FRZ(_)              (((_) >> 59) & 0x01)
 
     /**
+     * @brief Set 1 to cause ASCI = 1
+     *
      * Set 1 to cause ASCI = 1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 Asci                                                    : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_ASCI_BIT                60
@@ -7975,7 +9418,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_ASCI(_)                 (((_) >> 60) & 0x01)
 
     /**
+     * @brief Set 1 to cause Ovf_Uncore = 1
+     *
      * Set 1 to cause Ovf_Uncore = 1.
+     *
+     * @remarks 06_2EH
      */
     UINT64 OvfUncore                                               : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_UNCORE_BIT          61
@@ -7983,7 +9430,11 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_UNCORE(_)           (((_) >> 61) & 0x01)
 
     /**
+     * @brief Set 1 to cause OvfBuf = 1
+     *
      * Set 1 to cause OvfBuf = 1.
+     *
+     * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 OvfBuf                                                  : 1;
 #define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_BUF_BIT             62
@@ -7995,7 +9446,11 @@ typedef union
 } IA32_PERF_GLOBAL_STATUS_SET_REGISTER;
 
 /**
- * @brief Indicator that core perfmon interface is in use. <b>(RO)</b>
+ * @brief Indicator that core perfmon interface is in use <b>(RO)</b>
+ *
+ * Indicator that core perfmon interface is in use.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_INUSE                                       0x00000392
 
@@ -8004,7 +9459,11 @@ typedef union
   struct
   {
     /**
+     * @brief IA32_PERFEVTSEL(n) in use. Status bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * IA32_PERFEVTSEL(n) in use. Status bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 Ia32PerfevtselnInUse                                    : 32;
 #define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_PERFEVTSELN_IN_USE_BIT  0
@@ -8012,6 +9471,8 @@ typedef union
 #define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_PERFEVTSELN_IN_USE(_)   (((_) >> 0) & 0xFFFFFFFF)
 
     /**
+     * @brief IA32_FIXED_CTR(n) in use. Status bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved
+     *
      * IA32_FIXED_CTR(n) in use. Status bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
      */
     UINT64 Ia32FixedCtrnInUse                                      : 3;
@@ -8021,6 +9482,8 @@ typedef union
     UINT64 Reserved1                                               : 28;
 
     /**
+     * @brief PMI in use
+     *
      * PMI in use.
      */
     UINT64 PmiInUse                                                : 1;
@@ -8033,7 +9496,11 @@ typedef union
 } IA32_PERF_GLOBAL_INUSE_REGISTER;
 
 /**
- * @brief PEBS Control. <b>(R/W)</b>
+ * @brief PEBS Control <b>(R/W)</b>
+ *
+ * PEBS Control.
+ *
+ * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PEBS_ENABLE                                             0x000003F1
 
@@ -8042,7 +9509,11 @@ typedef union
   struct
   {
     /**
+     * @brief Enable PEBS on IA32_PMC0
+     *
      * Enable PEBS on IA32_PMC0.
+     *
+     * @remarks 06_0FH
      */
     UINT64 EnablePebs                                              : 1;
 #define IA32_PEBS_ENABLE_REGISTER_ENABLE_PEBS_BIT                    0
@@ -8050,6 +9521,8 @@ typedef union
 #define IA32_PEBS_ENABLE_REGISTER_ENABLE_PEBS(_)                     (((_) >> 0) & 0x01)
 
     /**
+     * @brief Reserved or model specific
+     *
      * Reserved or model specific.
      */
     UINT64 Reservedormodelspecific1                                : 3;
@@ -8059,6 +9532,8 @@ typedef union
     UINT64 Reserved1                                               : 28;
 
     /**
+     * @brief Reserved or model specific
+     *
      * Reserved or model specific.
      */
     UINT64 Reservedormodelspecific2                                : 4;
@@ -8239,7 +9714,13 @@ typedef union
  */
 
 /**
- * @brief Reporting Register of Basic VMX Capabilities. <b>(R/O)</b>
+ * @brief Reporting Register of Basic VMX Capabilities <b>(R/O)</b>
+ *
+ * Reporting Register of Basic VMX Capabilities.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+ * @see Vol3D[A.1(Basic VMX Information)] (reference)
  */
 #define IA32_VMX_BASIC                                               0x00000480
 
@@ -8259,6 +9740,8 @@ typedef union
 #define IA32_VMX_BASIC_REGISTER_VMCS_REVISION_ID(_)                  (((_) >> 0) & 0x7FFFFFFF)
 
     /**
+     * @brief Bit 31 is always 0
+     *
      * Bit 31 is always 0.
      */
     UINT64 MustBeZero                                              : 1;
@@ -8358,7 +9841,13 @@ typedef union
 } IA32_VMX_BASIC_REGISTER;
 
 /**
- * @brief Capability Reporting Register of Pin-Based VM-Execution Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of Pin-Based VM-Execution Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of Pin-Based VM-Execution Controls.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.3.1(Pin-Based VM-Execution Controls)]
+ * @see Vol3C[24.6.1(Pin-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PINBASED_CTLS                                       0x00000481
 
@@ -8438,7 +9927,13 @@ typedef union
 } IA32_VMX_PINBASED_CTLS_REGISTER;
 
 /**
- * @brief Capability Reporting Register of Primary Processor-Based VM-Execution Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of Primary Processor-Based VM-Execution Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of Primary Processor-Based VM-Execution Controls.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.3.2(Primary Processor-Based VM-Execution Controls)]
+ * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PROCBASED_CTLS                                      0x00000482
 
@@ -8700,7 +10195,13 @@ typedef union
 } IA32_VMX_PROCBASED_CTLS_REGISTER;
 
 /**
- * @brief Capability Reporting Register of VM-Exit Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of VM-Exit Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of VM-Exit Controls.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.4(VM-EXIT CONTROLS)]
+ * @see Vol3C[24.7.1(VM-Exit Controls)] (reference)
  */
 #define IA32_VMX_EXIT_CTLS                                           0x00000483
 
@@ -8813,6 +10314,8 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_VMX_PREEMPTION_TIMER_VALUE(_) (((_) >> 22) & 0x01)
 
     /**
+     * @brief This control determines whether the IA32_BNDCFGS MSR is cleared on VM exit
+     *
      * This control determines whether the IA32_BNDCFGS MSR is cleared on VM exit.
      */
     UINT64 ClearIa32Bndcfgs                                        : 1;
@@ -8821,8 +10324,13 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_REGISTER_CLEAR_IA32_BNDCFGS(_)            (((_) >> 23) & 0x01)
 
     /**
+     * @brief If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM exit or a
+     *        VMCS packet on an SMM VM exit
+     *
      * If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM exit or a VMCS
      * packet on an SMM VM exit.
+     *
+     * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
      */
     UINT64 ConcealVmxFromPt                                        : 1;
 #define IA32_VMX_EXIT_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_BIT          24
@@ -8834,7 +10342,13 @@ typedef union
 } IA32_VMX_EXIT_CTLS_REGISTER;
 
 /**
- * @brief Capability Reporting Register of VM-Entry Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of VM-Entry Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of VM-Entry Controls.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.5(VM-ENTRY CONTROLS)]
+ * @see Vol3D[24.8.1(VM-Entry Controls)] (reference)
  */
 #define IA32_VMX_ENTRY_CTLS                                          0x00000484
 
@@ -8925,6 +10439,8 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_EFER(_)               (((_) >> 15) & 0x01)
 
     /**
+     * @brief This control determines whether the IA32_BNDCFGS MSR is loaded on VM entry
+     *
      * This control determines whether the IA32_BNDCFGS MSR is loaded on VM entry.
      */
     UINT64 LoadIa32Bndcfgs                                         : 1;
@@ -8933,8 +10449,13 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_BNDCFGS(_)            (((_) >> 16) & 0x01)
 
     /**
+     * @brief If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM entry or a
+     *        VMCS packet on a VM entry that returns from SMM
+     *
      * If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM entry or a VMCS
      * packet on a VM entry that returns from SMM.
+     *
+     * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
      */
     UINT64 ConcealVmxFromPt                                        : 1;
 #define IA32_VMX_ENTRY_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_BIT         17
@@ -8946,7 +10467,13 @@ typedef union
 } IA32_VMX_ENTRY_CTLS_REGISTER;
 
 /**
- * @brief Reporting Register of Miscellaneous VMX Capabilities. <b>(R/O)</b>
+ * @brief Reporting Register of Miscellaneous VMX Capabilities <b>(R/O)</b>
+ *
+ * Reporting Register of Miscellaneous VMX Capabilities.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.6(MISCELLANEOUS DATA)]
+ * @see Vol3D[A.6(Miscellaneous Data)] (reference)
  */
 #define IA32_VMX_MISC                                                0x00000485
 
@@ -9071,6 +10598,9 @@ typedef union
 #define IA32_VMX_MISC_REGISTER_VMWRITE_VMEXIT_INFO(_)                (((_) >> 29) & 0x01)
 
     /**
+     * @brief When set to 1, VM entry allows injection of a software interrupt, software exception, or privileged software
+     *        exception with an instruction length of 0
+     *
      * When set to 1, VM entry allows injection of a software interrupt, software exception, or privileged software exception
      * with an instruction length of 0.
      */
@@ -9095,27 +10625,57 @@ typedef union
 } IA32_VMX_MISC_REGISTER;
 
 /**
- * @brief Capability Reporting Register of CR0 Bits Fixed to 0. <b>(R/O)</b>
+ * @brief Capability Reporting Register of CR0 Bits Fixed to 0 <b>(R/O)</b>
+ *
+ * Capability Reporting Register of CR0 Bits Fixed to 0.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.7(VMX-FIXED BITS IN CR0)]
+ * @see Vol3D[A.7(VMX-Fixed Bits in CR0)] (reference)
  */
 #define IA32_VMX_CR0_FIXED0                                          0x00000486
 
 /**
- * @brief Capability Reporting Register of CR0 Bits Fixed to 1. <b>(R/O)</b>
+ * @brief Capability Reporting Register of CR0 Bits Fixed to 1 <b>(R/O)</b>
+ *
+ * Capability Reporting Register of CR0 Bits Fixed to 1.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.7(VMX-FIXED BITS IN CR0)]
+ * @see Vol3D[A.7(VMX-Fixed Bits in CR0)] (reference)
  */
 #define IA32_VMX_CR0_FIXED1                                          0x00000487
 
 /**
- * @brief Capability Reporting Register of CR4 Bits Fixed to 0. <b>(R/O)</b>
+ * @brief Capability Reporting Register of CR4 Bits Fixed to 0 <b>(R/O)</b>
+ *
+ * Capability Reporting Register of CR4 Bits Fixed to 0.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.8(VMX-FIXED BITS IN CR4)]
+ * @see Vol3D[A.8(VMX-Fixed Bits in CR4)] (reference)
  */
 #define IA32_VMX_CR4_FIXED0                                          0x00000488
 
 /**
- * @brief Capability Reporting Register of CR4 Bits Fixed to 1. <b>(R/O)</b>
+ * @brief Capability Reporting Register of CR4 Bits Fixed to 1 <b>(R/O)</b>
+ *
+ * Capability Reporting Register of CR4 Bits Fixed to 1.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.8(VMX-FIXED BITS IN CR4)]
+ * @see Vol3D[A.8(VMX-Fixed Bits in CR4)] (reference)
  */
 #define IA32_VMX_CR4_FIXED1                                          0x00000489
 
 /**
- * @brief Capability Reporting Register of VMCS Field Enumeration. <b>(R/O)</b>
+ * @brief Capability Reporting Register of VMCS Field Enumeration <b>(R/O)</b>
+ *
+ * Capability Reporting Register of VMCS Field Enumeration.
+ *
+ * @remarks If CPUID.01H:ECX.[5] = 1
+ * @see Vol3D[A.9(VMCS ENUMERATION)]
+ * @see Vol3D[A.9(VMCS Enumeration)] (reference)
  */
 #define IA32_VMX_VMCS_ENUM                                           0x0000048A
 
@@ -9124,6 +10684,8 @@ typedef union
   struct
   {
     /**
+     * @brief Indicates access type
+     *
      * Indicates access type.
      */
     UINT64 AccessType                                              : 1;
@@ -9132,6 +10694,8 @@ typedef union
 #define IA32_VMX_VMCS_ENUM_REGISTER_ACCESS_TYPE(_)                   (((_) >> 0) & 0x01)
 
     /**
+     * @brief Highest index value used for any VMCS encoding
+     *
      * Highest index value used for any VMCS encoding.
      */
     UINT64 HighestIndexValue                                       : 9;
@@ -9140,6 +10704,8 @@ typedef union
 #define IA32_VMX_VMCS_ENUM_REGISTER_HIGHEST_INDEX_VALUE(_)           (((_) >> 1) & 0x1FF)
 
     /**
+     * @brief Indicate the field's type
+     *
      * Indicate the field's type.
      */
     UINT64 FieldType                                               : 2;
@@ -9149,6 +10715,8 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Indicate the field's width
+     *
      * Indicate the field's width.
      */
     UINT64 FieldWidth                                              : 2;
@@ -9161,7 +10729,13 @@ typedef union
 } IA32_VMX_VMCS_ENUM_REGISTER;
 
 /**
- * @brief Capability Reporting Register of Secondary Processor-Based VM-Execution Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of Secondary Processor-Based VM-Execution Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of Secondary Processor-Based VM-Execution Controls.
+ *
+ * @remarks If ( CPUID.01H:ECX.[5] && IA32_VMX_PROCBASED_CTLS[63] )
+ * @see Vol3D[A.3.3(Secondary Processor-Based VM-Execution Controls)]
+ * @see Vol3D[24.6.2(Processor-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PROCBASED_CTLS2                                     0x0000048B
 
@@ -9414,8 +10988,13 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief If this control is 1, EPT execute permissions are based on whether the linear address being accessed is
+     *        supervisor mode or user mode
+     *
      * If this control is 1, EPT execute permissions are based on whether the linear address being accessed is supervisor mode
      * or user mode.
+     *
+     * @see Vol3C[28(VMX SUPPORT FOR ADDRESS TRANSLATION)]
      */
     UINT64 ModeBasedExecuteControlForEpt                           : 1;
 #define IA32_VMX_PROCBASED_CTLS2_REGISTER_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_BIT 22
@@ -9442,7 +11021,14 @@ typedef union
 } IA32_VMX_PROCBASED_CTLS2_REGISTER;
 
 /**
- * @brief Capability Reporting Register of EPT and VPID. <b>(R/O)</b>
+ * @brief Capability Reporting Register of EPT and VPID <b>(R/O)</b>
+ *
+ * Capability Reporting Register of EPT and VPID.
+ *
+ * @remarks If ( CPUID.01H:ECX.[5] && IA32_VMX_PROCBASED_CTLS[63] && (IA32_VMX_PROCBASED_CTLS2[33] ||
+ *          IA32_VMX_PROCBASED_CTLS2[37]) )
+ * @see Vol3D[A.10(VPID AND EPT CAPABILITIES)]
+ * @see Vol3D[A.10(VPID and EPT Capabilities)] (reference)
  */
 #define IA32_VMX_EPT_VPID_CAP                                        0x0000048C
 
@@ -9451,6 +11037,10 @@ typedef union
   struct
   {
     /**
+     * @brief When set to 1, the processor supports execute-only translations by EPT. This support allows software to configure
+     *        EPT paging-structure entries in which bits 1:0 are clear (indicating that data accesses are not allowed) and bit 2 is
+     *        set (indicating that instruction fetches are allowed)
+     *
      * When set to 1, the processor supports execute-only translations by EPT. This support allows software to configure EPT
      * paging-structure entries in which bits 1:0 are clear (indicating that data accesses are not allowed) and bit 2 is set
      * (indicating that instruction fetches are allowed).
@@ -9462,6 +11052,8 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief Indicates support for a page-walk length of 4
+     *
      * Indicates support for a page-walk length of 4.
      */
     UINT64 PageWalkLength4                                         : 1;
@@ -9471,8 +11063,13 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief When set to 1, the logical processor allows software to configure the EPT paging-structure memory type to be
+     *        uncacheable (UC)
+     *
      * When set to 1, the logical processor allows software to configure the EPT paging-structure memory type to be uncacheable
      * (UC).
+     *
+     * @see Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP))]
      */
     UINT64 MemoryTypeUncacheable                                   : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_UNCACHEABLE_BIT   8
@@ -9481,6 +11078,9 @@ typedef union
     UINT64 Reserved3                                               : 5;
 
     /**
+     * @brief When set to 1, the logical processor allows software to configure the EPT paging-structure memory type to be
+     *        write-back (WB)
+     *
      * When set to 1, the logical processor allows software to configure the EPT paging-structure memory type to be write-back
      * (WB).
      */
@@ -9491,6 +11091,9 @@ typedef union
     UINT64 Reserved4                                               : 1;
 
     /**
+     * @brief When set to 1, the logical processor allows software to configure a EPT PDE to map a 2-Mbyte page (by setting bit
+     *        7 in the EPT PDE)
+     *
      * When set to 1, the logical processor allows software to configure a EPT PDE to map a 2-Mbyte page (by setting bit 7 in
      * the EPT PDE).
      */
@@ -9500,6 +11103,9 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_PDE_2MB_PAGES(_)              (((_) >> 16) & 0x01)
 
     /**
+     * @brief When set to 1, the logical processor allows software to configure a EPT PDPTE to map a 1-Gbyte page (by setting
+     *        bit 7 in the EPT PDPTE)
+     *
      * When set to 1, the logical processor allows software to configure a EPT PDPTE to map a 1-Gbyte page (by setting bit 7 in
      * the EPT PDPTE).
      */
@@ -9510,7 +11116,12 @@ typedef union
     UINT64 Reserved5                                               : 2;
 
     /**
+     * @brief If bit 20 is read as 1, the INVEPT instruction is supported
+     *
      * If bit 20 is read as 1, the INVEPT instruction is supported.
+     *
+     * @see Vol3C[30(VMX INSTRUCTION REFERENCE)]
+     * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 Invept                                                  : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_BIT                    20
@@ -9518,7 +11129,11 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT(_)                     (((_) >> 20) & 0x01)
 
     /**
+     * @brief When set to 1, accessed and dirty flags for EPT are supported
+     *
      * When set to 1, accessed and dirty flags for EPT are supported.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 EptAccessedAndDirtyFlags                                : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_EPT_ACCESSED_AND_DIRTY_FLAGS_BIT 21
@@ -9526,8 +11141,13 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_EPT_ACCESSED_AND_DIRTY_FLAGS(_) (((_) >> 21) & 0x01)
 
     /**
+     * @brief When set to 1, the processor reports advanced VM-exit information for EPT violations. This reporting is done only
+     *        if this bit is read as 1
+     *
      * When set to 1, the processor reports advanced VM-exit information for EPT violations. This reporting is done only if
      * this bit is read as 1.
+     *
+     * @see Vol3C[27.2.1(Basic VM-Exit Information)]
      */
     UINT64 AdvancedVmexitEptViolationsInformation                  : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_BIT 22
@@ -9536,7 +11156,12 @@ typedef union
     UINT64 Reserved6                                               : 2;
 
     /**
+     * @brief When set to 1, the single-context INVEPT type is supported
+     *
      * When set to 1, the single-context INVEPT type is supported.
+     *
+     * @see Vol3C[30(VMX INSTRUCTION REFERENCE)]
+     * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 InveptSingleContext                                     : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_SINGLE_CONTEXT_BIT     25
@@ -9544,7 +11169,12 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_SINGLE_CONTEXT(_)      (((_) >> 25) & 0x01)
 
     /**
+     * @brief When set to 1, the all-context INVEPT type is supported
+     *
      * When set to 1, the all-context INVEPT type is supported.
+     *
+     * @see Vol3C[30(VMX INSTRUCTION REFERENCE)]
+     * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 InveptAllContexts                                       : 1;
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_ALL_CONTEXTS_BIT       26
@@ -9553,6 +11183,8 @@ typedef union
     UINT64 Reserved7                                               : 5;
 
     /**
+     * @brief When set to 1, the INVVPID instruction is supported
+     *
      * When set to 1, the INVVPID instruction is supported.
      */
     UINT64 Invvpid                                                 : 1;
@@ -9562,6 +11194,8 @@ typedef union
     UINT64 Reserved8                                               : 7;
 
     /**
+     * @brief When set to 1, the individual-address INVVPID type is supported
+     *
      * When set to 1, the individual-address INVVPID type is supported.
      */
     UINT64 InvvpidIndividualAddress                                : 1;
@@ -9570,6 +11204,8 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_INDIVIDUAL_ADDRESS(_) (((_) >> 40) & 0x01)
 
     /**
+     * @brief When set to 1, the single-context INVVPID type is supported
+     *
      * When set to 1, the single-context INVVPID type is supported.
      */
     UINT64 InvvpidSingleContext                                    : 1;
@@ -9578,6 +11214,8 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT(_)     (((_) >> 41) & 0x01)
 
     /**
+     * @brief When set to 1, the all-context INVVPID type is supported
+     *
      * When set to 1, the all-context INVVPID type is supported.
      */
     UINT64 InvvpidAllContexts                                      : 1;
@@ -9586,6 +11224,8 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_ALL_CONTEXTS(_)       (((_) >> 42) & 0x01)
 
     /**
+     * @brief When set to 1, the single-context-retaining-globals INVVPID type is supported
+     *
      * When set to 1, the single-context-retaining-globals INVVPID type is supported.
      */
     UINT64 InvvpidSingleContextRetainGlobals                       : 1;
@@ -9609,7 +11249,10 @@ typedef union
  * @see Vol3D[A.3.2(Primary Processor-Based VM-Execution Controls)]
  * @see Vol3D[A.4(VM-EXIT CONTROLS)]
  * @see Vol3D[A.5(VM-ENTRY CONTROLS)]
- * @see ['Vol3D[A.3.1(Pin-Based VMExecution Controls)]', 'Vol3D[A.3.2(Primary Processor-Based VM-Execution Controls)]', 'Vol3D[A.4(VM-Exit Controls)]', 'Vol3D[A.5(VM-Entry Controls)]'] (reference)
+ * @see Vol3D[A.3.1(Pin-Based VMExecution Controls)] (reference)
+ * @see Vol3D[A.3.2(Primary Processor-Based VM-Execution Controls)] (reference)
+ * @see Vol3D[A.4(VM-Exit Controls)] (reference)
+ * @see Vol3D[A.5(VM-Entry Controls)] (reference)
  * @{
  */
 #define IA32_VMX_TRUE_PINBASED_CTLS                                  0x0000048D
@@ -9627,7 +11270,13 @@ typedef struct
  */
 
 /**
- * @brief Capability Reporting Register of VMFunction Controls. <b>(R/O)</b>
+ * @brief Capability Reporting Register of VMFunction Controls <b>(R/O)</b>
+ *
+ * Capability Reporting Register of VMFunction Controls.
+ *
+ * @remarks If ( CPUID.01H:ECX.[5] = 1 && IA32_VMX_BASIC[55] )
+ * @see Vol3D[A.11(VM FUNCTIONS)]
+ * @see Vol3D[24.6.14(VM-Function Controls)] (reference)
  */
 #define IA32_VMX_VMFUNC                                              0x00000491
 
@@ -9636,7 +11285,11 @@ typedef union
   struct
   {
     /**
+     * @brief The EPTP-switching VM function changes the EPT pointer to a value chosen from the EPTP list
+     *
      * The EPTP-switching VM function changes the EPT pointer to a value chosen from the EPTP list.
+     *
+     * @see Vol3C[25.5.5.3(EPTP Switching)]
      */
     UINT64 EptpSwitching                                           : 1;
 #define IA32_VMX_VMFUNC_REGISTER_EPTP_SWITCHING_BIT                  0
@@ -9669,7 +11322,12 @@ typedef union
  */
 
 /**
- * @brief Allows software to signal some MCEs to only a single logical processor in the system. <b>(R/W)</b>
+ * @brief Allows software to signal some MCEs to only a single logical processor in the system <b>(R/W)</b>
+ *
+ * Allows software to signal some MCEs to only a single logical processor in the system.
+ *
+ * @remarks If IA32_MCG_CAP.LMCE_P = 1
+ * @see Vol3B[15.3.1.4(IA32_MCG_EXT_CTL MSR)]
  */
 #define IA32_MCG_EXT_CTL                                             0x000004D0
 
@@ -9687,11 +11345,16 @@ typedef union
 } IA32_MCG_EXT_CTL_REGISTER;
 
 /**
- * @brief Intel SGX only allows launching ACMs with an Intel SGX SVN that is at the same level or higher than the expected
- *        Intel SGX SVN. The expected Intel SGX SVN is specified by BIOS and locked down by the processor on the first successful
- *        execution of an Intel SGX instruction that doesn't return an error code. Intel SGX provides interfaces for system
- *        software to discover whether a non faulting Intel SGX instruction has been executed, and evaluate the suitability of the
- *        Intel SGX SVN value of any ACM that is expected to be launched by the OS or the VMM. <b>(RO)</b>
+ * @brief Status and SVN Threshold of SGX Support for ACM <b>(RO)</b>
+ *
+ * Intel SGX only allows launching ACMs with an Intel SGX SVN that is at the same level or higher than the expected Intel
+ * SGX SVN. The expected Intel SGX SVN is specified by BIOS and locked down by the processor on the first successful
+ * execution of an Intel SGX instruction that doesn't return an error code. Intel SGX provides interfaces for system
+ * software to discover whether a non faulting Intel SGX instruction has been executed, and evaluate the suitability of the
+ * Intel SGX SVN value of any ACM that is expected to be launched by the OS or the VMM.
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H): EBX[2] = 1
+ * @see Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))] (reference)
  */
 #define IA32_SGX_SVN_STATUS                                          0x00000500
 
@@ -9700,10 +11363,18 @@ typedef union
   struct
   {
     /**
+     * @brief - If 1, indicates that a non-faulting Intel SGX instruction has been executed, consequently, launching a properly
+     *        signed ACM but with Intel SGX SVN value less than the BIOS specified Intel SGX SVN threshold would lead to an TXT
+     *        shutdown.
+     *        - If 0, indicates that the processor will allow a properly signed ACM to launch irrespective of the Intel SGX SVN value
+     *        of the ACM
+     *
      * - If 1, indicates that a non-faulting Intel SGX instruction has been executed, consequently, launching a properly signed
      * ACM but with Intel SGX SVN value less than the BIOS specified Intel SGX SVN threshold would lead to an TXT shutdown.
      * - If 0, indicates that the processor will allow a properly signed ACM to launch irrespective of the Intel SGX SVN value
      * of the ACM.
+     *
+     * @see Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))]
      */
     UINT64 Lock                                                    : 1;
 #define IA32_SGX_SVN_STATUS_REGISTER_LOCK_BIT                        0
@@ -9729,7 +11400,13 @@ typedef union
 } IA32_SGX_SVN_STATUS_REGISTER;
 
 /**
- * @brief Trace Output Base Register. <b>(R/W)</b>
+ * @brief Trace Output Base Register <b>(R/W)</b>
+ *
+ * Trace Output Base Register.
+ *
+ * @remarks If ( (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && ( (CPUID.(EAX=14H,ECX=0): ECX[0] = 1) ||
+ *          (CPUID.(EAX=14H,ECX=0):ECX[2] = 1) ) )
+ * @see Vol3C[35.2.7.7(IA32_RTIT_OUTPUT_BASE MSR)] (reference)
  */
 #define IA32_RTIT_OUTPUT_BASE                                        0x00000560
 
@@ -9763,7 +11440,13 @@ typedef union
 } IA32_RTIT_OUTPUT_BASE_REGISTER;
 
 /**
- * @brief Trace Output Mask Pointers Register. <b>(R/W)</b>
+ * @brief Trace Output Mask Pointers Register <b>(R/W)</b>
+ *
+ * Trace Output Mask Pointers Register.
+ *
+ * @remarks If ( (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && ( (CPUID.(EAX=14H,ECX=0):ECX[0] = 1) ||
+ *          (CPUID.(EAX=14H,ECX=0):ECX[2] = 1) ) )
+ * @see Vol3C[35.2.7.8(IA32_RTIT_OUTPUT_MASK_PTRS MSR)] (reference)
  */
 #define IA32_RTIT_OUTPUT_MASK_PTRS                                   0x00000561
 
@@ -9772,6 +11455,8 @@ typedef union
   struct
   {
     /**
+     * @brief Forced to 1, writes are ignored
+     *
      * Forced to 1, writes are ignored.
      */
     UINT64 LowerMask                                               : 7;
@@ -9825,7 +11510,12 @@ typedef union
 } IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER;
 
 /**
- * @brief Trace Control Register. <b>(R/W)</b>
+ * @brief Trace Control Register <b>(R/W)</b>
+ *
+ * Trace Control Register.
+ *
+ * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1)
+ * @see Vol3C[35.2.7.2(IA32_RTIT_CTL MSR)] (reference)
  */
 #define IA32_RTIT_CTL                                                0x00000570
 
@@ -10170,7 +11860,11 @@ typedef union
 } IA32_RTIT_CTL_REGISTER;
 
 /**
- * @brief Tracing Status Register. <b>(R/W)</b>
+ * @brief Tracing Status Register <b>(R/W)</b>
+ *
+ * Tracing Status Register.
+ *
+ * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1)
  */
 #define IA32_RTIT_STATUS                                             0x00000571
 
@@ -10296,8 +11990,14 @@ typedef union
 } IA32_RTIT_STATUS_REGISTER;
 
 /**
- * @brief The IA32_RTIT_CR3_MATCH register is compared against CR3 when IA32_RTIT_CTL.CR3Filter is 1. Bits 63:5 hold the
- *        CR3 address value to match, bits 4:0 are reserved to 0. <b>(R/W)</b>
+ * @brief Trace Filter CR3 Match Register <b>(R/W)</b>
+ *
+ * The IA32_RTIT_CR3_MATCH register is compared against CR3 when IA32_RTIT_CTL.CR3Filter is 1. Bits 63:5 hold the CR3
+ * address value to match, bits 4:0 are reserved to 0.
+ *
+ * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1)
+ * @see Vol3C[35.2.4.2(Filtering by CR3)]
+ * @see Vol3C[35.2.7.6(IA32_RTIT_CR3_MATCH MSR)] (reference)
  */
 #define IA32_RTIT_CR3_MATCH                                          0x00000572
 
@@ -10308,6 +12008,8 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief CR3[63:5] value to match
+     *
      * CR3[63:5] value to match.
      */
     UINT64 Cr3ValueToMatch                                         : 59;
@@ -10370,6 +12072,8 @@ typedef union
   struct
   {
     /**
+     * @brief Virtual Address
+     *
      * Virtual Address.
      */
     UINT64 VirtualAddress                                          : 48;
@@ -10378,6 +12082,8 @@ typedef union
 #define IA32_RTIT_ADDR_REGISTER_VIRTUAL_ADDRESS(_)                   (((_) >> 0) & 0xFFFFFFFFFFFF)
 
     /**
+     * @brief SignExt_VA
+     *
      * SignExt_VA.
      */
     UINT64 SignExtVa                                               : 16;
@@ -10399,17 +12105,35 @@ typedef union
  *        Returns:
  *        - [63:0] The linear address of the first byte of the DS buffer management area, if IA-32e mode is active.
  *        - [31:0] The linear address of the first byte of the DS buffer management area, if not in IA-32e mode.
- *        - [63:32] Reserved if not in IA-32e mode. <b>(R/W)</b>
+ *        - [63:32] Reserved if not in IA-32e mode <b>(R/W)</b>
+ *
+ * DS Save Area. Points to the linear address of the first byte of the DS buffer management area, which is used to manage
+ * the BTS and PEBS buffers.
+ * Returns:
+ * - [63:0] The linear address of the first byte of the DS buffer management area, if IA-32e mode is active.
+ * - [31:0] The linear address of the first byte of the DS buffer management area, if not in IA-32e mode.
+ * - [63:32] Reserved if not in IA-32e mode.
+ *
+ * @remarks If CPUID.01H:EDX.DS[21] = 1
+ * @see Vol3B[18.6.3.4(Debug Store (DS) Mechanism)]
  */
 #define IA32_DS_AREA                                                 0x00000600
 
 /**
- * @brief TSC Target of Local APIC's TSC Deadline Mode. <b>(R/W)</b>
+ * @brief TSC Target of Local APIC's TSC Deadline Mode <b>(R/W)</b>
+ *
+ * TSC Target of Local APIC's TSC Deadline Mode.
+ *
+ * @remarks If CPUID.01H:ECX.[24] = 1
  */
 #define IA32_TSC_DEADLINE                                            0x000006E0
 
 /**
- * @brief Enable/disable HWP. <b>(R/W)</b>
+ * @brief Enable/disable HWP <b>(R/W)</b>
+ *
+ * Enable/disable HWP.
+ *
+ * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_PM_ENABLE                                               0x00000770
 
@@ -10418,7 +12142,12 @@ typedef union
   struct
   {
     /**
+     * @brief HWP_ENABLE <b>(R/W1-Once)</b>
+     *
      * HWP_ENABLE.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.2(Enabling HWP)]
      */
     UINT64 HwpEnable                                               : 1;
 #define IA32_PM_ENABLE_REGISTER_HWP_ENABLE_BIT                       0
@@ -10430,7 +12159,11 @@ typedef union
 } IA32_PM_ENABLE_REGISTER;
 
 /**
- * @brief HWP Performance Range Enumeration. <b>(RO)</b>
+ * @brief HWP Performance Range Enumeration <b>(RO)</b>
+ *
+ * HWP Performance Range Enumeration.
+ *
+ * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_CAPABILITIES                                        0x00000771
 
@@ -10439,7 +12172,12 @@ typedef union
   struct
   {
     /**
+     * @brief Highest_Performance
+     *
      * Highest_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 HighestPerformance                                      : 8;
 #define IA32_HWP_CAPABILITIES_REGISTER_HIGHEST_PERFORMANCE_BIT       0
@@ -10447,7 +12185,12 @@ typedef union
 #define IA32_HWP_CAPABILITIES_REGISTER_HIGHEST_PERFORMANCE(_)        (((_) >> 0) & 0xFF)
 
     /**
+     * @brief Guaranteed_Performance
+     *
      * Guaranteed_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 GuaranteedPerformance                                   : 8;
 #define IA32_HWP_CAPABILITIES_REGISTER_GUARANTEED_PERFORMANCE_BIT    8
@@ -10455,7 +12198,12 @@ typedef union
 #define IA32_HWP_CAPABILITIES_REGISTER_GUARANTEED_PERFORMANCE(_)     (((_) >> 8) & 0xFF)
 
     /**
+     * @brief Most_Efficient_Performance
+     *
      * Most_Efficient_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 MostEfficientPerformance                                : 8;
 #define IA32_HWP_CAPABILITIES_REGISTER_MOST_EFFICIENT_PERFORMANCE_BIT 16
@@ -10463,7 +12211,12 @@ typedef union
 #define IA32_HWP_CAPABILITIES_REGISTER_MOST_EFFICIENT_PERFORMANCE(_) (((_) >> 16) & 0xFF)
 
     /**
+     * @brief Lowest_Performance
+     *
      * Lowest_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 LowestPerformance                                       : 8;
 #define IA32_HWP_CAPABILITIES_REGISTER_LOWEST_PERFORMANCE_BIT        24
@@ -10475,7 +12228,11 @@ typedef union
 } IA32_HWP_CAPABILITIES_REGISTER;
 
 /**
- * @brief Power Management Control Hints for All Logical Processors in a Package. <b>(R/W)</b>
+ * @brief Power Management Control Hints for All Logical Processors in a Package <b>(R/W)</b>
+ *
+ * Power Management Control Hints for All Logical Processors in a Package.
+ *
+ * @remarks If CPUID.06H:EAX.[11] = 1
  */
 #define IA32_HWP_REQUEST_PKG                                         0x00000772
 
@@ -10484,7 +12241,12 @@ typedef union
   struct
   {
     /**
+     * @brief Minimum_Performance
+     *
      * Minimum_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[11] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MinimumPerformance                                      : 8;
 #define IA32_HWP_REQUEST_PKG_REGISTER_MINIMUM_PERFORMANCE_BIT        0
@@ -10492,7 +12254,12 @@ typedef union
 #define IA32_HWP_REQUEST_PKG_REGISTER_MINIMUM_PERFORMANCE(_)         (((_) >> 0) & 0xFF)
 
     /**
+     * @brief Maximum_Performance
+     *
      * Maximum_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[11] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MaximumPerformance                                      : 8;
 #define IA32_HWP_REQUEST_PKG_REGISTER_MAXIMUM_PERFORMANCE_BIT        8
@@ -10500,7 +12267,12 @@ typedef union
 #define IA32_HWP_REQUEST_PKG_REGISTER_MAXIMUM_PERFORMANCE(_)         (((_) >> 8) & 0xFF)
 
     /**
+     * @brief Desired_Performance
+     *
      * Desired_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[11] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 DesiredPerformance                                      : 8;
 #define IA32_HWP_REQUEST_PKG_REGISTER_DESIRED_PERFORMANCE_BIT        16
@@ -10508,7 +12280,12 @@ typedef union
 #define IA32_HWP_REQUEST_PKG_REGISTER_DESIRED_PERFORMANCE(_)         (((_) >> 16) & 0xFF)
 
     /**
+     * @brief Energy_Performance_Preference
+     *
      * Energy_Performance_Preference.
+     *
+     * @remarks If CPUID.06H:EAX.[11] = 1 && CPUID.06H:EAX.[10] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 EnergyPerformancePreference                             : 8;
 #define IA32_HWP_REQUEST_PKG_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_BIT 24
@@ -10516,7 +12293,12 @@ typedef union
 #define IA32_HWP_REQUEST_PKG_REGISTER_ENERGY_PERFORMANCE_PREFERENCE(_) (((_) >> 24) & 0xFF)
 
     /**
+     * @brief Activity_Window
+     *
      * Activity_Window.
+     *
+     * @remarks If CPUID.06H:EAX.[11] = 1 && CPUID.06H:EAX.[9] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 ActivityWindow                                          : 10;
 #define IA32_HWP_REQUEST_PKG_REGISTER_ACTIVITY_WINDOW_BIT            32
@@ -10528,7 +12310,11 @@ typedef union
 } IA32_HWP_REQUEST_PKG_REGISTER;
 
 /**
- * @brief Control HWP Native Interrupts. <b>(R/W)</b>
+ * @brief Control HWP Native Interrupts <b>(R/W)</b>
+ *
+ * Control HWP Native Interrupts.
+ *
+ * @remarks If CPUID.06H:EAX.[8] = 1
  */
 #define IA32_HWP_INTERRUPT                                           0x00000773
 
@@ -10537,7 +12323,12 @@ typedef union
   struct
   {
     /**
+     * @brief EN_Guaranteed_Performance_Change
+     *
      * EN_Guaranteed_Performance_Change.
+     *
+     * @remarks If CPUID.06H:EAX.[8] = 1
+     * @see Vol3B[14.4.6(HWP Notifications)]
      */
     UINT64 EnGuaranteedPerformanceChange                           : 1;
 #define IA32_HWP_INTERRUPT_REGISTER_EN_GUARANTEED_PERFORMANCE_CHANGE_BIT 0
@@ -10545,7 +12336,12 @@ typedef union
 #define IA32_HWP_INTERRUPT_REGISTER_EN_GUARANTEED_PERFORMANCE_CHANGE(_) (((_) >> 0) & 0x01)
 
     /**
+     * @brief EN_Excursion_Minimum
+     *
      * EN_Excursion_Minimum.
+     *
+     * @remarks If CPUID.06H:EAX.[8] = 1
+     * @see Vol3B[14.4.6(HWP Notifications)]
      */
     UINT64 EnExcursionMinimum                                      : 1;
 #define IA32_HWP_INTERRUPT_REGISTER_EN_EXCURSION_MINIMUM_BIT         1
@@ -10557,7 +12353,11 @@ typedef union
 } IA32_HWP_INTERRUPT_REGISTER;
 
 /**
- * @brief Power Management Control Hints to a Logical Processor. <b>(R/W)</b>
+ * @brief Power Management Control Hints to a Logical Processor <b>(R/W)</b>
+ *
+ * Power Management Control Hints to a Logical Processor.
+ *
+ * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_REQUEST                                             0x00000774
 
@@ -10566,7 +12366,12 @@ typedef union
   struct
   {
     /**
+     * @brief Minimum_Performance
+     *
      * Minimum_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MinimumPerformance                                      : 8;
 #define IA32_HWP_REQUEST_REGISTER_MINIMUM_PERFORMANCE_BIT            0
@@ -10574,7 +12379,12 @@ typedef union
 #define IA32_HWP_REQUEST_REGISTER_MINIMUM_PERFORMANCE(_)             (((_) >> 0) & 0xFF)
 
     /**
+     * @brief Maximum_Performance
+     *
      * Maximum_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MaximumPerformance                                      : 8;
 #define IA32_HWP_REQUEST_REGISTER_MAXIMUM_PERFORMANCE_BIT            8
@@ -10582,7 +12392,12 @@ typedef union
 #define IA32_HWP_REQUEST_REGISTER_MAXIMUM_PERFORMANCE(_)             (((_) >> 8) & 0xFF)
 
     /**
+     * @brief Desired_Performance
+     *
      * Desired_Performance.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 DesiredPerformance                                      : 8;
 #define IA32_HWP_REQUEST_REGISTER_DESIRED_PERFORMANCE_BIT            16
@@ -10590,7 +12405,12 @@ typedef union
 #define IA32_HWP_REQUEST_REGISTER_DESIRED_PERFORMANCE(_)             (((_) >> 16) & 0xFF)
 
     /**
+     * @brief Energy_Performance_Preference
+     *
      * Energy_Performance_Preference.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1 && CPUID.06H:EAX.[10] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 EnergyPerformancePreference                             : 8;
 #define IA32_HWP_REQUEST_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_BIT  24
@@ -10598,7 +12418,12 @@ typedef union
 #define IA32_HWP_REQUEST_REGISTER_ENERGY_PERFORMANCE_PREFERENCE(_)   (((_) >> 24) & 0xFF)
 
     /**
+     * @brief Activity_Window
+     *
      * Activity_Window.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1 && CPUID.06H:EAX.[9] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 ActivityWindow                                          : 10;
 #define IA32_HWP_REQUEST_REGISTER_ACTIVITY_WINDOW_BIT                32
@@ -10606,7 +12431,12 @@ typedef union
 #define IA32_HWP_REQUEST_REGISTER_ACTIVITY_WINDOW(_)                 (((_) >> 32) & 0x3FF)
 
     /**
+     * @brief Package_Control
+     *
      * Package_Control.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1 && CPUID.06H:EAX.[11] = 1
+     * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 PackageControl                                          : 1;
 #define IA32_HWP_REQUEST_REGISTER_PACKAGE_CONTROL_BIT                42
@@ -10618,7 +12448,11 @@ typedef union
 } IA32_HWP_REQUEST_REGISTER;
 
 /**
- * @brief Log bits indicating changes to Guaranteed & excursions to Minimum. <b>(R/W)</b>
+ * @brief Log bits indicating changes to Guaranteed & excursions to Minimum <b>(R/W)</b>
+ *
+ * Log bits indicating changes to Guaranteed & excursions to Minimum.
+ *
+ * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_STATUS                                              0x00000777
 
@@ -10627,7 +12461,12 @@ typedef union
   struct
   {
     /**
+     * @brief Guaranteed_Performance_Change <b>(R/WC0)</b>
+     *
      * Guaranteed_Performance_Change.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.5(HWP Feedback)]
      */
     UINT64 GuaranteedPerformanceChange                             : 1;
 #define IA32_HWP_STATUS_REGISTER_GUARANTEED_PERFORMANCE_CHANGE_BIT   0
@@ -10636,7 +12475,12 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Excursion_To_Minimum <b>(R/WC0)</b>
+     *
      * Excursion_To_Minimum.
+     *
+     * @remarks If CPUID.06H:EAX.[7] = 1
+     * @see Vol3B[14.4.5(HWP Feedback)]
      */
     UINT64 ExcursionToMinimum                                      : 1;
 #define IA32_HWP_STATUS_REGISTER_EXCURSION_TO_MINIMUM_BIT            2
@@ -10648,37 +12492,66 @@ typedef union
 } IA32_HWP_STATUS_REGISTER;
 
 /**
- * @brief x2APIC ID Register. <b>(R/O)</b>
+ * @brief x2APIC ID Register <b>(R/O)</b>
+ *
+ * x2APIC ID Register.
+ *
+ * @remarks If CPUID.01H:ECX[21] = 1 && IA32_APIC_BASE.[10] = 1
+ * @see Vol3A[10.12(EXTENDED XAPIC (X2APIC))]
  */
 #define IA32_X2APIC_APICID                                           0x00000802
 
 /**
- * @brief x2APIC Version Register. <b>(R/O)</b>
+ * @brief x2APIC Version Register <b>(R/O)</b>
+ *
+ * x2APIC Version Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_VERSION                                          0x00000803
 
 /**
- * @brief x2APIC Task Priority Register. <b>(R/W)</b>
+ * @brief x2APIC Task Priority Register <b>(R/W)</b>
+ *
+ * x2APIC Task Priority Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_TPR                                              0x00000808
 
 /**
- * @brief x2APIC Processor Priority Register. <b>(R/O)</b>
+ * @brief x2APIC Processor Priority Register <b>(R/O)</b>
+ *
+ * x2APIC Processor Priority Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_PPR                                              0x0000080A
 
 /**
- * @brief x2APIC EOI Register. <b>(W/O)</b>
+ * @brief x2APIC EOI Register <b>(W/O)</b>
+ *
+ * x2APIC EOI Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_EOI                                              0x0000080B
 
 /**
- * @brief x2APIC Logical Destination Register. <b>(R/O)</b>
+ * @brief x2APIC Logical Destination Register <b>(R/O)</b>
+ *
+ * x2APIC Logical Destination Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LDR                                              0x0000080D
 
 /**
- * @brief x2APIC Spurious Interrupt Vector Register. <b>(R/W)</b>
+ * @brief x2APIC Spurious Interrupt Vector Register <b>(R/W)</b>
+ *
+ * x2APIC Spurious Interrupt Vector Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_SIVR                                             0x0000080F
 
@@ -10746,72 +12619,128 @@ typedef union
  */
 
 /**
- * @brief x2APIC Error Status Register. <b>(R/W)</b>
+ * @brief x2APIC Error Status Register <b>(R/W)</b>
+ *
+ * x2APIC Error Status Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_ESR                                              0x00000828
 
 /**
- * @brief x2APIC LVT Corrected Machine Check Interrupt Register. <b>(R/W)</b>
+ * @brief x2APIC LVT Corrected Machine Check Interrupt Register <b>(R/W)</b>
+ *
+ * x2APIC LVT Corrected Machine Check Interrupt Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_CMCI                                         0x0000082F
 
 /**
- * @brief x2APIC Interrupt Command Register. <b>(R/W)</b>
+ * @brief x2APIC Interrupt Command Register <b>(R/W)</b>
+ *
+ * x2APIC Interrupt Command Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_ICR                                              0x00000830
 
 /**
- * @brief x2APIC LVT Timer Interrupt Register. <b>(R/W)</b>
+ * @brief x2APIC LVT Timer Interrupt Register <b>(R/W)</b>
+ *
+ * x2APIC LVT Timer Interrupt Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_TIMER                                        0x00000832
 
 /**
- * @brief x2APIC LVT Thermal Sensor Interrupt Register. <b>(R/W)</b>
+ * @brief x2APIC LVT Thermal Sensor Interrupt Register <b>(R/W)</b>
+ *
+ * x2APIC LVT Thermal Sensor Interrupt Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_THERMAL                                      0x00000833
 
 /**
- * @brief x2APIC LVT Performance Monitor Interrupt Register. <b>(R/W)</b>
+ * @brief x2APIC LVT Performance Monitor Interrupt Register <b>(R/W)</b>
+ *
+ * x2APIC LVT Performance Monitor Interrupt Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_PMI                                          0x00000834
 
 /**
- * @brief x2APIC LVT LINT0 Register. <b>(R/W)</b>
+ * @brief x2APIC LVT LINT0 Register <b>(R/W)</b>
+ *
+ * x2APIC LVT LINT0 Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_LINT0                                        0x00000835
 
 /**
- * @brief x2APIC LVT LINT1 Register. <b>(R/W)</b>
+ * @brief x2APIC LVT LINT1 Register <b>(R/W)</b>
+ *
+ * x2APIC LVT LINT1 Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_LINT1                                        0x00000836
 
 /**
- * @brief x2APIC LVT Error Register. <b>(R/W)</b>
+ * @brief x2APIC LVT Error Register <b>(R/W)</b>
+ *
+ * x2APIC LVT Error Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_LVT_ERROR                                        0x00000837
 
 /**
- * @brief x2APIC Initial Count Register. <b>(R/W)</b>
+ * @brief x2APIC Initial Count Register <b>(R/W)</b>
+ *
+ * x2APIC Initial Count Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_INIT_COUNT                                       0x00000838
 
 /**
- * @brief x2APIC Current Count Register. <b>(R/O)</b>
+ * @brief x2APIC Current Count Register <b>(R/O)</b>
+ *
+ * x2APIC Current Count Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_CUR_COUNT                                        0x00000839
 
 /**
- * @brief x2APIC Divide Configuration Register. <b>(R/W)</b>
+ * @brief x2APIC Divide Configuration Register <b>(R/W)</b>
+ *
+ * x2APIC Divide Configuration Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_DIV_CONF                                         0x0000083E
 
 /**
- * @brief x2APIC Self IPI Register. <b>(W/O)</b>
+ * @brief x2APIC Self IPI Register <b>(W/O)</b>
+ *
+ * x2APIC Self IPI Register.
+ *
+ * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_SELF_IPI                                         0x0000083F
 
 /**
- * @brief Silicon Debug Feature Control. <b>(R/W)</b>
+ * @brief Silicon Debug Feature Control <b>(R/W)</b>
+ *
+ * Silicon Debug Feature Control.
+ *
+ * @remarks If CPUID.01H:ECX.[11] = 1
  */
 #define IA32_DEBUG_INTERFACE                                         0x00000C80
 
@@ -10862,7 +12791,11 @@ typedef union
 } IA32_DEBUG_INTERFACE_REGISTER;
 
 /**
- * @brief L3 QOS Configuration. <b>(R/W)</b>
+ * @brief L3 QOS Configuration <b>(R/W)</b>
+ *
+ * L3 QOS Configuration.
+ *
+ * @remarks If ( CPUID.(EAX=10H, ECX=1):ECX.[2] = 1 )
  */
 #define IA32_L3_QOS_CFG                                              0x00000C81
 
@@ -10885,7 +12818,11 @@ typedef union
 } IA32_L3_QOS_CFG_REGISTER;
 
 /**
- * @brief L2 QOS Configuration. <b>(R/W)</b>
+ * @brief L2 QOS Configuration <b>(R/W)</b>
+ *
+ * L2 QOS Configuration.
+ *
+ * @remarks If ( CPUID.(EAX=10H, ECX=2):ECX.[2] = 1 )
  */
 #define IA32_L2_QOS_CFG                                              0x00000C82
 
@@ -10908,7 +12845,11 @@ typedef union
 } IA32_L2_QOS_CFG_REGISTER;
 
 /**
- * @brief Monitoring Event Select Register. <b>(R/W)</b>
+ * @brief Monitoring Event Select Register <b>(R/W)</b>
+ *
+ * Monitoring Event Select Register.
+ *
+ * @remarks If ( CPUID.(EAX=07H, ECX=0):EBX.[12] = 1 )
  */
 #define IA32_QM_EVTSEL                                               0x00000C8D
 
@@ -10944,7 +12885,11 @@ typedef union
 } IA32_QM_EVTSEL_REGISTER;
 
 /**
- * @brief Monitoring Counter Register. <b>(R/O)</b>
+ * @brief Monitoring Counter Register <b>(R/O)</b>
+ *
+ * Monitoring Counter Register.
+ *
+ * @remarks If ( CPUID.(EAX=07H, ECX=0):EBX.[12] = 1 )
  */
 #define IA32_QM_CTR                                                  0x00000C8E
 
@@ -10953,6 +12898,8 @@ typedef union
   struct
   {
     /**
+     * @brief Resource Monitored Data
+     *
      * Resource Monitored Data.
      */
     UINT64 ResourceMonitoredData                                   : 62;
@@ -10985,7 +12932,11 @@ typedef union
 } IA32_QM_CTR_REGISTER;
 
 /**
- * @brief Resource Association Register. <b>(R/W)</b>
+ * @brief Resource Association Register <b>(R/W)</b>
+ *
+ * Resource Association Register.
+ *
+ * @remarks If ( (CPUID.(EAX=07H, ECX=0):EBX[12] = 1) or (CPUID.(EAX=07H, ECX=0):EBX[15] = 1 ) )
  */
 #define IA32_PQR_ASSOC                                               0x00000C8F
 
@@ -11022,7 +12973,11 @@ typedef union
 } IA32_PQR_ASSOC_REGISTER;
 
 /**
- * @brief Supervisor State of MPX Configuration. <b>(R/W)</b>
+ * @brief Supervisor State of MPX Configuration <b>(R/W)</b>
+ *
+ * Supervisor State of MPX Configuration.
+ *
+ * @remarks If (CPUID.(EAX=07H, ECX=0H):EBX[14] = 1)
  */
 #define IA32_BNDCFGS                                                 0x00000D90
 
@@ -11031,6 +12986,8 @@ typedef union
   struct
   {
     /**
+     * @brief Enable Intel MPX in supervisor mode
+     *
      * Enable Intel MPX in supervisor mode.
      */
     UINT64 Enable                                                  : 1;
@@ -11039,6 +12996,8 @@ typedef union
 #define IA32_BNDCFGS_REGISTER_ENABLE(_)                              (((_) >> 0) & 0x01)
 
     /**
+     * @brief Preserve the bounds registers for near branch instructions in the absence of the BND prefix
+     *
      * Preserve the bounds registers for near branch instructions in the absence of the BND prefix.
      */
     UINT64 BndPreserve                                             : 1;
@@ -11048,6 +13007,8 @@ typedef union
     UINT64 Reserved1                                               : 10;
 
     /**
+     * @brief Base Address of Bound Directory
+     *
      * Base Address of Bound Directory.
      */
     UINT64 BoundDirectoryBaseAddress                               : 52;
@@ -11060,7 +13021,11 @@ typedef union
 } IA32_BNDCFGS_REGISTER;
 
 /**
- * @brief Extended Supervisor State Mask. <b>(R/W)</b>
+ * @brief Extended Supervisor State Mask <b>(R/W)</b>
+ *
+ * Extended Supervisor State Mask.
+ *
+ * @remarks If ( CPUID.(0DH, 1):EAX.[3] = 1
  */
 #define IA32_XSS                                                     0x00000DA0
 
@@ -11071,6 +13036,8 @@ typedef union
     UINT64 Reserved1                                               : 8;
 
     /**
+     * @brief Trace Packet Configuration State <b>(R/W)</b>
+     *
      * Trace Packet Configuration State.
      */
     UINT64 TracePacketConfigurationState                           : 1;
@@ -11083,7 +13050,11 @@ typedef union
 } IA32_XSS_REGISTER;
 
 /**
- * @brief Package Level Enable/disable HDC. <b>(R/W)</b>
+ * @brief Package Level Enable/disable HDC <b>(R/W)</b>
+ *
+ * Package Level Enable/disable HDC.
+ *
+ * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_PKG_HDC_CTL                                             0x00000DB0
 
@@ -11109,7 +13080,11 @@ typedef union
 } IA32_PKG_HDC_CTL_REGISTER;
 
 /**
- * @brief Enable/disable HWP. <b>(R/W)</b>
+ * @brief Enable/disable HWP <b>(R/W)</b>
+ *
+ * Enable/disable HWP.
+ *
+ * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_PM_CTL1                                                 0x00000DB1
 
@@ -11135,7 +13110,11 @@ typedef union
 } IA32_PM_CTL1_REGISTER;
 
 /**
- * @brief Per-Logical_Processor HDC Idle Residency. <b>(R/0)</b>
+ * @brief Per-Logical_Processor HDC Idle Residency <b>(R/0)</b>
+ *
+ * Per-Logical_Processor HDC Idle Residency.
+ *
+ * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_THREAD_STALL                                            0x00000DB2
 
@@ -11145,7 +13124,11 @@ typedef struct
 } IA32_THREAD_STALL_REGISTER;
 
 /**
- * @brief Extended Feature Enables.
+ * @brief Extended Feature Enables
+ *
+ * Extended Feature Enables.
+ *
+ * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_EFER                                                    0xC0000080
 
@@ -11186,6 +13169,8 @@ typedef union
 #define IA32_EFER_REGISTER_IA32E_MODE_ACTIVE(_)                      (((_) >> 10) & 0x01)
 
     /**
+     * @brief Execute Disable Bit Enable <b>(R/W)</b>
+     *
      * Execute Disable Bit Enable.
      */
     UINT64 ExecuteDisableBitEnable                                 : 1;
@@ -11198,42 +13183,74 @@ typedef union
 } IA32_EFER_REGISTER;
 
 /**
- * @brief System Call Target Address. <b>(R/W)</b>
+ * @brief System Call Target Address <b>(R/W)</b>
+ *
+ * System Call Target Address.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_STAR                                                    0xC0000081
 
 /**
- * @brief Target RIP for the called procedure when SYSCALL is executed in 64-bit mode. <b>(R/W)</b>
+ * @brief IA-32e Mode System Call Target Address <b>(R/W)</b>
+ *
+ * Target RIP for the called procedure when SYSCALL is executed in 64-bit mode.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_LSTAR                                                   0xC0000082
 
 /**
- * @brief Not used, as the SYSCALL instruction is not recognized in compatibility mode. <b>(R/W)</b>
+ * @brief IA-32e Mode System Call Target Address <b>(R/W)</b>
+ *
+ * Not used, as the SYSCALL instruction is not recognized in compatibility mode.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_CSTAR                                                   0xC0000083
 
 /**
- * @brief System Call Flag Mask. <b>(R/W)</b>
+ * @brief System Call Flag Mask <b>(R/W)</b>
+ *
+ * System Call Flag Mask.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_FMASK                                                   0xC0000084
 
 /**
- * @brief Map of BASE Address of FS. <b>(R/W)</b>
+ * @brief Map of BASE Address of FS <b>(R/W)</b>
+ *
+ * Map of BASE Address of FS.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_FS_BASE                                                 0xC0000100
 
 /**
- * @brief Map of BASE Address of GS. <b>(R/W)</b>
+ * @brief Map of BASE Address of GS <b>(R/W)</b>
+ *
+ * Map of BASE Address of GS.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_GS_BASE                                                 0xC0000101
 
 /**
- * @brief Swap Target of BASE Address of GS. <b>(R/W)</b>
+ * @brief Swap Target of BASE Address of GS <b>(R/W)</b>
+ *
+ * Swap Target of BASE Address of GS.
+ *
+ * @remarks If CPUID.80000001:EDX.[29] = 1
  */
 #define IA32_KERNEL_GS_BASE                                          0xC0000102
 
 /**
- * @brief Auxiliary TSC. <b>(RW)</b>
+ * @brief Auxiliary TSC <b>(RW)</b>
+ *
+ * Auxiliary TSC.
+ *
+ * @remarks If CPUID.80000001H: EDX[27] = 1 or CPUID.(EAX=7,ECX=0):ECX[bit 22] = 1
  */
 #define IA32_TSC_AUX                                                 0xC0000103
 
@@ -11242,6 +13259,8 @@ typedef union
   struct
   {
     /**
+     * @brief AUX. Auxiliary signature of TSC
+     *
      * AUX. Auxiliary signature of TSC.
      */
     UINT64 TscAuxiliarySignature                                   : 32;
@@ -11270,20 +13289,24 @@ typedef union
  * to 40-bit physical addresses. Although 40 bits corresponds to 1 TByte, linear addresses are limited to 32 bits; at most
  * 4 GBytes of linear-address space may be accessed at any given time.
  * 32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to locate
- * the first paging-structure, the page directory. Table 4-3 illustrates how CR3 is used with 32-bit paging. 32-bit paging
- * may map linear addresses to either 4-KByte pages or 4-MByte pages.
+ * the first paging-structure, the page directory. 32-bit paging may map linear addresses to either 4-KByte pages or
+ * 4-MByte pages.
  *
  * @see Vol3A[4.5(4-LEVEL PAGING)] (reference)
  * @{
  */
 /**
  * @brief Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page
+ *
+ * Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to map a 4-MByte page
+     *
      * Present; must be 1 to map a 4-MByte page.
      */
     UINT32 Present                                                 : 1;
@@ -11292,7 +13315,11 @@ typedef union
 #define PDE_4MB_32_PRESENT(_)                                        (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Write                                                   : 1;
 #define PDE_4MB_32_WRITE_BIT                                         1
@@ -11300,7 +13327,11 @@ typedef union
 #define PDE_4MB_32_WRITE(_)                                          (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page referenced by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Supervisor                                              : 1;
 #define PDE_4MB_32_SUPERVISOR_BIT                                    2
@@ -11308,8 +13339,13 @@ typedef union
 #define PDE_4MB_32_SUPERVISOR(_)                                     (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the 4-MByte page referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the 4-MByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelWriteThrough                                   : 1;
 #define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH_BIT                      3
@@ -11317,8 +13353,13 @@ typedef union
 #define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH(_)                       (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the 4-MByte page referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the 4-MByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelCacheDisable                                   : 1;
 #define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE_BIT                      4
@@ -11326,7 +13367,11 @@ typedef union
 #define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE(_)                       (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether software has accessed the 4-MByte page referenced by this entry
+     *
      * Accessed; indicates whether software has accessed the 4-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT32 Accessed                                                : 1;
 #define PDE_4MB_32_ACCESSED_BIT                                      5
@@ -11334,7 +13379,11 @@ typedef union
 #define PDE_4MB_32_ACCESSED(_)                                       (((_) >> 5) & 0x01)
 
     /**
+     * @brief Dirty; indicates whether software has written to the 4-MByte page referenced by this entry
+     *
      * Dirty; indicates whether software has written to the 4-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT32 Dirty                                                   : 1;
 #define PDE_4MB_32_DIRTY_BIT                                         6
@@ -11342,6 +13391,8 @@ typedef union
 #define PDE_4MB_32_DIRTY(_)                                          (((_) >> 6) & 0x01)
 
     /**
+     * @brief Page size; must be 1 (otherwise, this entry references a page table)
+     *
      * Page size; must be 1 (otherwise, this entry references a page table).
      */
     UINT32 LargePage                                               : 1;
@@ -11350,7 +13401,11 @@ typedef union
 #define PDE_4MB_32_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
 
     /**
+     * @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
+     *
      * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     *
+     * @see Vol3A[4.10(Caching Translation Information)]
      */
     UINT32 Global                                                  : 1;
 #define PDE_4MB_32_GLOBAL_BIT                                        8
@@ -11358,6 +13413,8 @@ typedef union
 #define PDE_4MB_32_GLOBAL(_)                                         (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT32 Ignored1                                                : 3;
@@ -11366,7 +13423,11 @@ typedef union
 #define PDE_4MB_32_IGNORED_1(_)                                      (((_) >> 9) & 0x07)
 
     /**
+     * @brief Indirectly determines the memory type used to access the 4-MByte page referenced by this entry
+     *
      * Indirectly determines the memory type used to access the 4-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 Pat                                                     : 1;
 #define PDE_4MB_32_PAT_BIT                                           12
@@ -11374,6 +13435,8 @@ typedef union
 #define PDE_4MB_32_PAT(_)                                            (((_) >> 12) & 0x01)
 
     /**
+     * @brief Bits (M-1):32 of physical address of the 4-MByte page referenced by this entry
+     *
      * Bits (M-1):32 of physical address of the 4-MByte page referenced by this entry.
      */
     UINT32 PageFrameNumberLow                                      : 8;
@@ -11383,6 +13446,8 @@ typedef union
     UINT32 Reserved1                                               : 1;
 
     /**
+     * @brief Bits 31:22 of physical address of the 4-MByte page referenced by this entry
+     *
      * Bits 31:22 of physical address of the 4-MByte page referenced by this entry.
      */
     UINT32 PageFrameNumberHigh                                     : 10;
@@ -11396,12 +13461,16 @@ typedef union
 
 /**
  * @brief Format of a 32-Bit Page-Directory Entry that References a Page Table
+ *
+ * Format of a 32-Bit Page-Directory Entry that References a Page Table.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to reference a page table
+     *
      * Present; must be 1 to reference a page table.
      */
     UINT32 Present                                                 : 1;
@@ -11410,7 +13479,11 @@ typedef union
 #define PDE_32_PRESENT(_)                                            (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Write                                                   : 1;
 #define PDE_32_WRITE_BIT                                             1
@@ -11418,7 +13491,11 @@ typedef union
 #define PDE_32_WRITE(_)                                              (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region controlled by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Supervisor                                              : 1;
 #define PDE_32_SUPERVISOR_BIT                                        2
@@ -11426,7 +13503,12 @@ typedef union
 #define PDE_32_SUPERVISOR(_)                                         (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the page table referenced by this
+     *        entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the page table referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelWriteThrough                                   : 1;
 #define PDE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
@@ -11434,7 +13516,12 @@ typedef union
 #define PDE_32_PAGE_LEVEL_WRITE_THROUGH(_)                           (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this
+     *        entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelCacheDisable                                   : 1;
 #define PDE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
@@ -11442,7 +13529,11 @@ typedef union
 #define PDE_32_PAGE_LEVEL_CACHE_DISABLE(_)                           (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether this entry has been used for linear-address translation
+     *
      * Accessed; indicates whether this entry has been used for linear-address translation.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT32 Accessed                                                : 1;
 #define PDE_32_ACCESSED_BIT                                          5
@@ -11450,6 +13541,8 @@ typedef union
 #define PDE_32_ACCESSED(_)                                           (((_) >> 5) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT32 Ignored1                                                : 1;
@@ -11458,6 +13551,8 @@ typedef union
 #define PDE_32_IGNORED_1(_)                                          (((_) >> 6) & 0x01)
 
     /**
+     * @brief If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise, ignored
+     *
      * If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise, ignored.
      */
     UINT32 LargePage                                               : 1;
@@ -11466,6 +13561,8 @@ typedef union
 #define PDE_32_LARGE_PAGE(_)                                         (((_) >> 7) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT32 Ignored2                                                : 4;
@@ -11474,6 +13571,8 @@ typedef union
 #define PDE_32_IGNORED_2(_)                                          (((_) >> 8) & 0x0F)
 
     /**
+     * @brief Physical address of 4-KByte aligned page table referenced by this entry
+     *
      * Physical address of 4-KByte aligned page table referenced by this entry.
      */
     UINT32 PageFrameNumber                                         : 20;
@@ -11487,12 +13586,16 @@ typedef union
 
 /**
  * @brief Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page
+ *
+ * Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to map a 4-KByte page
+     *
      * Present; must be 1 to map a 4-KByte page.
      */
     UINT32 Present                                                 : 1;
@@ -11501,7 +13604,11 @@ typedef union
 #define PTE_32_PRESENT(_)                                            (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Write                                                   : 1;
 #define PTE_32_WRITE_BIT                                             1
@@ -11509,7 +13616,11 @@ typedef union
 #define PTE_32_WRITE(_)                                              (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT32 Supervisor                                              : 1;
 #define PTE_32_SUPERVISOR_BIT                                        2
@@ -11517,8 +13628,13 @@ typedef union
 #define PTE_32_SUPERVISOR(_)                                         (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelWriteThrough                                   : 1;
 #define PTE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
@@ -11526,8 +13642,13 @@ typedef union
 #define PTE_32_PAGE_LEVEL_WRITE_THROUGH(_)                           (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 PageLevelCacheDisable                                   : 1;
 #define PTE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
@@ -11535,7 +13656,11 @@ typedef union
 #define PTE_32_PAGE_LEVEL_CACHE_DISABLE(_)                           (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry
+     *
      * Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT32 Accessed                                                : 1;
 #define PTE_32_ACCESSED_BIT                                          5
@@ -11543,7 +13668,11 @@ typedef union
 #define PTE_32_ACCESSED(_)                                           (((_) >> 5) & 0x01)
 
     /**
+     * @brief Dirty; indicates whether software has written to the 4-KByte page referenced by this entry
+     *
      * Dirty; indicates whether software has written to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT32 Dirty                                                   : 1;
 #define PTE_32_DIRTY_BIT                                             6
@@ -11551,7 +13680,11 @@ typedef union
 #define PTE_32_DIRTY(_)                                              (((_) >> 6) & 0x01)
 
     /**
+     * @brief Indirectly determines the memory type used to access the 4-KByte page referenced by this entry
+     *
      * Indirectly determines the memory type used to access the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT32 Pat                                                     : 1;
 #define PTE_32_PAT_BIT                                               7
@@ -11559,7 +13692,11 @@ typedef union
 #define PTE_32_PAT(_)                                                (((_) >> 7) & 0x01)
 
     /**
+     * @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
+     *
      * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     *
+     * @see Vol3A[4.10(Caching Translation Information)]
      */
     UINT32 Global                                                  : 1;
 #define PTE_32_GLOBAL_BIT                                            8
@@ -11567,6 +13704,8 @@ typedef union
 #define PTE_32_GLOBAL(_)                                             (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT32 Ignored1                                                : 3;
@@ -11575,6 +13714,8 @@ typedef union
 #define PTE_32_IGNORED_1(_)                                          (((_) >> 9) & 0x07)
 
     /**
+     * @brief Physical address of 4-KByte aligned page table referenced by this entry
+     *
      * Physical address of 4-KByte aligned page table referenced by this entry.
      */
     UINT32 PageFrameNumber                                         : 20;
@@ -11588,6 +13729,8 @@ typedef union
 
 /**
  * @brief Format of a common Page-Table Entry
+ *
+ * Format of a common Page-Table Entry.
  */
 typedef union
 {
@@ -11631,6 +13774,8 @@ typedef union
 #define PT_ENTRY_32_GLOBAL(_)                                        (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT32 Ignored1                                                : 3;
@@ -11639,6 +13784,8 @@ typedef union
 #define PT_ENTRY_32_IGNORED_1(_)                                     (((_) >> 9) & 0x07)
 
     /**
+     * @brief Physical address of the 4-KByte page referenced by this entry
+     *
      * Physical address of the 4-KByte page referenced by this entry.
      */
     UINT32 PageFrameNumber                                         : 20;
@@ -11671,12 +13818,16 @@ typedef union
  */
 /**
  * @brief Format of a 4-Level PML4 Entry (PML4E) that References a Page-Directory-Pointer Table
+ *
+ * Format of a 4-Level PML4 Entry (PML4E) that References a Page-Directory-Pointer Table.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to reference a page-directory-pointer table
+     *
      * Present; must be 1 to reference a page-directory-pointer table.
      */
     UINT64 Present                                                 : 1;
@@ -11685,7 +13836,11 @@ typedef union
 #define PML4E_PRESENT(_)                                             (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 512-GByte region controlled by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 512-GByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PML4E_WRITE_BIT                                              1
@@ -11693,7 +13848,11 @@ typedef union
 #define PML4E_WRITE(_)                                               (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 512-GByte region controlled by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 512-GByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PML4E_SUPERVISOR_BIT                                         2
@@ -11701,8 +13860,13 @@ typedef union
 #define PML4E_SUPERVISOR(_)                                          (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the page-directory-pointer table
+     *        referenced by this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the page-directory-pointer table
      * referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PML4E_PAGE_LEVEL_WRITE_THROUGH_BIT                           3
@@ -11710,8 +13874,13 @@ typedef union
 #define PML4E_PAGE_LEVEL_WRITE_THROUGH(_)                            (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the page-directory-pointer table
+     *        referenced by this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the page-directory-pointer table
      * referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PML4E_PAGE_LEVEL_CACHE_DISABLE_BIT                           4
@@ -11719,7 +13888,11 @@ typedef union
 #define PML4E_PAGE_LEVEL_CACHE_DISABLE(_)                            (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether this entry has been used for linear-address translation
+     *
      * Accessed; indicates whether this entry has been used for linear-address translation.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PML4E_ACCESSED_BIT                                           5
@@ -11728,6 +13901,8 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Reserved (must be 0)
+     *
      * Reserved (must be 0).
      */
     UINT64 MustBeZero                                              : 1;
@@ -11736,6 +13911,8 @@ typedef union
 #define PML4E_MUST_BE_ZERO(_)                                        (((_) >> 7) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 4;
@@ -11744,6 +13921,8 @@ typedef union
 #define PML4E_IGNORED_1(_)                                           (((_) >> 8) & 0x0F)
 
     /**
+     * @brief Physical address of 4-KByte aligned page-directory-pointer table referenced by this entry
+     *
      * Physical address of 4-KByte aligned page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -11753,6 +13932,8 @@ typedef union
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 11;
@@ -11761,8 +13942,13 @@ typedef union
 #define PML4E_IGNORED_2(_)                                           (((_) >> 52) & 0x7FF)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 512-GByte region
+     *        controlled by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 512-GByte region controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PML4E_EXECUTE_DISABLE_BIT                                    63
@@ -11775,12 +13961,16 @@ typedef union
 
 /**
  * @brief Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
+ *
+ * Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to map a 1-GByte page
+     *
      * Present; must be 1 to map a 1-GByte page.
      */
     UINT64 Present                                                 : 1;
@@ -11789,7 +13979,11 @@ typedef union
 #define PDPTE_1GB_PRESENT(_)                                         (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 1-GByte page referenced by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 1-GByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PDPTE_1GB_WRITE_BIT                                          1
@@ -11797,7 +13991,11 @@ typedef union
 #define PDPTE_1GB_WRITE(_)                                           (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte page referenced by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PDPTE_1GB_SUPERVISOR_BIT                                     2
@@ -11805,8 +14003,13 @@ typedef union
 #define PDPTE_1GB_SUPERVISOR(_)                                      (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the 1-GByte page referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the 1-GByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PDPTE_1GB_PAGE_LEVEL_WRITE_THROUGH_BIT                       3
@@ -11814,8 +14017,13 @@ typedef union
 #define PDPTE_1GB_PAGE_LEVEL_WRITE_THROUGH(_)                        (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the 1-GByte page referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the 1-GByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PDPTE_1GB_PAGE_LEVEL_CACHE_DISABLE_BIT                       4
@@ -11823,7 +14031,11 @@ typedef union
 #define PDPTE_1GB_PAGE_LEVEL_CACHE_DISABLE(_)                        (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether software has accessed the 1-GByte page referenced by this entry
+     *
      * Accessed; indicates whether software has accessed the 1-GByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PDPTE_1GB_ACCESSED_BIT                                       5
@@ -11831,7 +14043,11 @@ typedef union
 #define PDPTE_1GB_ACCESSED(_)                                        (((_) >> 5) & 0x01)
 
     /**
+     * @brief Dirty; indicates whether software has written to the 1-GByte page referenced by this entry
+     *
      * Dirty; indicates whether software has written to the 1-GByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Dirty                                                   : 1;
 #define PDPTE_1GB_DIRTY_BIT                                          6
@@ -11839,6 +14055,8 @@ typedef union
 #define PDPTE_1GB_DIRTY(_)                                           (((_) >> 6) & 0x01)
 
     /**
+     * @brief Page size; must be 1 (otherwise, this entry references a page directory)
+     *
      * Page size; must be 1 (otherwise, this entry references a page directory).
      */
     UINT64 LargePage                                               : 1;
@@ -11847,7 +14065,11 @@ typedef union
 #define PDPTE_1GB_LARGE_PAGE(_)                                      (((_) >> 7) & 0x01)
 
     /**
+     * @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
+     *
      * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     *
+     * @see Vol3A[4.10(Caching Translation Information)]
      */
     UINT64 Global                                                  : 1;
 #define PDPTE_1GB_GLOBAL_BIT                                         8
@@ -11855,6 +14077,8 @@ typedef union
 #define PDPTE_1GB_GLOBAL(_)                                          (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 3;
@@ -11863,7 +14087,12 @@ typedef union
 #define PDPTE_1GB_IGNORED_1(_)                                       (((_) >> 9) & 0x07)
 
     /**
+     * @brief Indirectly determines the memory type used to access the 1-GByte page referenced by this entry
+     *
      * Indirectly determines the memory type used to access the 1-GByte page referenced by this entry.
+     *
+     * @note The PAT is supported on all processors that support 4-level paging.
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 Pat                                                     : 1;
 #define PDPTE_1GB_PAT_BIT                                            12
@@ -11872,6 +14101,8 @@ typedef union
     UINT64 Reserved1                                               : 17;
 
     /**
+     * @brief Physical address of the 1-GByte page referenced by this entry
+     *
      * Physical address of the 1-GByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 18;
@@ -11881,6 +14112,8 @@ typedef union
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 7;
@@ -11889,7 +14122,11 @@ typedef union
 #define PDPTE_1GB_IGNORED_2(_)                                       (((_) >> 52) & 0x7F)
 
     /**
+     * @brief Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise
+     *
      * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     *
+     * @see Vol3A[4.6.2(Protection Keys)]
      */
     UINT64 ProtectionKey                                           : 4;
 #define PDPTE_1GB_PROTECTION_KEY_BIT                                 59
@@ -11897,8 +14134,13 @@ typedef union
 #define PDPTE_1GB_PROTECTION_KEY(_)                                  (((_) >> 59) & 0x0F)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled
+     *        by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PDPTE_1GB_EXECUTE_DISABLE_BIT                                63
@@ -11911,12 +14153,16 @@ typedef union
 
 /**
  * @brief Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that References a Page Directory
+ *
+ * Format of a 4-Level Page-Directory-Pointer-Table Entry (PDPTE) that References a Page Directory.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to reference a page directory
+     *
      * Present; must be 1 to reference a page directory.
      */
     UINT64 Present                                                 : 1;
@@ -11925,7 +14171,11 @@ typedef union
 #define PDPTE_PRESENT(_)                                             (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 1-GByte region controlled by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 1-GByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PDPTE_WRITE_BIT                                              1
@@ -11933,7 +14183,11 @@ typedef union
 #define PDPTE_WRITE(_)                                               (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte region controlled by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 1-GByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PDPTE_SUPERVISOR_BIT                                         2
@@ -11941,8 +14195,13 @@ typedef union
 #define PDPTE_SUPERVISOR(_)                                          (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the page directory referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the page directory referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PDPTE_PAGE_LEVEL_WRITE_THROUGH_BIT                           3
@@ -11950,8 +14209,13 @@ typedef union
 #define PDPTE_PAGE_LEVEL_WRITE_THROUGH(_)                            (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the page directory referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the page directory referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PDPTE_PAGE_LEVEL_CACHE_DISABLE_BIT                           4
@@ -11959,7 +14223,11 @@ typedef union
 #define PDPTE_PAGE_LEVEL_CACHE_DISABLE(_)                            (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether this entry has been used for linear-address translation
+     *
      * Accessed; indicates whether this entry has been used for linear-address translation.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PDPTE_ACCESSED_BIT                                           5
@@ -11968,6 +14236,8 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Page size; must be 0 (otherwise, this entry maps a 1-GByte page)
+     *
      * Page size; must be 0 (otherwise, this entry maps a 1-GByte page).
      */
     UINT64 LargePage                                               : 1;
@@ -11976,6 +14246,8 @@ typedef union
 #define PDPTE_LARGE_PAGE(_)                                          (((_) >> 7) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 4;
@@ -11984,6 +14256,8 @@ typedef union
 #define PDPTE_IGNORED_1(_)                                           (((_) >> 8) & 0x0F)
 
     /**
+     * @brief Physical address of 4-KByte aligned page directory referenced by this entry
+     *
      * Physical address of 4-KByte aligned page directory referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -11993,6 +14267,8 @@ typedef union
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 11;
@@ -12001,8 +14277,13 @@ typedef union
 #define PDPTE_IGNORED_2(_)                                           (((_) >> 52) & 0x7FF)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte region
+     *        controlled by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte region controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PDPTE_EXECUTE_DISABLE_BIT                                    63
@@ -12015,12 +14296,16 @@ typedef union
 
 /**
  * @brief Format of a 4-Level Page-Directory Entry that Maps a 2-MByte Page
+ *
+ * Format of a 4-Level Page-Directory Entry that Maps a 2-MByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to map a 2-MByte page
+     *
      * Present; must be 1 to map a 2-MByte page.
      */
     UINT64 Present                                                 : 1;
@@ -12029,7 +14314,11 @@ typedef union
 #define PDE_2MB_PRESENT(_)                                           (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 2-MByte page referenced by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 2-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PDE_2MB_WRITE_BIT                                            1
@@ -12037,7 +14326,11 @@ typedef union
 #define PDE_2MB_WRITE(_)                                             (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte page referenced by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PDE_2MB_SUPERVISOR_BIT                                       2
@@ -12045,8 +14338,13 @@ typedef union
 #define PDE_2MB_SUPERVISOR(_)                                        (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the 2-MByte page referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the 2-MByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PDE_2MB_PAGE_LEVEL_WRITE_THROUGH_BIT                         3
@@ -12054,8 +14352,13 @@ typedef union
 #define PDE_2MB_PAGE_LEVEL_WRITE_THROUGH(_)                          (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the 2-MByte page referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the 2-MByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PDE_2MB_PAGE_LEVEL_CACHE_DISABLE_BIT                         4
@@ -12063,7 +14366,11 @@ typedef union
 #define PDE_2MB_PAGE_LEVEL_CACHE_DISABLE(_)                          (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether software has accessed the 2-MByte page referenced by this entry
+     *
      * Accessed; indicates whether software has accessed the 2-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PDE_2MB_ACCESSED_BIT                                         5
@@ -12071,7 +14378,11 @@ typedef union
 #define PDE_2MB_ACCESSED(_)                                          (((_) >> 5) & 0x01)
 
     /**
+     * @brief Dirty; indicates whether software has written to the 2-MByte page referenced by this entry
+     *
      * Dirty; indicates whether software has written to the 2-MByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Dirty                                                   : 1;
 #define PDE_2MB_DIRTY_BIT                                            6
@@ -12079,6 +14390,8 @@ typedef union
 #define PDE_2MB_DIRTY(_)                                             (((_) >> 6) & 0x01)
 
     /**
+     * @brief Page size; must be 1 (otherwise, this entry references a page directory)
+     *
      * Page size; must be 1 (otherwise, this entry references a page directory).
      */
     UINT64 LargePage                                               : 1;
@@ -12087,7 +14400,11 @@ typedef union
 #define PDE_2MB_LARGE_PAGE(_)                                        (((_) >> 7) & 0x01)
 
     /**
+     * @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
+     *
      * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     *
+     * @see Vol3A[4.10(Caching Translation Information)]
      */
     UINT64 Global                                                  : 1;
 #define PDE_2MB_GLOBAL_BIT                                           8
@@ -12095,6 +14412,8 @@ typedef union
 #define PDE_2MB_GLOBAL(_)                                            (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 3;
@@ -12103,7 +14422,12 @@ typedef union
 #define PDE_2MB_IGNORED_1(_)                                         (((_) >> 9) & 0x07)
 
     /**
+     * @brief Indirectly determines the memory type used to access the 2-MByte page referenced by this entry
+     *
      * Indirectly determines the memory type used to access the 2-MByte page referenced by this entry.
+     *
+     * @note The PAT is supported on all processors that support 4-level paging.
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 Pat                                                     : 1;
 #define PDE_2MB_PAT_BIT                                              12
@@ -12112,6 +14436,8 @@ typedef union
     UINT64 Reserved1                                               : 17;
 
     /**
+     * @brief Physical address of the 1-GByte page referenced by this entry
+     *
      * Physical address of the 1-GByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 18;
@@ -12121,6 +14447,8 @@ typedef union
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 7;
@@ -12129,7 +14457,11 @@ typedef union
 #define PDE_2MB_IGNORED_2(_)                                         (((_) >> 52) & 0x7F)
 
     /**
+     * @brief Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise
+     *
      * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     *
+     * @see Vol3A[4.6.2(Protection Keys)]
      */
     UINT64 ProtectionKey                                           : 4;
 #define PDE_2MB_PROTECTION_KEY_BIT                                   59
@@ -12137,8 +14469,13 @@ typedef union
 #define PDE_2MB_PROTECTION_KEY(_)                                    (((_) >> 59) & 0x0F)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled
+     *        by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PDE_2MB_EXECUTE_DISABLE_BIT                                  63
@@ -12151,12 +14488,16 @@ typedef union
 
 /**
  * @brief Format of a 4-Level Page-Directory Entry that References a Page Table
+ *
+ * Format of a 4-Level Page-Directory Entry that References a Page Table.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to reference a page table
+     *
      * Present; must be 1 to reference a page table.
      */
     UINT64 Present                                                 : 1;
@@ -12165,7 +14506,11 @@ typedef union
 #define PDE_PRESENT(_)                                               (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 2-MByte region controlled by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 2-MByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PDE_WRITE_BIT                                                1
@@ -12173,7 +14518,11 @@ typedef union
 #define PDE_WRITE(_)                                                 (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte region controlled by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 2-MByte region controlled by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PDE_SUPERVISOR_BIT                                           2
@@ -12181,7 +14530,12 @@ typedef union
 #define PDE_SUPERVISOR(_)                                            (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the page table referenced by this
+     *        entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the page table referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PDE_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
@@ -12189,7 +14543,12 @@ typedef union
 #define PDE_PAGE_LEVEL_WRITE_THROUGH(_)                              (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this
+     *        entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PDE_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
@@ -12197,7 +14556,11 @@ typedef union
 #define PDE_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether this entry has been used for linear-address translation
+     *
      * Accessed; indicates whether this entry has been used for linear-address translation.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PDE_ACCESSED_BIT                                             5
@@ -12206,6 +14569,8 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Page size; must be 0 (otherwise, this entry maps a 2-MByte page)
+     *
      * Page size; must be 0 (otherwise, this entry maps a 2-MByte page).
      */
     UINT64 LargePage                                               : 1;
@@ -12214,6 +14579,8 @@ typedef union
 #define PDE_LARGE_PAGE(_)                                            (((_) >> 7) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 4;
@@ -12222,6 +14589,8 @@ typedef union
 #define PDE_IGNORED_1(_)                                             (((_) >> 8) & 0x0F)
 
     /**
+     * @brief Physical address of 4-KByte aligned page table referenced by this entry
+     *
      * Physical address of 4-KByte aligned page table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -12231,6 +14600,8 @@ typedef union
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 11;
@@ -12239,8 +14610,13 @@ typedef union
 #define PDE_IGNORED_2(_)                                             (((_) >> 52) & 0x7FF)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 2-MByte region
+     *        controlled by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 2-MByte region controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PDE_EXECUTE_DISABLE_BIT                                      63
@@ -12253,12 +14629,16 @@ typedef union
 
 /**
  * @brief Format of a 4-Level Page-Table Entry that Maps a 4-KByte Page
+ *
+ * Format of a 4-Level Page-Table Entry that Maps a 4-KByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Present; must be 1 to map a 4-KByte page
+     *
      * Present; must be 1 to map a 4-KByte page.
      */
     UINT64 Present                                                 : 1;
@@ -12267,7 +14647,11 @@ typedef union
 #define PTE_PRESENT(_)                                               (((_) >> 0) & 0x01)
 
     /**
+     * @brief Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry
+     *
      * Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Write                                                   : 1;
 #define PTE_WRITE_BIT                                                1
@@ -12275,7 +14659,11 @@ typedef union
 #define PTE_WRITE(_)                                                 (((_) >> 1) & 0x01)
 
     /**
+     * @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry
+     *
      * User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 Supervisor                                              : 1;
 #define PTE_SUPERVISOR_BIT                                           2
@@ -12283,8 +14671,13 @@ typedef union
 #define PTE_SUPERVISOR(_)                                            (((_) >> 2) & 0x01)
 
     /**
+     * @brief Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by
+     *        this entry
+     *
      * Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelWriteThrough                                   : 1;
 #define PTE_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
@@ -12292,8 +14685,13 @@ typedef union
 #define PTE_PAGE_LEVEL_WRITE_THROUGH(_)                              (((_) >> 3) & 0x01)
 
     /**
+     * @brief Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by
+     *        this entry
+     *
      * Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
      * entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 PageLevelCacheDisable                                   : 1;
 #define PTE_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
@@ -12301,7 +14699,11 @@ typedef union
 #define PTE_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
 
     /**
+     * @brief Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry
+     *
      * Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Accessed                                                : 1;
 #define PTE_ACCESSED_BIT                                             5
@@ -12309,7 +14711,11 @@ typedef union
 #define PTE_ACCESSED(_)                                              (((_) >> 5) & 0x01)
 
     /**
+     * @brief Dirty; indicates whether software has written to the 4-KByte page referenced by this entry
+     *
      * Dirty; indicates whether software has written to the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.8(Accessed and Dirty Flags)]
      */
     UINT64 Dirty                                                   : 1;
 #define PTE_DIRTY_BIT                                                6
@@ -12317,7 +14723,11 @@ typedef union
 #define PTE_DIRTY(_)                                                 (((_) >> 6) & 0x01)
 
     /**
+     * @brief Indirectly determines the memory type used to access the 4-KByte page referenced by this entry
+     *
      * Indirectly determines the memory type used to access the 4-KByte page referenced by this entry.
+     *
+     * @see Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
      */
     UINT64 Pat                                                     : 1;
 #define PTE_PAT_BIT                                                  7
@@ -12325,7 +14735,11 @@ typedef union
 #define PTE_PAT(_)                                                   (((_) >> 7) & 0x01)
 
     /**
+     * @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
+     *
      * Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
+     *
+     * @see Vol3A[4.10(Caching Translation Information)]
      */
     UINT64 Global                                                  : 1;
 #define PTE_GLOBAL_BIT                                               8
@@ -12333,6 +14747,8 @@ typedef union
 #define PTE_GLOBAL(_)                                                (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 3;
@@ -12341,6 +14757,8 @@ typedef union
 #define PTE_IGNORED_1(_)                                             (((_) >> 9) & 0x07)
 
     /**
+     * @brief Physical address of the 4-KByte page referenced by this entry
+     *
      * Physical address of the 4-KByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -12350,6 +14768,8 @@ typedef union
     UINT64 Reserved1                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 7;
@@ -12358,7 +14778,11 @@ typedef union
 #define PTE_IGNORED_2(_)                                             (((_) >> 52) & 0x7F)
 
     /**
+     * @brief Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise
+     *
      * Protection key; if CR4.PKE = 1, determines the protection key of the page; ignored otherwise.
+     *
+     * @see Vol3A[4.6.2(Protection Keys)]
      */
     UINT64 ProtectionKey                                           : 4;
 #define PTE_PROTECTION_KEY_BIT                                       59
@@ -12366,8 +14790,13 @@ typedef union
 #define PTE_PROTECTION_KEY(_)                                        (((_) >> 59) & 0x0F)
 
     /**
+     * @brief If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled
+     *        by this entry); otherwise, reserved (must be 0)
+     *
      * If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page controlled by
      * this entry); otherwise, reserved (must be 0).
+     *
+     * @see Vol3A[4.6(Access Rights)]
      */
     UINT64 ExecuteDisable                                          : 1;
 #define PTE_EXECUTE_DISABLE_BIT                                      63
@@ -12380,6 +14809,8 @@ typedef union
 
 /**
  * @brief Format of a common Page-Table Entry
+ *
+ * Format of a common Page-Table Entry.
  */
 typedef union
 {
@@ -12423,6 +14854,8 @@ typedef union
 #define PT_ENTRY_GLOBAL(_)                                           (((_) >> 8) & 0x01)
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored1                                                : 3;
@@ -12431,6 +14864,8 @@ typedef union
 #define PT_ENTRY_IGNORED_1(_)                                        (((_) >> 9) & 0x07)
 
     /**
+     * @brief Physical address of the 4-KByte page referenced by this entry
+     *
      * Physical address of the 4-KByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -12440,6 +14875,8 @@ typedef union
     UINT64 Reserved1                                               : 4;
 
     /**
+     * @brief Ignored
+     *
      * Ignored.
      */
     UINT64 Ignored2                                                : 7;
@@ -12474,6 +14911,10 @@ typedef union
  */
 /**
  * @brief Pseudo-Descriptor Format (32-bit)
+ *
+ * Pseudo-Descriptor Format (32-bit).
+ *
+ * @see Vol3A[3.5.1(Segment Descriptor Tables)] (reference)
  */
 #include <pshpack1.h>
 typedef struct
@@ -12485,6 +14926,10 @@ typedef struct
 
 /**
  * @brief Pseudo-Descriptor Format (64-bit)
+ *
+ * Pseudo-Descriptor Format (64-bit).
+ *
+ * @see Vol3A[3.5.1(Segment Descriptor Tables)] (reference)
  */
 #include <pshpack1.h>
 typedef struct
@@ -12500,6 +14945,16 @@ typedef struct
  * A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of a
  * segment, as well as access control and status information. Segment descriptors are typically created by compilers,
  * linkers, loaders, or the operating system or executive, but not application programs.
+ *
+ * @see Vol3A[5.2(FIELDS AND FLAGS USED FOR SEGMENT-LEVEL AND PAGE-LEVEL PROTECTION)]
+ * @see Vol3A[5.2.1(Code-Segment Descriptor in 64-bit Mode)]
+ * @see Vol3A[5.8.3(Call Gates)]
+ * @see Vol3A[6.11(IDT DESCRIPTORS)]
+ * @see Vol3A[6.14.1(64-Bit Mode IDT)]
+ * @see Vol3A[7.2.2(TSS Descriptor)]
+ * @see Vol3A[7.2.3(TSS Descriptor in 64-bit mode)]
+ * @see Vol3A[7.2.5(Task-Gate Descriptor)]
+ * @see Vol3A[3.4.5(Segment Descriptors)] (reference)
  */
 typedef struct
 {
@@ -12507,12 +14962,16 @@ typedef struct
   UINT16 BaseAddressLow;
   /**
    * @brief Segment descriptor fields
+   *
+   * Segment descriptor fields.
    */
   union
   {
     struct
     {
       /**
+       * @brief Base address field (23:16); see description of $BASE_LOW for more details
+       *
        * Base address field (23:16); see description of $BASE_LOW for more details.
        */
       UINT32 BaseAddressMiddle                                     : 8;
@@ -12572,6 +15031,8 @@ typedef struct
 #define BITS_PRESENT(_)                                              (((_) >> 15) & 0x01)
 
       /**
+       * @brief Segment limit field (19:16); see description of $LIMIT_LOW for more details
+       *
        * Segment limit field (19:16); see description of $LIMIT_LOW for more details.
        */
       UINT32 SegmentLimitHigh                                      : 4;
@@ -12641,6 +15102,8 @@ typedef struct
 #define BITS_GRANULARITY(_)                                          (((_) >> 23) & 0x01)
 
       /**
+       * @brief Base address field (31:24); see description of $BASE_LOW for more details
+       *
        * Base address field (31:24); see description of $BASE_LOW for more details.
        */
       UINT32 BaseAddressHigh                                       : 8;
@@ -12660,6 +15123,8 @@ typedef struct
  * A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of a
  * segment, as well as access control and status information. Segment descriptors are typically created by compilers,
  * linkers, loaders, or the operating system or executive, but not application programs.
+ *
+ * @see Vol3A[3.4.5(Segment Descriptors)] (reference)
  */
 typedef struct
 {
@@ -12667,12 +15132,16 @@ typedef struct
   UINT16 BaseAddressLow;
   /**
    * @brief Segment descriptor fields
+   *
+   * Segment descriptor fields.
    */
   union
   {
     struct
     {
       /**
+       * @brief Base address field (23:16); see description of $BASE_LOW for more details
+       *
        * Base address field (23:16); see description of $BASE_LOW for more details.
        */
       UINT32 BaseAddressMiddle                                     : 8;
@@ -12732,6 +15201,8 @@ typedef struct
 #define BITS_PRESENT(_)                                              (((_) >> 15) & 0x01)
 
       /**
+       * @brief Segment limit field (19:16); see description of $LIMIT_LOW for more details
+       *
        * Segment limit field (19:16); see description of $LIMIT_LOW for more details.
        */
       UINT32 SegmentLimitHigh                                      : 4;
@@ -12801,6 +15272,8 @@ typedef struct
 #define BITS_GRANULARITY(_)                                          (((_) >> 23) & 0x01)
 
       /**
+       * @brief Base address field (31:24); see description of $BASE_LOW for more details
+       *
        * Base address field (31:24); see description of $BASE_LOW for more details.
        */
       UINT32 BaseAddressHigh                                       : 8;
@@ -12831,82 +15304,114 @@ typedef struct
  * @{
  */
 /**
- * @brief Read-Only.
+ * @brief Read-Only
+ *
+ * Read-Only.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_ONLY                               0x00000000
 
 /**
- * @brief Data Read-Only, accessed.
+ * @brief Data Read-Only, accessed
+ *
+ * Data Read-Only, accessed.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_ONLY_ACCESSED                      0x00000001
 
 /**
- * @brief Data Read/Write.
+ * @brief Data Read/Write
+ *
+ * Data Read/Write.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_WRITE                              0x00000002
 
 /**
- * @brief Data Read/Write, accessed.
+ * @brief Data Read/Write, accessed
+ *
+ * Data Read/Write, accessed.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_WRITE_ACCESSED                     0x00000003
 
 /**
- * @brief Data Read-Only, expand-down.
+ * @brief Data Read-Only, expand-down
+ *
+ * Data Read-Only, expand-down.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_ONLY_EXPAND_DOWN                   0x00000004
 
 /**
- * @brief Data Read-Only, expand-down, accessed.
+ * @brief Data Read-Only, expand-down, accessed
+ *
+ * Data Read-Only, expand-down, accessed.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_ONLY_EXPAND_DOWN_ACCESSED          0x00000005
 
 /**
- * @brief Data Read/Write, expand-down.
+ * @brief Data Read/Write, expand-down
+ *
+ * Data Read/Write, expand-down.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_WRITE_EXPAND_DOWN                  0x00000006
 
 /**
- * @brief Data Read/Write, expand-down, accessed.
+ * @brief Data Read/Write, expand-down, accessed
+ *
+ * Data Read/Write, expand-down, accessed.
  */
 #define DESCRIPTOR_TYPE_DATA_READ_WRITE_EXPAND_DOWN_ACCESSED         0x00000007
 
 /**
- * @brief Code Execute-Only.
+ * @brief Code Execute-Only
+ *
+ * Code Execute-Only.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_ONLY                            0x00000008
 
 /**
- * @brief Code Execute-Only, accessed.
+ * @brief Code Execute-Only, accessed
+ *
+ * Code Execute-Only, accessed.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_ONLY_ACCESSED                   0x00000009
 
 /**
- * @brief Code Execute/Read.
+ * @brief Code Execute/Read
+ *
+ * Code Execute/Read.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_READ                            0x0000000A
 
 /**
- * @brief Code Execute/Read, accessed.
+ * @brief Code Execute/Read, accessed
+ *
+ * Code Execute/Read, accessed.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_READ_ACCESSED                   0x0000000B
 
 /**
- * @brief Code Execute-Only, conforming.
+ * @brief Code Execute-Only, conforming
+ *
+ * Code Execute-Only, conforming.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_ONLY_CONFORMING                 0x0000000C
 
 /**
- * @brief Code Execute-Only, conforming, accessed.
+ * @brief Code Execute-Only, conforming, accessed
+ *
+ * Code Execute-Only, conforming, accessed.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_ONLY_CONFORMING_ACCESSED        0x0000000D
 
 /**
- * @brief Code Execute/Read, conforming.
+ * @brief Code Execute/Read, conforming
+ *
+ * Code Execute/Read, conforming.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_READ_CONFORMING                 0x0000000E
 
 /**
- * @brief Code Execute/Read, conforming, accessed.
+ * @brief Code Execute/Read, conforming, accessed
+ *
+ * Code Execute/Read, conforming, accessed.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_READ_CONFORMING_ACCESSED        0x0000000F
 
@@ -12935,98 +15440,98 @@ typedef struct
  * @{
  */
 /**
- * @brief - 32-Bit Mode: Reserved
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: Reserved
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_RESERVED_1                                   0x00000000
 
 /**
- * @brief - 32-Bit Mode: 16-bit TSS (Available)
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: 16-bit TSS (Available)
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_TSS_16_AVAILABLE                             0x00000001
 
 /**
- * @brief - 32-Bit Mode: LDT
- *        - IA-32e Mode: LDT
+ * - 32-Bit Mode: LDT
+ * - IA-32e Mode: LDT
  */
 #define DESCRIPTOR_TYPE_LDT                                          0x00000002
 
 /**
- * @brief - 32-Bit Mode: 16-bit TSS (Busy)
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: 16-bit TSS (Busy)
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_TSS_16_BUSY                                  0x00000003
 
 /**
- * @brief - 32-Bit Mode: 16-bit Call Gate
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: 16-bit Call Gate
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_CALL_GATE_16                                 0x00000004
 
 /**
- * @brief - 32-Bit Mode: Task Gate
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: Task Gate
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_TASK_GATE                                    0x00000005
 
 /**
- * @brief - 32-Bit Mode: 16-bit Interrupt Gate
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: 16-bit Interrupt Gate
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_INTERRUPT_GATE_16                            0x00000006
 
 /**
- * @brief - 32-Bit Mode: 16-bit Trap Gate
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: 16-bit Trap Gate
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_TRAP_GATE_16                                 0x00000007
 
 /**
- * @brief - 32-Bit Mode: Reserved
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: Reserved
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_RESERVED_2                                   0x00000008
 
 /**
- * @brief - 32-Bit Mode: 32-bit TSS (Available)
- *        - IA-32e Mode: 64-bit TSS (Available)
+ * - 32-Bit Mode: 32-bit TSS (Available)
+ * - IA-32e Mode: 64-bit TSS (Available)
  */
 #define DESCRIPTOR_TYPE_TSS_AVAILABLE                                0x00000009
 
 /**
- * @brief - 32-Bit Mode: Reserved
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: Reserved
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_RESERVED_3                                   0x0000000A
 
 /**
- * @brief - 32-Bit Mode: 32-bit TSS (Busy)
- *        - IA-32e Mode: 64-bit TSS (Busy)
+ * - 32-Bit Mode: 32-bit TSS (Busy)
+ * - IA-32e Mode: 64-bit TSS (Busy)
  */
 #define DESCRIPTOR_TYPE_TSS_BUSY                                     0x0000000B
 
 /**
- * @brief - 32-Bit Mode: 32-bit Call Gate
- *        - IA-32e Mode: 64-bit Call Gate
+ * - 32-Bit Mode: 32-bit Call Gate
+ * - IA-32e Mode: 64-bit Call Gate
  */
 #define DESCRIPTOR_TYPE_CALL_GATE                                    0x0000000C
 
 /**
- * @brief - 32-Bit Mode: Reserved
- *        - IA-32e Mode: Reserved
+ * - 32-Bit Mode: Reserved
+ * - IA-32e Mode: Reserved
  */
 #define DESCRIPTOR_TYPE_RESERVED_4                                   0x0000000D
 
 /**
- * @brief - 32-Bit Mode: 32-bit Interrupt Gate
- *        - IA-32e Mode: 64-bit Interrupt Gate
+ * - 32-Bit Mode: 32-bit Interrupt Gate
+ * - IA-32e Mode: 64-bit Interrupt Gate
  */
 #define DESCRIPTOR_TYPE_INTERRUPT_GATE                               0x0000000E
 
 /**
- * @brief - 32-Bit Mode: 32-bit Trap Gate
- *        - IA-32e Mode: 64-bit Trap Gate
+ * - 32-Bit Mode: 32-bit Trap Gate
+ * - IA-32e Mode: 64-bit Trap Gate
  */
 #define DESCRIPTOR_TYPE_TRAP_GATE                                    0x0000000F
 
@@ -13037,14 +15542,24 @@ typedef struct
 /**
  * @brief A segment selector is a 16-bit identifier for a segment. It does not point directly to the segment, but instead
  *        points to the segment descriptor that defines the segment
+ *
+ * A segment selector is a 16-bit identifier for a segment. It does not point directly to the segment, but instead points
+ * to the segment descriptor that defines the segment.
+ *
+ * @see Vol3A[3.4.2(Segment Selectors)] (reference)
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Specifies the privilege level of the selector. The privilege level can range from 0 to 3, with 0 being the most
+     *        privileged level
+     *
      * Specifies the privilege level of the selector. The privilege level can range from 0 to 3, with 0 being the most
      * privileged level.
+     *
+     * @see Vol3A[5.5(Privilege Levels)]
      */
     UINT16 RequestPrivilegeLevel                                   : 2;
 #define SELECTOR_REQUEST_PRIVILEGE_LEVEL_BIT                         0
@@ -13052,6 +15567,9 @@ typedef union
 #define SELECTOR_REQUEST_PRIVILEGE_LEVEL(_)                          (((_) >> 0) & 0x03)
 
     /**
+     * @brief Specifies the descriptor table to use: clearing this flag selects the GDT; setting this flag selects the current
+     *        LDT
+     *
      * Specifies the descriptor table to use: clearing this flag selects the GDT; setting this flag selects the current LDT.
      */
     UINT16 Table                                                   : 1;
@@ -13060,6 +15578,10 @@ typedef union
 #define SELECTOR_TABLE(_)                                            (((_) >> 2) & 0x01)
 
     /**
+     * @brief Selects one of 8192 descriptors in the GDT or LDT. The processor multiplies the index value by 8 (the number of
+     *        bytes in a segment descriptor) and adds the result to the base address of the GDT or LDT (from the GDTR or LDTR
+     *        register, respectively)
+     *
      * Selects one of 8192 descriptors in the GDT or LDT. The processor multiplies the index value by 8 (the number of bytes in
      * a segment descriptor) and adds the result to the base address of the GDT or LDT (from the GDTR or LDTR register,
      * respectively).
@@ -13092,355 +15614,499 @@ typedef union
  * @{
  */
 /**
- * @brief Either:
- *        -# Guest software caused an exception and the bit in the exception bitmap associated with exception's vector was 1. This
- *        case includes executions of BOUND that cause \#BR, executions of INT1 (they cause \#DB), executions of INT3 (they cause
- *        \#BP), executions of INTO that cause \#OF, and executions of UD0, UD1, and UD2 (they cause \#UD).
- *        -# An NMI was delivered to the logical processor and the "NMI exiting" VM-execution control was 1.
+ * @brief Exception or non-maskable interrupt (NMI)
+ *
+ * Either:
+ * -# Guest software caused an exception and the bit in the exception bitmap associated with exception's vector was 1. This
+ * case includes executions of BOUND that cause \#BR, executions of INT1 (they cause \#DB), executions of INT3 (they cause
+ * \#BP), executions of INTO that cause \#OF, and executions of UD0, UD1, and UD2 (they cause \#UD).
+ * -# An NMI was delivered to the logical processor and the "NMI exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXCEPTION_OR_NMI                             0x00000000
 
 /**
- * @brief An external interrupt arrived and the "external-interrupt exiting" VM-execution control was 1.
+ * @brief External interrupt
+ *
+ * An external interrupt arrived and the "external-interrupt exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXTERNAL_INTERRUPT                           0x00000001
 
 /**
- * @brief The logical processor encountered an exception while attempting to call the double-fault handler and that
- *        exception did not itself cause a VM exit due to the exception bitmap.
+ * @brief Triple fault
+ *
+ * The logical processor encountered an exception while attempting to call the double-fault handler and that exception did
+ * not itself cause a VM exit due to the exception bitmap.
  */
 #define VMX_EXIT_REASON_TRIPLE_FAULT                                 0x00000002
 
 /**
- * @brief An INIT signal arrived.
+ * @brief INIT signal
+ *
+ * An INIT signal arrived.
  */
 #define VMX_EXIT_REASON_INIT_SIGNAL                                  0x00000003
 
 /**
- * @brief A SIPI arrived while the logical processor was in the "wait-for-SIPI" state.
+ * @brief Start-up IPI (SIPI)
+ *
+ * A SIPI arrived while the logical processor was in the "wait-for-SIPI" state.
  */
 #define VMX_EXIT_REASON_STARTUP_IPI                                  0x00000004
 
 /**
- * @brief An SMI arrived immediately after retirement of an I/O instruction and caused an SMM VM exit.
+ * @brief I/O system-management interrupt (SMI)
+ *
+ * An SMI arrived immediately after retirement of an I/O instruction and caused an SMM VM exit.
+ *
+ * @see Vol3C[34.15.2(SMM VM Exits)]
  */
 #define VMX_EXIT_REASON_IO_SMI                                       0x00000005
 
 /**
- * @brief An SMI arrived and caused an SMM VM exit but not immediately after retirement of an I/O instruction.
+ * @brief Other SMI
+ *
+ * An SMI arrived and caused an SMM VM exit but not immediately after retirement of an I/O instruction.
+ *
+ * @see Vol3C[34.15.2(SMM VM Exits)]
  */
 #define VMX_EXIT_REASON_SMI                                          0x00000006
 
 /**
- * @brief At the beginning of an instruction, RFLAGS.IF was 1; events were not blocked by STI or by MOV SS; and the
- *        "interrupt-window exiting" VM-execution control was 1.
+ * @brief Interrupt window exiting
+ *
+ * At the beginning of an instruction, RFLAGS.IF was 1; events were not blocked by STI or by MOV SS; and the
+ * "interrupt-window exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_INTERRUPT_WINDOW                             0x00000007
 
 /**
- * @brief At the beginning of an instruction, there was no virtual-NMI blocking; events were not blocked by MOV SS; and the
- *        "NMI-window exiting" VM-execution control was 1.
+ * @brief NMI window exiting
+ *
+ * At the beginning of an instruction, there was no virtual-NMI blocking; events were not blocked by MOV SS; and the
+ * "NMI-window exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_NMI_WINDOW                                   0x00000008
 
 /**
- * @brief Guest software attempted a task switch.
+ * @brief Task switch
+ *
+ * Guest software attempted a task switch.
  */
 #define VMX_EXIT_REASON_TASK_SWITCH                                  0x00000009
 
 /**
- * @brief Guest software attempted to execute CPUID.
+ * @brief CPUID
+ *
+ * Guest software attempted to execute CPUID.
  */
 #define VMX_EXIT_REASON_EXECUTE_CPUID                                0x0000000A
 
 /**
- * @brief Guest software attempted to execute GETSEC.
+ * @brief GETSEC
+ *
+ * Guest software attempted to execute GETSEC.
  */
 #define VMX_EXIT_REASON_EXECUTE_GETSEC                               0x0000000B
 
 /**
- * @brief Guest software attempted to execute HLT and the "HLT exiting" VM-execution control was 1.
+ * @brief HLT
+ *
+ * Guest software attempted to execute HLT and the "HLT exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_HLT                                  0x0000000C
 
 /**
- * @brief Guest software attempted to execute INVD.
+ * @brief INVD
+ *
+ * Guest software attempted to execute INVD.
  */
 #define VMX_EXIT_REASON_EXECUTE_INVD                                 0x0000000D
 
 /**
- * @brief Guest software attempted to execute INVLPG and the "INVLPG exiting" VM-execution control was 1.
+ * @brief INVLPG
+ *
+ * Guest software attempted to execute INVLPG and the "INVLPG exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_INVLPG                               0x0000000E
 
 /**
- * @brief Guest software attempted to execute RDPMC and the "RDPMC exiting" VM-execution control was 1.
+ * @brief RDPMC
+ *
+ * Guest software attempted to execute RDPMC and the "RDPMC exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDPMC                                0x0000000F
 
 /**
- * @brief Guest software attempted to execute RDTSC and the "RDTSC exiting" VM-execution control was 1.
+ * @brief RDTSC
+ *
+ * Guest software attempted to execute RDTSC and the "RDTSC exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDTSC                                0x00000010
 
 /**
- * @brief Guest software attempted to execute RSM in SMM.
+ * @brief RSM in SMM
+ *
+ * Guest software attempted to execute RSM in SMM.
  */
 #define VMX_EXIT_REASON_EXECUTE_RSM_IN_SMM                           0x00000011
 
 /**
- * @brief VMCALL was executed either by guest software (causing an ordinary VM exit) or by the executive monitor (causing
- *        an SMM VM exit).
+ * @brief VMCALL
+ *
+ * VMCALL was executed either by guest software (causing an ordinary VM exit) or by the executive monitor (causing an SMM
+ * VM exit).
+ *
+ * @see Vol3C[34.15.2(SMM VM Exits)]
  */
 #define VMX_EXIT_REASON_EXECUTE_VMCALL                               0x00000012
 
 /**
- * @brief Guest software attempted to execute VMCLEAR.
+ * @brief VMCLEAR
+ *
+ * Guest software attempted to execute VMCLEAR.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMCLEAR                              0x00000013
 
 /**
- * @brief Guest software attempted to execute VMLAUNCH.
+ * @brief VMLAUNCH
+ *
+ * Guest software attempted to execute VMLAUNCH.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMLAUNCH                             0x00000014
 
 /**
- * @brief Guest software attempted to execute VMPTRLD.
+ * @brief VMPTRLD
+ *
+ * Guest software attempted to execute VMPTRLD.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMPTRLD                              0x00000015
 
 /**
- * @brief Guest software attempted to execute VMPTRST.
+ * @brief VMPTRST
+ *
+ * Guest software attempted to execute VMPTRST.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMPTRST                              0x00000016
 
 /**
- * @brief Guest software attempted to execute VMREAD.
+ * @brief VMREAD
+ *
+ * Guest software attempted to execute VMREAD.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMREAD                               0x00000017
 
 /**
- * @brief Guest software attempted to execute VMRESUME.
+ * @brief VMRESUME
+ *
+ * Guest software attempted to execute VMRESUME.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMRESUME                             0x00000018
 
 /**
- * @brief Guest software attempted to execute VMWRITE.
+ * @brief VMWRITE
+ *
+ * Guest software attempted to execute VMWRITE.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMWRITE                              0x00000019
 
 /**
- * @brief Guest software attempted to execute VMXOFF.
+ * @brief VMXOFF
+ *
+ * Guest software attempted to execute VMXOFF.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMXOFF                               0x0000001A
 
 /**
- * @brief Guest software attempted to execute VMXON.
+ * @brief VMXON
+ *
+ * Guest software attempted to execute VMXON.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMXON                                0x0000001B
 
 /**
- * @brief Guest software attempted to access CR0, CR3, CR4, or CR8 using CLTS, LMSW, or MOV CR and the VM-execution control
- *        fields indicate that a VM exit should occur. This basic exit reason is not used for trap-like VM exits following
- *        executions of the MOV to CR8 instruction when the "use TPR shadow" VM-execution control is 1. Such VM exits instead use
- *        basic exit reason 43.
+ * @brief Control-register accesses
+ *
+ * Guest software attempted to access CR0, CR3, CR4, or CR8 using CLTS, LMSW, or MOV CR and the VM-execution control fields
+ * indicate that a VM exit should occur. This basic exit reason is not used for trap-like VM exits following executions of
+ * the MOV to CR8 instruction when the "use TPR shadow" VM-execution control is 1. Such VM exits instead use basic exit
+ * reason 43.
+ *
+ * @see Vol3C[25.1(INSTRUCTIONS THAT CAUSE VM EXITS)]
  */
 #define VMX_EXIT_REASON_MOV_CR                                       0x0000001C
 
 /**
- * @brief Guest software attempted a MOV to or from a debug register and the "MOV-DR exiting" VM-execution control was 1.
+ * @brief Debug-register accesses
+ *
+ * Guest software attempted a MOV to or from a debug register and the "MOV-DR exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_MOV_DR                                       0x0000001D
 
 /**
- * @brief Guest software attempted to execute an I/O instruction and either:
- *        -# The "use I/O bitmaps" VM-execution control was 0 and the "unconditional I/O exiting" VM-execution control was 1.
- *        -# The "use I/O bitmaps" VM-execution control was 1 and a bit in the I/O bitmap associated with one of the ports
- *        accessed by the I/O instruction was 1.
+ * @brief I/O instruction
+ *
+ * Guest software attempted to execute an I/O instruction and either:
+ * -# The "use I/O bitmaps" VM-execution control was 0 and the "unconditional I/O exiting" VM-execution control was 1.
+ * -# The "use I/O bitmaps" VM-execution control was 1 and a bit in the I/O bitmap associated with one of the ports
+ * accessed by the I/O instruction was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_IO_INSTRUCTION                       0x0000001E
 
 /**
- * @brief Guest software attempted to execute RDMSR and either:
- *        -# The "use MSR bitmaps" VM-execution control was 0.
- *        -# The value of RCX is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
- *        -# The value of RCX was in the range 00000000H - 00001FFFH and the nth bit in read bitmap for low MSRs is 1, where n was
- *        the value of RCX.
- *        -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where n is
- *        the value of RCX & 00001FFFH.
+ * @brief RDMSR
+ *
+ * Guest software attempted to execute RDMSR and either:
+ * -# The "use MSR bitmaps" VM-execution control was 0.
+ * -# The value of RCX is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
+ * -# The value of RCX was in the range 00000000H - 00001FFFH and the nth bit in read bitmap for low MSRs is 1, where n was
+ * the value of RCX.
+ * -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where n is
+ * the value of RCX & 00001FFFH.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDMSR                                0x0000001F
 
 /**
- * @brief Guest software attempted to execute WRMSR and either:
- *        -# The "use MSR bitmaps" VM-execution control was 0.
- *        -# The value of RCX is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
- *        -# The value of RCX was in the range 00000000H - 00001FFFH and the nth bit in write bitmap for low MSRs is 1, where n
- *        was the value of RCX.
- *        -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in write bitmap for high MSRs is 1, where n is
- *        the value of RCX & 00001FFFH.
+ * @brief WRMSR
+ *
+ * Guest software attempted to execute WRMSR and either:
+ * -# The "use MSR bitmaps" VM-execution control was 0.
+ * -# The value of RCX is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
+ * -# The value of RCX was in the range 00000000H - 00001FFFH and the nth bit in write bitmap for low MSRs is 1, where n
+ * was the value of RCX.
+ * -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in write bitmap for high MSRs is 1, where n is
+ * the value of RCX & 00001FFFH.
  */
 #define VMX_EXIT_REASON_EXECUTE_WRMSR                                0x00000020
 
 /**
- * @brief A VM entry failed one of the checks identified in Section 26.3.1.
+ * @brief VM-entry failure due to invalid guest state
+ *
+ * A VM entry failed one of the checks identified in Section 26.3.1.
  */
 #define VMX_EXIT_REASON_ERROR_INVALID_GUEST_STATE                    0x00000021
 
 /**
- * @brief A VM entry failed in an attempt to load MSRs. See Section 26.4.
+ * @brief VM-entry failure due to MSR loading
+ *
+ * A VM entry failed in an attempt to load MSRs. See Section 26.4.
  */
 #define VMX_EXIT_REASON_ERROR_MSR_LOAD                               0x00000022
 
 /**
- * @brief Guest software attempted to execute MWAIT and the "MWAIT exiting" VM-execution control was 1.
+ * @brief Guest software executed MWAIT
+ *
+ * Guest software attempted to execute MWAIT and the "MWAIT exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_MWAIT                                0x00000024
 
 /**
- * @brief A VM entry occurred due to the 1-setting of the "monitor trap flag" VM-execution control and injection of an MTF
- *        VM exit as part of VM entry.
+ * @brief VM-exit due to monitor trap flag
+ *
+ * A VM entry occurred due to the 1-setting of the "monitor trap flag" VM-execution control and injection of an MTF VM exit
+ * as part of VM entry.
+ *
+ * @see Vol3C[25.5.2(Monitor Trap Flag)]
  */
 #define VMX_EXIT_REASON_MONITOR_TRAP_FLAG                            0x00000025
 
 /**
- * @brief Guest software attempted to execute MONITOR and the "MONITOR exiting" VM-execution control was 1.
+ * @brief Guest software attempted to execute MONITOR
+ *
+ * Guest software attempted to execute MONITOR and the "MONITOR exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_MONITOR                              0x00000027
 
 /**
- * @brief Either guest software attempted to execute PAUSE and the "PAUSE exiting" VM-execution control was 1 or the
- *        "PAUSE-loop exiting" VM-execution control was 1 and guest software executed a PAUSE loop with execution time exceeding
- *        PLE_Window.
+ * @brief Guest software attempted to execute PAUSE
+ *
+ * Either guest software attempted to execute PAUSE and the "PAUSE exiting" VM-execution control was 1 or the "PAUSE-loop
+ * exiting" VM-execution control was 1 and guest software executed a PAUSE loop with execution time exceeding PLE_Window.
+ *
+ * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
  */
 #define VMX_EXIT_REASON_EXECUTE_PAUSE                                0x00000028
 
 /**
- * @brief A machine-check event occurred during VM entry.
+ * @brief VM-entry failure due to machine-check
+ *
+ * A machine-check event occurred during VM entry.
+ *
+ * @see Vol3C[26.8(MACHINE-CHECK EVENTS DURING VM ENTRY)]
  */
 #define VMX_EXIT_REASON_ERROR_MACHINE_CHECK                          0x00000029
 
 /**
- * @brief The logical processor determined that the value of bits 7:4 of the byte at offset 080H on the virtual-APIC page
- *        was below that of the TPR threshold VM-execution control field while the "use TPR shadow" VMexecution control was 1
- *        either as part of TPR virtualization or VM entry.
+ * @brief TPR below threshold
+ *
+ * The logical processor determined that the value of bits 7:4 of the byte at offset 080H on the virtual-APIC page was
+ * below that of the TPR threshold VM-execution control field while the "use TPR shadow" VMexecution control was 1 either
+ * as part of TPR virtualization or VM entry.
+ *
+ * @see Vol3C[29.1.2(TPR Virtualization)]
+ * @see Vol3C[26.6.7(VM Exits Induced by the TPR Threshold)]
  */
 #define VMX_EXIT_REASON_TPR_BELOW_THRESHOLD                          0x0000002B
 
 /**
- * @brief Guest software attempted to access memory at a physical address on the APIC-access page and the "virtualize APIC
- *        accesses" VM-execution control was 1.
+ * @brief APIC access
+ *
+ * Guest software attempted to access memory at a physical address on the APIC-access page and the "virtualize APIC
+ * accesses" VM-execution control was 1.
+ *
+ * @see Vol3C[29.4(VIRTUALIZING MEMORY-MAPPED APIC ACCESSES)]
  */
 #define VMX_EXIT_REASON_APIC_ACCESS                                  0x0000002C
 
 /**
- * @brief EOI virtualization was performed for a virtual interrupt whose vector indexed a bit set in the EOIexit bitmap.
+ * @brief Virtualized EOI
+ *
+ * EOI virtualization was performed for a virtual interrupt whose vector indexed a bit set in the EOIexit bitmap.
  */
 #define VMX_EXIT_REASON_VIRTUALIZED_EOI                              0x0000002D
 
 /**
- * @brief Guest software attempted to execute LGDT, LIDT, SGDT, or SIDT and the "descriptor-table exiting" VM-execution
- *        control was 1.
+ * @brief Access to GDTR or IDTR
+ *
+ * Guest software attempted to execute LGDT, LIDT, SGDT, or SIDT and the "descriptor-table exiting" VM-execution control
+ * was 1.
  */
 #define VMX_EXIT_REASON_GDTR_IDTR_ACCESS                             0x0000002E
 
 /**
- * @brief Guest software attempted to execute LLDT, LTR, SLDT, or STR and the "descriptor-table exiting" VM-execution
- *        control was 1.
+ * @brief Access to LDTR or TR
+ *
+ * Guest software attempted to execute LLDT, LTR, SLDT, or STR and the "descriptor-table exiting" VM-execution control was
+ * 1.
  */
 #define VMX_EXIT_REASON_LDTR_TR_ACCESS                               0x0000002F
 
 /**
- * @brief An attempt to access memory with a guest-physical address was disallowed by the configuration of the EPT paging
- *        structures.
+ * @brief EPT violation
+ *
+ * An attempt to access memory with a guest-physical address was disallowed by the configuration of the EPT paging
+ * structures.
  */
 #define VMX_EXIT_REASON_EPT_VIOLATION                                0x00000030
 
 /**
- * @brief An attempt to access memory with a guest-physical address encountered a misconfigured EPT paging-structure entry.
+ * @brief EPT misconfiguration
+ *
+ * An attempt to access memory with a guest-physical address encountered a misconfigured EPT paging-structure entry.
  */
 #define VMX_EXIT_REASON_EPT_MISCONFIGURATION                         0x00000031
 
 /**
- * @brief Guest software attempted to execute INVEPT.
+ * @brief INVEPT
+ *
+ * Guest software attempted to execute INVEPT.
  */
 #define VMX_EXIT_REASON_EXECUTE_INVEPT                               0x00000032
 
 /**
- * @brief Guest software attempted to execute RDTSCP and the "enable RDTSCP" and "RDTSC exiting" VM-execution controls were
- *        both 1.
+ * @brief RDTSCP
+ *
+ * Guest software attempted to execute RDTSCP and the "enable RDTSCP" and "RDTSC exiting" VM-execution controls were both
+ * 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDTSCP                               0x00000033
 
 /**
- * @brief The preemption timer counted down to zero.
+ * @brief VMX-preemption timer expired
+ *
+ * The preemption timer counted down to zero.
  */
 #define VMX_EXIT_REASON_VMX_PREEMPTION_TIMER_EXPIRED                 0x00000034
 
 /**
- * @brief Guest software attempted to execute INVVPID.
+ * @brief INVVPID
+ *
+ * Guest software attempted to execute INVVPID.
  */
 #define VMX_EXIT_REASON_EXECUTE_INVVPID                              0x00000035
 
 /**
- * @brief Guest software attempted to execute WBINVD and the "WBINVD exiting" VM-execution control was 1.
+ * @brief WBINVD
+ *
+ * Guest software attempted to execute WBINVD and the "WBINVD exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_WBINVD                               0x00000036
 
 /**
- * @brief Guest software attempted to execute XSETBV.
+ * @brief XSETBV - Guest software attempted to execute XSETBV
+ *
+ * Guest software attempted to execute XSETBV.
  */
 #define VMX_EXIT_REASON_EXECUTE_XSETBV                               0x00000037
 
 /**
- * @brief Guest software completed a write to the virtual-APIC page that must be virtualized by VMM software.
+ * @brief APIC write
+ *
+ * Guest software completed a write to the virtual-APIC page that must be virtualized by VMM software.
+ *
+ * @see Vol3C[29.4.3.3(APIC-Write VM Exits)]
  */
 #define VMX_EXIT_REASON_APIC_WRITE                                   0x00000038
 
 /**
- * @brief Guest software attempted to execute RDRAND and the "RDRAND exiting" VM-execution control was 1.
+ * @brief RDRAND
+ *
+ * Guest software attempted to execute RDRAND and the "RDRAND exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDRAND                               0x00000039
 
 /**
- * @brief Guest software attempted to execute INVPCID and the "enable INVPCID" and "INVLPG exiting" VM-execution controls
- *        were both 1.
+ * @brief INVPCID
+ *
+ * Guest software attempted to execute INVPCID and the "enable INVPCID" and "INVLPG exiting" VM-execution controls were
+ * both 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_INVPCID                              0x0000003A
 
 /**
- * @brief Guest software invoked a VM function with the VMFUNC instruction and the VM function either was not enabled or
- *        generated a function-specific condition causing a VM exit.
+ * @brief VMFUNC
+ *
+ * Guest software invoked a VM function with the VMFUNC instruction and the VM function either was not enabled or generated
+ * a function-specific condition causing a VM exit.
  */
 #define VMX_EXIT_REASON_EXECUTE_VMFUNC                               0x0000003B
 
 /**
- * @brief Guest software attempted to execute ENCLS and "enable ENCLS exiting" VM-execution control was 1 and either:
- *        -# EAX < 63 and the corresponding bit in the ENCLS-exiting bitmap is 1; or
- *        -# EAX >= 63 and bit 63 in the ENCLS-exiting bitmap is 1.
+ * @brief ENCLS
+ *
+ * Guest software attempted to execute ENCLS and "enable ENCLS exiting" VM-execution control was 1 and either:
+ * -# EAX < 63 and the corresponding bit in the ENCLS-exiting bitmap is 1; or
+ * -# EAX >= 63 and bit 63 in the ENCLS-exiting bitmap is 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_ENCLS                                0x0000003C
 
 /**
- * @brief Guest software attempted to execute RDSEED and the "RDSEED exiting" VM-execution control was 1.
+ * @brief RDSEED
+ *
+ * Guest software attempted to execute RDSEED and the "RDSEED exiting" VM-execution control was 1.
  */
 #define VMX_EXIT_REASON_EXECUTE_RDSEED                               0x0000003D
 
 /**
- * @brief The processor attempted to create a page-modification log entry and the value of the PML index was not in the
- *        range 0-511.
+ * @brief Page-modification log full
+ *
+ * The processor attempted to create a page-modification log entry and the value of the PML index was not in the range
+ * 0-511.
  */
 #define VMX_EXIT_REASON_PAGE_MODIFICATION_LOG_FULL                   0x0000003E
 
 /**
- * @brief Guest software attempted to execute XSAVES, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the
- *        logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
+ * @brief XSAVES
+ *
+ * Guest software attempted to execute XSAVES, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the logical-AND of
+ * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
 #define VMX_EXIT_REASON_EXECUTE_XSAVES                               0x0000003F
 
 /**
- * @brief Guest software attempted to execute XRSTORS, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the
- *        logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
+ * @brief XRSTORS
+ *
+ * Guest software attempted to execute XRSTORS, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the logical-AND of
+ * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
 #define VMX_EXIT_REASON_EXECUTE_XRSTORS                              0x00000040
 
@@ -13458,130 +16124,180 @@ typedef union
  * @{
  */
 /**
- * @brief VMCALL executed in VMX root operation.
+ * @brief VMCALL executed in VMX root operation
+ *
+ * VMCALL executed in VMX root operation.
  */
 #define VMX_ERROR_VMCALL_IN_VMX_ROOT_OPERATION                       0x00000001
 
 /**
- * @brief VMCLEAR with invalid physical address.
+ * @brief VMCLEAR with invalid physical address
+ *
+ * VMCLEAR with invalid physical address.
  */
 #define VMX_ERROR_VMCLEAR_INVALID_PHYSICAL_ADDRESS                   0x00000002
 
 /**
- * @brief VMCLEAR with VMXON pointer.
+ * @brief VMCLEAR with VMXON pointer
+ *
+ * VMCLEAR with VMXON pointer.
  */
 #define VMX_ERROR_VMCLEAR_INVALID_VMXON_POINTER                      0x00000003
 
 /**
- * @brief VMLAUNCH with non-clear VMCS.
+ * @brief VMLAUNCH with non-clear VMCS
+ *
+ * VMLAUNCH with non-clear VMCS.
  */
 #define VMX_ERROR_VMLAUCH_NON_CLEAR_VMCS                             0x00000004
 
 /**
- * @brief VMRESUME with non-launched VMCS.
+ * @brief VMRESUME with non-launched VMCS
+ *
+ * VMRESUME with non-launched VMCS.
  */
 #define VMX_ERROR_VMRESUME_NON_LAUNCHED_VMCS                         0x00000005
 
 /**
- * @brief VMRESUME after VMXOFF (VMXOFF and VMXON between VMLAUNCH and VMRESUME).
+ * @brief VMRESUME after VMXOFF (VMXOFF and VMXON between VMLAUNCH and VMRESUME)
+ *
+ * VMRESUME after VMXOFF (VMXOFF and VMXON between VMLAUNCH and VMRESUME).
  */
 #define VMX_ERROR_VMRESUME_AFTER_VMXOFF                              0x00000006
 
 /**
- * @brief VM entry with invalid control field(s).
+ * @brief VM entry with invalid control field(s)
+ *
+ * VM entry with invalid control field(s).
  */
 #define VMX_ERROR_VMENTRY_INVALID_CONTROL_FIELDS                     0x00000007
 
 /**
- * @brief VM entry with invalid host-state field(s).
+ * @brief VM entry with invalid host-state field(s)
+ *
+ * VM entry with invalid host-state field(s).
  */
 #define VMX_ERROR_VMENTRY_INVALID_HOST_STATE                         0x00000008
 
 /**
- * @brief VMPTRLD with invalid physical address.
+ * @brief VMPTRLD with invalid physical address
+ *
+ * VMPTRLD with invalid physical address.
  */
 #define VMX_ERROR_VMPTRLD_INVALID_PHYSICAL_ADDRESS                   0x00000009
 
 /**
- * @brief VMPTRLD with VMXON pointer.
+ * @brief VMPTRLD with VMXON pointer
+ *
+ * VMPTRLD with VMXON pointer.
  */
 #define VMX_ERROR_VMPTRLD_VMXON_POINTER                              0x0000000A
 
 /**
- * @brief VMPTRLD with incorrect VMCS revision identifier.
+ * @brief VMPTRLD with incorrect VMCS revision identifier
+ *
+ * VMPTRLD with incorrect VMCS revision identifier.
  */
 #define VMX_ERROR_VMPTRLD_INCORRECT_VMCS_REVISION_ID                 0x0000000B
 
 /**
- * @brief VMREAD/VMWRITE from/to unsupported VMCS component.
+ * @brief VMREAD/VMWRITE from/to unsupported VMCS component
+ *
+ * VMREAD/VMWRITE from/to unsupported VMCS component.
  */
 #define VMX_ERROR_VMREAD_VMWRITE_INVALID_COMPONENT                   0x0000000C
 
 /**
- * @brief VMWRITE to read-only VMCS component.
+ * @brief VMWRITE to read-only VMCS component
+ *
+ * VMWRITE to read-only VMCS component.
  */
 #define VMX_ERROR_VMWRITE_READONLY_COMPONENT                         0x0000000D
 
 /**
- * @brief VMXON executed in VMX root operation.
+ * @brief VMXON executed in VMX root operation
+ *
+ * VMXON executed in VMX root operation.
  */
 #define VMX_ERROR_VMXON_IN_VMX_ROOT_OP                               0x0000000F
 
 /**
- * @brief VM entry with invalid executive-VMCS pointer.
+ * @brief VM entry with invalid executive-VMCS pointer
+ *
+ * VM entry with invalid executive-VMCS pointer.
  */
 #define VMX_ERROR_VMENTRY_INVALID_VMCS_EXECUTIVE_POINTER             0x00000010
 
 /**
- * @brief VM entry with non-launched executive VMCS.
+ * @brief VM entry with non-launched executive VMCS
+ *
+ * VM entry with non-launched executive VMCS.
  */
 #define VMX_ERROR_VMENTRY_NON_LAUNCHED_EXECUTIVE_VMCS                0x00000011
 
 /**
  * @brief VM entry with executive-VMCS pointer not VMXON pointer (when attempting to deactivate the dual-monitor treatment
- *        of SMIs and SMM).
+ *        of SMIs and SMM)
+ *
+ * VM entry with executive-VMCS pointer not VMXON pointer (when attempting to deactivate the dual-monitor treatment of SMIs
+ * and SMM).
  */
 #define VMX_ERROR_VMENTRY_EXECUTIVE_VMCS_PTR                         0x00000012
 
 /**
- * @brief VMCALL with non-clear VMCS (when attempting to activate the dual-monitor treatment of SMIs and SMM).
+ * @brief VMCALL with non-clear VMCS (when attempting to activate the dual-monitor treatment of SMIs and SMM)
+ *
+ * VMCALL with non-clear VMCS (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
 #define VMX_ERROR_VMCALL_NON_CLEAR_VMCS                              0x00000013
 
 /**
- * @brief VMCALL with invalid VM-exit control fields.
+ * @brief VMCALL with invalid VM-exit control fields
+ *
+ * VMCALL with invalid VM-exit control fields.
  */
 #define VMX_ERROR_VMCALL_INVALID_VMEXIT_FIELDS                       0x00000014
 
 /**
  * @brief VMCALL with incorrect MSEG revision identifier (when attempting to activate the dual-monitor treatment of SMIs
- *        and SMM).
+ *        and SMM)
+ *
+ * VMCALL with incorrect MSEG revision identifier (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
 #define VMX_ERROR_VMCALL_INVALID_MSEG_REVISION_ID                    0x00000016
 
 /**
- * @brief VMXOFF under dual-monitor treatment of SMIs and SMM.
+ * @brief VMXOFF under dual-monitor treatment of SMIs and SMM
+ *
+ * VMXOFF under dual-monitor treatment of SMIs and SMM.
  */
 #define VMX_ERROR_VMXOFF_DUAL_MONITOR                                0x00000017
 
 /**
- * @brief VMCALL with invalid SMM-monitor features (when attempting to activate the dual-monitor treatment of SMIs and
- *        SMM).
+ * @brief VMCALL with invalid SMM-monitor features (when attempting to activate the dual-monitor treatment of SMIs and SMM)
+ *
+ * VMCALL with invalid SMM-monitor features (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
 #define VMX_ERROR_VMCALL_INVALID_SMM_MONITOR                         0x00000018
 
 /**
- * @brief VM entry with invalid VM-execution control fields in executive VMCS (when attempting to return from SMM).
+ * @brief VM entry with invalid VM-execution control fields in executive VMCS (when attempting to return from SMM)
+ *
+ * VM entry with invalid VM-execution control fields in executive VMCS (when attempting to return from SMM).
  */
 #define VMX_ERROR_VMENTRY_INVALID_VM_EXECUTION_CONTROL               0x00000019
 
 /**
- * @brief VM entry with events blocked by MOV SS.
+ * @brief VM entry with events blocked by MOV SS
+ *
+ * VM entry with events blocked by MOV SS.
  */
 #define VMX_ERROR_VMENTRY_MOV_SS                                     0x0000001A
 
 /**
- * @brief Invalid operand to INVEPT/INVVPID.
+ * @brief Invalid operand to INVEPT/INVVPID
+ *
+ * Invalid operand to INVEPT/INVVPID.
  */
 #define VMX_ERROR_INVEPT_INVVPID_INVALID_OPERAND                     0x0000001C
 
@@ -13623,6 +16339,8 @@ typedef struct
  */
 /**
  * @brief Exit Qualification for Debug Exceptions
+ *
+ * Exit Qualification for Debug Exceptions.
  */
 typedef union
 {
@@ -13667,12 +16385,16 @@ typedef union
 
 /**
  * @brief Exit Qualification for Task Switch
+ *
+ * Exit Qualification for Task Switch.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Selector of task-state segment (TSS) to which the guest attempted to switch
+     *
      * Selector of task-state segment (TSS) to which the guest attempted to switch.
      */
     UINT64 Selector                                                : 16;
@@ -13682,12 +16404,18 @@ typedef union
     UINT64 Reserved1                                               : 14;
 
     /**
+     * @brief Source of task switch initiation
+     *
      * Source of task switch initiation.
      */
     UINT64 Source                                                  : 2;
 #define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_BIT                30
 #define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_MASK               0x03
 #define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE(_)                 (((_) >> 30) & 0x03)
+#define VMX_EXIT_QUALIFICATION_TYPE_CALL_INSTRUCTION                 0x00000000
+#define VMX_EXIT_QUALIFICATION_TYPE_IRET_INSTRUCTION                 0x00000001
+#define VMX_EXIT_QUALIFICATION_TYPE_JMP_INSTRUCTION                  0x00000002
+#define VMX_EXIT_QUALIFICATION_TYPE_TASK_GATE_IN_IDT                 0x00000003
   };
 
   UINT64 Flags;
@@ -13695,12 +16423,17 @@ typedef union
 
 /**
  * @brief Exit Qualification for Control-Register Accesses
+ *
+ * Exit Qualification for Control-Register Accesses.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Number of control register (0 for CLTS and LMSW). Bit 3 is always 0 on processors that do not support Intel 64
+     *        architecture as they do not support CR8
+     *
      * Number of control register (0 for CLTS and LMSW). Bit 3 is always 0 on processors that do not support Intel 64
      * architecture as they do not support CR8.
      */
@@ -13708,34 +16441,69 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_BIT           0
 #define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_MASK          0x0F
 #define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER(_)            (((_) >> 0) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR0                          0x00000000
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR2                          0x00000002
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR3                          0x00000003
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR4                          0x00000004
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR8                          0x00000008
 
     /**
+     * @brief Access type
+     *
      * Access type.
      */
     UINT64 AccessType                                              : 2;
 #define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_BIT                4
 #define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_MASK               0x03
 #define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE(_)                 (((_) >> 4) & 0x03)
+#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                      0x00000000
+#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                    0x00000001
+#define VMX_EXIT_QUALIFICATION_ACCESS_CLTS                           0x00000002
+#define VMX_EXIT_QUALIFICATION_ACCESS_LMSW                           0x00000003
 
     /**
+     * @brief LMSW operand type. For CLTS and MOV CR, cleared to 0
+     *
      * LMSW operand type. For CLTS and MOV CR, cleared to 0.
      */
     UINT64 LmswOperandType                                         : 1;
 #define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_BIT          6
 #define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_MASK         0x01
 #define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE(_)           (((_) >> 6) & 0x01)
+#define VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                      0x00000000
+#define VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                        0x00000001
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief For MOV CR, the general-purpose register
+     *
      * For MOV CR, the general-purpose register.
      */
     UINT64 GeneralPurposeRegister                                  : 4;
 #define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_BIT   8
 #define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_MASK  0x0F
 #define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER(_)    (((_) >> 8) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
+#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
+#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
+#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
+#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
+#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
+#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
+#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
+#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
+#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
+#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
+#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
+#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
+#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
+#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
+#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
     UINT64 Reserved2                                               : 4;
 
     /**
+     * @brief For LMSW, the LMSW source data. For CLTS and MOV CR, cleared to 0
+     *
      * For LMSW, the LMSW source data. For CLTS and MOV CR, cleared to 0.
      */
     UINT64 LmswSourceData                                          : 16;
@@ -13755,30 +16523,60 @@ typedef union
   struct
   {
     /**
+     * @brief Number of debug register
+     *
      * Number of debug register.
      */
     UINT64 DebugRegister                                           : 3;
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_BIT             0
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_MASK            0x07
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER(_)              (((_) >> 0) & 0x07)
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR0                          0x00000000
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR1                          0x00000001
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR2                          0x00000002
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR3                          0x00000003
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR6                          0x00000006
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR7                          0x00000007
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief Direction of access (0 = MOV to DR; 1 = MOV from DR)
+     *
      * Direction of access (0 = MOV to DR; 1 = MOV from DR).
      */
     UINT64 DirectionOfAccess                                       : 1;
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_BIT        4
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_MASK       0x01
 #define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS(_)         (((_) >> 4) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR                   0x00000000
+#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR                 0x00000001
     UINT64 Reserved2                                               : 3;
 
     /**
+     * @brief General-purpose register
+     *
      * General-purpose register.
      */
     UINT64 GeneralPurposeRegister                                  : 4;
 #define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_BIT   8
 #define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_MASK  0x0F
 #define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER(_)    (((_) >> 8) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
+#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
+#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
+#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
+#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
+#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
+#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
+#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
+#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
+#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
+#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
+#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
+#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
+#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
+#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
+#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
   };
 
   UINT64 Flags;
@@ -13786,53 +16584,78 @@ typedef union
 
 /**
  * @brief Exit Qualification for I/O Instructions
+ *
+ * Exit Qualification for I/O Instructions.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Size of access
+     *
      * Size of access.
      */
     UINT64 SizeOfAccess                                            : 3;
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_BIT     0
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_MASK    0x07
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS(_)      (((_) >> 0) & 0x07)
+#define VMX_EXIT_QUALIFICATION_WIDTH_1_BYTE                          0x00000000
+#define VMX_EXIT_QUALIFICATION_WIDTH_2_BYTE                          0x00000001
+#define VMX_EXIT_QUALIFICATION_WIDTH_4_BYTE                          0x00000003
 
     /**
+     * @brief Direction of the attempted access (0 = OUT, 1 = IN)
+     *
      * Direction of the attempted access (0 = OUT, 1 = IN).
      */
     UINT64 DirectionOfAccess                                       : 1;
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_BIT 3
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_MASK 0x01
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS(_) (((_) >> 3) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DIRECTION_OUT                         0x00000000
+#define VMX_EXIT_QUALIFICATION_DIRECTION_IN                          0x00000001
 
     /**
+     * @brief String instruction (0 = not string; 1 = string)
+     *
      * String instruction (0 = not string; 1 = string).
      */
     UINT64 StringInstruction                                       : 1;
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_BIT 4
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_MASK 0x01
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION(_)  (((_) >> 4) & 0x01)
+#define VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING                  0x00000000
+#define VMX_EXIT_QUALIFICATION_IS_STRING_STRING                      0x00000001
 
     /**
+     * @brief REP prefixed (0 = not REP; 1 = REP)
+     *
      * REP prefixed (0 = not REP; 1 = REP).
      */
     UINT64 RepPrefixed                                             : 1;
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_BIT       5
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_MASK      0x01
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED(_)        (((_) >> 5) & 0x01)
+#define VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                        0x00000000
+#define VMX_EXIT_QUALIFICATION_IS_REP_REP                            0x00000001
 
     /**
+     * @brief Operand encoding (0 = DX, 1 = immediate)
+     *
      * Operand encoding (0 = DX, 1 = immediate).
      */
     UINT64 OperandEncoding                                         : 1;
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_BIT   6
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_MASK  0x01
 #define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING(_)    (((_) >> 6) & 0x01)
+#define VMX_EXIT_QUALIFICATION_ENCODING_DX                           0x00000000
+#define VMX_EXIT_QUALIFICATION_ENCODING_IMMEDIATE                    0x00000001
     UINT64 Reserved1                                               : 9;
 
     /**
+     * @brief Port number (as specified in DX or in an immediate operand)
+     *
      * Port number (as specified in DX or in an immediate operand).
      */
     UINT64 PortNumber                                              : 16;
@@ -13846,12 +16669,17 @@ typedef union
 
 /**
  * @brief Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physical Accesses
+ *
+ * Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physical Accesses.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief - If the APIC-access VM exit is due to a linear access, the offset of access within the APIC page.
+     *        - Undefined if the APIC-access VM exit is due a guest-physical access
+     *
      * - If the APIC-access VM exit is due to a linear access, the offset of access within the APIC page.
      * - Undefined if the APIC-access VM exit is due a guest-physical access.
      */
@@ -13861,12 +16689,56 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET(_)            (((_) >> 0) & 0xFFF)
 
     /**
+     * @brief Access type
+     *
      * Access type.
      */
     UINT64 AccessType                                              : 4;
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_BIT           12
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_MASK          0x0F
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE(_)            (((_) >> 12) & 0x0F)
+    /**
+     * @brief Linear access for a data read during instruction execution
+     *
+     * Linear access for a data read during instruction execution.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                      0x00000000
+
+    /**
+     * @brief Linear access for a data write during instruction execution
+     *
+     * Linear access for a data write during instruction execution.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                     0x00000001
+
+    /**
+     * @brief Linear access for an instruction fetch
+     *
+     * Linear access for an instruction fetch.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTRUCTION_FETCH         0x00000002
+
+    /**
+     * @brief Linear access (read or write) during event delivery
+     *
+     * Linear access (read or write) during event delivery.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_EVENT_DELIVERY            0x00000003
+
+    /**
+     * @brief Guest-physical access during event delivery
+     *
+     * Guest-physical access during event delivery.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_EVENT_DELIVERY          0x0000000A
+
+    /**
+     * @brief Guest-physical access for an instruction fetch or during instruction execution
+     *
+     * Guest-physical access for an instruction fetch or during instruction execution.
+     */
+#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTRUCTION_FETCH       0x0000000F
+
   };
 
   UINT64 Flags;
@@ -13874,12 +16746,16 @@ typedef union
 
 /**
  * @brief Exit Qualification for EPT Violations
+ *
+ * Exit Qualification for EPT Violations.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Set if the access causing the EPT violation was a data read
+     *
      * Set if the access causing the EPT violation was a data read.
      */
     UINT64 ReadAccess                                              : 1;
@@ -13888,6 +16764,8 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS(_)          (((_) >> 0) & 0x01)
 
     /**
+     * @brief Set if the access causing the EPT violation was a data write
+     *
      * Set if the access causing the EPT violation was a data write.
      */
     UINT64 WriteAccess                                             : 1;
@@ -13896,6 +16774,8 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS(_)         (((_) >> 1) & 0x01)
 
     /**
+     * @brief Set if the access causing the EPT violation was an instruction fetch
+     *
      * Set if the access causing the EPT violation was an instruction fetch.
      */
     UINT64 ExecuteAccess                                           : 1;
@@ -13904,6 +16784,9 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS(_)       (((_) >> 2) & 0x01)
 
     /**
+     * @brief The logical-AND of bit 0 in the EPT paging-structure entries used to translate the guest-physical address of the
+     *        access causing the EPT violation (indicates whether the guest-physical address was readable)
+     *
      * The logical-AND of bit 0 in the EPT paging-structure entries used to translate the guest-physical address of the access
      * causing the EPT violation (indicates whether the guest-physical address was readable).
      */
@@ -13913,6 +16796,9 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE(_)         (((_) >> 3) & 0x01)
 
     /**
+     * @brief The logical-AND of bit 1 in the EPT paging-structure entries used to translate the guest-physical address of the
+     *        access causing the EPT violation (indicates whether the guest-physical address was writeable)
+     *
      * The logical-AND of bit 1 in the EPT paging-structure entries used to translate the guest-physical address of the access
      * causing the EPT violation (indicates whether the guest-physical address was writeable).
      */
@@ -13922,6 +16808,12 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE(_)        (((_) >> 4) & 0x01)
 
     /**
+     * @brief The logical-AND of bit 2 in the EPT paging-structure entries used to translate the guest-physical address of the
+     *        access causing the EPT violation.
+     *        If the "mode-based execute control for EPT" VM-execution control is 0, this indicates whether the guest-physical address
+     *        was executable. If that control is 1, this indicates whether the guest-physical address was executable for
+     *        supervisor-mode linear addresses
+     *
      * The logical-AND of bit 2 in the EPT paging-structure entries used to translate the guest-physical address of the access
      * causing the EPT violation.
      * If the "mode-based execute control for EPT" VM-execution control is 0, this indicates whether the guest-physical address
@@ -13934,6 +16826,11 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE(_)       (((_) >> 5) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control" VM-execution control is 0, the value of this bit is undefined. If that
+     *        control is 1, this bit is the logical-AND of bit 10 in the EPT paging-structures entries used to translate the
+     *        guest-physical address of the access causing the EPT violation. In this case, it indicates whether the guest-physical
+     *        address was executable for user-mode linear addresses
+     *
      * If the "mode-based execute control" VM-execution control is 0, the value of this bit is undefined. If that control is 1,
      * this bit is the logical-AND of bit 10 in the EPT paging-structures entries used to translate the guest-physical address
      * of the access causing the EPT violation. In this case, it indicates whether the guest-physical address was executable
@@ -13945,6 +16842,9 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE(_) (((_) >> 6) & 0x01)
 
     /**
+     * @brief Set if the guest linear-address field is valid. The guest linear-address field is valid for all EPT violations
+     *        except those resulting from an attempt to load the guest PDPTEs as part of the execution of the MOV CR instruction
+     *
      * Set if the guest linear-address field is valid. The guest linear-address field is valid for all EPT violations except
      * those resulting from an attempt to load the guest PDPTEs as part of the execution of the MOV CR instruction.
      */
@@ -13954,6 +16854,13 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS(_) (((_) >> 7) & 0x01)
 
     /**
+     * @brief If bit 7 is 1:
+     *        - Set if the access causing the EPT violation is to a guest-physical address that is the translation of a linear
+     *        address.
+     *        - Clear if the access causing the EPT violation is to a paging-structure entry as part of a page walk or the update of
+     *        an accessed or dirty bit.
+     *        Reserved if bit 7 is 0 (cleared to 0)
+     *
      * If bit 7 is 1:
      * - Set if the access causing the EPT violation is to a guest-physical address that is the translation of a linear
      * address.
@@ -13967,8 +16874,14 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION(_) (((_) >> 8) & 0x01)
 
     /**
+     * @brief This bit is 0 if the linear address is a supervisor-mode linear address and 1 if it is a user-mode linear
+     *        address. Otherwise, this bit is undefined
+     *
      * This bit is 0 if the linear address is a supervisor-mode linear address and 1 if it is a user-mode linear address.
      * Otherwise, this bit is undefined.
+     *
+     * @remarks If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations. (If
+     *          CR0.PG = 0, the translation of every linear address is a user-mode linear address and thus this bit will be 1.)
      */
     UINT64 UserModeLinearAddress                                   : 1;
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_BIT 9
@@ -13978,6 +16891,9 @@ typedef union
     /**
      * This bit is 0 if paging translates the linear address to a read-only page and 1 if it translates to a read/write page.
      * Otherwise, this bit is undefined
+     *
+     * @remarks If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations. (If
+     *          CR0.PG = 0, every linear address is read/write and thus this bit will be 1.)
      */
     UINT64 ReadableWritablePage                                    : 1;
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_BIT 10
@@ -13985,8 +16901,14 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE(_) (((_) >> 10) & 0x01)
 
     /**
+     * @brief This bit is 0 if paging translates the linear address to an executable page and 1 if it translates to an
+     *        execute-disable page. Otherwise, this bit is undefined
+     *
      * This bit is 0 if paging translates the linear address to an executable page and 1 if it translates to an execute-disable
      * page. Otherwise, this bit is undefined.
+     *
+     * @remarks If bit 7 is 1, bit 8 is 1, and the processor supports advanced VM-exit information for EPT violations. (If
+     *          CR0.PG = 0, CR4.PAE = 0, or IA32_EFER.NXE = 0, every linear address is executable and thus this bit will be 0.)
      */
     UINT64 ExecuteDisablePage                                      : 1;
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_BIT 11
@@ -13994,6 +16916,8 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE(_) (((_) >> 11) & 0x01)
 
     /**
+     * @brief NMI unblocking due to IRET
+     *
      * NMI unblocking due to IRET.
      */
     UINT64 NmiUnblocking                                           : 1;
@@ -14026,16 +16950,26 @@ typedef union
  *
  * The extended-page-table pointer (EPTP) contains the address of the base of EPT PML4 table, as well as other EPT
  * configuration information.
+ *
+ * @see Vol3C[28.2.2(EPT Translation Mechanism]
+ * @see Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)] (reference)
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief EPT paging-structure memory type:
+     *        - 0 = Uncacheable (UC)
+     *        - 6 = Write-back (WB)
+     *        Other values are reserved
+     *
      * EPT paging-structure memory type:
      * - 0 = Uncacheable (UC)
      * - 6 = Write-back (WB)
      * Other values are reserved.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
 #define EPT_POINTER_MEMORY_TYPE_BIT                                  0
@@ -14043,7 +16977,11 @@ typedef union
 #define EPT_POINTER_MEMORY_TYPE(_)                                   (((_) >> 0) & 0x07)
 
     /**
+     * @brief This value is 1 less than the EPT page-walk length
+     *
      * This value is 1 less than the EPT page-walk length.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 PageWalkLength                                          : 3;
 #define EPT_POINTER_PAGE_WALK_LENGTH_BIT                             3
@@ -14051,7 +16989,11 @@ typedef union
 #define EPT_POINTER_PAGE_WALK_LENGTH(_)                              (((_) >> 3) & 0x07)
 
     /**
+     * @brief Setting this control to 1 enables accessed and dirty flags for EPT
+     *
      * Setting this control to 1 enables accessed and dirty flags for EPT.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 EnableAccessAndDirtyFlags                               : 1;
 #define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_BIT                6
@@ -14060,6 +17002,8 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief Bits N-1:12 of the physical address of the 4-KByte aligned EPT PML4 table
+     *
      * Bits N-1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -14083,12 +17027,16 @@ typedef union
  * - Bits 2:0 are all 0.
  * Because an EPT PML4E is identified using bits 47:39 of the guest-physical address, it controls access to a 512- GByte
  * region of the guest-physical-address space.
+ *
+ * @see Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)]
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry
+     *
      * Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14097,6 +17045,8 @@ typedef union
 #define EPT_PML4_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry
+     *
      * Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14105,6 +17055,11 @@ typedef union
 #define EPT_PML4_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 512-GByte region controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 512-GByte region controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 512-GByte region controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14117,8 +17072,13 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 512-GByte region
+     *        controlled by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 512-GByte region controlled by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPT_PML4_ACCESSED_BIT                                        8
@@ -14127,6 +17087,10 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 512-GByte region
+     *        controlled by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 512-GByte region controlled by
      * this entry. If that control is 0, this bit is ignored.
@@ -14138,6 +17102,8 @@ typedef union
     UINT64 Reserved3                                               : 1;
 
     /**
+     * @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
+     *
      * Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -14151,12 +17117,16 @@ typedef union
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
+ *
+ * Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry
+     *
      * Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14165,6 +17135,8 @@ typedef union
 #define EPDPTE_1GB_READ_ACCESS(_)                                    (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry
+     *
      * Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14173,6 +17145,11 @@ typedef union
 #define EPDPTE_1GB_WRITE_ACCESS(_)                                   (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 1-GByte page controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 1-GByte page controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 1-GByte page controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14184,7 +17161,11 @@ typedef union
 #define EPDPTE_1GB_EXECUTE_ACCESS(_)                                 (((_) >> 2) & 0x01)
 
     /**
+     * @brief EPT memory type for this 1-GByte page
+     *
      * EPT memory type for this 1-GByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
 #define EPDPTE_1GB_MEMORY_TYPE_BIT                                   3
@@ -14192,7 +17173,11 @@ typedef union
 #define EPDPTE_1GB_MEMORY_TYPE(_)                                    (((_) >> 3) & 0x07)
 
     /**
+     * @brief Ignore PAT memory type for this 1-GByte page
+     *
      * Ignore PAT memory type for this 1-GByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
 #define EPDPTE_1GB_IGNORE_PAT_BIT                                    6
@@ -14200,6 +17185,8 @@ typedef union
 #define EPDPTE_1GB_IGNORE_PAT(_)                                     (((_) >> 6) & 0x01)
 
     /**
+     * @brief Must be 1 (otherwise, this entry references an EPT page directory)
+     *
      * Must be 1 (otherwise, this entry references an EPT page directory).
      */
     UINT64 LargePage                                               : 1;
@@ -14208,8 +17195,13 @@ typedef union
 #define EPDPTE_1GB_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page referenced by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPDPTE_1GB_ACCESSED_BIT                                      8
@@ -14217,8 +17209,13 @@ typedef union
 #define EPDPTE_1GB_ACCESSED(_)                                       (((_) >> 8) & 0x01)
 
     /**
+     * @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced by this
      * entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
 #define EPDPTE_1GB_DIRTY_BIT                                         9
@@ -14226,6 +17223,10 @@ typedef union
 #define EPDPTE_1GB_DIRTY(_)                                          (((_) >> 9) & 0x01)
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte page controlled
+     *        by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte page controlled by this
      * entry. If that control is 0, this bit is ignored.
@@ -14237,6 +17238,8 @@ typedef union
     UINT64 Reserved1                                               : 19;
 
     /**
+     * @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
+     *
      * Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 18;
@@ -14246,9 +17249,15 @@ typedef union
     UINT64 Reserved2                                               : 15;
 
     /**
+     * @brief Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
+     *        page are convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is
+     *        0, this bit is ignored
+     *
      * Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this page are
      * convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is 0, this
      * bit is ignored.
+     *
+     * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
 #define EPDPTE_1GB_SUPPRESS_VE_BIT                                   63
@@ -14261,12 +17270,16 @@ typedef union
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory
+ *
+ * Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry
+     *
      * Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14275,6 +17288,8 @@ typedef union
 #define EPDPTE_READ_ACCESS(_)                                        (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry
+     *
      * Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14283,6 +17298,11 @@ typedef union
 #define EPDPTE_WRITE_ACCESS(_)                                       (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 1-GByte region controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 1-GByte region controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 1-GByte region controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14295,8 +17315,13 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte region
+     *        controlled by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte region controlled by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPDPTE_ACCESSED_BIT                                          8
@@ -14305,6 +17330,10 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte region controlled
+     *        by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte region controlled by
      * this entry. If that control is 0, this bit is ignored.
@@ -14316,6 +17345,8 @@ typedef union
     UINT64 Reserved3                                               : 1;
 
     /**
+     * @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
+     *
      * Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -14329,12 +17360,16 @@ typedef union
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page
+ *
+ * Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry
+     *
      * Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14343,6 +17378,8 @@ typedef union
 #define EPDE_2MB_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry
+     *
      * Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14351,6 +17388,11 @@ typedef union
 #define EPDE_2MB_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 2-MByte page controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 2-MByte page controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 2-MByte page controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14362,7 +17404,11 @@ typedef union
 #define EPDE_2MB_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
 
     /**
+     * @brief EPT memory type for this 2-MByte page
+     *
      * EPT memory type for this 2-MByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
 #define EPDE_2MB_MEMORY_TYPE_BIT                                     3
@@ -14370,7 +17416,11 @@ typedef union
 #define EPDE_2MB_MEMORY_TYPE(_)                                      (((_) >> 3) & 0x07)
 
     /**
+     * @brief Ignore PAT memory type for this 2-MByte page
+     *
      * Ignore PAT memory type for this 2-MByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
 #define EPDE_2MB_IGNORE_PAT_BIT                                      6
@@ -14378,6 +17428,8 @@ typedef union
 #define EPDE_2MB_IGNORE_PAT(_)                                       (((_) >> 6) & 0x01)
 
     /**
+     * @brief Must be 1 (otherwise, this entry references an EPT page table)
+     *
      * Must be 1 (otherwise, this entry references an EPT page table).
      */
     UINT64 LargePage                                               : 1;
@@ -14386,8 +17438,13 @@ typedef union
 #define EPDE_2MB_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page referenced by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPDE_2MB_ACCESSED_BIT                                        8
@@ -14395,8 +17452,13 @@ typedef union
 #define EPDE_2MB_ACCESSED(_)                                         (((_) >> 8) & 0x01)
 
     /**
+     * @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced by this
      * entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
 #define EPDE_2MB_DIRTY_BIT                                           9
@@ -14404,6 +17466,10 @@ typedef union
 #define EPDE_2MB_DIRTY(_)                                            (((_) >> 9) & 0x01)
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte page controlled
+     *        by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte page controlled by this
      * entry. If that control is 0, this bit is ignored.
@@ -14415,6 +17481,8 @@ typedef union
     UINT64 Reserved1                                               : 10;
 
     /**
+     * @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
+     *
      * Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 27;
@@ -14424,9 +17492,15 @@ typedef union
     UINT64 Reserved2                                               : 15;
 
     /**
+     * @brief Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
+     *        page are convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is
+     *        0, this bit is ignored
+     *
      * Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this page are
      * convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is 0, this
      * bit is ignored.
+     *
+     * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
 #define EPDE_2MB_SUPPRESS_VE_BIT                                     63
@@ -14439,12 +17513,16 @@ typedef union
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table
+ *
+ * Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry
+     *
      * Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14453,6 +17531,8 @@ typedef union
 #define EPDE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry
+     *
      * Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14461,6 +17541,11 @@ typedef union
 #define EPDE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 2-MByte region controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 2-MByte region controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 2-MByte region controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14473,8 +17558,13 @@ typedef union
     UINT64 Reserved1                                               : 5;
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte region
+     *        controlled by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte region controlled by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPDE_ACCESSED_BIT                                            8
@@ -14483,6 +17573,10 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte region controlled
+     *        by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte region controlled by
      * this entry. If that control is 0, this bit is ignored.
@@ -14494,6 +17588,8 @@ typedef union
     UINT64 Reserved3                                               : 1;
 
     /**
+     * @brief Physical address of 4-KByte aligned EPT page table referenced by this entry
+     *
      * Physical address of 4-KByte aligned EPT page table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -14507,12 +17603,16 @@ typedef union
 
 /**
  * @brief Format of an EPT Page-Table Entry that Maps a 4-KByte Page
+ *
+ * Format of an EPT Page-Table Entry that Maps a 4-KByte Page.
  */
 typedef union
 {
   struct
   {
     /**
+     * @brief Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry
+     *
      * Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
@@ -14521,6 +17621,8 @@ typedef union
 #define EPTE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
 
     /**
+     * @brief Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry
+     *
      * Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
@@ -14529,6 +17631,11 @@ typedef union
 #define EPTE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
 
     /**
+     * @brief If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
+     *        instruction fetches are allowed from the 4-KByte page controlled by this entry.
+     *        If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
+     *        allowed from supervisor-mode linear addresses in the 4-KByte page controlled by this entry
+     *
      * If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether instruction
      * fetches are allowed from the 4-KByte page controlled by this entry.
      * If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
@@ -14540,7 +17647,11 @@ typedef union
 #define EPTE_EXECUTE_ACCESS(_)                                       (((_) >> 2) & 0x01)
 
     /**
+     * @brief EPT memory type for this 4-KByte page
+     *
      * EPT memory type for this 4-KByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
 #define EPTE_MEMORY_TYPE_BIT                                         3
@@ -14548,7 +17659,11 @@ typedef union
 #define EPTE_MEMORY_TYPE(_)                                          (((_) >> 3) & 0x07)
 
     /**
+     * @brief Ignore PAT memory type for this 4-KByte page
+     *
      * Ignore PAT memory type for this 4-KByte page.
+     *
+     * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
 #define EPTE_IGNORE_PAT_BIT                                          6
@@ -14557,8 +17672,13 @@ typedef union
     UINT64 Reserved1                                               : 1;
 
     /**
+     * @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 4-KByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 4-KByte page referenced by
      * this entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
 #define EPTE_ACCESSED_BIT                                            8
@@ -14566,8 +17686,13 @@ typedef union
 #define EPTE_ACCESSED(_)                                             (((_) >> 8) & 0x01)
 
     /**
+     * @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced
+     *        by this entry. Ignored if bit 6 of EPTP is 0
+     *
      * If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced by this
      * entry. Ignored if bit 6 of EPTP is 0.
+     *
+     * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
 #define EPTE_DIRTY_BIT                                               9
@@ -14575,6 +17700,10 @@ typedef union
 #define EPTE_DIRTY(_)                                                (((_) >> 9) & 0x01)
 
     /**
+     * @brief Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
+     *        is 1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 4-KByte page controlled
+     *        by this entry. If that control is 0, this bit is ignored
+     *
      * Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control is 1,
      * indicates whether instruction fetches are allowed from user-mode linear addresses in the 4-KByte page controlled by this
      * entry. If that control is 0, this bit is ignored.
@@ -14586,6 +17715,8 @@ typedef union
     UINT64 Reserved2                                               : 1;
 
     /**
+     * @brief Physical address of the 4-KByte page referenced by this entry
+     *
      * Physical address of the 4-KByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
@@ -14595,9 +17726,15 @@ typedef union
     UINT64 Reserved3                                               : 15;
 
     /**
+     * @brief Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
+     *        page are convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is
+     *        0, this bit is ignored
+     *
      * Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this page are
      * convertible to virtualization exceptions only if this bit is 0. If "EPT-violation \#VE" VMexecution control is 0, this
      * bit is ignored.
+     *
+     * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
 #define EPTE_SUPPRESS_VE_BIT                                         63
@@ -14610,6 +17747,8 @@ typedef union
 
 /**
  * @brief Format of a common EPT Entry
+ *
+ * Format of a common EPT Entry.
  */
 typedef union
 {
@@ -14753,6 +17892,8 @@ typedef union
   struct
   {
     /**
+     * @brief Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields
+     *
      * Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields.
      */
     UINT16 AccessType                                              : 1;
@@ -14761,6 +17902,8 @@ typedef union
 #define VMCS_COMPONENT_ENCODING_ACCESS_TYPE(_)                       (((_) >> 0) & 0x01)
 
     /**
+     * @brief Index
+     *
      * Index.
      */
     UINT16 Index                                                   : 9;
@@ -14781,6 +17924,8 @@ typedef union
 #define VMCS_COMPONENT_ENCODING_TYPE(_)                              (((_) >> 10) & 0x03)
 
     /**
+     * @brief Reserved (must be 0)
+     *
      * Reserved (must be 0).
      */
     UINT16 MustBeZero                                              : 1;
@@ -14821,17 +17966,31 @@ typedef union
  * @{
  */
 /**
- * @brief Virtual-processor identifier (VPID).
+ * @brief Virtual-processor identifier (VPID)
+ *
+ * Virtual-processor identifier (VPID).
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "enable VPID" VM-execution control.
  */
 #define VMCS_CTRL_VIRTUAL_PROCESSOR_IDENTIFIER                       0x00000000
 
 /**
- * @brief Posted-interrupt notification vector.
+ * @brief Posted-interrupt notification vector
+ *
+ * Posted-interrupt notification vector.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "process posted interrupts" VM-execution
+ *          control.
  */
 #define VMCS_CTRL_POSTED_INTERRUPT_NOTIFICATION_VECTOR               0x00000002
 
 /**
- * @brief EPTP index.
+ * @brief EPTP index
+ *
+ * EPTP index.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "EPT-violation \#VE" VM-execution
+ *          control.
  */
 #define VMCS_CTRL_EPTP_INDEX                                         0x00000004
 
@@ -14847,52 +18006,77 @@ typedef union
  * @{
  */
 /**
- * @brief Guest ES selector.
+ * @brief Guest ES selector
+ *
+ * Guest ES selector.
  */
 #define VMCS_GUEST_ES_SELECTOR                                       0x00000800
 
 /**
- * @brief Guest CS selector.
+ * @brief Guest CS selector
+ *
+ * Guest CS selector.
  */
 #define VMCS_GUEST_CS_SELECTOR                                       0x00000802
 
 /**
- * @brief Guest SS selector.
+ * @brief Guest SS selector
+ *
+ * Guest SS selector.
  */
 #define VMCS_GUEST_SS_SELECTOR                                       0x00000804
 
 /**
- * @brief Guest DS selector.
+ * @brief Guest DS selector
+ *
+ * Guest DS selector.
  */
 #define VMCS_GUEST_DS_SELECTOR                                       0x00000806
 
 /**
- * @brief Guest FS selector.
+ * @brief Guest FS selector
+ *
+ * Guest FS selector.
  */
 #define VMCS_GUEST_FS_SELECTOR                                       0x00000808
 
 /**
- * @brief Guest GS selector.
+ * @brief Guest GS selector
+ *
+ * Guest GS selector.
  */
 #define VMCS_GUEST_GS_SELECTOR                                       0x0000080A
 
 /**
- * @brief Guest LDTR selector.
+ * @brief Guest LDTR selector
+ *
+ * Guest LDTR selector.
  */
 #define VMCS_GUEST_LDTR_SELECTOR                                     0x0000080C
 
 /**
- * @brief Guest TR selector.
+ * @brief Guest TR selector
+ *
+ * Guest TR selector.
  */
 #define VMCS_GUEST_TR_SELECTOR                                       0x0000080E
 
 /**
- * @brief Guest interrupt status.
+ * @brief Guest interrupt status
+ *
+ * Guest interrupt status.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "virtual-interrupt delivery"
+ *          VM-execution control.
  */
 #define VMCS_GUEST_INTERRUPT_STATUS                                  0x00000810
 
 /**
- * @brief PML index.
+ * @brief PML index
+ *
+ * PML index.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "enable PML" VM-execution control.
  */
 #define VMCS_GUEST_PML_INDEX                                         0x00000812
 
@@ -14908,37 +18092,51 @@ typedef union
  * @{
  */
 /**
- * @brief Host ES selector.
+ * @brief Host ES selector
+ *
+ * Host ES selector.
  */
 #define VMCS_HOST_ES_SELECTOR                                        0x00000C00
 
 /**
- * @brief Host CS selector.
+ * @brief Host CS selector
+ *
+ * Host CS selector.
  */
 #define VMCS_HOST_CS_SELECTOR                                        0x00000C02
 
 /**
- * @brief Host SS selector.
+ * @brief Host SS selector
+ *
+ * Host SS selector.
  */
 #define VMCS_HOST_SS_SELECTOR                                        0x00000C04
 
 /**
- * @brief Host DS selector.
+ * @brief Host DS selector
+ *
+ * Host DS selector.
  */
 #define VMCS_HOST_DS_SELECTOR                                        0x00000C06
 
 /**
- * @brief Host FS selector.
+ * @brief Host FS selector
+ *
+ * Host FS selector.
  */
 #define VMCS_HOST_FS_SELECTOR                                        0x00000C08
 
 /**
- * @brief Host GS selector.
+ * @brief Host GS selector
+ *
+ * Host GS selector.
  */
 #define VMCS_HOST_GS_SELECTOR                                        0x00000C0A
 
 /**
- * @brief Host TR selector.
+ * @brief Host TR selector
+ *
+ * Host TR selector.
  */
 #define VMCS_HOST_TR_SELECTOR                                        0x00000C0C
 
@@ -14967,127 +18165,175 @@ typedef union
  * @{
  */
 /**
- * @brief Address of I/O bitmap A.
+ * @brief Address of I/O bitmap A
+ *
+ * Address of I/O bitmap A.
  */
 #define VMCS_CTRL_IO_BITMAP_A_ADDRESS                                0x00002000
 
 /**
- * @brief Address of I/O bitmap B.
+ * @brief Address of I/O bitmap B
+ *
+ * Address of I/O bitmap B.
  */
 #define VMCS_CTRL_IO_BITMAP_B_ADDRESS                                0x00002002
 
 /**
- * @brief Address of MSR bitmaps.
+ * @brief Address of MSR bitmaps
+ *
+ * Address of MSR bitmaps.
  */
 #define VMCS_CTRL_MSR_BITMAP_ADDRESS                                 0x00002004
 
 /**
- * @brief VM-exit MSR-store address.
+ * @brief VM-exit MSR-store address
+ *
+ * VM-exit MSR-store address.
  */
 #define VMCS_CTRL_VMEXIT_MSR_STORE_ADDRESS                           0x00002006
 
 /**
- * @brief VM-exit MSR-load address.
+ * @brief VM-exit MSR-load address
+ *
+ * VM-exit MSR-load address.
  */
 #define VMCS_CTRL_VMEXIT_MSR_LOAD_ADDRESS                            0x00002008
 
 /**
- * @brief VM-entry MSR-load address.
+ * @brief VM-entry MSR-load address
+ *
+ * VM-entry MSR-load address.
  */
 #define VMCS_CTRL_VMENTRY_MSR_LOAD_ADDRESS                           0x0000200A
 
 /**
- * @brief Executive-VMCS pointer.
+ * @brief Executive-VMCS pointer
+ *
+ * Executive-VMCS pointer.
  */
 #define VMCS_CTRL_EXECUTIVE_VMCS_POINTER                             0x0000200C
 
 /**
- * @brief PML address.
+ * @brief PML address
+ *
+ * PML address.
  */
 #define VMCS_CTRL_PML_ADDRESS                                        0x0000200E
 
 /**
- * @brief TSC offset.
+ * @brief TSC offset
+ *
+ * TSC offset.
  */
 #define VMCS_CTRL_TSC_OFFSET                                         0x00002010
 
 /**
- * @brief Virtual-APIC address.
+ * @brief Virtual-APIC address
+ *
+ * Virtual-APIC address.
  */
 #define VMCS_CTRL_VIRTUAL_APIC_ADDRESS                               0x00002012
 
 /**
- * @brief APIC-access address.
+ * @brief APIC-access address
+ *
+ * APIC-access address.
  */
 #define VMCS_CTRL_APIC_ACCESS_ADDRESS                                0x00002014
 
 /**
- * @brief Posted-interrupt descriptor address
+ * Posted-interrupt descriptor address
  */
 #define VMCS_CTRL_POSTED_INTERRUPT_DESCRIPTOR_ADDRESS                0x00002016
 
 /**
- * @brief VM-function controls.
+ * @brief VM-function controls
+ *
+ * VM-function controls.
  */
 #define VMCS_CTRL_VMFUNC_CONTROLS                                    0x00002018
 
 /**
- * @brief EPT pointer.
+ * @brief EPT pointer
+ *
+ * EPT pointer.
  */
 #define VMCS_CTRL_EPT_POINTER                                        0x0000201A
 
 /**
- * @brief EOI-exit bitmap 0.
+ * @brief EOI-exit bitmap 0
+ *
+ * EOI-exit bitmap 0.
  */
 #define VMCS_CTRL_EOI_EXIT_BITMAP_0                                  0x0000201C
 
 /**
- * @brief EOI-exit bitmap 1.
+ * @brief EOI-exit bitmap 1
+ *
+ * EOI-exit bitmap 1.
  */
 #define VMCS_CTRL_EOI_EXIT_BITMAP_1                                  0x0000201E
 
 /**
- * @brief EOI-exit bitmap 2.
+ * @brief EOI-exit bitmap 2
+ *
+ * EOI-exit bitmap 2.
  */
 #define VMCS_CTRL_EOI_EXIT_BITMAP_2                                  0x00002020
 
 /**
- * @brief EOI-exit bitmap 3.
+ * @brief EOI-exit bitmap 3
+ *
+ * EOI-exit bitmap 3.
  */
 #define VMCS_CTRL_EOI_EXIT_BITMAP_3                                  0x00002022
 
 /**
- * @brief EPTP-list address.
+ * @brief EPTP-list address
+ *
+ * EPTP-list address.
  */
 #define VMCS_CTRL_EPT_POINTER_LIST_ADDRESS                           0x00002024
 
 /**
- * @brief VMREAD-bitmap address.
+ * @brief VMREAD-bitmap address
+ *
+ * VMREAD-bitmap address.
  */
 #define VMCS_CTRL_VMREAD_BITMAP_ADDRESS                              0x00002026
 
 /**
- * @brief VMWRITE-bitmap address.
+ * @brief VMWRITE-bitmap address
+ *
+ * VMWRITE-bitmap address.
  */
 #define VMCS_CTRL_VMWRITE_BITMAP_ADDRESS                             0x00002028
 
 /**
- * @brief Virtualization-exception information address.
+ * @brief Virtualization-exception information address
+ *
+ * Virtualization-exception information address.
  */
 #define VMCS_CTRL_VIRTUALIZATION_EXCEPTION_INFORMATION_ADDRESS       0x0000202A
 
 /**
- * @brief XSS-exiting bitmap.
+ * @brief XSS-exiting bitmap
+ *
+ * XSS-exiting bitmap.
  */
 #define VMCS_CTRL_XSS_EXITING_BITMAP                                 0x0000202C
 
 /**
- * @brief ENCLS-exiting bitmap.
+ * @brief ENCLS-exiting bitmap
+ *
+ * ENCLS-exiting bitmap.
  */
 #define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
 
 /**
- * @brief TSC multiplier.
+ * @brief TSC multiplier
+ *
+ * TSC multiplier.
  */
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
 
@@ -15103,7 +18349,9 @@ typedef union
  * @{
  */
 /**
- * @brief Guest-physical address.
+ * @brief Guest-physical address
+ *
+ * Guest-physical address.
  */
 #define VMCS_GUEST_PHYSICAL_ADDRESS                                  0x00002400
 
@@ -15119,47 +18367,65 @@ typedef union
  * @{
  */
 /**
- * @brief VMCS link pointer.
+ * @brief VMCS link pointer
+ *
+ * VMCS link pointer.
  */
 #define VMCS_GUEST_VMCS_LINK_POINTER                                 0x00002800
 
 /**
- * @brief Guest IA32_DEBUGCTL.
+ * @brief Guest IA32_DEBUGCTL
+ *
+ * Guest IA32_DEBUGCTL.
  */
 #define VMCS_GUEST_DEBUGCTL                                          0x00002802
 
 /**
- * @brief Guest IA32_PAT.
+ * @brief Guest IA32_PAT
+ *
+ * Guest IA32_PAT.
  */
 #define VMCS_GUEST_PAT                                               0x00002804
 
 /**
- * @brief Guest IA32_EFER.
+ * @brief Guest IA32_EFER
+ *
+ * Guest IA32_EFER.
  */
 #define VMCS_GUEST_EFER                                              0x00002806
 
 /**
- * @brief Guest IA32_PERF_GLOBAL_CTRL.
+ * @brief Guest IA32_PERF_GLOBAL_CTRL
+ *
+ * Guest IA32_PERF_GLOBAL_CTRL.
  */
 #define VMCS_GUEST_PERF_GLOBAL_CTRL                                  0x00002808
 
 /**
- * @brief Guest PDPTE0.
+ * @brief Guest PDPTE0
+ *
+ * Guest PDPTE0.
  */
 #define VMCS_GUEST_PDPTE0                                            0x0000280A
 
 /**
- * @brief Guest PDPTE1.
+ * @brief Guest PDPTE1
+ *
+ * Guest PDPTE1.
  */
 #define VMCS_GUEST_PDPTE1                                            0x0000280C
 
 /**
- * @brief Guest PDPTE2.
+ * @brief Guest PDPTE2
+ *
+ * Guest PDPTE2.
  */
 #define VMCS_GUEST_PDPTE2                                            0x0000280E
 
 /**
- * @brief Guest PDPTE3.
+ * @brief Guest PDPTE3
+ *
+ * Guest PDPTE3.
  */
 #define VMCS_GUEST_PDPTE3                                            0x00002810
 
@@ -15175,17 +18441,23 @@ typedef union
  * @{
  */
 /**
- * @brief Host IA32_PAT.
+ * @brief Host IA32_PAT
+ *
+ * Host IA32_PAT.
  */
 #define VMCS_HOST_PAT                                                0x00002C00
 
 /**
- * @brief Host IA32_EFER.
+ * @brief Host IA32_EFER
+ *
+ * Host IA32_EFER.
  */
 #define VMCS_HOST_EFER                                               0x00002C02
 
 /**
- * @brief Host IA32_PERF_GLOBAL_CTRL.
+ * @brief Host IA32_PERF_GLOBAL_CTRL
+ *
+ * Host IA32_PERF_GLOBAL_CTRL.
  */
 #define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
 
@@ -15214,92 +18486,128 @@ typedef union
  * @{
  */
 /**
- * @brief Pin-based VM-execution controls.
+ * @brief Pin-based VM-execution controls
+ *
+ * Pin-based VM-execution controls.
  */
 #define VMCS_CTRL_PIN_BASED_VM_EXECUTION_CONTROLS                    0x00004000
 
 /**
- * @brief Primary processor-based VM-execution controls.
+ * @brief Primary processor-based VM-execution controls
+ *
+ * Primary processor-based VM-execution controls.
  */
 #define VMCS_CTRL_PROCESSOR_BASED_VM_EXECUTION_CONTROLS              0x00004002
 
 /**
- * @brief Exception bitmap.
+ * @brief Exception bitmap
+ *
+ * Exception bitmap.
  */
 #define VMCS_CTRL_EXCEPTION_BITMAP                                   0x00004004
 
 /**
- * @brief Page-fault error-code mask.
+ * @brief Page-fault error-code mask
+ *
+ * Page-fault error-code mask.
  */
 #define VMCS_CTRL_PAGEFAULT_ERROR_CODE_MASK                          0x00004006
 
 /**
- * @brief Page-fault error-code match.
+ * @brief Page-fault error-code match
+ *
+ * Page-fault error-code match.
  */
 #define VMCS_CTRL_PAGEFAULT_ERROR_CODE_MATCH                         0x00004008
 
 /**
- * @brief CR3-target count.
+ * @brief CR3-target count
+ *
+ * CR3-target count.
  */
 #define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
 
 /**
- * @brief VM-exit controls.
+ * @brief VM-exit controls
+ *
+ * VM-exit controls.
  */
 #define VMCS_CTRL_VMEXIT_CONTROLS                                    0x0000400C
 
 /**
- * @brief VM-exit MSR-store count.
+ * @brief VM-exit MSR-store count
+ *
+ * VM-exit MSR-store count.
  */
 #define VMCS_CTRL_VMEXIT_MSR_STORE_COUNT                             0x0000400E
 
 /**
- * @brief VM-exit MSR-load count.
+ * @brief VM-exit MSR-load count
+ *
+ * VM-exit MSR-load count.
  */
 #define VMCS_CTRL_VMEXIT_MSR_LOAD_COUNT                              0x00004010
 
 /**
- * @brief VM-entry controls.
+ * @brief VM-entry controls
+ *
+ * VM-entry controls.
  */
 #define VMCS_CTRL_VMENTRY_CONTROLS                                   0x00004012
 
 /**
- * @brief VM-entry MSR-load count.
+ * @brief VM-entry MSR-load count
+ *
+ * VM-entry MSR-load count.
  */
 #define VMCS_CTRL_VMENTRY_MSR_LOAD_COUNT                             0x00004014
 
 /**
- * @brief VM-entry interruption-information field.
+ * @brief VM-entry interruption-information field
+ *
+ * VM-entry interruption-information field.
  */
 #define VMCS_CTRL_VMENTRY_INTERRUPTION_INFORMATION_FIELD             0x00004016
 
 /**
- * @brief VM-entry exception error code.
+ * @brief VM-entry exception error code
+ *
+ * VM-entry exception error code.
  */
 #define VMCS_CTRL_VMENTRY_EXCEPTION_ERROR_CODE                       0x00004018
 
 /**
- * @brief VM-entry instruction length.
+ * @brief VM-entry instruction length
+ *
+ * VM-entry instruction length.
  */
 #define VMCS_CTRL_VMENTRY_INSTRUCTION_LENGTH                         0x0000401A
 
 /**
- * @brief TPR threshold.
+ * @brief TPR threshold
+ *
+ * TPR threshold.
  */
 #define VMCS_CTRL_TPR_THRESHOLD                                      0x0000401C
 
 /**
- * @brief Secondary processor-based VM-execution controls.
+ * @brief Secondary processor-based VM-execution controls
+ *
+ * Secondary processor-based VM-execution controls.
  */
 #define VMCS_CTRL_SECONDARY_PROCESSOR_BASED_VM_EXECUTION_CONTROLS    0x0000401E
 
 /**
- * @brief PLE_Gap.
+ * @brief PLE_Gap
+ *
+ * PLE_Gap.
  */
 #define VMCS_CTRL_PLE_GAP                                            0x00004020
 
 /**
- * @brief PLE_Window.
+ * @brief PLE_Window
+ *
+ * PLE_Window.
  */
 #define VMCS_CTRL_PLE_WINDOW                                         0x00004022
 
@@ -15315,42 +18623,58 @@ typedef union
  * @{
  */
 /**
- * @brief VM-instruction error.
+ * @brief VM-instruction error
+ *
+ * VM-instruction error.
  */
 #define VMCS_VM_INSTRUCTION_ERROR                                    0x00004400
 
 /**
- * @brief Exit reason.
+ * @brief Exit reason
+ *
+ * Exit reason.
  */
 #define VMCS_EXIT_REASON                                             0x00004402
 
 /**
- * @brief VM-exit interruption information.
+ * @brief VM-exit interruption information
+ *
+ * VM-exit interruption information.
  */
 #define VMCS_VMEXIT_INTERRUPTION_INFORMATION                         0x00004404
 
 /**
- * @brief VM-exit interruption error code.
+ * @brief VM-exit interruption error code
+ *
+ * VM-exit interruption error code.
  */
 #define VMCS_VMEXIT_INTERRUPTION_ERROR_CODE                          0x00004406
 
 /**
- * @brief IDT-vectoring information field.
+ * @brief IDT-vectoring information field
+ *
+ * IDT-vectoring information field.
  */
 #define VMCS_IDT_VECTORING_INFORMATION                               0x00004408
 
 /**
- * @brief IDT-vectoring error code.
+ * @brief IDT-vectoring error code
+ *
+ * IDT-vectoring error code.
  */
 #define VMCS_IDT_VECTORING_ERROR_CODE                                0x0000440A
 
 /**
- * @brief VM-exit instruction length.
+ * @brief VM-exit instruction length
+ *
+ * VM-exit instruction length.
  */
 #define VMCS_VMEXIT_INSTRUCTION_LENGTH                               0x0000440C
 
 /**
- * @brief VM-exit instruction information.
+ * @brief VM-exit instruction information
+ *
+ * VM-exit instruction information.
  */
 #define VMCS_VMEXIT_INSTRUCTION_INFO                                 0x0000440E
 
@@ -15366,117 +18690,163 @@ typedef union
  * @{
  */
 /**
- * @brief Guest ES limit.
+ * @brief Guest ES limit
+ *
+ * Guest ES limit.
  */
 #define VMCS_GUEST_ES_LIMIT                                          0x00004800
 
 /**
- * @brief Guest CS limit.
+ * @brief Guest CS limit
+ *
+ * Guest CS limit.
  */
 #define VMCS_GUEST_CS_LIMIT                                          0x00004802
 
 /**
- * @brief Guest SS limit.
+ * @brief Guest SS limit
+ *
+ * Guest SS limit.
  */
 #define VMCS_GUEST_SS_LIMIT                                          0x00004804
 
 /**
- * @brief Guest DS limit.
+ * @brief Guest DS limit
+ *
+ * Guest DS limit.
  */
 #define VMCS_GUEST_DS_LIMIT                                          0x00004806
 
 /**
- * @brief Guest FS limit.
+ * @brief Guest FS limit
+ *
+ * Guest FS limit.
  */
 #define VMCS_GUEST_FS_LIMIT                                          0x00004808
 
 /**
- * @brief Guest GS limit.
+ * @brief Guest GS limit
+ *
+ * Guest GS limit.
  */
 #define VMCS_GUEST_GS_LIMIT                                          0x0000480A
 
 /**
- * @brief Guest LDTR limit.
+ * @brief Guest LDTR limit
+ *
+ * Guest LDTR limit.
  */
 #define VMCS_GUEST_LDTR_LIMIT                                        0x0000480C
 
 /**
- * @brief Guest TR limit.
+ * @brief Guest TR limit
+ *
+ * Guest TR limit.
  */
 #define VMCS_GUEST_TR_LIMIT                                          0x0000480E
 
 /**
- * @brief Guest GDTR limit.
+ * @brief Guest GDTR limit
+ *
+ * Guest GDTR limit.
  */
 #define VMCS_GUEST_GDTR_LIMIT                                        0x00004810
 
 /**
- * @brief Guest IDTR limit.
+ * @brief Guest IDTR limit
+ *
+ * Guest IDTR limit.
  */
 #define VMCS_GUEST_IDTR_LIMIT                                        0x00004812
 
 /**
- * @brief Guest ES access rights.
+ * @brief Guest ES access rights
+ *
+ * Guest ES access rights.
  */
 #define VMCS_GUEST_ES_ACCESS_RIGHTS                                  0x00004814
 
 /**
- * @brief Guest CS access rights.
+ * @brief Guest CS access rights
+ *
+ * Guest CS access rights.
  */
 #define VMCS_GUEST_CS_ACCESS_RIGHTS                                  0x00004816
 
 /**
- * @brief Guest SS access rights.
+ * @brief Guest SS access rights
+ *
+ * Guest SS access rights.
  */
 #define VMCS_GUEST_SS_ACCESS_RIGHTS                                  0x00004818
 
 /**
- * @brief Guest DS access rights.
+ * @brief Guest DS access rights
+ *
+ * Guest DS access rights.
  */
 #define VMCS_GUEST_DS_ACCESS_RIGHTS                                  0x0000481A
 
 /**
- * @brief Guest FS access rights.
+ * @brief Guest FS access rights
+ *
+ * Guest FS access rights.
  */
 #define VMCS_GUEST_FS_ACCESS_RIGHTS                                  0x0000481C
 
 /**
- * @brief Guest GS access rights.
+ * @brief Guest GS access rights
+ *
+ * Guest GS access rights.
  */
 #define VMCS_GUEST_GS_ACCESS_RIGHTS                                  0x0000481E
 
 /**
- * @brief Guest LDTR access rights.
+ * @brief Guest LDTR access rights
+ *
+ * Guest LDTR access rights.
  */
 #define VMCS_GUEST_LDTR_ACCESS_RIGHTS                                0x00004820
 
 /**
- * @brief Guest TR access rights.
+ * @brief Guest TR access rights
+ *
+ * Guest TR access rights.
  */
 #define VMCS_GUEST_TR_ACCESS_RIGHTS                                  0x00004822
 
 /**
- * @brief Guest interruptibility state.
+ * @brief Guest interruptibility state
+ *
+ * Guest interruptibility state.
  */
 #define VMCS_GUEST_INTERRUPTIBILITY_STATE                            0x00004824
 
 /**
- * @brief Guest activity state.
+ * @brief Guest activity state
+ *
+ * Guest activity state.
  */
 #define VMCS_GUEST_ACTIVITY_STATE                                    0x00004826
 
 /**
- * @brief Guest SMBASE.
+ * @brief Guest SMBASE
+ *
+ * Guest SMBASE.
  */
 #define VMCS_GUEST_SMBASE                                            0x00004828
 
 /**
- * @brief Guest IA32_SYSENTER_CS.
+ * @brief Guest IA32_SYSENTER_CS
+ *
+ * Guest IA32_SYSENTER_CS.
  */
 #define VMCS_GUEST_SYSENTER_CS                                       0x0000482A
 
 /**
- * @brief VMX-preemption timer value.
+ * @brief VMX-preemption timer value
+ *
+ * VMX-preemption timer value.
  */
 #define VMCS_GUEST_VMX_PREEMPTION_TIMER_VALUE                        0x0000482E
 
@@ -15492,7 +18862,9 @@ typedef union
  * @{
  */
 /**
- * @brief Host IA32_SYSENTER_CS.
+ * @brief Host IA32_SYSENTER_CS
+ *
+ * Host IA32_SYSENTER_CS.
  */
 #define VMCS_SYSENTER_CS                                             0x00004C00
 
@@ -15521,42 +18893,58 @@ typedef union
  * @{
  */
 /**
- * @brief CR0 guest/host mask.
+ * @brief CR0 guest/host mask
+ *
+ * CR0 guest/host mask.
  */
 #define VMCS_CTRL_CR0_GUEST_HOST_MASK                                0x00006000
 
 /**
- * @brief CR4 guest/host mask.
+ * @brief CR4 guest/host mask
+ *
+ * CR4 guest/host mask.
  */
 #define VMCS_CTRL_CR4_GUEST_HOST_MASK                                0x00006002
 
 /**
- * @brief CR0 read shadow.
+ * @brief CR0 read shadow
+ *
+ * CR0 read shadow.
  */
 #define VMCS_CTRL_CR0_READ_SHADOW                                    0x00006004
 
 /**
- * @brief CR4 read shadow.
+ * @brief CR4 read shadow
+ *
+ * CR4 read shadow.
  */
 #define VMCS_CTRL_CR4_READ_SHADOW                                    0x00006006
 
 /**
- * @brief CR3-target value 0.
+ * @brief CR3-target value 0
+ *
+ * CR3-target value 0.
  */
 #define VMCS_CTRL_CR3_TARGET_VALUE_0                                 0x00006008
 
 /**
- * @brief CR3-target value 1.
+ * @brief CR3-target value 1
+ *
+ * CR3-target value 1.
  */
 #define VMCS_CTRL_CR3_TARGET_VALUE_1                                 0x0000600A
 
 /**
- * @brief CR3-target value 2.
+ * @brief CR3-target value 2
+ *
+ * CR3-target value 2.
  */
 #define VMCS_CTRL_CR3_TARGET_VALUE_2                                 0x0000600C
 
 /**
- * @brief CR3-target value 3.
+ * @brief CR3-target value 3
+ *
+ * CR3-target value 3.
  */
 #define VMCS_CTRL_CR3_TARGET_VALUE_3                                 0x0000600E
 
@@ -15572,32 +18960,44 @@ typedef union
  * @{
  */
 /**
- * @brief Exit qualification.
+ * @brief Exit qualification
+ *
+ * Exit qualification.
  */
 #define VMCS_EXIT_QUALIFICATION                                      0x00006400
 
 /**
- * @brief I/O RCX.
+ * @brief I/O RCX
+ *
+ * I/O RCX.
  */
 #define VMCS_IO_RCX                                                  0x00006402
 
 /**
- * @brief I/O RSI.
+ * @brief I/O RSI
+ *
+ * I/O RSI.
  */
 #define VMCS_IO_RSX                                                  0x00006404
 
 /**
- * @brief I/O RDI.
+ * @brief I/O RDI
+ *
+ * I/O RDI.
  */
 #define VMCS_IO_RDI                                                  0x00006406
 
 /**
- * @brief I/O RIP.
+ * @brief I/O RIP
+ *
+ * I/O RIP.
  */
 #define VMCS_IO_RIP                                                  0x00006408
 
 /**
- * @brief Guest-linear address.
+ * @brief Guest-linear address
+ *
+ * Guest-linear address.
  */
 #define VMCS_EXIT_GUEST_LINEAR_ADDRESS                               0x0000640A
 
@@ -15613,102 +19013,142 @@ typedef union
  * @{
  */
 /**
- * @brief Guest CR0.
+ * @brief Guest CR0
+ *
+ * Guest CR0.
  */
 #define VMCS_GUEST_CR0                                               0x00006800
 
 /**
- * @brief Guest CR3.
+ * @brief Guest CR3
+ *
+ * Guest CR3.
  */
 #define VMCS_GUEST_CR3                                               0x00006802
 
 /**
- * @brief Guest CR4.
+ * @brief Guest CR4
+ *
+ * Guest CR4.
  */
 #define VMCS_GUEST_CR4                                               0x00006804
 
 /**
- * @brief Guest ES base.
+ * @brief Guest ES base
+ *
+ * Guest ES base.
  */
 #define VMCS_GUEST_ES_BASE                                           0x00006806
 
 /**
- * @brief Guest CS base.
+ * @brief Guest CS base
+ *
+ * Guest CS base.
  */
 #define VMCS_GUEST_CS_BASE                                           0x00006808
 
 /**
- * @brief Guest SS base.
+ * @brief Guest SS base
+ *
+ * Guest SS base.
  */
 #define VMCS_GUEST_SS_BASE                                           0x0000680A
 
 /**
- * @brief Guest DS base.
+ * @brief Guest DS base
+ *
+ * Guest DS base.
  */
 #define VMCS_GUEST_DS_BASE                                           0x0000680C
 
 /**
- * @brief Guest FS base.
+ * @brief Guest FS base
+ *
+ * Guest FS base.
  */
 #define VMCS_GUEST_FS_BASE                                           0x0000680E
 
 /**
- * @brief Guest GS base.
+ * @brief Guest GS base
+ *
+ * Guest GS base.
  */
 #define VMCS_GUEST_GS_BASE                                           0x00006810
 
 /**
- * @brief Guest LDTR base.
+ * @brief Guest LDTR base
+ *
+ * Guest LDTR base.
  */
 #define VMCS_GUEST_LDTR_BASE                                         0x00006812
 
 /**
- * @brief Guest TR base.
+ * @brief Guest TR base
+ *
+ * Guest TR base.
  */
 #define VMCS_GUEST_TR_BASE                                           0x00006814
 
 /**
- * @brief Guest GDTR base.
+ * @brief Guest GDTR base
+ *
+ * Guest GDTR base.
  */
 #define VMCS_GUEST_GDTR_BASE                                         0x00006816
 
 /**
- * @brief Guest IDTR base.
+ * @brief Guest IDTR base
+ *
+ * Guest IDTR base.
  */
 #define VMCS_GUEST_IDTR_BASE                                         0x00006818
 
 /**
- * @brief Guest DR7.
+ * @brief Guest DR7
+ *
+ * Guest DR7.
  */
 #define VMCS_GUEST_DR7                                               0x0000681A
 
 /**
- * @brief Guest RSP.
+ * @brief Guest RSP
+ *
+ * Guest RSP.
  */
 #define VMCS_GUEST_RSP                                               0x0000681C
 
 /**
- * @brief Guest RIP.
+ * @brief Guest RIP
+ *
+ * Guest RIP.
  */
 #define VMCS_GUEST_RIP                                               0x0000681E
 
 /**
- * @brief Guest RFLAGS.
+ * @brief Guest RFLAGS
+ *
+ * Guest RFLAGS.
  */
 #define VMCS_GUEST_RFLAGS                                            0x00006820
 
 /**
- * @brief Guest pending debug exceptions.
+ * @brief Guest pending debug exceptions
+ *
+ * Guest pending debug exceptions.
  */
 #define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
 
 /**
- * @brief Guest IA32_SYSENTER_ESP.
+ * @brief Guest IA32_SYSENTER_ESP
+ *
+ * Guest IA32_SYSENTER_ESP.
  */
 #define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
 
 /**
- * @brief Guest IA32_SYSENTER_EIP.
+ * @brief Guest IA32_SYSENTER_EIP
+ *
+ * Guest IA32_SYSENTER_EIP.
  */
 #define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
 
@@ -15724,62 +19164,86 @@ typedef union
  * @{
  */
 /**
- * @brief Host CR0.
+ * @brief Host CR0
+ *
+ * Host CR0.
  */
 #define VMCS_HOST_CR0                                                0x00006C00
 
 /**
- * @brief Host CR3.
+ * @brief Host CR3
+ *
+ * Host CR3.
  */
 #define VMCS_HOST_CR3                                                0x00006C02
 
 /**
- * @brief Host CR4.
+ * @brief Host CR4
+ *
+ * Host CR4.
  */
 #define VMCS_HOST_CR4                                                0x00006C04
 
 /**
- * @brief Host FS base.
+ * @brief Host FS base
+ *
+ * Host FS base.
  */
 #define VMCS_HOST_FS_BASE                                            0x00006C06
 
 /**
- * @brief Host GS base.
+ * @brief Host GS base
+ *
+ * Host GS base.
  */
 #define VMCS_HOST_GS_BASE                                            0x00006C08
 
 /**
- * @brief Host TR base.
+ * @brief Host TR base
+ *
+ * Host TR base.
  */
 #define VMCS_HOST_TR_BASE                                            0x00006C0A
 
 /**
- * @brief Host GDTR base.
+ * @brief Host GDTR base
+ *
+ * Host GDTR base.
  */
 #define VMCS_HOST_GDTR_BASE                                          0x00006C0C
 
 /**
- * @brief Host IDTR base.
+ * @brief Host IDTR base
+ *
+ * Host IDTR base.
  */
 #define VMCS_HOST_IDTR_BASE                                          0x00006C0E
 
 /**
- * @brief Host IA32_SYSENTER_ESP.
+ * @brief Host IA32_SYSENTER_ESP
+ *
+ * Host IA32_SYSENTER_ESP.
  */
 #define VMCS_HOST_SYSENTER_ESP                                       0x00006C10
 
 /**
- * @brief Host IA32_SYSENTER_EIP.
+ * @brief Host IA32_SYSENTER_EIP
+ *
+ * Host IA32_SYSENTER_EIP.
  */
 #define VMCS_HOST_SYSENTER_EIP                                       0x00006C12
 
 /**
- * @brief Host RSP.
+ * @brief Host RSP
+ *
+ * Host RSP.
  */
 #define VMCS_HOST_RSP                                                0x00006C14
 
 /**
- * @brief Host RIP.
+ * @brief Host RIP
+ *
+ * Host RIP.
  */
 #define VMCS_HOST_RIP                                                0x00006C16
 
@@ -15818,242 +19282,344 @@ typedef union
  * @{
  */
 /**
- * @brief Local APIC Base Address.
+ * @brief Local APIC Base Address
+ *
+ * Local APIC Base Address.
+ *
+ * @remarks Reserved.
  */
 #define APIC_BASE_ADDRESS                                            0xFEE00000
 
 /**
- * @brief Local APIC ID Register. <b>(Read/Write)</b>
+ * @brief Local APIC ID Register <b>(Read/Write)</b>
+ *
+ * Local APIC ID Register.
  */
 #define APIC_ID                                                      0xFEE00020
 
 /**
- * @brief Local APIC Version Register. <b>(Read Only)</b>
+ * @brief Local APIC Version Register <b>(Read Only)</b>
+ *
+ * Local APIC Version Register.
  */
 #define APIC_VERSION                                                 0xFEE00030
 
 /**
- * @brief Task Priority Register (TPR). <b>(Read/Write)</b>
+ * @brief Task Priority Register (TPR) <b>(Read/Write)</b>
+ *
+ * Task Priority Register (TPR).
  */
 #define APIC_TASK_PRIORITY                                           0xFEE00080
 
 /**
- * @brief Arbitration Priority Register (APR). <b>(Read Only)</b>
+ * @brief Arbitration Priority Register (APR) <b>(Read Only)</b>
+ *
+ * Arbitration Priority Register (APR).
  */
 #define APIC_ARBITRATION_PRIORITY                                    0xFEE00090
 
 /**
- * @brief Processor Priority Register (PPR). <b>(Read Only)</b>
+ * @brief Processor Priority Register (PPR) <b>(Read Only)</b>
+ *
+ * Processor Priority Register (PPR).
  */
 #define APIC_PROCESSOR_PRIORITY                                      0xFEE000A0
 
 /**
- * @brief EOI Register. <b>(Write Only)</b>
+ * @brief EOI Register <b>(Write Only)</b>
+ *
+ * EOI Register.
  */
 #define APIC_EOI                                                     0xFEE000B0
 
 /**
- * @brief Remote Read Register (RRD). <b>(Read Only)</b>
+ * @brief Remote Read Register (RRD) <b>(Read Only)</b>
+ *
+ * Remote Read Register (RRD).
  */
 #define APIC_REMOTE_READ                                             0xFEE000C0
 
 /**
- * @brief Logical Destination Register. <b>(Read/Write)</b>
+ * @brief Logical Destination Register <b>(Read/Write)</b>
+ *
+ * Logical Destination Register.
  */
 #define APIC_LOGICAL_DESTINATION                                     0xFEE000D0
 
 /**
- * @brief Destination Format Register. <b>(Read/Write)</b>
+ * @brief Destination Format Register <b>(Read/Write)</b>
+ *
+ * Destination Format Register.
+ *
+ * @see Vol3A[10.6.2.2(Logical Destination Mode)]
  */
 #define APIC_DESTINATION_FORMAT                                      0xFEE000E0
 
 /**
- * @brief Spurious Interrupt Vector Register. <b>(Read/Write)</b>
+ * @brief Spurious Interrupt Vector Register <b>(Read/Write)</b>
+ *
+ * Spurious Interrupt Vector Register.
+ *
+ * @see Vol3A[10.9(SPURIOUS INTERRUPT)]
  */
 #define APIC_SPURIOUS_INTERRUPT_VECTOR                               0xFEE000F0
 
 /**
- * @brief In-Service Register (ISR); bits 31:0. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 31:0 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 31:0.
  */
 #define APIC_IN_SERVICE_BITS_31_0                                    0xFEE00100
 
 /**
- * @brief In-Service Register (ISR); bits 63:32. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 63:32 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 63:32.
  */
 #define APIC_IN_SERVICE_BITS_63_32                                   0xFEE00110
 
 /**
- * @brief In-Service Register (ISR); bits 95:64. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 95:64 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 95:64.
  */
 #define APIC_IN_SERVICE_BITS_95_64                                   0xFEE00120
 
 /**
- * @brief In-Service Register (ISR); bits 127:96. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 127:96 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 127:96.
  */
 #define APIC_IN_SERVICE_BITS_127_96                                  0xFEE00130
 
 /**
- * @brief In-Service Register (ISR); bits 159:128. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 159:128 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 159:128.
  */
 #define APIC_IN_SERVICE_BITS_159_128                                 0xFEE00140
 
 /**
- * @brief In-Service Register (ISR); bits 191:160. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 191:160 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 191:160.
  */
 #define APIC_IN_SERVICE_BITS_191_160                                 0xFEE00150
 
 /**
- * @brief In-Service Register (ISR); bits 223:192. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 223:192 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 223:192.
  */
 #define APIC_IN_SERVICE_BITS_223_192                                 0xFEE00160
 
 /**
- * @brief In-Service Register (ISR); bits 255:224. <b>(Read Only)</b>
+ * @brief In-Service Register (ISR); bits 255:224 <b>(Read Only)</b>
+ *
+ * In-Service Register (ISR); bits 255:224.
  */
 #define APIC_IN_SERVICE_BITS_255_224                                 0xFEE00170
 
 /**
- * @brief Trigger Mode Register (TMR); bits 31:0. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 31:0 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 31:0.
  */
 #define APIC_TRIGGER_MODE_BITS_31_0                                  0xFEE00180
 
 /**
- * @brief Trigger Mode Register (TMR); bits 63:32. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 63:32 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 63:32.
  */
 #define APIC_TRIGGER_MODE_BITS_63_32                                 0xFEE00190
 
 /**
- * @brief Trigger Mode Register (TMR); bits 95:64. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 95:64 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 95:64.
  */
 #define APIC_TRIGGER_MODE_BITS_95_64                                 0xFEE001A0
 
 /**
- * @brief Trigger Mode Register (TMR); bits 127:96. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 127:96 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 127:96.
  */
 #define APIC_TRIGGER_MODE_BITS_127_96                                0xFEE001B0
 
 /**
- * @brief Trigger Mode Register (TMR); bits 159:128. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 159:128 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 159:128.
  */
 #define APIC_TRIGGER_MODE_BITS_159_128                               0xFEE001C0
 
 /**
- * @brief Trigger Mode Register (TMR); bits 191:160. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 191:160 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 191:160.
  */
 #define APIC_TRIGGER_MODE_BITS_191_160                               0xFEE001D0
 
 /**
- * @brief Trigger Mode Register (TMR); bits 223:192. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 223:192 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 223:192.
  */
 #define APIC_TRIGGER_MODE_BITS_223_192                               0xFEE001E0
 
 /**
- * @brief Trigger Mode Register (TMR); bits 255:224. <b>(Read Only)</b>
+ * @brief Trigger Mode Register (TMR); bits 255:224 <b>(Read Only)</b>
+ *
+ * Trigger Mode Register (TMR); bits 255:224.
  */
 #define APIC_TRIGGER_MODE_BITS_255_224                               0xFEE001F0
 
 /**
- * @brief Interrupt Request Register (IRR); bits 31:0. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 31:0 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 31:0.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_31_0                             0xFEE00200
 
 /**
- * @brief Interrupt Request Register (IRR); bits 63:32. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 63:32 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 63:32.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_63_32                            0xFEE00210
 
 /**
- * @brief Interrupt Request Register (IRR); bits 95:64. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 95:64 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 95:64.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_95_64                            0xFEE00220
 
 /**
- * @brief Interrupt Request Register (IRR); bits 127:96. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 127:96 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 127:96.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_127_96                           0xFEE00230
 
 /**
- * @brief Interrupt Request Register (IRR); bits 159:128. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 159:128 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 159:128.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_159_128                          0xFEE00240
 
 /**
- * @brief Interrupt Request Register (IRR); bits 191:160. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 191:160 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 191:160.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_191_160                          0xFEE00250
 
 /**
- * @brief Interrupt Request Register (IRR); bits 223:192. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 223:192 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 223:192.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_223_192                          0xFEE00260
 
 /**
- * @brief Interrupt Request Register (IRR); bits 255:224. <b>(Read Only)</b>
+ * @brief Interrupt Request Register (IRR); bits 255:224 <b>(Read Only)</b>
+ *
+ * Interrupt Request Register (IRR); bits 255:224.
  */
 #define APIC_INTERRUPT_REQUEST_BITS_255_224                          0xFEE00270
 
 /**
- * @brief Error Status Register. <b>(Read Only)</b>
+ * @brief Error Status Register <b>(Read Only)</b>
+ *
+ * Error Status Register.
  */
 #define APIC_ERROR_STATUS                                            0xFEE00280
 
 /**
- * @brief LVT Corrected Machine Check Interrupt (CMCI) Register. <b>(Read/Write)</b>
+ * @brief LVT Corrected Machine Check Interrupt (CMCI) Register <b>(Read/Write)</b>
+ *
+ * LVT Corrected Machine Check Interrupt (CMCI) Register.
  */
 #define APIC_LVT_CORRECTED_MACHINE_CHECK_INTERRUPT                   0xFEE002F0
 
 /**
- * @brief Interrupt Command Register (ICR); bits 0-31. <b>(Read/Write)</b>
+ * @brief Interrupt Command Register (ICR); bits 0-31 <b>(Read/Write)</b>
+ *
+ * Interrupt Command Register (ICR); bits 0-31.
  */
 #define APIC_INTERRUPT_COMMAND_BITS_0_31                             0xFEE00300
 
 /**
- * @brief Interrupt Command Register (ICR); bits 32-63. <b>(Read/Write)</b>
+ * @brief Interrupt Command Register (ICR); bits 32-63 <b>(Read/Write)</b>
+ *
+ * Interrupt Command Register (ICR); bits 32-63.
  */
 #define APIC_INTERRUPT_COMMAND_BITS_32_63                            0xFEE00310
 
 /**
- * @brief LVT Timer Register. <b>(Read/Write)</b>
+ * @brief LVT Timer Register <b>(Read/Write)</b>
+ *
+ * LVT Timer Register.
  */
 #define APIC_LVT_TIMER                                               0xFEE00320
 
 /**
- * @brief LVT Thermal Sensor Register. <b>(Read/Write)</b>
+ * @brief LVT Thermal Sensor Register <b>(Read/Write)</b>
+ *
+ * LVT Thermal Sensor Register.
  */
 #define APIC_LVT_THERMAL_SENSOR                                      0xFEE00330
 
 /**
- * @brief LVT Performance Monitoring Counters Register. <b>(Read/Write)</b>
+ * @brief LVT Performance Monitoring Counters Register <b>(Read/Write)</b>
+ *
+ * LVT Performance Monitoring Counters Register.
  */
 #define APIC_LVT_PERFORMANCE_MONITORING_COUNTERS                     0xFEE00340
 
 /**
- * @brief LVT LINT0 Register. <b>(Read/Write)</b>
+ * @brief LVT LINT0 Register <b>(Read/Write)</b>
+ *
+ * LVT LINT0 Register.
  */
 #define APIC_LVT_LINT0                                               0xFEE00350
 
 /**
- * @brief LVT LINT1 Register. <b>(Read/Write)</b>
+ * @brief LVT LINT1 Register <b>(Read/Write)</b>
+ *
+ * LVT LINT1 Register.
  */
 #define APIC_LVT_LINT1                                               0xFEE00360
 
 /**
- * @brief LVT Error Register. <b>(Read/Write)</b>
+ * @brief LVT Error Register <b>(Read/Write)</b>
+ *
+ * LVT Error Register.
  */
 #define APIC_LVT_ERROR                                               0xFEE00370
 
 /**
- * @brief Initial Count Register (for Timer). <b>(Read/Write)</b>
+ * @brief Initial Count Register (for Timer) <b>(Read/Write)</b>
+ *
+ * Initial Count Register (for Timer).
  */
 #define APIC_INITIAL_COUNT                                           0xFEE00380
 
 /**
- * @brief Current Count Register (for Timer). <b>(Read Only)</b>
+ * @brief Current Count Register (for Timer) <b>(Read Only)</b>
+ *
+ * Current Count Register (for Timer).
  */
 #define APIC_CURRENT_COUNT                                           0xFEE00390
 
 /**
- * @brief Divide Configuration Register (for Timer). <b>(Read/Write)</b>
+ * @brief Divide Configuration Register (for Timer) <b>(Read/Write)</b>
+ *
+ * Divide Configuration Register (for Timer).
  */
 #define APIC_DIVIDE_CONFIGURATION                                    0xFEE003E0
 
@@ -16061,6 +19627,14 @@ typedef union
  * @}
  */
 
+/**
+ * The 32-bit EFLAGS register contains a group of status flags, a control flag, and a group of system flags. The status
+ * flags (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic instructions, such as the
+ * ADD, SUB, MUL, and DIV instructions.
+ * The system flags and IOPL field in the EFLAGS register control operating-system or executive operations.
+ *
+ * @see Vol1[3.4.3(EFLAGS)] (reference)
+ */
 typedef union
 {
   struct
@@ -16273,7 +19847,7 @@ typedef union
  *           Memory caching type
  *
  * The processor allows any area of system memory to be cached in the L1, L2, and L3 caches. In individual pages or regions
- * of system memory, it allows the type of caching (also called memory type) to be specified
+ * of system memory, it allows the type of caching (also called memory type) to be specified.
  *
  * @see Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
  * @see Vol3A[11.5(CACHE CONTROL)]
@@ -16281,41 +19855,51 @@ typedef union
  * @{
  */
 /**
- * @brief System memory locations are not cached. All reads and writes appear on the system bus and are executed in program
- *        order without reordering. No speculative memory accesses, pagetable walks, or prefetches of speculated branch targets
- *        are made. This type of cache-control is useful for memory-mapped I/O devices. When used with normal RAM, it greatly
- *        reduces processor performance.
+ * @brief Strong Uncacheable (UC)
+ *
+ * System memory locations are not cached. All reads and writes appear on the system bus and are executed in program order
+ * without reordering. No speculative memory accesses, pagetable walks, or prefetches of speculated branch targets are
+ * made. This type of cache-control is useful for memory-mapped I/O devices. When used with normal RAM, it greatly reduces
+ * processor performance.
  */
 #define MEMORY_TYPE_UNCACHEABLE                                      0x00000000
 
 /**
- * @brief System memory locations are not cached (as with uncacheable memory) and coherency is not enforced by the
- *        processor's bus coherency protocol. Speculative reads are allowed. Writes may be delayed and combined in the write
- *        combining buffer (WC buffer) to reduce memory accesses. If the WC buffer is partially filled, the writes may be delayed
- *        until the next occurrence of a serializing event; such as, an SFENCE or MFENCE instruction, CPUID execution, a read or
- *        write to uncached memory, an interrupt occurrence, or a LOCK instruction execution. This type of cache-control is
- *        appropriate for video frame buffers, where the order of writes is unimportant as long as the writes update memory so
- *        they can be seen on the graphics display. This memory type is available in the Pentium Pro and Pentium II processors by
- *        programming the MTRRs; or in processor families starting from the Pentium III processors by programming the MTRRs or by
- *        selecting it through the PAT.
+ * @brief Write Combining (WC)
+ *
+ * System memory locations are not cached (as with uncacheable memory) and coherency is not enforced by the processor's bus
+ * coherency protocol. Speculative reads are allowed. Writes may be delayed and combined in the write combining buffer (WC
+ * buffer) to reduce memory accesses. If the WC buffer is partially filled, the writes may be delayed until the next
+ * occurrence of a serializing event; such as, an SFENCE or MFENCE instruction, CPUID execution, a read or write to
+ * uncached memory, an interrupt occurrence, or a LOCK instruction execution. This type of cache-control is appropriate for
+ * video frame buffers, where the order of writes is unimportant as long as the writes update memory so they can be seen on
+ * the graphics display. This memory type is available in the Pentium Pro and Pentium II processors by programming the
+ * MTRRs; or in processor families starting from the Pentium III processors by programming the MTRRs or by selecting it
+ * through the PAT.
+ *
+ * @see Vol3A[11.3.1(Buffering of Write Combining Memory Locations)]
  */
 #define MEMORY_TYPE_WRITE_COMBINING                                  0x00000001
 
 /**
- * @brief Writes and reads to and from system memory are cached. Reads come from cache lines on cache hits; read misses
- *        cause cache fills. Speculative reads are allowed. All writes are written to a cache line (when possible) and through to
- *        system memory. When writing through to memory, invalid cache lines are never filled, and valid cache lines are either
- *        filled or invalidated. Write combining is allowed. This type of cache-control is appropriate for frame buffers or when
- *        there are devices on the system bus that access system memory, but do not perform snooping of memory accesses. It
- *        enforces coherency between caches in the processors and system memory.
+ * @brief Write-through (WT)
+ *
+ * Writes and reads to and from system memory are cached. Reads come from cache lines on cache hits; read misses cause
+ * cache fills. Speculative reads are allowed. All writes are written to a cache line (when possible) and through to system
+ * memory. When writing through to memory, invalid cache lines are never filled, and valid cache lines are either filled or
+ * invalidated. Write combining is allowed. This type of cache-control is appropriate for frame buffers or when there are
+ * devices on the system bus that access system memory, but do not perform snooping of memory accesses. It enforces
+ * coherency between caches in the processors and system memory.
  */
 #define MEMORY_TYPE_WRITE_THROUGH                                    0x00000004
 
 #define MEMORY_TYPE_WRITE_PROTECTED                                  0x00000005
 /**
- * @brief Reads come from cache lines when possible, and read misses cause cache fills. Writes are propagated to the system
- *        bus and cause corresponding cache lines on all processors on the bus to be invalidated. Speculative reads are allowed.
- *        This memory type is available in processor families starting from the P6 family processors by programming the MTRRs.
+ * @brief Write protected (WP)
+ *
+ * Reads come from cache lines when possible, and read misses cause cache fills. Writes are propagated to the system bus
+ * and cause corresponding cache lines on all processors on the bus to be invalidated. Speculative reads are allowed. This
+ * memory type is available in processor families starting from the P6 family processors by programming the MTRRs.
  */
 #define MEMORY_TYPE_WRITE_BACK                                       0x00000006
 
@@ -16328,4 +19912,5 @@ typedef union
 /**
  * @}
  */
+
 

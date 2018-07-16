@@ -1,192 +1,192 @@
-- ShortName: EAX_07
-  LongName: EAX_07
-  ShortDescription: Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
-  LongDescription: |
+- short_name: EAX_07
+  long_name: EAX_07
+  short_description: Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
+  long_description: |
     When CPUID executes with EAX set to 07H and ECX = 0, the processor returns information about the maximum
     input value for sub-leaves that contain extended feature flags.
 
     When CPUID executes with EAX set to 07H and the input value of ECX is invalid (see leaf 07H entry in Table 3-8),
     the processor returns 0 in EAX/EBX/ECX/EDX. In subleaf 0, EAX returns the maximum input value of the highest
     leaf 7 sub-leaf, and EBX, ECX & EDX contain information of extended feature flags.
-  Todo: Long names
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: NUMBER_OF_SUB_LEAVES
-      Description: Reports the maximum input value for supported leaf 7 sub-leaves.
+  todo: Long names
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: NUMBER_OF_SUB_LEAVES
+      description: Reports the maximum input value for supported leaf 7 sub-leaves.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: FSGSBASE
-      Description: Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: FSGSBASE
+      description: Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1.
 
-    - Bit: 1
-      Name: IA32_TSC_ADJUST_MSR
-      Description: IA32_TSC_ADJUST MSR is supported if 1.
+    - bit: 1
+      name: IA32_TSC_ADJUST_MSR
+      description: IA32_TSC_ADJUST MSR is supported if 1.
 
-    - Bit: 2
-      Name: SGX
-      Description: Supports Intel® Software Guard Extensions (Intel® SGX Extensions) if 1.
+    - bit: 2
+      name: SGX
+      description: Supports Intel® Software Guard Extensions (Intel® SGX Extensions) if 1.
 
-    - Bit: 3
-      Name: BMI1
-      Description: BMI1.
+    - bit: 3
+      name: BMI1
+      description: BMI1.
 
-    - Bit: 4
-      Name: HLE
-      Description: HLE.
+    - bit: 4
+      name: HLE
+      description: HLE.
 
-    - Bit: 5
-      Name: AVX2
-      Description: AVX2.
+    - bit: 5
+      name: AVX2
+      description: AVX2.
 
-    - Bit: 6
-      Name: FDP_EXCPTN_ONLY
-      Description: x87 FPU Data Pointer updated only on x87 exceptions if 1.
+    - bit: 6
+      name: FDP_EXCPTN_ONLY
+      description: x87 FPU Data Pointer updated only on x87 exceptions if 1.
 
-    - Bit: 7
-      Name: SMEP
-      Description: Supports Supervisor-Mode Execution Prevention if 1.
+    - bit: 7
+      name: SMEP
+      description: Supports Supervisor-Mode Execution Prevention if 1.
 
-    - Bit: 8
-      Name: BMI2
-      Description: BMI2.
+    - bit: 8
+      name: BMI2
+      description: BMI2.
 
-    - Bit: 9
-      Name: ENHANCED_REP_MOVSB_STOSB
-      Description: Supports Enhanced REP MOVSB/STOSB if 1.
+    - bit: 9
+      name: ENHANCED_REP_MOVSB_STOSB
+      description: Supports Enhanced REP MOVSB/STOSB if 1.
 
-    - Bit: 10
-      Name: INVPCID
-      Description: If 1, supports INVPCID instruction for system software that manages process-context identifiers.
+    - bit: 10
+      name: INVPCID
+      description: If 1, supports INVPCID instruction for system software that manages process-context identifiers.
 
-    - Bit: 11
-      Name: RTM
-      Description: RTM.
+    - bit: 11
+      name: RTM
+      description: RTM.
 
-    - Bit: 12
-      Name: RDT_M
-      Description: Supports Intel® Resource Director Technology (Intel® RDT) Monitoring capability if 1.
+    - bit: 12
+      name: RDT_M
+      description: Supports Intel® Resource Director Technology (Intel® RDT) Monitoring capability if 1.
 
-    - Bit: 13
-      Name: Deprecates
-      Description: Deprecates FPU CS and FPU DS values if 1.
+    - bit: 13
+      name: Deprecates
+      description: Deprecates FPU CS and FPU DS values if 1.
 
-    - Bit: 14
-      Name: MPX
-      Description: Supports Intel® Memory Protection Extensions if 1.
+    - bit: 14
+      name: MPX
+      description: Supports Intel® Memory Protection Extensions if 1.
 
-    - Bit: 15
-      Name: RDT
-      Description: Supports Intel® Resource Director Technology (Intel® RDT) Allocation capability if 1.
+    - bit: 15
+      name: RDT
+      description: Supports Intel® Resource Director Technology (Intel® RDT) Allocation capability if 1.
 
-    - Bit: 16
-      Name: AVX512F
-      Description: AVX512F.
+    - bit: 16
+      name: AVX512F
+      description: AVX512F.
 
-    - Bit: 17
-      Name: AVX512DQ
-      Description: AVX512DQ.
+    - bit: 17
+      name: AVX512DQ
+      description: AVX512DQ.
 
-    - Bit: 18
-      Name: RDSEED
-      Description: RDSEED.
+    - bit: 18
+      name: RDSEED
+      description: RDSEED.
 
-    - Bit: 19
-      Name: ADX
-      Description: ADX.
+    - bit: 19
+      name: ADX
+      description: ADX.
 
-    - Bit: 20
-      Name: SMAP
-      Description: Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1.
+    - bit: 20
+      name: SMAP
+      description: Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1.
 
-    - Bit: 21
-      Name: AVX512_IFMA
-      Description: AVX512_IFMA.
+    - bit: 21
+      name: AVX512_IFMA
+      description: AVX512_IFMA.
 
-    - Bit: 23
-      Name: CLFLUSHOPT
-      Description: CLFLUSHOPT.
+    - bit: 23
+      name: CLFLUSHOPT
+      description: CLFLUSHOPT.
 
-    - Bit: 24
-      Name: CLWB
-      Description: CLWB.
+    - bit: 24
+      name: CLWB
+      description: CLWB.
 
-    - Bit: 25
-      Name: Intel
-      Description: Intel Processor Trace.
+    - bit: 25
+      name: Intel
+      description: Intel Processor Trace.
 
-    - Bit: 26
-      Name: AVX512PF
-      Description: (Intel® Xeon Phi™ only).
+    - bit: 26
+      name: AVX512PF
+      description: (Intel® Xeon Phi™ only).
 
-    - Bit: 27
-      Name: AVX512ER
-      Description: (Intel® Xeon Phi™ only).
+    - bit: 27
+      name: AVX512ER
+      description: (Intel® Xeon Phi™ only).
 
-    - Bit: 28
-      Name: AVX512CD
-      Description: AVX512CD.
+    - bit: 28
+      name: AVX512CD
+      description: AVX512CD.
 
-    - Bit: 29
-      Name: SHA
-      Description: Supports Intel® Secure Hash Algorithm Extensions (Intel® SHA Extensions) if 1.
+    - bit: 29
+      name: SHA
+      description: Supports Intel® Secure Hash Algorithm Extensions (Intel® SHA Extensions) if 1.
 
-    - Bit: 30
-      Name: AVX512BW
-      Description: AVX512BW.
+    - bit: 30
+      name: AVX512BW
+      description: AVX512BW.
 
-    - Bit: 31
-      Name: AVX512VL
-      Description: AVX512VL.
+    - bit: 31
+      name: AVX512VL
+      description: AVX512VL.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0
-      Name: PREFETCHWT1
-      Description: (Intel® Xeon Phi™ only).
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: PREFETCHWT1
+      description: (Intel® Xeon Phi™ only).
 
-    - Bit: 1
-      Name: AVX512_VBMI
-      Description: AVX512_VBMI.
+    - bit: 1
+      name: AVX512_VBMI
+      description: AVX512_VBMI.
 
-    - Bit: 2
-      Name: UMIP
-      Description: Supports user-mode instruction prevention if 1.
+    - bit: 2
+      name: UMIP
+      description: Supports user-mode instruction prevention if 1.
 
-    - Bit: 3
-      Name: PKU
-      Description: Supports protection keys for user-mode pages if 1.
+    - bit: 3
+      name: PKU
+      description: Supports protection keys for user-mode pages if 1.
 
-    - Bit: 4
-      Name: OSPKE
-      Description: If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
+    - bit: 4
+      name: OSPKE
+      description: If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
 
-    - Bit: 17-21
-      Name: MAWAU
-      Description: The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
+    - bit: 17-21
+      name: MAWAU
+      description: The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
 
-    - Bit: 22
-      Name: RDPID
-      Description: RDPID and IA32_TSC_AUX are available if 1.
+    - bit: 22
+      name: RDPID
+      description: RDPID and IA32_TSC_AUX are available if 1.
 
-    - Bit: 30
-      Name: SGX_LC
-      Description: Supports SGX Launch Configuration if 1.
+    - bit: 30
+      name: SGX_LC
+      description: Supports SGX Launch Configuration if 1.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.

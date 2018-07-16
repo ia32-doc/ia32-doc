@@ -1,35 +1,35 @@
-- ShortName: EAX_80000006
-  LongName: EAX_80000006
-  Description: Extended Function CPUID Information.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EAX is reserved.
+- short_name: EAX_80000006
+  long_name: EAX_80000006
+  description: Extended Function CPUID Information.
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EAX is reserved.
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EBX is reserved.
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EBX is reserved.
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-7
-      Name: CACHE_LINE_SIZE_IN_BYTES
-      Description: Cache Line size in bytes.
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-7
+      name: CACHE_LINE_SIZE_IN_BYTES
+      description: Cache Line size in bytes.
 
-    - Bit: 12-15
-      Name: L2_ASSOCIATIVITY_FIELD
-      Description: |
+    - bit: 12-15
+      name: L2_ASSOCIATIVITY_FIELD
+      description: |
         L2 Associativity field.
 
         L2 associativity field encodings:
@@ -48,14 +48,14 @@
 
         - 0FH - Fully associative.
 
-    - Bit: 16-31
-      Name: CACHE_SIZE_IN_1K_UNITS
-      Description: Cache size in 1K units.
+    - bit: 16-31
+      name: CACHE_SIZE_IN_1K_UNITS
+      description: Cache size in 1K units.
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.

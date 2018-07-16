@@ -1,0 +1,47 @@
+#
+# Compact configuration. Prints just definitions, without comments.
+#
+
+align: 60
+
+indent: 2
+
+brace_on_next_line: false
+
+group_defgroup: true
+
+definition_no_indent: true
+
+bitfield_field_reserved_prefix: 'reserved_'
+bitfield_field_flags_name: 'flags'
+bitfield_field_with_defines: false
+
+comments: false
+
+group_prefer_long_names: false
+definition_prefer_long_names: false
+struct_prefer_long_names: false
+struct_field_prefer_long_names: true
+bitfield_prefer_long_names: false
+bitfield_field_prefer_long_names: true
+
+prefer_alternative_names: false
+
+group_name_letter_case: snake_case
+definition_name_letter_case: snake_case_upper
+struct_name_letter_case: snake_case
+struct_field_name_letter_case: snake_case
+bitfield_name_letter_case: snake_case
+bitfield_field_name_letter_case: snake_case
+
+int_type_8:  'uint8_t'
+int_type_16: 'uint16_t'
+int_type_32: 'uint32_t'
+int_type_64: 'uint64_t'
+
+output_prepend: |
+  #pragma once
+  #include <stdint.h>
+
+output_append: ''
+output_filename: out/ia32_compact.h

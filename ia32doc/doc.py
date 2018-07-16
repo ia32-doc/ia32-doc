@@ -3,48 +3,27 @@ from typing import List, Tuple
 
 import os
 import re
+import sys
 import yaml
 
-from .log import log
+from .text import DocTextCase
 
-int_types_c = {
-     8 : 'unsigned char',
-    16 : 'unsigned short',
-    32 : 'unsigned int',
-    64 : 'unsigned long long',
-}
+DOC_GROUP           = 'group'
+DOC_DEFINITION      = 'definition'
+DOC_ENUM            = 'enum'
+DOC_STRUCT          = 'struct'
+DOC_STRUCT_FIELD    = 'struct_field'
+DOC_BITFIELD        = 'bitfield'
+DOC_BITFIELD_FIELD  = 'bitfield_field'
 
-int_types_cstdint = {
-     8 : 'uint8_t',
-    16 : 'uint16_t',
-    32 : 'uint32_t',
-    64 : 'uint64_t',
-}
-
-int_types_ms = {
-     8 : 'UINT8',
-    16 : 'UINT16',
-    32 : 'UINT32',
-    64 : 'UINT64',
-}
-
-int_types_ms2 = {
-     8 : 'UCHAR',
-    16 : 'USHORT',
-    32 : 'ULONG',
-    64 : 'ULONGLONG',
-}
-
-int_types = int_types_ms
-
-DOC_VALID_TYPES = [
-    'Group',
-    'Definition',
-    'Enum',
-    'Struct',
-    'StructField',
-    'Bitfield',
-    'BitfieldField',
+DOC_TYPES = [
+    DOC_GROUP,
+    DOC_DEFINITION,
+    # DOC_ENUM,
+    DOC_STRUCT,
+    DOC_STRUCT_FIELD,
+    DOC_BITFIELD,
+    DOC_BITFIELD_FIELD,
 ]
 
 '''
@@ -63,21 +42,14 @@ class Doc(object):
 
     @staticmethod
     def parse(path: str, parent: DocBase=None) -> List[DocBase]:
-        log_message = f'Parsing "{path}"...'
-        #if not parent else \
-        #f'Parsing "{path}" (included from "{parent.path}")...'
-
         if path in Doc.doc_cache:
-            log_message += f'(cached)'
-            #log(log_message)
-
             doc_list = Doc.doc_cache[path]
         else:
-            log(log_message)
+            print(f'Parsing "{path}"...', file=sys.stderr)
             doc_list = yaml.load(open(path, encoding='utf-8').read())
 
             for doc in doc_list:
-                doc['Path'] = path
+                doc['path'] = path
 
             Doc.doc_cache[path] = doc_list
 
@@ -86,22 +58,7 @@ class Doc(object):
     @staticmethod
     def map_class(doc: dict, parent: DocBase=None) -> DocBase:
         doc_base = DocBase(doc, parent)
-
-        if doc_base.type == 'Group':
-            #log(f'Processing group "{doc_base.short_name_standalone}"')
-            return DocGroup(doc, parent)
-        elif doc_base.type == 'Definition':
-            return DocDefinition(doc, parent)
-        elif doc_base.type == 'Struct':
-            return DocStruct(doc, parent)
-        elif doc_base.type == 'StructField':
-            return DocStructField(doc, parent)
-        elif doc_base.type == 'Bitfield':
-            return DocBitfield(doc, parent)
-        elif doc_base.type == 'BitfieldField':
-            return DocBitfieldField(doc, parent)
-        else:
-            return doc_base
+        return globals()[f'Doc{DocTextCase.to_camel_case(doc_base.type)}'](doc, parent)
 
 
 class DocBase(object):
@@ -111,13 +68,16 @@ class DocBase(object):
         self._fields = []
         self._include = []
         
-        if 'Fields' in doc:
-            self._fields = [ Doc.map_class(field, self) for field in doc['Fields'] ]
+        if 'fields' in doc:
+            self._fields = [ Doc.map_class(field, self) for field in doc['fields'] ]
 
-        if 'Include' in doc:
-            self._include = doc['Include']
+        if 'include' in doc:
+            self._include = doc['include']
 
         self._do_include()
+
+    def __repr__(self):
+        return f'[{self.short_name} ({self.type})]'
 
     @property
     def short_name(self) -> str:
@@ -129,8 +89,8 @@ class DocBase(object):
 
     @property
     def alternative_name(self) -> str:
-        if 'AlternativeName' in self._doc:
-            return self._make_name(self._doc['AlternativeName'])
+        if 'alternative_name' in self._doc:
+            return self._make_name(self._doc['alternative_name'])
 
         return ''
 
@@ -140,14 +100,14 @@ class DocBase(object):
 
     @property
     def short_name_standalone(self) -> str:
-        if 'ShortName' in self._doc:
-            return self._doc['ShortName']
-        elif 'Name' in self._doc:
-            return self._doc['Name']
-        elif 'NameWithPostfix' in self._doc:
+        if 'short_name' in self._doc:
+            return self._doc['short_name']
+        elif 'name' in self._doc:
+            return self._doc['name']
+        elif 'name_with_postfix' in self._doc:
             if not self._parent:
-                raise Exception('NameWithPostfix without parent')
-            return f'{self._parent.short_name}_{self._doc["NameWithPostfix"]}'
+                raise Exception('name_with_postfix without parent')
+            return f'{self._parent.short_name}_{self._doc["name_with_postfix"]}'
         else:
             raise Exception('Field missing: short_name')
 
@@ -157,34 +117,42 @@ class DocBase(object):
 
     @property
     def long_name_standalone(self) -> str:
-        if 'LongName' in self._doc:
-            return self._doc['LongName']
-        elif 'Name' in self._doc:
-            return self._doc['Name']
-        elif 'NameWithPostfix' in self._doc:
+        if 'long_name' in self._doc:
+            return self._doc['long_name']
+        elif 'name' in self._doc:
+            return self._doc['name']
+        elif 'name_with_postfix' in self._doc:
             if not self._parent:
-                raise Exception('NameWithPostfix without parent')
-            return f'{self._parent.long_name}_{self._doc["NameWithPostfix"]}'
+                raise Exception('name_with_postfix without parent')
+            return f'{self._parent.long_name}_{self._doc["name_with_postfix"]}'
         else:
             raise Exception('Field missing: long_name')
 
     @property
     def short_description(self) -> str:
-        if 'ShortDescription' in self._doc:
-            result = self._doc['ShortDescription']
-        elif 'Description' in self._doc:
-            result = self._doc['Description']
+        return self.short_description_raw.rstrip().rstrip('.')
+
+    @property
+    def long_description(self) -> str:
+        return self.long_description_raw.rstrip()
+
+    @property
+    def short_description_raw(self) -> str:
+        if 'short_description' in self._doc:
+            result = self._doc['short_description']
+        elif 'description' in self._doc:
+            result = self._doc['description']
         else:
             result = ''
 
         return self._fix_description(result)
 
     @property
-    def long_description(self) -> str:
-        if 'LongDescription' in self._doc:
-            result = self._doc['LongDescription']
-        elif 'Description' in self._doc:
-            result = self._doc['Description']
+    def long_description_raw(self) -> str:
+        if 'long_description' in self._doc:
+            result = self._doc['long_description']
+        elif 'description' in self._doc:
+            result = self._doc['description']
         else:
             result = ''
 
@@ -192,86 +160,86 @@ class DocBase(object):
 
     @property
     def children_name_with_prefix(self) -> str:
-        if 'ChildrenNameWithPrefix' in self._doc:
-            if self._doc['ChildrenNameWithPrefix'] != '$':
-                return self._doc['ChildrenNameWithPrefix']
+        if 'children_name_with_prefix' in self._doc:
+            if self._doc['children_name_with_prefix'] != '$':
+                return self._doc['children_name_with_prefix']
             else:
                 return self.short_name
         return ''
 
     @property
     def children_name_with_postfix(self) -> str:
-        if 'ChildrenNameWithPostfix' in self._doc:
-            if self._doc['ChildrenNameWithPostfix'] != '$':
-                return self._doc['ChildrenNameWithPostfix']
+        if 'children_name_with_postfix' in self._doc:
+            if self._doc['children_name_with_postfix'] != '$':
+                return self._doc['children_name_with_postfix']
             else:
                 return self.short_name
         return ''
 
     @property
     def note(self) -> str:
-        if 'Note' in self._doc:
-            return self._doc['Note']
+        if 'note' in self._doc:
+            return self._doc['note']
         return ''
 
     @property
     def access(self) -> str:
-        if 'Access' in self._doc:
-            return self._doc['Access']
+        if 'access' in self._doc:
+            return self._doc['access']
         return ''
 
     @property
     def todo(self) -> str:
-        if 'Todo' in self._doc:
-            return self._doc['Todo']
+        if 'todo' in self._doc:
+            return self._doc['todo']
         return ''
 
     @property
     def tag(self) -> str:
-        if 'Tag' in self._doc:
-            return self._doc['Tag']
+        if 'tag' in self._doc:
+            return self._doc['tag']
         return ''
 
     @property
     def type(self) -> str:
-        if 'Type' not in self._doc:
+        if 'type' not in self._doc:
             if self._parent:
-                if self._parent.type == 'Struct':
-                    self._doc['Type'] = 'StructField'
-                elif self._parent.type == 'Bitfield':
-                    self._doc['Type'] = 'BitfieldField'
+                if self._parent.type == DOC_STRUCT:
+                    self._doc['type'] = DOC_STRUCT_FIELD
+                elif self._parent.type == DOC_BITFIELD:
+                    self._doc['type'] = DOC_BITFIELD_FIELD
                 else:
-                    self._doc['Type'] = 'Definition'
+                    self._doc['type'] = DOC_DEFINITION
             else:
-                self._doc['Type'] = 'Definition'
+                self._doc['type'] = DOC_DEFINITION
 
-        if 'Type' in self._doc and self._doc['Type'] in DOC_VALID_TYPES:
-            return self._doc['Type']
+        if 'type' in self._doc and self._doc['type'] in DOC_TYPES:
+            return self._doc['type']
         else:
             raise Exception('Invalid type')
 
     @property
     def alternative_type(self) -> str:
-        if 'AlternativeType' in self._doc:
-            return self._doc['AlternativeType']
+        if 'alternative_type' in self._doc:
+            return self._doc['alternative_type']
         return self.type
 
     @property
     def remarks(self) -> str:
-        if 'Remarks' in self._doc:
-            return self._fix_description(self._doc['Remarks'])
+        if 'remarks' in self._doc:
+            return self._fix_description(self._doc['remarks'])
         return ''
 
     @property
-    def see_also(self) -> str:
-        if 'SeeAlso' in self._doc:
-            return self._doc['SeeAlso']
+    def see(self) -> str:
+        if 'see' in self._doc:
+            return self._doc['see']
         return ''
 
     @property
     def reference(self) -> str:
-        if 'Reference' in self._doc:
-            return self._doc['Reference']
+        if 'reference' in self._doc:
+            return self._doc['reference']
         return ''
 
     @property
@@ -284,10 +252,10 @@ class DocBase(object):
 
     @property
     def path(self) -> str:
-        return self._doc['Path']
+        return self._doc['path']
 
     def _make_name(self, name: str) -> str:
-        if 'NameWithPostfix' not in self._doc and self.type in ['Definition', 'Group', 'Struct', 'Bitfield']:
+        if 'name_with_postfix' not in self._doc and self.type in [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD ]:
             parent = self._parent
 
             while parent:
@@ -311,7 +279,7 @@ class DocBase(object):
             elif os.path.isfile(dir_path):
                 doc_list = Doc.parse(dir_path, self)
             else:
-                doc_list = []
+                doc_list = []  # raise Exception(f'Path {self.path} not found')
 
             for doc in doc_list:
                 self._fields.append(doc)
@@ -319,7 +287,7 @@ class DocBase(object):
     def _fix_name(self, name: str) -> str:
         result = name
 
-        if self.type in ['Group', 'Struct', 'Bitfield']:
+        if self.type in ['group', 'struct', 'bitfield']:
             #
             # Remove everything between '(' and ')' characters.
             #
@@ -362,10 +330,7 @@ class DocDefinition(DocBase):
 
     @property
     def value(self) -> str:
-        try:
-            return self._doc['Value']
-        except:
-            pass
+        return self._doc['value']
 
 
 class DocStruct(DocBase):
@@ -379,11 +344,7 @@ class DocStructField(DocBase):
 
     @property
     def size(self) -> int:
-        return self._doc['Size']
-
-    @property
-    def size_type(self) -> str:
-        return int_types[self.size]
+        return self._doc['size']
 
 
 class DocBitfield(DocBase):
@@ -392,33 +353,21 @@ class DocBitfield(DocBase):
 
     @property
     def size_min(self):
-        if isinstance(self._doc['Size'], int):
-            return self._doc['Size']
+        if isinstance(self._doc['size'], int):
+            return self._doc['size']
         else:
-            return self._doc['Size'][0]
+            return self._doc['size'][0]
 
     @property
     def size_max(self):
-        if isinstance(self._doc['Size'], int):
-            return self._doc['Size']
+        if isinstance(self._doc['size'], int):
+            return self._doc['size']
         else:
-            return self._doc['Size'][1]
+            return self._doc['size'][1]
 
     @property
     def size(self) -> int:
         return self.size_max
-
-    @property
-    def size_type_min(self) -> str:
-        return int_types[self.size_min]
-
-    @property
-    def size_type_max(self) -> str:
-        return int_types[self.size_max]
-
-    @property
-    def size_type(self) -> str:
-        return int_types[self.size]
 
 
 class DocBitfieldField(DocBase):
@@ -427,10 +376,10 @@ class DocBitfieldField(DocBase):
 
     @property
     def bit(self) -> Tuple[int, int]:
-        if isinstance(self._doc['Bit'], int):
-            bit_from, bit_to = self._doc['Bit'], self._doc['Bit'] + 1
+        if isinstance(self._doc['bit'], int):
+            bit_from, bit_to = self._doc['bit'], self._doc['bit'] + 1
         else:
-            doc_bit = self._doc['Bit']
+            doc_bit = self._doc['bit']
             if 'MAXPHYADDR' in doc_bit:
                 doc_bit = doc_bit.replace('(MAXPHYADDR-1)', f'{MAXPHYADDR - 1}')
 

@@ -1,29 +1,29 @@
-- ShortName: EPT
-  LongName: EXTENDED_PAGE_TABLES
-  ShortDescription: The extended page-table mechanism
-  LongDescription: |
+- short_name: EPT
+  long_name: EXTENDED_PAGE_TABLES
+  short_description: The extended page-table mechanism
+  long_description: |
     The extended page-table mechanism (EPT) is a feature that can be used to support the virtualization of physical
     memory. When EPT is in use, certain addresses that would normally be treated as physical addresses (and used to
     access memory) are instead treated as guest-physical addresses. Guest-physical addresses are translated by
     traversing a set of EPT paging structures to produce physical addresses that are used to access memory.
-  Type: Group
-  Reference: Vol3C[28.2(THE EXTENDED PAGE TABLE MECHANISM (EPT))]
-  Fields:
-  - ShortName: EPTP
-    LongName: EPT_POINTER
-    ShortDescription: Extended-Page-Table Pointer (EPTP)
-    LongDescription: |
+  type: group
+  reference: Vol3C[28.2(THE EXTENDED PAGE TABLE MECHANISM (EPT))]
+  fields:
+  - short_name: EPTP
+    long_name: EPT_POINTER
+    short_description: Extended-Page-Table Pointer (EPTP)
+    long_description: |
       The extended-page-table pointer (EPTP) contains the address of the base of EPT PML4 table,
       as well as other EPT configuration information.
-    Type: Bitfield
-    Size: 64
-    SeeAlso: Vol3C[28.2.2(EPT Translation Mechanism]
-    Reference: Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)]
-    Fields:
-    - Bit: 0-2
-      ShortName: TYPE
-      LongName: MEMORY_TYPE
-      Description: |
+    type: bitfield
+    size: 64
+    see: Vol3C[28.2.2(EPT Translation Mechanism]
+    reference: Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)]
+    fields:
+    - bit: 0-2
+      short_name: TYPE
+      long_name: MEMORY_TYPE
+      description: |
         EPT paging-structure memory type:
 
         - 0 = Uncacheable (UC)
@@ -31,29 +31,29 @@
         - 6 = Write-back (WB)
 
         Other values are reserved.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 3-5
-      ShortName: PAGE_WALK_LENGTH
-      LongName: PAGE_WALK_LENGTH
-      Description: This value is 1 less than the EPT page-walk length.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 3-5
+      short_name: PAGE_WALK_LENGTH
+      long_name: PAGE_WALK_LENGTH
+      description: This value is 1 less than the EPT page-walk length.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 6
-      ShortName: ENABLE_ACCESS_AND_DIRTY_FLAGS
-      LongName: ENABLE_ACCESS_AND_DIRTY_FLAGS
-      Description: Setting this control to 1 enables accessed and dirty flags for EPT.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+    - bit: 6
+      short_name: ENABLE_ACCESS_AND_DIRTY_FLAGS
+      long_name: ENABLE_ACCESS_AND_DIRTY_FLAGS
+      description: Setting this control to 1 enables accessed and dirty flags for EPT.
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Bits N–1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Bits N–1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
 
-  - ShortName: EPML4E
-    LongName: EPT_PML4
-    ShortDescription: Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
-    LongDescription: |
+  - short_name: EPML4E
+    long_name: EPT_PML4
+    short_description: Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
+    long_description: |
       A 4-KByte naturally aligned EPT PML4 table is located at the physical address specified in bits 51:12 of the
       extended-page-table pointer (EPTP), a VM-execution control field. An EPT
       PML4 table comprises 512 64-bit entries (EPT PML4Es). An EPT PML4E is selected using the physical address
@@ -69,474 +69,474 @@
 
       Because an EPT PML4E is identified using bits 47:39 of the guest-physical address, it controls access to a 512-
       GByte region of the guest-physical-address space.
-    Type: Bitfield
-    Size: 64
-    SeeAlso: Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)]
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry.
+    type: bitfield
+    size: 64
+    see: Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP)]
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether instruction
         fetches are allowed from the 512-GByte region controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 512-GByte region controlled by this entry.
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 512-GByte region
         controlled by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 512-GByte region
         controlled by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-  - ShortName: EPT_PDPTE_1GB
-    LongName: EPDPTE_1GB
-    Description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry.
+  - short_name: EPT_PDPTE_1GB
+    long_name: EPDPTE_1GB
+    description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether
         instruction fetches are allowed from the 1-GByte page controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 1-GByte page controlled by this entry.
 
-    - Bit: 3-5
-      ShortName: TYPE
-      LongName: MEMORY_TYPE
-      Description: EPT memory type for this 1-GByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 3-5
+      short_name: TYPE
+      long_name: MEMORY_TYPE
+      description: EPT memory type for this 1-GByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 6
-      ShortName: IGNORE_PAT
-      LongName: IGNORE_PAT
-      Description: Ignore PAT memory type for this 1-GByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 6
+      short_name: IGNORE_PAT
+      long_name: IGNORE_PAT
+      description: Ignore PAT memory type for this 1-GByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 7
-      ShortName: LARGE
-      LongName: LARGE_PAGE
-      AlternativeName: LARGE_PAGE
-      Description: Must be 1 (otherwise, this entry references an EPT page directory).
+    - bit: 7
+      short_name: LARGE
+      long_name: LARGE_PAGE
+      alternative_name: LARGE_PAGE
+      description: Must be 1 (otherwise, this entry references an EPT page directory).
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page referenced
         by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 9
-      ShortName: DIRTY
-      LongName: DIRTY
-      Description: |
+    - bit: 9
+      short_name: DIRTY
+      long_name: DIRTY
+      description: |
         If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced by
         this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte page controlled
         by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 30-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
+    - bit: 30-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-    - Bit: 63
-      ShortName: SUPPRESS_VE
-      LongName: SUPPRESS_VE
-      Description: |
+    - bit: 63
+      short_name: SUPPRESS_VE
+      long_name: SUPPRESS_VE
+      description: |
         Suppress #VE. If the “EPT-violation #VE” VM-execution control is 1, EPT violations caused by accesses to this page
         are convertible to virtualization exceptions only if this bit is 0. If “EPT-violation #VE” VMexecution
         control is 0, this bit is ignored.
-      SeeAlso: Vol3C[25.5.6.1(Convertible EPT Violations)]
+      see: Vol3C[25.5.6.1(Convertible EPT Violations)]
 
-  - ShortName: EPT_PDPTE
-    LongName: EPDPTE
-    Description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry.
+  - short_name: EPT_PDPTE
+    long_name: EPDPTE
+    description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether instruction
         fetches are allowed from the 1-GByte region controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 1-GByte region controlled by this entry.
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte region controlled
         by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 1-GByte region
         controlled by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-  - ShortName: EPT_PDE_2MB
-    LongName: EPDE_2MB
-    Description: Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry.
+  - short_name: EPT_PDE_2MB
+    long_name: EPDE_2MB
+    description: Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether instruction
         fetches are allowed from the 2-MByte page controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 2-MByte page controlled by this entry.
 
-    - Bit: 3-5
-      ShortName: TYPE
-      LongName: MEMORY_TYPE
-      Description: EPT memory type for this 2-MByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 3-5
+      short_name: TYPE
+      long_name: MEMORY_TYPE
+      description: EPT memory type for this 2-MByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 6
-      ShortName: IGNORE_PAT
-      LongName: IGNORE_PAT
-      Description: Ignore PAT memory type for this 2-MByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 6
+      short_name: IGNORE_PAT
+      long_name: IGNORE_PAT
+      description: Ignore PAT memory type for this 2-MByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 7
-      ShortName: LARGE
-      LongName: LARGE_PAGE
-      AlternativeName: LARGE_PAGE
-      Description: Must be 1 (otherwise, this entry references an EPT page table).
+    - bit: 7
+      short_name: LARGE
+      long_name: LARGE_PAGE
+      alternative_name: LARGE_PAGE
+      description: Must be 1 (otherwise, this entry references an EPT page table).
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page referenced
         by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 9
-      ShortName: DIRTY
-      LongName: DIRTY
-      Description: |
+    - bit: 9
+      short_name: DIRTY
+      long_name: DIRTY
+      description: |
         If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced by
         this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte page controlled
         by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 21-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
+    - bit: 21-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-    - Bit: 63
-      ShortName: SUPPRESS_VE
-      LongName: SUPPRESS_VE
-      Description: |
+    - bit: 63
+      short_name: SUPPRESS_VE
+      long_name: SUPPRESS_VE
+      description: |
         Suppress #VE. If the “EPT-violation #VE” VM-execution control is 1, EPT violations caused by accesses to this page
         are convertible to virtualization exceptions only if this bit is 0. If “EPT-violation #VE” VMexecution
         control is 0, this bit is ignored.
-      SeeAlso: Vol3C[25.5.6.1(Convertible EPT Violations)]
+      see: Vol3C[25.5.6.1(Convertible EPT Violations)]
 
-  - ShortName: EPT_PDE
-    LongName: EPDE
-    Description: Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry.
+  - short_name: EPT_PDE
+    long_name: EPDE
+    description: Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether instruction
         fetches are allowed from the 2-MByte region controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 2-MByte region controlled by this entry.
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte region controlled
         by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 2-MByte region
         controlled by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of 4-KByte aligned EPT page table referenced by this entry.
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of 4-KByte aligned EPT page table referenced by this entry.
 
-  - ShortName: EPT_PTE
-    LongName: EPTE
-    Description: Format of an EPT Page-Table Entry that Maps a 4-KByte Page.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
-      Description: Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry.
+  - short_name: EPT_PTE
+    long_name: EPTE
+    description: Format of an EPT Page-Table Entry that Maps a 4-KByte Page.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
+      description: Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry.
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
-      Description: Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry.
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
+      description: Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry.
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
-      Description: |
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
+      description: |
         If the “mode-based execute control for EPT” VM-execution control is 0, execute access; indicates whether
         instruction fetches are allowed from the 4-KByte page controlled by this entry.
 
         If that control is 1, execute access for supervisor-mode linear addresses; indicates whether instruction fetches are
         allowed from supervisor-mode linear addresses in the 4-KByte page controlled by this entry.
 
-    - Bit: 3-5
-      ShortName: TYPE
-      LongName: MEMORY_TYPE
-      Description: EPT memory type for this 4-KByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 3-5
+      short_name: TYPE
+      long_name: MEMORY_TYPE
+      description: EPT memory type for this 4-KByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 6
-      ShortName: IGNORE_PAT
-      LongName: IGNORE_PAT
-      Description: Ignore PAT memory type for this 4-KByte page.
-      SeeAlso: Vol3C[28.2.6(EPT and memory Typing)]
+    - bit: 6
+      short_name: IGNORE_PAT
+      long_name: IGNORE_PAT
+      description: Ignore PAT memory type for this 4-KByte page.
+      see: Vol3C[28.2.6(EPT and memory Typing)]
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
-      Description: |
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
+      description: |
         If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 4-KByte page referenced
         by this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 9
-      ShortName: DIRTY
-      LongName: DIRTY
-      Description: |
+    - bit: 9
+      short_name: DIRTY
+      long_name: DIRTY
+      description: |
         If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced by
         this entry. Ignored if bit 6 of EPTP is 0.
-      SeeAlso: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
+      see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
-      Description: |
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
+      description: |
         Execute access for user-mode linear addresses. If the “mode-based execute control for EPT” VM-execution control is
         1, indicates whether instruction fetches are allowed from user-mode linear addresses in the 4-KByte page controlled
         by this entry. If that control is 0, this bit is ignored.
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
-      Description: Physical address of the 4-KByte page referenced by this entry.
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
+      description: Physical address of the 4-KByte page referenced by this entry.
 
-    - Bit: 63
-      ShortName: SUPPRESS_VE
-      LongName: SUPPRESS_VE
-      Description: |
+    - bit: 63
+      short_name: SUPPRESS_VE
+      long_name: SUPPRESS_VE
+      description: |
         Suppress #VE. If the “EPT-violation #VE” VM-execution control is 1, EPT violations caused by accesses to this page
         are convertible to virtualization exceptions only if this bit is 0. If “EPT-violation #VE” VMexecution
         control is 0, this bit is ignored.
-      SeeAlso: Vol3C[25.5.6.1(Convertible EPT Violations)]
+      see: Vol3C[25.5.6.1(Convertible EPT Violations)]
 
   #
   # Common EPT fields.
   #
 
-  - Name: EPT_ENTRY
-    Description: Format of a common EPT Entry.
-    Type: Bitfield
-    Size: 64
-    Fields:
-    - Bit: 0
-      ShortName: READ
-      LongName: READ_ACCESS
+  - name: EPT_ENTRY
+    description: Format of a common EPT Entry.
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: READ
+      long_name: READ_ACCESS
 
-    - Bit: 1
-      ShortName: WRITE
-      LongName: WRITE_ACCESS
+    - bit: 1
+      short_name: WRITE
+      long_name: WRITE_ACCESS
 
-    - Bit: 2
-      ShortName: EXECUTE
-      LongName: EXECUTE_ACCESS
+    - bit: 2
+      short_name: EXECUTE
+      long_name: EXECUTE_ACCESS
 
-    - Bit: 3-5
-      ShortName: TYPE
-      LongName: MEMORY_TYPE
+    - bit: 3-5
+      short_name: TYPE
+      long_name: MEMORY_TYPE
 
-    - Bit: 6
-      ShortName: IGNORE_PAT
-      LongName: IGNORE_PAT
+    - bit: 6
+      short_name: IGNORE_PAT
+      long_name: IGNORE_PAT
 
-    - Bit: 7
-      ShortName: LARGE
-      LongName: LARGE_PAGE
+    - bit: 7
+      short_name: LARGE
+      long_name: LARGE_PAGE
 
-    - Bit: 8
-      ShortName: ACCESSED
-      LongName: ACCESSED
+    - bit: 8
+      short_name: ACCESSED
+      long_name: ACCESSED
 
-    - Bit: 9
-      ShortName: DIRTY
-      LongName: DIRTY
+    - bit: 9
+      short_name: DIRTY
+      long_name: DIRTY
 
-    - Bit: 10
-      ShortName: USER_MODE_EXECUTE
-      LongName: USER_MODE_EXECUTE
+    - bit: 10
+      short_name: USER_MODE_EXECUTE
+      long_name: USER_MODE_EXECUTE
 
-    - Bit: 12-(MAXPHYADDR-1)
-      ShortName: PFN
-      LongName: PAGE_FRAME_NUMBER
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PFN
+      long_name: PAGE_FRAME_NUMBER
 
-    - Bit: 63
-      ShortName: SUPPRESS_VE
-      LongName: SUPPRESS_VE
+    - bit: 63
+      short_name: SUPPRESS_VE
+      long_name: SUPPRESS_VE
 
   #
   # Helper definitions (not in Intel Manual).
   #
 
-  - Name: EPT_TABLE_LEVEL
-    Description: EPT Table level numbers.
-    Type: Group
-    Fields:
-    - Value: 3
-      Name: LEVEL_PML4E
+  - name: EPT_TABLE_LEVEL
+    description: EPT Table level numbers.
+    type: group
+    fields:
+    - value: 3
+      name: LEVEL_PML4E
 
-    - Value: 2
-      Name: LEVEL_PDPTE
+    - value: 2
+      name: LEVEL_PDPTE
 
-    - Value: 1
-      Name: LEVEL_PDE
+    - value: 1
+      name: LEVEL_PDE
 
-    - Value: 0
-      Name: LEVEL_PTE
+    - value: 0
+      name: LEVEL_PTE
 
-  - Name: EPT_ENTRY_COUNT
-    Description: EPT Entry counts.
-    Type: Group
-    Fields:
-    - Value: 512
-      Name: PML4_ENTRY_COUNT
+  - name: EPT_ENTRY_COUNT
+    description: EPT Entry counts.
+    type: group
+    fields:
+    - value: 512
+      name: PML4_ENTRY_COUNT
 
-    - Value: 512
-      Name: PDPTE_ENTRY_COUNT
+    - value: 512
+      name: PDPTE_ENTRY_COUNT
 
-    - Value: 512
-      Name: PDE_ENTRY_COUNT
+    - value: 512
+      name: PDE_ENTRY_COUNT
 
-  - Name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
-    ShortDescription: EPT memory type.
-    LongDescription: |
+  - name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
+    short_description: EPT memory type.
+    long_description: |
       The effective memory type of a memory access using a guest-physical address (an access that is translated
       using EPT) is the memory type that is used to access memory. The effective memory type is based on the value of
       bit 30 (cache disable—CD) in control register CR0; the last EPT paging-structure entry used to translate the guestphysical
@@ -564,38 +564,38 @@
       - If CR0.CD = 1, the effective memory type is UC.
 
         The MTRRs have no effect on the memory type used for an access to a guest-physical address.
-    ChildrenNameWithPrefix: EPT_MEMORY_TYPE
-    Type: Group
-    SeeAlso:
+    children_name_with_prefix: EPT_MEMORY_TYPE
+    type: group
+    see:
     - MemoryType.yml
     - Vol3A[11.5.2.2(Selecting Memory Types for Pentium III and More Recent Processor Families)]
     - Vol3A[11.12.3(Selecting a Memory Type from the PAT)]
     - Vol3C[28.2.3(EPT-Induced VM Exits)]
-    Reference: Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
-    Fields:
-    - Value: 0
-      ShortName: UC
-      LongName: UNCACHEABLE
+    reference: Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
+    fields:
+    - value: 0
+      short_name: UC
+      long_name: UNCACHEABLE
 
-    - Value: 1
-      ShortName: WC
-      LongName: WRITE_COMBINING
+    - value: 1
+      short_name: WC
+      long_name: WRITE_COMBINING
 
-    - Value: 4
-      ShortName: WT
-      LongName: WRITE_THROUGH
+    - value: 4
+      short_name: WT
+      long_name: WRITE_THROUGH
 
-    - Value: 5
-      ShortName: WP
-      LongName: WRITE_PROTECTED
+    - value: 5
+      short_name: WP
+      long_name: WRITE_PROTECTED
 
-    - Value: 6
-      ShortName: WB
-      LongName: WRITE_BACK
+    - value: 6
+      short_name: WB
+      long_name: WRITE_BACK
 
-    - Value: 7
-      Name: UNCACHED
-      Todo: Source???
+    - value: 7
+      name: UNCACHED
+      todo: Source???
 
-    - Value: 0xFF
-      Name: INVALID
+    - value: 0xFF
+      name: INVALID

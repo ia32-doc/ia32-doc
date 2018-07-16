@@ -1,9 +1,9 @@
-- ShortName: EAX_16
-  LongName: EAX_16
-  ShortDescription: Processor Frequency Information Leaf
-  LongDescription: |
+- short_name: EAX_16
+  long_name: EAX_16
+  short_description: Processor Frequency Information Leaf
+  long_description: |
     When CPUID executes with EAX set to 16H, the processor returns information about Processor Frequency Information.
-  Note: |
+  note: |
     Data is returned from this interface in accordance with the processor's specification and does not reflect
     actual values. Suitable use of this data includes the display of processor information in like manner to the
     processor brand string and for determining the appropriate range to use when displaying processor
@@ -13,36 +13,36 @@
 
     While a processor may support the Processor Frequency Information leaf, fields that return a value of
     zero are not supported.
-  Type: Struct
-  Fields:
-  - Name: EAX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: PROCESOR_BASE_FREQUENCY_MHZ
-      Description: Processor Base Frequency (in MHz).
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: PROCESOR_BASE_FREQUENCY_MHZ
+      description: Processor Base Frequency (in MHz).
 
-  - Name: EBX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: PROCESSOR_MAXIMUM_FREQUENCY_MHZ
-      Description: Maximum Frequency (in MHz).
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: PROCESSOR_MAXIMUM_FREQUENCY_MHZ
+      description: Maximum Frequency (in MHz).
 
-  - Name: ECX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-15
-      Name: BUS_FREQUENCY_MHZ
-      Description: Bus (Reference) Frequency (in MHz).
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: BUS_FREQUENCY_MHZ
+      description: Bus (Reference) Frequency (in MHz).
 
-  - Name: EDX
-    Type: Bitfield
-    Size: 32
-    Fields:
-    - Bit: 0-31
-      Name: RESERVED
-      Description: EDX is reserved.
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: RESERVED
+      description: EDX is reserved.
