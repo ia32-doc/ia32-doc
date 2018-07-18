@@ -16734,7 +16734,7 @@ typedef enum
    * The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
    */
   VmxWaitForSipi                                               = 0x00000003,
-} GUEST_ACTIVITY_STATE;
+} VMX_GUEST_ACTIVITY_STATE;
 
 /**
  * @defgroup VMX_EPT \
@@ -17594,7 +17594,7 @@ typedef enum
    * all EP4TAs (and, for combined mappings, for all VPIDs and PCIDs).
    */
   VmxInveptAllContext                                          = 0x00000002,
-} INVEPT_TYPE;
+} VMX_INVEPT_TYPE;
 
 typedef enum
 {
@@ -17632,7 +17632,7 @@ typedef enum
    * @see Vol3C[4.10(Caching Translation Information)]
    */
   VmxInvvpidSingleContextRetainingGlobals                      = 0x00000003,
-} INVVPID_TYPE;
+} VMX_INVVPID_TYPE;
 
 typedef struct
 {

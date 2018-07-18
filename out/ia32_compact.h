@@ -4104,7 +4104,7 @@ typedef enum {
   vmx_hlt                                                      = 0x00000001,
   vmx_shutdown                                                 = 0x00000002,
   vmx_wait_for_sipi                                            = 0x00000003,
-} guest_activity_state;
+} vmx_guest_activity_state;
 
 /**
  * @defgroup vmx_ept \
@@ -4299,14 +4299,14 @@ typedef union {
 typedef enum {
   vmx_invept_single_context                                    = 0x00000001,
   vmx_invept_all_context                                       = 0x00000002,
-} invept_type;
+} vmx_invept_type;
 
 typedef enum {
   vmx_invvpid_individual_address                               = 0x00000000,
   vmx_invvpid_single_context                                   = 0x00000001,
   vmx_invvpid_all_context                                      = 0x00000002,
   vmx_invvpid_single_context_retaining_globals                 = 0x00000003,
-} invvpid_type;
+} vmx_invvpid_type;
 
 typedef struct {
   uint64_t ept_pointer;

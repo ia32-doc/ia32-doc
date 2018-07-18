@@ -260,7 +260,7 @@ class DocBase(object):
         return self._doc['path']
 
     def _make_name(self, name: str) -> str:
-        candidate_types_for_affix = [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD, DOC_ENUM_FIELD ]
+        candidate_types_for_affix = [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD, DOC_ENUM, DOC_ENUM_FIELD ]
         if 'name_with_suffix' not in self._doc and self.type in candidate_types_for_affix:
             parent = self.parent
 
