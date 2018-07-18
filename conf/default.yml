@@ -29,6 +29,11 @@ indent: 2
 brace_on_next_line: true
 
 #
+# If true, enum fields are printed out as #define macros.
+#
+enum_as_define: false
+
+#
 # Print @defgroup when entering group.
 #
 group_defgroup: true
@@ -242,6 +247,8 @@ prefer_alternative_names: true
 #
 group_name_letter_case: snake_case_upper
 definition_name_letter_case: snake_case_upper
+enum_name_letter_case: snake_case_upper
+enum_field_name_letter_case: camel_case
 struct_name_letter_case: snake_case_upper
 struct_field_name_letter_case: camel_case
 bitfield_name_letter_case: snake_case_upper

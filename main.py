@@ -8,7 +8,7 @@ ALL = False
 
 TEST = False
 TEST_CONFIG = 'conf/default.yml'
-TEST_FILE = 'yaml/Intel/CPUID/index.yml'
+TEST_FILE = 'yaml/Intel/VMX/EPT.yml'
 
 
 def process(config, file):

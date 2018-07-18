@@ -66,13 +66,19 @@ class DocProcessor(object):
 
     def process(self, doc_list: List[DocBase]) -> None:
         for doc in doc_list:
-            assert doc.type in [ DOC_GROUP, DOC_DEFINITION, DOC_STRUCT, DOC_BITFIELD ]
+            assert doc.type in [ DOC_GROUP, DOC_DEFINITION, DOC_ENUM, DOC_STRUCT, DOC_BITFIELD ]
             getattr(self, f'process_{doc.type}')(doc)
 
     def process_group(self, doc: DocGroup) -> None:
         pass
 
     def process_definition(self, doc: DocDefinition) -> None:
+        pass
+
+    def process_enum(self, doc: DocEnum) -> None:
+        pass
+
+    def process_enum_field(self, doc: DocEnumField) -> None:
         pass
 
     def process_bitfield(self, doc: DocBitfield) -> None:
@@ -103,5 +109,6 @@ class DocProcessor(object):
         text = text.replace('≤', '<=')
         text = text.replace('™', '(TM)')
         text = text.replace('←', '<-')
+        text = text.replace('∗', '*')
 
         return text

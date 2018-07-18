@@ -667,14 +667,37 @@ typedef union
  * - ECX <- 6c65746eh (* "ntel", with n in the low eight bits of CL *)
  */
 #define CPUID_SIGNATURE                                              0x00000000
-
 typedef struct
 {
+  /**
+   * @brief EAX
+   *
+   * Maximum Input Value for Basic CPUID Information.
+   */
   UINT32 MaxCpuidInputValue;
+
+  /**
+   * @brief EBX
+   *
+   * "Genu"
+   */
   UINT32 EbxValueGenu;
+
+  /**
+   * @brief ECX
+   *
+   * "ntel"
+   */
   UINT32 EcxValueNtel;
+
+  /**
+   * @brief EDX
+   *
+   * "ineI"
+   */
   UINT32 EdxValueInei;
 } CPUID_EAX_00;
+
 
 /**
  * @brief Returns Model, Family, Stepping Information, Additional Information and Feature Information
@@ -685,7 +708,6 @@ typedef struct
  *   * Feature Information in ECX and EDX
  */
 #define CPUID_VERSION_INFORMATION                                    0x00000001
-
 typedef struct
 {
   /**
@@ -752,9 +774,33 @@ typedef struct
    */
   struct
   {
+    /**
+     * This number provides an entry into a brand string table that contains brand strings for IA-32 processors. More
+     * information about this field is provided later in this section.
+     */
     UINT8 BrandIndex;
+
+    /**
+     * @brief Value * 8 = cache line size in bytes; used also by CLFLUSHOPT
+     *
+     * This number indicates the size of the cache line flushed by the CLFLUSH and CLFLUSHOPT instructions in 8-byte
+     * increments. This field was introduced in the Pentium 4 processor.
+     */
     UINT8 ClflushLineSize;
+
+    /**
+     * Maximum number of addressable IDs for logical processors in this physical package.
+     *
+     * @remarks The nearest power-of-2 integer that is not smaller than EBX[23:16] is the number of unique initial APIC IDs
+     *          reserved for addressing different logical processors in a physical package. This field is only valid if
+     *          CPUID.1.EDX.HTT[bit 28] = 1.
+     */
     UINT8 MaxAddressableIds;
+
+    /**
+     * This number is the 8-bit ID that is assigned to the local APIC on the processor during power up. This field was
+     * introduced in the Pentium 4 processor.
+     */
     UINT8 InitialApicId;
   } CpuidAdditionalInformation;
 
@@ -1475,6 +1521,7 @@ typedef struct
 
 } CPUID_EAX_01;
 
+
 /**
  * @brief Deterministic Cache Parameters Leaf
  *
@@ -1494,7 +1541,6 @@ typedef struct
  * @see Vol3A[8(Multiple-Processor Management)]
  */
 #define CPUID_CACHE_PARAMETERS                                       0x00000004
-
 typedef struct
 {
   union
@@ -1680,6 +1726,7 @@ typedef struct
 
 } CPUID_EAX_04;
 
+
 /**
  * @brief MONITOR/MWAIT Leaf
  *
@@ -1688,7 +1735,6 @@ typedef struct
  * MWAIT instruction optionally provides additional extensions for advanced power management.
  */
 #define CPUID_MONITOR_MWAIT                                          0x00000005
-
 typedef struct
 {
   union
@@ -1836,13 +1882,13 @@ typedef struct
 
 } CPUID_EAX_05;
 
+
 /**
  * @brief Thermal and Power Management Leaf
  *
  * When CPUID executes with EAX set to 06H, the processor returns information about thermal and power management features.
  */
 #define CPUID_THERMAL_AND_POWER_MANAGEMENT                           0x00000006
-
 typedef struct
 {
   union
@@ -2088,6 +2134,7 @@ typedef struct
 
 } CPUID_EAX_06;
 
+
 /**
  * @brief Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
  *
@@ -2098,7 +2145,6 @@ typedef struct
  * sub-leaf, and EBX, ECX & EDX contain information of extended feature flags.
  */
 #define CPUID_STRUCTURED_EXTENDED_FEATURE_FLAGS                      0x00000007
-
 typedef struct
 {
   union
@@ -2508,13 +2554,13 @@ typedef struct
 
 } CPUID_EAX_07;
 
+
 /**
  * @brief Direct Cache Access Information Leaf
  *
  * When CPUID executes with EAX set to 09H, the processor returns information about Direct Cache Access capabilities.
  */
 #define CPUID_DIRECT_CACHE_ACCESS_INFORMATION                        0x00000009
-
 typedef struct
 {
   union
@@ -2587,6 +2633,7 @@ typedef struct
 
 } CPUID_EAX_09;
 
+
 /**
  * @brief Architectural Performance Monitoring Leaf
  *
@@ -2598,7 +2645,6 @@ typedef struct
  * @see Vol3C[23(Introduction to Virtual-Machine Extensions)]
  */
 #define CPUID_ARCHITECTURAL_PERFORMANCE_MONITORING                   0x0000000A
-
 typedef struct
 {
   union
@@ -2773,6 +2819,7 @@ typedef struct
 
 } CPUID_EAX_0A;
 
+
 /**
  * @brief Extended Topology Enumeration Leaf
  *
@@ -2788,7 +2835,6 @@ typedef struct
  *       n in ECX returns the invalid level-type of 0 in ECX[15:8], other input values with ECX > n also return 0 in ECX[15:8].
  */
 #define CPUID_EXTENDED_TOPOLOGY                                      0x0000000B
-
 typedef struct
 {
   union
@@ -4495,6 +4541,7 @@ typedef struct
  * @}
  */
 
+
 /**
  * @brief Stamp Counter and Nominal Core Crystal Clock Information Leaf
  *
@@ -4507,7 +4554,6 @@ typedef struct
  *       frequency" * EBX/EAX.
  */
 #define CPUID_TIME_STAMP_COUNTER_INFORMATION                         0x00000015
-
 typedef struct
 {
   union
@@ -4580,6 +4626,7 @@ typedef struct
 
 } CPUID_EAX_15;
 
+
 /**
  * @brief Processor Frequency Information Leaf
  *
@@ -4594,7 +4641,6 @@ typedef struct
  *       supported.
  */
 #define CPUID_PROCESSOR_FREQUENCY_INFORMATION                        0x00000016
-
 typedef struct
 {
   union
@@ -5277,6 +5323,7 @@ typedef struct
  * @}
  */
 
+
 /**
  * @brief Extended Function CPUID Information
  *
@@ -5284,7 +5331,6 @@ typedef struct
  * returning extended processor information. The value is returned in the EAX register and is processor specific.
  */
 #define CPUID_EXTENDED_FUNCTION_INFORMATION                          0x80000000
-
 typedef struct
 {
   union
@@ -5357,11 +5403,11 @@ typedef struct
 
 } CPUID_EAX_80000000;
 
+
 /**
  * Extended Function CPUID Information.
  */
 #define CPUID_EXTENDED_CPU_SIGNATURE                                 0x80000001
-
 typedef struct
 {
   union
@@ -5497,6 +5543,7 @@ typedef struct
 
 } CPUID_EAX_80000001;
 
+
 /**
  * Extended Function CPUID Information.
  */
@@ -5511,7 +5558,6 @@ typedef struct
  * Extended Function CPUID Information.
  */
 #define CPUID_BRAND_STRING3                                          0x80000004
-
 typedef struct
 {
   union
@@ -5809,11 +5855,11 @@ typedef struct
 
 } CPUID_EAX_80000005;
 
+
 /**
  * Extended Function CPUID Information.
  */
 #define CPUID_EXTENDED_CACHE_INFO                                    0x80000006
-
 typedef struct
 {
   union
@@ -5913,11 +5959,11 @@ typedef struct
 
 } CPUID_EAX_80000006;
 
+
 /**
  * Extended Function CPUID Information.
  */
 #define CPUID_EXTENDED_TIME_STAMP_COUNTER                            0x80000007
-
 typedef struct
 {
   union
@@ -6031,7 +6077,6 @@ typedef struct
  * @see Vol4[2.22(MSRS IN PENTIUM PROCESSORS)]
  */
 #define IA32_P5_MC_TYPE                                              0x00000001
-
 /**
  * @}
  */
@@ -6060,7 +6105,6 @@ typedef struct
  * @remarks 06_01H
  */
 #define IA32_PLATFORM_ID                                             0x00000017
-
 typedef union
 {
   struct
@@ -6095,6 +6139,7 @@ typedef union
   UINT64 Flags;
 } IA32_PLATFORM_ID_REGISTER;
 
+
 /**
  * This register holds the APIC base address, permitting the relocation of the APIC memory map.
  *
@@ -6103,7 +6148,6 @@ typedef union
  * @see Vol3A[10.4.5(Relocating the Local APIC Registers)]
  */
 #define IA32_APIC_BASE                                               0x0000001B
-
 typedef union
 {
   struct
@@ -6153,13 +6197,13 @@ typedef union
   UINT64 Flags64;
 } IA32_APIC_BASE_REGISTER;
 
+
 /**
  * Control Features in Intel 64 Processor.
  *
  * @remarks If any one enumeration condition for defined bit field holds.
  */
 #define IA32_FEATURE_CONTROL                                         0x0000003A
-
 typedef union
 {
   struct
@@ -6286,17 +6330,22 @@ typedef union
   UINT64 Flags64;
 } IA32_FEATURE_CONTROL_REGISTER;
 
+
 /**
  * Per Logical Processor TSC Adjust.
  *
  * @remarks If CPUID.(EAX=07H, ECX=0H): EBX[1] = 1
  */
 #define IA32_TSC_ADJUST                                              0x0000003B
-
 typedef struct
 {
+  /**
+   * Local offset value of the IA32_TSC for a logical processor. Reset value is zero. A write to IA32_TSC will modify the
+   * local offset in IA32_TSC_ADJUST and the content of IA32_TSC, but does not affect the internal invariant TSC hardware.
+   */
   UINT64 ThreadAdjust;
 } IA32_TSC_ADJUST_REGISTER;
+
 
 /**
  * @brief BIOS Update Trigger <b>(W)</b>
@@ -6318,10 +6367,23 @@ typedef struct
  * @remarks 06_01H
  */
 #define IA32_BIOS_UPDATE_SIGNATURE                                   0x0000008B
-
 typedef struct
 {
+  /**
+   * Reserved.
+   */
   UINT32 Reserved;
+
+  /**
+   * @brief Microcode update signature
+   *
+   * This field contains the signature of the currently loaded microcode update when read following the execution of the
+   * CPUID instruction, function 1. It is required that this register field be pre-loaded with zero prior to executing the
+   * CPUID, function 1. If the field remains equal to zero, then there is no microcode update loaded. Another nonzero value
+   * will be the signature.
+   *
+   * @see Vol3A[9.11.7.1(Determining the Signature)] (reference)
+   */
   UINT32 MicrocodeUpdateSignature;
 } IA32_BIOS_UPDATE_SIGNATURE_REGISTER;
 
@@ -6344,13 +6406,13 @@ typedef struct
  * @}
  */
 
+
 /**
  * SMM Monitor Configuration.
  *
  * @remarks If CPUID.01H: ECX[5]=1 || CPUID.01H: ECX[6] = 1
  */
 #define IA32_SMM_MONITOR_CTL                                         0x0000009B
-
 typedef union
 {
   struct
@@ -6410,7 +6472,25 @@ typedef union
 
 typedef struct
 {
+  /**
+   * @brief MSEG revision identifier
+   *
+   * Different processors may use different MSEG revision identifiers. These identifiers enable software to avoid using an
+   * MSEG header formatted for one processor on a processor that uses a different format. Software can discover the MSEG
+   * revision identifier that a processor uses by reading the VMX capability MSR IA32_VMX_MISC.
+   *
+   * @see Vol3D[A.6(MISCELLANEOUS DATA)]
+   */
   UINT32 MsegHeaderRevision;
+
+  /**
+   * @brief SMM-transfer monitor features field
+   *
+   * Bits 31:1 of this field are reserved and must be zero. Bit 0 of the field is the IA-32e mode SMM feature bit. It
+   * indicates whether the logical processor will be in IA-32e mode after the STM is activated.
+   *
+   * @see Vol3C[34.15.6(Activating the Dual-Monitor Treatment)]
+   */
   UINT32 MonitorFeatures;
 
   /**
@@ -6418,6 +6498,12 @@ typedef struct
    */
 #define IA32_STM_FEATURES_IA32E                                      0x00000001
 
+  /**
+   * Fields that determine how processor state is loaded when the STM is activated. SMM code should establish these fields so
+   * that activating of the STM invokes the STM's initialization code.
+   *
+   * @see Vol3C[34.15.6.5(Loading Host State)]
+   */
   UINT32 GdtrLimit;
   UINT32 GdtrBaseOffset;
   UINT32 CsSelector;
@@ -6426,13 +6512,13 @@ typedef struct
   UINT32 Cr3Offset;
 } IA32_MSEG_HEADER;
 
+
 /**
  * Base address of the logical processor's SMRAM image.
  *
  * @remarks If IA32_VMX_MISC[15]
  */
 #define IA32_SMBASE                                                  0x0000009E
-
 /**
  * @defgroup IA32_PMC \
  *           IA32_PMC(n)
@@ -6454,17 +6540,24 @@ typedef struct
  * @}
  */
 
+
 /**
  * TSC Frequency Clock Counter.
  *
  * @remarks If CPUID.06H: ECX[0] = 1
  */
 #define IA32_MPERF                                                   0x000000E7
-
 typedef struct
 {
+  /**
+   * @brief C0 TSC Frequency Clock Count
+   *
+   * Increments at fixed interval (relative to TSC freq.) when the logical processor is in C0. Cleared upon overflow /
+   * wrap-around of IA32_APERF.
+   */
   UINT64 C0Mcnt;
 } IA32_MPERF_REGISTER;
+
 
 /**
  * Actual Performance Clock Counter
@@ -6472,11 +6565,17 @@ typedef struct
  * @remarks If CPUID.06H: ECX[0] = 1
  */
 #define IA32_APERF                                                   0x000000E8
-
 typedef struct
 {
+  /**
+   * @brief C0 Actual Frequency Clock Count
+   *
+   * Accumulates core clock counts at the coordinated clock frequency, when the logical processor is in C0. Cleared upon
+   * overflow / wrap-around of IA32_MPERF.
+   */
   UINT64 C0Acnt;
 } IA32_APERF_REGISTER;
+
 
 /**
  * MTRR Capability.
@@ -6485,7 +6584,6 @@ typedef struct
  * @see Vol3A[11.11.1(MTRR Feature Identification)] (reference)
  */
 #define IA32_MTRR_CAPABILITIES                                       0x000000FE
-
 typedef union
 {
   struct
@@ -6543,6 +6641,7 @@ typedef union
   UINT64 Flags64;
 } IA32_MTRR_CAPABILITIES_REGISTER;
 
+
 /**
  * @brief SYSENTER_CS_MSR <b>(R/W)</b>
  *
@@ -6553,13 +6652,28 @@ typedef union
  * @see Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)] (reference)
  */
 #define IA32_SYSENTER_CS                                             0x00000174
-
 typedef struct
 {
+  /**
+   * CS Selector.
+   */
   UINT16 CsSelector;
+
+  /**
+   * Not used.
+   *
+   * @remarks Can be read and written.
+   */
   UINT16 NotUsed1;
+
+  /**
+   * Not used.
+   *
+   * @remarks Writes ignored; reads return zero.
+   */
   UINT32 NotUsed2;
 } IA32_SYSENTER_CS_REGISTER;
+
 
 /**
  * @brief SYSENTER_ESP_MSR <b>(R/W)</b>
@@ -6589,7 +6703,6 @@ typedef struct
  * @remarks 06_01H
  */
 #define IA32_MCG_CAP                                                 0x00000179
-
 typedef union
 {
   struct
@@ -6692,13 +6805,13 @@ typedef union
   UINT64 Flags64;
 } IA32_MCG_CAP_REGISTER;
 
+
 /**
  * Global Machine Check Status.
  *
  * @remarks 06_01H
  */
 #define IA32_MCG_STATUS                                              0x0000017A
-
 typedef union
 {
   struct
@@ -6751,13 +6864,13 @@ typedef union
   UINT64 Flags64;
 } IA32_MCG_STATUS_REGISTER;
 
+
 /**
  * Global Machine Check Control.
  *
  * @remarks If IA32_MCG_CAP.CTL_P[8] = 1
  */
 #define IA32_MCG_CTL                                                 0x0000017B
-
 /**
  * @defgroup IA32_PERFEVTSEL \
  *           IA32_PERFEVTSEL(n)
@@ -6887,6 +7000,7 @@ typedef union
  * @}
  */
 
+
 /**
  * Current Performance Status.
  *
@@ -6894,11 +7008,14 @@ typedef union
  * @see Vol3B[14.1.1(Software Interface For Initiating Performance State Transitions)]
  */
 #define IA32_PERF_STATUS                                             0x00000198
-
 typedef struct
 {
+  /**
+   * Current performance State Value.
+   */
   UINT16 StateValue;
 } IA32_PERF_STATUS_REGISTER;
+
 
 /**
  * @brief Performance Control <b>(R/W)</b>
@@ -6909,7 +7026,6 @@ typedef struct
  * @see Vol3B[14.1.1(Software Interface For Initiating Performance State Transitions)]
  */
 #define IA32_PERF_CTL                                                0x00000199
-
 typedef union
 {
   struct
@@ -6941,6 +7057,7 @@ typedef union
   UINT64 Flags64;
 } IA32_PERF_CTL_REGISTER;
 
+
 /**
  * Clock Modulation Control.
  *
@@ -6948,7 +7065,6 @@ typedef union
  * @see Vol3B[14.7.3(Software Controlled Clock Modulation)]
  */
 #define IA32_CLOCK_MODULATION                                        0x0000019A
-
 typedef union
 {
   struct
@@ -6996,6 +7112,7 @@ typedef union
   UINT64 Flags64;
 } IA32_CLOCK_MODULATION_REGISTER;
 
+
 /**
  * @brief Thermal Interrupt Control <b>(R/W)</b>
  *
@@ -7006,7 +7123,6 @@ typedef union
  * @see Vol3B[14.7.2(Thermal Monitor)]
  */
 #define IA32_THERM_INTERRUPT                                         0x0000019B
-
 typedef union
 {
   struct
@@ -7128,6 +7244,7 @@ typedef union
   UINT64 Flags64;
 } IA32_THERM_INTERRUPT_REGISTER;
 
+
 /**
  * @brief Thermal Status Information <b>(RO)</b>
  *
@@ -7138,7 +7255,6 @@ typedef union
  * @see Vol3B[14.7.2(Thermal Monitor)]
  */
 #define IA32_THERM_STATUS                                            0x0000019C
-
 typedef union
 {
   struct
@@ -7359,13 +7475,13 @@ typedef union
   UINT64 Flags64;
 } IA32_THERM_STATUS_REGISTER;
 
+
 /**
  * @brief Enable Misc. Processor Features <b>(R/W)</b>
  *
  * Allows a variety of processor functions to be enabled and disabled.
  */
 #define IA32_MISC_ENABLE                                             0x000001A0
-
 typedef union
 {
   struct
@@ -7538,13 +7654,13 @@ typedef union
   UINT64 Flags64;
 } IA32_MISC_ENABLE_REGISTER;
 
+
 /**
  * Performance Energy Bias Hint.
  *
  * @remarks If CPUID.6H:ECX[3] = 1
  */
 #define IA32_ENERGY_PERF_BIAS                                        0x000001B0
-
 typedef union
 {
   struct
@@ -7567,6 +7683,7 @@ typedef union
   UINT64 Flags64;
 } IA32_ENERGY_PERF_BIAS_REGISTER;
 
+
 /**
  * @brief Package Thermal Status Information <b>(RO)</b>
  *
@@ -7576,7 +7693,6 @@ typedef union
  * @see Vol3B[14.8(PACKAGE LEVEL THERMAL MANAGEMENT)]
  */
 #define IA32_PACKAGE_THERM_STATUS                                    0x000001B1
-
 typedef union
 {
   struct
@@ -7705,6 +7821,7 @@ typedef union
   UINT64 Flags64;
 } IA32_PACKAGE_THERM_STATUS_REGISTER;
 
+
 /**
  * @brief Package Thermal Interrupt Control <b>(RO)</b>
  *
@@ -7715,7 +7832,6 @@ typedef union
  * @see Vol3B[14.8(PACKAGE LEVEL THERMAL MANAGEMENT)]
  */
 #define IA32_PACKAGE_THERM_INTERRUPT                                 0x000001B2
-
 typedef union
 {
   struct
@@ -7809,13 +7925,13 @@ typedef union
   UINT64 Flags64;
 } IA32_PACKAGE_THERM_INTERRUPT_REGISTER;
 
+
 /**
  * Trace/Profile Resource Control.
  *
  * @remarks 06_0EH
  */
 #define IA32_DEBUGCTL                                                0x000001D9
-
 typedef union
 {
   struct
@@ -7962,6 +8078,7 @@ typedef union
   UINT64 Flags64;
 } IA32_DEBUGCTL_REGISTER;
 
+
 /**
  * @brief SMRR Base Address <b>(Writeable only in SMM)</b>
  *
@@ -7970,7 +8087,6 @@ typedef union
  * @remarks If IA32_MTRRCAP.SMRR[11] = 1
  */
 #define IA32_SMRR_PHYSBASE                                           0x000001F2
-
 typedef union
 {
   struct
@@ -8002,6 +8118,7 @@ typedef union
   UINT64 Flags64;
 } IA32_SMRR_PHYSBASE_REGISTER;
 
+
 /**
  * @brief SMRR Range Mask <b>(Writeable only in SMM)</b>
  *
@@ -8010,7 +8127,6 @@ typedef union
  * @remarks If IA32_MTRRCAP[SMRR] = 1
  */
 #define IA32_SMRR_PHYSMASK                                           0x000001F3
-
 typedef union
 {
   struct
@@ -8041,6 +8157,7 @@ typedef union
   UINT64 Flags64;
 } IA32_SMRR_PHYSMASK_REGISTER;
 
+
 /**
  * DCA Capability.
  *
@@ -8061,7 +8178,6 @@ typedef union
  * @remarks If CPUID.01H: ECX[18] = 1
  */
 #define IA32_DCA_0_CAP                                               0x000001FA
-
 typedef union
 {
   struct
@@ -8260,10 +8376,10 @@ typedef union
  * A size of array to store all possible MTRRs.
  */
 #define IA32_MTRR_COUNT                                              (IA32_MTRR_FIX_COUNT + IA32_MTRR_VARIABLE_COUNT)
-
 /**
  * @}
  */
+
 
 /**
  * IA32_PAT.
@@ -8271,7 +8387,6 @@ typedef union
  * @remarks If CPUID.01H: EDX.MTRR[16] = 1
  */
 #define IA32_PAT                                                     0x00000277
-
 typedef union
 {
   struct
@@ -8435,13 +8550,13 @@ typedef union
  * @}
  */
 
+
 /**
  * IA32_MTRR_DEF_TYPE.
  *
  * @remarks If CPUID.01H: EDX.MTRR[12] = 1
  */
 #define IA32_MTRR_DEF_TYPE                                           0x000002FF
-
 typedef union
 {
   struct
@@ -8503,10 +8618,10 @@ typedef union
  * Counts CPU_CLK_Unhalted.Ref
  */
 #define IA32_FIXED_CTR2                                              0x0000030B
-
 /**
  * @}
  */
+
 
 /**
  * Read Only MSR that enumerates the existence of performance monitoring features.
@@ -8514,7 +8629,6 @@ typedef union
  * @remarks If CPUID.01H: ECX[15] = 1
  */
 #define IA32_PERF_CAPABILITIES                                       0x00000345
-
 typedef union
 {
   struct
@@ -8579,6 +8693,7 @@ typedef union
   UINT64 Flags64;
 } IA32_PERF_CAPABILITIES_REGISTER;
 
+
 /**
  * @brief Fixed-Function Performance Counter Control <b>(R/W)</b>
  *
@@ -8588,7 +8703,6 @@ typedef union
  * @remarks If CPUID.0AH: EAX[7:0] > 1
  */
 #define IA32_FIXED_CTR_CTRL                                          0x0000038D
-
 typedef union
 {
   struct
@@ -8717,13 +8831,13 @@ typedef union
   UINT64 Flags64;
 } IA32_FIXED_CTR_CTRL_REGISTER;
 
+
 /**
  * Global Performance Counter Status.
  *
  * @remarks If CPUID.0AH: EAX[7:0] > 0
  */
 #define IA32_PERF_GLOBAL_STATUS                                      0x0000038E
-
 typedef union
 {
   struct
@@ -8894,6 +9008,7 @@ typedef union
   UINT64 Flags;
 } IA32_PERF_GLOBAL_STATUS_REGISTER;
 
+
 /**
  * @brief Global Performance Counter Control <b>(R/W)</b>
  *
@@ -8903,12 +9018,23 @@ typedef union
  * @remarks If CPUID.0AH: EAX[7:0] > 0
  */
 #define IA32_PERF_GLOBAL_CTRL                                        0x0000038F
-
 typedef struct
 {
+  /**
+   * EN_PMC(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+   *
+   * @remarks If CPUID.0AH: EAX[15:8] > n
+   */
   UINT32 EnPmcn;
+
+  /**
+   * EN_FIXED_CTR(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+   *
+   * @remarks If CPUID.0AH: EDX[4:0] > n
+   */
   UINT32 EnFixedCtrn;
 } IA32_PERF_GLOBAL_CTRL_REGISTER;
+
 
 /**
  * Global Performance Counter Overflow Reset Control.
@@ -8916,7 +9042,6 @@ typedef struct
  * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_STATUS_RESET                                0x00000390
-
 typedef union
 {
   struct
@@ -9027,13 +9152,13 @@ typedef union
   UINT64 Flags;
 } IA32_PERF_GLOBAL_STATUS_RESET_REGISTER;
 
+
 /**
  * Global Performance Counter Overflow Set Control.
  *
  * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_STATUS_SET                                  0x00000391
-
 typedef union
 {
   struct
@@ -9134,13 +9259,13 @@ typedef union
   UINT64 Flags;
 } IA32_PERF_GLOBAL_STATUS_SET_REGISTER;
 
+
 /**
  * Indicator that core perfmon interface is in use.
  *
  * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PERF_GLOBAL_INUSE                                       0x00000392
-
 typedef union
 {
   struct
@@ -9179,13 +9304,13 @@ typedef union
   UINT64 Flags;
 } IA32_PERF_GLOBAL_INUSE_REGISTER;
 
+
 /**
  * PEBS Control.
  *
  * @remarks If CPUID.0AH: EAX[7:0] > 3
  */
 #define IA32_PEBS_ENABLE                                             0x000003F1
-
 typedef union
 {
   struct
@@ -9393,6 +9518,7 @@ typedef union
  * @}
  */
 
+
 /**
  * Reporting Register of Basic VMX Capabilities.
  *
@@ -9401,7 +9527,6 @@ typedef union
  * @see Vol3D[A.1(Basic VMX Information)] (reference)
  */
 #define IA32_VMX_BASIC                                               0x00000480
-
 typedef union
 {
   struct
@@ -9526,6 +9651,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_BASIC_REGISTER;
 
+
 /**
  * Capability Reporting Register of Pin-Based VM-Execution Controls.
  *
@@ -9534,7 +9660,6 @@ typedef union
  * @see Vol3C[24.6.1(Pin-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PINBASED_CTLS                                       0x00000481
-
 typedef union
 {
   struct
@@ -9616,6 +9741,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_PINBASED_CTLS_REGISTER;
 
+
 /**
  * Capability Reporting Register of Primary Processor-Based VM-Execution Controls.
  *
@@ -9624,7 +9750,6 @@ typedef union
  * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PROCBASED_CTLS                                      0x00000482
-
 typedef union
 {
   struct
@@ -9904,6 +10029,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_PROCBASED_CTLS_REGISTER;
 
+
 /**
  * Capability Reporting Register of VM-Exit Controls.
  *
@@ -9912,7 +10038,6 @@ typedef union
  * @see Vol3C[24.7.1(VM-Exit Controls)] (reference)
  */
 #define IA32_VMX_EXIT_CTLS                                           0x00000483
-
 typedef union
 {
   struct
@@ -10056,6 +10181,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_EXIT_CTLS_REGISTER;
 
+
 /**
  * Capability Reporting Register of VM-Entry Controls.
  *
@@ -10064,7 +10190,6 @@ typedef union
  * @see Vol3D[24.8.1(VM-Entry Controls)] (reference)
  */
 #define IA32_VMX_ENTRY_CTLS                                          0x00000484
-
 typedef union
 {
   struct
@@ -10184,6 +10309,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_ENTRY_CTLS_REGISTER;
 
+
 /**
  * Reporting Register of Miscellaneous VMX Capabilities.
  *
@@ -10192,7 +10318,6 @@ typedef union
  * @see Vol3D[A.6(Miscellaneous Data)] (reference)
  */
 #define IA32_VMX_MISC                                                0x00000485
-
 typedef union
 {
   struct
@@ -10348,6 +10473,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_MISC_REGISTER;
 
+
 /**
  * Capability Reporting Register of CR0 Bits Fixed to 0.
  *
@@ -10392,7 +10518,6 @@ typedef union
  * @see Vol3D[A.9(VMCS Enumeration)] (reference)
  */
 #define IA32_VMX_VMCS_ENUM                                           0x0000048A
-
 typedef union
 {
   struct
@@ -10439,6 +10564,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_VMCS_ENUM_REGISTER;
 
+
 /**
  * Capability Reporting Register of Secondary Processor-Based VM-Execution Controls.
  *
@@ -10447,7 +10573,6 @@ typedef union
  * @see Vol3D[24.6.2(Processor-Based VM-Execution Controls)] (reference)
  */
 #define IA32_VMX_PROCBASED_CTLS2                                     0x0000048B
-
 typedef union
 {
   struct
@@ -10752,6 +10877,7 @@ typedef union
   UINT64 Flags;
 } IA32_VMX_PROCBASED_CTLS2_REGISTER;
 
+
 /**
  * Capability Reporting Register of EPT and VPID.
  *
@@ -10761,7 +10887,6 @@ typedef union
  * @see Vol3D[A.10(VPID and EPT Capabilities)] (reference)
  */
 #define IA32_VMX_EPT_VPID_CAP                                        0x0000048C
-
 typedef union
 {
   struct
@@ -10969,13 +11094,23 @@ typedef union
 #define IA32_VMX_TRUE_ENTRY_CTLS                                     0x00000490
 typedef struct
 {
+  /**
+   * Indicate the allowed 0-settings of these controls. VM entry allows control X to be 0 if bit X in the MSR is cleared to
+   * 0; if bit X in the MSR is set to 1, VM entry fails if control X is 0.
+   */
   UINT32 Allowed0Settings;
+
+  /**
+   * Indicate the allowed 1-settings of these controls. VM entry allows control X to be 1 if bit 32+X in the MSR is set to 1;
+   * if bit 32+X in the MSR is cleared to 0, VM entry fails if control X is 1.
+   */
   UINT32 Allowed1Settings;
 } IA32_VMX_TRUE_CTLS_REGISTER;
 
 /**
  * @}
  */
+
 
 /**
  * Capability Reporting Register of VMFunction Controls.
@@ -10985,7 +11120,6 @@ typedef struct
  * @see Vol3D[24.6.14(VM-Function Controls)] (reference)
  */
 #define IA32_VMX_VMFUNC                                              0x00000491
-
 typedef union
 {
   struct
@@ -11027,6 +11161,7 @@ typedef union
  * @}
  */
 
+
 /**
  * Allows software to signal some MCEs to only a single logical processor in the system.
  *
@@ -11034,7 +11169,6 @@ typedef union
  * @see Vol3B[15.3.1.4(IA32_MCG_EXT_CTL MSR)]
  */
 #define IA32_MCG_EXT_CTL                                             0x000004D0
-
 typedef union
 {
   struct
@@ -11050,6 +11184,7 @@ typedef union
   UINT64 Flags;
 } IA32_MCG_EXT_CTL_REGISTER;
 
+
 /**
  * @brief Status and SVN Threshold of SGX Support for ACM <b>(RO)</b>
  *
@@ -11063,7 +11198,6 @@ typedef union
  * @see Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))] (reference)
  */
 #define IA32_SGX_SVN_STATUS                                          0x00000500
-
 typedef union
 {
   struct
@@ -11103,6 +11237,7 @@ typedef union
   UINT64 Flags;
 } IA32_SGX_SVN_STATUS_REGISTER;
 
+
 /**
  * Trace Output Base Register.
  *
@@ -11111,7 +11246,6 @@ typedef union
  * @see Vol3C[35.2.7.7(IA32_RTIT_OUTPUT_BASE MSR)] (reference)
  */
 #define IA32_RTIT_OUTPUT_BASE                                        0x00000560
-
 typedef union
 {
   struct
@@ -11143,6 +11277,7 @@ typedef union
   UINT64 Flags;
 } IA32_RTIT_OUTPUT_BASE_REGISTER;
 
+
 /**
  * Trace Output Mask Pointers Register.
  *
@@ -11151,7 +11286,6 @@ typedef union
  * @see Vol3C[35.2.7.8(IA32_RTIT_OUTPUT_MASK_PTRS MSR)] (reference)
  */
 #define IA32_RTIT_OUTPUT_MASK_PTRS                                   0x00000561
-
 typedef union
 {
   struct
@@ -11212,6 +11346,7 @@ typedef union
   UINT64 Flags;
 } IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER;
 
+
 /**
  * Trace Control Register.
  *
@@ -11219,7 +11354,6 @@ typedef union
  * @see Vol3C[35.2.7.2(IA32_RTIT_CTL MSR)] (reference)
  */
 #define IA32_RTIT_CTL                                                0x00000570
-
 typedef union
 {
   struct
@@ -11584,13 +11718,13 @@ typedef union
   UINT64 Flags;
 } IA32_RTIT_CTL_REGISTER;
 
+
 /**
  * Tracing Status Register.
  *
  * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1)
  */
 #define IA32_RTIT_STATUS                                             0x00000571
-
 typedef union
 {
   struct
@@ -11724,6 +11858,7 @@ typedef union
   UINT64 Flags;
 } IA32_RTIT_STATUS_REGISTER;
 
+
 /**
  * @brief Trace Filter CR3 Match Register <b>(R/W)</b>
  *
@@ -11735,7 +11870,6 @@ typedef union
  * @see Vol3C[35.2.7.6(IA32_RTIT_CR3_MATCH MSR)] (reference)
  */
 #define IA32_RTIT_CR3_MATCH                                          0x00000572
-
 typedef union
 {
   struct
@@ -11831,6 +11965,7 @@ typedef union
  * @}
  */
 
+
 /**
  * DS Save Area. Points to the linear address of the first byte of the DS buffer management area, which is used to manage
  * the BTS and PEBS buffers.
@@ -11857,7 +11992,6 @@ typedef union
  * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_PM_ENABLE                                               0x00000770
-
 typedef union
 {
   struct
@@ -11879,13 +12013,13 @@ typedef union
   UINT64 Flags;
 } IA32_PM_ENABLE_REGISTER;
 
+
 /**
  * HWP Performance Range Enumeration.
  *
  * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_CAPABILITIES                                        0x00000771
-
 typedef union
 {
   struct
@@ -11943,13 +12077,13 @@ typedef union
   UINT64 Flags;
 } IA32_HWP_CAPABILITIES_REGISTER;
 
+
 /**
  * Power Management Control Hints for All Logical Processors in a Package.
  *
  * @remarks If CPUID.06H:EAX.[11] = 1
  */
 #define IA32_HWP_REQUEST_PKG                                         0x00000772
-
 typedef union
 {
   struct
@@ -12019,13 +12153,13 @@ typedef union
   UINT64 Flags;
 } IA32_HWP_REQUEST_PKG_REGISTER;
 
+
 /**
  * Control HWP Native Interrupts.
  *
  * @remarks If CPUID.06H:EAX.[8] = 1
  */
 #define IA32_HWP_INTERRUPT                                           0x00000773
-
 typedef union
 {
   struct
@@ -12059,13 +12193,13 @@ typedef union
   UINT64 Flags;
 } IA32_HWP_INTERRUPT_REGISTER;
 
+
 /**
  * Power Management Control Hints to a Logical Processor.
  *
  * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_REQUEST                                             0x00000774
-
 typedef union
 {
   struct
@@ -12147,13 +12281,13 @@ typedef union
   UINT64 Flags;
 } IA32_HWP_REQUEST_REGISTER;
 
+
 /**
  * Log bits indicating changes to Guaranteed & excursions to Minimum.
  *
  * @remarks If CPUID.06H:EAX.[7] = 1
  */
 #define IA32_HWP_STATUS                                              0x00000777
-
 typedef union
 {
   struct
@@ -12187,6 +12321,7 @@ typedef union
 
   UINT64 Flags;
 } IA32_HWP_STATUS_REGISTER;
+
 
 /**
  * x2APIC ID Register.
@@ -12237,7 +12372,6 @@ typedef union
  * @remarks If CPUID.01H:ECX.[21] = 1 && IA32_APIC_BASE.[10] = 1
  */
 #define IA32_X2APIC_SIVR                                             0x0000080F
-
 /**
  * @defgroup IA32_X2APIC_ISR \
  *           IA32_X2APIC_ISR(n)
@@ -12300,6 +12434,7 @@ typedef union
 /**
  * @}
  */
+
 
 /**
  * x2APIC Error Status Register.
@@ -12398,7 +12533,6 @@ typedef union
  * @remarks If CPUID.01H:ECX.[11] = 1
  */
 #define IA32_DEBUG_INTERFACE                                         0x00000C80
-
 typedef union
 {
   struct
@@ -12449,13 +12583,13 @@ typedef union
   UINT64 Flags;
 } IA32_DEBUG_INTERFACE_REGISTER;
 
+
 /**
  * L3 QOS Configuration.
  *
  * @remarks If ( CPUID.(EAX=10H, ECX=1):ECX.[2] = 1 )
  */
 #define IA32_L3_QOS_CFG                                              0x00000C81
-
 typedef union
 {
   struct
@@ -12476,13 +12610,13 @@ typedef union
   UINT64 Flags;
 } IA32_L3_QOS_CFG_REGISTER;
 
+
 /**
  * L2 QOS Configuration.
  *
  * @remarks If ( CPUID.(EAX=10H, ECX=2):ECX.[2] = 1 )
  */
 #define IA32_L2_QOS_CFG                                              0x00000C82
-
 typedef union
 {
   struct
@@ -12503,13 +12637,13 @@ typedef union
   UINT64 Flags;
 } IA32_L2_QOS_CFG_REGISTER;
 
+
 /**
  * Monitoring Event Select Register.
  *
  * @remarks If ( CPUID.(EAX=07H, ECX=0):EBX.[12] = 1 )
  */
 #define IA32_QM_EVTSEL                                               0x00000C8D
-
 typedef union
 {
   struct
@@ -12543,13 +12677,13 @@ typedef union
   UINT64 Flags;
 } IA32_QM_EVTSEL_REGISTER;
 
+
 /**
  * Monitoring Counter Register.
  *
  * @remarks If ( CPUID.(EAX=07H, ECX=0):EBX.[12] = 1 )
  */
 #define IA32_QM_CTR                                                  0x00000C8E
-
 typedef union
 {
   struct
@@ -12589,13 +12723,13 @@ typedef union
   UINT64 Flags;
 } IA32_QM_CTR_REGISTER;
 
+
 /**
  * Resource Association Register.
  *
  * @remarks If ( (CPUID.(EAX=07H, ECX=0):EBX[12] = 1) or (CPUID.(EAX=07H, ECX=0):EBX[15] = 1 ) )
  */
 #define IA32_PQR_ASSOC                                               0x00000C8F
-
 typedef union
 {
   struct
@@ -12630,13 +12764,13 @@ typedef union
   UINT64 Flags;
 } IA32_PQR_ASSOC_REGISTER;
 
+
 /**
  * Supervisor State of MPX Configuration.
  *
  * @remarks If (CPUID.(EAX=07H, ECX=0H):EBX[14] = 1)
  */
 #define IA32_BNDCFGS                                                 0x00000D90
-
 typedef union
 {
   struct
@@ -12673,13 +12807,13 @@ typedef union
   UINT64 Flags;
 } IA32_BNDCFGS_REGISTER;
 
+
 /**
  * Extended Supervisor State Mask.
  *
  * @remarks If ( CPUID.(0DH, 1):EAX.[3] = 1
  */
 #define IA32_XSS                                                     0x00000DA0
-
 typedef union
 {
   struct
@@ -12700,13 +12834,13 @@ typedef union
   UINT64 Flags;
 } IA32_XSS_REGISTER;
 
+
 /**
  * Package Level Enable/disable HDC.
  *
  * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_PKG_HDC_CTL                                             0x00000DB0
-
 typedef union
 {
   struct
@@ -12730,13 +12864,13 @@ typedef union
   UINT64 Flags;
 } IA32_PKG_HDC_CTL_REGISTER;
 
+
 /**
  * Enable/disable HWP.
  *
  * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_PM_CTL1                                                 0x00000DB1
-
 typedef union
 {
   struct
@@ -12760,17 +12894,26 @@ typedef union
   UINT64 Flags;
 } IA32_PM_CTL1_REGISTER;
 
+
 /**
  * Per-Logical_Processor HDC Idle Residency.
  *
  * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_THREAD_STALL                                            0x00000DB2
-
 typedef struct
 {
+  /**
+   * @brief Stall_Cycle_Cnt <b>(R/W)</b>
+   *
+   * Stalled cycles due to HDC forced idle on this logical processor.
+   *
+   * @remarks If CPUID.06H:EAX.[13] = 1
+   * @see Vol3B[14.5.4.1(IA32_THREAD_STALL)]
+   */
   UINT64 StallCycleCount;
 } IA32_THREAD_STALL_REGISTER;
+
 
 /**
  * Extended Feature Enables.
@@ -12778,7 +12921,6 @@ typedef struct
  * @remarks If CPUID.06H:EAX.[13] = 1
  */
 #define IA32_EFER                                                    0xC0000080
-
 typedef union
 {
   struct
@@ -12831,6 +12973,7 @@ typedef union
 
   UINT64 Flags;
 } IA32_EFER_REGISTER;
+
 
 /**
  * System Call Target Address.
@@ -12891,7 +13034,6 @@ typedef union
  * @remarks If CPUID.80000001H: EDX[27] = 1 or CPUID.(EAX=7,ECX=0):ECX[bit 22] = 1
  */
 #define IA32_TSC_AUX                                                 0xC0000103
-
 typedef union
 {
   struct
@@ -14417,7 +14559,14 @@ typedef union
 #pragma pack(push, 1)
 typedef struct
 {
+  /**
+   * Limit.
+   */
   UINT16 Limit;
+
+  /**
+   * Base Address.
+   */
   UINT32 BaseAddress;
 } DESCRIPTOR_32;
 #pragma pack(pop)
@@ -14430,7 +14579,14 @@ typedef struct
 #pragma pack(push, 1)
 typedef struct
 {
+  /**
+   * Limit.
+   */
   UINT16 Limit;
+
+  /**
+   * Base Address.
+   */
   UINT64 BaseAddress;
 } DESCRIPTOR_64;
 #pragma pack(pop)
@@ -14454,7 +14610,35 @@ typedef struct
  */
 typedef struct
 {
+  /**
+   * @brief Segment limit field (15:00)
+   *
+   * Specifies the size of the segment. The processor puts together the two segment limit fields to form a 20-bit value. The
+   * processor interprets the segment limit in one of two ways, depending on the setting of the G (granularity) flag:
+   * - If the granularity flag is clear, the segment size can range from 1 byte to 1 MByte, in byte increments.
+   * - If the granularity flag is set, the segment size can range from 4 KBytes to 4 GBytes, in 4-KByte increments.
+   * The processor uses the segment limit in two different ways, depending on whether the segment is an expand-up or an
+   * expand-down segment. For expand-up segments, the offset in a logical address can range from 0 to the segment limit.
+   * Offsets greater than the segment limit generate general-protection exceptions (\#GP, for all segments other than SS) or
+   * stack-fault exceptions (\#SS for the SS segment). For expand-down segments, the segment limit has the reverse function;
+   * the offset can range from the segment limit plus 1 to FFFFFFFFH or FFFFH, depending on the setting of the B flag.
+   * Offsets less than or equal to the segment limit generate general-protection exceptions or stack-fault exceptions.
+   * Decreasing the value in the segment limit field for an expanddown segment allocates new memory at the bottom of the
+   * segment's address space, rather than at the top. IA-32 architecture stacks always grow downwards, making this mechanism
+   * convenient for expandable stacks.
+   *
+   * @see Vol3A[3.4.5.1(Code- and Data-Segment Descriptor Types)]
+   */
   UINT16 SegmentLimitLow;
+
+  /**
+   * @brief Base address field (15:00)
+   *
+   * Defines the location of byte 0 of the segment within the 4-GByte linear address space. The processor puts together the
+   * three base address fields to form a single 32-bit value. Segment base addresses should be aligned to 16-byte boundaries.
+   * Although 16-byte alignment is not required, this alignment allows programs to maximize performance by aligning code and
+   * data on 16-byte boundaries.
+   */
   UINT16 BaseAddressLow;
   /**
    * @brief Segment descriptor fields
@@ -14628,7 +14812,35 @@ typedef struct
  */
 typedef struct
 {
+  /**
+   * @brief Segment limit field (15:00)
+   *
+   * Specifies the size of the segment. The processor puts together the two segment limit fields to form a 20-bit value. The
+   * processor interprets the segment limit in one of two ways, depending on the setting of the G (granularity) flag:
+   * - If the granularity flag is clear, the segment size can range from 1 byte to 1 MByte, in byte increments.
+   * - If the granularity flag is set, the segment size can range from 4 KBytes to 4 GBytes, in 4-KByte increments.
+   * The processor uses the segment limit in two different ways, depending on whether the segment is an expand-up or an
+   * expand-down segment. For expand-up segments, the offset in a logical address can range from 0 to the segment limit.
+   * Offsets greater than the segment limit generate general-protection exceptions (\#GP, for all segments other than SS) or
+   * stack-fault exceptions (\#SS for the SS segment). For expand-down segments, the segment limit has the reverse function;
+   * the offset can range from the segment limit plus 1 to FFFFFFFFH or FFFFH, depending on the setting of the B flag.
+   * Offsets less than or equal to the segment limit generate general-protection exceptions or stack-fault exceptions.
+   * Decreasing the value in the segment limit field for an expanddown segment allocates new memory at the bottom of the
+   * segment's address space, rather than at the top. IA-32 architecture stacks always grow downwards, making this mechanism
+   * convenient for expandable stacks.
+   *
+   * @see Vol3A[3.4.5.1(Code- and Data-Segment Descriptor Types)]
+   */
   UINT16 SegmentLimitLow;
+
+  /**
+   * @brief Base address field (15:00)
+   *
+   * Defines the location of byte 0 of the segment within the 4-GByte linear address space. The processor puts together the
+   * three base address fields to form a single 32-bit value. Segment base addresses should be aligned to 16-byte boundaries.
+   * Although 16-byte alignment is not required, this alignment allows programs to maximize performance by aligning code and
+   * data on 16-byte boundaries.
+   */
   UINT16 BaseAddressLow;
   /**
    * @brief Segment descriptor fields
@@ -14789,7 +15001,15 @@ typedef struct
     UINT32 Flags;
   } Bits;
 
+
+  /**
+   * Base address field (32:63); see description of $BASE_LOW for more details.
+   */
   UINT32 BaseAddressUpper;
+
+  /**
+   * Base address field (32:63); see description of $BASE_LOW for more details.
+   */
   UINT32 MustBeZero;
 } SEGMENT_DESCRIPTOR_64;
 
@@ -14886,7 +15106,6 @@ typedef struct
  * Code Execute/Read, conforming, accessed.
  */
 #define DESCRIPTOR_TYPE_CODE_EXECUTE_READ_CONFORMING_ACCESSED        0x0000000F
-
 /**
  * @}
  */
@@ -15006,7 +15225,6 @@ typedef struct
  * - IA-32e Mode: 64-bit Trap Gate
  */
 #define DESCRIPTOR_TYPE_TRAP_GATE                                    0x0000000F
-
 /**
  * @}
  */
@@ -15572,7 +15790,6 @@ typedef union
  * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
 #define VMX_EXIT_REASON_EXECUTE_XRSTORS                              0x00000040
-
 /**
  * @}
  */
@@ -15711,7 +15928,6 @@ typedef union
  * Invalid operand to INVEPT/INVVPID.
  */
 #define VMX_ERROR_INVEPT_INVVPID_INVALID_OPERAND                     0x0000001C
-
 /**
  * @}
  */
@@ -15727,11 +15943,41 @@ typedef union
  */
 typedef struct
 {
+  /**
+   * The 32-bit value that would have been saved into the VMCS as an exit reason had a VM exit occurred instead of the
+   * virtualization exception. For EPT violations, this value is 48 (00000030H).
+   */
   UINT32 Reason;
+
+  /**
+   * FFFFFFFFH
+   */
   UINT32 ExceptionMask;
+
+  /**
+   * The 64-bit value that would have been saved into the VMCS as an exit qualification had a VM exit occurred instead of the
+   * virtualization exception.
+   */
   UINT64 Exit;
+
+  /**
+   * The 64-bit value that would have been saved into the VMCS as a guest-linear address had a VM exit occurred instead of
+   * the virtualization exception.
+   */
   UINT64 GuestLinearAddress;
+
+  /**
+   * The 64-bit value that would have been saved into the VMCS as a guest-physical address had a VM exit occurred instead of
+   * the virtualization exception.
+   */
   UINT64 GuestPhysicalAddress;
+
+  /**
+   * The current 16-bit value of the EPTP index VM-execution control.
+   *
+   * @see Vol3C[24.6.18(Controls for Virtualization Exceptions)]
+   * @see Vol3C[25.5.5.3(EPTP Switching)]
+   */
   UINT16 CurrentEptpIndex;
 } VIRTUALIZATION_EXCEPTION_INFORMATION;
 
@@ -16115,7 +16361,6 @@ typedef union
      * Guest-physical access for an instruction fetch or during instruction execution.
      */
 #define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTRUCTION_FETCH       0x0000000F
-
     UINT64 Reserved1                                               : 48;
   };
 
@@ -17126,6 +17371,86 @@ typedef union
  * @}
  */
 
+typedef enum
+{
+  /**
+   * If the INVEPT type is 1, the logical processor invalidates all guest-physical mappings and combined mappings associated
+   * with the EP4TA specified in the INVEPT descriptor. Combined mappings for that EP4TA are invalidated for all VPIDs and
+   * all PCIDs. (The instruction may invalidate mappings associated with other EP4TAs.)
+   */
+  InveptSingleContext                                          = 0x00000001,
+
+  /**
+   * If the INVEPT type is 2, the logical processor invalidates guest-physical mappings and combined mappings associated with
+   * all EP4TAs (and, for combined mappings, for all VPIDs and PCIDs).
+   */
+  InveptAllContext                                             = 0x00000002,
+} INVEPT_TYPE;
+
+typedef enum
+{
+  /**
+   * If the INVVPID type is 0, the logical processor invalidates linear mappings and combined mappings associated with the
+   * VPID specified in the INVVPID descriptor and that would be used to translate the linear address specified in of the
+   * INVVPID descriptor. Linear mappings and combined mappings for that VPID and linear address are invalidated for all PCIDs
+   * and, for combined mappings, all EP4TAs. (The instruction may also invalidate mappings associated with other VPIDs and
+   * for other linear addresses).
+   */
+  InvvpidIndividualAddress                                     = 0x00000000,
+
+  /**
+   * If the INVVPID type is 1, the logical processor invalidates all linear mappings and combined mappings associated with
+   * the VPID specified in the INVVPID descriptor. Linear mappings and combined mappings for that VPID are invalidated for
+   * all PCIDs and, for combined mappings, all EP4TAs. (The instruction may also invalidate mappings associated with other
+   * VPIDs).
+   */
+  InvvpidSingleContext                                         = 0x00000001,
+
+  /**
+   * If the INVVPID type is 2, the logical processor invalidates linear mappings and combined mappings associated with all
+   * VPIDs except VPID 0000H and with all PCIDs. (The instruction may also invalidate linear mappings with VPID 0000H.)
+   * Combined mappings are invalidated for all EP4TAs.
+   */
+  InvvpidAllContext                                            = 0x00000002,
+
+  /**
+   * If the INVVPID type is 3, the logical processor invalidates linear mappings and combined mappings associated with the
+   * VPID specified in the INVVPID descriptor. Linear mappings and combined mappings for that VPID are invalidated for all
+   * PCIDs and, for combined mappings, all EP4TAs. The logical processor is not required to invalidate information that was
+   * used for global translations (although it may do so). (The instruction may also invalidate mappings associated with
+   * other VPIDs).
+   *
+   * @see Vol3C[4.10(Caching Translation Information)]
+   */
+  InvvpidSingleContextRetainingGlobals                         = 0x00000003,
+} INVVPID_TYPE;
+
+typedef struct
+{
+  UINT64 EptPointer;
+
+  /**
+   * Must be zero.
+   */
+  UINT64 Reserved;
+} INVEPT_DESCRIPTOR;
+
+typedef struct
+{
+  UINT16 Vpid;
+
+  /**
+   * Must be zero.
+   */
+  UINT16 Reserved1;
+
+  /**
+   * Must be zero.
+   */
+  UINT32 Reserved2;
+  UINT64 LinearAddress;
+} INVVPID_DESCRIPTOR;
+
 /**
  * @defgroup VMCS \
  *           VMCS (VM Control Structure)
@@ -17237,7 +17562,6 @@ typedef union
  *          control.
  */
 #define VMCS_CTRL_EPTP_INDEX                                         0x00000004
-
 /**
  * @}
  */
@@ -17303,7 +17627,6 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "enable PML" VM-execution control.
  */
 #define VMCS_GUEST_PML_INDEX                                         0x00000812
-
 /**
  * @}
  */
@@ -17349,7 +17672,6 @@ typedef union
  * Host TR selector.
  */
 #define VMCS_HOST_TR_SELECTOR                                        0x00000C0C
-
 /**
  * @}
  */
@@ -17498,7 +17820,6 @@ typedef union
  * TSC multiplier.
  */
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
-
 /**
  * @}
  */
@@ -17514,7 +17835,6 @@ typedef union
  * Guest-physical address.
  */
 #define VMCS_GUEST_PHYSICAL_ADDRESS                                  0x00002400
-
 /**
  * @}
  */
@@ -17570,7 +17890,6 @@ typedef union
  * Guest PDPTE3.
  */
 #define VMCS_GUEST_PDPTE3                                            0x00002810
-
 /**
  * @}
  */
@@ -17596,7 +17915,6 @@ typedef union
  * Host IA32_PERF_GLOBAL_CTRL.
  */
 #define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
-
 /**
  * @}
  */
@@ -17710,7 +18028,6 @@ typedef union
  * PLE_Window.
  */
 #define VMCS_CTRL_PLE_WINDOW                                         0x00004022
-
 /**
  * @}
  */
@@ -17761,7 +18078,6 @@ typedef union
  * VM-exit instruction information.
  */
 #define VMCS_VMEXIT_INSTRUCTION_INFO                                 0x0000440E
-
 /**
  * @}
  */
@@ -17887,7 +18203,6 @@ typedef union
  * VMX-preemption timer value.
  */
 #define VMCS_GUEST_VMX_PREEMPTION_TIMER_VALUE                        0x0000482E
-
 /**
  * @}
  */
@@ -17903,7 +18218,6 @@ typedef union
  * Host IA32_SYSENTER_CS.
  */
 #define VMCS_SYSENTER_CS                                             0x00004C00
-
 /**
  * @}
  */
@@ -17967,7 +18281,6 @@ typedef union
  * CR3-target value 3.
  */
 #define VMCS_CTRL_CR3_TARGET_VALUE_3                                 0x0000600E
-
 /**
  * @}
  */
@@ -18008,7 +18321,6 @@ typedef union
  * Guest-linear address.
  */
 #define VMCS_EXIT_GUEST_LINEAR_ADDRESS                               0x0000640A
-
 /**
  * @}
  */
@@ -18119,7 +18431,6 @@ typedef union
  * Guest IA32_SYSENTER_EIP.
  */
 #define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
-
 /**
  * @}
  */
@@ -18190,7 +18501,6 @@ typedef union
  * Host RIP.
  */
 #define VMCS_HOST_RIP                                                0x00006C16
-
 /**
  * @}
  */
@@ -18470,7 +18780,6 @@ typedef union
  * Divide Configuration Register (for Timer).
  */
 #define APIC_DIVIDE_CONFIGURATION                                    0x000003E0
-
 /**
  * @}
  */
@@ -18759,8 +19068,8 @@ typedef union
  * coherency between caches in the processors and system memory.
  */
 #define MEMORY_TYPE_WRITE_THROUGH                                    0x00000004
-
 #define MEMORY_TYPE_WRITE_PROTECTED                                  0x00000005
+
 /**
  * @brief Write protected (WP)
  *
@@ -18769,7 +19078,6 @@ typedef union
  * memory type is available in processor families starting from the P6 family processors by programming the MTRRs.
  */
 #define MEMORY_TYPE_WRITE_BACK                                       0x00000006
-
 #define MEMORY_TYPE_UNCACHED                                         0x00000007
 #define MEMORY_TYPE_INVALID                                          0x000000FF
 /**

@@ -4260,6 +4260,30 @@ typedef union {
  * @}
  */
 
+typedef enum {
+  invept_single_context                                        = 0x00000001,
+  invept_all_context                                           = 0x00000002,
+} invept_type;
+
+typedef enum {
+  invvpid_individual_address                                   = 0x00000000,
+  invvpid_single_context                                       = 0x00000001,
+  invvpid_all_context                                          = 0x00000002,
+  invvpid_single_context_retaining_globals                     = 0x00000003,
+} invvpid_type;
+
+typedef struct {
+  uint64_t ept_pointer;
+  uint64_t reserved;
+} invept_descriptor;
+
+typedef struct {
+  uint16_t vpid;
+  uint16_t reserved1;
+  uint32_t reserved2;
+  uint64_t linear_address;
+} invvpid_descriptor;
+
 /**
  * @defgroup vmcs \
  *           VMCS (VM Control Structure)

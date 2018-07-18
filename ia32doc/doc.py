@@ -11,6 +11,7 @@ from .text import DocTextCase
 DOC_GROUP           = 'group'
 DOC_DEFINITION      = 'definition'
 DOC_ENUM            = 'enum'
+DOC_ENUM_FIELD      = 'enum_field'
 DOC_STRUCT          = 'struct'
 DOC_STRUCT_FIELD    = 'struct_field'
 DOC_BITFIELD        = 'bitfield'
@@ -19,7 +20,8 @@ DOC_BITFIELD_FIELD  = 'bitfield_field'
 DOC_TYPES = [
     DOC_GROUP,
     DOC_DEFINITION,
-    # DOC_ENUM,
+    DOC_ENUM,
+    DOC_ENUM_FIELD,
     DOC_STRUCT,
     DOC_STRUCT_FIELD,
     DOC_BITFIELD,
@@ -205,7 +207,9 @@ class DocBase(object):
     def type(self) -> str:
         if 'type' not in self._doc:
             if self.parent:
-                if self.parent.type == DOC_STRUCT:
+                if self.parent.type == DOC_ENUM:
+                    self._doc['type'] = DOC_ENUM_FIELD
+                elif self.parent.type == DOC_STRUCT:
                     self._doc['type'] = DOC_STRUCT_FIELD
                 elif self.parent.type == DOC_BITFIELD:
                     self._doc['type'] = DOC_BITFIELD_FIELD
@@ -256,7 +260,8 @@ class DocBase(object):
         return self._doc['path']
 
     def _make_name(self, name: str) -> str:
-        if 'name_with_suffix' not in self._doc and self.type in [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD ]:
+        candidate_types_for_affix = [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD, DOC_ENUM_FIELD ]
+        if 'name_with_suffix' not in self._doc and self.type in candidate_types_for_affix:
             parent = self.parent
 
             while parent:
@@ -334,6 +339,20 @@ class DocDefinition(DocBase):
         return self._doc['value']
 
 
+class DocEnum(DocBase):
+    def __init__(self, doc: dict, parent: DocBase=None):
+        super().__init__(doc, parent)
+
+
+class DocEnumField(DocBase):
+    def __init__(self, doc: dict, parent: DocBase=None):
+        super().__init__(doc, parent)
+
+    @property
+    def value(self) -> str:
+        return self._doc['value']
+
+
 class DocStruct(DocBase):
     def __init__(self, doc: dict, parent: DocBase=None):
         super().__init__(doc, parent)
@@ -388,5 +407,3 @@ class DocBitfieldField(DocBase):
             bit_to += 1
 
         return bit_from, bit_to
-
-

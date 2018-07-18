@@ -169,6 +169,7 @@ class DocProcessorOptions(object):
         self.align = 60
         self.indent = 2
         self.brace_on_next_line = True  # Bitfield / struct.
+        self.enum_as_define = False
         self.int_type_8  = 'UINT8'
         self.int_type_16 = 'UINT16'
         self.int_type_32 = 'UINT32'
@@ -183,6 +184,8 @@ class DocProcessorOptions(object):
         #
         self.group_name_letter_case = 'snake_case_upper'
         self.definition_name_letter_case = 'snake_case_upper'
+        self.enum_name_letter_case = 'snake_case_upper'
+        self.enum_field_name_letter_case = 'camel_case'
         self.struct_name_letter_case = 'snake_case_upper'
         self.struct_field_name_letter_case = 'camel_case'
         self.bitfield_name_letter_case = 'snake_case_upper'

@@ -8,6 +8,8 @@ indent: 2
 
 brace_on_next_line: false
 
+enum_as_define: true
+
 group_defgroup: true
 
 definition_no_indent: true
@@ -33,6 +35,8 @@ prefer_alternative_names: false
 
 group_name_letter_case: snake_case
 definition_name_letter_case: snake_case_upper
+enum_name_letter_case: snake_case
+enum_field_name_letter_case: snake_case
 struct_name_letter_case: snake_case
 struct_field_name_letter_case: snake_case
 bitfield_name_letter_case: snake_case

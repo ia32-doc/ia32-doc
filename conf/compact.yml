@@ -31,6 +31,8 @@ prefer_alternative_names: false
 
 group_name_letter_case: snake_case
 definition_name_letter_case: snake_case_upper
+enum_name_letter_case: snake_case
+enum_field_name_letter_case: snake_case
 struct_name_letter_case: snake_case
 struct_field_name_letter_case: snake_case
 bitfield_name_letter_case: snake_case

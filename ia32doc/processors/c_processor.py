@@ -1,7 +1,8 @@
 from .base import DocProcessor
 
-from ..doc import DocBase, DocGroup, DocDefinition, DocBitfield, DocBitfieldField, DocStruct, DocStructField
-from ..doc import DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD
+from ..doc import DocBase, DocGroup, DocDefinition, DocEnum, DocEnumField,\
+                  DocBitfield, DocBitfieldField, DocStruct, DocStructField
+from ..doc import DOC_DEFINITION, DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD, DOC_ENUM_FIELD
 from ..text import DocText
 
 
@@ -43,15 +44,21 @@ class DocCProcessor(DocProcessor):
         self.print(f'')
 
     def process_definition(self, doc: DocDefinition) -> None:
-        name = self.make_name(doc)
-        description_printed = False
+        #
+        # We need to set "override_name_letter_case" explicitly,
+        # because this method is also shared for DocEnumField.
+        #
+        name = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
 
         if self.opt.definition_comments and doc.long_description:
+            #
+            # Do not print empty line for the first element.
+            #
+            if next(filter(lambda field: isinstance(field, DocDefinition), doc.parent.fields)) != doc:
+                self.print(f'')
             self.print(f'/**')
             self.print_details(doc)
             self.print(f' */')
-
-            description_printed = True
 
         align = self.opt.align if self.opt.definition_no_indent else \
                 self.align_indent_adjusted
@@ -61,8 +68,85 @@ class DocCProcessor(DocProcessor):
 
         self.print(f'#define {name:<{align}} {value}')
 
-        if description_printed:
-            self.print(f'')
+        self.process(doc.fields)
+
+    def process_enum(self, doc: DocEnum) -> None:
+        if self.opt.enum_as_define:
+            if self.opt.enum_comments and doc.long_description:
+                self.print(f'/**')
+                self.print_details(doc)
+
+                #
+                # Create defgroup for this group of definitions (enum).
+                #
+                if self.opt.group_defgroup:
+                    self.print(f' * @{{')
+                self.print(f' */')
+
+            for field in doc.fields:
+                assert field.type in [ DOC_DEFINITION, DOC_ENUM_FIELD ]
+                definition_field: DocDefinition = field
+
+                #
+                # DocDefinition and DocEnumField has the same interface,
+                # so it can be hacked this way.
+                #
+                self.process_definition(definition_field)
+
+            if self.opt.group_defgroup:
+                self.print(f'/**')
+                self.print(f' * @}}')
+                self.print(f' */')
+        else:
+            self._typedef_nesting += 1
+
+            if self.opt.enum_comments and doc.long_description:
+                self.print(f'/**')
+                self.print_details(doc, treat_description_as_short=True)
+                self.print(f' */')
+
+            optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
+            optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+
+            self.print(f'{optional_typedef}enum{optional_curly_brace}')
+            if self.opt.brace_on_next_line:
+                self.print(f'{{')
+
+            with self.indent:
+                for field in doc.fields:
+                    assert field.type in [ DOC_DEFINITION, DOC_ENUM_FIELD ]
+                    getattr(self, f'process_{field.type}')(field)
+
+            if self._typedef_nesting == 1:
+                self.print(f'}} {self.make_name(doc)};')
+            else:
+                name = self.make_name(
+                    doc,
+                    standalone=True,
+                    override_name_letter_case=self.opt.enum_field_name_letter_case
+                )
+                self.print(f'}} {name};')
+
+            self._typedef_nesting -= 1
+
+        self.print(f'')
+
+    def process_enum_field(self, doc: DocEnumField) -> None:
+        name = self.make_name(doc)
+
+        if self.opt.enum_field_comments and doc.long_description:
+            #
+            # Do not print empty line for the first element.
+            #
+            if next(filter(lambda field: isinstance(field, DocEnumField), doc.parent.fields)) != doc:
+                self.print(f'')
+            self.print(f'/**')
+            self.print_details(doc)
+            self.print(f' */')
+
+        value = f'0x{doc.value:08X}'
+
+        self.print(f'{name:<{self.opt.align}} = {value},')
 
         self.process(doc.fields)
 
@@ -251,8 +335,6 @@ class DocCProcessor(DocProcessor):
             self.print(f'{{')
 
         with self.indent:
-            field_number = 0
-
             for field in doc.fields:
                 assert field.type in [ DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
 
@@ -260,8 +342,6 @@ class DocCProcessor(DocProcessor):
                     self.print(f'{self.make_size_type(field.size)} {self.make_name(field, standalone=True)};')
                 else:
                     getattr(self, f'process_{field.type}')(field)
-
-                field_number += 1
 
         if self._typedef_nesting == 1:
             self.print(f'}} {self.make_name(doc)};')
@@ -281,6 +361,16 @@ class DocCProcessor(DocProcessor):
         self._typedef_nesting -= 1
 
     def process_struct_field(self, doc: DocStructField) -> None:
+        if self.opt.struct_field_comments and doc.long_description:
+            #
+            # Do not print empty line for the first element.
+            #
+            if next(iter(doc.parent.fields)) != doc:
+                self.print(f'')
+            self.print(f'/**')
+            self.print_details(doc)
+            self.print(f' */')
+
         self.print(f'{self.make_size_type(doc.size)} {self.make_name(doc)};')
 
         if doc.fields:
