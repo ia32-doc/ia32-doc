@@ -13440,26 +13440,26 @@ typedef union
  *
  * @see Vol3A[3.5.1(Segment Descriptor Tables)] (reference)
  */
-#include <pshpack1.h>
+#pragma pack(push, 1)
 typedef struct
 {
   UINT16 Limit;
   UINT32 BaseAddress;
 } DESCRIPTOR_32;
-#include <poppack.h>
+#pragma pack(pop)
 
 /**
  * @brief Pseudo-Descriptor Format (64-bit)
  *
  * @see Vol3A[3.5.1(Segment Descriptor Tables)] (reference)
  */
-#include <pshpack1.h>
+#pragma pack(push, 1)
 typedef struct
 {
   UINT16 Limit;
   UINT64 BaseAddress;
 } DESCRIPTOR_64;
-#include <poppack.h>
+#pragma pack(pop)
 
 /**
  * @brief General Segment Descriptor (32-bit)

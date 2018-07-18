@@ -1690,19 +1690,19 @@ typedef struct {
  *           Segment descriptors
  * @{
  */
-#include <pshpack1.h>
+#pragma pack(push, 1)
 typedef struct {
   uint16_t limit;
   uint32_t base_address;
 } descriptor_32;
-#include <poppack.h>
+#pragma pack(pop)
 
-#include <pshpack1.h>
+#pragma pack(push, 1)
 typedef struct {
   uint16_t limit;
   uint64_t base_address;
 } descriptor_64;
-#include <poppack.h>
+#pragma pack(pop)
 
 typedef struct {
   uint16_t segment_limit_low;

@@ -227,7 +227,7 @@ class DocCProcessor(DocProcessor):
             self.print(f' */')
 
         if doc.tag == 'Packed':
-            self.print(f'#include <pshpack1.h>')
+            self.print(f'#pragma pack(push, 1)')
 
         optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
         optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
@@ -260,7 +260,7 @@ class DocCProcessor(DocProcessor):
             self.print(f'}} {name};')
 
         if doc.tag == 'Packed':
-            self.print(f'#include <poppack.h>')
+            self.print(f'#pragma pack(pop)')
 
         self.print(f'')
 
