@@ -17132,241 +17132,241 @@ typedef union
 /**
  * Local APIC ID Register.
  */
-#define APIC_ID                                                      0xFEE00020
+#define APIC_ID                                                      0x00000020
 
 /**
  * Local APIC Version Register.
  */
-#define APIC_VERSION                                                 0xFEE00030
+#define APIC_VERSION                                                 0x00000030
 
 /**
  * Task Priority Register (TPR).
  */
-#define APIC_TASK_PRIORITY                                           0xFEE00080
+#define APIC_TASK_PRIORITY                                           0x00000080
 
 /**
  * Arbitration Priority Register (APR).
  */
-#define APIC_ARBITRATION_PRIORITY                                    0xFEE00090
+#define APIC_ARBITRATION_PRIORITY                                    0x00000090
 
 /**
  * Processor Priority Register (PPR).
  */
-#define APIC_PROCESSOR_PRIORITY                                      0xFEE000A0
+#define APIC_PROCESSOR_PRIORITY                                      0x000000A0
 
 /**
  * EOI Register.
  */
-#define APIC_EOI                                                     0xFEE000B0
+#define APIC_EOI                                                     0x000000B0
 
 /**
  * Remote Read Register (RRD).
  */
-#define APIC_REMOTE_READ                                             0xFEE000C0
+#define APIC_REMOTE_READ                                             0x000000C0
 
 /**
  * Logical Destination Register.
  */
-#define APIC_LOGICAL_DESTINATION                                     0xFEE000D0
+#define APIC_LOGICAL_DESTINATION                                     0x000000D0
 
 /**
  * Destination Format Register.
  *
  * @see Vol3A[10.6.2.2(Logical Destination Mode)]
  */
-#define APIC_DESTINATION_FORMAT                                      0xFEE000E0
+#define APIC_DESTINATION_FORMAT                                      0x000000E0
 
 /**
  * Spurious Interrupt Vector Register.
  *
  * @see Vol3A[10.9(SPURIOUS INTERRUPT)]
  */
-#define APIC_SPURIOUS_INTERRUPT_VECTOR                               0xFEE000F0
+#define APIC_SPURIOUS_INTERRUPT_VECTOR                               0x000000F0
 
 /**
  * In-Service Register (ISR); bits 31:0.
  */
-#define APIC_IN_SERVICE_BITS_31_0                                    0xFEE00100
+#define APIC_IN_SERVICE_BITS_31_0                                    0x00000100
 
 /**
  * In-Service Register (ISR); bits 63:32.
  */
-#define APIC_IN_SERVICE_BITS_63_32                                   0xFEE00110
+#define APIC_IN_SERVICE_BITS_63_32                                   0x00000110
 
 /**
  * In-Service Register (ISR); bits 95:64.
  */
-#define APIC_IN_SERVICE_BITS_95_64                                   0xFEE00120
+#define APIC_IN_SERVICE_BITS_95_64                                   0x00000120
 
 /**
  * In-Service Register (ISR); bits 127:96.
  */
-#define APIC_IN_SERVICE_BITS_127_96                                  0xFEE00130
+#define APIC_IN_SERVICE_BITS_127_96                                  0x00000130
 
 /**
  * In-Service Register (ISR); bits 159:128.
  */
-#define APIC_IN_SERVICE_BITS_159_128                                 0xFEE00140
+#define APIC_IN_SERVICE_BITS_159_128                                 0x00000140
 
 /**
  * In-Service Register (ISR); bits 191:160.
  */
-#define APIC_IN_SERVICE_BITS_191_160                                 0xFEE00150
+#define APIC_IN_SERVICE_BITS_191_160                                 0x00000150
 
 /**
  * In-Service Register (ISR); bits 223:192.
  */
-#define APIC_IN_SERVICE_BITS_223_192                                 0xFEE00160
+#define APIC_IN_SERVICE_BITS_223_192                                 0x00000160
 
 /**
  * In-Service Register (ISR); bits 255:224.
  */
-#define APIC_IN_SERVICE_BITS_255_224                                 0xFEE00170
+#define APIC_IN_SERVICE_BITS_255_224                                 0x00000170
 
 /**
  * Trigger Mode Register (TMR); bits 31:0.
  */
-#define APIC_TRIGGER_MODE_BITS_31_0                                  0xFEE00180
+#define APIC_TRIGGER_MODE_BITS_31_0                                  0x00000180
 
 /**
  * Trigger Mode Register (TMR); bits 63:32.
  */
-#define APIC_TRIGGER_MODE_BITS_63_32                                 0xFEE00190
+#define APIC_TRIGGER_MODE_BITS_63_32                                 0x00000190
 
 /**
  * Trigger Mode Register (TMR); bits 95:64.
  */
-#define APIC_TRIGGER_MODE_BITS_95_64                                 0xFEE001A0
+#define APIC_TRIGGER_MODE_BITS_95_64                                 0x000001A0
 
 /**
  * Trigger Mode Register (TMR); bits 127:96.
  */
-#define APIC_TRIGGER_MODE_BITS_127_96                                0xFEE001B0
+#define APIC_TRIGGER_MODE_BITS_127_96                                0x000001B0
 
 /**
  * Trigger Mode Register (TMR); bits 159:128.
  */
-#define APIC_TRIGGER_MODE_BITS_159_128                               0xFEE001C0
+#define APIC_TRIGGER_MODE_BITS_159_128                               0x000001C0
 
 /**
  * Trigger Mode Register (TMR); bits 191:160.
  */
-#define APIC_TRIGGER_MODE_BITS_191_160                               0xFEE001D0
+#define APIC_TRIGGER_MODE_BITS_191_160                               0x000001D0
 
 /**
  * Trigger Mode Register (TMR); bits 223:192.
  */
-#define APIC_TRIGGER_MODE_BITS_223_192                               0xFEE001E0
+#define APIC_TRIGGER_MODE_BITS_223_192                               0x000001E0
 
 /**
  * Trigger Mode Register (TMR); bits 255:224.
  */
-#define APIC_TRIGGER_MODE_BITS_255_224                               0xFEE001F0
+#define APIC_TRIGGER_MODE_BITS_255_224                               0x000001F0
 
 /**
  * Interrupt Request Register (IRR); bits 31:0.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_31_0                             0xFEE00200
+#define APIC_INTERRUPT_REQUEST_BITS_31_0                             0x00000200
 
 /**
  * Interrupt Request Register (IRR); bits 63:32.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_63_32                            0xFEE00210
+#define APIC_INTERRUPT_REQUEST_BITS_63_32                            0x00000210
 
 /**
  * Interrupt Request Register (IRR); bits 95:64.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_95_64                            0xFEE00220
+#define APIC_INTERRUPT_REQUEST_BITS_95_64                            0x00000220
 
 /**
  * Interrupt Request Register (IRR); bits 127:96.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_127_96                           0xFEE00230
+#define APIC_INTERRUPT_REQUEST_BITS_127_96                           0x00000230
 
 /**
  * Interrupt Request Register (IRR); bits 159:128.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_159_128                          0xFEE00240
+#define APIC_INTERRUPT_REQUEST_BITS_159_128                          0x00000240
 
 /**
  * Interrupt Request Register (IRR); bits 191:160.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_191_160                          0xFEE00250
+#define APIC_INTERRUPT_REQUEST_BITS_191_160                          0x00000250
 
 /**
  * Interrupt Request Register (IRR); bits 223:192.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_223_192                          0xFEE00260
+#define APIC_INTERRUPT_REQUEST_BITS_223_192                          0x00000260
 
 /**
  * Interrupt Request Register (IRR); bits 255:224.
  */
-#define APIC_INTERRUPT_REQUEST_BITS_255_224                          0xFEE00270
+#define APIC_INTERRUPT_REQUEST_BITS_255_224                          0x00000270
 
 /**
  * Error Status Register.
  */
-#define APIC_ERROR_STATUS                                            0xFEE00280
+#define APIC_ERROR_STATUS                                            0x00000280
 
 /**
  * LVT Corrected Machine Check Interrupt (CMCI) Register.
  */
-#define APIC_LVT_CORRECTED_MACHINE_CHECK_INTERRUPT                   0xFEE002F0
+#define APIC_LVT_CORRECTED_MACHINE_CHECK_INTERRUPT                   0x000002F0
 
 /**
  * Interrupt Command Register (ICR); bits 0-31.
  */
-#define APIC_INTERRUPT_COMMAND_BITS_0_31                             0xFEE00300
+#define APIC_INTERRUPT_COMMAND_BITS_0_31                             0x00000300
 
 /**
  * Interrupt Command Register (ICR); bits 32-63.
  */
-#define APIC_INTERRUPT_COMMAND_BITS_32_63                            0xFEE00310
+#define APIC_INTERRUPT_COMMAND_BITS_32_63                            0x00000310
 
 /**
  * LVT Timer Register.
  */
-#define APIC_LVT_TIMER                                               0xFEE00320
+#define APIC_LVT_TIMER                                               0x00000320
 
 /**
  * LVT Thermal Sensor Register.
  */
-#define APIC_LVT_THERMAL_SENSOR                                      0xFEE00330
+#define APIC_LVT_THERMAL_SENSOR                                      0x00000330
 
 /**
  * LVT Performance Monitoring Counters Register.
  */
-#define APIC_LVT_PERFORMANCE_MONITORING_COUNTERS                     0xFEE00340
+#define APIC_LVT_PERFORMANCE_MONITORING_COUNTERS                     0x00000340
 
 /**
  * LVT LINT0 Register.
  */
-#define APIC_LVT_LINT0                                               0xFEE00350
+#define APIC_LVT_LINT0                                               0x00000350
 
 /**
  * LVT LINT1 Register.
  */
-#define APIC_LVT_LINT1                                               0xFEE00360
+#define APIC_LVT_LINT1                                               0x00000360
 
 /**
  * LVT Error Register.
  */
-#define APIC_LVT_ERROR                                               0xFEE00370
+#define APIC_LVT_ERROR                                               0x00000370
 
 /**
  * Initial Count Register (for Timer).
  */
-#define APIC_INITIAL_COUNT                                           0xFEE00380
+#define APIC_INITIAL_COUNT                                           0x00000380
 
 /**
  * Current Count Register (for Timer).
  */
-#define APIC_CURRENT_COUNT                                           0xFEE00390
+#define APIC_CURRENT_COUNT                                           0x00000390
 
 /**
  * Divide Configuration Register (for Timer).
  */
-#define APIC_DIVIDE_CONFIGURATION                                    0xFEE003E0
+#define APIC_DIVIDE_CONFIGURATION                                    0x000003E0
 
 /**
  * @}
