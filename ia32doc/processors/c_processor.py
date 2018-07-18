@@ -53,10 +53,13 @@ class DocCProcessor(DocProcessor):
 
             description_printed = True
 
+        align = self.opt.align if self.opt.definition_no_indent else \
+                self.align_indent_adjusted
+
         value = f'0x{doc.value:08X}' if isinstance(doc.value, int) else \
                 f'{doc.value}'
 
-        self.print(f'#define {name:<{self.opt.align}} {value}')
+        self.print(f'#define {name:<{align}} {value}')
 
         if description_printed:
             self.print(f'')
@@ -190,6 +193,8 @@ class DocCProcessor(DocProcessor):
            self.opt.bitfield_field_with_define_get:
             part1 = self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)
             part2 = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
+            align = self.opt.align if self.opt.definition_no_indent else \
+                    self.align_indent_adjusted
 
             #
             # !!! INCREDIBLY UGLY HACK !!!
@@ -200,16 +205,16 @@ class DocCProcessor(DocProcessor):
 
         if self.opt.bitfield_field_with_define_bit:
             definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_bit_suffix}'
-            self.print(f'#define {definition:<{self.opt.align}} {bit_from}')
+            self.print(f'#define {definition:<{align}} {bit_from}')
 
         if self.opt.bitfield_field_with_define_mask:
             definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_mask_suffix}'
-            self.print(f'#define {definition:<{self.opt.align}} 0x{((1 << bit_shift) - 1):02X}')
+            self.print(f'#define {definition:<{align}} 0x{((1 << bit_shift) - 1):02X}')
 
         if self.opt.bitfield_field_with_define_get:
             definition = f'{part1}_{part2}({self.opt.bitfield_field_with_define_get_macro_argument_name})'
             self.print(
-                f'#define {definition:<{self.opt.align}} '
+                f'#define {definition:<{align}} '
                 f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '
                 f'0x{((1 << bit_shift) - 1):02X})'
             )
