@@ -10,6 +10,7 @@
     4-level paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to
     locate the first paging-structure, the PML4 table. Use of CR3 with 4-level paging depends on whether processcontext
     identifiers (PCIDs) have been enabled by setting CR4.PCIDE.
+  children_name_with_suffix: 64
   type: group
   reference: Vol3A[4.5(4-LEVEL PAGING)]
   fields:

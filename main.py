@@ -4,6 +4,30 @@ from ia32doc.doc import Doc
 from ia32doc.processors.c_processor import DocCProcessor
 from ia32doc.options import DocProcessorOptions
 
+ALL = True
+
+TEST = True
+TEST_CONFIG = 'conf/compact.yml'
+TEST_FILE = 'yaml/Intel/index.yml'
+
+
+def process(config, file):
+    processor = DocCProcessor()
+    options = DocProcessorOptions(file=config)
+    with processor.opt.push(options):
+        processor.run(Doc.parse(file))
+
+
+def process_all():
+    index = 'yaml/Intel/index.yml'
+    process('conf/default.yml', index)
+    process('conf/compact.yml', index)
+    process('conf/defines_only.yml', index)
+
+
+def test():
+    process(TEST_CONFIG, TEST_FILE)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -18,17 +42,13 @@ def main():
                         help='YAML file to process')
 
     args = parser.parse_args()
-
-    # doc_list = Doc.parse('yaml/Intel/index.yml')
-    # doc_list = Doc.parse('yaml/Intel/CPUID/index.yml')
-    # doc_list = Doc.parse('yaml/Intel/VMX/index.yml')
-    doc_list = Doc.parse(args.file)
-
-    processor = DocCProcessor()
-    options = DocProcessorOptions(file=args.config)
-    with processor.opt.push(options):
-        processor.run(doc_list)
+    process(args.config, args.file)
 
 
 if __name__ == '__main__':
-    main()
+    if ALL:
+        process_all()
+    elif TEST:
+        test()
+    else:
+        main()

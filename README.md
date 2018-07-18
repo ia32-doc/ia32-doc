@@ -79,7 +79,6 @@ Also, by looking at other yaml files, you should get the idea.
 
 ### TODO
 - ? OriginalNames - preserve case-sensitivity (BIOS, x2APIC, ToPA, ...)
-- ? Add final Reserved field to bitfields
 - ? Possibility to split into multiple .h
 - ?? Add doxygen main page
 - ??? Add AMD

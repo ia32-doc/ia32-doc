@@ -8,7 +8,7 @@
     32-bit paging uses a hierarchy of paging structures to produce a translation for a linear address. CR3 is used to
     locate the first paging-structure, the page directory.
     32-bit paging may map linear addresses to either 4-KByte pages or 4-MByte pages.
-  children_name_with_postfix: 32
+  children_name_with_suffix: 32
   type: group
   reference: Vol3A[4.5(4-LEVEL PAGING)]
   fields:

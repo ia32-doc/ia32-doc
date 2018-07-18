@@ -14,24 +14,24 @@
 #   - These fields are common for each YAML object type.
 #
 
-- short_name: WC                           # General short name
-  long_name: WC_SUPPORTED                  # General long name
-  original_short_name: Wc                   # Suggested short name (by document/manual)
-  original_long_name: (Wc)_Supported        # Suggested long name (by document/manual)
+- short_name: WC                          # General short name
+  long_name: WC_SUPPORTED                 # General long name
+  original_short_name: Wc                 # Suggested short name (by document/manual)
+  original_long_name: (Wc)_Supported      # Suggested long name (by document/manual)
                                           #   Note that text in parentheses is used as hint
                                           #   to keep case-sensitivity
-  alternative_short_name: WRITE_COMBINED    # Author's subjective best (descriptive) short name
-  alternative_long_name: WRITE_COMBINED     # Author's subjective best (descriptive) long name
+  alternative_short_name: WRITE_COMBINED  # Author's subjective best (descriptive) short name
+  alternative_long_name: WRITE_COMBINED   # Author's subjective best (descriptive) long name
 
-  name_with_postfix: REGISTER               # Appended to parent's name (used in groups)
+  name_with_postfix: REGISTER             # Appended to parent's name (used in groups)
 
   short_description: Description doesn't end with dot
   long_description: |
     Description must end with dot.
   description: Description is used as both long/short. Can be multiline. Must end with dot.
 
-  children_name_with_prefix: GUEST           # Prepend to children's name (used in groups)
-  children_name_with_postfix: REGISTER       # Appended to children's name (used in groups)
+  children_name_with_prefix: GUEST        # Prepend to children's name (used in groups)
+  children_name_with_suffix: REGISTER     # Appended to children's name (used in groups)
                                           # Use '$' for "Name".
 
   note: |                                 # Additional notes.
@@ -53,12 +53,12 @@
   tag: BOOKMARK                           # General tag
 
   type: [group|definition|enum|struct|bitfield] # Type of the object
-  alternative_type: [Struct|Bitfield]      # Alternative type of the object
+  alternative_type: [Struct|Bitfield]     # Alternative type of the object
 
   size: [Bytes|Bits]                      # Size of the object
 
   remarks: 06_01H                         # Additional notes
-  see: Vol3A[4.6(ACCESS RIGHTS)]      # Additional references in Description
+  see: Vol3A[4.6(ACCESS RIGHTS)]          # Additional references in Description
   reference: VolXY[A.B.C(Chapter Name)]   # Where the Name/Description can be found.
 
   #
@@ -86,4 +86,3 @@ StructField:
 BitfieldField:
   bit: [N|N-M] # Bit or bit range
   [...YamlObject]
-

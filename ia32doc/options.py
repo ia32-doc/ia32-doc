@@ -127,6 +127,10 @@ class DocProcessorOptions(object):
         #
         # Bitfield field category.
         #
+        self.bitfield_create_struct = True
+
+        self.bitfield_field_long_description_with_bit_range = True
+        self.bitfield_field_fill_with_reserved = True
         self.bitfield_field_reserved_prefix = 'Reserved'
         self.bitfield_field_flags_name = 'Flags'
 

@@ -69,7 +69,7 @@ class DocProcessor(object):
             assert doc.type in [ DOC_GROUP, DOC_DEFINITION, DOC_STRUCT, DOC_BITFIELD ]
             getattr(self, f'process_{doc.type}')(doc)
 
-    def process_group(self, doc: DocBase) -> None:
+    def process_group(self, doc: DocGroup) -> None:
         pass
 
     def process_definition(self, doc: DocDefinition) -> None:
@@ -78,8 +78,7 @@ class DocProcessor(object):
     def process_bitfield(self, doc: DocBitfield) -> None:
         pass
 
-    def process_bitfield_field(self, doc: DocBitfield, field: DocBitfieldField,
-                               bit_position: int, reserved_count: int) -> Tuple[int, int]:
+    def process_bitfield_field(self, doc: DocBitfieldField) -> None:
         pass
 
     def process_struct(self, doc: DocStruct) -> None:

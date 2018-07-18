@@ -3473,7 +3473,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pml4e;
+} pml4e_64;
 
 typedef union {
   struct {
@@ -3497,7 +3497,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pdpte_1gb;
+} pdpte_1gb_64;
 
 typedef union {
   struct {
@@ -3517,7 +3517,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pdpte;
+} pdpte_64;
 
 typedef union {
   struct {
@@ -3541,7 +3541,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pde_2mb;
+} pde_2mb_64;
 
 typedef union {
   struct {
@@ -3561,7 +3561,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pde;
+} pde_64;
 
 typedef union {
   struct {
@@ -3583,7 +3583,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pte;
+} pte_64;
 
 typedef union {
   struct {
@@ -3605,7 +3605,7 @@ typedef union {
   };
 
   uint64_t flags;
-} pt_entry;
+} pt_entry_64;
 
 /**
  * @}

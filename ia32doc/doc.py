@@ -64,10 +64,11 @@ class Doc(object):
 class DocBase(object):
     def __init__(self, doc: dict, parent: DocBase=None):
         self._doc = doc
-        self._parent = parent
         self._fields = []
         self._include = []
-        
+
+        self.parent = parent
+
         if 'fields' in doc:
             self._fields = [ Doc.map_class(field, self) for field in doc['fields'] ]
 
@@ -105,9 +106,9 @@ class DocBase(object):
         elif 'name' in self._doc:
             return self._doc['name']
         elif 'name_with_postfix' in self._doc:
-            if not self._parent:
+            if not self.parent:
                 raise Exception('name_with_postfix without parent')
-            return f'{self._parent.short_name}_{self._doc["name_with_postfix"]}'
+            return f'{self.parent.short_name}_{self._doc["name_with_postfix"]}'
         else:
             raise Exception('Field missing: short_name')
 
@@ -122,9 +123,9 @@ class DocBase(object):
         elif 'name' in self._doc:
             return self._doc['name']
         elif 'name_with_postfix' in self._doc:
-            if not self._parent:
+            if not self.parent:
                 raise Exception('name_with_postfix without parent')
-            return f'{self._parent.long_name}_{self._doc["name_with_postfix"]}'
+            return f'{self.parent.long_name}_{self._doc["name_with_postfix"]}'
         else:
             raise Exception('Field missing: long_name')
 
@@ -168,10 +169,10 @@ class DocBase(object):
         return ''
 
     @property
-    def children_name_with_postfix(self) -> str:
-        if 'children_name_with_postfix' in self._doc:
-            if self._doc['children_name_with_postfix'] != '$':
-                return self._doc['children_name_with_postfix']
+    def children_name_with_suffix(self) -> str:
+        if 'children_name_with_suffix' in self._doc:
+            if self._doc['children_name_with_suffix'] != '$':
+                return self._doc['children_name_with_suffix']
             else:
                 return self.short_name
         return ''
@@ -203,10 +204,10 @@ class DocBase(object):
     @property
     def type(self) -> str:
         if 'type' not in self._doc:
-            if self._parent:
-                if self._parent.type == DOC_STRUCT:
+            if self.parent:
+                if self.parent.type == DOC_STRUCT:
                     self._doc['type'] = DOC_STRUCT_FIELD
-                elif self._parent.type == DOC_BITFIELD:
+                elif self.parent.type == DOC_BITFIELD:
                     self._doc['type'] = DOC_BITFIELD_FIELD
                 else:
                     self._doc['type'] = DOC_DEFINITION
@@ -256,16 +257,16 @@ class DocBase(object):
 
     def _make_name(self, name: str) -> str:
         if 'name_with_postfix' not in self._doc and self.type in [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD ]:
-            parent = self._parent
+            parent = self.parent
 
             while parent:
                 if parent.children_name_with_prefix:
                     name = f'{parent.children_name_with_prefix}_{name}'
 
-                if parent.children_name_with_postfix:
-                    name = f'{name}_{parent.children_name_with_postfix}'
+                if parent.children_name_with_suffix:
+                    name = f'{name}_{parent.children_name_with_suffix}'
 
-                parent = parent._parent
+                parent = parent.parent
 
         return name
 

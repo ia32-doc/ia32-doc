@@ -1,5 +1,3 @@
-from typing import Tuple
-
 from .base import DocProcessor
 
 from ..doc import DocBase, DocGroup, DocDefinition, DocBitfield, DocBitfieldField, DocStruct, DocStructField
@@ -10,19 +8,37 @@ from ..text import DocText
 class DocCProcessor(DocProcessor):
     def __init__(self):
         super().__init__()
+
+        #
+        # Nesting level of union/struct typedefs.
+        #
         self._typedef_nesting = 0
 
-    def process_group(self, doc: DocBase) -> None:
-        self.print(f'/**')
-        self.print_details(doc)
-        self.print(f' * @{{')
-        self.print(f' */')
+        #
+        # Bitfield position of last bitfield field.
+        #
+        self._bitfield_position = None
+
+        #
+        # Number of "Reserved" bitfield fields in current bitfield.
+        #
+        self._bitfield_reserved_count = None
+
+    def process_group(self, doc: DocGroup) -> None:
+        if self.opt.group_comments and doc.long_description or self.opt.group_defgroup:
+            self.print(f'/**')
+            self.print_details(doc)
+
+            if self.opt.group_defgroup:
+                self.print(f' * @{{')
+            self.print(f' */')
 
         self.process(doc.fields)
 
-        self.print(f'/**')
-        self.print(f' * @}}')
-        self.print(f' */')
+        if self.opt.group_defgroup:
+            self.print(f'/**')
+            self.print(f' * @}}')
+            self.print(f' */')
 
         self.print(f'')
 
@@ -48,133 +64,155 @@ class DocCProcessor(DocProcessor):
         self.process(doc.fields)
 
     def process_bitfield(self, doc: DocBitfield) -> None:
-        self._typedef_nesting += 1
+        if self.opt.bitfield_create_struct:
+            self._typedef_nesting += 1
 
-        if self.opt.bitfield_comments and doc.long_description:
-            self.print(f'/**')
-            self.print_details(doc, treat_description_as_short=True)
-            self.print(f' */')
+            if self.opt.bitfield_comments and doc.long_description:
+                self.print(f'/**')
+                self.print_details(doc, treat_description_as_short=True)
+                self.print(f' */')
 
-        optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
-        optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+            optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
+            optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
 
-        self.print(f'{optional_typedef}union{optional_curly_brace}')
-        if self.opt.brace_on_next_line:
-            self.print(f'{{')
-
-        with self.indent:
-            self.print(f'struct{optional_curly_brace}')
+            self.print(f'{optional_typedef}union{optional_curly_brace}')
             if self.opt.brace_on_next_line:
                 self.print(f'{{')
 
             with self.indent:
-                bit_position = 0
-                reserved_count = 0
+                self.print(f'struct{optional_curly_brace}')
+                if self.opt.brace_on_next_line:
+                    self.print(f'{{')
 
-                for field in doc.fields:
-                    if isinstance(field, DocBitfieldField):
-                        bit_position, reserved_count = self.process_bitfield_field(
-                            doc, field, bit_position, reserved_count
-                            )
+                with self.indent:
+                    assert self._bitfield_position is None
+                    assert self._bitfield_reserved_count is None
+                    self._bitfield_position = 0
+                    self._bitfield_reserved_count = 0
 
-            self.print(f'}};')
-            self.print(f'')
+                    last_field = None
+                    for field in doc.fields:
+                        if isinstance(field, DocBitfieldField):
+                            self.process_bitfield_field(field)
+                            last_field = field
 
-            #
-            # Print "Flags" member.
-            #
-            if doc.size_min != doc.size_max:
-                self.print(f'{self.make_size_type(doc.size_min)} {self.opt.bitfield_field_flags_name}{doc.size_min};')
-                self.print(f'{self.make_size_type(doc.size_max)} {self.opt.bitfield_field_flags_name}{doc.size_max};')
+                    #
+                    # Check if we have to create last "Reserved" field.
+                    #
+                    last_bit_from, last_bit_to = last_field.bit
+                    if last_bit_to < doc.size_max and self.opt.bitfield_field_fill_with_reserved:
+                        self._bitfield_reserved_count += 1
+                        bit_length = doc.size_max - self._bitfield_position
+                        long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
+                        self.print(
+                            f'{self.make_size_type(doc.size)} {long_name:<{self.align_indent_adjusted}}: '
+                            f'{bit_length};'
+                        )
+
+                    self._bitfield_position = None
+                    self._bitfield_reserved_count = None
+
+                self.print(f'}};')
+                self.print(f'')
+
+                #
+                # Print "Flags" member.
+                #
+                if doc.size_min != doc.size_max:
+                    self.print(f'{self.make_size_type(doc.size_min)} {self.opt.bitfield_field_flags_name}{doc.size_min};')
+                    self.print(f'{self.make_size_type(doc.size_max)} {self.opt.bitfield_field_flags_name}{doc.size_max};')
+                else:
+                    self.print(f'{self.make_size_type(doc.size)} {self.opt.bitfield_field_flags_name};')
+
+            if self._typedef_nesting == 1:
+                self.print(f'}} {self.make_name(doc)};')
             else:
-                self.print(f'{self.make_size_type(doc.size)} {self.opt.bitfield_field_flags_name};')
+                name = self.make_name(
+                    doc,
+                    standalone=True,
+                    override_name_letter_case=self.opt.bitfield_field_name_letter_case
+                )
+                self.print(f'}} {name};')
 
-        if self._typedef_nesting == 1:
-            self.print(f'}} {self.make_name(doc)};')
+            self._typedef_nesting -= 1
         else:
-            name = self.make_name(
-                doc,
-                standalone=True,
-                override_name_letter_case=self.opt.bitfield_field_name_letter_case
-            )
-            self.print(f'}} {name};')
+            #
+            # Do not create unions.
+            #
+            for field in doc.fields:
+                if isinstance(field, DocBitfieldField):
+                    self.process_bitfield_field(field)
 
         self.print(f'')
 
-        self._typedef_nesting -= 1
+    def process_bitfield_field(self, doc: DocBitfieldField) -> None:
+        bit_from, bit_to = doc.bit
 
-    def process_bitfield_field(
-            self, doc: DocBitfield, field: DocBitfieldField, bit_position: int, reserved_count: int
-            ) -> Tuple[int, int]:
-        bit_from, bit_to = field.bit
+        if self.opt.bitfield_create_struct:
+            #
+            # Handle "Reserved" fields.
+            #
+            if bit_from > self._bitfield_position:
+                self._bitfield_reserved_count += 1
 
-        #
-        # Handle "Reserved" fields.
-        #
-        if bit_from > bit_position:
-            reserved_count += 1
+                bit_length = bit_from - self._bitfield_position
+                long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
+                self.print(
+                    f'{self.make_size_type(doc.parent.size)} {long_name:<{self.align_indent_adjusted}}: '
+                    f'{bit_length};'
+                )
+                self._bitfield_position = bit_from
 
-            bit_length = bit_from - bit_position
-            long_name = f'{self.opt.bitfield_field_reserved_prefix}{reserved_count}'
+            #
+            # Print bit-field.
+            #
+            bit_length = bit_to - self._bitfield_position
+            if self.opt.bitfield_field_comments and doc.long_description:
+                if self._bitfield_position > 0:
+                    self.print(f'')
+
+                self.print(f'/**')
+                self.print_details(doc)
+                self.print(f' */')
+
             self.print(
-                f'{self.make_size_type(doc.size)} {long_name:<{self.align_indent_adjusted}}: '
+                f'{self.make_size_type(doc.parent.size)} {self.make_name(doc):<{self.align_indent_adjusted}}: '
                 f'{bit_length};'
             )
-            bit_position = bit_from
-
-        #
-        # Print bit-field.
-        #
-        bit_length = bit_to - bit_position
-        if self.opt.bitfield_field_comments and field.long_description:
-            if bit_position > 0:
-                self.print(f'')
-
-            self.print(f'/**')
-            self.print_details(field)
-            self.print(f' */')
-
-        self.print(
-            f'{self.make_size_type(doc.size)} {self.make_name(field):<{self.align_indent_adjusted}}: '
-            f'{bit_length};'
-        )
 
         #
         # Print definitions for fields.
         #
-        if self.opt.bitfield_field_with_defines:
-            bit_shift = bit_to - bit_from
+        bit_shift = bit_to - bit_from
 
-            if self.opt.bitfield_field_with_define_bit:
-                definition_bit = \
-                    f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                    f'{self.make_name(field, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                    f'{self.opt.bitfield_field_with_define_bit_suffix}'
-                self.print(f'#define {definition_bit:<{self.opt.align}} {bit_from}')
+        if self.opt.bitfield_field_with_define_bit:
+            definition_bit = \
+                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
+                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
+                f'{self.opt.bitfield_field_with_define_bit_suffix}'
+            self.print(f'#define {definition_bit:<{self.opt.align}} {bit_from}')
 
-            if self.opt.bitfield_field_with_define_mask:
-                definition_size = \
-                    f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                    f'{self.make_name(field, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                    f'{self.opt.bitfield_field_with_define_mask_suffix}'
-                self.print(f'#define {definition_size:<{self.opt.align}} 0x{((1 << bit_shift) - 1):02X}')
+        if self.opt.bitfield_field_with_define_mask:
+            definition_size = \
+                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
+                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
+                f'{self.opt.bitfield_field_with_define_mask_suffix}'
+            self.print(f'#define {definition_size:<{self.opt.align}} 0x{((1 << bit_shift) - 1):02X}')
 
-            if self.opt.bitfield_field_with_define_get:
-                definition = \
-                    f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                    f'{self.make_name(field, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                    f'({self.opt.bitfield_field_with_define_get_macro_argument_name})'
-                self.print(
-                    f'#define {definition:<{self.opt.align}} '
-                    f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '
-                    f'0x{((1 << bit_shift) - 1):02X})'
-                )
+        if self.opt.bitfield_field_with_define_get:
+            definition = \
+                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
+                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
+                f'({self.opt.bitfield_field_with_define_get_macro_argument_name})'
+            self.print(
+                f'#define {definition:<{self.opt.align}} '
+                f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '
+                f'0x{((1 << bit_shift) - 1):02X})'
+            )
 
-        bit_position = bit_to
+        self._bitfield_position = bit_to
 
-        self.process(field.fields)
-
-        return bit_position, reserved_count
+        self.process(doc.fields)
 
     def process_struct(self, doc: DocStruct) -> None:
         self._typedef_nesting += 1
@@ -199,7 +237,11 @@ class DocCProcessor(DocProcessor):
 
             for field in doc.fields:
                 assert field.type in [ DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
-                getattr(self, f'process_{field.type}')(field)
+
+                if isinstance(field, DocBitfield) and not self.opt.bitfield_create_struct:
+                    self.print(f'{self.make_size_type(field.size)} {self.make_name(field, standalone=True)};')
+                else:
+                    getattr(self, f'process_{field.type}')(field)
 
                 field_number += 1
 
@@ -217,8 +259,6 @@ class DocCProcessor(DocProcessor):
             self.print(f'#include <poppack.h>')
 
         self.print(f'')
-
-        # self.process(doc.fields)
 
         self._typedef_nesting -= 1
 
@@ -257,7 +297,7 @@ class DocCProcessor(DocProcessor):
         print_long_description = getattr(self.opt, f'{doc.type}_long_description') and doc.long_description
         print_access = getattr(self.opt, f'{doc.type}_access') and doc.access
 
-        if doc.short_description == doc.long_description:
+        if doc.short_description_raw == doc.long_description_raw:
             if treat_description_as_short:
                 print_long_description = False
             else:
@@ -279,7 +319,17 @@ class DocCProcessor(DocProcessor):
             if print_short_description or print_defgroup:
                 self.print(f' *')
 
-            long_description = self.make_multiline_comment(doc.long_description)
+            if isinstance(doc, DocBitfieldField) and self.opt.bitfield_field_long_description_with_bit_range:
+                bit_from, bit_to = doc.bit
+                bit_to -= 1
+
+                bit = f'[Bit {bit_from}] ' if bit_from == bit_to else \
+                      f'[Bits {bit_to}:{bit_from}] '
+
+                long_description = self.make_multiline_comment(f'{bit}{doc.long_description}')
+            else:
+                long_description = self.make_multiline_comment(doc.long_description)
+
             self.print(f' * {long_description}')
 
         #
@@ -322,14 +372,9 @@ class DocCProcessor(DocProcessor):
             else:
                 self.print(f' * @see {doc.reference} (reference)')
 
-    def make_name(
-            self,
-            doc: DocBase,
-            long: bool=None,
-            raw: bool=False,
-            standalone: bool=False,
-            override_name_letter_case: str=None
-    ) -> str:
+    def make_name(self, doc: DocBase,
+                  long: bool=None, raw: bool=False, standalone: bool=False,
+                  override_name_letter_case: str=None) -> str:
         assert not (raw and standalone)  # invalid combination
 
         if long is None:
