@@ -9,6 +9,11 @@
     CPUID.(EAX=14H, ECX= 0H).EAX), the processor returns information about packet generation in Intel Processor
     Trace.
   type: group
+  fields:
+  - value: 0x14
+    short_name: INTEL_PROCESSOR_TRACE
+    long_name: INTEL_PROCESSOR_TRACE_INFORMATION
+
   include:
   - EAX_14_ECX_00
   - EAX_14_ECX_01

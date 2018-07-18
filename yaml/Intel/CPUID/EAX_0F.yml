@@ -12,6 +12,11 @@
     software can use to program IA32_PQR_ASSOC, IA32_QM_EVTSEL MSRs before reading QoS data from the
     IA32_QM_CTR MSR.
   type: group
+  fields:
+  - value: 0x0F
+    short_name: INTEL_RDT_MONITORING
+    long_name: INTEL_RESOURCE_DIRECTOR_TECHNOLOGY_MONITORING_INFORMATION
+
   include:
   - EAX_0F_ECX_00
   - EAX_0F_ECX_01

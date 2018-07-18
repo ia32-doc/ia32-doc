@@ -1,6 +1,10 @@
+- value: 0x80000008
+  short_name: EXTENDED_VIRT_PHYS_ADDRESS_SIZE
+  long_name: EXTENDED_VIRTUAL_PHYSICAL_ADDRESS_SIZE
+  description: Extended Function CPUID Information.
+
 - short_name: EAX_80000008
   long_name: EAX_80000008
-  description: Extended Function CPUID Information.
   type: struct
   fields:
   - name: EAX

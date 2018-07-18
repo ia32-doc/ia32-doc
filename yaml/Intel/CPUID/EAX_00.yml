@@ -1,5 +1,5 @@
-- short_name: EAX_00
-  long_name: EAX_00
+- value: 0x00
+  name: SIGNATURE
   short_description: Returns CPUID’s Highest Value for Basic Processor Information and the Vendor Identification String
   long_description: |
     When CPUID executes with EAX set to 0, the processor returns the highest value the CPUID recognizes for
@@ -13,6 +13,9 @@
     - EDX ← 49656e69h (* “ineI”, with i in the low eight bits of DL *)
 
     - ECX ← 6c65746eh (* “ntel”, with n in the low eight bits of CL *)
+
+- short_name: EAX_00
+  long_name: EAX_00
   type: struct
   fields:
   - size: 32

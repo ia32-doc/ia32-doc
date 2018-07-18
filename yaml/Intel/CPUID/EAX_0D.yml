@@ -18,6 +18,11 @@
       FI;
     </pre>
   type: group
+  fields:
+  - value: 0x0D
+    short_name: EXTENDED_STATE
+    long_name: EXTENDED_STATE_INFORMATION
+
   include:
   - EAX_0D_ECX_00
   - EAX_0D_ECX_01

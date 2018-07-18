@@ -1,5 +1,5 @@
-- short_name: EAX_0A
-  long_name: EAX_0A
+- value: 0x0A
+  name: ARCHITECTURAL_PERFORMANCE_MONITORING
   short_description: Architectural Performance Monitoring Leaf
   long_description: |
     When CPUID executes with EAX set to 0AH, the processor returns information about support for architectural
@@ -7,6 +7,9 @@
     For each version of architectural performance monitoring capability, software must enumerate this leaf to discover
     the programming facilities and the architectural performance events available in the processor.
   see: Vol3C[23(Introduction to Virtual-Machine Extensions)]
+
+- short_name: EAX_0A
+  long_name: EAX_0A
   todo: Can be struct
   type: struct
   fields:

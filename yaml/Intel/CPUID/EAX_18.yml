@@ -5,6 +5,10 @@
     When CPUID executes with EAX set to 18H, the processor returns information about the Deterministic Address
     Translation Parameters.
   type: group
+  fields:
+  - value: 0x18
+    name: DETERMINISTIC_ADDRESS_TRANSLATION_PARAMETERS
+
   include:
   - EAX_18_ECX_00
   - EAX_18_ECX_01P

@@ -5,6 +5,11 @@
     When CPUID executes with EAX set to 17H, the processor returns information about the System-On-Chip Vendor
     Attribute Enumeration.
   type: group
+  fields:
+  - value: 0x17
+    short_name: SOC_VENDOR
+    long_name: SOC_VENDOR_INFORMATION
+
   include:
   - EAX_17_ECX_00
   - EAX_17_ECX_01_03

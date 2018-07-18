@@ -11,6 +11,11 @@
     about available classes of service and range of QoS mask MSRs that software can use to configure each
     class of services using capability bit masks in the QoS Mask registers, IA32_resourceType_Mask_n.
   type: group
+  fields:
+  - value: 0x10
+    short_name: INTEL_RDT_ALLOCATION
+    long_name: INTEL_RESOURCE_DIRECTOR_TECHNOLOGY_ALLOCATION_INFORMATION
+
   include:
   - EAX_10_ECX_00
   - EAX_10_ECX_01

@@ -666,6 +666,8 @@ typedef union
  * - EDX <- 49656e69h (* "ineI", with i in the low eight bits of DL *)
  * - ECX <- 6c65746eh (* "ntel", with n in the low eight bits of CL *)
  */
+#define CPUID_SIGNATURE                                              0x00000000
+
 typedef struct
 {
   UINT32 MaxCpuidInputValue;
@@ -682,6 +684,8 @@ typedef struct
  *   * Additional Information in EBX
  *   * Feature Information in ECX and EDX
  */
+#define CPUID_VERSION_INFORMATION                                    0x00000001
+
 typedef struct
 {
   /**
@@ -1489,6 +1493,8 @@ typedef struct
  *
  * @see Vol3A[8(Multiple-Processor Management)]
  */
+#define CPUID_CACHE_PARAMETERS                                       0x00000004
+
 typedef struct
 {
   union
@@ -1678,6 +1684,8 @@ typedef struct
  * instructions. The MONITOR instruction is used for address-range monitoring in conjunction with MWAIT instruction. The
  * MWAIT instruction optionally provides additional extensions for advanced power management.
  */
+#define CPUID_MONITOR_MWAIT                                          0x00000005
+
 typedef struct
 {
   union
@@ -1830,6 +1838,8 @@ typedef struct
  *
  * When CPUID executes with EAX set to 06H, the processor returns information about thermal and power management features.
  */
+#define CPUID_THERMAL_AND_POWER_MANAGEMENT                           0x00000006
+
 typedef struct
 {
   union
@@ -2084,6 +2094,8 @@ typedef struct
  * processor returns 0 in EAX/EBX/ECX/EDX. In subleaf 0, EAX returns the maximum input value of the highest leaf 7
  * sub-leaf, and EBX, ECX & EDX contain information of extended feature flags.
  */
+#define CPUID_STRUCTURED_EXTENDED_FEATURE_FLAGS                      0x00000007
+
 typedef struct
 {
   union
@@ -2498,6 +2510,8 @@ typedef struct
  *
  * When CPUID executes with EAX set to 09H, the processor returns information about Direct Cache Access capabilities.
  */
+#define CPUID_DIRECT_CACHE_ACCESS_INFORMATION                        0x00000009
+
 typedef struct
 {
   union
@@ -2580,6 +2594,8 @@ typedef struct
  *
  * @see Vol3C[23(Introduction to Virtual-Machine Extensions)]
  */
+#define CPUID_ARCHITECTURAL_PERFORMANCE_MONITORING                   0x0000000A
+
 typedef struct
 {
   union
@@ -2768,6 +2784,8 @@ typedef struct
  *       order. For sub-leaves that return an invalid level-type of 0 in ECX[15:8]; EAX and EBX will return 0. If an input value
  *       n in ECX returns the invalid level-type of 0 in ECX[15:8], other input values with ECX > n also return 0 in ECX[15:8].
  */
+#define CPUID_EXTENDED_TOPOLOGY                                      0x0000000B
+
 typedef struct
 {
   union
@@ -2882,6 +2900,7 @@ typedef struct
  * of EDX:EAX Execute CPUID.(EAX=0DH, ECX = i) to examine size and offset for sub-leaf i; FI; </pre>
  * @{
  */
+#define CPUID_EXTENDED_STATE_INFORMATION                             0x0000000D
 /**
  * @brief Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)
  */
@@ -3266,6 +3285,7 @@ typedef struct
  * software can use to program IA32_PQR_ASSOC, IA32_QM_EVTSEL MSRs before reading QoS data from the IA32_QM_CTR MSR.
  * @{
  */
+#define CPUID_INTEL_RESOURCE_DIRECTOR_TECHNOLOGY_MONITORING_INFORMATION 0x0000000F
 /**
  * @brief Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0)
  *
@@ -3460,6 +3480,7 @@ typedef struct
  * using capability bit masks in the QoS Mask registers, IA32_resourceType_Mask_n.
  * @{
  */
+#define CPUID_INTEL_RESOURCE_DIRECTOR_TECHNOLOGY_ALLOCATION_INFORMATION 0x00000010
 /**
  * @brief Intel Resource Director Technology (Intel RDT) Allocation Enumeration Sub-leaf (EAX = 10H, ECX = 0)
  *
@@ -3816,6 +3837,7 @@ typedef struct
  * Page Cache.
  * @{
  */
+#define CPUID_INTEL_SGX                                              0x00000012
 /**
  * @brief Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)
  *
@@ -4206,6 +4228,7 @@ typedef struct
  * ECX= 0H).EAX), the processor returns information about packet generation in Intel Processor Trace.
  * @{
  */
+#define CPUID_INTEL_PROCESSOR_TRACE_INFORMATION                      0x00000014
 /**
  * @brief Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)
  *
@@ -4480,6 +4503,8 @@ typedef struct
  *       If ECX is 0, the nominal core crystal clock frequency is not enumerated. "TSC frequency" = "core crystal clock
  *       frequency" * EBX/EAX.
  */
+#define CPUID_TIME_STAMP_COUNTER_INFORMATION                         0x00000015
+
 typedef struct
 {
   union
@@ -4565,6 +4590,8 @@ typedef struct
  *       While a processor may support the Processor Frequency Information leaf, fields that return a value of zero are not
  *       supported.
  */
+#define CPUID_PROCESSOR_FREQUENCY_INFORMATION                        0x00000016
+
 typedef struct
 {
   union
@@ -4648,6 +4675,7 @@ typedef struct
  * Enumeration.
  * @{
  */
+#define CPUID_SOC_VENDOR_INFORMATION                                 0x00000017
 /**
  * @brief System-On-Chip Vendor Attribute Enumeration Main Leaf (EAX = 17H, ECX = 0)
  *
@@ -4905,6 +4933,7 @@ typedef struct
  * Parameters.
  * @{
  */
+#define CPUID_DETERMINISTIC_ADDRESS_TRANSLATION_PARAMETERS           0x00000018
 /**
  * @brief Deterministic Address Translation Parameters Main Leaf (EAX = 18H, ECX = 0)
  *
@@ -5251,6 +5280,8 @@ typedef struct
  * When CPUID executes with EAX set to 80000000H, the processor returns the highest value the processor recognizes for
  * returning extended processor information. The value is returned in the EAX register and is processor specific.
  */
+#define CPUID_EXTENDED_FUNCTION_INFORMATION                          0x80000000
+
 typedef struct
 {
   union
@@ -5324,8 +5355,10 @@ typedef struct
 } CPUID_EAX_80000000;
 
 /**
- * @brief Extended Function CPUID Information
+ * Extended Function CPUID Information.
  */
+#define CPUID_EXTENDED_CPU_SIGNATURE                                 0x80000001
+
 typedef struct
 {
   union
@@ -5462,8 +5495,20 @@ typedef struct
 } CPUID_EAX_80000001;
 
 /**
- * @brief Extended Function CPUID Information
+ * Extended Function CPUID Information.
  */
+#define CPUID_BRAND_STRING1                                          0x80000002
+
+/**
+ * Extended Function CPUID Information.
+ */
+#define CPUID_BRAND_STRING2                                          0x80000003
+
+/**
+ * Extended Function CPUID Information.
+ */
+#define CPUID_BRAND_STRING3                                          0x80000004
+
 typedef struct
 {
   union
@@ -5762,8 +5807,10 @@ typedef struct
 } CPUID_EAX_80000005;
 
 /**
- * @brief Extended Function CPUID Information
+ * Extended Function CPUID Information.
  */
+#define CPUID_EXTENDED_CACHE_INFO                                    0x80000006
+
 typedef struct
 {
   union
@@ -5864,8 +5911,10 @@ typedef struct
 } CPUID_EAX_80000006;
 
 /**
- * @brief Extended Function CPUID Information
+ * Extended Function CPUID Information.
  */
+#define CPUID_EXTENDED_TIME_STAMP_COUNTER                            0x80000007
+
 typedef struct
 {
   union

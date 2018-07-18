@@ -1,8 +1,12 @@
-- short_name: EAX_09
-  long_name: EAX_09
+- value: 0x09
+  short_name: DIRECT_CACHE_ACCESS_INFO
+  long_name: DIRECT_CACHE_ACCESS_INFORMATION
   short_description: Direct Cache Access Information Leaf
   long_description: |
     When CPUID executes with EAX set to 09H, the processor returns information about Direct Cache Access capabilities.
+
+- short_name: EAX_09
+  long_name: EAX_09
   todo: Long names
   type: struct
   fields:

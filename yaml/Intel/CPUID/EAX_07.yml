@@ -1,5 +1,5 @@
-- short_name: EAX_07
-  long_name: EAX_07
+- value: 0x07
+  name: STRUCTURED_EXTENDED_FEATURE_FLAGS
   short_description: Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
   long_description: |
     When CPUID executes with EAX set to 07H and ECX = 0, the processor returns information about the maximum
@@ -8,6 +8,9 @@
     When CPUID executes with EAX set to 07H and the input value of ECX is invalid (see leaf 07H entry in Table 3-8),
     the processor returns 0 in EAX/EBX/ECX/EDX. In subleaf 0, EAX returns the maximum input value of the highest
     leaf 7 sub-leaf, and EBX, ECX & EDX contain information of extended feature flags.
+
+- short_name: EAX_07
+  long_name: EAX_07
   todo: Long names
   type: struct
   fields:

@@ -1,5 +1,6 @@
-- short_name: EAX_15
-  long_name: EAX_15
+- value: 0x15
+  short_name: TIME_STAMP_COUNTER
+  long_name: TIME_STAMP_COUNTER_INFORMATION
   short_description: Stamp Counter and Nominal Core Crystal Clock Information Leaf
   long_description: |
     When CPUID executes with EAX set to 15H and ECX = 0H, the processor returns information about Time Stamp
@@ -10,6 +11,9 @@
 
     If ECX is 0, the nominal core crystal clock frequency is not enumerated.
     “TSC frequency” = “core crystal clock frequency” * EBX/EAX.
+
+- short_name: EAX_15
+  long_name: EAX_15
   type: struct
   fields:
   - name: EAX

@@ -1,6 +1,9 @@
+- value: 0x80000001
+  name: EXTENDED_CPU_SIGNATURE
+  description: Extended Function CPUID Information.
+
 - short_name: EAX_80000001
   long_name: EAX_80000001
-  description: Extended Function CPUID Information.
   type: struct
   fields:
   - name: EAX

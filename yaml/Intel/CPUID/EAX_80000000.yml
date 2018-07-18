@@ -1,10 +1,14 @@
-- short_name: EAX_80000000
-  long_name: EAX_80000000
+- value: 0x80000000
+  short_name: EXTENDED_FUNCTION
+  long_name: EXTENDED_FUNCTION_INFORMATION
   short_description: Extended Function CPUID Information
   long_description: |
     When CPUID executes with EAX set to 80000000H, the processor returns the highest value the processor recognizes
     for returning extended processor information. The value is returned in the EAX register and is processor
     specific.
+
+- short_name: EAX_80000000
+  long_name: EAX_80000000
   type: struct
   fields:
   - name: EAX

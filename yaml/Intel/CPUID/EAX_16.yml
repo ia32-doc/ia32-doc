@@ -1,5 +1,6 @@
-- short_name: EAX_16
-  long_name: EAX_16
+- value: 0x16
+  short_name: PROCESSOR_FREQUENCY
+  long_name: PROCESSOR_FREQUENCY_INFORMATION
   short_description: Processor Frequency Information Leaf
   long_description: |
     When CPUID executes with EAX set to 16H, the processor returns information about Processor Frequency Information.
@@ -13,6 +14,9 @@
 
     While a processor may support the Processor Frequency Information leaf, fields that return a value of
     zero are not supported.
+
+- short_name: EAX_16
+  long_name: EAX_16
   type: struct
   fields:
   - name: EAX

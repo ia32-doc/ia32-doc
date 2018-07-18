@@ -1,6 +1,9 @@
+- value: 0x80000006
+  name: EXTENDED_CACHE_INFO
+  description: Extended Function CPUID Information.
+
 - short_name: EAX_80000006
   long_name: EAX_80000006
-  description: Extended Function CPUID Information.
   type: struct
   fields:
   - name: EAX

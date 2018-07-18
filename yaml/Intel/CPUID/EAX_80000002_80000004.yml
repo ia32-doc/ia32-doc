@@ -1,6 +1,17 @@
+- value: 0x80000002
+  name: BRAND_STRING1
+  description: Extended Function CPUID Information.
+
+- value: 0x80000003
+  name: BRAND_STRING2
+  description: Extended Function CPUID Information.
+
+- value: 0x80000004
+  name: BRAND_STRING3
+  description: Extended Function CPUID Information.
+
 - short_name: EAX_80000002
   long_name: EAX_80000002
-  description: Extended Function CPUID Information.
   type: struct
   fields:
   - name: EAX

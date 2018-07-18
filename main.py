@@ -7,8 +7,8 @@ from ia32doc.options import DocProcessorOptions
 ALL = False
 
 TEST = False
-TEST_CONFIG = 'conf/compact.yml'
-TEST_FILE = 'yaml/Intel/index.yml'
+TEST_CONFIG = 'conf/default.yml'
+TEST_FILE = 'yaml/Intel/CPUID/index.yml'
 
 
 def process(config, file):

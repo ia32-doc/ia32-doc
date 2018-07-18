@@ -9,6 +9,10 @@
     When CPUID executes with EAX set to 12H and ECX = n (n > 1), the processor returns information about Intel SGX
     Enclave Page Cache.
   type: group
+  fields:
+  - value: 0x12
+    name: INTEL_SGX
+
   include:
   - EAX_12_ECX_00
   - EAX_12_ECX_01

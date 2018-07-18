@@ -1,6 +1,9 @@
+- value: 0x80000007
+  name: EXTENDED_TIME_STAMP_COUNTER
+  description: Extended Function CPUID Information.
+
 - short_name: EAX_80000007
   long_name: EAX_80000007
-  description: Extended Function CPUID Information.
   type: struct
   fields:
   - name: EAX

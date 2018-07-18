@@ -1,5 +1,5 @@
-- short_name: EAX_0B
-  long_name: EAX_0B
+- value: 0x0B
+  name: EXTENDED_TOPOLOGY
   short_description: Extended Topology Enumeration Leaf
   long_description: |
     When CPUID executes with EAX set to 0BH, the processor returns information about extended topology enumeration
@@ -17,6 +17,9 @@
     For sub-leaves that return an invalid level-type of 0 in ECX[15:8]; EAX and EBX will return 0.
     If an input value n in ECX returns the invalid level-type of 0 in ECX[15:8], other input values with ECX > n
     also return 0 in ECX[15:8].
+
+- short_name: EAX_0B
+  long_name: EAX_0B
   type: struct
   fields:
   - name: EAX

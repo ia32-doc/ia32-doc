@@ -96,6 +96,7 @@ typedef union {
  *           CPUID
  * @{
  */
+#define CPUID_SIGNATURE                                              0x00000000
 typedef struct {
   uint32_t max_cpuid_input_value;
   uint32_t ebx_value_genu;
@@ -103,6 +104,7 @@ typedef struct {
   uint32_t edx_value_inei;
 } cpuid_eax_00;
 
+#define CPUID_VERSION_INFO                                           0x00000001
 typedef struct {
   union {
     struct {
@@ -204,6 +206,7 @@ typedef struct {
 
 } cpuid_eax_01;
 
+#define CPUID_CACHE_PARAMS                                           0x00000004
 typedef struct {
   union {
     struct {
@@ -249,6 +252,7 @@ typedef struct {
 
 } cpuid_eax_04;
 
+#define CPUID_MONITOR_MWAIT                                          0x00000005
 typedef struct {
   union {
     struct {
@@ -292,6 +296,7 @@ typedef struct {
 
 } cpuid_eax_05;
 
+#define CPUID_THERMAL_POWER_MANAGEMENT                               0x00000006
 typedef struct {
   union {
     struct {
@@ -349,6 +354,7 @@ typedef struct {
 
 } cpuid_eax_06;
 
+#define CPUID_STRUCTURED_EXTENDED_FEATURE_FLAGS                      0x00000007
 typedef struct {
   union {
     struct {
@@ -424,6 +430,7 @@ typedef struct {
 
 } cpuid_eax_07;
 
+#define CPUID_DIRECT_CACHE_ACCESS_INFO                               0x00000009
 typedef struct {
   union {
     struct {
@@ -459,6 +466,7 @@ typedef struct {
 
 } cpuid_eax_09;
 
+#define CPUID_ARCHITECTURAL_PERFORMANCE_MONITORING                   0x0000000A
 typedef struct {
   union {
     struct {
@@ -506,6 +514,7 @@ typedef struct {
 
 } cpuid_eax_0a;
 
+#define CPUID_EXTENDED_TOPOLOGY                                      0x0000000B
 typedef struct {
   union {
     struct {
@@ -547,6 +556,7 @@ typedef struct {
  *           EAX = 0x0D
  * @{
  */
+#define CPUID_EXTENDED_STATE                                         0x0000000D
 typedef struct {
   union {
     struct {
@@ -677,6 +687,7 @@ typedef struct {
  *           EAX = 0x0F
  * @{
  */
+#define CPUID_INTEL_RDT_MONITORING                                   0x0000000F
 typedef struct {
   union {
     struct {
@@ -759,6 +770,7 @@ typedef struct {
  *           EAX = 0x10
  * @{
  */
+#define CPUID_INTEL_RDT_ALLOCATION                                   0x00000010
 typedef struct {
   union {
     struct {
@@ -913,6 +925,7 @@ typedef struct {
  *           EAX = 0x12
  * @{
  */
+#define CPUID_INTEL_SGX                                              0x00000012
 typedef struct {
   union {
     struct {
@@ -1071,6 +1084,7 @@ typedef struct {
  *           EAX = 0x14
  * @{
  */
+#define CPUID_INTEL_PROCESSOR_TRACE                                  0x00000014
 typedef struct {
   union {
     struct {
@@ -1158,6 +1172,7 @@ typedef struct {
  * @}
  */
 
+#define CPUID_TIME_STAMP_COUNTER                                     0x00000015
 typedef struct {
   union {
     struct {
@@ -1193,6 +1208,7 @@ typedef struct {
 
 } cpuid_eax_15;
 
+#define CPUID_PROCESSOR_FREQUENCY                                    0x00000016
 typedef struct {
   union {
     struct {
@@ -1233,6 +1249,7 @@ typedef struct {
  *           EAX = 0x17
  * @{
  */
+#define CPUID_SOC_VENDOR                                             0x00000017
 typedef struct {
   union {
     struct {
@@ -1348,6 +1365,7 @@ typedef struct {
  *           EAX = 0x18
  * @{
  */
+#define CPUID_DETERMINISTIC_ADDRESS_TRANSLATION_PARAMETERS           0x00000018
 typedef struct {
   union {
     struct {
@@ -1444,6 +1462,7 @@ typedef struct {
  * @}
  */
 
+#define CPUID_EXTENDED_FUNCTION                                      0x80000000
 typedef struct {
   union {
     struct {
@@ -1479,6 +1498,7 @@ typedef struct {
 
 } cpuid_eax_80000000;
 
+#define CPUID_EXTENDED_CPU_SIGNATURE                                 0x80000001
 typedef struct {
   union {
     struct {
@@ -1526,6 +1546,9 @@ typedef struct {
 
 } cpuid_eax_80000001;
 
+#define CPUID_BRAND_STRING1                                          0x80000002
+#define CPUID_BRAND_STRING2                                          0x80000003
+#define CPUID_BRAND_STRING3                                          0x80000004
 typedef struct {
   union {
     struct {
@@ -1666,6 +1689,7 @@ typedef struct {
 
 } cpuid_eax_80000005;
 
+#define CPUID_EXTENDED_CACHE_INFO                                    0x80000006
 typedef struct {
   union {
     struct {
@@ -1704,6 +1728,7 @@ typedef struct {
 
 } cpuid_eax_80000006;
 
+#define CPUID_EXTENDED_TIME_STAMP_COUNTER                            0x80000007
 typedef struct {
   union {
     struct {

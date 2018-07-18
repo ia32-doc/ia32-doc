@@ -1,5 +1,6 @@
-- short_name: EAX_01
-  long_name: EAX_01
+- value: 0x01
+  short_name: VERSION_INFO
+  long_name: VERSION_INFORMATION
   short_description: Returns Model, Family, Stepping Information, Additional Information and Feature Information
   long_description: |
     Returns:
@@ -9,6 +10,9 @@
       * Additional Information in EBX
 
       * Feature Information in ECX and EDX
+
+- short_name: EAX_01
+  long_name: EAX_01
   type: struct
   fields:
   - name: EAX

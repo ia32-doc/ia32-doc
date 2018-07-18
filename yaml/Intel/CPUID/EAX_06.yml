@@ -1,9 +1,13 @@
-- short_name: EAX_06
-  long_name: EAX_06
+- value: 0x06
+  short_name: THERMAL_POWER_MANAGEMENT
+  long_name: THERMAL_AND_POWER_MANAGEMENT
   short_description: Thermal and Power Management Leaf
   long_description: |
     When CPUID executes with EAX set to 06H, the processor returns information about thermal and power management
     features.
+
+- short_name: EAX_06
+  long_name: EAX_06
   type: struct
   fields:
   - name: EAX

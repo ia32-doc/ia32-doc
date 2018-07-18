@@ -1,5 +1,6 @@
-- short_name: EAX_04
-  long_name: EAX_04
+- value: 0x04
+  short_name: CACHE_PARAMS
+  long_name: CACHE_PARAMETERS
   short_description: Deterministic Cache Parameters Leaf
   long_description: |
     When CPUID executes with EAX set to 04H and ECX contains an index value, the processor returns encoded data
@@ -19,8 +20,11 @@
     The CPUID leaf 04H also reports data that can be used to derive the topology of processor cores in a physical
     package. This information is constant for all valid index values. Software can query the raw data reported by
     executing CPUID with EAX=04H and ECX=0 and use it as part of the topology enumeration algorithm.
-  type: struct
   see: Vol3A[8(Multiple-Processor Management)]
+
+- short_name: EAX_04
+  long_name: EAX_04
+  type: struct
   fields:
   - name: EAX
     type: bitfield

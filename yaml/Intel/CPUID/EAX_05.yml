@@ -1,10 +1,13 @@
-- short_name: EAX_05
-  long_name: EAX_05
+- value: 0x05
+  name: MONITOR_MWAIT
   short_description: MONITOR/MWAIT Leaf
   long_description: |
     When CPUID executes with EAX set to 05H, the processor returns information about features available to
     MONITOR/MWAIT instructions. The MONITOR instruction is used for address-range monitoring in conjunction with
     MWAIT instruction. The MWAIT instruction optionally provides additional extensions for advanced power management.
+
+- short_name: EAX_05
+  long_name: EAX_05
   type: struct
   fields:
   - name: EAX
