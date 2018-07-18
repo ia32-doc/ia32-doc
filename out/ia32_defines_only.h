@@ -12,44 +12,80 @@
  * @{
  */
 #define CR0_PROTECTION_ENABLE_BIT                                    0
+#define CR0_PROTECTION_ENABLE_FLAG                                   0x01
 #define CR0_MONITOR_COPROCESSOR_BIT                                  1
+#define CR0_MONITOR_COPROCESSOR_FLAG                                 0x02
 #define CR0_EMULATE_FPU_BIT                                          2
+#define CR0_EMULATE_FPU_FLAG                                         0x04
 #define CR0_TASK_SWITCHED_BIT                                        3
+#define CR0_TASK_SWITCHED_FLAG                                       0x08
 #define CR0_EXTENSION_TYPE_BIT                                       4
+#define CR0_EXTENSION_TYPE_FLAG                                      0x10
 #define CR0_NUMERIC_ERROR_BIT                                        5
+#define CR0_NUMERIC_ERROR_FLAG                                       0x20
 #define CR0_WRITE_PROTECT_BIT                                        16
+#define CR0_WRITE_PROTECT_FLAG                                       0x10000
 #define CR0_ALIGNMENT_MASK_BIT                                       18
+#define CR0_ALIGNMENT_MASK_FLAG                                      0x40000
 #define CR0_NOT_WRITE_THROUGH_BIT                                    29
+#define CR0_NOT_WRITE_THROUGH_FLAG                                   0x20000000
 #define CR0_CACHE_DISABLE_BIT                                        30
+#define CR0_CACHE_DISABLE_FLAG                                       0x40000000
 #define CR0_PAGING_ENABLE_BIT                                        31
+#define CR0_PAGING_ENABLE_FLAG                                       0x80000000
 
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
+#define CR3_PAGE_LEVEL_WRITE_THROUGH_FLAG                            0x08
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
+#define CR3_PAGE_LEVEL_CACHE_DISABLE_FLAG                            0x10
 #define CR3_ADDRESS_OF_PAGE_DIRECTORY_BIT                            12
+#define CR3_ADDRESS_OF_PAGE_DIRECTORY_FLAG                           0xFFFFFFFFF000
 
 #define CR4_VIRTUAL_MODE_EXTENSIONS_BIT                              0
+#define CR4_VIRTUAL_MODE_EXTENSIONS_FLAG                             0x01
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_BIT                    1
+#define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_FLAG                   0x02
 #define CR4_TIMESTAMP_DISABLE_BIT                                    2
+#define CR4_TIMESTAMP_DISABLE_FLAG                                   0x04
 #define CR4_DEBUGGING_EXTENSIONS_BIT                                 3
+#define CR4_DEBUGGING_EXTENSIONS_FLAG                                0x08
 #define CR4_PAGE_SIZE_EXTENSIONS_BIT                                 4
+#define CR4_PAGE_SIZE_EXTENSIONS_FLAG                                0x10
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_BIT                           5
+#define CR4_PHYSICAL_ADDRESS_EXTENSION_FLAG                          0x20
 #define CR4_MACHINE_CHECK_ENABLE_BIT                                 6
+#define CR4_MACHINE_CHECK_ENABLE_FLAG                                0x40
 #define CR4_PAGE_GLOBAL_ENABLE_BIT                                   7
+#define CR4_PAGE_GLOBAL_ENABLE_FLAG                                  0x80
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_BIT                8
+#define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_FLAG               0x100
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_BIT                            9
+#define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_FLAG                           0x200
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_BIT                             10
+#define CR4_OS_XMM_EXCEPTION_SUPPORT_FLAG                            0x400
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_BIT                      11
+#define CR4_USERMODE_INSTRUCTION_PREVENTION_FLAG                     0x800
 #define CR4_VMX_ENABLE_BIT                                           13
+#define CR4_VMX_ENABLE_FLAG                                          0x2000
 #define CR4_SMX_ENABLE_BIT                                           14
+#define CR4_SMX_ENABLE_FLAG                                          0x4000
 #define CR4_FSGSBASE_ENABLE_BIT                                      16
+#define CR4_FSGSBASE_ENABLE_FLAG                                     0x10000
 #define CR4_PCID_ENABLE_BIT                                          17
+#define CR4_PCID_ENABLE_FLAG                                         0x20000
 #define CR4_OS_XSAVE_BIT                                             18
+#define CR4_OS_XSAVE_FLAG                                            0x40000
 #define CR4_SMEP_ENABLE_BIT                                          20
+#define CR4_SMEP_ENABLE_FLAG                                         0x100000
 #define CR4_SMAP_ENABLE_BIT                                          21
+#define CR4_SMAP_ENABLE_FLAG                                         0x200000
 #define CR4_PROTECTION_KEY_ENABLE_BIT                                22
+#define CR4_PROTECTION_KEY_ENABLE_FLAG                               0x400000
 
 #define CR8_TASK_PRIORITY_LEVEL_BIT                                  0
+#define CR8_TASK_PRIORITY_LEVEL_FLAG                                 0x0F
 #define CR8_RESERVED_BIT                                             4
+#define CR8_RESERVED_FLAG                                            0xFFFFFFFFFFFFFFF0
 
 /**
  * @}
@@ -426,22 +462,35 @@ typedef struct {
 #define IA32_TIME_STAMP_COUNTER                                      0x00000010
 #define IA32_PLATFORM_ID                                             0x00000017
 #define IA32_PLATFORM_ID_PLATFORM_ID_BIT                             50
+#define IA32_PLATFORM_ID_PLATFORM_ID_FLAG                            0x1C000000000000
 
 #define IA32_APIC_BASE                                               0x0000001B
 #define IA32_APIC_BASE_BSP_FLAG_BIT                                  8
+#define IA32_APIC_BASE_BSP_FLAG_FLAG                                 0x100
 #define IA32_APIC_BASE_ENABLE_X2APIC_MODE_BIT                        10
+#define IA32_APIC_BASE_ENABLE_X2APIC_MODE_FLAG                       0x400
 #define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_BIT                        11
+#define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_FLAG                       0x800
 #define IA32_APIC_BASE_APIC_BASE_BIT                                 12
+#define IA32_APIC_BASE_APIC_BASE_FLAG                                0xFFFFFFFFF000
 
 #define IA32_FEATURE_CONTROL                                         0x0000003A
 #define IA32_FEATURE_CONTROL_LOCK_BIT_BIT                            0
+#define IA32_FEATURE_CONTROL_LOCK_BIT_FLAG                           0x01
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_BIT               1
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_FLAG              0x02
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_BIT              2
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_FLAG             0x04
 #define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_BIT       8
+#define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_FLAG      0x7F00
 #define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_BIT                15
+#define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_FLAG               0x8000
 #define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_BIT           17
+#define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_FLAG          0x20000
 #define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_BIT                   18
+#define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_FLAG                  0x40000
 #define IA32_FEATURE_CONTROL_LMCE_ON_BIT                             20
+#define IA32_FEATURE_CONTROL_LMCE_ON_FLAG                            0x100000
 
 #define IA32_TSC_ADJUST                                              0x0000003B
 typedef struct {
@@ -470,8 +519,11 @@ typedef struct {
 
 #define IA32_SMM_MONITOR_CTL                                         0x0000009B
 #define IA32_SMM_MONITOR_CTL_VALID_BIT                               0
+#define IA32_SMM_MONITOR_CTL_VALID_FLAG                              0x01
 #define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_BIT            2
+#define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_FLAG           0x04
 #define IA32_SMM_MONITOR_CTL_MSEG_BASE_BIT                           12
+#define IA32_SMM_MONITOR_CTL_MSEG_BASE_FLAG                          0xFFFFF000
 
 typedef struct {
   uint32_t mseg_header_revision;
@@ -516,9 +568,13 @@ typedef struct {
 
 #define IA32_MTRRCAP                                                 0x000000FE
 #define IA32_MTRRCAP_VARIABLE_RANGE_REGISTERS_COUNT_BIT              0
+#define IA32_MTRRCAP_VARIABLE_RANGE_REGISTERS_COUNT_FLAG             0xFF
 #define IA32_MTRRCAP_FIXED_RANGE_REGISTERS_SUPPORTED_BIT             8
+#define IA32_MTRRCAP_FIXED_RANGE_REGISTERS_SUPPORTED_FLAG            0x100
 #define IA32_MTRRCAP_WRITE_COMBINING_BIT                             10
+#define IA32_MTRRCAP_WRITE_COMBINING_FLAG                            0x400
 #define IA32_MTRRCAP_SYSTEM_MANAGEMENT_RANGE_REGISTER_BIT            11
+#define IA32_MTRRCAP_SYSTEM_MANAGEMENT_RANGE_REGISTER_FLAG           0x800
 
 #define IA32_SYSENTER_CS                                             0x00000174
 typedef struct {
@@ -531,20 +587,33 @@ typedef struct {
 #define IA32_SYSENTER_EIP                                            0x00000176
 #define IA32_MCG_CAP                                                 0x00000179
 #define IA32_MCG_CAP_COUNT_BIT                                       0
+#define IA32_MCG_CAP_COUNT_FLAG                                      0xFF
 #define IA32_MCG_CAP_MCG_CTL_P_BIT                                   8
+#define IA32_MCG_CAP_MCG_CTL_P_FLAG                                  0x100
 #define IA32_MCG_CAP_MCG_EXT_P_BIT                                   9
+#define IA32_MCG_CAP_MCG_EXT_P_FLAG                                  0x200
 #define IA32_MCG_CAP_MCP_CMCI_P_BIT                                  10
+#define IA32_MCG_CAP_MCP_CMCI_P_FLAG                                 0x400
 #define IA32_MCG_CAP_MCG_TES_P_BIT                                   11
+#define IA32_MCG_CAP_MCG_TES_P_FLAG                                  0x800
 #define IA32_MCG_CAP_MCG_EXT_CNT_BIT                                 16
+#define IA32_MCG_CAP_MCG_EXT_CNT_FLAG                                0xFF0000
 #define IA32_MCG_CAP_MCG_SER_P_BIT                                   24
+#define IA32_MCG_CAP_MCG_SER_P_FLAG                                  0x1000000
 #define IA32_MCG_CAP_MCG_ELOG_P_BIT                                  26
+#define IA32_MCG_CAP_MCG_ELOG_P_FLAG                                 0x4000000
 #define IA32_MCG_CAP_MCG_LMCE_P_BIT                                  27
+#define IA32_MCG_CAP_MCG_LMCE_P_FLAG                                 0x8000000
 
 #define IA32_MCG_STATUS                                              0x0000017A
 #define IA32_MCG_STATUS_RIPV_BIT                                     0
+#define IA32_MCG_STATUS_RIPV_FLAG                                    0x01
 #define IA32_MCG_STATUS_EIPV_BIT                                     1
+#define IA32_MCG_STATUS_EIPV_FLAG                                    0x02
 #define IA32_MCG_STATUS_MCIP_BIT                                     2
+#define IA32_MCG_STATUS_MCIP_FLAG                                    0x04
 #define IA32_MCG_STATUS_LMCE_S_BIT                                   3
+#define IA32_MCG_STATUS_LMCE_S_FLAG                                  0x08
 
 #define IA32_MCG_CTL                                                 0x0000017B
 /**
@@ -557,16 +626,27 @@ typedef struct {
 #define IA32_PERFEVTSEL2                                             0x00000188
 #define IA32_PERFEVTSEL3                                             0x00000189
 #define IA32_PERFEVTSEL_EVENT_SELECT_BIT                             0
+#define IA32_PERFEVTSEL_EVENT_SELECT_FLAG                            0xFF
 #define IA32_PERFEVTSEL_U_MASK_BIT                                   8
+#define IA32_PERFEVTSEL_U_MASK_FLAG                                  0xFF00
 #define IA32_PERFEVTSEL_USR_BIT                                      16
+#define IA32_PERFEVTSEL_USR_FLAG                                     0x10000
 #define IA32_PERFEVTSEL_OS_BIT                                       17
+#define IA32_PERFEVTSEL_OS_FLAG                                      0x20000
 #define IA32_PERFEVTSEL_EDGE_BIT                                     18
+#define IA32_PERFEVTSEL_EDGE_FLAG                                    0x40000
 #define IA32_PERFEVTSEL_PC_BIT                                       19
+#define IA32_PERFEVTSEL_PC_FLAG                                      0x80000
 #define IA32_PERFEVTSEL_INTR_BIT                                     20
+#define IA32_PERFEVTSEL_INTR_FLAG                                    0x100000
 #define IA32_PERFEVTSEL_ANY_THREAD_BIT                               21
+#define IA32_PERFEVTSEL_ANY_THREAD_FLAG                              0x200000
 #define IA32_PERFEVTSEL_EN_BIT                                       22
+#define IA32_PERFEVTSEL_EN_FLAG                                      0x400000
 #define IA32_PERFEVTSEL_INV_BIT                                      23
+#define IA32_PERFEVTSEL_INV_FLAG                                     0x800000
 #define IA32_PERFEVTSEL_CMASK_BIT                                    24
+#define IA32_PERFEVTSEL_CMASK_FLAG                                   0xFF000000
 
 /**
  * @}
@@ -579,119 +659,209 @@ typedef struct {
 
 #define IA32_PERF_CTL                                                0x00000199
 #define IA32_PERF_CTL_TARGET_PERFORMANCE_STATE_VALUE_BIT             0
+#define IA32_PERF_CTL_TARGET_PERFORMANCE_STATE_VALUE_FLAG            0xFFFF
 #define IA32_PERF_CTL_IDA_ENGAGE_BIT                                 32
+#define IA32_PERF_CTL_IDA_ENGAGE_FLAG                                0x100000000
 
 #define IA32_CLOCK_MODULATION                                        0x0000019A
 #define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 0
+#define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_FLAG 0x01
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 1
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_FLAG 0x0E
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_BIT  4
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_FLAG 0x10
 
 #define IA32_THERM_INTERRUPT                                         0x0000019B
 #define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT   0
+#define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_FLAG  0x01
 #define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT    1
+#define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_FLAG   0x02
 #define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT            2
+#define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_FLAG           0x04
 #define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_BIT            3
+#define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_FLAG           0x08
 #define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_BIT 4
+#define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x10
 #define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT                    8
+#define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_FLAG                   0x7F00
 #define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT         15
+#define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_FLAG        0x8000
 #define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT                    16
+#define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_FLAG                   0x7F0000
 #define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT         23
+#define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_FLAG        0x800000
 #define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT     24
+#define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_FLAG    0x1000000
 
 #define IA32_THERM_STATUS                                            0x0000019C
 #define IA32_THERM_STATUS_THERMAL_STATUS_BIT                         0
+#define IA32_THERM_STATUS_THERMAL_STATUS_FLAG                        0x01
 #define IA32_THERM_STATUS_THERMAL_STATUS_LOG_BIT                     1
+#define IA32_THERM_STATUS_THERMAL_STATUS_LOG_FLAG                    0x02
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_BIT                  2
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_FLAG                 0x04
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_BIT                    3
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_FLAG                   0x08
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT            4
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_FLAG           0x10
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT        5
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_FLAG       0x20
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT              6
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_FLAG             0x40
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT                 7
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_FLAG                0x80
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT              8
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_FLAG             0x100
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT                 9
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_FLAG                0x200
 #define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_BIT                10
+#define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_FLAG               0x400
 #define IA32_THERM_STATUS_POWER_LIMITATION_LOG_BIT                   11
+#define IA32_THERM_STATUS_POWER_LIMITATION_LOG_FLAG                  0x800
 #define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_BIT                   12
+#define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_FLAG                  0x1000
 #define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_BIT                      13
+#define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_FLAG                     0x2000
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_BIT              14
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_FLAG             0x4000
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_BIT                 15
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_FLAG                0x8000
 #define IA32_THERM_STATUS_DIGITAL_READOUT_BIT                        16
+#define IA32_THERM_STATUS_DIGITAL_READOUT_FLAG                       0x7F0000
 #define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_BIT          27
+#define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_FLAG         0x78000000
 #define IA32_THERM_STATUS_READING_VALID_BIT                          31
+#define IA32_THERM_STATUS_READING_VALID_FLAG                         0x80000000
 
 #define IA32_MISC_ENABLE                                             0x000001A0
 #define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_BIT                     0
+#define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_FLAG                    0x01
 #define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_BIT 3
+#define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_FLAG 0x08
 #define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_BIT        7
+#define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_FLAG       0x80
 #define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_BIT        11
+#define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_FLAG       0x800
 #define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_BIT 12
+#define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_FLAG 0x1000
 #define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_BIT 16
+#define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_FLAG 0x10000
 #define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_BIT                      18
+#define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_FLAG                     0x40000
 #define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_BIT                      22
+#define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_FLAG                     0x400000
 #define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_BIT                    23
+#define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_FLAG                   0x800000
 #define IA32_MISC_ENABLE_XD_BIT_DISABLE_BIT                          34
+#define IA32_MISC_ENABLE_XD_BIT_DISABLE_FLAG                         0x400000000
 
 #define IA32_ENERGY_PERF_BIAS                                        0x000001B0
 #define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_BIT            0
+#define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_FLAG           0x0F
 
 #define IA32_PACKAGE_THERM_STATUS                                    0x000001B1
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_BIT                 0
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_FLAG                0x01
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_BIT             1
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_FLAG            0x02
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_BIT                  2
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_FLAG                 0x04
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_BIT                    3
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_FLAG                   0x08
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT    4
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_FLAG   0x10
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_FLAG 0x20
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT      6
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_FLAG     0x40
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT         7
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_FLAG        0x80
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT      8
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_FLAG     0x100
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT         9
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_FLAG        0x200
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_BIT        10
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_FLAG       0x400
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_BIT           11
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_FLAG          0x800
 #define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_BIT                16
+#define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_FLAG               0x7F0000
 
 #define IA32_PACKAGE_THERM_INTERRUPT                                 0x000001B2
 #define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
+#define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x01
 #define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
+#define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x02
 #define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT    2
+#define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_FLAG   0x04
 #define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_BIT   4
+#define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_FLAG  0x10
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT            8
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_FLAG           0x7F00
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_FLAG 0x8000
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT            16
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_FLAG           0x7F0000
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_FLAG 0x800000
 #define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
+#define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_FLAG 0x1000000
 
 #define IA32_DEBUGCTL                                                0x000001D9
 #define IA32_DEBUGCTL_LBR_BIT                                        0
+#define IA32_DEBUGCTL_LBR_FLAG                                       0x01
 #define IA32_DEBUGCTL_BTF_BIT                                        1
+#define IA32_DEBUGCTL_BTF_FLAG                                       0x02
 #define IA32_DEBUGCTL_TR_BIT                                         6
+#define IA32_DEBUGCTL_TR_FLAG                                        0x40
 #define IA32_DEBUGCTL_BTS_BIT                                        7
+#define IA32_DEBUGCTL_BTS_FLAG                                       0x80
 #define IA32_DEBUGCTL_BTINT_BIT                                      8
+#define IA32_DEBUGCTL_BTINT_FLAG                                     0x100
 #define IA32_DEBUGCTL_BTS_OFF_OS_BIT                                 9
+#define IA32_DEBUGCTL_BTS_OFF_OS_FLAG                                0x200
 #define IA32_DEBUGCTL_BTS_OFF_USR_BIT                                10
+#define IA32_DEBUGCTL_BTS_OFF_USR_FLAG                               0x400
 #define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_BIT                         11
+#define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_FLAG                        0x800
 #define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_BIT                      12
+#define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_FLAG                     0x1000
 #define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_BIT                          13
+#define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_FLAG                         0x2000
 #define IA32_DEBUGCTL_FREEZE_WHILE_SMM_BIT                           14
+#define IA32_DEBUGCTL_FREEZE_WHILE_SMM_FLAG                          0x4000
 #define IA32_DEBUGCTL_RTM_DEBUG_BIT                                  15
+#define IA32_DEBUGCTL_RTM_DEBUG_FLAG                                 0x8000
 
 #define IA32_SMRR_PHYSBASE                                           0x000001F2
 #define IA32_SMRR_PHYSBASE_TYPE_BIT                                  0
+#define IA32_SMRR_PHYSBASE_TYPE_FLAG                                 0xFF
 #define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_BIT            12
+#define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_FLAG           0xFFFFF000
 
 #define IA32_SMRR_PHYSMASK                                           0x000001F3
 #define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_BIT                     11
+#define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_FLAG                    0x800
 #define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_BIT               12
+#define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_FLAG              0xFFFFF000
 
 #define IA32_PLATFORM_DCA_CAP                                        0x000001F8
 #define IA32_CPU_DCA_CAP                                             0x000001F9
 #define IA32_DCA_0_CAP                                               0x000001FA
 #define IA32_DCA_0_CAP_DCA_ACTIVE_BIT                                0
+#define IA32_DCA_0_CAP_DCA_ACTIVE_FLAG                               0x01
 #define IA32_DCA_0_CAP_TRANSACTION_BIT                               1
+#define IA32_DCA_0_CAP_TRANSACTION_FLAG                              0x06
 #define IA32_DCA_0_CAP_DCA_TYPE_BIT                                  3
+#define IA32_DCA_0_CAP_DCA_TYPE_FLAG                                 0x78
 #define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_BIT                            7
+#define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_FLAG                           0x780
 #define IA32_DCA_0_CAP_DCA_DELAY_BIT                                 13
+#define IA32_DCA_0_CAP_DCA_DELAY_FLAG                                0x1E000
 #define IA32_DCA_0_CAP_SW_BLOCK_BIT                                  24
+#define IA32_DCA_0_CAP_SW_BLOCK_FLAG                                 0x1000000
 #define IA32_DCA_0_CAP_HW_BLOCK_BIT                                  26
+#define IA32_DCA_0_CAP_HW_BLOCK_FLAG                                 0x4000000
 
 /**
  * @defgroup ia32_mtrr_physbase \
@@ -789,13 +959,21 @@ typedef struct {
 
 #define IA32_PAT                                                     0x00000277
 #define IA32_PAT_PA0_BIT                                             0
+#define IA32_PAT_PA0_FLAG                                            0x07
 #define IA32_PAT_PA1_BIT                                             8
+#define IA32_PAT_PA1_FLAG                                            0x700
 #define IA32_PAT_PA2_BIT                                             16
+#define IA32_PAT_PA2_FLAG                                            0x70000
 #define IA32_PAT_PA3_BIT                                             24
+#define IA32_PAT_PA3_FLAG                                            0x7000000
 #define IA32_PAT_PA4_BIT                                             32
+#define IA32_PAT_PA4_FLAG                                            0x700000000
 #define IA32_PAT_PA5_BIT                                             40
+#define IA32_PAT_PA5_FLAG                                            0x70000000000
 #define IA32_PAT_PA6_BIT                                             48
+#define IA32_PAT_PA6_FLAG                                            0x7000000000000
 #define IA32_PAT_PA7_BIT                                             56
+#define IA32_PAT_PA7_FLAG                                            0x700000000000000
 
 /**
  * @defgroup ia32_mc_ctl2 \
@@ -835,7 +1013,9 @@ typedef struct {
 #define IA32_MC30_CTL2                                               0x0000029E
 #define IA32_MC31_CTL2                                               0x0000029F
 #define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_BIT             0
+#define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_FLAG            0x7FFF
 #define IA32_MC_CTL2_CMCI_EN_BIT                                     30
+#define IA32_MC_CTL2_CMCI_EN_FLAG                                    0x40000000
 
 /**
  * @}
@@ -843,8 +1023,11 @@ typedef struct {
 
 #define IA32_MTRR_DEF_TYPE                                           0x000002FF
 #define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_BIT                   0
+#define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_FLAG                  0x07
 #define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_BIT               10
+#define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_FLAG              0x400
 #define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_BIT                           11
+#define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_FLAG                          0x800
 
 /**
  * @defgroup ia32_fixed_ctr \
@@ -860,41 +1043,73 @@ typedef struct {
 
 #define IA32_PERF_CAPABILITIES                                       0x00000345
 #define IA32_PERF_CAPABILITIES_LBR_FORMAT_BIT                        0
+#define IA32_PERF_CAPABILITIES_LBR_FORMAT_FLAG                       0x3F
 #define IA32_PERF_CAPABILITIES_PEBS_TRAP_BIT                         6
+#define IA32_PERF_CAPABILITIES_PEBS_TRAP_FLAG                        0x40
 #define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_BIT               7
+#define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_FLAG              0x80
 #define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_BIT                8
+#define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_FLAG               0xF00
 #define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_BIT     12
+#define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_FLAG    0x1000
 #define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_BIT          13
+#define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_FLAG         0x2000
 
 #define IA32_FIXED_CTR_CTRL                                          0x0000038D
 #define IA32_FIXED_CTR_CTRL_EN0_OS_BIT                               0
+#define IA32_FIXED_CTR_CTRL_EN0_OS_FLAG                              0x01
 #define IA32_FIXED_CTR_CTRL_EN0_USR_BIT                              1
+#define IA32_FIXED_CTR_CTRL_EN0_USR_FLAG                             0x02
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD0_BIT                          2
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD0_FLAG                         0x04
 #define IA32_FIXED_CTR_CTRL_EN0_PMI_BIT                              3
+#define IA32_FIXED_CTR_CTRL_EN0_PMI_FLAG                             0x08
 #define IA32_FIXED_CTR_CTRL_EN1_OS_BIT                               4
+#define IA32_FIXED_CTR_CTRL_EN1_OS_FLAG                              0x10
 #define IA32_FIXED_CTR_CTRL_EN1_USR_BIT                              5
+#define IA32_FIXED_CTR_CTRL_EN1_USR_FLAG                             0x20
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD1_BIT                          6
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD1_FLAG                         0x40
 #define IA32_FIXED_CTR_CTRL_EN1_PMI_BIT                              7
+#define IA32_FIXED_CTR_CTRL_EN1_PMI_FLAG                             0x80
 #define IA32_FIXED_CTR_CTRL_EN2_OS_BIT                               8
+#define IA32_FIXED_CTR_CTRL_EN2_OS_FLAG                              0x100
 #define IA32_FIXED_CTR_CTRL_EN2_USR_BIT                              9
+#define IA32_FIXED_CTR_CTRL_EN2_USR_FLAG                             0x200
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD2_BIT                          10
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD2_FLAG                         0x400
 #define IA32_FIXED_CTR_CTRL_EN2_PMI_BIT                              11
+#define IA32_FIXED_CTR_CTRL_EN2_PMI_FLAG                             0x800
 
 #define IA32_PERF_GLOBAL_STATUS                                      0x0000038E
 #define IA32_PERF_GLOBAL_STATUS_OVF_PMC0_BIT                         0
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC0_FLAG                        0x01
 #define IA32_PERF_GLOBAL_STATUS_OVF_PMC1_BIT                         1
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC1_FLAG                        0x02
 #define IA32_PERF_GLOBAL_STATUS_OVF_PMC2_BIT                         2
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC2_FLAG                        0x04
 #define IA32_PERF_GLOBAL_STATUS_OVF_PMC3_BIT                         3
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC3_FLAG                        0x08
 #define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR0_BIT                    32
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR0_FLAG                   0x100000000
 #define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR1_BIT                    33
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR1_FLAG                   0x200000000
 #define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR2_BIT                    34
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR2_FLAG                   0x400000000
 #define IA32_PERF_GLOBAL_STATUS_TRACE_TOPA_PMI_BIT                   55
+#define IA32_PERF_GLOBAL_STATUS_TRACE_TOPA_PMI_FLAG                  0x80000000000000
 #define IA32_PERF_GLOBAL_STATUS_LBR_FRZ_BIT                          58
+#define IA32_PERF_GLOBAL_STATUS_LBR_FRZ_FLAG                         0x400000000000000
 #define IA32_PERF_GLOBAL_STATUS_CTR_FRZ_BIT                          59
+#define IA32_PERF_GLOBAL_STATUS_CTR_FRZ_FLAG                         0x800000000000000
 #define IA32_PERF_GLOBAL_STATUS_ASCI_BIT                             60
+#define IA32_PERF_GLOBAL_STATUS_ASCI_FLAG                            0x1000000000000000
 #define IA32_PERF_GLOBAL_STATUS_OVF_UNCORE_BIT                       61
+#define IA32_PERF_GLOBAL_STATUS_OVF_UNCORE_FLAG                      0x2000000000000000
 #define IA32_PERF_GLOBAL_STATUS_OVF_BUF_BIT                          62
+#define IA32_PERF_GLOBAL_STATUS_OVF_BUF_FLAG                         0x4000000000000000
 #define IA32_PERF_GLOBAL_STATUS_COND_CHGD_BIT                        63
+#define IA32_PERF_GLOBAL_STATUS_COND_CHGD_FLAG                       0x8000000000000000
 
 #define IA32_PERF_GLOBAL_CTRL                                        0x0000038F
 typedef struct {
@@ -904,34 +1119,57 @@ typedef struct {
 
 #define IA32_PERF_GLOBAL_STATUS_RESET                                0x00000390
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_PMCN_BIT             0
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_PMCN_FLAG            0xFFFFFFFF
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_FIXED_CTRN_BIT       32
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_FIXED_CTRN_FLAG      0x700000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_TRACE_TOPA_PMI_BIT       55
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_TRACE_TOPA_PMI_FLAG      0x80000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_LBR_FRZ_BIT              58
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_LBR_FRZ_FLAG             0x400000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_CTR_FRZ_BIT              59
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_CTR_FRZ_FLAG             0x800000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_ASCI_BIT                 60
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_ASCI_FLAG                0x1000000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_UNCORE_BIT           61
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_UNCORE_FLAG          0x2000000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_BUF_BIT              62
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_BUF_FLAG             0x4000000000000000
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD_BIT            63
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD_FLAG           0x8000000000000000
 
 #define IA32_PERF_GLOBAL_STATUS_SET                                  0x00000391
 #define IA32_PERF_GLOBAL_STATUS_SET_OVF_PMCN_BIT                     0
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_PMCN_FLAG                    0xFFFFFFFF
 #define IA32_PERF_GLOBAL_STATUS_SET_OVF_FIXED_CTRN_BIT               32
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_FIXED_CTRN_FLAG              0x700000000
 #define IA32_PERF_GLOBAL_STATUS_SET_TRACE_TOPA_PMI_BIT               55
+#define IA32_PERF_GLOBAL_STATUS_SET_TRACE_TOPA_PMI_FLAG              0x80000000000000
 #define IA32_PERF_GLOBAL_STATUS_SET_LBR_FRZ_BIT                      58
+#define IA32_PERF_GLOBAL_STATUS_SET_LBR_FRZ_FLAG                     0x400000000000000
 #define IA32_PERF_GLOBAL_STATUS_SET_CTR_FRZ_BIT                      59
+#define IA32_PERF_GLOBAL_STATUS_SET_CTR_FRZ_FLAG                     0x800000000000000
 #define IA32_PERF_GLOBAL_STATUS_SET_ASCI_BIT                         60
+#define IA32_PERF_GLOBAL_STATUS_SET_ASCI_FLAG                        0x1000000000000000
 #define IA32_PERF_GLOBAL_STATUS_SET_OVF_UNCORE_BIT                   61
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_UNCORE_FLAG                  0x2000000000000000
 #define IA32_PERF_GLOBAL_STATUS_SET_OVF_BUF_BIT                      62
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_BUF_FLAG                     0x4000000000000000
 
 #define IA32_PERF_GLOBAL_INUSE                                       0x00000392
 #define IA32_PERF_GLOBAL_INUSE_IA32_PERFEVTSELN_IN_USE_BIT           0
+#define IA32_PERF_GLOBAL_INUSE_IA32_PERFEVTSELN_IN_USE_FLAG          0xFFFFFFFF
 #define IA32_PERF_GLOBAL_INUSE_IA32_FIXED_CTRN_IN_USE_BIT            32
+#define IA32_PERF_GLOBAL_INUSE_IA32_FIXED_CTRN_IN_USE_FLAG           0x700000000
 #define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE_BIT                        63
+#define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE_FLAG                       0x8000000000000000
 
 #define IA32_PEBS_ENABLE                                             0x000003F1
 #define IA32_PEBS_ENABLE_ENABLE_PEBS_BIT                             0
+#define IA32_PEBS_ENABLE_ENABLE_PEBS_FLAG                            0x01
 #define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC1_BIT                1
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC1_FLAG               0x0E
 #define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC2_BIT                32
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC2_FLAG               0xF00000000
 
 /**
  * @defgroup ia32_mc_ctl \
@@ -1087,80 +1325,145 @@ typedef struct {
 
 #define IA32_VMX_BASIC                                               0x00000480
 #define IA32_VMX_BASIC_VMCS_REVISION_ID_BIT                          0
+#define IA32_VMX_BASIC_VMCS_REVISION_ID_FLAG                         0x7FFFFFFF
 #define IA32_VMX_BASIC_MUST_BE_ZERO_BIT                              31
+#define IA32_VMX_BASIC_MUST_BE_ZERO_FLAG                             0x80000000
 #define IA32_VMX_BASIC_VMCS_SIZE_IN_BYTES_BIT                        32
+#define IA32_VMX_BASIC_VMCS_SIZE_IN_BYTES_FLAG                       0x1FFF00000000
 #define IA32_VMX_BASIC_VMCS_PHYSICAL_ADDRESS_WIDTH_BIT               48
+#define IA32_VMX_BASIC_VMCS_PHYSICAL_ADDRESS_WIDTH_FLAG              0x1000000000000
 #define IA32_VMX_BASIC_DUAL_MONITOR_BIT                              49
+#define IA32_VMX_BASIC_DUAL_MONITOR_FLAG                             0x2000000000000
 #define IA32_VMX_BASIC_MEMORY_TYPE_BIT                               50
+#define IA32_VMX_BASIC_MEMORY_TYPE_FLAG                              0x3C000000000000
 #define IA32_VMX_BASIC_INS_OUTS_VMEXIT_INFORMATION_BIT               54
+#define IA32_VMX_BASIC_INS_OUTS_VMEXIT_INFORMATION_FLAG              0x40000000000000
 #define IA32_VMX_BASIC_TRUE_CONTROLS_BIT                             55
+#define IA32_VMX_BASIC_TRUE_CONTROLS_FLAG                            0x80000000000000
 
 #define IA32_VMX_PINBASED_CTLS                                       0x00000481
 #define IA32_VMX_PINBASED_CTLS_EXTERNAL_INTERRUPT_EXITING_BIT        0
+#define IA32_VMX_PINBASED_CTLS_EXTERNAL_INTERRUPT_EXITING_FLAG       0x01
 #define IA32_VMX_PINBASED_CTLS_NMI_EXITING_BIT                       3
+#define IA32_VMX_PINBASED_CTLS_NMI_EXITING_FLAG                      0x08
 #define IA32_VMX_PINBASED_CTLS_VIRTUAL_NMIS_BIT                      5
+#define IA32_VMX_PINBASED_CTLS_VIRTUAL_NMIS_FLAG                     0x20
 #define IA32_VMX_PINBASED_CTLS_ACTIVATE_VMX_PREEMPTION_TIMER_BIT     6
+#define IA32_VMX_PINBASED_CTLS_ACTIVATE_VMX_PREEMPTION_TIMER_FLAG    0x40
 #define IA32_VMX_PINBASED_CTLS_PROCESS_POSTED_INTERRUPTS_BIT         7
+#define IA32_VMX_PINBASED_CTLS_PROCESS_POSTED_INTERRUPTS_FLAG        0x80
 
 #define IA32_VMX_PROCBASED_CTLS                                      0x00000482
 #define IA32_VMX_PROCBASED_CTLS_INTERRUPT_WINDOW_EXITING_BIT         2
+#define IA32_VMX_PROCBASED_CTLS_INTERRUPT_WINDOW_EXITING_FLAG        0x04
 #define IA32_VMX_PROCBASED_CTLS_USE_TSC_OFFSETTING_BIT               3
+#define IA32_VMX_PROCBASED_CTLS_USE_TSC_OFFSETTING_FLAG              0x08
 #define IA32_VMX_PROCBASED_CTLS_HLT_EXITING_BIT                      7
+#define IA32_VMX_PROCBASED_CTLS_HLT_EXITING_FLAG                     0x80
 #define IA32_VMX_PROCBASED_CTLS_INVLPG_EXITING_BIT                   9
+#define IA32_VMX_PROCBASED_CTLS_INVLPG_EXITING_FLAG                  0x200
 #define IA32_VMX_PROCBASED_CTLS_MWAIT_EXITING_BIT                    10
+#define IA32_VMX_PROCBASED_CTLS_MWAIT_EXITING_FLAG                   0x400
 #define IA32_VMX_PROCBASED_CTLS_RDPMC_EXITING_BIT                    11
+#define IA32_VMX_PROCBASED_CTLS_RDPMC_EXITING_FLAG                   0x800
 #define IA32_VMX_PROCBASED_CTLS_RDTSC_EXITING_BIT                    12
+#define IA32_VMX_PROCBASED_CTLS_RDTSC_EXITING_FLAG                   0x1000
 #define IA32_VMX_PROCBASED_CTLS_CR3_LOAD_EXITING_BIT                 15
+#define IA32_VMX_PROCBASED_CTLS_CR3_LOAD_EXITING_FLAG                0x8000
 #define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_BIT                16
+#define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_FLAG               0x10000
 #define IA32_VMX_PROCBASED_CTLS_CR8_LOAD_EXITING_BIT                 19
+#define IA32_VMX_PROCBASED_CTLS_CR8_LOAD_EXITING_FLAG                0x80000
 #define IA32_VMX_PROCBASED_CTLS_CR8_STORE_EXITING_BIT                20
+#define IA32_VMX_PROCBASED_CTLS_CR8_STORE_EXITING_FLAG               0x100000
 #define IA32_VMX_PROCBASED_CTLS_USE_TPR_SHADOW_BIT                   21
+#define IA32_VMX_PROCBASED_CTLS_USE_TPR_SHADOW_FLAG                  0x200000
 #define IA32_VMX_PROCBASED_CTLS_NMI_WINDOW_EXITING_BIT               22
+#define IA32_VMX_PROCBASED_CTLS_NMI_WINDOW_EXITING_FLAG              0x400000
 #define IA32_VMX_PROCBASED_CTLS_MOV_DR_EXITING_BIT                   23
+#define IA32_VMX_PROCBASED_CTLS_MOV_DR_EXITING_FLAG                  0x800000
 #define IA32_VMX_PROCBASED_CTLS_UNCONDITIONAL_IO_EXITING_BIT         24
+#define IA32_VMX_PROCBASED_CTLS_UNCONDITIONAL_IO_EXITING_FLAG        0x1000000
 #define IA32_VMX_PROCBASED_CTLS_USE_IO_BITMAPS_BIT                   25
+#define IA32_VMX_PROCBASED_CTLS_USE_IO_BITMAPS_FLAG                  0x2000000
 #define IA32_VMX_PROCBASED_CTLS_MONITOR_TRAP_FLAG_BIT                27
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_TRAP_FLAG_FLAG               0x8000000
 #define IA32_VMX_PROCBASED_CTLS_USE_MSR_BITMAPS_BIT                  28
+#define IA32_VMX_PROCBASED_CTLS_USE_MSR_BITMAPS_FLAG                 0x10000000
 #define IA32_VMX_PROCBASED_CTLS_MONITOR_EXITING_BIT                  29
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_EXITING_FLAG                 0x20000000
 #define IA32_VMX_PROCBASED_CTLS_PAUSE_EXITING_BIT                    30
+#define IA32_VMX_PROCBASED_CTLS_PAUSE_EXITING_FLAG                   0x40000000
 #define IA32_VMX_PROCBASED_CTLS_ACTIVATE_SECONDARY_CONTROLS_BIT      31
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_SECONDARY_CONTROLS_FLAG     0x80000000
 
 #define IA32_VMX_EXIT_CTLS                                           0x00000483
 #define IA32_VMX_EXIT_CTLS_SAVE_DEBUG_CONTROLS_BIT                   2
+#define IA32_VMX_EXIT_CTLS_SAVE_DEBUG_CONTROLS_FLAG                  0x04
 #define IA32_VMX_EXIT_CTLS_HOST_ADDRESS_SPACE_SIZE_BIT               9
+#define IA32_VMX_EXIT_CTLS_HOST_ADDRESS_SPACE_SIZE_FLAG              0x200
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_BIT            12
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_FLAG           0x1000
 #define IA32_VMX_EXIT_CTLS_ACKNOWLEDGE_INTERRUPT_ON_EXIT_BIT         15
+#define IA32_VMX_EXIT_CTLS_ACKNOWLEDGE_INTERRUPT_ON_EXIT_FLAG        0x8000
 #define IA32_VMX_EXIT_CTLS_SAVE_IA32_PAT_BIT                         18
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PAT_FLAG                        0x40000
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PAT_BIT                         19
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PAT_FLAG                        0x80000
 #define IA32_VMX_EXIT_CTLS_SAVE_IA32_EFER_BIT                        20
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_EFER_FLAG                       0x100000
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_EFER_BIT                        21
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_EFER_FLAG                       0x200000
 #define IA32_VMX_EXIT_CTLS_SAVE_VMX_PREEMPTION_TIMER_VALUE_BIT       22
+#define IA32_VMX_EXIT_CTLS_SAVE_VMX_PREEMPTION_TIMER_VALUE_FLAG      0x400000
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS_BIT                    23
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS_FLAG                   0x800000
 #define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_BIT                   24
+#define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_FLAG                  0x1000000
 
 #define IA32_VMX_ENTRY_CTLS                                          0x00000484
 #define IA32_VMX_ENTRY_CTLS_LOAD_DEBUG_CONTROLS_BIT                  2
+#define IA32_VMX_ENTRY_CTLS_LOAD_DEBUG_CONTROLS_FLAG                 0x04
 #define IA32_VMX_ENTRY_CTLS_IA32E_MODE_GUEST_BIT                     9
+#define IA32_VMX_ENTRY_CTLS_IA32E_MODE_GUEST_FLAG                    0x200
 #define IA32_VMX_ENTRY_CTLS_ENTRY_TO_SMM_BIT                         10
+#define IA32_VMX_ENTRY_CTLS_ENTRY_TO_SMM_FLAG                        0x400
 #define IA32_VMX_ENTRY_CTLS_DEACTIVATE_DUAL_MONITOR_TREATMENT_BIT    11
+#define IA32_VMX_ENTRY_CTLS_DEACTIVATE_DUAL_MONITOR_TREATMENT_FLAG   0x800
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_BIT           13
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_FLAG          0x2000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PAT_BIT                        14
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PAT_FLAG                       0x4000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_EFER_BIT                       15
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_EFER_FLAG                      0x8000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_BNDCFGS_BIT                    16
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_BNDCFGS_FLAG                   0x10000
 #define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_BIT                  17
+#define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_FLAG                 0x20000
 
 #define IA32_VMX_MISC                                                0x00000485
 #define IA32_VMX_MISC_PREEMPTION_TIMER_TSC_RELATIONSHIP_BIT          0
+#define IA32_VMX_MISC_PREEMPTION_TIMER_TSC_RELATIONSHIP_FLAG         0x1F
 #define IA32_VMX_MISC_STORE_EFER_LMA_ON_VMEXIT_BIT                   5
+#define IA32_VMX_MISC_STORE_EFER_LMA_ON_VMEXIT_FLAG                  0x20
 #define IA32_VMX_MISC_ACTIVITY_STATES_BIT                            6
+#define IA32_VMX_MISC_ACTIVITY_STATES_FLAG                           0x1C0
 #define IA32_VMX_MISC_INTEL_PT_AVAILABLE_IN_VMX_BIT                  14
+#define IA32_VMX_MISC_INTEL_PT_AVAILABLE_IN_VMX_FLAG                 0x4000
 #define IA32_VMX_MISC_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_BIT      15
+#define IA32_VMX_MISC_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_FLAG     0x8000
 #define IA32_VMX_MISC_CR3_TARGET_COUNT_BIT                           16
+#define IA32_VMX_MISC_CR3_TARGET_COUNT_FLAG                          0x1FF0000
 #define IA32_VMX_MISC_MAX_NUMBER_OF_MSR_BIT                          25
+#define IA32_VMX_MISC_MAX_NUMBER_OF_MSR_FLAG                         0xE000000
 #define IA32_VMX_MISC_SMM_MONITOR_CTL_B2_BIT                         28
+#define IA32_VMX_MISC_SMM_MONITOR_CTL_B2_FLAG                        0x10000000
 #define IA32_VMX_MISC_VMWRITE_VMEXIT_INFO_BIT                        29
+#define IA32_VMX_MISC_VMWRITE_VMEXIT_INFO_FLAG                       0x20000000
 #define IA32_VMX_MISC_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_BIT  30
+#define IA32_VMX_MISC_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_FLAG 0x40000000
 #define IA32_VMX_MISC_MSEG_ID_BIT                                    32
+#define IA32_VMX_MISC_MSEG_ID_FLAG                                   0xFFFFFFFF00000000
 
 #define IA32_VMX_CR0_FIXED0                                          0x00000486
 #define IA32_VMX_CR0_FIXED1                                          0x00000487
@@ -1168,52 +1471,95 @@ typedef struct {
 #define IA32_VMX_CR4_FIXED1                                          0x00000489
 #define IA32_VMX_VMCS_ENUM                                           0x0000048A
 #define IA32_VMX_VMCS_ENUM_ACCESS_TYPE_BIT                           0
+#define IA32_VMX_VMCS_ENUM_ACCESS_TYPE_FLAG                          0x01
 #define IA32_VMX_VMCS_ENUM_HIGHEST_INDEX_VALUE_BIT                   1
+#define IA32_VMX_VMCS_ENUM_HIGHEST_INDEX_VALUE_FLAG                  0x3FE
 #define IA32_VMX_VMCS_ENUM_FIELD_TYPE_BIT                            10
+#define IA32_VMX_VMCS_ENUM_FIELD_TYPE_FLAG                           0xC00
 #define IA32_VMX_VMCS_ENUM_FIELD_WIDTH_BIT                           13
+#define IA32_VMX_VMCS_ENUM_FIELD_WIDTH_FLAG                          0x6000
 
 #define IA32_VMX_PROCBASED_CTLS2                                     0x0000048B
 #define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_APIC_ACCESSES_BIT        0
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_APIC_ACCESSES_FLAG       0x01
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_BIT                      1
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_FLAG                     0x02
 #define IA32_VMX_PROCBASED_CTLS2_DESCRIPTOR_TABLE_EXITING_BIT        2
+#define IA32_VMX_PROCBASED_CTLS2_DESCRIPTOR_TABLE_EXITING_FLAG       0x04
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_RDTSCP_BIT                   3
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_RDTSCP_FLAG                  0x08
 #define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_X2APIC_MODE_BIT          4
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_X2APIC_MODE_FLAG         0x10
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_VPID_BIT                     5
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VPID_FLAG                    0x20
 #define IA32_VMX_PROCBASED_CTLS2_WBINVD_EXITING_BIT                  6
+#define IA32_VMX_PROCBASED_CTLS2_WBINVD_EXITING_FLAG                 0x40
 #define IA32_VMX_PROCBASED_CTLS2_UNRESTRICTED_GUEST_BIT              7
+#define IA32_VMX_PROCBASED_CTLS2_UNRESTRICTED_GUEST_FLAG             0x80
 #define IA32_VMX_PROCBASED_CTLS2_APIC_REGISTER_VIRTUALIZATION_BIT    8
+#define IA32_VMX_PROCBASED_CTLS2_APIC_REGISTER_VIRTUALIZATION_FLAG   0x100
 #define IA32_VMX_PROCBASED_CTLS2_VIRTUAL_INTERRUPT_DELIVERY_BIT      9
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUAL_INTERRUPT_DELIVERY_FLAG     0x200
 #define IA32_VMX_PROCBASED_CTLS2_PAUSE_LOOP_EXITING_BIT              10
+#define IA32_VMX_PROCBASED_CTLS2_PAUSE_LOOP_EXITING_FLAG             0x400
 #define IA32_VMX_PROCBASED_CTLS2_RDRAND_EXITING_BIT                  11
+#define IA32_VMX_PROCBASED_CTLS2_RDRAND_EXITING_FLAG                 0x800
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_INVPCID_BIT                  12
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INVPCID_FLAG                 0x1000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_VM_FUNCTIONS_BIT             13
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VM_FUNCTIONS_FLAG            0x2000
 #define IA32_VMX_PROCBASED_CTLS2_VMCS_SHADOWING_BIT                  14
+#define IA32_VMX_PROCBASED_CTLS2_VMCS_SHADOWING_FLAG                 0x4000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLS_EXITING_BIT            15
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLS_EXITING_FLAG           0x8000
 #define IA32_VMX_PROCBASED_CTLS2_RDSEED_EXITING_BIT                  16
+#define IA32_VMX_PROCBASED_CTLS2_RDSEED_EXITING_FLAG                 0x10000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_PML_BIT                      17
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PML_FLAG                     0x20000
 #define IA32_VMX_PROCBASED_CTLS2_EPT_VIOLATION_BIT                   18
+#define IA32_VMX_PROCBASED_CTLS2_EPT_VIOLATION_FLAG                  0x40000
 #define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT_BIT             19
+#define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT_FLAG            0x80000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_BIT                   20
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_FLAG                  0x100000
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_BIT 22
+#define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_FLAG 0x400000
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_BIT                 25
+#define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_FLAG                0x2000000
 
 #define IA32_VMX_EPT_VPID_CAP                                        0x0000048C
 #define IA32_VMX_EPT_VPID_CAP_EXECUTE_ONLY_PAGES_BIT                 0
+#define IA32_VMX_EPT_VPID_CAP_EXECUTE_ONLY_PAGES_FLAG                0x01
 #define IA32_VMX_EPT_VPID_CAP_PAGE_WALK_LENGTH_4_BIT                 6
+#define IA32_VMX_EPT_VPID_CAP_PAGE_WALK_LENGTH_4_FLAG                0x40
 #define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_UNCACHEABLE_BIT            8
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_UNCACHEABLE_FLAG           0x100
 #define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_WRITE_BACK_BIT             14
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_WRITE_BACK_FLAG            0x4000
 #define IA32_VMX_EPT_VPID_CAP_PDE_2MB_PAGES_BIT                      16
+#define IA32_VMX_EPT_VPID_CAP_PDE_2MB_PAGES_FLAG                     0x10000
 #define IA32_VMX_EPT_VPID_CAP_PDPTE_1GB_PAGES_BIT                    17
+#define IA32_VMX_EPT_VPID_CAP_PDPTE_1GB_PAGES_FLAG                   0x20000
 #define IA32_VMX_EPT_VPID_CAP_INVEPT_BIT                             20
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_FLAG                            0x100000
 #define IA32_VMX_EPT_VPID_CAP_EPT_ACCESSED_AND_DIRTY_FLAGS_BIT       21
+#define IA32_VMX_EPT_VPID_CAP_EPT_ACCESSED_AND_DIRTY_FLAGS_FLAG      0x200000
 #define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_BIT 22
+#define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_FLAG 0x400000
 #define IA32_VMX_EPT_VPID_CAP_INVEPT_SINGLE_CONTEXT_BIT              25
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_SINGLE_CONTEXT_FLAG             0x2000000
 #define IA32_VMX_EPT_VPID_CAP_INVEPT_ALL_CONTEXTS_BIT                26
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_ALL_CONTEXTS_FLAG               0x4000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_BIT                            32
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_FLAG                           0x100000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_INDIVIDUAL_ADDRESS_BIT         40
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_INDIVIDUAL_ADDRESS_FLAG        0x10000000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_BIT             41
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_FLAG            0x20000000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_ALL_CONTEXTS_BIT               42
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_ALL_CONTEXTS_FLAG              0x40000000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_BIT 43
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_FLAG 0x80000000000
 
 /**
  * @defgroup ia32_vmx_true_ctls \
@@ -1235,6 +1581,7 @@ typedef struct {
 
 #define IA32_VMX_VMFUNC                                              0x00000491
 #define IA32_VMX_VMFUNC_EPTP_SWITCHING_BIT                           0
+#define IA32_VMX_VMFUNC_EPTP_SWITCHING_FLAG                          0x01
 
 /**
  * @defgroup ia32_a_pmc \
@@ -1255,55 +1602,93 @@ typedef struct {
 
 #define IA32_MCG_EXT_CTL                                             0x000004D0
 #define IA32_MCG_EXT_CTL_LMCE_EN_BIT                                 0
+#define IA32_MCG_EXT_CTL_LMCE_EN_FLAG                                0x01
 
 #define IA32_SGX_SVN_STATUS                                          0x00000500
 #define IA32_SGX_SVN_STATUS_LOCK_BIT                                 0
+#define IA32_SGX_SVN_STATUS_LOCK_FLAG                                0x01
 #define IA32_SGX_SVN_STATUS_SGX_SVN_SINIT_BIT                        16
+#define IA32_SGX_SVN_STATUS_SGX_SVN_SINIT_FLAG                       0xFF0000
 
 #define IA32_RTIT_OUTPUT_BASE                                        0x00000560
 #define IA32_RTIT_OUTPUT_BASE_BASE_PHYSICAL_ADDRESS_BIT              7
+#define IA32_RTIT_OUTPUT_BASE_BASE_PHYSICAL_ADDRESS_FLAG             0xFFFFFFFFFF80
 
 #define IA32_RTIT_OUTPUT_MASK_PTRS                                   0x00000561
 #define IA32_RTIT_OUTPUT_MASK_PTRS_LOWER_MASK_BIT                    0
+#define IA32_RTIT_OUTPUT_MASK_PTRS_LOWER_MASK_FLAG                   0x7F
 #define IA32_RTIT_OUTPUT_MASK_PTRS_MASK_OR_TABLE_OFFSET_BIT          7
+#define IA32_RTIT_OUTPUT_MASK_PTRS_MASK_OR_TABLE_OFFSET_FLAG         0xFFFFFF80
 #define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET_BIT                 32
+#define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET_FLAG                0xFFFFFFFF00000000
 
 #define IA32_RTIT_CTL                                                0x00000570
 #define IA32_RTIT_CTL_TRACE_EN_BIT                                   0
+#define IA32_RTIT_CTL_TRACE_EN_FLAG                                  0x01
 #define IA32_RTIT_CTL_CYC_EN_BIT                                     1
+#define IA32_RTIT_CTL_CYC_EN_FLAG                                    0x02
 #define IA32_RTIT_CTL_OS_BIT                                         2
+#define IA32_RTIT_CTL_OS_FLAG                                        0x04
 #define IA32_RTIT_CTL_USER_BIT                                       3
+#define IA32_RTIT_CTL_USER_FLAG                                      0x08
 #define IA32_RTIT_CTL_PWR_EVT_EN_BIT                                 4
+#define IA32_RTIT_CTL_PWR_EVT_EN_FLAG                                0x10
 #define IA32_RTIT_CTL_FUP_ON_PTW_BIT                                 5
+#define IA32_RTIT_CTL_FUP_ON_PTW_FLAG                                0x20
 #define IA32_RTIT_CTL_FABRIC_EN_BIT                                  6
+#define IA32_RTIT_CTL_FABRIC_EN_FLAG                                 0x40
 #define IA32_RTIT_CTL_CR3_FILTER_BIT                                 7
+#define IA32_RTIT_CTL_CR3_FILTER_FLAG                                0x80
 #define IA32_RTIT_CTL_TOPA_BIT                                       8
+#define IA32_RTIT_CTL_TOPA_FLAG                                      0x100
 #define IA32_RTIT_CTL_MTC_EN_BIT                                     9
+#define IA32_RTIT_CTL_MTC_EN_FLAG                                    0x200
 #define IA32_RTIT_CTL_TSC_EN_BIT                                     10
+#define IA32_RTIT_CTL_TSC_EN_FLAG                                    0x400
 #define IA32_RTIT_CTL_DIS_RETC_BIT                                   11
+#define IA32_RTIT_CTL_DIS_RETC_FLAG                                  0x800
 #define IA32_RTIT_CTL_PTW_EN_BIT                                     12
+#define IA32_RTIT_CTL_PTW_EN_FLAG                                    0x1000
 #define IA32_RTIT_CTL_BRANCH_EN_BIT                                  13
+#define IA32_RTIT_CTL_BRANCH_EN_FLAG                                 0x2000
 #define IA32_RTIT_CTL_MTC_FREQ_BIT                                   14
+#define IA32_RTIT_CTL_MTC_FREQ_FLAG                                  0x3C000
 #define IA32_RTIT_CTL_CYC_THRESH_BIT                                 19
+#define IA32_RTIT_CTL_CYC_THRESH_FLAG                                0x780000
 #define IA32_RTIT_CTL_PSB_FREQ_BIT                                   24
+#define IA32_RTIT_CTL_PSB_FREQ_FLAG                                  0xF000000
 #define IA32_RTIT_CTL_ADDR0_CFG_BIT                                  32
+#define IA32_RTIT_CTL_ADDR0_CFG_FLAG                                 0xF00000000
 #define IA32_RTIT_CTL_ADDR1_CFG_BIT                                  36
+#define IA32_RTIT_CTL_ADDR1_CFG_FLAG                                 0xF000000000
 #define IA32_RTIT_CTL_ADDR2_CFG_BIT                                  40
+#define IA32_RTIT_CTL_ADDR2_CFG_FLAG                                 0xF0000000000
 #define IA32_RTIT_CTL_ADDR3_CFG_BIT                                  44
+#define IA32_RTIT_CTL_ADDR3_CFG_FLAG                                 0xF00000000000
 #define IA32_RTIT_CTL_INJECT_PSB_PMI_ON_ENABLE_BIT                   56
+#define IA32_RTIT_CTL_INJECT_PSB_PMI_ON_ENABLE_FLAG                  0x100000000000000
 
 #define IA32_RTIT_STATUS                                             0x00000571
 #define IA32_RTIT_STATUS_FILTER_EN_BIT                               0
+#define IA32_RTIT_STATUS_FILTER_EN_FLAG                              0x01
 #define IA32_RTIT_STATUS_CONTEX_EN_BIT                               1
+#define IA32_RTIT_STATUS_CONTEX_EN_FLAG                              0x02
 #define IA32_RTIT_STATUS_TRIGGER_EN_BIT                              2
+#define IA32_RTIT_STATUS_TRIGGER_EN_FLAG                             0x04
 #define IA32_RTIT_STATUS_ERROR_BIT                                   4
+#define IA32_RTIT_STATUS_ERROR_FLAG                                  0x10
 #define IA32_RTIT_STATUS_STOPPED_BIT                                 5
+#define IA32_RTIT_STATUS_STOPPED_FLAG                                0x20
 #define IA32_RTIT_STATUS_PEND_PSB_BIT                                6
+#define IA32_RTIT_STATUS_PEND_PSB_FLAG                               0x40
 #define IA32_RTIT_STATUS_PEND_TOPA_PMI_BIT                           7
+#define IA32_RTIT_STATUS_PEND_TOPA_PMI_FLAG                          0x80
 #define IA32_RTIT_STATUS_PACKET_BYTE_CNT_BIT                         32
+#define IA32_RTIT_STATUS_PACKET_BYTE_CNT_FLAG                        0x1FFFF00000000
 
 #define IA32_RTIT_CR3_MATCH                                          0x00000572
 #define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH_BIT                   5
+#define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH_FLAG                  0xFFFFFFFFFFFFFFE0
 
 /**
  * @defgroup ia32_rtit_addr \
@@ -1337,7 +1722,9 @@ typedef struct {
  */
 
 #define IA32_RTIT_ADDR_VIRTUAL_ADDRESS_BIT                           0
+#define IA32_RTIT_ADDR_VIRTUAL_ADDRESS_FLAG                          0xFFFFFFFFFFFF
 #define IA32_RTIT_ADDR_SIGN_EXT_VA_BIT                               48
+#define IA32_RTIT_ADDR_SIGN_EXT_VA_FLAG                              0xFFFF000000000000
 
 /**
  * @}
@@ -1347,35 +1734,55 @@ typedef struct {
 #define IA32_TSC_DEADLINE                                            0x000006E0
 #define IA32_PM_ENABLE                                               0x00000770
 #define IA32_PM_ENABLE_HWP_ENABLE_BIT                                0
+#define IA32_PM_ENABLE_HWP_ENABLE_FLAG                               0x01
 
 #define IA32_HWP_CAPABILITIES                                        0x00000771
 #define IA32_HWP_CAPABILITIES_HIGHEST_PERFORMANCE_BIT                0
+#define IA32_HWP_CAPABILITIES_HIGHEST_PERFORMANCE_FLAG               0xFF
 #define IA32_HWP_CAPABILITIES_GUARANTEED_PERFORMANCE_BIT             8
+#define IA32_HWP_CAPABILITIES_GUARANTEED_PERFORMANCE_FLAG            0xFF00
 #define IA32_HWP_CAPABILITIES_MOST_EFFICIENT_PERFORMANCE_BIT         16
+#define IA32_HWP_CAPABILITIES_MOST_EFFICIENT_PERFORMANCE_FLAG        0xFF0000
 #define IA32_HWP_CAPABILITIES_LOWEST_PERFORMANCE_BIT                 24
+#define IA32_HWP_CAPABILITIES_LOWEST_PERFORMANCE_FLAG                0xFF000000
 
 #define IA32_HWP_REQUEST_PKG                                         0x00000772
 #define IA32_HWP_REQUEST_PKG_MINIMUM_PERFORMANCE_BIT                 0
+#define IA32_HWP_REQUEST_PKG_MINIMUM_PERFORMANCE_FLAG                0xFF
 #define IA32_HWP_REQUEST_PKG_MAXIMUM_PERFORMANCE_BIT                 8
+#define IA32_HWP_REQUEST_PKG_MAXIMUM_PERFORMANCE_FLAG                0xFF00
 #define IA32_HWP_REQUEST_PKG_DESIRED_PERFORMANCE_BIT                 16
+#define IA32_HWP_REQUEST_PKG_DESIRED_PERFORMANCE_FLAG                0xFF0000
 #define IA32_HWP_REQUEST_PKG_ENERGY_PERFORMANCE_PREFERENCE_BIT       24
+#define IA32_HWP_REQUEST_PKG_ENERGY_PERFORMANCE_PREFERENCE_FLAG      0xFF000000
 #define IA32_HWP_REQUEST_PKG_ACTIVITY_WINDOW_BIT                     32
+#define IA32_HWP_REQUEST_PKG_ACTIVITY_WINDOW_FLAG                    0x3FF00000000
 
 #define IA32_HWP_INTERRUPT                                           0x00000773
 #define IA32_HWP_INTERRUPT_EN_GUARANTEED_PERFORMANCE_CHANGE_BIT      0
+#define IA32_HWP_INTERRUPT_EN_GUARANTEED_PERFORMANCE_CHANGE_FLAG     0x01
 #define IA32_HWP_INTERRUPT_EN_EXCURSION_MINIMUM_BIT                  1
+#define IA32_HWP_INTERRUPT_EN_EXCURSION_MINIMUM_FLAG                 0x02
 
 #define IA32_HWP_REQUEST                                             0x00000774
 #define IA32_HWP_REQUEST_MINIMUM_PERFORMANCE_BIT                     0
+#define IA32_HWP_REQUEST_MINIMUM_PERFORMANCE_FLAG                    0xFF
 #define IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE_BIT                     8
+#define IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE_FLAG                    0xFF00
 #define IA32_HWP_REQUEST_DESIRED_PERFORMANCE_BIT                     16
+#define IA32_HWP_REQUEST_DESIRED_PERFORMANCE_FLAG                    0xFF0000
 #define IA32_HWP_REQUEST_ENERGY_PERFORMANCE_PREFERENCE_BIT           24
+#define IA32_HWP_REQUEST_ENERGY_PERFORMANCE_PREFERENCE_FLAG          0xFF000000
 #define IA32_HWP_REQUEST_ACTIVITY_WINDOW_BIT                         32
+#define IA32_HWP_REQUEST_ACTIVITY_WINDOW_FLAG                        0x3FF00000000
 #define IA32_HWP_REQUEST_PACKAGE_CONTROL_BIT                         42
+#define IA32_HWP_REQUEST_PACKAGE_CONTROL_FLAG                        0x40000000000
 
 #define IA32_HWP_STATUS                                              0x00000777
 #define IA32_HWP_STATUS_GUARANTEED_PERFORMANCE_CHANGE_BIT            0
+#define IA32_HWP_STATUS_GUARANTEED_PERFORMANCE_CHANGE_FLAG           0x01
 #define IA32_HWP_STATUS_EXCURSION_TO_MINIMUM_BIT                     2
+#define IA32_HWP_STATUS_EXCURSION_TO_MINIMUM_FLAG                    0x04
 
 #define IA32_X2APIC_APICID                                           0x00000802
 #define IA32_X2APIC_VERSION                                          0x00000803
@@ -1450,41 +1857,59 @@ typedef struct {
 #define IA32_X2APIC_SELF_IPI                                         0x0000083F
 #define IA32_DEBUG_INTERFACE                                         0x00000C80
 #define IA32_DEBUG_INTERFACE_ENABLE_BIT                              0
+#define IA32_DEBUG_INTERFACE_ENABLE_FLAG                             0x01
 #define IA32_DEBUG_INTERFACE_LOCK_BIT                                30
+#define IA32_DEBUG_INTERFACE_LOCK_FLAG                               0x40000000
 #define IA32_DEBUG_INTERFACE_DEBUG_OCCURRED_BIT                      31
+#define IA32_DEBUG_INTERFACE_DEBUG_OCCURRED_FLAG                     0x80000000
 
 #define IA32_L3_QOS_CFG                                              0x00000C81
 #define IA32_L3_QOS_CFG_ENABLE_BIT                                   0
+#define IA32_L3_QOS_CFG_ENABLE_FLAG                                  0x01
 
 #define IA32_L2_QOS_CFG                                              0x00000C82
 #define IA32_L2_QOS_CFG_ENABLE_BIT                                   0
+#define IA32_L2_QOS_CFG_ENABLE_FLAG                                  0x01
 
 #define IA32_QM_EVTSEL                                               0x00000C8D
 #define IA32_QM_EVTSEL_EVENT_ID_BIT                                  0
+#define IA32_QM_EVTSEL_EVENT_ID_FLAG                                 0xFF
 #define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID_BIT                    32
+#define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID_FLAG                   0xFFFFFFFF00000000
 
 #define IA32_QM_CTR                                                  0x00000C8E
 #define IA32_QM_CTR_RESOURCE_MONITORED_DATA_BIT                      0
+#define IA32_QM_CTR_RESOURCE_MONITORED_DATA_FLAG                     0x3FFFFFFFFFFFFFFF
 #define IA32_QM_CTR_UNAVAILABLE_BIT                                  62
+#define IA32_QM_CTR_UNAVAILABLE_FLAG                                 0x4000000000000000
 #define IA32_QM_CTR_ERROR_BIT                                        63
+#define IA32_QM_CTR_ERROR_FLAG                                       0x8000000000000000
 
 #define IA32_PQR_ASSOC                                               0x00000C8F
 #define IA32_PQR_ASSOC_RESOURCE_MONITORING_ID_BIT                    0
+#define IA32_PQR_ASSOC_RESOURCE_MONITORING_ID_FLAG                   0xFFFFFFFF
 #define IA32_PQR_ASSOC_COS_BIT                                       32
+#define IA32_PQR_ASSOC_COS_FLAG                                      0xFFFFFFFF00000000
 
 #define IA32_BNDCFGS                                                 0x00000D90
 #define IA32_BNDCFGS_ENABLE_BIT                                      0
+#define IA32_BNDCFGS_ENABLE_FLAG                                     0x01
 #define IA32_BNDCFGS_BND_PRESERVE_BIT                                1
+#define IA32_BNDCFGS_BND_PRESERVE_FLAG                               0x02
 #define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS_BIT                12
+#define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS_FLAG               0xFFFFFFFFFFFFF000
 
 #define IA32_XSS                                                     0x00000DA0
 #define IA32_XSS_TRACE_PACKET_CONFIGURATION_STATE_BIT                8
+#define IA32_XSS_TRACE_PACKET_CONFIGURATION_STATE_FLAG               0x100
 
 #define IA32_PKG_HDC_CTL                                             0x00000DB0
 #define IA32_PKG_HDC_CTL_HDC_PKG_ENABLE_BIT                          0
+#define IA32_PKG_HDC_CTL_HDC_PKG_ENABLE_FLAG                         0x01
 
 #define IA32_PM_CTL1                                                 0x00000DB1
 #define IA32_PM_CTL1_HDC_ALLOW_BLOCK_BIT                             0
+#define IA32_PM_CTL1_HDC_ALLOW_BLOCK_FLAG                            0x01
 
 #define IA32_THREAD_STALL                                            0x00000DB2
 typedef struct {
@@ -1493,9 +1918,13 @@ typedef struct {
 
 #define IA32_EFER                                                    0xC0000080
 #define IA32_EFER_SYSCALL_ENABLE_BIT                                 0
+#define IA32_EFER_SYSCALL_ENABLE_FLAG                                0x01
 #define IA32_EFER_IA32E_MODE_ENABLE_BIT                              8
+#define IA32_EFER_IA32E_MODE_ENABLE_FLAG                             0x100
 #define IA32_EFER_IA32E_MODE_ACTIVE_BIT                              10
+#define IA32_EFER_IA32E_MODE_ACTIVE_FLAG                             0x400
 #define IA32_EFER_EXECUTE_DISABLE_BIT_ENABLE_BIT                     11
+#define IA32_EFER_EXECUTE_DISABLE_BIT_ENABLE_FLAG                    0x800
 
 #define IA32_STAR                                                    0xC0000081
 #define IA32_LSTAR                                                   0xC0000082
@@ -1506,6 +1935,7 @@ typedef struct {
 #define IA32_KERNEL_GS_BASE                                          0xC0000102
 #define IA32_TSC_AUX                                                 0xC0000103
 #define IA32_TSC_AUX_TSC_AUXILIARY_SIGNATURE_BIT                     0
+#define IA32_TSC_AUX_TSC_AUXILIARY_SIGNATURE_FLAG                    0xFFFFFFFF
 
 /**
  * @}
@@ -1522,53 +1952,98 @@ typedef struct {
  * @{
  */
 #define PDE_4MB_32_PRESENT_BIT                                       0
+#define PDE_4MB_32_PRESENT_FLAG                                      0x01
 #define PDE_4MB_32_WRITE_BIT                                         1
+#define PDE_4MB_32_WRITE_FLAG                                        0x02
 #define PDE_4MB_32_SUPERVISOR_BIT                                    2
+#define PDE_4MB_32_SUPERVISOR_FLAG                                   0x04
 #define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH_BIT                      3
+#define PDE_4MB_32_PAGE_LEVEL_WRITE_THROUGH_FLAG                     0x08
 #define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE_BIT                      4
+#define PDE_4MB_32_PAGE_LEVEL_CACHE_DISABLE_FLAG                     0x10
 #define PDE_4MB_32_ACCESSED_BIT                                      5
+#define PDE_4MB_32_ACCESSED_FLAG                                     0x20
 #define PDE_4MB_32_DIRTY_BIT                                         6
+#define PDE_4MB_32_DIRTY_FLAG                                        0x40
 #define PDE_4MB_32_LARGE_PAGE_BIT                                    7
+#define PDE_4MB_32_LARGE_PAGE_FLAG                                   0x80
 #define PDE_4MB_32_GLOBAL_BIT                                        8
+#define PDE_4MB_32_GLOBAL_FLAG                                       0x100
 #define PDE_4MB_32_IGNORED_1_BIT                                     9
+#define PDE_4MB_32_IGNORED_1_FLAG                                    0xE00
 #define PDE_4MB_32_PAT_BIT                                           12
+#define PDE_4MB_32_PAT_FLAG                                          0x1000
 #define PDE_4MB_32_PAGE_FRAME_NUMBER_LOW_BIT                         13
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_LOW_FLAG                        0x1FE000
 #define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH_BIT                        22
+#define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH_FLAG                       0xFFC00000
 
 #define PDE_32_PRESENT_BIT                                           0
+#define PDE_32_PRESENT_FLAG                                          0x01
 #define PDE_32_WRITE_BIT                                             1
+#define PDE_32_WRITE_FLAG                                            0x02
 #define PDE_32_SUPERVISOR_BIT                                        2
+#define PDE_32_SUPERVISOR_FLAG                                       0x04
 #define PDE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PDE_32_PAGE_LEVEL_WRITE_THROUGH_FLAG                         0x08
 #define PDE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PDE_32_PAGE_LEVEL_CACHE_DISABLE_FLAG                         0x10
 #define PDE_32_ACCESSED_BIT                                          5
+#define PDE_32_ACCESSED_FLAG                                         0x20
 #define PDE_32_IGNORED_1_BIT                                         6
+#define PDE_32_IGNORED_1_FLAG                                        0x40
 #define PDE_32_LARGE_PAGE_BIT                                        7
+#define PDE_32_LARGE_PAGE_FLAG                                       0x80
 #define PDE_32_IGNORED_2_BIT                                         8
+#define PDE_32_IGNORED_2_FLAG                                        0xF00
 #define PDE_32_PAGE_FRAME_NUMBER_BIT                                 12
+#define PDE_32_PAGE_FRAME_NUMBER_FLAG                                0xFFFFF000
 
 #define PTE_32_PRESENT_BIT                                           0
+#define PTE_32_PRESENT_FLAG                                          0x01
 #define PTE_32_WRITE_BIT                                             1
+#define PTE_32_WRITE_FLAG                                            0x02
 #define PTE_32_SUPERVISOR_BIT                                        2
+#define PTE_32_SUPERVISOR_FLAG                                       0x04
 #define PTE_32_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PTE_32_PAGE_LEVEL_WRITE_THROUGH_FLAG                         0x08
 #define PTE_32_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PTE_32_PAGE_LEVEL_CACHE_DISABLE_FLAG                         0x10
 #define PTE_32_ACCESSED_BIT                                          5
+#define PTE_32_ACCESSED_FLAG                                         0x20
 #define PTE_32_DIRTY_BIT                                             6
+#define PTE_32_DIRTY_FLAG                                            0x40
 #define PTE_32_PAT_BIT                                               7
+#define PTE_32_PAT_FLAG                                              0x80
 #define PTE_32_GLOBAL_BIT                                            8
+#define PTE_32_GLOBAL_FLAG                                           0x100
 #define PTE_32_IGNORED_1_BIT                                         9
+#define PTE_32_IGNORED_1_FLAG                                        0xE00
 #define PTE_32_PAGE_FRAME_NUMBER_BIT                                 12
+#define PTE_32_PAGE_FRAME_NUMBER_FLAG                                0xFFFFF000
 
 #define PT_ENTRY_32_PRESENT_BIT                                      0
+#define PT_ENTRY_32_PRESENT_FLAG                                     0x01
 #define PT_ENTRY_32_WRITE_BIT                                        1
+#define PT_ENTRY_32_WRITE_FLAG                                       0x02
 #define PT_ENTRY_32_SUPERVISOR_BIT                                   2
+#define PT_ENTRY_32_SUPERVISOR_FLAG                                  0x04
 #define PT_ENTRY_32_PAGE_LEVEL_WRITE_THROUGH_BIT                     3
+#define PT_ENTRY_32_PAGE_LEVEL_WRITE_THROUGH_FLAG                    0x08
 #define PT_ENTRY_32_PAGE_LEVEL_CACHE_DISABLE_BIT                     4
+#define PT_ENTRY_32_PAGE_LEVEL_CACHE_DISABLE_FLAG                    0x10
 #define PT_ENTRY_32_ACCESSED_BIT                                     5
+#define PT_ENTRY_32_ACCESSED_FLAG                                    0x20
 #define PT_ENTRY_32_DIRTY_BIT                                        6
+#define PT_ENTRY_32_DIRTY_FLAG                                       0x40
 #define PT_ENTRY_32_LARGE_PAGE_BIT                                   7
+#define PT_ENTRY_32_LARGE_PAGE_FLAG                                  0x80
 #define PT_ENTRY_32_GLOBAL_BIT                                       8
+#define PT_ENTRY_32_GLOBAL_FLAG                                      0x100
 #define PT_ENTRY_32_IGNORED_1_BIT                                    9
+#define PT_ENTRY_32_IGNORED_1_FLAG                                   0xE00
 #define PT_ENTRY_32_PAGE_FRAME_NUMBER_BIT                            12
+#define PT_ENTRY_32_PAGE_FRAME_NUMBER_FLAG                           0xFFFFF000
 
 /**
  * @}
@@ -1580,102 +2055,193 @@ typedef struct {
  * @{
  */
 #define PML4E_64_PRESENT_BIT                                         0
+#define PML4E_64_PRESENT_FLAG                                        0x01
 #define PML4E_64_WRITE_BIT                                           1
+#define PML4E_64_WRITE_FLAG                                          0x02
 #define PML4E_64_SUPERVISOR_BIT                                      2
+#define PML4E_64_SUPERVISOR_FLAG                                     0x04
 #define PML4E_64_PAGE_LEVEL_WRITE_THROUGH_BIT                        3
+#define PML4E_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                       0x08
 #define PML4E_64_PAGE_LEVEL_CACHE_DISABLE_BIT                        4
+#define PML4E_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                       0x10
 #define PML4E_64_ACCESSED_BIT                                        5
+#define PML4E_64_ACCESSED_FLAG                                       0x20
 #define PML4E_64_MUST_BE_ZERO_BIT                                    7
+#define PML4E_64_MUST_BE_ZERO_FLAG                                   0x80
 #define PML4E_64_IGNORED_1_BIT                                       8
+#define PML4E_64_IGNORED_1_FLAG                                      0xF00
 #define PML4E_64_PAGE_FRAME_NUMBER_BIT                               12
+#define PML4E_64_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
 #define PML4E_64_IGNORED_2_BIT                                       52
+#define PML4E_64_IGNORED_2_FLAG                                      0x7FF0000000000000
 #define PML4E_64_EXECUTE_DISABLE_BIT                                 63
+#define PML4E_64_EXECUTE_DISABLE_FLAG                                0x8000000000000000
 
 #define PDPTE_1GB_64_PRESENT_BIT                                     0
+#define PDPTE_1GB_64_PRESENT_FLAG                                    0x01
 #define PDPTE_1GB_64_WRITE_BIT                                       1
+#define PDPTE_1GB_64_WRITE_FLAG                                      0x02
 #define PDPTE_1GB_64_SUPERVISOR_BIT                                  2
+#define PDPTE_1GB_64_SUPERVISOR_FLAG                                 0x04
 #define PDPTE_1GB_64_PAGE_LEVEL_WRITE_THROUGH_BIT                    3
+#define PDPTE_1GB_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                   0x08
 #define PDPTE_1GB_64_PAGE_LEVEL_CACHE_DISABLE_BIT                    4
+#define PDPTE_1GB_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                   0x10
 #define PDPTE_1GB_64_ACCESSED_BIT                                    5
+#define PDPTE_1GB_64_ACCESSED_FLAG                                   0x20
 #define PDPTE_1GB_64_DIRTY_BIT                                       6
+#define PDPTE_1GB_64_DIRTY_FLAG                                      0x40
 #define PDPTE_1GB_64_LARGE_PAGE_BIT                                  7
+#define PDPTE_1GB_64_LARGE_PAGE_FLAG                                 0x80
 #define PDPTE_1GB_64_GLOBAL_BIT                                      8
+#define PDPTE_1GB_64_GLOBAL_FLAG                                     0x100
 #define PDPTE_1GB_64_IGNORED_1_BIT                                   9
+#define PDPTE_1GB_64_IGNORED_1_FLAG                                  0xE00
 #define PDPTE_1GB_64_PAT_BIT                                         12
+#define PDPTE_1GB_64_PAT_FLAG                                        0x1000
 #define PDPTE_1GB_64_PAGE_FRAME_NUMBER_BIT                           30
+#define PDPTE_1GB_64_PAGE_FRAME_NUMBER_FLAG                          0xFFFFC0000000
 #define PDPTE_1GB_64_IGNORED_2_BIT                                   52
+#define PDPTE_1GB_64_IGNORED_2_FLAG                                  0x7F0000000000000
 #define PDPTE_1GB_64_PROTECTION_KEY_BIT                              59
+#define PDPTE_1GB_64_PROTECTION_KEY_FLAG                             0x7800000000000000
 #define PDPTE_1GB_64_EXECUTE_DISABLE_BIT                             63
+#define PDPTE_1GB_64_EXECUTE_DISABLE_FLAG                            0x8000000000000000
 
 #define PDPTE_64_PRESENT_BIT                                         0
+#define PDPTE_64_PRESENT_FLAG                                        0x01
 #define PDPTE_64_WRITE_BIT                                           1
+#define PDPTE_64_WRITE_FLAG                                          0x02
 #define PDPTE_64_SUPERVISOR_BIT                                      2
+#define PDPTE_64_SUPERVISOR_FLAG                                     0x04
 #define PDPTE_64_PAGE_LEVEL_WRITE_THROUGH_BIT                        3
+#define PDPTE_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                       0x08
 #define PDPTE_64_PAGE_LEVEL_CACHE_DISABLE_BIT                        4
+#define PDPTE_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                       0x10
 #define PDPTE_64_ACCESSED_BIT                                        5
+#define PDPTE_64_ACCESSED_FLAG                                       0x20
 #define PDPTE_64_LARGE_PAGE_BIT                                      7
+#define PDPTE_64_LARGE_PAGE_FLAG                                     0x80
 #define PDPTE_64_IGNORED_1_BIT                                       8
+#define PDPTE_64_IGNORED_1_FLAG                                      0xF00
 #define PDPTE_64_PAGE_FRAME_NUMBER_BIT                               12
+#define PDPTE_64_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
 #define PDPTE_64_IGNORED_2_BIT                                       52
+#define PDPTE_64_IGNORED_2_FLAG                                      0x7FF0000000000000
 #define PDPTE_64_EXECUTE_DISABLE_BIT                                 63
+#define PDPTE_64_EXECUTE_DISABLE_FLAG                                0x8000000000000000
 
 #define PDE_2MB_64_PRESENT_BIT                                       0
+#define PDE_2MB_64_PRESENT_FLAG                                      0x01
 #define PDE_2MB_64_WRITE_BIT                                         1
+#define PDE_2MB_64_WRITE_FLAG                                        0x02
 #define PDE_2MB_64_SUPERVISOR_BIT                                    2
+#define PDE_2MB_64_SUPERVISOR_FLAG                                   0x04
 #define PDE_2MB_64_PAGE_LEVEL_WRITE_THROUGH_BIT                      3
+#define PDE_2MB_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                     0x08
 #define PDE_2MB_64_PAGE_LEVEL_CACHE_DISABLE_BIT                      4
+#define PDE_2MB_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                     0x10
 #define PDE_2MB_64_ACCESSED_BIT                                      5
+#define PDE_2MB_64_ACCESSED_FLAG                                     0x20
 #define PDE_2MB_64_DIRTY_BIT                                         6
+#define PDE_2MB_64_DIRTY_FLAG                                        0x40
 #define PDE_2MB_64_LARGE_PAGE_BIT                                    7
+#define PDE_2MB_64_LARGE_PAGE_FLAG                                   0x80
 #define PDE_2MB_64_GLOBAL_BIT                                        8
+#define PDE_2MB_64_GLOBAL_FLAG                                       0x100
 #define PDE_2MB_64_IGNORED_1_BIT                                     9
+#define PDE_2MB_64_IGNORED_1_FLAG                                    0xE00
 #define PDE_2MB_64_PAT_BIT                                           12
+#define PDE_2MB_64_PAT_FLAG                                          0x1000
 #define PDE_2MB_64_PAGE_FRAME_NUMBER_BIT                             30
+#define PDE_2MB_64_PAGE_FRAME_NUMBER_FLAG                            0xFFFFC0000000
 #define PDE_2MB_64_IGNORED_2_BIT                                     52
+#define PDE_2MB_64_IGNORED_2_FLAG                                    0x7F0000000000000
 #define PDE_2MB_64_PROTECTION_KEY_BIT                                59
+#define PDE_2MB_64_PROTECTION_KEY_FLAG                               0x7800000000000000
 #define PDE_2MB_64_EXECUTE_DISABLE_BIT                               63
+#define PDE_2MB_64_EXECUTE_DISABLE_FLAG                              0x8000000000000000
 
 #define PDE_64_PRESENT_BIT                                           0
+#define PDE_64_PRESENT_FLAG                                          0x01
 #define PDE_64_WRITE_BIT                                             1
+#define PDE_64_WRITE_FLAG                                            0x02
 #define PDE_64_SUPERVISOR_BIT                                        2
+#define PDE_64_SUPERVISOR_FLAG                                       0x04
 #define PDE_64_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PDE_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                         0x08
 #define PDE_64_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PDE_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                         0x10
 #define PDE_64_ACCESSED_BIT                                          5
+#define PDE_64_ACCESSED_FLAG                                         0x20
 #define PDE_64_LARGE_PAGE_BIT                                        7
+#define PDE_64_LARGE_PAGE_FLAG                                       0x80
 #define PDE_64_IGNORED_1_BIT                                         8
+#define PDE_64_IGNORED_1_FLAG                                        0xF00
 #define PDE_64_PAGE_FRAME_NUMBER_BIT                                 12
+#define PDE_64_PAGE_FRAME_NUMBER_FLAG                                0xFFFFFFFFF000
 #define PDE_64_IGNORED_2_BIT                                         52
+#define PDE_64_IGNORED_2_FLAG                                        0x7FF0000000000000
 #define PDE_64_EXECUTE_DISABLE_BIT                                   63
+#define PDE_64_EXECUTE_DISABLE_FLAG                                  0x8000000000000000
 
 #define PTE_64_PRESENT_BIT                                           0
+#define PTE_64_PRESENT_FLAG                                          0x01
 #define PTE_64_WRITE_BIT                                             1
+#define PTE_64_WRITE_FLAG                                            0x02
 #define PTE_64_SUPERVISOR_BIT                                        2
+#define PTE_64_SUPERVISOR_FLAG                                       0x04
 #define PTE_64_PAGE_LEVEL_WRITE_THROUGH_BIT                          3
+#define PTE_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                         0x08
 #define PTE_64_PAGE_LEVEL_CACHE_DISABLE_BIT                          4
+#define PTE_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                         0x10
 #define PTE_64_ACCESSED_BIT                                          5
+#define PTE_64_ACCESSED_FLAG                                         0x20
 #define PTE_64_DIRTY_BIT                                             6
+#define PTE_64_DIRTY_FLAG                                            0x40
 #define PTE_64_PAT_BIT                                               7
+#define PTE_64_PAT_FLAG                                              0x80
 #define PTE_64_GLOBAL_BIT                                            8
+#define PTE_64_GLOBAL_FLAG                                           0x100
 #define PTE_64_IGNORED_1_BIT                                         9
+#define PTE_64_IGNORED_1_FLAG                                        0xE00
 #define PTE_64_PAGE_FRAME_NUMBER_BIT                                 12
+#define PTE_64_PAGE_FRAME_NUMBER_FLAG                                0xFFFFFFFFF000
 #define PTE_64_IGNORED_2_BIT                                         52
+#define PTE_64_IGNORED_2_FLAG                                        0x7F0000000000000
 #define PTE_64_PROTECTION_KEY_BIT                                    59
+#define PTE_64_PROTECTION_KEY_FLAG                                   0x7800000000000000
 #define PTE_64_EXECUTE_DISABLE_BIT                                   63
+#define PTE_64_EXECUTE_DISABLE_FLAG                                  0x8000000000000000
 
 #define PT_ENTRY_64_PRESENT_BIT                                      0
+#define PT_ENTRY_64_PRESENT_FLAG                                     0x01
 #define PT_ENTRY_64_WRITE_BIT                                        1
+#define PT_ENTRY_64_WRITE_FLAG                                       0x02
 #define PT_ENTRY_64_SUPERVISOR_BIT                                   2
+#define PT_ENTRY_64_SUPERVISOR_FLAG                                  0x04
 #define PT_ENTRY_64_PAGE_LEVEL_WRITE_THROUGH_BIT                     3
+#define PT_ENTRY_64_PAGE_LEVEL_WRITE_THROUGH_FLAG                    0x08
 #define PT_ENTRY_64_PAGE_LEVEL_CACHE_DISABLE_BIT                     4
+#define PT_ENTRY_64_PAGE_LEVEL_CACHE_DISABLE_FLAG                    0x10
 #define PT_ENTRY_64_ACCESSED_BIT                                     5
+#define PT_ENTRY_64_ACCESSED_FLAG                                    0x20
 #define PT_ENTRY_64_DIRTY_BIT                                        6
+#define PT_ENTRY_64_DIRTY_FLAG                                       0x40
 #define PT_ENTRY_64_LARGE_PAGE_BIT                                   7
+#define PT_ENTRY_64_LARGE_PAGE_FLAG                                  0x80
 #define PT_ENTRY_64_GLOBAL_BIT                                       8
+#define PT_ENTRY_64_GLOBAL_FLAG                                      0x100
 #define PT_ENTRY_64_IGNORED_1_BIT                                    9
+#define PT_ENTRY_64_IGNORED_1_FLAG                                   0xE00
 #define PT_ENTRY_64_PAGE_FRAME_NUMBER_BIT                            12
+#define PT_ENTRY_64_PAGE_FRAME_NUMBER_FLAG                           0xFFFFFFFFF000
 #define PT_ENTRY_64_IGNORED_2_BIT                                    52
+#define PT_ENTRY_64_IGNORED_2_FLAG                                   0x7F0000000000000
 #define PT_ENTRY_64_PROTECTION_KEY_BIT                               59
+#define PT_ENTRY_64_PROTECTION_KEY_FLAG                              0x7800000000000000
 #define PT_ENTRY_64_EXECUTE_DISABLE_BIT                              63
+#define PT_ENTRY_64_EXECUTE_DISABLE_FLAG                             0x8000000000000000
 
 /**
  * @}
@@ -1769,8 +2335,11 @@ typedef struct {
  */
 
 #define SELECTOR_REQUEST_PRIVILEGE_LEVEL_BIT                         0
+#define SELECTOR_REQUEST_PRIVILEGE_LEVEL_FLAG                        0x03
 #define SELECTOR_TABLE_INDICATOR_BIT                                 2
+#define SELECTOR_TABLE_INDICATOR_FLAG                                0x04
 #define SELECTOR_INDEX_BIT                                           3
+#define SELECTOR_INDEX_FLAG                                          0x1FFF8
 
 /**
  * @}
@@ -1910,31 +2479,40 @@ typedef struct {
  * @{
  */
 #define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_BIT 0
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_FLAG 0x0F
 #define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_BIT 13
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_FLAG 0x2000
 #define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_BIT 14
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_FLAG 0x4000
 
 #define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_BIT              0
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_FLAG             0xFFFF
 #define VMX_EXIT_QUALIFICATION_TASK_SWITCH_TYPE_BIT                  30
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_TYPE_FLAG                 0xC0000000
 #define VMX_EXIT_QUALIFICATION_TYPE_CALL                             0x00000000
 #define VMX_EXIT_QUALIFICATION_TYPE_IRET                             0x00000001
 #define VMX_EXIT_QUALIFICATION_TYPE_JMP                              0x00000002
 #define VMX_EXIT_QUALIFICATION_TYPE_IDT                              0x00000003
 
 #define VMX_EXIT_QUALIFICATION_CR_ACCESS_CR_NUMBER_BIT               0
+#define VMX_EXIT_QUALIFICATION_CR_ACCESS_CR_NUMBER_FLAG              0x0F
 #define VMX_EXIT_QUALIFICATION_REGISTER_CR0                          0x00000000
 #define VMX_EXIT_QUALIFICATION_REGISTER_CR2                          0x00000002
 #define VMX_EXIT_QUALIFICATION_REGISTER_CR3                          0x00000003
 #define VMX_EXIT_QUALIFICATION_REGISTER_CR4                          0x00000004
 #define VMX_EXIT_QUALIFICATION_REGISTER_CR8                          0x00000008
 #define VMX_EXIT_QUALIFICATION_CR_ACCESS_ACCESS_TYPE_BIT             4
+#define VMX_EXIT_QUALIFICATION_CR_ACCESS_ACCESS_TYPE_FLAG            0x30
 #define VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                      0x00000000
 #define VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                    0x00000001
 #define VMX_EXIT_QUALIFICATION_ACCESS_CLTS                           0x00000002
 #define VMX_EXIT_QUALIFICATION_ACCESS_LMSW                           0x00000003
 #define VMX_EXIT_QUALIFICATION_CR_ACCESS_LMSW_OPERAND_TYPE_BIT       6
+#define VMX_EXIT_QUALIFICATION_CR_ACCESS_LMSW_OPERAND_TYPE_FLAG      0x40
 #define VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                      0x00000000
 #define VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                        0x00000001
 #define VMX_EXIT_QUALIFICATION_CR_ACCESS_GENERAL_PURPOSE_REGISTER_BIT 8
+#define VMX_EXIT_QUALIFICATION_CR_ACCESS_GENERAL_PURPOSE_REGISTER_FLAG 0xF00
 #define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
 #define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
 #define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
@@ -1952,8 +2530,10 @@ typedef struct {
 #define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
 #define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
 #define VMX_EXIT_QUALIFICATION_CR_ACCESS_LMSW_SOURCE_DATA_BIT        16
+#define VMX_EXIT_QUALIFICATION_CR_ACCESS_LMSW_SOURCE_DATA_FLAG       0xFFFF0000
 
 #define VMX_EXIT_QUALIFICATION_DR_ACCESS_DR_NUMBER_BIT               0
+#define VMX_EXIT_QUALIFICATION_DR_ACCESS_DR_NUMBER_FLAG              0x07
 #define VMX_EXIT_QUALIFICATION_REGISTER_DR0                          0x00000000
 #define VMX_EXIT_QUALIFICATION_REGISTER_DR1                          0x00000001
 #define VMX_EXIT_QUALIFICATION_REGISTER_DR2                          0x00000002
@@ -1961,9 +2541,11 @@ typedef struct {
 #define VMX_EXIT_QUALIFICATION_REGISTER_DR6                          0x00000006
 #define VMX_EXIT_QUALIFICATION_REGISTER_DR7                          0x00000007
 #define VMX_EXIT_QUALIFICATION_DR_ACCESS_DIRECTION_OF_ACCESS_BIT     4
+#define VMX_EXIT_QUALIFICATION_DR_ACCESS_DIRECTION_OF_ACCESS_FLAG    0x10
 #define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR                   0x00000000
 #define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR                 0x00000001
 #define VMX_EXIT_QUALIFICATION_DR_ACCESS_GP_REGISTER_BIT             8
+#define VMX_EXIT_QUALIFICATION_DR_ACCESS_GP_REGISTER_FLAG            0xF00
 #define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
 #define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
 #define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
@@ -1982,25 +2564,33 @@ typedef struct {
 #define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
 
 #define VMX_EXIT_QUALIFICATION_IO_INST_SIZE_OF_ACCESS_BIT            0
+#define VMX_EXIT_QUALIFICATION_IO_INST_SIZE_OF_ACCESS_FLAG           0x07
 #define VMX_EXIT_QUALIFICATION_WIDTH_1B                              0x00000000
 #define VMX_EXIT_QUALIFICATION_WIDTH_2B                              0x00000001
 #define VMX_EXIT_QUALIFICATION_WIDTH_4B                              0x00000003
 #define VMX_EXIT_QUALIFICATION_IO_INST_DIRECTION_OF_ACCESS_BIT       3
+#define VMX_EXIT_QUALIFICATION_IO_INST_DIRECTION_OF_ACCESS_FLAG      0x08
 #define VMX_EXIT_QUALIFICATION_DIRECTION_OUT                         0x00000000
 #define VMX_EXIT_QUALIFICATION_DIRECTION_IN                          0x00000001
 #define VMX_EXIT_QUALIFICATION_IO_INST_STRING_INSTRUCTION_BIT        4
+#define VMX_EXIT_QUALIFICATION_IO_INST_STRING_INSTRUCTION_FLAG       0x10
 #define VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING                  0x00000000
 #define VMX_EXIT_QUALIFICATION_IS_STRING_STRING                      0x00000001
 #define VMX_EXIT_QUALIFICATION_IO_INST_REP_PREFIXED_BIT              5
+#define VMX_EXIT_QUALIFICATION_IO_INST_REP_PREFIXED_FLAG             0x20
 #define VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                        0x00000000
 #define VMX_EXIT_QUALIFICATION_IS_REP_REP                            0x00000001
 #define VMX_EXIT_QUALIFICATION_IO_INST_OPERAND_ENCODING_BIT          6
+#define VMX_EXIT_QUALIFICATION_IO_INST_OPERAND_ENCODING_FLAG         0x40
 #define VMX_EXIT_QUALIFICATION_ENCODING_DX                           0x00000000
 #define VMX_EXIT_QUALIFICATION_ENCODING_IMM                          0x00000001
 #define VMX_EXIT_QUALIFICATION_IO_INST_PORT_NUMBER_BIT               16
+#define VMX_EXIT_QUALIFICATION_IO_INST_PORT_NUMBER_FLAG              0xFFFF0000
 
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_BIT           0
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_FLAG          0xFFF
 #define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_BIT           12
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_FLAG          0xF000
 #define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                      0x00000000
 #define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                     0x00000001
 #define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTR_FETCH               0x00000002
@@ -2009,18 +2599,31 @@ typedef struct {
 #define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTR                   0x0000000F
 
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_DATA_READ_BIT           0
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_DATA_READ_FLAG          0x01
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_DATA_WRITE_BIT          1
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_DATA_WRITE_FLAG         0x02
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_INSTRUCTION_FETCH_BIT   2
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_INSTRUCTION_FETCH_FLAG  0x04
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_PRESENT_BIT       3
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_PRESENT_FLAG      0x08
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_WRITE_BIT         4
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_WRITE_FLAG        0x10
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_EXECUTE_BIT       5
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_EXECUTE_FLAG      0x20
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_EXECUTE_FOR_USER_MODE_BIT 6
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ENTRY_EXECUTE_FOR_USER_MODE_FLAG 0x40
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_BIT 7
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_FLAG 0x80
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_TRANSLATED_ACCESS_BIT 8
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_TRANSLATED_ACCESS_FLAG 0x100
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_BIT 9
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_FLAG 0x200
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_BIT 10
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_FLAG 0x400
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_BIT 11
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_FLAG 0x800
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_BIT      12
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_FLAG     0x1000
 
 /**
  * @}
@@ -2032,77 +2635,142 @@ typedef struct {
  * @{
  */
 #define EPTP_MEMORY_TYPE_BIT                                         0
+#define EPTP_MEMORY_TYPE_FLAG                                        0x07
 #define EPTP_PAGE_WALK_LENGTH_BIT                                    3
+#define EPTP_PAGE_WALK_LENGTH_FLAG                                   0x38
 #define EPTP_ENABLE_ACCESS_AND_DIRTY_FLAGS_BIT                       6
+#define EPTP_ENABLE_ACCESS_AND_DIRTY_FLAGS_FLAG                      0x40
 #define EPTP_PAGE_FRAME_NUMBER_BIT                                   12
+#define EPTP_PAGE_FRAME_NUMBER_FLAG                                  0xFFFFFFFFF000
 
 #define EPML4E_READ_ACCESS_BIT                                       0
+#define EPML4E_READ_ACCESS_FLAG                                      0x01
 #define EPML4E_WRITE_ACCESS_BIT                                      1
+#define EPML4E_WRITE_ACCESS_FLAG                                     0x02
 #define EPML4E_EXECUTE_ACCESS_BIT                                    2
+#define EPML4E_EXECUTE_ACCESS_FLAG                                   0x04
 #define EPML4E_ACCESSED_BIT                                          8
+#define EPML4E_ACCESSED_FLAG                                         0x100
 #define EPML4E_USER_MODE_EXECUTE_BIT                                 10
+#define EPML4E_USER_MODE_EXECUTE_FLAG                                0x400
 #define EPML4E_PAGE_FRAME_NUMBER_BIT                                 12
+#define EPML4E_PAGE_FRAME_NUMBER_FLAG                                0xFFFFFFFFF000
 
 #define EPT_PDPTE_1GB_READ_ACCESS_BIT                                0
+#define EPT_PDPTE_1GB_READ_ACCESS_FLAG                               0x01
 #define EPT_PDPTE_1GB_WRITE_ACCESS_BIT                               1
+#define EPT_PDPTE_1GB_WRITE_ACCESS_FLAG                              0x02
 #define EPT_PDPTE_1GB_EXECUTE_ACCESS_BIT                             2
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS_FLAG                            0x04
 #define EPT_PDPTE_1GB_MEMORY_TYPE_BIT                                3
+#define EPT_PDPTE_1GB_MEMORY_TYPE_FLAG                               0x38
 #define EPT_PDPTE_1GB_IGNORE_PAT_BIT                                 6
+#define EPT_PDPTE_1GB_IGNORE_PAT_FLAG                                0x40
 #define EPT_PDPTE_1GB_LARGE_PAGE_BIT                                 7
+#define EPT_PDPTE_1GB_LARGE_PAGE_FLAG                                0x80
 #define EPT_PDPTE_1GB_ACCESSED_BIT                                   8
+#define EPT_PDPTE_1GB_ACCESSED_FLAG                                  0x100
 #define EPT_PDPTE_1GB_DIRTY_BIT                                      9
+#define EPT_PDPTE_1GB_DIRTY_FLAG                                     0x200
 #define EPT_PDPTE_1GB_USER_MODE_EXECUTE_BIT                          10
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE_FLAG                         0x400
 #define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_BIT                          30
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                         0xFFFFC0000000
 #define EPT_PDPTE_1GB_SUPPRESS_VE_BIT                                63
+#define EPT_PDPTE_1GB_SUPPRESS_VE_FLAG                               0x8000000000000000
 
 #define EPT_PDPTE_READ_ACCESS_BIT                                    0
+#define EPT_PDPTE_READ_ACCESS_FLAG                                   0x01
 #define EPT_PDPTE_WRITE_ACCESS_BIT                                   1
+#define EPT_PDPTE_WRITE_ACCESS_FLAG                                  0x02
 #define EPT_PDPTE_EXECUTE_ACCESS_BIT                                 2
+#define EPT_PDPTE_EXECUTE_ACCESS_FLAG                                0x04
 #define EPT_PDPTE_ACCESSED_BIT                                       8
+#define EPT_PDPTE_ACCESSED_FLAG                                      0x100
 #define EPT_PDPTE_USER_MODE_EXECUTE_BIT                              10
+#define EPT_PDPTE_USER_MODE_EXECUTE_FLAG                             0x400
 #define EPT_PDPTE_PAGE_FRAME_NUMBER_BIT                              12
+#define EPT_PDPTE_PAGE_FRAME_NUMBER_FLAG                             0xFFFFFFFFF000
 
 #define EPT_PDE_2MB_READ_ACCESS_BIT                                  0
+#define EPT_PDE_2MB_READ_ACCESS_FLAG                                 0x01
 #define EPT_PDE_2MB_WRITE_ACCESS_BIT                                 1
+#define EPT_PDE_2MB_WRITE_ACCESS_FLAG                                0x02
 #define EPT_PDE_2MB_EXECUTE_ACCESS_BIT                               2
+#define EPT_PDE_2MB_EXECUTE_ACCESS_FLAG                              0x04
 #define EPT_PDE_2MB_MEMORY_TYPE_BIT                                  3
+#define EPT_PDE_2MB_MEMORY_TYPE_FLAG                                 0x38
 #define EPT_PDE_2MB_IGNORE_PAT_BIT                                   6
+#define EPT_PDE_2MB_IGNORE_PAT_FLAG                                  0x40
 #define EPT_PDE_2MB_LARGE_PAGE_BIT                                   7
+#define EPT_PDE_2MB_LARGE_PAGE_FLAG                                  0x80
 #define EPT_PDE_2MB_ACCESSED_BIT                                     8
+#define EPT_PDE_2MB_ACCESSED_FLAG                                    0x100
 #define EPT_PDE_2MB_DIRTY_BIT                                        9
+#define EPT_PDE_2MB_DIRTY_FLAG                                       0x200
 #define EPT_PDE_2MB_USER_MODE_EXECUTE_BIT                            10
+#define EPT_PDE_2MB_USER_MODE_EXECUTE_FLAG                           0x400
 #define EPT_PDE_2MB_PAGE_FRAME_NUMBER_BIT                            21
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER_FLAG                           0xFFFFFFE00000
 #define EPT_PDE_2MB_SUPPRESS_VE_BIT                                  63
+#define EPT_PDE_2MB_SUPPRESS_VE_FLAG                                 0x8000000000000000
 
 #define EPT_PDE_READ_ACCESS_BIT                                      0
+#define EPT_PDE_READ_ACCESS_FLAG                                     0x01
 #define EPT_PDE_WRITE_ACCESS_BIT                                     1
+#define EPT_PDE_WRITE_ACCESS_FLAG                                    0x02
 #define EPT_PDE_EXECUTE_ACCESS_BIT                                   2
+#define EPT_PDE_EXECUTE_ACCESS_FLAG                                  0x04
 #define EPT_PDE_ACCESSED_BIT                                         8
+#define EPT_PDE_ACCESSED_FLAG                                        0x100
 #define EPT_PDE_USER_MODE_EXECUTE_BIT                                10
+#define EPT_PDE_USER_MODE_EXECUTE_FLAG                               0x400
 #define EPT_PDE_PAGE_FRAME_NUMBER_BIT                                12
+#define EPT_PDE_PAGE_FRAME_NUMBER_FLAG                               0xFFFFFFFFF000
 
 #define EPT_PTE_READ_ACCESS_BIT                                      0
+#define EPT_PTE_READ_ACCESS_FLAG                                     0x01
 #define EPT_PTE_WRITE_ACCESS_BIT                                     1
+#define EPT_PTE_WRITE_ACCESS_FLAG                                    0x02
 #define EPT_PTE_EXECUTE_ACCESS_BIT                                   2
+#define EPT_PTE_EXECUTE_ACCESS_FLAG                                  0x04
 #define EPT_PTE_MEMORY_TYPE_BIT                                      3
+#define EPT_PTE_MEMORY_TYPE_FLAG                                     0x38
 #define EPT_PTE_IGNORE_PAT_BIT                                       6
+#define EPT_PTE_IGNORE_PAT_FLAG                                      0x40
 #define EPT_PTE_ACCESSED_BIT                                         8
+#define EPT_PTE_ACCESSED_FLAG                                        0x100
 #define EPT_PTE_DIRTY_BIT                                            9
+#define EPT_PTE_DIRTY_FLAG                                           0x200
 #define EPT_PTE_USER_MODE_EXECUTE_BIT                                10
+#define EPT_PTE_USER_MODE_EXECUTE_FLAG                               0x400
 #define EPT_PTE_PAGE_FRAME_NUMBER_BIT                                12
+#define EPT_PTE_PAGE_FRAME_NUMBER_FLAG                               0xFFFFFFFFF000
 #define EPT_PTE_SUPPRESS_VE_BIT                                      63
+#define EPT_PTE_SUPPRESS_VE_FLAG                                     0x8000000000000000
 
 #define EPT_ENTRY_READ_ACCESS_BIT                                    0
+#define EPT_ENTRY_READ_ACCESS_FLAG                                   0x01
 #define EPT_ENTRY_WRITE_ACCESS_BIT                                   1
+#define EPT_ENTRY_WRITE_ACCESS_FLAG                                  0x02
 #define EPT_ENTRY_EXECUTE_ACCESS_BIT                                 2
+#define EPT_ENTRY_EXECUTE_ACCESS_FLAG                                0x04
 #define EPT_ENTRY_MEMORY_TYPE_BIT                                    3
+#define EPT_ENTRY_MEMORY_TYPE_FLAG                                   0x38
 #define EPT_ENTRY_IGNORE_PAT_BIT                                     6
+#define EPT_ENTRY_IGNORE_PAT_FLAG                                    0x40
 #define EPT_ENTRY_LARGE_PAGE_BIT                                     7
+#define EPT_ENTRY_LARGE_PAGE_FLAG                                    0x80
 #define EPT_ENTRY_ACCESSED_BIT                                       8
+#define EPT_ENTRY_ACCESSED_FLAG                                      0x100
 #define EPT_ENTRY_DIRTY_BIT                                          9
+#define EPT_ENTRY_DIRTY_FLAG                                         0x200
 #define EPT_ENTRY_USER_MODE_EXECUTE_BIT                              10
+#define EPT_ENTRY_USER_MODE_EXECUTE_FLAG                             0x400
 #define EPT_ENTRY_PAGE_FRAME_NUMBER_BIT                              12
+#define EPT_ENTRY_PAGE_FRAME_NUMBER_FLAG                             0xFFFFFFFFF000
 #define EPT_ENTRY_SUPPRESS_VE_BIT                                    63
+#define EPT_ENTRY_SUPPRESS_VE_FLAG                                   0x8000000000000000
 
 /**
  * @defgroup ept_table_level \
@@ -2155,10 +2823,15 @@ typedef struct {
  * @{
  */
 #define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_BIT                      0
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_FLAG                     0x01
 #define VMCS_COMPONENT_ENCODING_INDEX_BIT                            1
+#define VMCS_COMPONENT_ENCODING_INDEX_FLAG                           0x3FE
 #define VMCS_COMPONENT_ENCODING_TYPE_BIT                             10
+#define VMCS_COMPONENT_ENCODING_TYPE_FLAG                            0xC00
 #define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_BIT                     12
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_FLAG                    0x1000
 #define VMCS_COMPONENT_ENCODING_WIDTH_BIT                            13
+#define VMCS_COMPONENT_ENCODING_WIDTH_FLAG                           0x6000
 
 /**
  * @defgroup vmcs_16_bit \
@@ -2551,23 +3224,41 @@ typedef struct {
  */
 
 #define EFL_CARRY_FLAG_BIT                                           0
+#define EFL_CARRY_FLAG_FLAG                                          0x01
 #define EFL_READ_AS_1_BIT                                            1
+#define EFL_READ_AS_1_FLAG                                           0x02
 #define EFL_PARITY_FLAG_BIT                                          2
+#define EFL_PARITY_FLAG_FLAG                                         0x04
 #define EFL_AUXILIARY_CARRY_FLAG_BIT                                 4
+#define EFL_AUXILIARY_CARRY_FLAG_FLAG                                0x10
 #define EFL_ZERO_FLAG_BIT                                            6
+#define EFL_ZERO_FLAG_FLAG                                           0x40
 #define EFL_SIGN_FLAG_BIT                                            7
+#define EFL_SIGN_FLAG_FLAG                                           0x80
 #define EFL_TRAP_FLAG_BIT                                            8
+#define EFL_TRAP_FLAG_FLAG                                           0x100
 #define EFL_INTERRUPT_ENABLE_FLAG_BIT                                9
+#define EFL_INTERRUPT_ENABLE_FLAG_FLAG                               0x200
 #define EFL_DIRECTION_FLAG_BIT                                       10
+#define EFL_DIRECTION_FLAG_FLAG                                      0x400
 #define EFL_OVERFLOW_FLAG_BIT                                        11
+#define EFL_OVERFLOW_FLAG_FLAG                                       0x800
 #define EFL_IO_PRIVILEGE_LEVEL_BIT                                   12
+#define EFL_IO_PRIVILEGE_LEVEL_FLAG                                  0x3000
 #define EFL_NESTED_TASK_FLAG_BIT                                     14
+#define EFL_NESTED_TASK_FLAG_FLAG                                    0x4000
 #define EFL_RESUME_FLAG_BIT                                          16
+#define EFL_RESUME_FLAG_FLAG                                         0x10000
 #define EFL_VIRTUAL_8086_MODE_FLAG_BIT                               17
+#define EFL_VIRTUAL_8086_MODE_FLAG_FLAG                              0x20000
 #define EFL_ALIGNMENT_CHECK_FLAG_BIT                                 18
+#define EFL_ALIGNMENT_CHECK_FLAG_FLAG                                0x40000
 #define EFL_VIRTUAL_INTERRUPT_FLAG_BIT                               19
+#define EFL_VIRTUAL_INTERRUPT_FLAG_FLAG                              0x80000
 #define EFL_VIRTUAL_INTERRUPT_PENDING_FLAG_BIT                       20
+#define EFL_VIRTUAL_INTERRUPT_PENDING_FLAG_FLAG                      0x100000
 #define EFL_IDENTIFICATION_FLAG_BIT                                  21
+#define EFL_IDENTIFICATION_FLAG_FLAG                                 0x200000
 
 /**
  * @defgroup memory_type \

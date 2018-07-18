@@ -95,6 +95,7 @@ bitfield_field_flags_name: 'Flags'
 #
 # Common option for:
 # - bitfield_field_with_define_bit
+# - bitfield_field_with_define_flag
 # - bitfield_field_with_define_get
 # - bitfield_field_with_define_mask
 #
@@ -107,6 +108,14 @@ bitfield_field_with_defines: true
 # #define CR0_PROTECTION_ENABLE_BIT                                    0
 #
 # bitfield_field_with_define_bit: true
+
+#
+# If true, definition of bitfield flag is printed with each bitfield field:
+#
+#     UINT64 ProtectionEnable                                        : 1;
+# #define CR0_PROTECTION_ENABLE_FLAG                                   0x01
+#
+# bitfield_field_with_define_flag: true
 
 #
 # If true, definition of bitfield mask is printed with each bitfield field:
@@ -126,6 +135,11 @@ bitfield_field_with_defines: true
 # Define suffix for macros printed with bitfield_field_with_define_bit.
 #
 bitfield_field_with_define_bit_suffix: '_BIT'
+
+#
+# Define suffix for macros printed with bitfield_field_with_define_flag.
+#
+bitfield_field_with_define_flag_suffix: '_FLAG'
 
 #
 # Define suffix for macros printed with bitfield_field_with_define_mask.

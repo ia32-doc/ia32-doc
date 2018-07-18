@@ -188,9 +188,14 @@ class DocCProcessor(DocProcessor):
         #
         bit_shift = bit_to - bit_from
 
-        if self.opt.bitfield_field_with_define_bit or \
-           self.opt.bitfield_field_with_define_mask or \
-           self.opt.bitfield_field_with_define_get:
+        bitfield_field_with_define_any = any([
+            self.opt.bitfield_field_with_define_bit,
+            self.opt.bitfield_field_with_define_flag,
+            self.opt.bitfield_field_with_define_mask,
+            self.opt.bitfield_field_with_define_get
+        ])
+
+        if bitfield_field_with_define_any:
             part1 = self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)
             part2 = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
             align = self.opt.align if self.opt.definition_no_indent else \
@@ -206,6 +211,10 @@ class DocCProcessor(DocProcessor):
         if self.opt.bitfield_field_with_define_bit:
             definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_bit_suffix}'
             self.print(f'#define {definition:<{align}} {bit_from}')
+
+        if self.opt.bitfield_field_with_define_flag:
+            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_flag_suffix}'
+            self.print(f'#define {definition:<{align}} 0x{(((1 << bit_shift) - 1) << bit_from):02X}')
 
         if self.opt.bitfield_field_with_define_mask:
             definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_mask_suffix}'

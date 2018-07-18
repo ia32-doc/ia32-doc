@@ -135,22 +135,26 @@ class DocProcessorOptions(object):
         self.bitfield_field_flags_name = 'Flags'
 
         self.bitfield_field_with_define_bit = True
+        self.bitfield_field_with_define_flag = True
         self.bitfield_field_with_define_mask = True
         self.bitfield_field_with_define_get = True
 
         self.bitfield_field_with_define_bit_suffix = '_BIT'
+        self.bitfield_field_with_define_flag_suffix = '_FLAG'
         self.bitfield_field_with_define_mask_suffix = '_MASK'
         self.bitfield_field_with_define_get_macro_argument_name = '_'
 
         def bitfield_field_with_defines_getter(self_):
             return all([
                 self_.bitfield_field_with_define_bit,
+                self_.bitfield_field_with_define_flag,
                 self_.bitfield_field_with_define_mask,
                 self_.bitfield_field_with_define_get
             ])
 
         def bitfield_field_with_defines_setter(self_, value_):
             self_.bitfield_field_with_define_bit = value_
+            self_.bitfield_field_with_define_flag = value_
             self_.bitfield_field_with_define_mask = value_
             self_.bitfield_field_with_define_get = value_
 
