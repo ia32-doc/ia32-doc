@@ -15303,14 +15303,14 @@ typedef union
  * \#BP), executions of INTO that cause \#OF, and executions of UD0, UD1, and UD2 (they cause \#UD).
  * -# An NMI was delivered to the logical processor and the "NMI exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXCEPTION_OR_NMI                         0x00000000
+#define VMX_EXIT_REASON_EXCEPTION_OR_NMI                             0x00000000
 
 /**
  * @brief External interrupt
  *
  * An external interrupt arrived and the "external-interrupt exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXTERNAL_INTERRUPT                       0x00000001
+#define VMX_EXIT_REASON_EXTERNAL_INTERRUPT                           0x00000001
 
 /**
  * @brief Triple fault
@@ -15318,21 +15318,21 @@ typedef union
  * The logical processor encountered an exception while attempting to call the double-fault handler and that exception did
  * not itself cause a VM exit due to the exception bitmap.
  */
-#define VMX_VMX_EXIT_REASON_TRIPLE_FAULT                             0x00000002
+#define VMX_EXIT_REASON_TRIPLE_FAULT                                 0x00000002
 
 /**
  * @brief INIT signal
  *
  * An INIT signal arrived.
  */
-#define VMX_VMX_EXIT_REASON_INIT_SIGNAL                              0x00000003
+#define VMX_EXIT_REASON_INIT_SIGNAL                                  0x00000003
 
 /**
  * @brief Start-up IPI (SIPI)
  *
  * A SIPI arrived while the logical processor was in the "wait-for-SIPI" state.
  */
-#define VMX_VMX_EXIT_REASON_STARTUP_IPI                              0x00000004
+#define VMX_EXIT_REASON_STARTUP_IPI                                  0x00000004
 
 /**
  * @brief I/O system-management interrupt (SMI)
@@ -15341,7 +15341,7 @@ typedef union
  *
  * @see Vol3C[34.15.2(SMM VM Exits)]
  */
-#define VMX_VMX_EXIT_REASON_IO_SMI                                   0x00000005
+#define VMX_EXIT_REASON_IO_SMI                                       0x00000005
 
 /**
  * @brief Other SMI
@@ -15350,7 +15350,7 @@ typedef union
  *
  * @see Vol3C[34.15.2(SMM VM Exits)]
  */
-#define VMX_VMX_EXIT_REASON_SMI                                      0x00000006
+#define VMX_EXIT_REASON_SMI                                          0x00000006
 
 /**
  * @brief Interrupt window exiting
@@ -15358,7 +15358,7 @@ typedef union
  * At the beginning of an instruction, RFLAGS.IF was 1; events were not blocked by STI or by MOV SS; and the
  * "interrupt-window exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_INTERRUPT_WINDOW                         0x00000007
+#define VMX_EXIT_REASON_INTERRUPT_WINDOW                             0x00000007
 
 /**
  * @brief NMI window exiting
@@ -15366,70 +15366,70 @@ typedef union
  * At the beginning of an instruction, there was no virtual-NMI blocking; events were not blocked by MOV SS; and the
  * "NMI-window exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_NMI_WINDOW                               0x00000008
+#define VMX_EXIT_REASON_NMI_WINDOW                                   0x00000008
 
 /**
  * @brief Task switch
  *
  * Guest software attempted a task switch.
  */
-#define VMX_VMX_EXIT_REASON_TASK_SWITCH                              0x00000009
+#define VMX_EXIT_REASON_TASK_SWITCH                                  0x00000009
 
 /**
  * @brief CPUID
  *
  * Guest software attempted to execute CPUID.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_CPUID                            0x0000000A
+#define VMX_EXIT_REASON_EXECUTE_CPUID                                0x0000000A
 
 /**
  * @brief GETSEC
  *
  * Guest software attempted to execute GETSEC.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_GETSEC                           0x0000000B
+#define VMX_EXIT_REASON_EXECUTE_GETSEC                               0x0000000B
 
 /**
  * @brief HLT
  *
  * Guest software attempted to execute HLT and the "HLT exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_HLT                              0x0000000C
+#define VMX_EXIT_REASON_EXECUTE_HLT                                  0x0000000C
 
 /**
  * @brief INVD
  *
  * Guest software attempted to execute INVD.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_INVD                             0x0000000D
+#define VMX_EXIT_REASON_EXECUTE_INVD                                 0x0000000D
 
 /**
  * @brief INVLPG
  *
  * Guest software attempted to execute INVLPG and the "INVLPG exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_INVLPG                           0x0000000E
+#define VMX_EXIT_REASON_EXECUTE_INVLPG                               0x0000000E
 
 /**
  * @brief RDPMC
  *
  * Guest software attempted to execute RDPMC and the "RDPMC exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDPMC                            0x0000000F
+#define VMX_EXIT_REASON_EXECUTE_RDPMC                                0x0000000F
 
 /**
  * @brief RDTSC
  *
  * Guest software attempted to execute RDTSC and the "RDTSC exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDTSC                            0x00000010
+#define VMX_EXIT_REASON_EXECUTE_RDTSC                                0x00000010
 
 /**
  * @brief RSM in SMM
  *
  * Guest software attempted to execute RSM in SMM.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RSM_IN_SMM                       0x00000011
+#define VMX_EXIT_REASON_EXECUTE_RSM_IN_SMM                           0x00000011
 
 /**
  * @brief VMCALL
@@ -15439,70 +15439,70 @@ typedef union
  *
  * @see Vol3C[34.15.2(SMM VM Exits)]
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMCALL                           0x00000012
+#define VMX_EXIT_REASON_EXECUTE_VMCALL                               0x00000012
 
 /**
  * @brief VMCLEAR
  *
  * Guest software attempted to execute VMCLEAR.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMCLEAR                          0x00000013
+#define VMX_EXIT_REASON_EXECUTE_VMCLEAR                              0x00000013
 
 /**
  * @brief VMLAUNCH
  *
  * Guest software attempted to execute VMLAUNCH.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMLAUNCH                         0x00000014
+#define VMX_EXIT_REASON_EXECUTE_VMLAUNCH                             0x00000014
 
 /**
  * @brief VMPTRLD
  *
  * Guest software attempted to execute VMPTRLD.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMPTRLD                          0x00000015
+#define VMX_EXIT_REASON_EXECUTE_VMPTRLD                              0x00000015
 
 /**
  * @brief VMPTRST
  *
  * Guest software attempted to execute VMPTRST.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMPTRST                          0x00000016
+#define VMX_EXIT_REASON_EXECUTE_VMPTRST                              0x00000016
 
 /**
  * @brief VMREAD
  *
  * Guest software attempted to execute VMREAD.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMREAD                           0x00000017
+#define VMX_EXIT_REASON_EXECUTE_VMREAD                               0x00000017
 
 /**
  * @brief VMRESUME
  *
  * Guest software attempted to execute VMRESUME.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMRESUME                         0x00000018
+#define VMX_EXIT_REASON_EXECUTE_VMRESUME                             0x00000018
 
 /**
  * @brief VMWRITE
  *
  * Guest software attempted to execute VMWRITE.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMWRITE                          0x00000019
+#define VMX_EXIT_REASON_EXECUTE_VMWRITE                              0x00000019
 
 /**
  * @brief VMXOFF
  *
  * Guest software attempted to execute VMXOFF.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMXOFF                           0x0000001A
+#define VMX_EXIT_REASON_EXECUTE_VMXOFF                               0x0000001A
 
 /**
  * @brief VMXON
  *
  * Guest software attempted to execute VMXON.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMXON                            0x0000001B
+#define VMX_EXIT_REASON_EXECUTE_VMXON                                0x0000001B
 
 /**
  * @brief Control-register accesses
@@ -15514,14 +15514,14 @@ typedef union
  *
  * @see Vol3C[25.1(INSTRUCTIONS THAT CAUSE VM EXITS)]
  */
-#define VMX_VMX_EXIT_REASON_MOV_CR                                   0x0000001C
+#define VMX_EXIT_REASON_MOV_CR                                       0x0000001C
 
 /**
  * @brief Debug-register accesses
  *
  * Guest software attempted a MOV to or from a debug register and the "MOV-DR exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_MOV_DR                                   0x0000001D
+#define VMX_EXIT_REASON_MOV_DR                                       0x0000001D
 
 /**
  * @brief I/O instruction
@@ -15531,7 +15531,7 @@ typedef union
  * -# The "use I/O bitmaps" VM-execution control was 1 and a bit in the I/O bitmap associated with one of the ports
  * accessed by the I/O instruction was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_IO_INSTRUCTION                   0x0000001E
+#define VMX_EXIT_REASON_EXECUTE_IO_INSTRUCTION                       0x0000001E
 
 /**
  * @brief RDMSR
@@ -15544,7 +15544,7 @@ typedef union
  * -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where n is
  * the value of RCX & 00001FFFH.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDMSR                            0x0000001F
+#define VMX_EXIT_REASON_EXECUTE_RDMSR                                0x0000001F
 
 /**
  * @brief WRMSR
@@ -15557,28 +15557,28 @@ typedef union
  * -# The value of RCX is in the range C0000000H - C0001FFFH and the nth bit in write bitmap for high MSRs is 1, where n is
  * the value of RCX & 00001FFFH.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_WRMSR                            0x00000020
+#define VMX_EXIT_REASON_EXECUTE_WRMSR                                0x00000020
 
 /**
  * @brief VM-entry failure due to invalid guest state
  *
  * A VM entry failed one of the checks identified in Section 26.3.1.
  */
-#define VMX_VMX_EXIT_REASON_ERROR_INVALID_GUEST_STATE                0x00000021
+#define VMX_EXIT_REASON_ERROR_INVALID_GUEST_STATE                    0x00000021
 
 /**
  * @brief VM-entry failure due to MSR loading
  *
  * A VM entry failed in an attempt to load MSRs. See Section 26.4.
  */
-#define VMX_VMX_EXIT_REASON_ERROR_MSR_LOAD                           0x00000022
+#define VMX_EXIT_REASON_ERROR_MSR_LOAD                               0x00000022
 
 /**
  * @brief Guest software executed MWAIT
  *
  * Guest software attempted to execute MWAIT and the "MWAIT exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_MWAIT                            0x00000024
+#define VMX_EXIT_REASON_EXECUTE_MWAIT                                0x00000024
 
 /**
  * @brief VM-exit due to monitor trap flag
@@ -15588,14 +15588,14 @@ typedef union
  *
  * @see Vol3C[25.5.2(Monitor Trap Flag)]
  */
-#define VMX_VMX_EXIT_REASON_MONITOR_TRAP_FLAG                        0x00000025
+#define VMX_EXIT_REASON_MONITOR_TRAP_FLAG                            0x00000025
 
 /**
  * @brief Guest software attempted to execute MONITOR
  *
  * Guest software attempted to execute MONITOR and the "MONITOR exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_MONITOR                          0x00000027
+#define VMX_EXIT_REASON_EXECUTE_MONITOR                              0x00000027
 
 /**
  * @brief Guest software attempted to execute PAUSE
@@ -15605,7 +15605,7 @@ typedef union
  *
  * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_PAUSE                            0x00000028
+#define VMX_EXIT_REASON_EXECUTE_PAUSE                                0x00000028
 
 /**
  * @brief VM-entry failure due to machine-check
@@ -15614,7 +15614,7 @@ typedef union
  *
  * @see Vol3C[26.8(MACHINE-CHECK EVENTS DURING VM ENTRY)]
  */
-#define VMX_VMX_EXIT_REASON_ERROR_MACHINE_CHECK                      0x00000029
+#define VMX_EXIT_REASON_ERROR_MACHINE_CHECK                          0x00000029
 
 /**
  * @brief TPR below threshold
@@ -15626,7 +15626,7 @@ typedef union
  * @see Vol3C[29.1.2(TPR Virtualization)]
  * @see Vol3C[26.6.7(VM Exits Induced by the TPR Threshold)]
  */
-#define VMX_VMX_EXIT_REASON_TPR_BELOW_THRESHOLD                      0x0000002B
+#define VMX_EXIT_REASON_TPR_BELOW_THRESHOLD                          0x0000002B
 
 /**
  * @brief APIC access
@@ -15636,14 +15636,14 @@ typedef union
  *
  * @see Vol3C[29.4(VIRTUALIZING MEMORY-MAPPED APIC ACCESSES)]
  */
-#define VMX_VMX_EXIT_REASON_APIC_ACCESS                              0x0000002C
+#define VMX_EXIT_REASON_APIC_ACCESS                                  0x0000002C
 
 /**
  * @brief Virtualized EOI
  *
  * EOI virtualization was performed for a virtual interrupt whose vector indexed a bit set in the EOIexit bitmap.
  */
-#define VMX_VMX_EXIT_REASON_VIRTUALIZED_EOI                          0x0000002D
+#define VMX_EXIT_REASON_VIRTUALIZED_EOI                              0x0000002D
 
 /**
  * @brief Access to GDTR or IDTR
@@ -15651,7 +15651,7 @@ typedef union
  * Guest software attempted to execute LGDT, LIDT, SGDT, or SIDT and the "descriptor-table exiting" VM-execution control
  * was 1.
  */
-#define VMX_VMX_EXIT_REASON_GDTR_IDTR_ACCESS                         0x0000002E
+#define VMX_EXIT_REASON_GDTR_IDTR_ACCESS                             0x0000002E
 
 /**
  * @brief Access to LDTR or TR
@@ -15659,7 +15659,7 @@ typedef union
  * Guest software attempted to execute LLDT, LTR, SLDT, or STR and the "descriptor-table exiting" VM-execution control was
  * 1.
  */
-#define VMX_VMX_EXIT_REASON_LDTR_TR_ACCESS                           0x0000002F
+#define VMX_EXIT_REASON_LDTR_TR_ACCESS                               0x0000002F
 
 /**
  * @brief EPT violation
@@ -15667,21 +15667,21 @@ typedef union
  * An attempt to access memory with a guest-physical address was disallowed by the configuration of the EPT paging
  * structures.
  */
-#define VMX_VMX_EXIT_REASON_EPT_VIOLATION                            0x00000030
+#define VMX_EXIT_REASON_EPT_VIOLATION                                0x00000030
 
 /**
  * @brief EPT misconfiguration
  *
  * An attempt to access memory with a guest-physical address encountered a misconfigured EPT paging-structure entry.
  */
-#define VMX_VMX_EXIT_REASON_EPT_MISCONFIGURATION                     0x00000031
+#define VMX_EXIT_REASON_EPT_MISCONFIGURATION                         0x00000031
 
 /**
  * @brief INVEPT
  *
  * Guest software attempted to execute INVEPT.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_INVEPT                           0x00000032
+#define VMX_EXIT_REASON_EXECUTE_INVEPT                               0x00000032
 
 /**
  * @brief RDTSCP
@@ -15689,35 +15689,35 @@ typedef union
  * Guest software attempted to execute RDTSCP and the "enable RDTSCP" and "RDTSC exiting" VM-execution controls were both
  * 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDTSCP                           0x00000033
+#define VMX_EXIT_REASON_EXECUTE_RDTSCP                               0x00000033
 
 /**
  * @brief VMX-preemption timer expired
  *
  * The preemption timer counted down to zero.
  */
-#define VMX_VMX_EXIT_REASON_VMX_PREEMPTION_TIMER_EXPIRED             0x00000034
+#define VMX_EXIT_REASON_VMX_PREEMPTION_TIMER_EXPIRED                 0x00000034
 
 /**
  * @brief INVVPID
  *
  * Guest software attempted to execute INVVPID.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_INVVPID                          0x00000035
+#define VMX_EXIT_REASON_EXECUTE_INVVPID                              0x00000035
 
 /**
  * @brief WBINVD
  *
  * Guest software attempted to execute WBINVD and the "WBINVD exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_WBINVD                           0x00000036
+#define VMX_EXIT_REASON_EXECUTE_WBINVD                               0x00000036
 
 /**
  * @brief XSETBV - Guest software attempted to execute XSETBV
  *
  * Guest software attempted to execute XSETBV.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_XSETBV                           0x00000037
+#define VMX_EXIT_REASON_EXECUTE_XSETBV                               0x00000037
 
 /**
  * @brief APIC write
@@ -15726,14 +15726,14 @@ typedef union
  *
  * @see Vol3C[29.4.3.3(APIC-Write VM Exits)]
  */
-#define VMX_VMX_EXIT_REASON_APIC_WRITE                               0x00000038
+#define VMX_EXIT_REASON_APIC_WRITE                                   0x00000038
 
 /**
  * @brief RDRAND
  *
  * Guest software attempted to execute RDRAND and the "RDRAND exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDRAND                           0x00000039
+#define VMX_EXIT_REASON_EXECUTE_RDRAND                               0x00000039
 
 /**
  * @brief INVPCID
@@ -15741,7 +15741,7 @@ typedef union
  * Guest software attempted to execute INVPCID and the "enable INVPCID" and "INVLPG exiting" VM-execution controls were
  * both 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_INVPCID                          0x0000003A
+#define VMX_EXIT_REASON_EXECUTE_INVPCID                              0x0000003A
 
 /**
  * @brief VMFUNC
@@ -15749,7 +15749,7 @@ typedef union
  * Guest software invoked a VM function with the VMFUNC instruction and the VM function either was not enabled or generated
  * a function-specific condition causing a VM exit.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_VMFUNC                           0x0000003B
+#define VMX_EXIT_REASON_EXECUTE_VMFUNC                               0x0000003B
 
 /**
  * @brief ENCLS
@@ -15758,14 +15758,14 @@ typedef union
  * -# EAX < 63 and the corresponding bit in the ENCLS-exiting bitmap is 1; or
  * -# EAX >= 63 and bit 63 in the ENCLS-exiting bitmap is 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_ENCLS                            0x0000003C
+#define VMX_EXIT_REASON_EXECUTE_ENCLS                                0x0000003C
 
 /**
  * @brief RDSEED
  *
  * Guest software attempted to execute RDSEED and the "RDSEED exiting" VM-execution control was 1.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_RDSEED                           0x0000003D
+#define VMX_EXIT_REASON_EXECUTE_RDSEED                               0x0000003D
 
 /**
  * @brief Page-modification log full
@@ -15773,7 +15773,7 @@ typedef union
  * The processor attempted to create a page-modification log entry and the value of the PML index was not in the range
  * 0-511.
  */
-#define VMX_VMX_EXIT_REASON_PAGE_MODIFICATION_LOG_FULL               0x0000003E
+#define VMX_EXIT_REASON_PAGE_MODIFICATION_LOG_FULL                   0x0000003E
 
 /**
  * @brief XSAVES
@@ -15781,7 +15781,7 @@ typedef union
  * Guest software attempted to execute XSAVES, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the logical-AND of
  * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_XSAVES                           0x0000003F
+#define VMX_EXIT_REASON_EXECUTE_XSAVES                               0x0000003F
 
 /**
  * @brief XRSTORS
@@ -15789,7 +15789,7 @@ typedef union
  * Guest software attempted to execute XRSTORS, the "enable XSAVES/XRSTORS" was 1, and a bit was set in the logical-AND of
  * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
-#define VMX_VMX_EXIT_REASON_EXECUTE_XRSTORS                          0x00000040
+#define VMX_EXIT_REASON_EXECUTE_XRSTORS                              0x00000040
 /**
  * @}
  */
@@ -15806,128 +15806,128 @@ typedef union
 /**
  * VMCALL executed in VMX root operation.
  */
-#define VMX_VMX_ERROR_VMCALL_IN_VMX_ROOT_OPERATION                   0x00000001
+#define VMX_ERROR_VMCALL_IN_VMX_ROOT_OPERATION                       0x00000001
 
 /**
  * VMCLEAR with invalid physical address.
  */
-#define VMX_VMX_ERROR_VMCLEAR_INVALID_PHYSICAL_ADDRESS               0x00000002
+#define VMX_ERROR_VMCLEAR_INVALID_PHYSICAL_ADDRESS                   0x00000002
 
 /**
  * VMCLEAR with VMXON pointer.
  */
-#define VMX_VMX_ERROR_VMCLEAR_INVALID_VMXON_POINTER                  0x00000003
+#define VMX_ERROR_VMCLEAR_INVALID_VMXON_POINTER                      0x00000003
 
 /**
  * VMLAUNCH with non-clear VMCS.
  */
-#define VMX_VMX_ERROR_VMLAUCH_NON_CLEAR_VMCS                         0x00000004
+#define VMX_ERROR_VMLAUCH_NON_CLEAR_VMCS                             0x00000004
 
 /**
  * VMRESUME with non-launched VMCS.
  */
-#define VMX_VMX_ERROR_VMRESUME_NON_LAUNCHED_VMCS                     0x00000005
+#define VMX_ERROR_VMRESUME_NON_LAUNCHED_VMCS                         0x00000005
 
 /**
  * VMRESUME after VMXOFF (VMXOFF and VMXON between VMLAUNCH and VMRESUME).
  */
-#define VMX_VMX_ERROR_VMRESUME_AFTER_VMXOFF                          0x00000006
+#define VMX_ERROR_VMRESUME_AFTER_VMXOFF                              0x00000006
 
 /**
  * VM entry with invalid control field(s).
  */
-#define VMX_VMX_ERROR_VMENTRY_INVALID_CONTROL_FIELDS                 0x00000007
+#define VMX_ERROR_VMENTRY_INVALID_CONTROL_FIELDS                     0x00000007
 
 /**
  * VM entry with invalid host-state field(s).
  */
-#define VMX_VMX_ERROR_VMENTRY_INVALID_HOST_STATE                     0x00000008
+#define VMX_ERROR_VMENTRY_INVALID_HOST_STATE                         0x00000008
 
 /**
  * VMPTRLD with invalid physical address.
  */
-#define VMX_VMX_ERROR_VMPTRLD_INVALID_PHYSICAL_ADDRESS               0x00000009
+#define VMX_ERROR_VMPTRLD_INVALID_PHYSICAL_ADDRESS                   0x00000009
 
 /**
  * VMPTRLD with VMXON pointer.
  */
-#define VMX_VMX_ERROR_VMPTRLD_VMXON_POINTER                          0x0000000A
+#define VMX_ERROR_VMPTRLD_VMXON_POINTER                              0x0000000A
 
 /**
  * VMPTRLD with incorrect VMCS revision identifier.
  */
-#define VMX_VMX_ERROR_VMPTRLD_INCORRECT_VMCS_REVISION_ID             0x0000000B
+#define VMX_ERROR_VMPTRLD_INCORRECT_VMCS_REVISION_ID                 0x0000000B
 
 /**
  * VMREAD/VMWRITE from/to unsupported VMCS component.
  */
-#define VMX_VMX_ERROR_VMREAD_VMWRITE_INVALID_COMPONENT               0x0000000C
+#define VMX_ERROR_VMREAD_VMWRITE_INVALID_COMPONENT                   0x0000000C
 
 /**
  * VMWRITE to read-only VMCS component.
  */
-#define VMX_VMX_ERROR_VMWRITE_READONLY_COMPONENT                     0x0000000D
+#define VMX_ERROR_VMWRITE_READONLY_COMPONENT                         0x0000000D
 
 /**
  * VMXON executed in VMX root operation.
  */
-#define VMX_VMX_ERROR_VMXON_IN_VMX_ROOT_OP                           0x0000000F
+#define VMX_ERROR_VMXON_IN_VMX_ROOT_OP                               0x0000000F
 
 /**
  * VM entry with invalid executive-VMCS pointer.
  */
-#define VMX_VMX_ERROR_VMENTRY_INVALID_VMCS_EXECUTIVE_POINTER         0x00000010
+#define VMX_ERROR_VMENTRY_INVALID_VMCS_EXECUTIVE_POINTER             0x00000010
 
 /**
  * VM entry with non-launched executive VMCS.
  */
-#define VMX_VMX_ERROR_VMENTRY_NON_LAUNCHED_EXECUTIVE_VMCS            0x00000011
+#define VMX_ERROR_VMENTRY_NON_LAUNCHED_EXECUTIVE_VMCS                0x00000011
 
 /**
  * VM entry with executive-VMCS pointer not VMXON pointer (when attempting to deactivate the dual-monitor treatment of SMIs
  * and SMM).
  */
-#define VMX_VMX_ERROR_VMENTRY_EXECUTIVE_VMCS_PTR                     0x00000012
+#define VMX_ERROR_VMENTRY_EXECUTIVE_VMCS_PTR                         0x00000012
 
 /**
  * VMCALL with non-clear VMCS (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
-#define VMX_VMX_ERROR_VMCALL_NON_CLEAR_VMCS                          0x00000013
+#define VMX_ERROR_VMCALL_NON_CLEAR_VMCS                              0x00000013
 
 /**
  * VMCALL with invalid VM-exit control fields.
  */
-#define VMX_VMX_ERROR_VMCALL_INVALID_VMEXIT_FIELDS                   0x00000014
+#define VMX_ERROR_VMCALL_INVALID_VMEXIT_FIELDS                       0x00000014
 
 /**
  * VMCALL with incorrect MSEG revision identifier (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
-#define VMX_VMX_ERROR_VMCALL_INVALID_MSEG_REVISION_ID                0x00000016
+#define VMX_ERROR_VMCALL_INVALID_MSEG_REVISION_ID                    0x00000016
 
 /**
  * VMXOFF under dual-monitor treatment of SMIs and SMM.
  */
-#define VMX_VMX_ERROR_VMXOFF_DUAL_MONITOR                            0x00000017
+#define VMX_ERROR_VMXOFF_DUAL_MONITOR                                0x00000017
 
 /**
  * VMCALL with invalid SMM-monitor features (when attempting to activate the dual-monitor treatment of SMIs and SMM).
  */
-#define VMX_VMX_ERROR_VMCALL_INVALID_SMM_MONITOR                     0x00000018
+#define VMX_ERROR_VMCALL_INVALID_SMM_MONITOR                         0x00000018
 
 /**
  * VM entry with invalid VM-execution control fields in executive VMCS (when attempting to return from SMM).
  */
-#define VMX_VMX_ERROR_VMENTRY_INVALID_VM_EXECUTION_CONTROL           0x00000019
+#define VMX_ERROR_VMENTRY_INVALID_VM_EXECUTION_CONTROL               0x00000019
 
 /**
  * VM entry with events blocked by MOV SS.
  */
-#define VMX_VMX_ERROR_VMENTRY_MOV_SS                                 0x0000001A
+#define VMX_ERROR_VMENTRY_MOV_SS                                     0x0000001A
 
 /**
  * Invalid operand to INVEPT/INVVPID.
  */
-#define VMX_VMX_ERROR_INVEPT_INVVPID_INVALID_OPERAND                 0x0000001C
+#define VMX_ERROR_INVEPT_INVVPID_INVALID_OPERAND                     0x0000001C
 /**
  * @}
  */
@@ -16008,10 +16008,10 @@ typedef union
      * may be set even if its corresponding enabling bit in DR7 is not set.
      */
     UINT64 BreakpointCondition                                     : 4;
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_BIT 0
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_FLAG 0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_MASK 0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION(_) (((_) >> 0) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_BIT 0
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_FLAG 0x0F
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION_MASK 0x0F
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_BREAKPOINT_CONDITION(_) (((_) >> 0) & 0x0F)
     UINT64 Reserved1                                               : 9;
 
     /**
@@ -16020,10 +16020,10 @@ typedef union
      * [Bit 13] When set, this bit indicates that the cause of the debug exception is "debug register access detected."
      */
     UINT64 DebugRegisterAccessDetected                             : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_BIT 13
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_FLAG 0x2000
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED(_) (((_) >> 13) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_BIT 13
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_FLAG 0x2000
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_DEBUG_REGISTER_ACCESS_DETECTED(_) (((_) >> 13) & 0x01)
 
     /**
      * @brief BS
@@ -16032,15 +16032,15 @@ typedef union
      * instruction (if RFLAGS.TF = 1 and IA32_DEBUGCTL.BTF = 0) or a taken branch (if RFLAGS.TF = DEBUGCTL.BTF = 1).
      */
     UINT64 SingleInstruction                                       : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_BIT 14
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_FLAG 0x4000
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION(_) (((_) >> 14) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_BIT 14
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_FLAG 0x4000
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION_SINGLE_INSTRUCTION(_) (((_) >> 14) & 0x01)
     UINT64 Reserved2                                               : 49;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION;
+} VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION;
 
 /**
  * @brief Exit Qualification for Task Switch
@@ -16053,29 +16053,29 @@ typedef union
      * [Bits 15:0] Selector of task-state segment (TSS) to which the guest attempted to switch.
      */
     UINT64 Selector                                                : 16;
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_BIT          0
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_FLAG         0xFFFF
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_MASK         0xFFFF
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR(_)           (((_) >> 0) & 0xFFFF)
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_BIT              0
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_FLAG             0xFFFF
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR_MASK             0xFFFF
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SELECTOR(_)               (((_) >> 0) & 0xFFFF)
     UINT64 Reserved1                                               : 14;
 
     /**
      * [Bits 31:30] Source of task switch initiation.
      */
     UINT64 Source                                                  : 2;
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_BIT            30
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_FLAG           0xC0000000
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_MASK           0x03
-#define VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE(_)             (((_) >> 30) & 0x03)
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_CALL_INSTRUCTION             0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_IRET_INSTRUCTION             0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_JMP_INSTRUCTION              0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_TASK_GATE_IN_IDT             0x00000003
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_BIT                30
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_FLAG               0xC0000000
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE_MASK               0x03
+#define VMX_EXIT_QUALIFICATION_TASK_SWITCH_SOURCE(_)                 (((_) >> 30) & 0x03)
+#define VMX_EXIT_QUALIFICATION_TYPE_CALL_INSTRUCTION                 0x00000000
+#define VMX_EXIT_QUALIFICATION_TYPE_IRET_INSTRUCTION                 0x00000001
+#define VMX_EXIT_QUALIFICATION_TYPE_JMP_INSTRUCTION                  0x00000002
+#define VMX_EXIT_QUALIFICATION_TYPE_TASK_GATE_IN_IDT                 0x00000003
     UINT64 Reserved2                                               : 32;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_TASK_SWITCH;
+} VMX_EXIT_QUALIFICATION_TASK_SWITCH;
 
 /**
  * @brief Exit Qualification for Control-Register Accesses
@@ -16089,80 +16089,80 @@ typedef union
      * 64 architecture as they do not support CR8.
      */
     UINT64 ControlRegister                                         : 4;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_BIT       0
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_FLAG      0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_MASK      0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER(_)        (((_) >> 0) & 0x0F)
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR0                      0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR2                      0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR3                      0x00000003
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR4                      0x00000004
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR8                      0x00000008
+#define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_BIT           0
+#define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_FLAG          0x0F
+#define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER_MASK          0x0F
+#define VMX_EXIT_QUALIFICATION_MOV_CR_CONTROL_REGISTER(_)            (((_) >> 0) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR0                          0x00000000
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR2                          0x00000002
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR3                          0x00000003
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR4                          0x00000004
+#define VMX_EXIT_QUALIFICATION_REGISTER_CR8                          0x00000008
 
     /**
      * [Bits 5:4] Access type.
      */
     UINT64 AccessType                                              : 2;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_BIT            4
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_FLAG           0x30
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_MASK           0x03
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE(_)             (((_) >> 4) & 0x03)
-#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                  0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_CLTS                       0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_LMSW                       0x00000003
+#define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_BIT                4
+#define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_FLAG               0x30
+#define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE_MASK               0x03
+#define VMX_EXIT_QUALIFICATION_MOV_CR_ACCESS_TYPE(_)                 (((_) >> 4) & 0x03)
+#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                      0x00000000
+#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                    0x00000001
+#define VMX_EXIT_QUALIFICATION_ACCESS_CLTS                           0x00000002
+#define VMX_EXIT_QUALIFICATION_ACCESS_LMSW                           0x00000003
 
     /**
      * [Bit 6] LMSW operand type. For CLTS and MOV CR, cleared to 0.
      */
     UINT64 LmswOperandType                                         : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_BIT      6
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_FLAG     0x40
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_MASK     0x01
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE(_)       (((_) >> 6) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                  0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                    0x00000001
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_BIT          6
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_FLAG         0x40
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE_MASK         0x01
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_OPERAND_TYPE(_)           (((_) >> 6) & 0x01)
+#define VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                      0x00000000
+#define VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                        0x00000001
     UINT64 Reserved1                                               : 1;
 
     /**
      * [Bits 11:8] For MOV CR, the general-purpose register.
      */
     UINT64 GeneralPurposeRegister                                  : 4;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_BIT 8
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_FLAG 0xF00
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_MASK 0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER(_) (((_) >> 8) & 0x0F)
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RAX                        0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RCX                        0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDX                        0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBX                        0x00000003
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSP                        0x00000004
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBP                        0x00000005
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSI                        0x00000006
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDI                        0x00000007
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R8                         0x00000008
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R9                         0x00000009
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R10                        0x0000000A
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R11                        0x0000000B
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R12                        0x0000000C
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R13                        0x0000000D
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R14                        0x0000000E
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R15                        0x0000000F
+#define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_BIT   8
+#define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_FLAG  0xF00
+#define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER_MASK  0x0F
+#define VMX_EXIT_QUALIFICATION_MOV_CR_GENERAL_PURPOSE_REGISTER(_)    (((_) >> 8) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
+#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
+#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
+#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
+#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
+#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
+#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
+#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
+#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
+#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
+#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
+#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
+#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
+#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
+#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
+#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
     UINT64 Reserved2                                               : 4;
 
     /**
      * [Bits 31:16] For LMSW, the LMSW source data. For CLTS and MOV CR, cleared to 0.
      */
     UINT64 LmswSourceData                                          : 16;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_BIT       16
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_FLAG      0xFFFF0000
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_MASK      0xFFFF
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA(_)        (((_) >> 16) & 0xFFFF)
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_BIT           16
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_FLAG          0xFFFF0000
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA_MASK          0xFFFF
+#define VMX_EXIT_QUALIFICATION_MOV_CR_LMSW_SOURCE_DATA(_)            (((_) >> 16) & 0xFFFF)
     UINT64 Reserved3                                               : 32;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_MOV_CR;
+} VMX_EXIT_QUALIFICATION_MOV_CR;
 
 /**
  * @brief Exit Qualification for MOV DR
@@ -16175,59 +16175,59 @@ typedef union
      * [Bits 2:0] Number of debug register.
      */
     UINT64 DebugRegister                                           : 3;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_BIT         0
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_FLAG        0x07
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_MASK        0x07
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER(_)          (((_) >> 0) & 0x07)
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR0                      0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR1                      0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR2                      0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR3                      0x00000003
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR6                      0x00000006
-#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR7                      0x00000007
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_BIT             0
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_FLAG            0x07
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER_MASK            0x07
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DEBUG_REGISTER(_)              (((_) >> 0) & 0x07)
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR0                          0x00000000
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR1                          0x00000001
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR2                          0x00000002
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR3                          0x00000003
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR6                          0x00000006
+#define VMX_EXIT_QUALIFICATION_REGISTER_DR7                          0x00000007
     UINT64 Reserved1                                               : 1;
 
     /**
      * [Bit 4] Direction of access (0 = MOV to DR; 1 = MOV from DR).
      */
     UINT64 DirectionOfAccess                                       : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_BIT    4
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_FLAG   0x10
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_MASK   0x01
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS(_)     (((_) >> 4) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR               0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR             0x00000001
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_BIT        4
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_FLAG       0x10
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS_MASK       0x01
+#define VMX_EXIT_QUALIFICATION_MOV_DR_DIRECTION_OF_ACCESS(_)         (((_) >> 4) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR                   0x00000000
+#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR                 0x00000001
     UINT64 Reserved2                                               : 3;
 
     /**
      * [Bits 11:8] General-purpose register.
      */
     UINT64 GeneralPurposeRegister                                  : 4;
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_BIT 8
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_FLAG 0xF00
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_MASK 0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER(_) (((_) >> 8) & 0x0F)
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RAX                        0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RCX                        0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDX                        0x00000002
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBX                        0x00000003
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSP                        0x00000004
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBP                        0x00000005
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSI                        0x00000006
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDI                        0x00000007
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R8                         0x00000008
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R9                         0x00000009
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R10                        0x0000000A
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R11                        0x0000000B
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R12                        0x0000000C
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R13                        0x0000000D
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R14                        0x0000000E
-#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R15                        0x0000000F
+#define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_BIT   8
+#define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_FLAG  0xF00
+#define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER_MASK  0x0F
+#define VMX_EXIT_QUALIFICATION_MOV_DR_GENERAL_PURPOSE_REGISTER(_)    (((_) >> 8) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
+#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
+#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
+#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
+#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
+#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
+#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
+#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
+#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
+#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
+#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
+#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
+#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
+#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
+#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
+#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
     UINT64 Reserved3                                               : 52;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_MOV_DR;
+} VMX_EXIT_QUALIFICATION_MOV_DR;
 
 /**
  * @brief Exit Qualification for I/O Instructions
@@ -16240,72 +16240,72 @@ typedef union
      * [Bits 2:0] Size of access.
      */
     UINT64 SizeOfAccess                                            : 3;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_BIT 0
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_FLAG 0x07
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_MASK 0x07
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS(_)  (((_) >> 0) & 0x07)
-#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_1_BYTE                      0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_2_BYTE                      0x00000001
-#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_4_BYTE                      0x00000003
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_BIT     0
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_FLAG    0x07
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS_MASK    0x07
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_SIZE_OF_ACCESS(_)      (((_) >> 0) & 0x07)
+#define VMX_EXIT_QUALIFICATION_WIDTH_1_BYTE                          0x00000000
+#define VMX_EXIT_QUALIFICATION_WIDTH_2_BYTE                          0x00000001
+#define VMX_EXIT_QUALIFICATION_WIDTH_4_BYTE                          0x00000003
 
     /**
      * [Bit 3] Direction of the attempted access (0 = OUT, 1 = IN).
      */
     UINT64 DirectionOfAccess                                       : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_BIT 3
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_FLAG 0x08
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS(_) (((_) >> 3) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_OUT                     0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_IN                      0x00000001
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_BIT 3
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_FLAG 0x08
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_DIRECTION_OF_ACCESS(_) (((_) >> 3) & 0x01)
+#define VMX_EXIT_QUALIFICATION_DIRECTION_OUT                         0x00000000
+#define VMX_EXIT_QUALIFICATION_DIRECTION_IN                          0x00000001
 
     /**
      * [Bit 4] String instruction (0 = not string; 1 = string).
      */
     UINT64 StringInstruction                                       : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_BIT 4
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_FLAG 0x10
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION(_) (((_) >> 4) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING              0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_IS_STRING_STRING                  0x00000001
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_BIT 4
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_FLAG 0x10
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_STRING_INSTRUCTION(_)  (((_) >> 4) & 0x01)
+#define VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING                  0x00000000
+#define VMX_EXIT_QUALIFICATION_IS_STRING_STRING                      0x00000001
 
     /**
      * [Bit 5] REP prefixed (0 = not REP; 1 = REP).
      */
     UINT64 RepPrefixed                                             : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_BIT   5
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_FLAG  0x20
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_MASK  0x01
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED(_)    (((_) >> 5) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                    0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_IS_REP_REP                        0x00000001
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_BIT       5
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_FLAG      0x20
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED_MASK      0x01
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_REP_PREFIXED(_)        (((_) >> 5) & 0x01)
+#define VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                        0x00000000
+#define VMX_EXIT_QUALIFICATION_IS_REP_REP                            0x00000001
 
     /**
      * [Bit 6] Operand encoding (0 = DX, 1 = immediate).
      */
     UINT64 OperandEncoding                                         : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_BIT 6
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_FLAG 0x40
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING(_) (((_) >> 6) & 0x01)
-#define VMX_VMX_EXIT_QUALIFICATION_ENCODING_DX                       0x00000000
-#define VMX_VMX_EXIT_QUALIFICATION_ENCODING_IMMEDIATE                0x00000001
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_BIT   6
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_FLAG  0x40
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING_MASK  0x01
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_OPERAND_ENCODING(_)    (((_) >> 6) & 0x01)
+#define VMX_EXIT_QUALIFICATION_ENCODING_DX                           0x00000000
+#define VMX_EXIT_QUALIFICATION_ENCODING_IMMEDIATE                    0x00000001
     UINT64 Reserved1                                               : 9;
 
     /**
      * [Bits 31:16] Port number (as specified in DX or in an immediate operand).
      */
     UINT64 PortNumber                                              : 16;
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_BIT    16
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_FLAG   0xFFFF0000
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_MASK   0xFFFF
-#define VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER(_)     (((_) >> 16) & 0xFFFF)
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_BIT        16
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_FLAG       0xFFFF0000
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER_MASK       0xFFFF
+#define VMX_EXIT_QUALIFICATION_IO_INSTRUCTION_PORT_NUMBER(_)         (((_) >> 16) & 0xFFFF)
     UINT64 Reserved2                                               : 32;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_IO_INSTRUCTION;
+} VMX_EXIT_QUALIFICATION_IO_INSTRUCTION;
 
 /**
  * @brief Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physical Accesses
@@ -16319,53 +16319,53 @@ typedef union
      * - Undefined if the APIC-access VM exit is due a guest-physical access.
      */
     UINT64 PageOffset                                              : 12;
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_BIT       0
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_FLAG      0xFFF
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_MASK      0xFFF
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET(_)        (((_) >> 0) & 0xFFF)
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_BIT           0
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_FLAG          0xFFF
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET_MASK          0xFFF
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_PAGE_OFFSET(_)            (((_) >> 0) & 0xFFF)
 
     /**
      * [Bits 15:12] Access type.
      */
     UINT64 AccessType                                              : 4;
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_BIT       12
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_FLAG      0xF000
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_MASK      0x0F
-#define VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE(_)        (((_) >> 12) & 0x0F)
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_BIT           12
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_FLAG          0xF000
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE_MASK          0x0F
+#define VMX_EXIT_QUALIFICATION_APIC_ACCESS_ACCESS_TYPE(_)            (((_) >> 12) & 0x0F)
     /**
      * Linear access for a data read during instruction execution.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                  0x00000000
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                      0x00000000
 
     /**
      * Linear access for a data write during instruction execution.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                 0x00000001
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                     0x00000001
 
     /**
      * Linear access for an instruction fetch.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTRUCTION_FETCH     0x00000002
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTRUCTION_FETCH         0x00000002
 
     /**
      * Linear access (read or write) during event delivery.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_EVENT_DELIVERY        0x00000003
+#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_EVENT_DELIVERY            0x00000003
 
     /**
      * Guest-physical access during event delivery.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_EVENT_DELIVERY      0x0000000A
+#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_EVENT_DELIVERY          0x0000000A
 
     /**
      * Guest-physical access for an instruction fetch or during instruction execution.
      */
-#define VMX_VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTRUCTION_FETCH   0x0000000F
+#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTRUCTION_FETCH       0x0000000F
     UINT64 Reserved1                                               : 48;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_APIC_ACCESS;
+} VMX_EXIT_QUALIFICATION_APIC_ACCESS;
 
 /**
  * @brief Exit Qualification for EPT Violations
@@ -16378,48 +16378,48 @@ typedef union
      * [Bit 0] Set if the access causing the EPT violation was a data read.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_BIT     0
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_FLAG    0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_MASK    0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS(_)      (((_) >> 0) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_BIT         0
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_FLAG        0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS_MASK        0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READ_ACCESS(_)          (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Set if the access causing the EPT violation was a data write.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_BIT    1
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_FLAG   0x02
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_MASK   0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS(_)     (((_) >> 1) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_BIT        1
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_FLAG       0x02
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS_MASK       0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_WRITE_ACCESS(_)         (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] Set if the access causing the EPT violation was an instruction fetch.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_BIT  2
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_FLAG 0x04
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS(_)   (((_) >> 2) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_BIT      2
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_FLAG     0x04
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS_MASK     0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_ACCESS(_)       (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] The logical-AND of bit 0 in the EPT paging-structure entries used to translate the guest-physical address of the
      * access causing the EPT violation (indicates whether the guest-physical address was readable).
      */
     UINT64 EptReadable                                             : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_BIT    3
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_FLAG   0x08
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_MASK   0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE(_)     (((_) >> 3) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_BIT        3
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_FLAG       0x08
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE_MASK       0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_READABLE(_)         (((_) >> 3) & 0x01)
 
     /**
      * [Bit 4] The logical-AND of bit 1 in the EPT paging-structure entries used to translate the guest-physical address of the
      * access causing the EPT violation (indicates whether the guest-physical address was writeable).
      */
     UINT64 EptWriteable                                            : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_BIT   4
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_FLAG  0x10
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_MASK  0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE(_)    (((_) >> 4) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_BIT       4
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_FLAG      0x10
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE_MASK      0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_WRITEABLE(_)        (((_) >> 4) & 0x01)
 
     /**
      * [Bit 5] The logical-AND of bit 2 in the EPT paging-structure entries used to translate the guest-physical address of the
@@ -16429,10 +16429,10 @@ typedef union
      * supervisor-mode linear addresses.
      */
     UINT64 EptExecutable                                           : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_BIT  5
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FLAG 0x20
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE(_)   (((_) >> 5) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_BIT      5
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FLAG     0x20
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_MASK     0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE(_)       (((_) >> 5) & 0x01)
 
     /**
      * [Bit 6] If the "mode-based execute control" VM-execution control is 0, the value of this bit is undefined. If that
@@ -16441,20 +16441,20 @@ typedef union
      * address was executable for user-mode linear addresses.
      */
     UINT64 EptExecutableForUserMode                                : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_BIT 6
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_FLAG 0x40
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE(_) (((_) >> 6) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_BIT 6
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_FLAG 0x40
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EPT_EXECUTABLE_FOR_USER_MODE(_) (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Set if the guest linear-address field is valid. The guest linear-address field is valid for all EPT violations
      * except those resulting from an attempt to load the guest PDPTEs as part of the execution of the MOV CR instruction.
      */
     UINT64 ValidGuestLinearAddress                                 : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_BIT 7
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_FLAG 0x80
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS(_) (((_) >> 7) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_BIT 7
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_FLAG 0x80
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_VALID_GUEST_LINEAR_ADDRESS(_) (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] If bit 7 is 1:
@@ -16465,10 +16465,10 @@ typedef union
      * Reserved if bit 7 is 0 (cleared to 0).
      */
     UINT64 CausedByTranslation                                     : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_BIT 8
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_FLAG 0x100
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION(_) (((_) >> 8) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_BIT 8
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_FLAG 0x100
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_CAUSED_BY_TRANSLATION(_) (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] This bit is 0 if the linear address is a supervisor-mode linear address and 1 if it is a user-mode linear
@@ -16478,10 +16478,10 @@ typedef union
      *          CR0.PG = 0, the translation of every linear address is a user-mode linear address and thus this bit will be 1.)
      */
     UINT64 UserModeLinearAddress                                   : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_BIT 9
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_FLAG 0x200
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS(_) (((_) >> 9) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_BIT 9
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_FLAG 0x200
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_USER_MODE_LINEAR_ADDRESS(_) (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] This bit is 0 if paging translates the linear address to a read-only page and 1 if it translates to a
@@ -16491,10 +16491,10 @@ typedef union
      *          CR0.PG = 0, every linear address is read/write and thus this bit will be 1.)
      */
     UINT64 ReadableWritablePage                                    : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_BIT 10
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_FLAG 0x400
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE(_) (((_) >> 10) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_BIT 10
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_FLAG 0x400
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_READABLE_WRITABLE_PAGE(_) (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] This bit is 0 if paging translates the linear address to an executable page and 1 if it translates to an
@@ -16504,24 +16504,24 @@ typedef union
      *          CR0.PG = 0, CR4.PAE = 0, or IA32_EFER.NXE = 0, every linear address is executable and thus this bit will be 0.)
      */
     UINT64 ExecuteDisablePage                                      : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_BIT 11
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_FLAG 0x800
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE(_) (((_) >> 11) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_BIT 11
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_FLAG 0x800
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_EXECUTE_DISABLE_PAGE(_) (((_) >> 11) & 0x01)
 
     /**
      * [Bit 12] NMI unblocking due to IRET.
      */
     UINT64 NmiUnblocking                                           : 1;
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_BIT  12
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_FLAG 0x1000
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_MASK 0x01
-#define VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING(_)   (((_) >> 12) & 0x01)
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_BIT      12
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_FLAG     0x1000
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_MASK     0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING(_)       (((_) >> 12) & 0x01)
     UINT64 Reserved1                                               : 51;
   };
 
   UINT64 Flags;
-} VMX_VMX_EXIT_QUALIFICATION_EPT_VIOLATION;
+} VMX_EXIT_QUALIFICATION_EPT_VIOLATION;
 
 /**
  * @}

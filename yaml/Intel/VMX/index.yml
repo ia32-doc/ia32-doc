@@ -6,7 +6,7 @@
   fields:
   - name: BASIC_EXIT_REASONS
     description: VMX Basic Exit Reasons.
-    children_name_with_prefix: VMX_EXIT_REASON # Just EXIT_REASON ?
+    children_name_with_prefix: EXIT_REASON # Just EXIT_REASON ?
     type: group
     reference: Vol3D[C(VMX BASIC EXIT REASONS)]
     fields:
@@ -523,7 +523,7 @@
 
   - name: INSTRUCTION_ERROR_NUMBERS
     description: VM Instruction Error Numbers.
-    children_name_with_prefix: VMX_ERROR
+    children_name_with_prefix: ERROR
     type: group
     reference: Vol3C[30.4(VM INSTRUCTION ERROR NUMBERS)]
     fields:
@@ -706,7 +706,7 @@
 
   - name: BASIC_EXIT_INFORMATION
     description: Basic VM-Exit Information.
-    children_name_with_prefix: VMX_EXIT_QUALIFICATION
+    children_name_with_prefix: EXIT_QUALIFICATION
     type: group
     reference: Vol3C[27.2.1(Basic VM-Exit Information)]
     fields:
