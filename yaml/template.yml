@@ -23,7 +23,7 @@
   alternative_short_name: WRITE_COMBINED  # Author's subjective best (descriptive) short name
   alternative_long_name: WRITE_COMBINED   # Author's subjective best (descriptive) long name
 
-  name_with_postfix: REGISTER             # Appended to parent's name (used in groups)
+  name_with_suffix: REGISTER             # Appended to parent's name (used in groups)
 
   short_description: Description doesn't end with dot
   long_description: |

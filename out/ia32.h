@@ -5641,9 +5641,9 @@ typedef union
      * 1  | 1  | 1  | Processor Flag 7
      */
     UINT64 PlatformId                                              : 3;
-#define IA32_PLATFORM_ID_REGISTER_PLATFORM_ID_BIT                    50
-#define IA32_PLATFORM_ID_REGISTER_PLATFORM_ID_MASK                   0x07
-#define IA32_PLATFORM_ID_REGISTER_PLATFORM_ID(_)                     (((_) >> 50) & 0x07)
+#define IA32_PLATFORM_ID_PLATFORM_ID_BIT                             50
+#define IA32_PLATFORM_ID_PLATFORM_ID_MASK                            0x07
+#define IA32_PLATFORM_ID_PLATFORM_ID(_)                              (((_) >> 50) & 0x07)
     UINT64 Reserved2                                               : 11;
   };
 
@@ -5669,34 +5669,34 @@ typedef union
      * [Bit 8] BSP flag.
      */
     UINT64 BspFlag                                                 : 1;
-#define IA32_APIC_BASE_REGISTER_BSP_FLAG_BIT                         8
-#define IA32_APIC_BASE_REGISTER_BSP_FLAG_MASK                        0x01
-#define IA32_APIC_BASE_REGISTER_BSP_FLAG(_)                          (((_) >> 8) & 0x01)
+#define IA32_APIC_BASE_BSP_FLAG_BIT                                  8
+#define IA32_APIC_BASE_BSP_FLAG_MASK                                 0x01
+#define IA32_APIC_BASE_BSP_FLAG(_)                                   (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
      * [Bit 10] Enable x2APIC mode.
      */
     UINT64 EnableX2ApicMode                                        : 1;
-#define IA32_APIC_BASE_REGISTER_ENABLE_X2APIC_MODE_BIT               10
-#define IA32_APIC_BASE_REGISTER_ENABLE_X2APIC_MODE_MASK              0x01
-#define IA32_APIC_BASE_REGISTER_ENABLE_X2APIC_MODE(_)                (((_) >> 10) & 0x01)
+#define IA32_APIC_BASE_ENABLE_X2APIC_MODE_BIT                        10
+#define IA32_APIC_BASE_ENABLE_X2APIC_MODE_MASK                       0x01
+#define IA32_APIC_BASE_ENABLE_X2APIC_MODE(_)                         (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] APIC Global Enable.
      */
     UINT64 ApicGlobalEnable                                        : 1;
-#define IA32_APIC_BASE_REGISTER_APIC_GLOBAL_ENABLE_BIT               11
-#define IA32_APIC_BASE_REGISTER_APIC_GLOBAL_ENABLE_MASK              0x01
-#define IA32_APIC_BASE_REGISTER_APIC_GLOBAL_ENABLE(_)                (((_) >> 11) & 0x01)
+#define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_BIT                        11
+#define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_MASK                       0x01
+#define IA32_APIC_BASE_APIC_GLOBAL_ENABLE(_)                         (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] APIC Base.
      */
     UINT64 ApicBase                                                : 36;
-#define IA32_APIC_BASE_REGISTER_APIC_BASE_BIT                        12
-#define IA32_APIC_BASE_REGISTER_APIC_BASE_MASK                       0xFFFFFFFFF
-#define IA32_APIC_BASE_REGISTER_APIC_BASE(_)                         (((_) >> 12) & 0xFFFFFFFFF)
+#define IA32_APIC_BASE_APIC_BASE_BIT                                 12
+#define IA32_APIC_BASE_APIC_BASE_MASK                                0xFFFFFFFFF
+#define IA32_APIC_BASE_APIC_BASE(_)                                  (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved3                                               : 16;
   };
 
@@ -5727,9 +5727,9 @@ typedef union
      * @remarks If any one enumeration condition for defined bit field position greater than bit 0 holds.
      */
     UINT64 LockBit                                                 : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_LOCK_BIT_BIT                   0
-#define IA32_FEATURE_CONTROL_REGISTER_LOCK_BIT_MASK                  0x01
-#define IA32_FEATURE_CONTROL_REGISTER_LOCK_BIT(_)                    (((_) >> 0) & 0x01)
+#define IA32_FEATURE_CONTROL_LOCK_BIT_BIT                            0
+#define IA32_FEATURE_CONTROL_LOCK_BIT_MASK                           0x01
+#define IA32_FEATURE_CONTROL_LOCK_BIT(_)                             (((_) >> 0) & 0x01)
 
     /**
      * @brief Enable VMX inside SMX operation <b>(R/WL)</b>
@@ -5741,9 +5741,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[5] = 1 && CPUID.01H:ECX[6] = 1
      */
     UINT64 EnableVmxInsideSmx                                      : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_INSIDE_SMX_BIT      1
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_INSIDE_SMX_MASK     0x01
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_INSIDE_SMX(_)       (((_) >> 1) & 0x01)
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_BIT               1
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_MASK              0x01
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX(_)                (((_) >> 1) & 0x01)
 
     /**
      * @brief Enable VMX outside SMX operation <b>(R/WL)</b>
@@ -5754,9 +5754,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[5] = 1
      */
     UINT64 EnableVmxOutsideSmx                                     : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_OUTSIDE_SMX_BIT     2
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_OUTSIDE_SMX_MASK    0x01
-#define IA32_FEATURE_CONTROL_REGISTER_ENABLE_VMX_OUTSIDE_SMX(_)      (((_) >> 2) & 0x01)
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_BIT              2
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_MASK             0x01
+#define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX(_)               (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -5768,9 +5768,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[6] = 1
      */
     UINT64 SenterLocalFunctionEnables                              : 7;
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_LOCAL_FUNCTION_ENABLES_BIT 8
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_LOCAL_FUNCTION_ENABLES_MASK 0x7F
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_LOCAL_FUNCTION_ENABLES(_) (((_) >> 8) & 0x7F)
+#define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_BIT       8
+#define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_MASK      0x7F
+#define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES(_)        (((_) >> 8) & 0x7F)
 
     /**
      * @brief SENTER Global Enable <b>(R/WL)</b>
@@ -5780,9 +5780,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[6] = 1
      */
     UINT64 SenterGlobalEnable                                      : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_GLOBAL_ENABLE_BIT       15
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_GLOBAL_ENABLE_MASK      0x01
-#define IA32_FEATURE_CONTROL_REGISTER_SENTER_GLOBAL_ENABLE(_)        (((_) >> 15) & 0x01)
+#define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_BIT                15
+#define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_MASK               0x01
+#define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE(_)                 (((_) >> 15) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -5793,9 +5793,9 @@ typedef union
      * @remarks If CPUID.(EAX=07H, ECX=0H): ECX[30] = 1
      */
     UINT64 SgxLaunchControlEnable                                  : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_LAUNCH_CONTROL_ENABLE_BIT  17
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_LAUNCH_CONTROL_ENABLE_MASK 0x01
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_LAUNCH_CONTROL_ENABLE(_)   (((_) >> 17) & 0x01)
+#define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_BIT           17
+#define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_MASK          0x01
+#define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE(_)            (((_) >> 17) & 0x01)
 
     /**
      * @brief SGX Global Enable <b>(R/WL)</b>
@@ -5805,9 +5805,9 @@ typedef union
      * @remarks If CPUID.(EAX=07H, ECX=0H): EBX[2] = 1
      */
     UINT64 SgxGlobalEnable                                         : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_GLOBAL_ENABLE_BIT          18
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_GLOBAL_ENABLE_MASK         0x01
-#define IA32_FEATURE_CONTROL_REGISTER_SGX_GLOBAL_ENABLE(_)           (((_) >> 18) & 0x01)
+#define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_BIT                   18
+#define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_MASK                  0x01
+#define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE(_)                    (((_) >> 18) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
@@ -5819,9 +5819,9 @@ typedef union
      * @remarks If IA32_MCG_CAP[27] = 1
      */
     UINT64 LmceOn                                                  : 1;
-#define IA32_FEATURE_CONTROL_REGISTER_LMCE_ON_BIT                    20
-#define IA32_FEATURE_CONTROL_REGISTER_LMCE_ON_MASK                   0x01
-#define IA32_FEATURE_CONTROL_REGISTER_LMCE_ON(_)                     (((_) >> 20) & 0x01)
+#define IA32_FEATURE_CONTROL_LMCE_ON_BIT                             20
+#define IA32_FEATURE_CONTROL_LMCE_ON_MASK                            0x01
+#define IA32_FEATURE_CONTROL_LMCE_ON(_)                              (((_) >> 20) & 0x01)
     UINT64 Reserved4                                               : 43;
   };
 
@@ -5909,9 +5909,9 @@ typedef union
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
     UINT64 Valid                                                   : 1;
-#define IA32_SMM_MONITOR_CTL_REGISTER_VALID_BIT                      0
-#define IA32_SMM_MONITOR_CTL_REGISTER_VALID_MASK                     0x01
-#define IA32_SMM_MONITOR_CTL_REGISTER_VALID(_)                       (((_) >> 0) & 0x01)
+#define IA32_SMM_MONITOR_CTL_VALID_BIT                               0
+#define IA32_SMM_MONITOR_CTL_VALID_MASK                              0x01
+#define IA32_SMM_MONITOR_CTL_VALID(_)                                (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -5925,9 +5925,9 @@ typedef union
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
     UINT64 SmiUnblockingByVmxoff                                   : 1;
-#define IA32_SMM_MONITOR_CTL_REGISTER_SMI_UNBLOCKING_BY_VMXOFF_BIT   2
-#define IA32_SMM_MONITOR_CTL_REGISTER_SMI_UNBLOCKING_BY_VMXOFF_MASK  0x01
-#define IA32_SMM_MONITOR_CTL_REGISTER_SMI_UNBLOCKING_BY_VMXOFF(_)    (((_) >> 2) & 0x01)
+#define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_BIT            2
+#define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_MASK           0x01
+#define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF(_)             (((_) >> 2) & 0x01)
     UINT64 Reserved2                                               : 9;
 
     /**
@@ -5938,9 +5938,9 @@ typedef union
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
     UINT64 MsegBase                                                : 20;
-#define IA32_SMM_MONITOR_CTL_REGISTER_MSEG_BASE_BIT                  12
-#define IA32_SMM_MONITOR_CTL_REGISTER_MSEG_BASE_MASK                 0xFFFFF
-#define IA32_SMM_MONITOR_CTL_REGISTER_MSEG_BASE(_)                   (((_) >> 12) & 0xFFFFF)
+#define IA32_SMM_MONITOR_CTL_MSEG_BASE_BIT                           12
+#define IA32_SMM_MONITOR_CTL_MSEG_BASE_MASK                          0xFFFFF
+#define IA32_SMM_MONITOR_CTL_MSEG_BASE(_)                            (((_) >> 12) & 0xFFFFF)
     UINT64 Reserved3                                               : 32;
   };
 
@@ -6036,9 +6036,9 @@ typedef union
      * [Bits 7:0] Indicates the number of variable ranges implemented on the processor.
      */
     UINT64 VariableRangeCount                                      : 8;
-#define IA32_MTRR_CAPABILITIES_REGISTER_VARIABLE_RANGE_COUNT_BIT     0
-#define IA32_MTRR_CAPABILITIES_REGISTER_VARIABLE_RANGE_COUNT_MASK    0xFF
-#define IA32_MTRR_CAPABILITIES_REGISTER_VARIABLE_RANGE_COUNT(_)      (((_) >> 0) & 0xFF)
+#define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT_BIT              0
+#define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT_MASK             0xFF
+#define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT(_)               (((_) >> 0) & 0xFF)
 
     /**
      * @brief FIX (fixed range registers supported) flag
@@ -6047,9 +6047,9 @@ typedef union
      * registers are supported when clear.
      */
     UINT64 FixedRangeSupported                                     : 1;
-#define IA32_MTRR_CAPABILITIES_REGISTER_FIXED_RANGE_SUPPORTED_BIT    8
-#define IA32_MTRR_CAPABILITIES_REGISTER_FIXED_RANGE_SUPPORTED_MASK   0x01
-#define IA32_MTRR_CAPABILITIES_REGISTER_FIXED_RANGE_SUPPORTED(_)     (((_) >> 8) & 0x01)
+#define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED_BIT             8
+#define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED_MASK            0x01
+#define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED(_)              (((_) >> 8) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -6058,9 +6058,9 @@ typedef union
      * [Bit 10] The write-combining (WC) memory type is supported when set; the WC type is not supported when clear.
      */
     UINT64 WcSupported                                             : 1;
-#define IA32_MTRR_CAPABILITIES_REGISTER_WC_SUPPORTED_BIT             10
-#define IA32_MTRR_CAPABILITIES_REGISTER_WC_SUPPORTED_MASK            0x01
-#define IA32_MTRR_CAPABILITIES_REGISTER_WC_SUPPORTED(_)              (((_) >> 10) & 0x01)
+#define IA32_MTRR_CAPABILITIES_WC_SUPPORTED_BIT                      10
+#define IA32_MTRR_CAPABILITIES_WC_SUPPORTED_MASK                     0x01
+#define IA32_MTRR_CAPABILITIES_WC_SUPPORTED(_)                       (((_) >> 10) & 0x01)
 
     /**
      * @brief SMRR (System-Management Range Register) flag
@@ -6069,9 +6069,9 @@ typedef union
      * not supported when clear.
      */
     UINT64 SmrrSupported                                           : 1;
-#define IA32_MTRR_CAPABILITIES_REGISTER_SMRR_SUPPORTED_BIT           11
-#define IA32_MTRR_CAPABILITIES_REGISTER_SMRR_SUPPORTED_MASK          0x01
-#define IA32_MTRR_CAPABILITIES_REGISTER_SMRR_SUPPORTED(_)            (((_) >> 11) & 0x01)
+#define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED_BIT                    11
+#define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED_MASK                   0x01
+#define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED(_)                     (((_) >> 11) & 0x01)
     UINT64 Reserved2                                               : 52;
   };
 
@@ -6134,25 +6134,25 @@ typedef union
      * [Bits 7:0] Number of reporting banks.
      */
     UINT64 Count                                                   : 8;
-#define IA32_MCG_CAP_REGISTER_COUNT_BIT                              0
-#define IA32_MCG_CAP_REGISTER_COUNT_MASK                             0xFF
-#define IA32_MCG_CAP_REGISTER_COUNT(_)                               (((_) >> 0) & 0xFF)
+#define IA32_MCG_CAP_COUNT_BIT                                       0
+#define IA32_MCG_CAP_COUNT_MASK                                      0xFF
+#define IA32_MCG_CAP_COUNT(_)                                        (((_) >> 0) & 0xFF)
 
     /**
      * [Bit 8] IA32_MCG_CTL is present if this bit is set.
      */
     UINT64 McgCtlP                                                 : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_CTL_P_BIT                          8
-#define IA32_MCG_CAP_REGISTER_MCG_CTL_P_MASK                         0x01
-#define IA32_MCG_CAP_REGISTER_MCG_CTL_P(_)                           (((_) >> 8) & 0x01)
+#define IA32_MCG_CAP_MCG_CTL_P_BIT                                   8
+#define IA32_MCG_CAP_MCG_CTL_P_MASK                                  0x01
+#define IA32_MCG_CAP_MCG_CTL_P(_)                                    (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] Extended machine check state registers are present if this bit is set.
      */
     UINT64 McgExtP                                                 : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_P_BIT                          9
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_P_MASK                         0x01
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_P(_)                           (((_) >> 9) & 0x01)
+#define IA32_MCG_CAP_MCG_EXT_P_BIT                                   9
+#define IA32_MCG_CAP_MCG_EXT_P_MASK                                  0x01
+#define IA32_MCG_CAP_MCG_EXT_P(_)                                    (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Support for corrected MC error event is present.
@@ -6160,34 +6160,34 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 McpCmciP                                                : 1;
-#define IA32_MCG_CAP_REGISTER_MCP_CMCI_P_BIT                         10
-#define IA32_MCG_CAP_REGISTER_MCP_CMCI_P_MASK                        0x01
-#define IA32_MCG_CAP_REGISTER_MCP_CMCI_P(_)                          (((_) >> 10) & 0x01)
+#define IA32_MCG_CAP_MCP_CMCI_P_BIT                                  10
+#define IA32_MCG_CAP_MCP_CMCI_P_MASK                                 0x01
+#define IA32_MCG_CAP_MCP_CMCI_P(_)                                   (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] Threshold-based error status register are present if this bit is set.
      */
     UINT64 McgTesP                                                 : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_TES_P_BIT                          11
-#define IA32_MCG_CAP_REGISTER_MCG_TES_P_MASK                         0x01
-#define IA32_MCG_CAP_REGISTER_MCG_TES_P(_)                           (((_) >> 11) & 0x01)
+#define IA32_MCG_CAP_MCG_TES_P_BIT                                   11
+#define IA32_MCG_CAP_MCG_TES_P_MASK                                  0x01
+#define IA32_MCG_CAP_MCG_TES_P(_)                                    (((_) >> 11) & 0x01)
     UINT64 Reserved1                                               : 4;
 
     /**
      * [Bits 23:16] Number of extended machine check state registers present.
      */
     UINT64 McgExtCnt                                               : 8;
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_CNT_BIT                        16
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_CNT_MASK                       0xFF
-#define IA32_MCG_CAP_REGISTER_MCG_EXT_CNT(_)                         (((_) >> 16) & 0xFF)
+#define IA32_MCG_CAP_MCG_EXT_CNT_BIT                                 16
+#define IA32_MCG_CAP_MCG_EXT_CNT_MASK                                0xFF
+#define IA32_MCG_CAP_MCG_EXT_CNT(_)                                  (((_) >> 16) & 0xFF)
 
     /**
      * [Bit 24] The processor supports software error recovery if this bit is set.
      */
     UINT64 McgSerP                                                 : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_SER_P_BIT                          24
-#define IA32_MCG_CAP_REGISTER_MCG_SER_P_MASK                         0x01
-#define IA32_MCG_CAP_REGISTER_MCG_SER_P(_)                           (((_) >> 24) & 0x01)
+#define IA32_MCG_CAP_MCG_SER_P_BIT                                   24
+#define IA32_MCG_CAP_MCG_SER_P_MASK                                  0x01
+#define IA32_MCG_CAP_MCG_SER_P(_)                                    (((_) >> 24) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -6198,9 +6198,9 @@ typedef union
      * @remarks 06_3EH
      */
     UINT64 McgElogP                                                : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_ELOG_P_BIT                         26
-#define IA32_MCG_CAP_REGISTER_MCG_ELOG_P_MASK                        0x01
-#define IA32_MCG_CAP_REGISTER_MCG_ELOG_P(_)                          (((_) >> 26) & 0x01)
+#define IA32_MCG_CAP_MCG_ELOG_P_BIT                                  26
+#define IA32_MCG_CAP_MCG_ELOG_P_MASK                                 0x01
+#define IA32_MCG_CAP_MCG_ELOG_P(_)                                   (((_) >> 26) & 0x01)
 
     /**
      * [Bit 27] Indicates that the processor supports extended state in IA32_MCG_STATUS and associated MSR necessary to
@@ -6209,9 +6209,9 @@ typedef union
      * @remarks 06_3EH
      */
     UINT64 McgLmceP                                                : 1;
-#define IA32_MCG_CAP_REGISTER_MCG_LMCE_P_BIT                         27
-#define IA32_MCG_CAP_REGISTER_MCG_LMCE_P_MASK                        0x01
-#define IA32_MCG_CAP_REGISTER_MCG_LMCE_P(_)                          (((_) >> 27) & 0x01)
+#define IA32_MCG_CAP_MCG_LMCE_P_BIT                                  27
+#define IA32_MCG_CAP_MCG_LMCE_P_MASK                                 0x01
+#define IA32_MCG_CAP_MCG_LMCE_P(_)                                   (((_) >> 27) & 0x01)
     UINT64 Reserved3                                               : 36;
   };
 
@@ -6236,9 +6236,9 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 Ripv                                                    : 1;
-#define IA32_MCG_STATUS_REGISTER_RIPV_BIT                            0
-#define IA32_MCG_STATUS_REGISTER_RIPV_MASK                           0x01
-#define IA32_MCG_STATUS_REGISTER_RIPV(_)                             (((_) >> 0) & 0x01)
+#define IA32_MCG_STATUS_RIPV_BIT                                     0
+#define IA32_MCG_STATUS_RIPV_MASK                                    0x01
+#define IA32_MCG_STATUS_RIPV(_)                                      (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Error IP valid.
@@ -6246,9 +6246,9 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 Eipv                                                    : 1;
-#define IA32_MCG_STATUS_REGISTER_EIPV_BIT                            1
-#define IA32_MCG_STATUS_REGISTER_EIPV_MASK                           0x01
-#define IA32_MCG_STATUS_REGISTER_EIPV(_)                             (((_) >> 1) & 0x01)
+#define IA32_MCG_STATUS_EIPV_BIT                                     1
+#define IA32_MCG_STATUS_EIPV_MASK                                    0x01
+#define IA32_MCG_STATUS_EIPV(_)                                      (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] Machine check in progress.
@@ -6256,17 +6256,17 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 Mcip                                                    : 1;
-#define IA32_MCG_STATUS_REGISTER_MCIP_BIT                            2
-#define IA32_MCG_STATUS_REGISTER_MCIP_MASK                           0x01
-#define IA32_MCG_STATUS_REGISTER_MCIP(_)                             (((_) >> 2) & 0x01)
+#define IA32_MCG_STATUS_MCIP_BIT                                     2
+#define IA32_MCG_STATUS_MCIP_MASK                                    0x01
+#define IA32_MCG_STATUS_MCIP(_)                                      (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] If IA32_MCG_CAP.LMCE_P[27] = 1.
      */
     UINT64 LmceS                                                   : 1;
-#define IA32_MCG_STATUS_REGISTER_LMCE_S_BIT                          3
-#define IA32_MCG_STATUS_REGISTER_LMCE_S_MASK                         0x01
-#define IA32_MCG_STATUS_REGISTER_LMCE_S(_)                           (((_) >> 3) & 0x01)
+#define IA32_MCG_STATUS_LMCE_S_BIT                                   3
+#define IA32_MCG_STATUS_LMCE_S_MASK                                  0x01
+#define IA32_MCG_STATUS_LMCE_S(_)                                    (((_) >> 3) & 0x01)
     UINT64 Reserved1                                               : 60;
   };
 
@@ -6302,57 +6302,57 @@ typedef union
      * [Bits 7:0] Selects a performance event logic unit.
      */
     UINT64 EventSelect                                             : 8;
-#define IA32_PERFEVTSEL_REGISTER_EVENT_SELECT_BIT                    0
-#define IA32_PERFEVTSEL_REGISTER_EVENT_SELECT_MASK                   0xFF
-#define IA32_PERFEVTSEL_REGISTER_EVENT_SELECT(_)                     (((_) >> 0) & 0xFF)
+#define IA32_PERFEVTSEL_EVENT_SELECT_BIT                             0
+#define IA32_PERFEVTSEL_EVENT_SELECT_MASK                            0xFF
+#define IA32_PERFEVTSEL_EVENT_SELECT(_)                              (((_) >> 0) & 0xFF)
 
     /**
      * [Bits 15:8] Qualifies the microarchitectural condition to detect on the selected event logic.
      */
     UINT64 UMask                                                   : 8;
-#define IA32_PERFEVTSEL_REGISTER_U_MASK_BIT                          8
-#define IA32_PERFEVTSEL_REGISTER_U_MASK_MASK                         0xFF
-#define IA32_PERFEVTSEL_REGISTER_U_MASK(_)                           (((_) >> 8) & 0xFF)
+#define IA32_PERFEVTSEL_U_MASK_BIT                                   8
+#define IA32_PERFEVTSEL_U_MASK_MASK                                  0xFF
+#define IA32_PERFEVTSEL_U_MASK(_)                                    (((_) >> 8) & 0xFF)
 
     /**
      * [Bit 16] Counts while in privilege level is not ring 0.
      */
     UINT64 Usr                                                     : 1;
-#define IA32_PERFEVTSEL_REGISTER_USR_BIT                             16
-#define IA32_PERFEVTSEL_REGISTER_USR_MASK                            0x01
-#define IA32_PERFEVTSEL_REGISTER_USR(_)                              (((_) >> 16) & 0x01)
+#define IA32_PERFEVTSEL_USR_BIT                                      16
+#define IA32_PERFEVTSEL_USR_MASK                                     0x01
+#define IA32_PERFEVTSEL_USR(_)                                       (((_) >> 16) & 0x01)
 
     /**
      * [Bit 17] Counts while in privilege level is ring 0.
      */
     UINT64 Os                                                      : 1;
-#define IA32_PERFEVTSEL_REGISTER_OS_BIT                              17
-#define IA32_PERFEVTSEL_REGISTER_OS_MASK                             0x01
-#define IA32_PERFEVTSEL_REGISTER_OS(_)                               (((_) >> 17) & 0x01)
+#define IA32_PERFEVTSEL_OS_BIT                                       17
+#define IA32_PERFEVTSEL_OS_MASK                                      0x01
+#define IA32_PERFEVTSEL_OS(_)                                        (((_) >> 17) & 0x01)
 
     /**
      * [Bit 18] Enables edge detection if set.
      */
     UINT64 Edge                                                    : 1;
-#define IA32_PERFEVTSEL_REGISTER_EDGE_BIT                            18
-#define IA32_PERFEVTSEL_REGISTER_EDGE_MASK                           0x01
-#define IA32_PERFEVTSEL_REGISTER_EDGE(_)                             (((_) >> 18) & 0x01)
+#define IA32_PERFEVTSEL_EDGE_BIT                                     18
+#define IA32_PERFEVTSEL_EDGE_MASK                                    0x01
+#define IA32_PERFEVTSEL_EDGE(_)                                      (((_) >> 18) & 0x01)
 
     /**
      * [Bit 19] Enables pin control.
      */
     UINT64 Pc                                                      : 1;
-#define IA32_PERFEVTSEL_REGISTER_PC_BIT                              19
-#define IA32_PERFEVTSEL_REGISTER_PC_MASK                             0x01
-#define IA32_PERFEVTSEL_REGISTER_PC(_)                               (((_) >> 19) & 0x01)
+#define IA32_PERFEVTSEL_PC_BIT                                       19
+#define IA32_PERFEVTSEL_PC_MASK                                      0x01
+#define IA32_PERFEVTSEL_PC(_)                                        (((_) >> 19) & 0x01)
 
     /**
      * [Bit 20] Enables interrupt on counter overflow.
      */
     UINT64 Intr                                                    : 1;
-#define IA32_PERFEVTSEL_REGISTER_INTR_BIT                            20
-#define IA32_PERFEVTSEL_REGISTER_INTR_MASK                           0x01
-#define IA32_PERFEVTSEL_REGISTER_INTR(_)                             (((_) >> 20) & 0x01)
+#define IA32_PERFEVTSEL_INTR_BIT                                     20
+#define IA32_PERFEVTSEL_INTR_MASK                                    0x01
+#define IA32_PERFEVTSEL_INTR(_)                                      (((_) >> 20) & 0x01)
 
     /**
      * [Bit 21] When set to 1, it enables counting the associated event conditions occurring across all logical processors
@@ -6360,34 +6360,34 @@ typedef union
      * logical processor which programmed the MSR.
      */
     UINT64 AnyThread                                               : 1;
-#define IA32_PERFEVTSEL_REGISTER_ANY_THREAD_BIT                      21
-#define IA32_PERFEVTSEL_REGISTER_ANY_THREAD_MASK                     0x01
-#define IA32_PERFEVTSEL_REGISTER_ANY_THREAD(_)                       (((_) >> 21) & 0x01)
+#define IA32_PERFEVTSEL_ANY_THREAD_BIT                               21
+#define IA32_PERFEVTSEL_ANY_THREAD_MASK                              0x01
+#define IA32_PERFEVTSEL_ANY_THREAD(_)                                (((_) >> 21) & 0x01)
 
     /**
      * [Bit 22] Enables the corresponding performance counter to commence counting when this bit is set.
      */
     UINT64 En                                                      : 1;
-#define IA32_PERFEVTSEL_REGISTER_EN_BIT                              22
-#define IA32_PERFEVTSEL_REGISTER_EN_MASK                             0x01
-#define IA32_PERFEVTSEL_REGISTER_EN(_)                               (((_) >> 22) & 0x01)
+#define IA32_PERFEVTSEL_EN_BIT                                       22
+#define IA32_PERFEVTSEL_EN_MASK                                      0x01
+#define IA32_PERFEVTSEL_EN(_)                                        (((_) >> 22) & 0x01)
 
     /**
      * [Bit 23] Invert the CMASK.
      */
     UINT64 Inv                                                     : 1;
-#define IA32_PERFEVTSEL_REGISTER_INV_BIT                             23
-#define IA32_PERFEVTSEL_REGISTER_INV_MASK                            0x01
-#define IA32_PERFEVTSEL_REGISTER_INV(_)                              (((_) >> 23) & 0x01)
+#define IA32_PERFEVTSEL_INV_BIT                                      23
+#define IA32_PERFEVTSEL_INV_MASK                                     0x01
+#define IA32_PERFEVTSEL_INV(_)                                       (((_) >> 23) & 0x01)
 
     /**
      * [Bits 31:24] When CMASK is not zero, the corresponding performance counter increments each cycle if the event count is
      * greater than or equal to the CMASK.
      */
     UINT64 Cmask                                                   : 8;
-#define IA32_PERFEVTSEL_REGISTER_CMASK_BIT                           24
-#define IA32_PERFEVTSEL_REGISTER_CMASK_MASK                          0xFF
-#define IA32_PERFEVTSEL_REGISTER_CMASK(_)                            (((_) >> 24) & 0xFF)
+#define IA32_PERFEVTSEL_CMASK_BIT                                    24
+#define IA32_PERFEVTSEL_CMASK_MASK                                   0xFF
+#define IA32_PERFEVTSEL_CMASK(_)                                     (((_) >> 24) & 0xFF)
     UINT64 Reserved1                                               : 32;
   };
 
@@ -6430,9 +6430,9 @@ typedef union
      * [Bits 15:0] Target performance State Value.
      */
     UINT64 TargetStateValue                                        : 16;
-#define IA32_PERF_CTL_REGISTER_TARGET_STATE_VALUE_BIT                0
-#define IA32_PERF_CTL_REGISTER_TARGET_STATE_VALUE_MASK               0xFFFF
-#define IA32_PERF_CTL_REGISTER_TARGET_STATE_VALUE(_)                 (((_) >> 0) & 0xFFFF)
+#define IA32_PERF_CTL_TARGET_STATE_VALUE_BIT                         0
+#define IA32_PERF_CTL_TARGET_STATE_VALUE_MASK                        0xFFFF
+#define IA32_PERF_CTL_TARGET_STATE_VALUE(_)                          (((_) >> 0) & 0xFFFF)
     UINT64 Reserved1                                               : 16;
 
     /**
@@ -6441,9 +6441,9 @@ typedef union
      * @remarks 06_0FH (Mobile only)
      */
     UINT64 IdaEngage                                               : 1;
-#define IA32_PERF_CTL_REGISTER_IDA_ENGAGE_BIT                        32
-#define IA32_PERF_CTL_REGISTER_IDA_ENGAGE_MASK                       0x01
-#define IA32_PERF_CTL_REGISTER_IDA_ENGAGE(_)                         (((_) >> 32) & 0x01)
+#define IA32_PERF_CTL_IDA_ENGAGE_BIT                                 32
+#define IA32_PERF_CTL_IDA_ENGAGE_MASK                                0x01
+#define IA32_PERF_CTL_IDA_ENGAGE(_)                                  (((_) >> 32) & 0x01)
     UINT64 Reserved2                                               : 31;
   };
 
@@ -6469,9 +6469,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[5] = 1
      */
     UINT64 ExtendedOnDemandClockModulationDutyCycle                : 1;
-#define IA32_CLOCK_MODULATION_REGISTER_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 0
-#define IA32_CLOCK_MODULATION_REGISTER_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x01
-#define IA32_CLOCK_MODULATION_REGISTER_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE(_) (((_) >> 0) & 0x01)
+#define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 0
+#define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x01
+#define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE(_) (((_) >> 0) & 0x01)
 
     /**
      * @brief On-Demand Clock Modulation Duty Cycle
@@ -6481,9 +6481,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 OnDemandClockModulationDutyCycle                        : 3;
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 1
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x07
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE(_) (((_) >> 1) & 0x07)
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 1
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x07
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE(_) (((_) >> 1) & 0x07)
 
     /**
      * @brief On-Demand Clock Modulation Enable
@@ -6493,9 +6493,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 OnDemandClockModulationEnable                           : 1;
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_ENABLE_BIT 4
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_ENABLE_MASK 0x01
-#define IA32_CLOCK_MODULATION_REGISTER_ON_DEMAND_CLOCK_MODULATION_ENABLE(_) (((_) >> 4) & 0x01)
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_BIT  4
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_MASK 0x01
+#define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE(_)   (((_) >> 4) & 0x01)
     UINT64 Reserved1                                               : 59;
   };
 
@@ -6524,9 +6524,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 HighTemperatureInterruptEnable                          : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
-#define IA32_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 0) & 0x01)
+#define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT   0
+#define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK  0x01
+#define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_)    (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Low-Temperature Interrupt Enable.
@@ -6534,9 +6534,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 LowTemperatureInterruptEnable                           : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
-#define IA32_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 1) & 0x01)
+#define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT    1
+#define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK   0x01
+#define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE(_)     (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] PROCHOT\# Interrupt Enable.
@@ -6544,9 +6544,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotInterruptEnable                                  : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE_BIT   2
-#define IA32_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE_MASK  0x01
-#define IA32_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE(_)    (((_) >> 2) & 0x01)
+#define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT            2
+#define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_MASK           0x01
+#define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE(_)             (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] FORCEPR\# Interrupt Enable.
@@ -6554,9 +6554,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ForceprInterruptEnable                                  : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_FORCEPR_INTERRUPT_ENABLE_BIT   3
-#define IA32_THERM_INTERRUPT_REGISTER_FORCEPR_INTERRUPT_ENABLE_MASK  0x01
-#define IA32_THERM_INTERRUPT_REGISTER_FORCEPR_INTERRUPT_ENABLE(_)    (((_) >> 3) & 0x01)
+#define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_BIT            3
+#define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_MASK           0x01
+#define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE(_)             (((_) >> 3) & 0x01)
 
     /**
      * [Bit 4] Critical Temperature Interrupt Enable.
@@ -6564,9 +6564,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureInterruptEnable                      : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_BIT 4
-#define IA32_THERM_INTERRUPT_REGISTER_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 4) & 0x01)
+#define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_BIT 4
+#define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
+#define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 4) & 0x01)
     UINT64 Reserved1                                               : 3;
 
     /**
@@ -6575,9 +6575,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold1Value                                         : 7;
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE_BIT           8
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE_MASK          0x7F
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE(_)            (((_) >> 8) & 0x7F)
+#define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT                    8
+#define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_MASK                   0x7F
+#define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE(_)                     (((_) >> 8) & 0x7F)
 
     /**
      * [Bit 15] Threshold \#1 Interrupt Enable.
@@ -6585,9 +6585,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold1InterruptEnable                               : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE(_) (((_) >> 15) & 0x01)
+#define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT         15
+#define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_MASK        0x01
+#define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE(_)          (((_) >> 15) & 0x01)
 
     /**
      * [Bits 22:16] Threshold \#2 Value.
@@ -6595,9 +6595,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold2Value                                         : 7;
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE_BIT           16
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE_MASK          0x7F
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE(_)            (((_) >> 16) & 0x7F)
+#define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT                    16
+#define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_MASK                   0x7F
+#define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE(_)                     (((_) >> 16) & 0x7F)
 
     /**
      * [Bit 23] Threshold \#2 Interrupt Enable.
@@ -6605,9 +6605,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 Threshold2InterruptEnable                               : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE(_) (((_) >> 23) & 0x01)
+#define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT         23
+#define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_MASK        0x01
+#define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE(_)          (((_) >> 23) & 0x01)
 
     /**
      * [Bit 24] Power Limit Notification Enable.
@@ -6615,9 +6615,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitNotificationEnable                            : 1;
-#define IA32_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
-#define IA32_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE_MASK 0x01
-#define IA32_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE(_) (((_) >> 24) & 0x01)
+#define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT     24
+#define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_MASK    0x01
+#define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE(_)      (((_) >> 24) & 0x01)
     UINT64 Reserved2                                               : 39;
   };
 
@@ -6646,9 +6646,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ThermalStatus                                           : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_BIT                0
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_MASK               0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS(_)                 (((_) >> 0) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_STATUS_BIT                         0
+#define IA32_THERM_STATUS_THERMAL_STATUS_MASK                        0x01
+#define IA32_THERM_STATUS_THERMAL_STATUS(_)                          (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Thermal Status Log
@@ -6656,9 +6656,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ThermalStatusLog                                        : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG_BIT            1
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG_MASK           0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG(_)             (((_) >> 1) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_STATUS_LOG_BIT                     1
+#define IA32_THERM_STATUS_THERMAL_STATUS_LOG_MASK                    0x01
+#define IA32_THERM_STATUS_THERMAL_STATUS_LOG(_)                      (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] PROCHOT \# or FORCEPR\# event
@@ -6666,9 +6666,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotForceprEvent                                     : 1;
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_EVENT_BIT         2
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_EVENT_MASK        0x01
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_EVENT(_)          (((_) >> 2) & 0x01)
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_BIT                  2
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_MASK                 0x01
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT(_)                   (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] PROCHOT \# or FORCEPR\# log
@@ -6676,9 +6676,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 ProchotForceprLog                                       : 1;
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_LOG_BIT           3
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_LOG_MASK          0x01
-#define IA32_THERM_STATUS_REGISTER_PROCHOT_FORCEPR_LOG(_)            (((_) >> 3) & 0x01)
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_BIT                    3
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_MASK                   0x01
+#define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG(_)                     (((_) >> 3) & 0x01)
 
     /**
      * [Bit 4] Critical Temperature Status
@@ -6686,9 +6686,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureStatus                               : 1;
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_BIT   4
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_MASK  0x01
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS(_)    (((_) >> 4) & 0x01)
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT            4
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_MASK           0x01
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS(_)             (((_) >> 4) & 0x01)
 
     /**
      * [Bit 5] Critical Temperature Status log
@@ -6696,9 +6696,9 @@ typedef union
      * @remarks If CPUID.01H:EDX[22] = 1
      */
     UINT64 CriticalTemperatureStatusLog                            : 1;
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG_MASK 0x01
-#define IA32_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG(_) (((_) >> 5) & 0x01)
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT        5
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_MASK       0x01
+#define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG(_)         (((_) >> 5) & 0x01)
 
     /**
      * [Bit 6] Thermal Threshold \#1 Status
@@ -6706,9 +6706,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold1Status                                 : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS_BIT     6
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS_MASK    0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS(_)      (((_) >> 6) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT              6
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_MASK             0x01
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS(_)               (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Thermal Threshold \#1 log
@@ -6716,9 +6716,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold1Log                                    : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG_BIT        7
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG_MASK       0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG(_)         (((_) >> 7) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT                 7
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_MASK                0x01
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG(_)                  (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] Thermal Threshold \#2 Status
@@ -6726,9 +6726,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold2Status                                 : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS_BIT     8
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS_MASK    0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS(_)      (((_) >> 8) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT              8
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_MASK             0x01
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS(_)               (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] Thermal Threshold \#2 log
@@ -6736,9 +6736,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[8] = 1
      */
     UINT64 ThermalThreshold2Log                                    : 1;
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG_BIT        9
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG_MASK       0x01
-#define IA32_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG(_)         (((_) >> 9) & 0x01)
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT                 9
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_MASK                0x01
+#define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG(_)                  (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Power Limitation Status
@@ -6746,9 +6746,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitationStatus                                   : 1;
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS_BIT       10
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS_MASK      0x01
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS(_)        (((_) >> 10) & 0x01)
+#define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_BIT                10
+#define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_MASK               0x01
+#define IA32_THERM_STATUS_POWER_LIMITATION_STATUS(_)                 (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] Power Limitation log
@@ -6756,9 +6756,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[4] = 1
      */
     UINT64 PowerLimitationLog                                      : 1;
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG_BIT          11
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG_MASK         0x01
-#define IA32_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG(_)           (((_) >> 11) & 0x01)
+#define IA32_THERM_STATUS_POWER_LIMITATION_LOG_BIT                   11
+#define IA32_THERM_STATUS_POWER_LIMITATION_LOG_MASK                  0x01
+#define IA32_THERM_STATUS_POWER_LIMITATION_LOG(_)                    (((_) >> 11) & 0x01)
 
     /**
      * [Bit 12] Current Limit Status
@@ -6766,9 +6766,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CurrentLimitStatus                                      : 1;
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_STATUS_BIT          12
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_STATUS_MASK         0x01
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_STATUS(_)           (((_) >> 12) & 0x01)
+#define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_BIT                   12
+#define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_MASK                  0x01
+#define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS(_)                    (((_) >> 12) & 0x01)
 
     /**
      * [Bit 13] Current Limit log
@@ -6776,9 +6776,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CurrentLimitLog                                         : 1;
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_LOG_BIT             13
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_LOG_MASK            0x01
-#define IA32_THERM_STATUS_REGISTER_CURRENT_LIMIT_LOG(_)              (((_) >> 13) & 0x01)
+#define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_BIT                      13
+#define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_MASK                     0x01
+#define IA32_THERM_STATUS_CURRENT_LIMIT_LOG(_)                       (((_) >> 13) & 0x01)
 
     /**
      * [Bit 14] Cross Domain Limit Status
@@ -6786,9 +6786,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CrossDomainLimitStatus                                  : 1;
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_STATUS_BIT     14
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_STATUS_MASK    0x01
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_STATUS(_)      (((_) >> 14) & 0x01)
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_BIT              14
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_MASK             0x01
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS(_)               (((_) >> 14) & 0x01)
 
     /**
      * [Bit 15] Cross Domain Limit log
@@ -6796,9 +6796,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[7] = 1
      */
     UINT64 CrossDomainLimitLog                                     : 1;
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_LOG_BIT        15
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_LOG_MASK       0x01
-#define IA32_THERM_STATUS_REGISTER_CROSS_DOMAIN_LIMIT_LOG(_)         (((_) >> 15) & 0x01)
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_BIT                 15
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_MASK                0x01
+#define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG(_)                  (((_) >> 15) & 0x01)
 
     /**
      * [Bits 22:16] Digital Readout
@@ -6806,9 +6806,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 DigitalReadout                                          : 7;
-#define IA32_THERM_STATUS_REGISTER_DIGITAL_READOUT_BIT               16
-#define IA32_THERM_STATUS_REGISTER_DIGITAL_READOUT_MASK              0x7F
-#define IA32_THERM_STATUS_REGISTER_DIGITAL_READOUT(_)                (((_) >> 16) & 0x7F)
+#define IA32_THERM_STATUS_DIGITAL_READOUT_BIT                        16
+#define IA32_THERM_STATUS_DIGITAL_READOUT_MASK                       0x7F
+#define IA32_THERM_STATUS_DIGITAL_READOUT(_)                         (((_) >> 16) & 0x7F)
     UINT64 Reserved1                                               : 4;
 
     /**
@@ -6817,9 +6817,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 ResolutionInDegreesCelsius                              : 4;
-#define IA32_THERM_STATUS_REGISTER_RESOLUTION_IN_DEGREES_CELSIUS_BIT 27
-#define IA32_THERM_STATUS_REGISTER_RESOLUTION_IN_DEGREES_CELSIUS_MASK 0x0F
-#define IA32_THERM_STATUS_REGISTER_RESOLUTION_IN_DEGREES_CELSIUS(_)  (((_) >> 27) & 0x0F)
+#define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_BIT          27
+#define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_MASK         0x0F
+#define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS(_)           (((_) >> 27) & 0x0F)
 
     /**
      * [Bit 31] Reading Valid
@@ -6827,9 +6827,9 @@ typedef union
      * @remarks If CPUID.06H:EAX[0] = 1
      */
     UINT64 ReadingValid                                            : 1;
-#define IA32_THERM_STATUS_REGISTER_READING_VALID_BIT                 31
-#define IA32_THERM_STATUS_REGISTER_READING_VALID_MASK                0x01
-#define IA32_THERM_STATUS_REGISTER_READING_VALID(_)                  (((_) >> 31) & 0x01)
+#define IA32_THERM_STATUS_READING_VALID_BIT                          31
+#define IA32_THERM_STATUS_READING_VALID_MASK                         0x01
+#define IA32_THERM_STATUS_READING_VALID(_)                           (((_) >> 31) & 0x01)
     UINT64 Reserved2                                               : 32;
   };
 
@@ -6857,9 +6857,9 @@ typedef union
      * @remarks 0F_0H
      */
     UINT64 FastStringsEnable                                       : 1;
-#define IA32_MISC_ENABLE_REGISTER_FAST_STRINGS_ENABLE_BIT            0
-#define IA32_MISC_ENABLE_REGISTER_FAST_STRINGS_ENABLE_MASK           0x01
-#define IA32_MISC_ENABLE_REGISTER_FAST_STRINGS_ENABLE(_)             (((_) >> 0) & 0x01)
+#define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_BIT                     0
+#define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_MASK                    0x01
+#define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE(_)                      (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 2;
 
     /**
@@ -6874,9 +6874,9 @@ typedef union
      * @remarks 0F_0H
      */
     UINT64 AutomaticThermalControlCircuitEnable                    : 1;
-#define IA32_MISC_ENABLE_REGISTER_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_BIT 3
-#define IA32_MISC_ENABLE_REGISTER_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_MASK 0x01
-#define IA32_MISC_ENABLE_REGISTER_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE(_) (((_) >> 3) & 0x01)
+#define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_BIT 3
+#define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_MASK 0x01
+#define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE(_) (((_) >> 3) & 0x01)
     UINT64 Reserved2                                               : 3;
 
     /**
@@ -6888,9 +6888,9 @@ typedef union
      * @remarks 0F_0H
      */
     UINT64 PerformanceMonitoringAvailable                          : 1;
-#define IA32_MISC_ENABLE_REGISTER_PERFORMANCE_MONITORING_AVAILABLE_BIT 7
-#define IA32_MISC_ENABLE_REGISTER_PERFORMANCE_MONITORING_AVAILABLE_MASK 0x01
-#define IA32_MISC_ENABLE_REGISTER_PERFORMANCE_MONITORING_AVAILABLE(_) (((_) >> 7) & 0x01)
+#define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_BIT        7
+#define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_MASK       0x01
+#define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE(_)         (((_) >> 7) & 0x01)
     UINT64 Reserved3                                               : 3;
 
     /**
@@ -6902,9 +6902,9 @@ typedef union
      * @remarks 0F_0H
      */
     UINT64 BranchTraceStorageUnavailable                           : 1;
-#define IA32_MISC_ENABLE_REGISTER_BRANCH_TRACE_STORAGE_UNAVAILABLE_BIT 11
-#define IA32_MISC_ENABLE_REGISTER_BRANCH_TRACE_STORAGE_UNAVAILABLE_MASK 0x01
-#define IA32_MISC_ENABLE_REGISTER_BRANCH_TRACE_STORAGE_UNAVAILABLE(_) (((_) >> 11) & 0x01)
+#define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_BIT        11
+#define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_MASK       0x01
+#define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE(_)         (((_) >> 11) & 0x01)
 
     /**
      * @brief Processor Event Based Sampling (PEBS) Unavailable <b>(RO)</b>
@@ -6915,9 +6915,9 @@ typedef union
      * @remarks 06_0FH
      */
     UINT64 ProcessorEventBasedSamplingUnavailable                  : 1;
-#define IA32_MISC_ENABLE_REGISTER_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_BIT 12
-#define IA32_MISC_ENABLE_REGISTER_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_MASK 0x01
-#define IA32_MISC_ENABLE_REGISTER_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE(_) (((_) >> 12) & 0x01)
+#define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_BIT 12
+#define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_MASK 0x01
+#define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE(_) (((_) >> 12) & 0x01)
     UINT64 Reserved4                                               : 3;
 
     /**
@@ -6929,9 +6929,9 @@ typedef union
      * @remarks If CPUID.01H: ECX[7] = 1
      */
     UINT64 EnhancedIntelSpeedstepTechnologyEnable                  : 1;
-#define IA32_MISC_ENABLE_REGISTER_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_BIT 16
-#define IA32_MISC_ENABLE_REGISTER_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_MASK 0x01
-#define IA32_MISC_ENABLE_REGISTER_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE(_) (((_) >> 16) & 0x01)
+#define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_BIT 16
+#define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_MASK 0x01
+#define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE(_) (((_) >> 16) & 0x01)
     UINT64 Reserved5                                               : 1;
 
     /**
@@ -6946,9 +6946,9 @@ typedef union
      * @remarks 0F_03H
      */
     UINT64 EnableMonitorFsm                                        : 1;
-#define IA32_MISC_ENABLE_REGISTER_ENABLE_MONITOR_FSM_BIT             18
-#define IA32_MISC_ENABLE_REGISTER_ENABLE_MONITOR_FSM_MASK            0x01
-#define IA32_MISC_ENABLE_REGISTER_ENABLE_MONITOR_FSM(_)              (((_) >> 18) & 0x01)
+#define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_BIT                      18
+#define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_MASK                     0x01
+#define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM(_)                       (((_) >> 18) & 0x01)
     UINT64 Reserved6                                               : 3;
 
     /**
@@ -6965,9 +6965,9 @@ typedef union
      * @remarks 0F_03H
      */
     UINT64 LimitCpuidMaxval                                        : 1;
-#define IA32_MISC_ENABLE_REGISTER_LIMIT_CPUID_MAXVAL_BIT             22
-#define IA32_MISC_ENABLE_REGISTER_LIMIT_CPUID_MAXVAL_MASK            0x01
-#define IA32_MISC_ENABLE_REGISTER_LIMIT_CPUID_MAXVAL(_)              (((_) >> 22) & 0x01)
+#define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_BIT                      22
+#define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_MASK                     0x01
+#define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL(_)                       (((_) >> 22) & 0x01)
 
     /**
      * @brief xTPR Message Disable <b>(R/W)</b>
@@ -6978,9 +6978,9 @@ typedef union
      * @remarks If CPUID.01H:ECX[14] = 1
      */
     UINT64 XtprMessageDisable                                      : 1;
-#define IA32_MISC_ENABLE_REGISTER_XTPR_MESSAGE_DISABLE_BIT           23
-#define IA32_MISC_ENABLE_REGISTER_XTPR_MESSAGE_DISABLE_MASK          0x01
-#define IA32_MISC_ENABLE_REGISTER_XTPR_MESSAGE_DISABLE(_)            (((_) >> 23) & 0x01)
+#define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_BIT                    23
+#define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_MASK                   0x01
+#define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE(_)                     (((_) >> 23) & 0x01)
     UINT64 Reserved7                                               : 10;
 
     /**
@@ -6996,9 +6996,9 @@ typedef union
      * @remarks If CPUID.80000001H:EDX[20] = 1
      */
     UINT64 XdBitDisable                                            : 1;
-#define IA32_MISC_ENABLE_REGISTER_XD_BIT_DISABLE_BIT                 34
-#define IA32_MISC_ENABLE_REGISTER_XD_BIT_DISABLE_MASK                0x01
-#define IA32_MISC_ENABLE_REGISTER_XD_BIT_DISABLE(_)                  (((_) >> 34) & 0x01)
+#define IA32_MISC_ENABLE_XD_BIT_DISABLE_BIT                          34
+#define IA32_MISC_ENABLE_XD_BIT_DISABLE_MASK                         0x01
+#define IA32_MISC_ENABLE_XD_BIT_DISABLE(_)                           (((_) >> 34) & 0x01)
     UINT64 Reserved8                                               : 29;
   };
 
@@ -7024,9 +7024,9 @@ typedef union
      * - 15 indicates preference to maximize energy saving.
      */
     UINT64 PowerPolicyPreference                                   : 4;
-#define IA32_ENERGY_PERF_BIAS_REGISTER_POWER_POLICY_PREFERENCE_BIT   0
-#define IA32_ENERGY_PERF_BIAS_REGISTER_POWER_POLICY_PREFERENCE_MASK  0x0F
-#define IA32_ENERGY_PERF_BIAS_REGISTER_POWER_POLICY_PREFERENCE(_)    (((_) >> 0) & 0x0F)
+#define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_BIT            0
+#define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_MASK           0x0F
+#define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE(_)             (((_) >> 0) & 0x0F)
     UINT64 Reserved1                                               : 60;
   };
 
@@ -7052,106 +7052,106 @@ typedef union
      * [Bit 0] Pkg Thermal Status
      */
     UINT64 ThermalStatus                                           : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS_BIT        0
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS_MASK       0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS(_)         (((_) >> 0) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_BIT                 0
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_MASK                0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS(_)                  (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Pkg Thermal Status Log
      */
     UINT64 ThermalStatusLog                                        : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG_BIT    1
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG_MASK   0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_STATUS_LOG(_)     (((_) >> 1) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_BIT             1
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_MASK            0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG(_)              (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] Pkg PROCHOT \# event
      */
     UINT64 ProchotEvent                                            : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_EVENT_BIT         2
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_EVENT_MASK        0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_EVENT(_)          (((_) >> 2) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_BIT                  2
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_MASK                 0x01
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT(_)                   (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] Pkg PROCHOT \# log
      */
     UINT64 ProchotLog                                              : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_LOG_BIT           3
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_LOG_MASK          0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_PROCHOT_LOG(_)            (((_) >> 3) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_BIT                    3
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_MASK                   0x01
+#define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG(_)                     (((_) >> 3) & 0x01)
 
     /**
      * [Bit 4] Pkg Critical Temperature Status
      */
     UINT64 CriticalTemperatureStatus                               : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_BIT 4
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS(_) (((_) >> 4) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT    4
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_MASK   0x01
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS(_)     (((_) >> 4) & 0x01)
 
     /**
      * [Bit 5] Pkg Critical Temperature Status Log
      */
     UINT64 CriticalTemperatureStatusLog                            : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_CRITICAL_TEMPERATURE_STATUS_LOG(_) (((_) >> 5) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_MASK 0x01
+#define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG(_) (((_) >> 5) & 0x01)
 
     /**
      * [Bit 6] Pkg Thermal Threshold \#1 Status
      */
     UINT64 ThermalThreshold1Status                                 : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS_BIT 6
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_STATUS(_) (((_) >> 6) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT      6
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_MASK     0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS(_)       (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Pkg Thermal Threshold \#1 log
      */
     UINT64 ThermalThreshold1Log                                    : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG_BIT 7
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD1_LOG(_) (((_) >> 7) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT         7
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_MASK        0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG(_)          (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] Pkg Thermal Threshold \#2 Status
      */
     UINT64 ThermalThreshold2Status                                 : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS_BIT 8
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_STATUS(_) (((_) >> 8) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT      8
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_MASK     0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS(_)       (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] Pkg Thermal Threshold \#2 log
      */
     UINT64 ThermalThreshold2Log                                    : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG_BIT 9
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_THERMAL_THRESHOLD2_LOG(_) (((_) >> 9) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT         9
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_MASK        0x01
+#define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG(_)          (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Pkg Power Limitation Status
      */
     UINT64 PowerLimitationStatus                                   : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS_BIT 10
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_STATUS(_) (((_) >> 10) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_BIT        10
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_MASK       0x01
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS(_)         (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] Pkg Power Limitation log
      */
     UINT64 PowerLimitationLog                                      : 1;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG_BIT  11
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG_MASK 0x01
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_POWER_LIMITATION_LOG(_)   (((_) >> 11) & 0x01)
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_BIT           11
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_MASK          0x01
+#define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG(_)            (((_) >> 11) & 0x01)
     UINT64 Reserved1                                               : 4;
 
     /**
      * [Bits 22:16] Pkg Digital Readout
      */
     UINT64 DigitalReadout                                          : 7;
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_DIGITAL_READOUT_BIT       16
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_DIGITAL_READOUT_MASK      0x7F
-#define IA32_PACKAGE_THERM_STATUS_REGISTER_DIGITAL_READOUT(_)        (((_) >> 16) & 0x7F)
+#define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_BIT                16
+#define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_MASK               0x7F
+#define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT(_)                 (((_) >> 16) & 0x7F)
     UINT64 Reserved2                                               : 41;
   };
 
@@ -7178,75 +7178,75 @@ typedef union
      * [Bit 0] Pkg High-Temperature Interrupt Enable.
      */
     UINT64 HighTemperatureInterruptEnable                          : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 0) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
+#define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Pkg Low-Temperature Interrupt Enable.
      */
     UINT64 LowTemperatureInterruptEnable                           : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_LOW_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 1) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
+#define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] Pkg PROCHOT\# Interrupt Enable.
      */
     UINT64 ProchotInterruptEnable                                  : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE_BIT 2
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_PROCHOT_INTERRUPT_ENABLE(_) (((_) >> 2) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT    2
+#define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_MASK   0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE(_)     (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
      * [Bit 4] Pkg Overheat Interrupt Enable.
      */
     UINT64 OverheatInterruptEnable                                 : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_OVERHEAT_INTERRUPT_ENABLE_BIT 4
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_OVERHEAT_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_OVERHEAT_INTERRUPT_ENABLE(_) (((_) >> 4) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_BIT   4
+#define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_MASK  0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE(_)    (((_) >> 4) & 0x01)
     UINT64 Reserved2                                               : 3;
 
     /**
      * [Bits 14:8] Pkg Threshold \#1 Value
      */
     UINT64 Threshold1Value                                         : 7;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE_BIT   8
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE_MASK  0x7F
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_VALUE(_)    (((_) >> 8) & 0x7F)
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT            8
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_MASK           0x7F
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE(_)             (((_) >> 8) & 0x7F)
 
     /**
      * [Bit 15] Pkg Threshold \#1 Interrupt Enable.
      */
     UINT64 Threshold1InterruptEnable                               : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD1_INTERRUPT_ENABLE(_) (((_) >> 15) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_MASK 0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE(_)  (((_) >> 15) & 0x01)
 
     /**
      * [Bits 22:16] Pkg Threshold \#2 Value.
      */
     UINT64 Threshold2Value                                         : 7;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE_BIT   16
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE_MASK  0x7F
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_VALUE(_)    (((_) >> 16) & 0x7F)
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT            16
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_MASK           0x7F
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE(_)             (((_) >> 16) & 0x7F)
 
     /**
      * [Bit 23] Pkg Threshold \#2 Interrupt Enable.
      */
     UINT64 Threshold2InterruptEnable                               : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_THRESHOLD2_INTERRUPT_ENABLE(_) (((_) >> 23) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_MASK 0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE(_)  (((_) >> 23) & 0x01)
 
     /**
      * [Bit 24] Pkg Power Limit Notification Enable.
      */
     UINT64 PowerLimitNotificationEnable                            : 1;
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE_MASK 0x01
-#define IA32_PACKAGE_THERM_INTERRUPT_REGISTER_POWER_LIMIT_NOTIFICATION_ENABLE(_) (((_) >> 24) & 0x01)
+#define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
+#define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_MASK 0x01
+#define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE(_) (((_) >> 24) & 0x01)
     UINT64 Reserved3                                               : 39;
   };
 
@@ -7272,9 +7272,9 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 Lbr                                                     : 1;
-#define IA32_DEBUGCTL_REGISTER_LBR_BIT                               0
-#define IA32_DEBUGCTL_REGISTER_LBR_MASK                              0x01
-#define IA32_DEBUGCTL_REGISTER_LBR(_)                                (((_) >> 0) & 0x01)
+#define IA32_DEBUGCTL_LBR_BIT                                        0
+#define IA32_DEBUGCTL_LBR_MASK                                       0x01
+#define IA32_DEBUGCTL_LBR(_)                                         (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Setting this bit to 1 enables the processor to treat EFLAGS.TF as single-step on branches instead of single-step
@@ -7283,9 +7283,9 @@ typedef union
      * @remarks 06_01H
      */
     UINT64 Btf                                                     : 1;
-#define IA32_DEBUGCTL_REGISTER_BTF_BIT                               1
-#define IA32_DEBUGCTL_REGISTER_BTF_MASK                              0x01
-#define IA32_DEBUGCTL_REGISTER_BTF(_)                                (((_) >> 1) & 0x01)
+#define IA32_DEBUGCTL_BTF_BIT                                        1
+#define IA32_DEBUGCTL_BTF_MASK                                       0x01
+#define IA32_DEBUGCTL_BTF(_)                                         (((_) >> 1) & 0x01)
     UINT64 Reserved1                                               : 4;
 
     /**
@@ -7294,9 +7294,9 @@ typedef union
      * @remarks 06_0EH
      */
     UINT64 Tr                                                      : 1;
-#define IA32_DEBUGCTL_REGISTER_TR_BIT                                6
-#define IA32_DEBUGCTL_REGISTER_TR_MASK                               0x01
-#define IA32_DEBUGCTL_REGISTER_TR(_)                                 (((_) >> 6) & 0x01)
+#define IA32_DEBUGCTL_TR_BIT                                         6
+#define IA32_DEBUGCTL_TR_MASK                                        0x01
+#define IA32_DEBUGCTL_TR(_)                                          (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Setting this bit enables branch trace messages (BTMs) to be logged in a BTS buffer.
@@ -7304,9 +7304,9 @@ typedef union
      * @remarks 06_0EH
      */
     UINT64 Bts                                                     : 1;
-#define IA32_DEBUGCTL_REGISTER_BTS_BIT                               7
-#define IA32_DEBUGCTL_REGISTER_BTS_MASK                              0x01
-#define IA32_DEBUGCTL_REGISTER_BTS(_)                                (((_) >> 7) & 0x01)
+#define IA32_DEBUGCTL_BTS_BIT                                        7
+#define IA32_DEBUGCTL_BTS_MASK                                       0x01
+#define IA32_DEBUGCTL_BTS(_)                                         (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] When clear, BTMs are logged in a BTS buffer in circular fashion. When this bit is set, an interrupt is generated
@@ -7315,9 +7315,9 @@ typedef union
      * @remarks 06_0EH
      */
     UINT64 Btint                                                   : 1;
-#define IA32_DEBUGCTL_REGISTER_BTINT_BIT                             8
-#define IA32_DEBUGCTL_REGISTER_BTINT_MASK                            0x01
-#define IA32_DEBUGCTL_REGISTER_BTINT(_)                              (((_) >> 8) & 0x01)
+#define IA32_DEBUGCTL_BTINT_BIT                                      8
+#define IA32_DEBUGCTL_BTINT_MASK                                     0x01
+#define IA32_DEBUGCTL_BTINT(_)                                       (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] When set, BTS or BTM is skipped if CPL = 0.
@@ -7325,9 +7325,9 @@ typedef union
      * @remarks 06_0FH
      */
     UINT64 BtsOffOs                                                : 1;
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_OS_BIT                        9
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_OS_MASK                       0x01
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_OS(_)                         (((_) >> 9) & 0x01)
+#define IA32_DEBUGCTL_BTS_OFF_OS_BIT                                 9
+#define IA32_DEBUGCTL_BTS_OFF_OS_MASK                                0x01
+#define IA32_DEBUGCTL_BTS_OFF_OS(_)                                  (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] When set, BTS or BTM is skipped if CPL > 0.
@@ -7335,9 +7335,9 @@ typedef union
      * @remarks 06_0FH
      */
     UINT64 BtsOffUsr                                               : 1;
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_USR_BIT                       10
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_USR_MASK                      0x01
-#define IA32_DEBUGCTL_REGISTER_BTS_OFF_USR(_)                        (((_) >> 10) & 0x01)
+#define IA32_DEBUGCTL_BTS_OFF_USR_BIT                                10
+#define IA32_DEBUGCTL_BTS_OFF_USR_MASK                               0x01
+#define IA32_DEBUGCTL_BTS_OFF_USR(_)                                 (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] When set, the LBR stack is frozen on a PMI request.
@@ -7345,9 +7345,9 @@ typedef union
      * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 FreezeLbrsOnPmi                                         : 1;
-#define IA32_DEBUGCTL_REGISTER_FREEZE_LBRS_ON_PMI_BIT                11
-#define IA32_DEBUGCTL_REGISTER_FREEZE_LBRS_ON_PMI_MASK               0x01
-#define IA32_DEBUGCTL_REGISTER_FREEZE_LBRS_ON_PMI(_)                 (((_) >> 11) & 0x01)
+#define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_BIT                         11
+#define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_MASK                        0x01
+#define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI(_)                          (((_) >> 11) & 0x01)
 
     /**
      * [Bit 12] When set, each ENABLE bit of the global counter control MSR are frozen (address 38FH) on a PMI request.
@@ -7355,9 +7355,9 @@ typedef union
      * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 FreezePerfmonOnPmi                                      : 1;
-#define IA32_DEBUGCTL_REGISTER_FREEZE_PERFMON_ON_PMI_BIT             12
-#define IA32_DEBUGCTL_REGISTER_FREEZE_PERFMON_ON_PMI_MASK            0x01
-#define IA32_DEBUGCTL_REGISTER_FREEZE_PERFMON_ON_PMI(_)              (((_) >> 12) & 0x01)
+#define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_BIT                      12
+#define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_MASK                     0x01
+#define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI(_)                       (((_) >> 12) & 0x01)
 
     /**
      * [Bit 13] When set, enables the logical processor to receive and generate PMI on behalf of the uncore.
@@ -7365,9 +7365,9 @@ typedef union
      * @remarks 06_1AH
      */
     UINT64 EnableUncorePmi                                         : 1;
-#define IA32_DEBUGCTL_REGISTER_ENABLE_UNCORE_PMI_BIT                 13
-#define IA32_DEBUGCTL_REGISTER_ENABLE_UNCORE_PMI_MASK                0x01
-#define IA32_DEBUGCTL_REGISTER_ENABLE_UNCORE_PMI(_)                  (((_) >> 13) & 0x01)
+#define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_BIT                          13
+#define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_MASK                         0x01
+#define IA32_DEBUGCTL_ENABLE_UNCORE_PMI(_)                           (((_) >> 13) & 0x01)
 
     /**
      * [Bit 14] When set, freezes perfmon and trace messages while in SMM.
@@ -7375,9 +7375,9 @@ typedef union
      * @remarks If IA32_PERF_CAPABILITIES[12] = 1
      */
     UINT64 FreezeWhileSmm                                          : 1;
-#define IA32_DEBUGCTL_REGISTER_FREEZE_WHILE_SMM_BIT                  14
-#define IA32_DEBUGCTL_REGISTER_FREEZE_WHILE_SMM_MASK                 0x01
-#define IA32_DEBUGCTL_REGISTER_FREEZE_WHILE_SMM(_)                   (((_) >> 14) & 0x01)
+#define IA32_DEBUGCTL_FREEZE_WHILE_SMM_BIT                           14
+#define IA32_DEBUGCTL_FREEZE_WHILE_SMM_MASK                          0x01
+#define IA32_DEBUGCTL_FREEZE_WHILE_SMM(_)                            (((_) >> 14) & 0x01)
 
     /**
      * [Bit 15] When set, enables DR7 debug bit on XBEGIN.
@@ -7385,9 +7385,9 @@ typedef union
      * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[11] = 1)
      */
     UINT64 RtmDebug                                                : 1;
-#define IA32_DEBUGCTL_REGISTER_RTM_DEBUG_BIT                         15
-#define IA32_DEBUGCTL_REGISTER_RTM_DEBUG_MASK                        0x01
-#define IA32_DEBUGCTL_REGISTER_RTM_DEBUG(_)                          (((_) >> 15) & 0x01)
+#define IA32_DEBUGCTL_RTM_DEBUG_BIT                                  15
+#define IA32_DEBUGCTL_RTM_DEBUG_MASK                                 0x01
+#define IA32_DEBUGCTL_RTM_DEBUG(_)                                   (((_) >> 15) & 0x01)
     UINT64 Reserved2                                               : 48;
   };
 
@@ -7414,18 +7414,18 @@ typedef union
      * [Bits 7:0] Type. Specifies memory type of the range.
      */
     UINT64 Type                                                    : 8;
-#define IA32_SMRR_PHYSBASE_REGISTER_TYPE_BIT                         0
-#define IA32_SMRR_PHYSBASE_REGISTER_TYPE_MASK                        0xFF
-#define IA32_SMRR_PHYSBASE_REGISTER_TYPE(_)                          (((_) >> 0) & 0xFF)
+#define IA32_SMRR_PHYSBASE_TYPE_BIT                                  0
+#define IA32_SMRR_PHYSBASE_TYPE_MASK                                 0xFF
+#define IA32_SMRR_PHYSBASE_TYPE(_)                                   (((_) >> 0) & 0xFF)
     UINT64 Reserved1                                               : 4;
 
     /**
      * [Bits 31:12] SMRR physical Base Address.
      */
     UINT64 SmrrPhysicalBaseAddress                                 : 20;
-#define IA32_SMRR_PHYSBASE_REGISTER_SMRR_PHYSICAL_BASE_ADDRESS_BIT   12
-#define IA32_SMRR_PHYSBASE_REGISTER_SMRR_PHYSICAL_BASE_ADDRESS_MASK  0xFFFFF
-#define IA32_SMRR_PHYSBASE_REGISTER_SMRR_PHYSICAL_BASE_ADDRESS(_)    (((_) >> 12) & 0xFFFFF)
+#define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_BIT            12
+#define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_MASK           0xFFFFF
+#define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS(_)             (((_) >> 12) & 0xFFFFF)
     UINT64 Reserved2                                               : 32;
   };
 
@@ -7452,17 +7452,17 @@ typedef union
      * [Bit 11] Enable range mask.
      */
     UINT64 EnableRangeMask                                         : 1;
-#define IA32_SMRR_PHYSMASK_REGISTER_ENABLE_RANGE_MASK_BIT            11
-#define IA32_SMRR_PHYSMASK_REGISTER_ENABLE_RANGE_MASK_MASK           0x01
-#define IA32_SMRR_PHYSMASK_REGISTER_ENABLE_RANGE_MASK(_)             (((_) >> 11) & 0x01)
+#define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_BIT                     11
+#define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_MASK                    0x01
+#define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK(_)                      (((_) >> 11) & 0x01)
 
     /**
      * [Bits 31:12] SMRR address range mask.
      */
     UINT64 SmrrAddressRangeMask                                    : 20;
-#define IA32_SMRR_PHYSMASK_REGISTER_SMRR_ADDRESS_RANGE_MASK_BIT      12
-#define IA32_SMRR_PHYSMASK_REGISTER_SMRR_ADDRESS_RANGE_MASK_MASK     0xFFFFF
-#define IA32_SMRR_PHYSMASK_REGISTER_SMRR_ADDRESS_RANGE_MASK(_)       (((_) >> 12) & 0xFFFFF)
+#define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_BIT               12
+#define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_MASK              0xFFFFF
+#define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK(_)                (((_) >> 12) & 0xFFFFF)
     UINT64 Reserved2                                               : 32;
   };
 
@@ -7499,60 +7499,60 @@ typedef union
      * [Bit 0] Set by HW when DCA is fuseenabled and no defeatures are set.
      */
     UINT64 DcaActive                                               : 1;
-#define IA32_DCA_0_CAP_REGISTER_DCA_ACTIVE_BIT                       0
-#define IA32_DCA_0_CAP_REGISTER_DCA_ACTIVE_MASK                      0x01
-#define IA32_DCA_0_CAP_REGISTER_DCA_ACTIVE(_)                        (((_) >> 0) & 0x01)
+#define IA32_DCA_0_CAP_DCA_ACTIVE_BIT                                0
+#define IA32_DCA_0_CAP_DCA_ACTIVE_MASK                               0x01
+#define IA32_DCA_0_CAP_DCA_ACTIVE(_)                                 (((_) >> 0) & 0x01)
 
     /**
      * [Bits 2:1] TRANSACTION.
      */
     UINT64 Transaction                                             : 2;
-#define IA32_DCA_0_CAP_REGISTER_TRANSACTION_BIT                      1
-#define IA32_DCA_0_CAP_REGISTER_TRANSACTION_MASK                     0x03
-#define IA32_DCA_0_CAP_REGISTER_TRANSACTION(_)                       (((_) >> 1) & 0x03)
+#define IA32_DCA_0_CAP_TRANSACTION_BIT                               1
+#define IA32_DCA_0_CAP_TRANSACTION_MASK                              0x03
+#define IA32_DCA_0_CAP_TRANSACTION(_)                                (((_) >> 1) & 0x03)
 
     /**
      * [Bits 6:3] DCA_TYPE.
      */
     UINT64 DcaType                                                 : 4;
-#define IA32_DCA_0_CAP_REGISTER_DCA_TYPE_BIT                         3
-#define IA32_DCA_0_CAP_REGISTER_DCA_TYPE_MASK                        0x0F
-#define IA32_DCA_0_CAP_REGISTER_DCA_TYPE(_)                          (((_) >> 3) & 0x0F)
+#define IA32_DCA_0_CAP_DCA_TYPE_BIT                                  3
+#define IA32_DCA_0_CAP_DCA_TYPE_MASK                                 0x0F
+#define IA32_DCA_0_CAP_DCA_TYPE(_)                                   (((_) >> 3) & 0x0F)
 
     /**
      * [Bits 10:7] DCA_QUEUE_SIZE.
      */
     UINT64 DcaQueueSize                                            : 4;
-#define IA32_DCA_0_CAP_REGISTER_DCA_QUEUE_SIZE_BIT                   7
-#define IA32_DCA_0_CAP_REGISTER_DCA_QUEUE_SIZE_MASK                  0x0F
-#define IA32_DCA_0_CAP_REGISTER_DCA_QUEUE_SIZE(_)                    (((_) >> 7) & 0x0F)
+#define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_BIT                            7
+#define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_MASK                           0x0F
+#define IA32_DCA_0_CAP_DCA_QUEUE_SIZE(_)                             (((_) >> 7) & 0x0F)
     UINT64 Reserved1                                               : 2;
 
     /**
      * [Bits 16:13] Writes will update the register but have no HW side-effect.
      */
     UINT64 DcaDelay                                                : 4;
-#define IA32_DCA_0_CAP_REGISTER_DCA_DELAY_BIT                        13
-#define IA32_DCA_0_CAP_REGISTER_DCA_DELAY_MASK                       0x0F
-#define IA32_DCA_0_CAP_REGISTER_DCA_DELAY(_)                         (((_) >> 13) & 0x0F)
+#define IA32_DCA_0_CAP_DCA_DELAY_BIT                                 13
+#define IA32_DCA_0_CAP_DCA_DELAY_MASK                                0x0F
+#define IA32_DCA_0_CAP_DCA_DELAY(_)                                  (((_) >> 13) & 0x0F)
     UINT64 Reserved2                                               : 7;
 
     /**
      * [Bit 24] SW can request DCA block by setting this bit.
      */
     UINT64 SwBlock                                                 : 1;
-#define IA32_DCA_0_CAP_REGISTER_SW_BLOCK_BIT                         24
-#define IA32_DCA_0_CAP_REGISTER_SW_BLOCK_MASK                        0x01
-#define IA32_DCA_0_CAP_REGISTER_SW_BLOCK(_)                          (((_) >> 24) & 0x01)
+#define IA32_DCA_0_CAP_SW_BLOCK_BIT                                  24
+#define IA32_DCA_0_CAP_SW_BLOCK_MASK                                 0x01
+#define IA32_DCA_0_CAP_SW_BLOCK(_)                                   (((_) >> 24) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bit 26] Set when DCA is blocked by HW (e.g. CR0.CD = 1).
      */
     UINT64 HwBlock                                                 : 1;
-#define IA32_DCA_0_CAP_REGISTER_HW_BLOCK_BIT                         26
-#define IA32_DCA_0_CAP_REGISTER_HW_BLOCK_MASK                        0x01
-#define IA32_DCA_0_CAP_REGISTER_HW_BLOCK(_)                          (((_) >> 26) & 0x01)
+#define IA32_DCA_0_CAP_HW_BLOCK_BIT                                  26
+#define IA32_DCA_0_CAP_HW_BLOCK_MASK                                 0x01
+#define IA32_DCA_0_CAP_HW_BLOCK(_)                                   (((_) >> 26) & 0x01)
     UINT64 Reserved4                                               : 37;
   };
 
@@ -7702,72 +7702,72 @@ typedef union
      * [Bits 2:0] PA0.
      */
     UINT64 Pa0                                                     : 3;
-#define IA32_PAT_REGISTER_PA0_BIT                                    0
-#define IA32_PAT_REGISTER_PA0_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA0(_)                                     (((_) >> 0) & 0x07)
+#define IA32_PAT_PA0_BIT                                             0
+#define IA32_PAT_PA0_MASK                                            0x07
+#define IA32_PAT_PA0(_)                                              (((_) >> 0) & 0x07)
     UINT64 Reserved1                                               : 5;
 
     /**
      * [Bits 10:8] PA1.
      */
     UINT64 Pa1                                                     : 3;
-#define IA32_PAT_REGISTER_PA1_BIT                                    8
-#define IA32_PAT_REGISTER_PA1_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA1(_)                                     (((_) >> 8) & 0x07)
+#define IA32_PAT_PA1_BIT                                             8
+#define IA32_PAT_PA1_MASK                                            0x07
+#define IA32_PAT_PA1(_)                                              (((_) >> 8) & 0x07)
     UINT64 Reserved2                                               : 5;
 
     /**
      * [Bits 18:16] PA2.
      */
     UINT64 Pa2                                                     : 3;
-#define IA32_PAT_REGISTER_PA2_BIT                                    16
-#define IA32_PAT_REGISTER_PA2_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA2(_)                                     (((_) >> 16) & 0x07)
+#define IA32_PAT_PA2_BIT                                             16
+#define IA32_PAT_PA2_MASK                                            0x07
+#define IA32_PAT_PA2(_)                                              (((_) >> 16) & 0x07)
     UINT64 Reserved3                                               : 5;
 
     /**
      * [Bits 26:24] PA3.
      */
     UINT64 Pa3                                                     : 3;
-#define IA32_PAT_REGISTER_PA3_BIT                                    24
-#define IA32_PAT_REGISTER_PA3_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA3(_)                                     (((_) >> 24) & 0x07)
+#define IA32_PAT_PA3_BIT                                             24
+#define IA32_PAT_PA3_MASK                                            0x07
+#define IA32_PAT_PA3(_)                                              (((_) >> 24) & 0x07)
     UINT64 Reserved4                                               : 5;
 
     /**
      * [Bits 34:32] PA4.
      */
     UINT64 Pa4                                                     : 3;
-#define IA32_PAT_REGISTER_PA4_BIT                                    32
-#define IA32_PAT_REGISTER_PA4_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA4(_)                                     (((_) >> 32) & 0x07)
+#define IA32_PAT_PA4_BIT                                             32
+#define IA32_PAT_PA4_MASK                                            0x07
+#define IA32_PAT_PA4(_)                                              (((_) >> 32) & 0x07)
     UINT64 Reserved5                                               : 5;
 
     /**
      * [Bits 42:40] PA5.
      */
     UINT64 Pa5                                                     : 3;
-#define IA32_PAT_REGISTER_PA5_BIT                                    40
-#define IA32_PAT_REGISTER_PA5_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA5(_)                                     (((_) >> 40) & 0x07)
+#define IA32_PAT_PA5_BIT                                             40
+#define IA32_PAT_PA5_MASK                                            0x07
+#define IA32_PAT_PA5(_)                                              (((_) >> 40) & 0x07)
     UINT64 Reserved6                                               : 5;
 
     /**
      * [Bits 50:48] PA6.
      */
     UINT64 Pa6                                                     : 3;
-#define IA32_PAT_REGISTER_PA6_BIT                                    48
-#define IA32_PAT_REGISTER_PA6_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA6(_)                                     (((_) >> 48) & 0x07)
+#define IA32_PAT_PA6_BIT                                             48
+#define IA32_PAT_PA6_MASK                                            0x07
+#define IA32_PAT_PA6(_)                                              (((_) >> 48) & 0x07)
     UINT64 Reserved7                                               : 5;
 
     /**
      * [Bits 58:56] PA7.
      */
     UINT64 Pa7                                                     : 3;
-#define IA32_PAT_REGISTER_PA7_BIT                                    56
-#define IA32_PAT_REGISTER_PA7_MASK                                   0x07
-#define IA32_PAT_REGISTER_PA7(_)                                     (((_) >> 56) & 0x07)
+#define IA32_PAT_PA7_BIT                                             56
+#define IA32_PAT_PA7_MASK                                            0x07
+#define IA32_PAT_PA7(_)                                              (((_) >> 56) & 0x07)
     UINT64 Reserved8                                               : 5;
   };
 
@@ -7824,18 +7824,18 @@ typedef union
      * [Bits 14:0] Corrected error count threshold.
      */
     UINT64 CorrectedErrorCountThreshold                            : 15;
-#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_BIT    0
-#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD_MASK   0x7FFF
-#define IA32_MC_CTL2_REGISTER_CORRECTED_ERROR_COUNT_THRESHOLD(_)     (((_) >> 0) & 0x7FFF)
+#define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_BIT             0
+#define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_MASK            0x7FFF
+#define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD(_)              (((_) >> 0) & 0x7FFF)
     UINT64 Reserved1                                               : 15;
 
     /**
      * [Bit 30] CMCI_EN.
      */
     UINT64 CmciEn                                                  : 1;
-#define IA32_MC_CTL2_REGISTER_CMCI_EN_BIT                            30
-#define IA32_MC_CTL2_REGISTER_CMCI_EN_MASK                           0x01
-#define IA32_MC_CTL2_REGISTER_CMCI_EN(_)                             (((_) >> 30) & 0x01)
+#define IA32_MC_CTL2_CMCI_EN_BIT                                     30
+#define IA32_MC_CTL2_CMCI_EN_MASK                                    0x01
+#define IA32_MC_CTL2_CMCI_EN(_)                                      (((_) >> 30) & 0x01)
     UINT64 Reserved2                                               : 33;
   };
 
@@ -7862,26 +7862,26 @@ typedef union
      * [Bits 2:0] Default Memory Type.
      */
     UINT64 DefaultMemoryType                                       : 3;
-#define IA32_MTRR_DEF_TYPE_REGISTER_DEFAULT_MEMORY_TYPE_BIT          0
-#define IA32_MTRR_DEF_TYPE_REGISTER_DEFAULT_MEMORY_TYPE_MASK         0x07
-#define IA32_MTRR_DEF_TYPE_REGISTER_DEFAULT_MEMORY_TYPE(_)           (((_) >> 0) & 0x07)
+#define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_BIT                   0
+#define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_MASK                  0x07
+#define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE(_)                    (((_) >> 0) & 0x07)
     UINT64 Reserved1                                               : 7;
 
     /**
      * [Bit 10] Fixed Range MTRR Enable.
      */
     UINT64 FixedRangeMtrrEnable                                    : 1;
-#define IA32_MTRR_DEF_TYPE_REGISTER_FIXED_RANGE_MTRR_ENABLE_BIT      10
-#define IA32_MTRR_DEF_TYPE_REGISTER_FIXED_RANGE_MTRR_ENABLE_MASK     0x01
-#define IA32_MTRR_DEF_TYPE_REGISTER_FIXED_RANGE_MTRR_ENABLE(_)       (((_) >> 10) & 0x01)
+#define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_BIT               10
+#define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_MASK              0x01
+#define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE(_)                (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] MTRR Enable.
      */
     UINT64 MtrrEnable                                              : 1;
-#define IA32_MTRR_DEF_TYPE_REGISTER_MTRR_ENABLE_BIT                  11
-#define IA32_MTRR_DEF_TYPE_REGISTER_MTRR_ENABLE_MASK                 0x01
-#define IA32_MTRR_DEF_TYPE_REGISTER_MTRR_ENABLE(_)                   (((_) >> 11) & 0x01)
+#define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_BIT                           11
+#define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_MASK                          0x01
+#define IA32_MTRR_DEF_TYPE_MTRR_ENABLE(_)                            (((_) >> 11) & 0x01)
     UINT64 Reserved2                                               : 52;
   };
 
@@ -7932,49 +7932,49 @@ typedef union
      * [Bits 5:0] LBR format.
      */
     UINT64 LbrFormat                                               : 6;
-#define IA32_PERF_CAPABILITIES_REGISTER_LBR_FORMAT_BIT               0
-#define IA32_PERF_CAPABILITIES_REGISTER_LBR_FORMAT_MASK              0x3F
-#define IA32_PERF_CAPABILITIES_REGISTER_LBR_FORMAT(_)                (((_) >> 0) & 0x3F)
+#define IA32_PERF_CAPABILITIES_LBR_FORMAT_BIT                        0
+#define IA32_PERF_CAPABILITIES_LBR_FORMAT_MASK                       0x3F
+#define IA32_PERF_CAPABILITIES_LBR_FORMAT(_)                         (((_) >> 0) & 0x3F)
 
     /**
      * [Bit 6] PEBS Trap.
      */
     UINT64 PebsTrap                                                : 1;
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_TRAP_BIT                6
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_TRAP_MASK               0x01
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_TRAP(_)                 (((_) >> 6) & 0x01)
+#define IA32_PERF_CAPABILITIES_PEBS_TRAP_BIT                         6
+#define IA32_PERF_CAPABILITIES_PEBS_TRAP_MASK                        0x01
+#define IA32_PERF_CAPABILITIES_PEBS_TRAP(_)                          (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] PEBSSaveArchRegs.
      */
     UINT64 PebsSaveArchRegs                                        : 1;
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_SAVE_ARCH_REGS_BIT      7
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_SAVE_ARCH_REGS_MASK     0x01
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_SAVE_ARCH_REGS(_)       (((_) >> 7) & 0x01)
+#define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_BIT               7
+#define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_MASK              0x01
+#define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS(_)                (((_) >> 7) & 0x01)
 
     /**
      * [Bits 11:8] PEBS Record Format.
      */
     UINT64 PebsRecordFormat                                        : 4;
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_RECORD_FORMAT_BIT       8
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_RECORD_FORMAT_MASK      0x0F
-#define IA32_PERF_CAPABILITIES_REGISTER_PEBS_RECORD_FORMAT(_)        (((_) >> 8) & 0x0F)
+#define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_BIT                8
+#define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_MASK               0x0F
+#define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT(_)                 (((_) >> 8) & 0x0F)
 
     /**
      * [Bit 12] Freeze while SMM is supported.
      */
     UINT64 FreezeWhileSmmIsSupported                               : 1;
-#define IA32_PERF_CAPABILITIES_REGISTER_FREEZE_WHILE_SMM_IS_SUPPORTED_BIT 12
-#define IA32_PERF_CAPABILITIES_REGISTER_FREEZE_WHILE_SMM_IS_SUPPORTED_MASK 0x01
-#define IA32_PERF_CAPABILITIES_REGISTER_FREEZE_WHILE_SMM_IS_SUPPORTED(_) (((_) >> 12) & 0x01)
+#define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_BIT     12
+#define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_MASK    0x01
+#define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED(_)      (((_) >> 12) & 0x01)
 
     /**
      * [Bit 13] Full width of counter writable via IA32_A_PMCx.
      */
     UINT64 FullWidthCounterWrite                                   : 1;
-#define IA32_PERF_CAPABILITIES_REGISTER_FULL_WIDTH_COUNTER_WRITE_BIT 13
-#define IA32_PERF_CAPABILITIES_REGISTER_FULL_WIDTH_COUNTER_WRITE_MASK 0x01
-#define IA32_PERF_CAPABILITIES_REGISTER_FULL_WIDTH_COUNTER_WRITE(_)  (((_) >> 13) & 0x01)
+#define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_BIT          13
+#define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_MASK         0x01
+#define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE(_)           (((_) >> 13) & 0x01)
     UINT64 Reserved1                                               : 50;
   };
 
@@ -8000,17 +8000,17 @@ typedef union
      * [Bit 0] EN0_OS: Enable Fixed Counter 0 to count while CPL = 0.
      */
     UINT64 En0Os                                                   : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_OS_BIT                      0
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_OS_MASK                     0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_OS(_)                       (((_) >> 0) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN0_OS_BIT                               0
+#define IA32_FIXED_CTR_CTRL_EN0_OS_MASK                              0x01
+#define IA32_FIXED_CTR_CTRL_EN0_OS(_)                                (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] EN0_Usr: Enable Fixed Counter 0 to count while CPL > 0.
      */
     UINT64 En0Usr                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_USR_BIT                     1
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_USR_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_USR(_)                      (((_) >> 1) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN0_USR_BIT                              1
+#define IA32_FIXED_CTR_CTRL_EN0_USR_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN0_USR(_)                               (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
@@ -8018,33 +8018,33 @@ typedef union
      * occurring in the logical processor which programmed the MSR.
      */
     UINT64 AnyThread0                                              : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD0_BIT                 2
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD0_MASK                0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD0(_)                  (((_) >> 2) & 0x01)
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD0_BIT                          2
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD0_MASK                         0x01
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD0(_)                           (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] EN0_PMI: Enable PMI when fixed counter 0 overflows.
      */
     UINT64 En0Pmi                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_PMI_BIT                     3
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_PMI_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN0_PMI(_)                      (((_) >> 3) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN0_PMI_BIT                              3
+#define IA32_FIXED_CTR_CTRL_EN0_PMI_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN0_PMI(_)                               (((_) >> 3) & 0x01)
 
     /**
      * [Bit 4] EN1_OS: Enable Fixed Counter 1 to count while CPL = 0.
      */
     UINT64 En1Os                                                   : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_OS_BIT                      4
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_OS_MASK                     0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_OS(_)                       (((_) >> 4) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN1_OS_BIT                               4
+#define IA32_FIXED_CTR_CTRL_EN1_OS_MASK                              0x01
+#define IA32_FIXED_CTR_CTRL_EN1_OS(_)                                (((_) >> 4) & 0x01)
 
     /**
      * [Bit 5] EN1_Usr: Enable Fixed Counter 1 to count while CPL > 0.
      */
     UINT64 En1Usr                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_USR_BIT                     5
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_USR_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_USR(_)                      (((_) >> 5) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN1_USR_BIT                              5
+#define IA32_FIXED_CTR_CTRL_EN1_USR_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN1_USR(_)                               (((_) >> 5) & 0x01)
 
     /**
      * [Bit 6] AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
@@ -8054,33 +8054,33 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 AnyThread1                                              : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD1_BIT                 6
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD1_MASK                0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD1(_)                  (((_) >> 6) & 0x01)
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD1_BIT                          6
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD1_MASK                         0x01
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD1(_)                           (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] EN1_PMI: Enable PMI when fixed counter 1 overflows.
      */
     UINT64 En1Pmi                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_PMI_BIT                     7
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_PMI_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN1_PMI(_)                      (((_) >> 7) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN1_PMI_BIT                              7
+#define IA32_FIXED_CTR_CTRL_EN1_PMI_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN1_PMI(_)                               (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] EN2_OS: Enable Fixed Counter 2 to count while CPL = 0.
      */
     UINT64 En2Os                                                   : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_OS_BIT                      8
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_OS_MASK                     0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_OS(_)                       (((_) >> 8) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN2_OS_BIT                               8
+#define IA32_FIXED_CTR_CTRL_EN2_OS_MASK                              0x01
+#define IA32_FIXED_CTR_CTRL_EN2_OS(_)                                (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] EN2_Usr: Enable Fixed Counter 2 to count while CPL > 0.
      */
     UINT64 En2Usr                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_USR_BIT                     9
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_USR_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_USR(_)                      (((_) >> 9) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN2_USR_BIT                              9
+#define IA32_FIXED_CTR_CTRL_EN2_USR_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN2_USR(_)                               (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] AnyThread: When set to 1, it enables counting the associated event conditions occurring across all logical
@@ -8090,17 +8090,17 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 AnyThread2                                              : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD2_BIT                 10
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD2_MASK                0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_ANY_THREAD2(_)                  (((_) >> 10) & 0x01)
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD2_BIT                          10
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD2_MASK                         0x01
+#define IA32_FIXED_CTR_CTRL_ANY_THREAD2(_)                           (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] EN2_PMI: Enable PMI when fixed counter 2 overflows.
      */
     UINT64 En2Pmi                                                  : 1;
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_PMI_BIT                     11
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_PMI_MASK                    0x01
-#define IA32_FIXED_CTR_CTRL_REGISTER_EN2_PMI(_)                      (((_) >> 11) & 0x01)
+#define IA32_FIXED_CTR_CTRL_EN2_PMI_BIT                              11
+#define IA32_FIXED_CTR_CTRL_EN2_PMI_MASK                             0x01
+#define IA32_FIXED_CTR_CTRL_EN2_PMI(_)                               (((_) >> 11) & 0x01)
     UINT64 Reserved1                                               : 52;
   };
 
@@ -8125,9 +8125,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > 0
      */
     UINT64 OvfPmc0                                                 : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC0_BIT                0
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC0_MASK               0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC0(_)                 (((_) >> 0) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC0_BIT                         0
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC0_MASK                        0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC0(_)                          (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Ovf_PMC1: Overflow status of IA32_PMC1.
@@ -8135,9 +8135,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > 1
      */
     UINT64 OvfPmc1                                                 : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC1_BIT                1
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC1_MASK               0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC1(_)                 (((_) >> 1) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC1_BIT                         1
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC1_MASK                        0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC1(_)                          (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] Ovf_PMC2: Overflow status of IA32_PMC2.
@@ -8145,9 +8145,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > 2
      */
     UINT64 OvfPmc2                                                 : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC2_BIT                2
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC2_MASK               0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC2(_)                 (((_) >> 2) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC2_BIT                         2
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC2_MASK                        0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC2(_)                          (((_) >> 2) & 0x01)
 
     /**
      * [Bit 3] Ovf_PMC3: Overflow status of IA32_PMC3.
@@ -8155,9 +8155,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > 3
      */
     UINT64 OvfPmc3                                                 : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC3_BIT                3
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC3_MASK               0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_PMC3(_)                 (((_) >> 3) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC3_BIT                         3
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC3_MASK                        0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_PMC3(_)                          (((_) >> 3) & 0x01)
     UINT64 Reserved1                                               : 28;
 
     /**
@@ -8166,9 +8166,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr0                                            : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR0_BIT           32
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR0_MASK          0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR0(_)            (((_) >> 32) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR0_BIT                    32
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR0_MASK                   0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR0(_)                     (((_) >> 32) & 0x01)
 
     /**
      * [Bit 33] Ovf_FixedCtr1: Overflow status of IA32_FIXED_CTR1.
@@ -8176,9 +8176,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr1                                            : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR1_BIT           33
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR1_MASK          0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR1(_)            (((_) >> 33) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR1_BIT                    33
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR1_MASK                   0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR1(_)                     (((_) >> 33) & 0x01)
 
     /**
      * [Bit 34] Ovf_FixedCtr2: Overflow status of IA32_FIXED_CTR2.
@@ -8186,9 +8186,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 1
      */
     UINT64 OvfFixedctr2                                            : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR2_BIT           34
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR2_MASK          0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_FIXEDCTR2(_)            (((_) >> 34) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR2_BIT                    34
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR2_MASK                   0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_FIXEDCTR2(_)                     (((_) >> 34) & 0x01)
     UINT64 Reserved2                                               : 20;
 
     /**
@@ -8197,9 +8197,9 @@ typedef union
      * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && IA32_RTIT_CTL.ToPA = 1
      */
     UINT64 TraceTopaPmi                                            : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_TRACE_TOPA_PMI_BIT          55
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_TRACE_TOPA_PMI_MASK         0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_TRACE_TOPA_PMI(_)           (((_) >> 55) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_TRACE_TOPA_PMI_BIT                   55
+#define IA32_PERF_GLOBAL_STATUS_TRACE_TOPA_PMI_MASK                  0x01
+#define IA32_PERF_GLOBAL_STATUS_TRACE_TOPA_PMI(_)                    (((_) >> 55) & 0x01)
     UINT64 Reserved3                                               : 2;
 
     /**
@@ -8210,9 +8210,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 LbrFrz                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_LBR_FRZ_BIT                 58
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_LBR_FRZ_MASK                0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_LBR_FRZ(_)                  (((_) >> 58) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_LBR_FRZ_BIT                          58
+#define IA32_PERF_GLOBAL_STATUS_LBR_FRZ_MASK                         0x01
+#define IA32_PERF_GLOBAL_STATUS_LBR_FRZ(_)                           (((_) >> 58) & 0x01)
 
     /**
      * [Bit 59] CTR_Frz. Performance counters in the core PMU are frozen due to:
@@ -8222,9 +8222,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 CtrFrz                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_CTR_FRZ_BIT                 59
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_CTR_FRZ_MASK                0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_CTR_FRZ(_)                  (((_) >> 59) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_CTR_FRZ_BIT                          59
+#define IA32_PERF_GLOBAL_STATUS_CTR_FRZ_MASK                         0x01
+#define IA32_PERF_GLOBAL_STATUS_CTR_FRZ(_)                           (((_) >> 59) & 0x01)
 
     /**
      * [Bit 60] ASCI: Data in the performance counters in the core PMU may include contributions from the direct or indirect
@@ -8233,9 +8233,9 @@ typedef union
      * @remarks If CPUID.(EAX=07H, ECX=0):EBX[2] = 1
      */
     UINT64 Asci                                                    : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_ASCI_BIT                    60
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_ASCI_MASK                   0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_ASCI(_)                     (((_) >> 60) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_ASCI_BIT                             60
+#define IA32_PERF_GLOBAL_STATUS_ASCI_MASK                            0x01
+#define IA32_PERF_GLOBAL_STATUS_ASCI(_)                              (((_) >> 60) & 0x01)
 
     /**
      * [Bit 61] Uncore counter overflow status.
@@ -8243,9 +8243,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
     UINT64 OvfUncore                                               : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_UNCORE_BIT              61
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_UNCORE_MASK             0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_UNCORE(_)               (((_) >> 61) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_UNCORE_BIT                       61
+#define IA32_PERF_GLOBAL_STATUS_OVF_UNCORE_MASK                      0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_UNCORE(_)                        (((_) >> 61) & 0x01)
 
     /**
      * [Bit 62] OvfBuf: DS SAVE area Buffer overflow status.
@@ -8253,9 +8253,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 OvfBuf                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_BUF_BIT                 62
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_BUF_MASK                0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_OVF_BUF(_)                  (((_) >> 62) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_OVF_BUF_BIT                          62
+#define IA32_PERF_GLOBAL_STATUS_OVF_BUF_MASK                         0x01
+#define IA32_PERF_GLOBAL_STATUS_OVF_BUF(_)                           (((_) >> 62) & 0x01)
 
     /**
      * [Bit 63] CondChgd: Status bits of this register have changed.
@@ -8263,9 +8263,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 CondChgd                                                : 1;
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_COND_CHGD_BIT               63
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_COND_CHGD_MASK              0x01
-#define IA32_PERF_GLOBAL_STATUS_REGISTER_COND_CHGD(_)                (((_) >> 63) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_COND_CHGD_BIT                        63
+#define IA32_PERF_GLOBAL_STATUS_COND_CHGD_MASK                       0x01
+#define IA32_PERF_GLOBAL_STATUS_COND_CHGD(_)                         (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
@@ -8304,9 +8304,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 ClearOvfPmcn                                            : 32;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_PMCN_BIT    0
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_PMCN_MASK   0xFFFFFFFF
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_PMCN(_)     (((_) >> 0) & 0xFFFFFFFF)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_PMCN_BIT             0
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_PMCN_MASK            0xFFFFFFFF
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_PMCN(_)              (((_) >> 0) & 0xFFFFFFFF)
 
     /**
      * [Bits 34:32] Set 1 to clear Ovf_FIXED_CTR(n) bit. Clear bitmask. Only the first n-1 bits are valid. Bits 31:n are
@@ -8315,9 +8315,9 @@ typedef union
      * @remarks If CPUID.0AH: EDX[4:0] > n
      */
     UINT64 ClearOvfFixedCtrn                                       : 3;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_FIXED_CTRN_BIT 32
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_FIXED_CTRN_MASK 0x07
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_FIXED_CTRN(_) (((_) >> 32) & 0x07)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_FIXED_CTRN_BIT       32
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_FIXED_CTRN_MASK      0x07
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_FIXED_CTRN(_)        (((_) >> 32) & 0x07)
     UINT64 Reserved1                                               : 20;
 
     /**
@@ -8326,9 +8326,9 @@ typedef union
      * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[25] = 1) && IA32_RTIT_CTL.ToPA = 1
      */
     UINT64 ClearTraceTopaPmi                                       : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_TRACE_TOPA_PMI_BIT 55
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_TRACE_TOPA_PMI_MASK 0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_TRACE_TOPA_PMI(_) (((_) >> 55) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_TRACE_TOPA_PMI_BIT       55
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_TRACE_TOPA_PMI_MASK      0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_TRACE_TOPA_PMI(_)        (((_) >> 55) & 0x01)
     UINT64 Reserved2                                               : 2;
 
     /**
@@ -8337,9 +8337,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearLbrFrz                                             : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_LBR_FRZ_BIT     58
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_LBR_FRZ_MASK    0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_LBR_FRZ(_)      (((_) >> 58) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_LBR_FRZ_BIT              58
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_LBR_FRZ_MASK             0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_LBR_FRZ(_)               (((_) >> 58) & 0x01)
 
     /**
      * [Bit 59] Set 1 to clear CTR_Frz bit.
@@ -8347,9 +8347,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearCtrFrz                                             : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_CTR_FRZ_BIT     59
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_CTR_FRZ_MASK    0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_CTR_FRZ(_)      (((_) >> 59) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_CTR_FRZ_BIT              59
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_CTR_FRZ_MASK             0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_CTR_FRZ(_)               (((_) >> 59) & 0x01)
 
     /**
      * [Bit 60] Set 1 to clear ASCI bit.
@@ -8357,9 +8357,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 ClearAsci                                               : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_ASCI_BIT        60
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_ASCI_MASK       0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_ASCI(_)         (((_) >> 60) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_ASCI_BIT                 60
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_ASCI_MASK                0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_ASCI(_)                  (((_) >> 60) & 0x01)
 
     /**
      * [Bit 61] Set 1 to clear Ovf_Uncore bit.
@@ -8367,9 +8367,9 @@ typedef union
      * @remarks 06_2EH
      */
     UINT64 ClearOvfUncore                                          : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_UNCORE_BIT  61
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_UNCORE_MASK 0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_UNCORE(_)   (((_) >> 61) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_UNCORE_BIT           61
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_UNCORE_MASK          0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_UNCORE(_)            (((_) >> 61) & 0x01)
 
     /**
      * [Bit 62] Set 1 to clear OvfBuf bit.
@@ -8377,9 +8377,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 ClearOvfBuf                                             : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_BUF_BIT     62
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_BUF_MASK    0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_OVF_BUF(_)      (((_) >> 62) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_BUF_BIT              62
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_BUF_MASK             0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_OVF_BUF(_)               (((_) >> 62) & 0x01)
 
     /**
      * [Bit 63] Set 1 to clear CondChgd bit.
@@ -8387,9 +8387,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 0
      */
     UINT64 ClearCondChgd                                           : 1;
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_COND_CHGD_BIT   63
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_COND_CHGD_MASK  0x01
-#define IA32_PERF_GLOBAL_STATUS_RESET_REGISTER_CLEAR_COND_CHGD(_)    (((_) >> 63) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD_BIT            63
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD_MASK           0x01
+#define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD(_)             (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
@@ -8412,9 +8412,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 OvfPmcn                                                 : 32;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_PMCN_BIT            0
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_PMCN_MASK           0xFFFFFFFF
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_PMCN(_)             (((_) >> 0) & 0xFFFFFFFF)
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_PMCN_BIT                     0
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_PMCN_MASK                    0xFFFFFFFF
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_PMCN(_)                      (((_) >> 0) & 0xFFFFFFFF)
 
     /**
      * [Bits 34:32] Set 1 to cause Ovf_FIXED_CTR(n) = 1. Set bitmask. Only the first n-1 bits are valid. Bits 31:n are
@@ -8423,9 +8423,9 @@ typedef union
      * @remarks If CPUID.0AH: EDX[4:0] > n
      */
     UINT64 OvfFixedCtrn                                            : 3;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_FIXED_CTRN_BIT      32
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_FIXED_CTRN_MASK     0x07
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_FIXED_CTRN(_)       (((_) >> 32) & 0x07)
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_FIXED_CTRN_BIT               32
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_FIXED_CTRN_MASK              0x07
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_FIXED_CTRN(_)                (((_) >> 32) & 0x07)
     UINT64 Reserved1                                               : 20;
 
     /**
@@ -8434,9 +8434,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 TraceTopaPmi                                            : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_TRACE_TOPA_PMI_BIT      55
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_TRACE_TOPA_PMI_MASK     0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_TRACE_TOPA_PMI(_)       (((_) >> 55) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_TRACE_TOPA_PMI_BIT               55
+#define IA32_PERF_GLOBAL_STATUS_SET_TRACE_TOPA_PMI_MASK              0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_TRACE_TOPA_PMI(_)                (((_) >> 55) & 0x01)
     UINT64 Reserved2                                               : 2;
 
     /**
@@ -8445,9 +8445,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 LbrFrz                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_LBR_FRZ_BIT             58
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_LBR_FRZ_MASK            0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_LBR_FRZ(_)              (((_) >> 58) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_LBR_FRZ_BIT                      58
+#define IA32_PERF_GLOBAL_STATUS_SET_LBR_FRZ_MASK                     0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_LBR_FRZ(_)                       (((_) >> 58) & 0x01)
 
     /**
      * [Bit 59] Set 1 to cause CTR_Frz = 1.
@@ -8455,9 +8455,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 CtrFrz                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_CTR_FRZ_BIT             59
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_CTR_FRZ_MASK            0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_CTR_FRZ(_)              (((_) >> 59) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_CTR_FRZ_BIT                      59
+#define IA32_PERF_GLOBAL_STATUS_SET_CTR_FRZ_MASK                     0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_CTR_FRZ(_)                       (((_) >> 59) & 0x01)
 
     /**
      * [Bit 60] Set 1 to cause ASCI = 1.
@@ -8465,9 +8465,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 Asci                                                    : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_ASCI_BIT                60
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_ASCI_MASK               0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_ASCI(_)                 (((_) >> 60) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_ASCI_BIT                         60
+#define IA32_PERF_GLOBAL_STATUS_SET_ASCI_MASK                        0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_ASCI(_)                          (((_) >> 60) & 0x01)
 
     /**
      * [Bit 61] Set 1 to cause Ovf_Uncore = 1.
@@ -8475,9 +8475,9 @@ typedef union
      * @remarks 06_2EH
      */
     UINT64 OvfUncore                                               : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_UNCORE_BIT          61
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_UNCORE_MASK         0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_UNCORE(_)           (((_) >> 61) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_UNCORE_BIT                   61
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_UNCORE_MASK                  0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_UNCORE(_)                    (((_) >> 61) & 0x01)
 
     /**
      * [Bit 62] Set 1 to cause OvfBuf = 1.
@@ -8485,9 +8485,9 @@ typedef union
      * @remarks If CPUID.0AH: EAX[7:0] > 3
      */
     UINT64 OvfBuf                                                  : 1;
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_BUF_BIT             62
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_BUF_MASK            0x01
-#define IA32_PERF_GLOBAL_STATUS_SET_REGISTER_OVF_BUF(_)              (((_) >> 62) & 0x01)
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_BUF_BIT                      62
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_BUF_MASK                     0x01
+#define IA32_PERF_GLOBAL_STATUS_SET_OVF_BUF(_)                       (((_) >> 62) & 0x01)
     UINT64 Reserved3                                               : 1;
   };
 
@@ -8511,26 +8511,26 @@ typedef union
      * @remarks If CPUID.0AH: EAX[15:8] > n
      */
     UINT64 Ia32PerfevtselnInUse                                    : 32;
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_PERFEVTSELN_IN_USE_BIT  0
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_PERFEVTSELN_IN_USE_MASK 0xFFFFFFFF
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_PERFEVTSELN_IN_USE(_)   (((_) >> 0) & 0xFFFFFFFF)
+#define IA32_PERF_GLOBAL_INUSE_IA32_PERFEVTSELN_IN_USE_BIT           0
+#define IA32_PERF_GLOBAL_INUSE_IA32_PERFEVTSELN_IN_USE_MASK          0xFFFFFFFF
+#define IA32_PERF_GLOBAL_INUSE_IA32_PERFEVTSELN_IN_USE(_)            (((_) >> 0) & 0xFFFFFFFF)
 
     /**
      * [Bits 34:32] IA32_FIXED_CTR(n) in use. Status bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
      */
     UINT64 Ia32FixedCtrnInUse                                      : 3;
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_FIXED_CTRN_IN_USE_BIT   32
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_FIXED_CTRN_IN_USE_MASK  0x07
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_IA32_FIXED_CTRN_IN_USE(_)    (((_) >> 32) & 0x07)
+#define IA32_PERF_GLOBAL_INUSE_IA32_FIXED_CTRN_IN_USE_BIT            32
+#define IA32_PERF_GLOBAL_INUSE_IA32_FIXED_CTRN_IN_USE_MASK           0x07
+#define IA32_PERF_GLOBAL_INUSE_IA32_FIXED_CTRN_IN_USE(_)             (((_) >> 32) & 0x07)
     UINT64 Reserved1                                               : 28;
 
     /**
      * [Bit 63] PMI in use.
      */
     UINT64 PmiInUse                                                : 1;
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_PMI_IN_USE_BIT               63
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_PMI_IN_USE_MASK              0x01
-#define IA32_PERF_GLOBAL_INUSE_REGISTER_PMI_IN_USE(_)                (((_) >> 63) & 0x01)
+#define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE_BIT                        63
+#define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE_MASK                       0x01
+#define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE(_)                         (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
@@ -8553,26 +8553,26 @@ typedef union
      * @remarks 06_0FH
      */
     UINT64 EnablePebs                                              : 1;
-#define IA32_PEBS_ENABLE_REGISTER_ENABLE_PEBS_BIT                    0
-#define IA32_PEBS_ENABLE_REGISTER_ENABLE_PEBS_MASK                   0x01
-#define IA32_PEBS_ENABLE_REGISTER_ENABLE_PEBS(_)                     (((_) >> 0) & 0x01)
+#define IA32_PEBS_ENABLE_ENABLE_PEBS_BIT                             0
+#define IA32_PEBS_ENABLE_ENABLE_PEBS_MASK                            0x01
+#define IA32_PEBS_ENABLE_ENABLE_PEBS(_)                              (((_) >> 0) & 0x01)
 
     /**
      * [Bits 3:1] Reserved or model specific.
      */
     UINT64 Reservedormodelspecific1                                : 3;
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC1_BIT       1
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC1_MASK      0x07
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC1(_)        (((_) >> 1) & 0x07)
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC1_BIT                1
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC1_MASK               0x07
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC1(_)                 (((_) >> 1) & 0x07)
     UINT64 Reserved1                                               : 28;
 
     /**
      * [Bits 35:32] Reserved or model specific.
      */
     UINT64 Reservedormodelspecific2                                : 4;
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC2_BIT       32
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC2_MASK      0x0F
-#define IA32_PEBS_ENABLE_REGISTER_RESERVEDORMODELSPECIFIC2(_)        (((_) >> 32) & 0x0F)
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC2_BIT                32
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC2_MASK               0x0F
+#define IA32_PEBS_ENABLE_RESERVEDORMODELSPECIFIC2(_)                 (((_) >> 32) & 0x0F)
     UINT64 Reserved2                                               : 28;
   };
 
@@ -8767,17 +8767,17 @@ typedef union
      * use the same size for VMCS regions.
      */
     UINT64 VmcsRevisionId                                          : 31;
-#define IA32_VMX_BASIC_REGISTER_VMCS_REVISION_ID_BIT                 0
-#define IA32_VMX_BASIC_REGISTER_VMCS_REVISION_ID_MASK                0x7FFFFFFF
-#define IA32_VMX_BASIC_REGISTER_VMCS_REVISION_ID(_)                  (((_) >> 0) & 0x7FFFFFFF)
+#define IA32_VMX_BASIC_VMCS_REVISION_ID_BIT                          0
+#define IA32_VMX_BASIC_VMCS_REVISION_ID_MASK                         0x7FFFFFFF
+#define IA32_VMX_BASIC_VMCS_REVISION_ID(_)                           (((_) >> 0) & 0x7FFFFFFF)
 
     /**
      * [Bit 31] Bit 31 is always 0.
      */
     UINT64 MustBeZero                                              : 1;
-#define IA32_VMX_BASIC_REGISTER_MUST_BE_ZERO_BIT                     31
-#define IA32_VMX_BASIC_REGISTER_MUST_BE_ZERO_MASK                    0x01
-#define IA32_VMX_BASIC_REGISTER_MUST_BE_ZERO(_)                      (((_) >> 31) & 0x01)
+#define IA32_VMX_BASIC_MUST_BE_ZERO_BIT                              31
+#define IA32_VMX_BASIC_MUST_BE_ZERO_MASK                             0x01
+#define IA32_VMX_BASIC_MUST_BE_ZERO(_)                               (((_) >> 31) & 0x01)
 
     /**
      * @brief Size of the VMCS
@@ -8786,9 +8786,9 @@ typedef union
      * value greater than 0 and at most 4096 (bit 44 is set if and only if bits 43:32 are clear).
      */
     UINT64 VmcsSizeInBytes                                         : 13;
-#define IA32_VMX_BASIC_REGISTER_VMCS_SIZE_IN_BYTES_BIT               32
-#define IA32_VMX_BASIC_REGISTER_VMCS_SIZE_IN_BYTES_MASK              0x1FFF
-#define IA32_VMX_BASIC_REGISTER_VMCS_SIZE_IN_BYTES(_)                (((_) >> 32) & 0x1FFF)
+#define IA32_VMX_BASIC_VMCS_SIZE_IN_BYTES_BIT                        32
+#define IA32_VMX_BASIC_VMCS_SIZE_IN_BYTES_MASK                       0x1FFF
+#define IA32_VMX_BASIC_VMCS_SIZE_IN_BYTES(_)                         (((_) >> 32) & 0x1FFF)
     UINT64 Reserved1                                               : 3;
 
     /**
@@ -8802,9 +8802,9 @@ typedef union
      * limited to 32 bits. This bit is always 0 for processors that support Intel 64 architecture.
      */
     UINT64 VmcsPhysicalAddressWidth                                : 1;
-#define IA32_VMX_BASIC_REGISTER_VMCS_PHYSICAL_ADDRESS_WIDTH_BIT      48
-#define IA32_VMX_BASIC_REGISTER_VMCS_PHYSICAL_ADDRESS_WIDTH_MASK     0x01
-#define IA32_VMX_BASIC_REGISTER_VMCS_PHYSICAL_ADDRESS_WIDTH(_)       (((_) >> 48) & 0x01)
+#define IA32_VMX_BASIC_VMCS_PHYSICAL_ADDRESS_WIDTH_BIT               48
+#define IA32_VMX_BASIC_VMCS_PHYSICAL_ADDRESS_WIDTH_MASK              0x01
+#define IA32_VMX_BASIC_VMCS_PHYSICAL_ADDRESS_WIDTH(_)                (((_) >> 48) & 0x01)
 
     /**
      * @brief Whether the processor supports the dual-monitor treatment of system-management interrupts and system-management
@@ -8816,9 +8816,9 @@ typedef union
      * @see Vol3C[34.15(DUAL-MONITOR TREATMENT OF SMIs AND SMM)]
      */
     UINT64 DualMonitorSupport                                      : 1;
-#define IA32_VMX_BASIC_REGISTER_DUAL_MONITOR_SUPPORT_BIT             49
-#define IA32_VMX_BASIC_REGISTER_DUAL_MONITOR_SUPPORT_MASK            0x01
-#define IA32_VMX_BASIC_REGISTER_DUAL_MONITOR_SUPPORT(_)              (((_) >> 49) & 0x01)
+#define IA32_VMX_BASIC_DUAL_MONITOR_SUPPORT_BIT                      49
+#define IA32_VMX_BASIC_DUAL_MONITOR_SUPPORT_MASK                     0x01
+#define IA32_VMX_BASIC_DUAL_MONITOR_SUPPORT(_)                       (((_) >> 49) & 0x01)
 
     /**
      * @brief Memory type that must be used for the VMCS
@@ -8831,9 +8831,9 @@ typedef union
      * As of this writing, all processors that support VMX operation indicate the write-back type.
      */
     UINT64 MemoryType                                              : 4;
-#define IA32_VMX_BASIC_REGISTER_MEMORY_TYPE_BIT                      50
-#define IA32_VMX_BASIC_REGISTER_MEMORY_TYPE_MASK                     0x0F
-#define IA32_VMX_BASIC_REGISTER_MEMORY_TYPE(_)                       (((_) >> 50) & 0x0F)
+#define IA32_VMX_BASIC_MEMORY_TYPE_BIT                               50
+#define IA32_VMX_BASIC_MEMORY_TYPE_MASK                              0x0F
+#define IA32_VMX_BASIC_MEMORY_TYPE(_)                                (((_) >> 50) & 0x0F)
 
     /**
      * @brief Whether the processor provides additional information for exits due to INS/OUTS
@@ -8844,9 +8844,9 @@ typedef union
      * @see Vol3C[27.2.4(Information for VM Exits Due to Instruction Execution)]
      */
     UINT64 InsOutsReporting                                        : 1;
-#define IA32_VMX_BASIC_REGISTER_INS_OUTS_REPORTING_BIT               54
-#define IA32_VMX_BASIC_REGISTER_INS_OUTS_REPORTING_MASK              0x01
-#define IA32_VMX_BASIC_REGISTER_INS_OUTS_REPORTING(_)                (((_) >> 54) & 0x01)
+#define IA32_VMX_BASIC_INS_OUTS_REPORTING_BIT                        54
+#define IA32_VMX_BASIC_INS_OUTS_REPORTING_MASK                       0x01
+#define IA32_VMX_BASIC_INS_OUTS_REPORTING(_)                         (((_) >> 54) & 0x01)
 
     /**
      * @brief Whether default 1 bits in control MSRs (pin/proc/exit/entry) may be cleared to 0 and that 'true' control MSRs are
@@ -8863,9 +8863,9 @@ typedef union
      * @see Vol3D[A.5(VM-ENTRY CONTROLS)]
      */
     UINT64 VmxControls                                             : 1;
-#define IA32_VMX_BASIC_REGISTER_VMX_CONTROLS_BIT                     55
-#define IA32_VMX_BASIC_REGISTER_VMX_CONTROLS_MASK                    0x01
-#define IA32_VMX_BASIC_REGISTER_VMX_CONTROLS(_)                      (((_) >> 55) & 0x01)
+#define IA32_VMX_BASIC_VMX_CONTROLS_BIT                              55
+#define IA32_VMX_BASIC_VMX_CONTROLS_MASK                             0x01
+#define IA32_VMX_BASIC_VMX_CONTROLS(_)                               (((_) >> 55) & 0x01)
     UINT64 Reserved2                                               : 8;
   };
 
@@ -8892,9 +8892,9 @@ typedef union
      * guest interrupt-descriptor table (IDT). If this control is 1, the value of RFLAGS.IF does not affect interrupt blocking.
      */
     UINT64 ExternalInterruptExiting                                : 1;
-#define IA32_VMX_PINBASED_CTLS_REGISTER_EXTERNAL_INTERRUPT_EXITING_BIT 0
-#define IA32_VMX_PINBASED_CTLS_REGISTER_EXTERNAL_INTERRUPT_EXITING_MASK 0x01
-#define IA32_VMX_PINBASED_CTLS_REGISTER_EXTERNAL_INTERRUPT_EXITING(_) (((_) >> 0) & 0x01)
+#define IA32_VMX_PINBASED_CTLS_EXTERNAL_INTERRUPT_EXITING_BIT        0
+#define IA32_VMX_PINBASED_CTLS_EXTERNAL_INTERRUPT_EXITING_MASK       0x01
+#define IA32_VMX_PINBASED_CTLS_EXTERNAL_INTERRUPT_EXITING(_)         (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 2;
 
     /**
@@ -8906,9 +8906,9 @@ typedef union
      * @see Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
      */
     UINT64 NmiExiting                                              : 1;
-#define IA32_VMX_PINBASED_CTLS_REGISTER_NMI_EXITING_BIT              3
-#define IA32_VMX_PINBASED_CTLS_REGISTER_NMI_EXITING_MASK             0x01
-#define IA32_VMX_PINBASED_CTLS_REGISTER_NMI_EXITING(_)               (((_) >> 3) & 0x01)
+#define IA32_VMX_PINBASED_CTLS_NMI_EXITING_BIT                       3
+#define IA32_VMX_PINBASED_CTLS_NMI_EXITING_MASK                      0x01
+#define IA32_VMX_PINBASED_CTLS_NMI_EXITING(_)                        (((_) >> 3) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -8920,9 +8920,9 @@ typedef union
      * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)]
      */
     UINT64 VirtualNmi                                              : 1;
-#define IA32_VMX_PINBASED_CTLS_REGISTER_VIRTUAL_NMI_BIT              5
-#define IA32_VMX_PINBASED_CTLS_REGISTER_VIRTUAL_NMI_MASK             0x01
-#define IA32_VMX_PINBASED_CTLS_REGISTER_VIRTUAL_NMI(_)               (((_) >> 5) & 0x01)
+#define IA32_VMX_PINBASED_CTLS_VIRTUAL_NMI_BIT                       5
+#define IA32_VMX_PINBASED_CTLS_VIRTUAL_NMI_MASK                      0x01
+#define IA32_VMX_PINBASED_CTLS_VIRTUAL_NMI(_)                        (((_) >> 5) & 0x01)
 
     /**
      * @brief Activate VMX preemption timer
@@ -8934,9 +8934,9 @@ typedef union
      * @see Vol3C[25.2(OTHER CAUSES OF VM EXITS)]
      */
     UINT64 ActivateVmxPreemptionTimer                              : 1;
-#define IA32_VMX_PINBASED_CTLS_REGISTER_ACTIVATE_VMX_PREEMPTION_TIMER_BIT 6
-#define IA32_VMX_PINBASED_CTLS_REGISTER_ACTIVATE_VMX_PREEMPTION_TIMER_MASK 0x01
-#define IA32_VMX_PINBASED_CTLS_REGISTER_ACTIVATE_VMX_PREEMPTION_TIMER(_) (((_) >> 6) & 0x01)
+#define IA32_VMX_PINBASED_CTLS_ACTIVATE_VMX_PREEMPTION_TIMER_BIT     6
+#define IA32_VMX_PINBASED_CTLS_ACTIVATE_VMX_PREEMPTION_TIMER_MASK    0x01
+#define IA32_VMX_PINBASED_CTLS_ACTIVATE_VMX_PREEMPTION_TIMER(_)      (((_) >> 6) & 0x01)
 
     /**
      * @brief Process interrupts with the posted-interrupt notification vector
@@ -8948,9 +8948,9 @@ typedef union
      * @see Vol3C[29.6(POSTED-INTERRUPT PROCESSING)]
      */
     UINT64 ProcessPostedInterrupts                                 : 1;
-#define IA32_VMX_PINBASED_CTLS_REGISTER_PROCESS_POSTED_INTERRUPTS_BIT 7
-#define IA32_VMX_PINBASED_CTLS_REGISTER_PROCESS_POSTED_INTERRUPTS_MASK 0x01
-#define IA32_VMX_PINBASED_CTLS_REGISTER_PROCESS_POSTED_INTERRUPTS(_) (((_) >> 7) & 0x01)
+#define IA32_VMX_PINBASED_CTLS_PROCESS_POSTED_INTERRUPTS_BIT         7
+#define IA32_VMX_PINBASED_CTLS_PROCESS_POSTED_INTERRUPTS_MASK        0x01
+#define IA32_VMX_PINBASED_CTLS_PROCESS_POSTED_INTERRUPTS(_)          (((_) >> 7) & 0x01)
     UINT64 Reserved3                                               : 56;
   };
 
@@ -8981,9 +8981,9 @@ typedef union
      * @see Vol3C[24.4.2(Guest Non-Register State)]
      */
     UINT64 InterruptWindowExiting                                  : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INTERRUPT_WINDOW_EXITING_BIT 2
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INTERRUPT_WINDOW_EXITING_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INTERRUPT_WINDOW_EXITING(_) (((_) >> 2) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_INTERRUPT_WINDOW_EXITING_BIT         2
+#define IA32_VMX_PROCBASED_CTLS_INTERRUPT_WINDOW_EXITING_MASK        0x01
+#define IA32_VMX_PROCBASED_CTLS_INTERRUPT_WINDOW_EXITING(_)          (((_) >> 2) & 0x01)
 
     /**
      * @brief Use timestamp counter offset
@@ -8995,9 +8995,9 @@ typedef union
      * @see Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
      */
     UINT64 UseTscOffsetting                                        : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TSC_OFFSETTING_BIT      3
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TSC_OFFSETTING_MASK     0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TSC_OFFSETTING(_)       (((_) >> 3) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_USE_TSC_OFFSETTING_BIT               3
+#define IA32_VMX_PROCBASED_CTLS_USE_TSC_OFFSETTING_MASK              0x01
+#define IA32_VMX_PROCBASED_CTLS_USE_TSC_OFFSETTING(_)                (((_) >> 3) & 0x01)
     UINT64 Reserved2                                               : 3;
 
     /**
@@ -9006,9 +9006,9 @@ typedef union
      * [Bit 7] This control determines whether executions of HLT cause VM exits.
      */
     UINT64 HltExiting                                              : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_HLT_EXITING_BIT             7
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_HLT_EXITING_MASK            0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_HLT_EXITING(_)              (((_) >> 7) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_HLT_EXITING_BIT                      7
+#define IA32_VMX_PROCBASED_CTLS_HLT_EXITING_MASK                     0x01
+#define IA32_VMX_PROCBASED_CTLS_HLT_EXITING(_)                       (((_) >> 7) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
@@ -9017,9 +9017,9 @@ typedef union
      * [Bit 9] This control determines whether executions of INVLPG cause VM exits.
      */
     UINT64 InvlpgExiting                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INVLPG_EXITING_BIT          9
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INVLPG_EXITING_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_INVLPG_EXITING(_)           (((_) >> 9) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_INVLPG_EXITING_BIT                   9
+#define IA32_VMX_PROCBASED_CTLS_INVLPG_EXITING_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS_INVLPG_EXITING(_)                    (((_) >> 9) & 0x01)
 
     /**
      * @brief VM-exit when executing the MWAIT instruction
@@ -9027,9 +9027,9 @@ typedef union
      * [Bit 10] This control determines whether executions of MWAIT cause VM exits.
      */
     UINT64 MwaitExiting                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MWAIT_EXITING_BIT           10
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MWAIT_EXITING_MASK          0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MWAIT_EXITING(_)            (((_) >> 10) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_MWAIT_EXITING_BIT                    10
+#define IA32_VMX_PROCBASED_CTLS_MWAIT_EXITING_MASK                   0x01
+#define IA32_VMX_PROCBASED_CTLS_MWAIT_EXITING(_)                     (((_) >> 10) & 0x01)
 
     /**
      * @brief VM-exit when executing the RDPMC instruction
@@ -9037,9 +9037,9 @@ typedef union
      * [Bit 11] This control determines whether executions of RDPMC cause VM exits.
      */
     UINT64 RdpmcExiting                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDPMC_EXITING_BIT           11
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDPMC_EXITING_MASK          0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDPMC_EXITING(_)            (((_) >> 11) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_RDPMC_EXITING_BIT                    11
+#define IA32_VMX_PROCBASED_CTLS_RDPMC_EXITING_MASK                   0x01
+#define IA32_VMX_PROCBASED_CTLS_RDPMC_EXITING(_)                     (((_) >> 11) & 0x01)
 
     /**
      * @brief VM-exit when executing the RDTSC/RDTSCP instruction
@@ -9047,9 +9047,9 @@ typedef union
      * [Bit 12] This control determines whether executions of RDTSC and RDTSCP cause VM exits.
      */
     UINT64 RdtscExiting                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDTSC_EXITING_BIT           12
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDTSC_EXITING_MASK          0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_RDTSC_EXITING(_)            (((_) >> 12) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_RDTSC_EXITING_BIT                    12
+#define IA32_VMX_PROCBASED_CTLS_RDTSC_EXITING_MASK                   0x01
+#define IA32_VMX_PROCBASED_CTLS_RDTSC_EXITING(_)                     (((_) >> 12) & 0x01)
     UINT64 Reserved4                                               : 2;
 
     /**
@@ -9063,9 +9063,9 @@ typedef union
      * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
      */
     UINT64 Cr3LoadExiting                                          : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_LOAD_EXITING_BIT        15
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_LOAD_EXITING_MASK       0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_LOAD_EXITING(_)         (((_) >> 15) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_CR3_LOAD_EXITING_BIT                 15
+#define IA32_VMX_PROCBASED_CTLS_CR3_LOAD_EXITING_MASK                0x01
+#define IA32_VMX_PROCBASED_CTLS_CR3_LOAD_EXITING(_)                  (((_) >> 15) & 0x01)
 
     /**
      * @brief VM-exit when executing the MOV from CR3 instruction (forced to 1 on the 'first' VT-x capable CPUs; this actually
@@ -9075,9 +9075,9 @@ typedef union
      * virtual-machine extensions supported only the 1-setting of this control.
      */
     UINT64 Cr3StoreExiting                                         : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_STORE_EXITING_BIT       16
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_STORE_EXITING_MASK      0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR3_STORE_EXITING(_)        (((_) >> 16) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_BIT                16
+#define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_MASK               0x01
+#define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING(_)                 (((_) >> 16) & 0x01)
     UINT64 Reserved5                                               : 2;
 
     /**
@@ -9086,9 +9086,9 @@ typedef union
      * [Bit 19] This control determines whether executions of MOV to CR8 cause VM exits.
      */
     UINT64 Cr8LoadExiting                                          : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_LOAD_EXITING_BIT        19
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_LOAD_EXITING_MASK       0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_LOAD_EXITING(_)         (((_) >> 19) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_CR8_LOAD_EXITING_BIT                 19
+#define IA32_VMX_PROCBASED_CTLS_CR8_LOAD_EXITING_MASK                0x01
+#define IA32_VMX_PROCBASED_CTLS_CR8_LOAD_EXITING(_)                  (((_) >> 19) & 0x01)
 
     /**
      * @brief VM-exit on CR8 stores
@@ -9096,9 +9096,9 @@ typedef union
      * [Bit 20] This control determines whether executions of MOV from CR8 cause VM exits.
      */
     UINT64 Cr8StoreExiting                                         : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_STORE_EXITING_BIT       20
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_STORE_EXITING_MASK      0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_CR8_STORE_EXITING(_)        (((_) >> 20) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_CR8_STORE_EXITING_BIT                20
+#define IA32_VMX_PROCBASED_CTLS_CR8_STORE_EXITING_MASK               0x01
+#define IA32_VMX_PROCBASED_CTLS_CR8_STORE_EXITING(_)                 (((_) >> 20) & 0x01)
 
     /**
      * @brief Use TPR shadow
@@ -9108,9 +9108,9 @@ typedef union
      * @see Vol3C[29(APIC VIRTUALIZATION AND VIRTUAL INTERRUPTS)]
      */
     UINT64 UseTprShadow                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TPR_SHADOW_BIT          21
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TPR_SHADOW_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_TPR_SHADOW(_)           (((_) >> 21) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_USE_TPR_SHADOW_BIT                   21
+#define IA32_VMX_PROCBASED_CTLS_USE_TPR_SHADOW_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS_USE_TPR_SHADOW(_)                    (((_) >> 21) & 0x01)
 
     /**
      * @brief VM-exit when virtual NMI blocking is disabled
@@ -9120,9 +9120,9 @@ typedef union
      * @see Vol3C[24.4.2(Guest Non-Register State)]
      */
     UINT64 NmiWindowExiting                                        : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_NMI_WINDOW_EXITING_BIT      22
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_NMI_WINDOW_EXITING_MASK     0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_NMI_WINDOW_EXITING(_)       (((_) >> 22) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_NMI_WINDOW_EXITING_BIT               22
+#define IA32_VMX_PROCBASED_CTLS_NMI_WINDOW_EXITING_MASK              0x01
+#define IA32_VMX_PROCBASED_CTLS_NMI_WINDOW_EXITING(_)                (((_) >> 22) & 0x01)
 
     /**
      * @brief VM-exit when executing a MOV DRx instruction
@@ -9130,9 +9130,9 @@ typedef union
      * [Bit 23] This control determines whether executions of MOV DR cause VM exits.
      */
     UINT64 MovDrExiting                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MOV_DR_EXITING_BIT          23
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MOV_DR_EXITING_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MOV_DR_EXITING(_)           (((_) >> 23) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_MOV_DR_EXITING_BIT                   23
+#define IA32_VMX_PROCBASED_CTLS_MOV_DR_EXITING_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS_MOV_DR_EXITING(_)                    (((_) >> 23) & 0x01)
 
     /**
      * @brief VM-exit when executing IO instructions
@@ -9141,9 +9141,9 @@ typedef union
      * OUTS/OUTSB/OUTSW/OUTSD) cause VM exits.
      */
     UINT64 UnconditionalIoExiting                                  : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_UNCONDITIONAL_IO_EXITING_BIT 24
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_UNCONDITIONAL_IO_EXITING_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_UNCONDITIONAL_IO_EXITING(_) (((_) >> 24) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_UNCONDITIONAL_IO_EXITING_BIT         24
+#define IA32_VMX_PROCBASED_CTLS_UNCONDITIONAL_IO_EXITING_MASK        0x01
+#define IA32_VMX_PROCBASED_CTLS_UNCONDITIONAL_IO_EXITING(_)          (((_) >> 24) & 0x01)
 
     /**
      * @brief Use IO bitmaps
@@ -9156,9 +9156,9 @@ typedef union
      * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
      */
     UINT64 UseIoBitmaps                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_IO_BITMAPS_BIT          25
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_IO_BITMAPS_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_IO_BITMAPS(_)           (((_) >> 25) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_USE_IO_BITMAPS_BIT                   25
+#define IA32_VMX_PROCBASED_CTLS_USE_IO_BITMAPS_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS_USE_IO_BITMAPS(_)                    (((_) >> 25) & 0x01)
     UINT64 Reserved6                                               : 1;
 
     /**
@@ -9169,9 +9169,9 @@ typedef union
      * @see Vol3C[25.5.2(Monitor Trap Flag)]
      */
     UINT64 MonitorTrapFlag                                         : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_TRAP_FLAG_BIT       27
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_TRAP_FLAG_MASK      0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_TRAP_FLAG(_)        (((_) >> 27) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_TRAP_FLAG_BIT                27
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_TRAP_FLAG_MASK               0x01
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_TRAP_FLAG(_)                 (((_) >> 27) & 0x01)
 
     /**
      * @brief Use MSR bitmaps
@@ -9184,9 +9184,9 @@ typedef union
      * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
      */
     UINT64 UseMsrBitmaps                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_MSR_BITMAPS_BIT         28
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_MSR_BITMAPS_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_USE_MSR_BITMAPS(_)          (((_) >> 28) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_USE_MSR_BITMAPS_BIT                  28
+#define IA32_VMX_PROCBASED_CTLS_USE_MSR_BITMAPS_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS_USE_MSR_BITMAPS(_)                   (((_) >> 28) & 0x01)
 
     /**
      * @brief VM-exit when executing the MONITOR instruction
@@ -9194,9 +9194,9 @@ typedef union
      * [Bit 29] This control determines whether executions of MONITOR cause VM exits.
      */
     UINT64 MonitorExiting                                          : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_EXITING_BIT         29
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_EXITING_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_MONITOR_EXITING(_)          (((_) >> 29) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_EXITING_BIT                  29
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_EXITING_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS_MONITOR_EXITING(_)                   (((_) >> 29) & 0x01)
 
     /**
      * @brief VM-exit when executing the PAUSE instruction
@@ -9204,9 +9204,9 @@ typedef union
      * [Bit 30] This control determines whether executions of PAUSE cause VM exits.
      */
     UINT64 PauseExiting                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_PAUSE_EXITING_BIT           30
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_PAUSE_EXITING_MASK          0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_PAUSE_EXITING(_)            (((_) >> 30) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_PAUSE_EXITING_BIT                    30
+#define IA32_VMX_PROCBASED_CTLS_PAUSE_EXITING_MASK                   0x01
+#define IA32_VMX_PROCBASED_CTLS_PAUSE_EXITING(_)                     (((_) >> 30) & 0x01)
 
     /**
      * @brief Determines whether the secondary processor based VM-execution controls are used
@@ -9215,9 +9215,9 @@ typedef union
      * is 0, the logical processor operates as if all the secondary processor-based VM-execution controls were also 0.
      */
     UINT64 ActivateSecondaryControls                               : 1;
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_ACTIVATE_SECONDARY_CONTROLS_BIT 31
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_ACTIVATE_SECONDARY_CONTROLS_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS_REGISTER_ACTIVATE_SECONDARY_CONTROLS(_) (((_) >> 31) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_SECONDARY_CONTROLS_BIT      31
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_SECONDARY_CONTROLS_MASK     0x01
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_SECONDARY_CONTROLS(_)       (((_) >> 31) & 0x01)
     UINT64 Reserved7                                               : 32;
   };
 
@@ -9247,9 +9247,9 @@ typedef union
      * support the virtual-machine extensions supported only the 1-setting of this control.
      */
     UINT64 SaveDebugControls                                       : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_DEBUG_CONTROLS_BIT          2
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_DEBUG_CONTROLS_MASK         0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_DEBUG_CONTROLS(_)           (((_) >> 2) & 0x01)
+#define IA32_VMX_EXIT_CTLS_SAVE_DEBUG_CONTROLS_BIT                   2
+#define IA32_VMX_EXIT_CTLS_SAVE_DEBUG_CONTROLS_MASK                  0x01
+#define IA32_VMX_EXIT_CTLS_SAVE_DEBUG_CONTROLS(_)                    (((_) >> 2) & 0x01)
     UINT64 Reserved2                                               : 6;
 
     /**
@@ -9260,9 +9260,9 @@ typedef union
      * This control must be 0 on processors that do not support Intel 64 architecture.
      */
     UINT64 HostAddressSpaceSize                                    : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_HOST_ADDRESS_SPACE_SIZE_BIT      9
-#define IA32_VMX_EXIT_CTLS_REGISTER_HOST_ADDRESS_SPACE_SIZE_MASK     0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_HOST_ADDRESS_SPACE_SIZE(_)       (((_) >> 9) & 0x01)
+#define IA32_VMX_EXIT_CTLS_HOST_ADDRESS_SPACE_SIZE_BIT               9
+#define IA32_VMX_EXIT_CTLS_HOST_ADDRESS_SPACE_SIZE_MASK              0x01
+#define IA32_VMX_EXIT_CTLS_HOST_ADDRESS_SPACE_SIZE(_)                (((_) >> 9) & 0x01)
     UINT64 Reserved3                                               : 2;
 
     /**
@@ -9271,9 +9271,9 @@ typedef union
      * [Bit 12] This control determines whether the IA32_PERF_GLOBAL_CTRL MSR is loaded on VM exit.
      */
     UINT64 LoadIa32PerfGlobalCtrl                                  : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL_BIT   12
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL_MASK  0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL(_)    (((_) >> 12) & 0x01)
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_BIT            12
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_MASK           0x01
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL(_)             (((_) >> 12) & 0x01)
     UINT64 Reserved4                                               : 2;
 
     /**
@@ -9286,9 +9286,9 @@ typedef union
      * interruption-information field is marked invalid.
      */
     UINT64 AcknowledgeInterruptOnExit                              : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_ACKNOWLEDGE_INTERRUPT_ON_EXIT_BIT 15
-#define IA32_VMX_EXIT_CTLS_REGISTER_ACKNOWLEDGE_INTERRUPT_ON_EXIT_MASK 0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_ACKNOWLEDGE_INTERRUPT_ON_EXIT(_) (((_) >> 15) & 0x01)
+#define IA32_VMX_EXIT_CTLS_ACKNOWLEDGE_INTERRUPT_ON_EXIT_BIT         15
+#define IA32_VMX_EXIT_CTLS_ACKNOWLEDGE_INTERRUPT_ON_EXIT_MASK        0x01
+#define IA32_VMX_EXIT_CTLS_ACKNOWLEDGE_INTERRUPT_ON_EXIT(_)          (((_) >> 15) & 0x01)
     UINT64 Reserved5                                               : 2;
 
     /**
@@ -9297,9 +9297,9 @@ typedef union
      * [Bit 18] This control determines whether the IA32_PAT MSR is saved on VM exit.
      */
     UINT64 SaveIa32Pat                                             : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_PAT_BIT                18
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_PAT_MASK               0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_PAT(_)                 (((_) >> 18) & 0x01)
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PAT_BIT                         18
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PAT_MASK                        0x01
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PAT(_)                          (((_) >> 18) & 0x01)
 
     /**
      * @brief Whether the host IA32_PAT MSR is loaded on VM-exit
@@ -9307,9 +9307,9 @@ typedef union
      * [Bit 19] This control determines whether the IA32_PAT MSR is loaded on VM exit.
      */
     UINT64 LoadIa32Pat                                             : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PAT_BIT                19
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PAT_MASK               0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_PAT(_)                 (((_) >> 19) & 0x01)
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PAT_BIT                         19
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PAT_MASK                        0x01
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PAT(_)                          (((_) >> 19) & 0x01)
 
     /**
      * @brief Whether the guest IA32_EFER MSR is saved on VM-exit
@@ -9317,9 +9317,9 @@ typedef union
      * [Bit 20] This control determines whether the IA32_EFER MSR is saved on VM exit.
      */
     UINT64 SaveIa32Efer                                            : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_EFER_BIT               20
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_EFER_MASK              0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_IA32_EFER(_)                (((_) >> 20) & 0x01)
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_EFER_BIT                        20
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_EFER_MASK                       0x01
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_EFER(_)                         (((_) >> 20) & 0x01)
 
     /**
      * @brief Whether the host IA32_EFER MSR is loaded on VM-exit
@@ -9327,9 +9327,9 @@ typedef union
      * [Bit 21] This control determines whether the IA32_EFER MSR is loaded on VM exit.
      */
     UINT64 LoadIa32Efer                                            : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_EFER_BIT               21
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_EFER_MASK              0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_LOAD_IA32_EFER(_)                (((_) >> 21) & 0x01)
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_EFER_BIT                        21
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_EFER_MASK                       0x01
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_EFER(_)                         (((_) >> 21) & 0x01)
 
     /**
      * @brief Whether the value of the VMX preemption timer is saved on every VM-exit
@@ -9337,17 +9337,17 @@ typedef union
      * [Bit 22] This control determines whether the value of the VMX-preemption timer is saved on VM exit.
      */
     UINT64 SaveVmxPreemptionTimerValue                             : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_VMX_PREEMPTION_TIMER_VALUE_BIT 22
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_VMX_PREEMPTION_TIMER_VALUE_MASK 0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_SAVE_VMX_PREEMPTION_TIMER_VALUE(_) (((_) >> 22) & 0x01)
+#define IA32_VMX_EXIT_CTLS_SAVE_VMX_PREEMPTION_TIMER_VALUE_BIT       22
+#define IA32_VMX_EXIT_CTLS_SAVE_VMX_PREEMPTION_TIMER_VALUE_MASK      0x01
+#define IA32_VMX_EXIT_CTLS_SAVE_VMX_PREEMPTION_TIMER_VALUE(_)        (((_) >> 22) & 0x01)
 
     /**
      * [Bit 23] This control determines whether the IA32_BNDCFGS MSR is cleared on VM exit.
      */
     UINT64 ClearIa32Bndcfgs                                        : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_CLEAR_IA32_BNDCFGS_BIT           23
-#define IA32_VMX_EXIT_CTLS_REGISTER_CLEAR_IA32_BNDCFGS_MASK          0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_CLEAR_IA32_BNDCFGS(_)            (((_) >> 23) & 0x01)
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS_BIT                    23
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS_MASK                   0x01
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS(_)                     (((_) >> 23) & 0x01)
 
     /**
      * [Bit 24] If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM exit or
@@ -9356,9 +9356,9 @@ typedef union
      * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
      */
     UINT64 ConcealVmxFromPt                                        : 1;
-#define IA32_VMX_EXIT_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_BIT          24
-#define IA32_VMX_EXIT_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_MASK         0x01
-#define IA32_VMX_EXIT_CTLS_REGISTER_CONCEAL_VMX_FROM_PT(_)           (((_) >> 24) & 0x01)
+#define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_BIT                   24
+#define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_MASK                  0x01
+#define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT(_)                    (((_) >> 24) & 0x01)
     UINT64 Reserved6                                               : 39;
   };
 
@@ -9388,9 +9388,9 @@ typedef union
      * support the virtual-machine extensions supported only the 1-setting of this control.
      */
     UINT64 LoadDebugControls                                       : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_DEBUG_CONTROLS_BIT         2
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_DEBUG_CONTROLS_MASK        0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_DEBUG_CONTROLS(_)          (((_) >> 2) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_LOAD_DEBUG_CONTROLS_BIT                  2
+#define IA32_VMX_ENTRY_CTLS_LOAD_DEBUG_CONTROLS_MASK                 0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_DEBUG_CONTROLS(_)                   (((_) >> 2) & 0x01)
     UINT64 Reserved2                                               : 6;
 
     /**
@@ -9401,9 +9401,9 @@ typedef union
      * processors that do not support Intel 64 architecture.
      */
     UINT64 Ia32EModeGuest                                          : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_IA32E_MODE_GUEST_BIT            9
-#define IA32_VMX_ENTRY_CTLS_REGISTER_IA32E_MODE_GUEST_MASK           0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_IA32E_MODE_GUEST(_)             (((_) >> 9) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_IA32E_MODE_GUEST_BIT                     9
+#define IA32_VMX_ENTRY_CTLS_IA32E_MODE_GUEST_MASK                    0x01
+#define IA32_VMX_ENTRY_CTLS_IA32E_MODE_GUEST(_)                      (((_) >> 9) & 0x01)
 
     /**
      * @brief In SMM mode after VM-entry
@@ -9412,9 +9412,9 @@ typedef union
      * control must be 0 for any VM entry from outside SMM.
      */
     UINT64 EntryToSmm                                              : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_ENTRY_TO_SMM_BIT                10
-#define IA32_VMX_ENTRY_CTLS_REGISTER_ENTRY_TO_SMM_MASK               0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_ENTRY_TO_SMM(_)                 (((_) >> 10) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_ENTRY_TO_SMM_BIT                         10
+#define IA32_VMX_ENTRY_CTLS_ENTRY_TO_SMM_MASK                        0x01
+#define IA32_VMX_ENTRY_CTLS_ENTRY_TO_SMM(_)                          (((_) >> 10) & 0x01)
 
     /**
      * @brief Disable dual treatment of SMI and SMM; must be zero for VM-entry outside of SMM
@@ -9425,9 +9425,9 @@ typedef union
      * @see Vol3C[34.15.7(Deactivating the Dual-Monitor Treatment)]
      */
     UINT64 DeactivateDualMonitorTreatment                          : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_DEACTIVATE_DUAL_MONITOR_TREATMENT_BIT 11
-#define IA32_VMX_ENTRY_CTLS_REGISTER_DEACTIVATE_DUAL_MONITOR_TREATMENT_MASK 0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_DEACTIVATE_DUAL_MONITOR_TREATMENT(_) (((_) >> 11) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_DEACTIVATE_DUAL_MONITOR_TREATMENT_BIT    11
+#define IA32_VMX_ENTRY_CTLS_DEACTIVATE_DUAL_MONITOR_TREATMENT_MASK   0x01
+#define IA32_VMX_ENTRY_CTLS_DEACTIVATE_DUAL_MONITOR_TREATMENT(_)     (((_) >> 11) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
@@ -9436,9 +9436,9 @@ typedef union
      * [Bit 13] This control determines whether the IA32_PERF_GLOBAL_CTRL MSR is loaded on VM entry.
      */
     UINT64 LoadIa32PerfGlobalCtrl                                  : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL_BIT  13
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL_MASK 0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PERF_GLOBAL_CTRL(_)   (((_) >> 13) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_BIT           13
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL_MASK          0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PERF_GLOBAL_CTRL(_)            (((_) >> 13) & 0x01)
 
     /**
      * @brief Whether the guest IA32_PAT MSR is loaded on VM-entry
@@ -9446,9 +9446,9 @@ typedef union
      * [Bit 14] This control determines whether the IA32_PAT MSR is loaded on VM entry.
      */
     UINT64 LoadIa32Pat                                             : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PAT_BIT               14
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PAT_MASK              0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_PAT(_)                (((_) >> 14) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PAT_BIT                        14
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PAT_MASK                       0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PAT(_)                         (((_) >> 14) & 0x01)
 
     /**
      * @brief Whether the guest IA32_EFER MSR is loaded on VM-entry
@@ -9456,17 +9456,17 @@ typedef union
      * [Bit 15] This control determines whether the IA32_EFER MSR is loaded on VM entry.
      */
     UINT64 LoadIa32Efer                                            : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_EFER_BIT              15
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_EFER_MASK             0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_EFER(_)               (((_) >> 15) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_EFER_BIT                       15
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_EFER_MASK                      0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_EFER(_)                        (((_) >> 15) & 0x01)
 
     /**
      * [Bit 16] This control determines whether the IA32_BNDCFGS MSR is loaded on VM entry.
      */
     UINT64 LoadIa32Bndcfgs                                         : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_BNDCFGS_BIT           16
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_BNDCFGS_MASK          0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_LOAD_IA32_BNDCFGS(_)            (((_) >> 16) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_BNDCFGS_BIT                    16
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_BNDCFGS_MASK                   0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_BNDCFGS(_)                     (((_) >> 16) & 0x01)
 
     /**
      * [Bit 17] If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on a VM entry or
@@ -9475,9 +9475,9 @@ typedef union
      * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
      */
     UINT64 ConcealVmxFromPt                                        : 1;
-#define IA32_VMX_ENTRY_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_BIT         17
-#define IA32_VMX_ENTRY_CTLS_REGISTER_CONCEAL_VMX_FROM_PT_MASK        0x01
-#define IA32_VMX_ENTRY_CTLS_REGISTER_CONCEAL_VMX_FROM_PT(_)          (((_) >> 17) & 0x01)
+#define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_BIT                  17
+#define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_MASK                 0x01
+#define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT(_)                   (((_) >> 17) & 0x01)
     UINT64 Reserved4                                               : 46;
   };
 
@@ -9505,9 +9505,9 @@ typedef union
      * the TSC changes due to a TSC increment.
      */
     UINT64 PreemptionTimerTscRelationship                          : 5;
-#define IA32_VMX_MISC_REGISTER_PREEMPTION_TIMER_TSC_RELATIONSHIP_BIT 0
-#define IA32_VMX_MISC_REGISTER_PREEMPTION_TIMER_TSC_RELATIONSHIP_MASK 0x1F
-#define IA32_VMX_MISC_REGISTER_PREEMPTION_TIMER_TSC_RELATIONSHIP(_)  (((_) >> 0) & 0x1F)
+#define IA32_VMX_MISC_PREEMPTION_TIMER_TSC_RELATIONSHIP_BIT          0
+#define IA32_VMX_MISC_PREEMPTION_TIMER_TSC_RELATIONSHIP_MASK         0x1F
+#define IA32_VMX_MISC_PREEMPTION_TIMER_TSC_RELATIONSHIP(_)           (((_) >> 0) & 0x1F)
 
     /**
      * @brief Whether VM-exit stores EFER.LMA into the "IA32e mode guest" field
@@ -9518,9 +9518,9 @@ typedef union
      * @see Vol3C[27.2(RECORDING VM-EXIT INFORMATION AND UPDATING VM-ENTRY CONTROL FIELDS)]
      */
     UINT64 StoreEferLmaOnVmexit                                    : 1;
-#define IA32_VMX_MISC_REGISTER_STORE_EFER_LMA_ON_VMEXIT_BIT          5
-#define IA32_VMX_MISC_REGISTER_STORE_EFER_LMA_ON_VMEXIT_MASK         0x01
-#define IA32_VMX_MISC_REGISTER_STORE_EFER_LMA_ON_VMEXIT(_)           (((_) >> 5) & 0x01)
+#define IA32_VMX_MISC_STORE_EFER_LMA_ON_VMEXIT_BIT                   5
+#define IA32_VMX_MISC_STORE_EFER_LMA_ON_VMEXIT_MASK                  0x01
+#define IA32_VMX_MISC_STORE_EFER_LMA_ON_VMEXIT(_)                    (((_) >> 5) & 0x01)
 
     /**
      * @brief Activity states supported by the implementation
@@ -9533,9 +9533,9 @@ typedef union
      * activity state. All implementations support VM entry to activity state 0 (active).
      */
     UINT64 ActivityStates                                          : 3;
-#define IA32_VMX_MISC_REGISTER_ACTIVITY_STATES_BIT                   6
-#define IA32_VMX_MISC_REGISTER_ACTIVITY_STATES_MASK                  0x07
-#define IA32_VMX_MISC_REGISTER_ACTIVITY_STATES(_)                    (((_) >> 6) & 0x07)
+#define IA32_VMX_MISC_ACTIVITY_STATES_BIT                            6
+#define IA32_VMX_MISC_ACTIVITY_STATES_MASK                           0x07
+#define IA32_VMX_MISC_ACTIVITY_STATES(_)                             (((_) >> 6) & 0x07)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -9548,9 +9548,9 @@ typedef union
      * @see Vol3C[30.3(VMX INSTRUCTIONS | VMXON-Enter VMX Operation)]
      */
     UINT64 IntelPtAvailableInVmx                                   : 1;
-#define IA32_VMX_MISC_REGISTER_INTEL_PT_AVAILABLE_IN_VMX_BIT         14
-#define IA32_VMX_MISC_REGISTER_INTEL_PT_AVAILABLE_IN_VMX_MASK        0x01
-#define IA32_VMX_MISC_REGISTER_INTEL_PT_AVAILABLE_IN_VMX(_)          (((_) >> 14) & 0x01)
+#define IA32_VMX_MISC_INTEL_PT_AVAILABLE_IN_VMX_BIT                  14
+#define IA32_VMX_MISC_INTEL_PT_AVAILABLE_IN_VMX_MASK                 0x01
+#define IA32_VMX_MISC_INTEL_PT_AVAILABLE_IN_VMX(_)                   (((_) >> 14) & 0x01)
 
     /**
      * @brief Whether RDMSR can be used to read IA32_SMBASE_MSR in SMM
@@ -9561,9 +9561,9 @@ typedef union
      * @see Vol3C[34.15.6.3(Saving Guest State)]
      */
     UINT64 RdmsrCanReadIa32SmbaseMsrInSmm                          : 1;
-#define IA32_VMX_MISC_REGISTER_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_BIT 15
-#define IA32_VMX_MISC_REGISTER_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_MASK 0x01
-#define IA32_VMX_MISC_REGISTER_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM(_) (((_) >> 15) & 0x01)
+#define IA32_VMX_MISC_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_BIT      15
+#define IA32_VMX_MISC_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM_MASK     0x01
+#define IA32_VMX_MISC_RDMSR_CAN_READ_IA32_SMBASE_MSR_IN_SMM(_)       (((_) >> 15) & 0x01)
 
     /**
      * @brief Number of CR3 target values supported by the processor (0-256)
@@ -9572,9 +9572,9 @@ typedef union
      * 256, inclusive (bit 24 is set if and only if bits 23:16 are clear).
      */
     UINT64 Cr3TargetCount                                          : 9;
-#define IA32_VMX_MISC_REGISTER_CR3_TARGET_COUNT_BIT                  16
-#define IA32_VMX_MISC_REGISTER_CR3_TARGET_COUNT_MASK                 0x1FF
-#define IA32_VMX_MISC_REGISTER_CR3_TARGET_COUNT(_)                   (((_) >> 16) & 0x1FF)
+#define IA32_VMX_MISC_CR3_TARGET_COUNT_BIT                           16
+#define IA32_VMX_MISC_CR3_TARGET_COUNT_MASK                          0x1FF
+#define IA32_VMX_MISC_CR3_TARGET_COUNT(_)                            (((_) >> 16) & 0x1FF)
 
     /**
      * @brief Maximum number of MSRs in the VMCS. (N+1)*512
@@ -9585,9 +9585,9 @@ typedef union
      * undefined processor behavior may result (including a machine check during the VMX transition).
      */
     UINT64 MaxNumberOfMsr                                          : 3;
-#define IA32_VMX_MISC_REGISTER_MAX_NUMBER_OF_MSR_BIT                 25
-#define IA32_VMX_MISC_REGISTER_MAX_NUMBER_OF_MSR_MASK                0x07
-#define IA32_VMX_MISC_REGISTER_MAX_NUMBER_OF_MSR(_)                  (((_) >> 25) & 0x07)
+#define IA32_VMX_MISC_MAX_NUMBER_OF_MSR_BIT                          25
+#define IA32_VMX_MISC_MAX_NUMBER_OF_MSR_MASK                         0x07
+#define IA32_VMX_MISC_MAX_NUMBER_OF_MSR(_)                           (((_) >> 25) & 0x07)
 
     /**
      * @brief Whether bit 2 of IA32_SMM_MONITOR_CTL can be set to 1
@@ -9598,9 +9598,9 @@ typedef union
      * @see Vol3C[34.14.4(VMXOFF and SMI Unblocking)]
      */
     UINT64 SmmMonitorCtlB2                                         : 1;
-#define IA32_VMX_MISC_REGISTER_SMM_MONITOR_CTL_B2_BIT                28
-#define IA32_VMX_MISC_REGISTER_SMM_MONITOR_CTL_B2_MASK               0x01
-#define IA32_VMX_MISC_REGISTER_SMM_MONITOR_CTL_B2(_)                 (((_) >> 28) & 0x01)
+#define IA32_VMX_MISC_SMM_MONITOR_CTL_B2_BIT                         28
+#define IA32_VMX_MISC_SMM_MONITOR_CTL_B2_MASK                        0x01
+#define IA32_VMX_MISC_SMM_MONITOR_CTL_B2(_)                          (((_) >> 28) & 0x01)
 
     /**
      * @brief Whether VMWRITE can be used to write VM-exit information fields
@@ -9609,18 +9609,18 @@ typedef union
      * be used to modify VM-exit information fields.
      */
     UINT64 VmwriteVmexitInfo                                       : 1;
-#define IA32_VMX_MISC_REGISTER_VMWRITE_VMEXIT_INFO_BIT               29
-#define IA32_VMX_MISC_REGISTER_VMWRITE_VMEXIT_INFO_MASK              0x01
-#define IA32_VMX_MISC_REGISTER_VMWRITE_VMEXIT_INFO(_)                (((_) >> 29) & 0x01)
+#define IA32_VMX_MISC_VMWRITE_VMEXIT_INFO_BIT                        29
+#define IA32_VMX_MISC_VMWRITE_VMEXIT_INFO_MASK                       0x01
+#define IA32_VMX_MISC_VMWRITE_VMEXIT_INFO(_)                         (((_) >> 29) & 0x01)
 
     /**
      * [Bit 30] When set to 1, VM entry allows injection of a software interrupt, software exception, or privileged software
      * exception with an instruction length of 0.
      */
     UINT64 ZeroLengthInstructionVmentryInjection                   : 1;
-#define IA32_VMX_MISC_REGISTER_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_BIT 30
-#define IA32_VMX_MISC_REGISTER_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_MASK 0x01
-#define IA32_VMX_MISC_REGISTER_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION(_) (((_) >> 30) & 0x01)
+#define IA32_VMX_MISC_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_BIT  30
+#define IA32_VMX_MISC_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION_MASK 0x01
+#define IA32_VMX_MISC_ZERO_LENGTH_INSTRUCTION_VMENTRY_INJECTION(_)   (((_) >> 30) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -9629,9 +9629,9 @@ typedef union
      * [Bits 63:32] Report the 32-bit MSEG revision identifier used by the processor.
      */
     UINT64 MsegId                                                  : 32;
-#define IA32_VMX_MISC_REGISTER_MSEG_ID_BIT                           32
-#define IA32_VMX_MISC_REGISTER_MSEG_ID_MASK                          0xFFFFFFFF
-#define IA32_VMX_MISC_REGISTER_MSEG_ID(_)                            (((_) >> 32) & 0xFFFFFFFF)
+#define IA32_VMX_MISC_MSEG_ID_BIT                                    32
+#define IA32_VMX_MISC_MSEG_ID_MASK                                   0xFFFFFFFF
+#define IA32_VMX_MISC_MSEG_ID(_)                                     (((_) >> 32) & 0xFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -9690,34 +9690,34 @@ typedef union
      * [Bit 0] Indicates access type.
      */
     UINT64 AccessType                                              : 1;
-#define IA32_VMX_VMCS_ENUM_REGISTER_ACCESS_TYPE_BIT                  0
-#define IA32_VMX_VMCS_ENUM_REGISTER_ACCESS_TYPE_MASK                 0x01
-#define IA32_VMX_VMCS_ENUM_REGISTER_ACCESS_TYPE(_)                   (((_) >> 0) & 0x01)
+#define IA32_VMX_VMCS_ENUM_ACCESS_TYPE_BIT                           0
+#define IA32_VMX_VMCS_ENUM_ACCESS_TYPE_MASK                          0x01
+#define IA32_VMX_VMCS_ENUM_ACCESS_TYPE(_)                            (((_) >> 0) & 0x01)
 
     /**
      * [Bits 9:1] Highest index value used for any VMCS encoding.
      */
     UINT64 HighestIndexValue                                       : 9;
-#define IA32_VMX_VMCS_ENUM_REGISTER_HIGHEST_INDEX_VALUE_BIT          1
-#define IA32_VMX_VMCS_ENUM_REGISTER_HIGHEST_INDEX_VALUE_MASK         0x1FF
-#define IA32_VMX_VMCS_ENUM_REGISTER_HIGHEST_INDEX_VALUE(_)           (((_) >> 1) & 0x1FF)
+#define IA32_VMX_VMCS_ENUM_HIGHEST_INDEX_VALUE_BIT                   1
+#define IA32_VMX_VMCS_ENUM_HIGHEST_INDEX_VALUE_MASK                  0x1FF
+#define IA32_VMX_VMCS_ENUM_HIGHEST_INDEX_VALUE(_)                    (((_) >> 1) & 0x1FF)
 
     /**
      * [Bits 11:10] Indicate the field's type.
      */
     UINT64 FieldType                                               : 2;
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_TYPE_BIT                   10
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_TYPE_MASK                  0x03
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_TYPE(_)                    (((_) >> 10) & 0x03)
+#define IA32_VMX_VMCS_ENUM_FIELD_TYPE_BIT                            10
+#define IA32_VMX_VMCS_ENUM_FIELD_TYPE_MASK                           0x03
+#define IA32_VMX_VMCS_ENUM_FIELD_TYPE(_)                             (((_) >> 10) & 0x03)
     UINT64 Reserved1                                               : 1;
 
     /**
      * [Bits 14:13] Indicate the field's width.
      */
     UINT64 FieldWidth                                              : 2;
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_WIDTH_BIT                  13
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_WIDTH_MASK                 0x03
-#define IA32_VMX_VMCS_ENUM_REGISTER_FIELD_WIDTH(_)                   (((_) >> 13) & 0x03)
+#define IA32_VMX_VMCS_ENUM_FIELD_WIDTH_BIT                           13
+#define IA32_VMX_VMCS_ENUM_FIELD_WIDTH_MASK                          0x03
+#define IA32_VMX_VMCS_ENUM_FIELD_WIDTH(_)                            (((_) >> 13) & 0x03)
     UINT64 Reserved2                                               : 49;
   };
 
@@ -9745,9 +9745,9 @@ typedef union
      * @see Vol3C[29.4(VIRTUALIZING MEMORY-MAPPED APIC ACCESSES)]
      */
     UINT64 VirtualizeApicAccesses                                  : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_APIC_ACCESSES_BIT 0
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_APIC_ACCESSES_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_APIC_ACCESSES(_) (((_) >> 0) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_APIC_ACCESSES_BIT        0
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_APIC_ACCESSES_MASK       0x01
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_APIC_ACCESSES(_)         (((_) >> 0) & 0x01)
 
     /**
      * @brief EPT supported/enabled
@@ -9757,9 +9757,9 @@ typedef union
      * @see Vol3C[28.2(THE EXTENDED PAGE TABLE MECHANISM (EPT))]
      */
     UINT64 EnableEpt                                               : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_EPT_BIT             1
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_EPT_MASK            0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_EPT(_)              (((_) >> 1) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_BIT                      1
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT_MASK                     0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_EPT(_)                       (((_) >> 1) & 0x01)
 
     /**
      * @brief Descriptor table instructions cause VM-exits
@@ -9767,9 +9767,9 @@ typedef union
      * [Bit 2] This control determines whether executions of LGDT, LIDT, LLDT, LTR, SGDT, SIDT, SLDT, and STR cause VM exits.
      */
     UINT64 DescriptorTableExiting                                  : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_DESCRIPTOR_TABLE_EXITING_BIT 2
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_DESCRIPTOR_TABLE_EXITING_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_DESCRIPTOR_TABLE_EXITING(_) (((_) >> 2) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_DESCRIPTOR_TABLE_EXITING_BIT        2
+#define IA32_VMX_PROCBASED_CTLS2_DESCRIPTOR_TABLE_EXITING_MASK       0x01
+#define IA32_VMX_PROCBASED_CTLS2_DESCRIPTOR_TABLE_EXITING(_)         (((_) >> 2) & 0x01)
 
     /**
      * @brief RDTSCP supported/enabled
@@ -9777,9 +9777,9 @@ typedef union
      * [Bit 3] If this control is 0, any execution of RDTSCP causes an invalid-opcode exception (\#UD).
      */
     UINT64 EnableRdtscp                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_RDTSCP_BIT          3
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_RDTSCP_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_RDTSCP(_)           (((_) >> 3) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_RDTSCP_BIT                   3
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_RDTSCP_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_RDTSCP(_)                    (((_) >> 3) & 0x01)
 
     /**
      * @brief Virtualize x2APIC mode
@@ -9790,9 +9790,9 @@ typedef union
      * @see Vol3C[29.5(VIRTUALIZING MSR-BASED APIC ACCESSES)]
      */
     UINT64 VirtualizeX2ApicMode                                    : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_X2APIC_MODE_BIT 4
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_X2APIC_MODE_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUALIZE_X2APIC_MODE(_)  (((_) >> 4) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_X2APIC_MODE_BIT          4
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_X2APIC_MODE_MASK         0x01
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUALIZE_X2APIC_MODE(_)           (((_) >> 4) & 0x01)
 
     /**
      * @brief VPID supported/enabled
@@ -9803,9 +9803,9 @@ typedef union
      * @see Vol3C[28.1(VIRTUAL PROCESSOR IDENTIFIERS (VPIDS))]
      */
     UINT64 EnableVpid                                              : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VPID_BIT            5
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VPID_MASK           0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VPID(_)             (((_) >> 5) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VPID_BIT                     5
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VPID_MASK                    0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VPID(_)                      (((_) >> 5) & 0x01)
 
     /**
      * @brief VM-exit when executing the WBINVD instruction
@@ -9813,9 +9813,9 @@ typedef union
      * [Bit 6] This control determines whether executions of WBINVD cause VM exits.
      */
     UINT64 WbinvdExiting                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_WBINVD_EXITING_BIT         6
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_WBINVD_EXITING_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_WBINVD_EXITING(_)          (((_) >> 6) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_WBINVD_EXITING_BIT                  6
+#define IA32_VMX_PROCBASED_CTLS2_WBINVD_EXITING_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_WBINVD_EXITING(_)                   (((_) >> 6) & 0x01)
 
     /**
      * @brief Unrestricted guest execution
@@ -9823,9 +9823,9 @@ typedef union
      * [Bit 7] This control determines whether guest software may run in unpaged protected mode or in realaddress mode.
      */
     UINT64 UnrestrictedGuest                                       : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_UNRESTRICTED_GUEST_BIT     7
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_UNRESTRICTED_GUEST_MASK    0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_UNRESTRICTED_GUEST(_)      (((_) >> 7) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_UNRESTRICTED_GUEST_BIT              7
+#define IA32_VMX_PROCBASED_CTLS2_UNRESTRICTED_GUEST_MASK             0x01
+#define IA32_VMX_PROCBASED_CTLS2_UNRESTRICTED_GUEST(_)               (((_) >> 7) & 0x01)
 
     /**
      * @brief APIC register virtualization
@@ -9836,9 +9836,9 @@ typedef union
      * @see Vol3C[29.5(VIRTUALIZING MSR-BASED APIC ACCESSES)]
      */
     UINT64 ApicRegisterVirtualization                              : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_APIC_REGISTER_VIRTUALIZATION_BIT 8
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_APIC_REGISTER_VIRTUALIZATION_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_APIC_REGISTER_VIRTUALIZATION(_) (((_) >> 8) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_APIC_REGISTER_VIRTUALIZATION_BIT    8
+#define IA32_VMX_PROCBASED_CTLS2_APIC_REGISTER_VIRTUALIZATION_MASK   0x01
+#define IA32_VMX_PROCBASED_CTLS2_APIC_REGISTER_VIRTUALIZATION(_)     (((_) >> 8) & 0x01)
 
     /**
      * @brief Virtual-interrupt delivery
@@ -9847,9 +9847,9 @@ typedef union
      * writes to the APIC registers that control interrupt prioritization.
      */
     UINT64 VirtualInterruptDelivery                                : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUAL_INTERRUPT_DELIVERY_BIT 9
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUAL_INTERRUPT_DELIVERY_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VIRTUAL_INTERRUPT_DELIVERY(_) (((_) >> 9) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUAL_INTERRUPT_DELIVERY_BIT      9
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUAL_INTERRUPT_DELIVERY_MASK     0x01
+#define IA32_VMX_PROCBASED_CTLS2_VIRTUAL_INTERRUPT_DELIVERY(_)       (((_) >> 9) & 0x01)
 
     /**
      * @brief A specified number of pause loops cause a VM-exit
@@ -9860,9 +9860,9 @@ typedef union
      * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
      */
     UINT64 PauseLoopExiting                                        : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_PAUSE_LOOP_EXITING_BIT     10
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_PAUSE_LOOP_EXITING_MASK    0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_PAUSE_LOOP_EXITING(_)      (((_) >> 10) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_PAUSE_LOOP_EXITING_BIT              10
+#define IA32_VMX_PROCBASED_CTLS2_PAUSE_LOOP_EXITING_MASK             0x01
+#define IA32_VMX_PROCBASED_CTLS2_PAUSE_LOOP_EXITING(_)               (((_) >> 10) & 0x01)
 
     /**
      * @brief VM-exit when executing RDRAND instructions
@@ -9870,9 +9870,9 @@ typedef union
      * [Bit 11] This control determines whether executions of RDRAND cause VM exits.
      */
     UINT64 RdrandExiting                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDRAND_EXITING_BIT         11
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDRAND_EXITING_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDRAND_EXITING(_)          (((_) >> 11) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_RDRAND_EXITING_BIT                  11
+#define IA32_VMX_PROCBASED_CTLS2_RDRAND_EXITING_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_RDRAND_EXITING(_)                   (((_) >> 11) & 0x01)
 
     /**
      * @brief Enables INVPCID instructions
@@ -9880,9 +9880,9 @@ typedef union
      * [Bit 12] If this control is 0, any execution of INVPCID causes a \#UD.
      */
     UINT64 EnableInvpcid                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_INVPCID_BIT         12
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_INVPCID_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_INVPCID(_)          (((_) >> 12) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INVPCID_BIT                  12
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INVPCID_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INVPCID(_)                   (((_) >> 12) & 0x01)
 
     /**
      * @brief Enables VMFUNC instructions
@@ -9892,9 +9892,9 @@ typedef union
      * @see Vol3C[25.5.5(VM Functions)]
      */
     UINT64 EnableVmFunctions                                       : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VM_FUNCTIONS_BIT    13
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VM_FUNCTIONS_MASK   0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_VM_FUNCTIONS(_)     (((_) >> 13) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VM_FUNCTIONS_BIT             13
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VM_FUNCTIONS_MASK            0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VM_FUNCTIONS(_)              (((_) >> 13) & 0x01)
 
     /**
      * @brief Enables VMCS shadowing
@@ -9906,9 +9906,9 @@ typedef union
      * @see Vol3C[30.3(VMX INSTRUCTIONS)]
      */
     UINT64 VmcsShadowing                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VMCS_SHADOWING_BIT         14
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VMCS_SHADOWING_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_VMCS_SHADOWING(_)          (((_) >> 14) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_VMCS_SHADOWING_BIT                  14
+#define IA32_VMX_PROCBASED_CTLS2_VMCS_SHADOWING_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_VMCS_SHADOWING(_)                   (((_) >> 14) & 0x01)
 
     /**
      * @brief Enables ENCLS VM-exits
@@ -9920,9 +9920,9 @@ typedef union
      * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
      */
     UINT64 EnableEnclsExiting                                      : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_ENCLS_EXITING_BIT   15
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_ENCLS_EXITING_MASK  0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_ENCLS_EXITING(_)    (((_) >> 15) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLS_EXITING_BIT            15
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLS_EXITING_MASK           0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLS_EXITING(_)             (((_) >> 15) & 0x01)
 
     /**
      * @brief VM-exit when executing RDSEED
@@ -9930,9 +9930,9 @@ typedef union
      * [Bit 16] This control determines whether executions of RDSEED cause VM exits.
      */
     UINT64 RdseedExiting                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDSEED_EXITING_BIT         16
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDSEED_EXITING_MASK        0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_RDSEED_EXITING(_)          (((_) >> 16) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_RDSEED_EXITING_BIT                  16
+#define IA32_VMX_PROCBASED_CTLS2_RDSEED_EXITING_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_RDSEED_EXITING(_)                   (((_) >> 16) & 0x01)
 
     /**
      * @brief Enables page-modification logging
@@ -9943,9 +9943,9 @@ typedef union
      * @see Vol3C[28.2.5(Page-Modification Logging)]
      */
     UINT64 EnablePml                                               : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_PML_BIT             17
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_PML_MASK            0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_PML(_)              (((_) >> 17) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PML_BIT                      17
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PML_MASK                     0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PML(_)                       (((_) >> 17) & 0x01)
 
     /**
      * @brief Controls whether EPT-violations may cause
@@ -9955,9 +9955,9 @@ typedef union
      * @see Vol3C[25.5.6(Virtualization Exceptions)]
      */
     UINT64 EptViolation                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_EPT_VIOLATION_BIT          18
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_EPT_VIOLATION_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_EPT_VIOLATION(_)           (((_) >> 18) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_EPT_VIOLATION_BIT                   18
+#define IA32_VMX_PROCBASED_CTLS2_EPT_VIOLATION_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS2_EPT_VIOLATION(_)                    (((_) >> 18) & 0x01)
 
     /**
      * @brief Conceal VMX non-root operation from Intel processor trace (PT)
@@ -9968,9 +9968,9 @@ typedef union
      * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
      */
     UINT64 ConcealVmxFromPt                                        : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_CONCEAL_VMX_FROM_PT_BIT    19
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_CONCEAL_VMX_FROM_PT_MASK   0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_CONCEAL_VMX_FROM_PT(_)     (((_) >> 19) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT_BIT             19
+#define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT_MASK            0x01
+#define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT(_)              (((_) >> 19) & 0x01)
 
     /**
      * @brief Enables XSAVES/XRSTORS instructions
@@ -9978,9 +9978,9 @@ typedef union
      * [Bit 20] If this control is 0, any execution of XSAVES or XRSTORS causes a \#UD.
      */
     UINT64 EnableXsaves                                            : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_XSAVES_BIT          20
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_XSAVES_MASK         0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_ENABLE_XSAVES(_)           (((_) >> 20) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_BIT                   20
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_MASK                  0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES(_)                    (((_) >> 20) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -9990,9 +9990,9 @@ typedef union
      * @see Vol3C[28(VMX SUPPORT FOR ADDRESS TRANSLATION)]
      */
     UINT64 ModeBasedExecuteControlForEpt                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_BIT 22
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_MASK 0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_MODE_BASED_EXECUTE_CONTROL_FOR_EPT(_) (((_) >> 22) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_BIT 22
+#define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_MASK 0x01
+#define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT(_) (((_) >> 22) & 0x01)
     UINT64 Reserved2                                               : 2;
 
     /**
@@ -10005,9 +10005,9 @@ typedef union
      * @see Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
      */
     UINT64 UseTscScaling                                           : 1;
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_USE_TSC_SCALING_BIT        25
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_USE_TSC_SCALING_MASK       0x01
-#define IA32_VMX_PROCBASED_CTLS2_REGISTER_USE_TSC_SCALING(_)         (((_) >> 25) & 0x01)
+#define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_BIT                 25
+#define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_MASK                0x01
+#define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING(_)                  (((_) >> 25) & 0x01)
     UINT64 Reserved3                                               : 38;
   };
 
@@ -10034,18 +10034,18 @@ typedef union
      * bit 2 is set (indicating that instruction fetches are allowed).
      */
     UINT64 ExecuteOnlyPages                                        : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EXECUTE_ONLY_PAGES_BIT        0
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EXECUTE_ONLY_PAGES_MASK       0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EXECUTE_ONLY_PAGES(_)         (((_) >> 0) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_EXECUTE_ONLY_PAGES_BIT                 0
+#define IA32_VMX_EPT_VPID_CAP_EXECUTE_ONLY_PAGES_MASK                0x01
+#define IA32_VMX_EPT_VPID_CAP_EXECUTE_ONLY_PAGES(_)                  (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
      * [Bit 6] Indicates support for a page-walk length of 4.
      */
     UINT64 PageWalkLength4                                         : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PAGE_WALK_LENGTH_4_BIT        6
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PAGE_WALK_LENGTH_4_MASK       0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PAGE_WALK_LENGTH_4(_)         (((_) >> 6) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_PAGE_WALK_LENGTH_4_BIT                 6
+#define IA32_VMX_EPT_VPID_CAP_PAGE_WALK_LENGTH_4_MASK                0x01
+#define IA32_VMX_EPT_VPID_CAP_PAGE_WALK_LENGTH_4(_)                  (((_) >> 6) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -10055,9 +10055,9 @@ typedef union
      * @see Vol3C[24.6.11(Extended-Page-Table Pointer (EPTP))]
      */
     UINT64 MemoryTypeUncacheable                                   : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_UNCACHEABLE_BIT   8
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_UNCACHEABLE_MASK  0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_UNCACHEABLE(_)    (((_) >> 8) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_UNCACHEABLE_BIT            8
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_UNCACHEABLE_MASK           0x01
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_UNCACHEABLE(_)             (((_) >> 8) & 0x01)
     UINT64 Reserved3                                               : 5;
 
     /**
@@ -10065,9 +10065,9 @@ typedef union
      * write-back (WB).
      */
     UINT64 MemoryTypeWriteBack                                     : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_WRITE_BACK_BIT    14
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_WRITE_BACK_MASK   0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_MEMORY_TYPE_WRITE_BACK(_)     (((_) >> 14) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_WRITE_BACK_BIT             14
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_WRITE_BACK_MASK            0x01
+#define IA32_VMX_EPT_VPID_CAP_MEMORY_TYPE_WRITE_BACK(_)              (((_) >> 14) & 0x01)
     UINT64 Reserved4                                               : 1;
 
     /**
@@ -10075,18 +10075,18 @@ typedef union
      * bit 7 in the EPT PDE).
      */
     UINT64 Pde2MbPages                                             : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDE_2MB_PAGES_BIT             16
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDE_2MB_PAGES_MASK            0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDE_2MB_PAGES(_)              (((_) >> 16) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_PDE_2MB_PAGES_BIT                      16
+#define IA32_VMX_EPT_VPID_CAP_PDE_2MB_PAGES_MASK                     0x01
+#define IA32_VMX_EPT_VPID_CAP_PDE_2MB_PAGES(_)                       (((_) >> 16) & 0x01)
 
     /**
      * [Bit 17] When set to 1, the logical processor allows software to configure a EPT PDPTE to map a 1-Gbyte page (by setting
      * bit 7 in the EPT PDPTE).
      */
     UINT64 Pdpte1GbPages                                           : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDPTE_1GB_PAGES_BIT           17
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDPTE_1GB_PAGES_MASK          0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_PDPTE_1GB_PAGES(_)            (((_) >> 17) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_PDPTE_1GB_PAGES_BIT                    17
+#define IA32_VMX_EPT_VPID_CAP_PDPTE_1GB_PAGES_MASK                   0x01
+#define IA32_VMX_EPT_VPID_CAP_PDPTE_1GB_PAGES(_)                     (((_) >> 17) & 0x01)
     UINT64 Reserved5                                               : 2;
 
     /**
@@ -10096,9 +10096,9 @@ typedef union
      * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 Invept                                                  : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_BIT                    20
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_MASK                   0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT(_)                     (((_) >> 20) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_BIT                             20
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_MASK                            0x01
+#define IA32_VMX_EPT_VPID_CAP_INVEPT(_)                              (((_) >> 20) & 0x01)
 
     /**
      * [Bit 21] When set to 1, accessed and dirty flags for EPT are supported.
@@ -10106,9 +10106,9 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 EptAccessedAndDirtyFlags                                : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EPT_ACCESSED_AND_DIRTY_FLAGS_BIT 21
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EPT_ACCESSED_AND_DIRTY_FLAGS_MASK 0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_EPT_ACCESSED_AND_DIRTY_FLAGS(_) (((_) >> 21) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_EPT_ACCESSED_AND_DIRTY_FLAGS_BIT       21
+#define IA32_VMX_EPT_VPID_CAP_EPT_ACCESSED_AND_DIRTY_FLAGS_MASK      0x01
+#define IA32_VMX_EPT_VPID_CAP_EPT_ACCESSED_AND_DIRTY_FLAGS(_)        (((_) >> 21) & 0x01)
 
     /**
      * [Bit 22] When set to 1, the processor reports advanced VM-exit information for EPT violations. This reporting is done
@@ -10117,9 +10117,9 @@ typedef union
      * @see Vol3C[27.2.1(Basic VM-Exit Information)]
      */
     UINT64 AdvancedVmexitEptViolationsInformation                  : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_BIT 22
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_MASK 0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION(_) (((_) >> 22) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_BIT 22
+#define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_MASK 0x01
+#define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION(_) (((_) >> 22) & 0x01)
     UINT64 Reserved6                                               : 2;
 
     /**
@@ -10129,9 +10129,9 @@ typedef union
      * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 InveptSingleContext                                     : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_SINGLE_CONTEXT_BIT     25
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_SINGLE_CONTEXT_MASK    0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_SINGLE_CONTEXT(_)      (((_) >> 25) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_SINGLE_CONTEXT_BIT              25
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_SINGLE_CONTEXT_MASK             0x01
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_SINGLE_CONTEXT(_)               (((_) >> 25) & 0x01)
 
     /**
      * [Bit 26] When set to 1, the all-context INVEPT type is supported.
@@ -10140,51 +10140,51 @@ typedef union
      * @see Vol3C[28.3.3.1(Operations that Invalidate Cached Mappings)]
      */
     UINT64 InveptAllContexts                                       : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_ALL_CONTEXTS_BIT       26
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_ALL_CONTEXTS_MASK      0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVEPT_ALL_CONTEXTS(_)        (((_) >> 26) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_ALL_CONTEXTS_BIT                26
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_ALL_CONTEXTS_MASK               0x01
+#define IA32_VMX_EPT_VPID_CAP_INVEPT_ALL_CONTEXTS(_)                 (((_) >> 26) & 0x01)
     UINT64 Reserved7                                               : 5;
 
     /**
      * [Bit 32] When set to 1, the INVVPID instruction is supported.
      */
     UINT64 Invvpid                                                 : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_BIT                   32
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_MASK                  0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID(_)                    (((_) >> 32) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_BIT                            32
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_MASK                           0x01
+#define IA32_VMX_EPT_VPID_CAP_INVVPID(_)                             (((_) >> 32) & 0x01)
     UINT64 Reserved8                                               : 7;
 
     /**
      * [Bit 40] When set to 1, the individual-address INVVPID type is supported.
      */
     UINT64 InvvpidIndividualAddress                                : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_INDIVIDUAL_ADDRESS_BIT 40
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_INDIVIDUAL_ADDRESS_MASK 0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_INDIVIDUAL_ADDRESS(_) (((_) >> 40) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_INDIVIDUAL_ADDRESS_BIT         40
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_INDIVIDUAL_ADDRESS_MASK        0x01
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_INDIVIDUAL_ADDRESS(_)          (((_) >> 40) & 0x01)
 
     /**
      * [Bit 41] When set to 1, the single-context INVVPID type is supported.
      */
     UINT64 InvvpidSingleContext                                    : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT_BIT    41
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT_MASK   0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT(_)     (((_) >> 41) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_BIT             41
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_MASK            0x01
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT(_)              (((_) >> 41) & 0x01)
 
     /**
      * [Bit 42] When set to 1, the all-context INVVPID type is supported.
      */
     UINT64 InvvpidAllContexts                                      : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_ALL_CONTEXTS_BIT      42
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_ALL_CONTEXTS_MASK     0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_ALL_CONTEXTS(_)       (((_) >> 42) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_ALL_CONTEXTS_BIT               42
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_ALL_CONTEXTS_MASK              0x01
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_ALL_CONTEXTS(_)                (((_) >> 42) & 0x01)
 
     /**
      * [Bit 43] When set to 1, the single-context-retaining-globals INVVPID type is supported.
      */
     UINT64 InvvpidSingleContextRetainGlobals                       : 1;
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_BIT 43
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_MASK 0x01
-#define IA32_VMX_EPT_VPID_CAP_REGISTER_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS(_) (((_) >> 43) & 0x01)
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_BIT 43
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_MASK 0x01
+#define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS(_) (((_) >> 43) & 0x01)
     UINT64 Reserved9                                               : 20;
   };
 
@@ -10242,9 +10242,9 @@ typedef union
      * @see Vol3C[25.5.5.3(EPTP Switching)]
      */
     UINT64 EptpSwitching                                           : 1;
-#define IA32_VMX_VMFUNC_REGISTER_EPTP_SWITCHING_BIT                  0
-#define IA32_VMX_VMFUNC_REGISTER_EPTP_SWITCHING_MASK                 0x01
-#define IA32_VMX_VMFUNC_REGISTER_EPTP_SWITCHING(_)                   (((_) >> 0) & 0x01)
+#define IA32_VMX_VMFUNC_EPTP_SWITCHING_BIT                           0
+#define IA32_VMX_VMFUNC_EPTP_SWITCHING_MASK                          0x01
+#define IA32_VMX_VMFUNC_EPTP_SWITCHING(_)                            (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -10285,9 +10285,9 @@ typedef union
   struct
   {
     UINT64 LmceEn                                                  : 1;
-#define IA32_MCG_EXT_CTL_REGISTER_LMCE_EN_BIT                        0
-#define IA32_MCG_EXT_CTL_REGISTER_LMCE_EN_MASK                       0x01
-#define IA32_MCG_EXT_CTL_REGISTER_LMCE_EN(_)                         (((_) >> 0) & 0x01)
+#define IA32_MCG_EXT_CTL_LMCE_EN_BIT                                 0
+#define IA32_MCG_EXT_CTL_LMCE_EN_MASK                                0x01
+#define IA32_MCG_EXT_CTL_LMCE_EN(_)                                  (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -10322,9 +10322,9 @@ typedef union
      * @see Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))]
      */
     UINT64 Lock                                                    : 1;
-#define IA32_SGX_SVN_STATUS_REGISTER_LOCK_BIT                        0
-#define IA32_SGX_SVN_STATUS_REGISTER_LOCK_MASK                       0x01
-#define IA32_SGX_SVN_STATUS_REGISTER_LOCK(_)                         (((_) >> 0) & 0x01)
+#define IA32_SGX_SVN_STATUS_LOCK_BIT                                 0
+#define IA32_SGX_SVN_STATUS_LOCK_MASK                                0x01
+#define IA32_SGX_SVN_STATUS_LOCK(_)                                  (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 15;
 
     /**
@@ -10336,9 +10336,9 @@ typedef union
      * @see Vol3D[41.11.3(Interactions with Authenticated Code Modules (ACMs))]
      */
     UINT64 SgxSvnSinit                                             : 8;
-#define IA32_SGX_SVN_STATUS_REGISTER_SGX_SVN_SINIT_BIT               16
-#define IA32_SGX_SVN_STATUS_REGISTER_SGX_SVN_SINIT_MASK              0xFF
-#define IA32_SGX_SVN_STATUS_REGISTER_SGX_SVN_SINIT(_)                (((_) >> 16) & 0xFF)
+#define IA32_SGX_SVN_STATUS_SGX_SVN_SINIT_BIT                        16
+#define IA32_SGX_SVN_STATUS_SGX_SVN_SINIT_MASK                       0xFF
+#define IA32_SGX_SVN_STATUS_SGX_SVN_SINIT(_)                         (((_) >> 16) & 0xFF)
     UINT64 Reserved2                                               : 40;
   };
 
@@ -10375,9 +10375,9 @@ typedef union
      * @see Vol3C[35.2.6.2(Table of Physical Addresses (ToPA))]
      */
     UINT64 BasePhysicalAddress                                     : 41;
-#define IA32_RTIT_OUTPUT_BASE_REGISTER_BASE_PHYSICAL_ADDRESS_BIT     7
-#define IA32_RTIT_OUTPUT_BASE_REGISTER_BASE_PHYSICAL_ADDRESS_MASK    0x1FFFFFFFFFF
-#define IA32_RTIT_OUTPUT_BASE_REGISTER_BASE_PHYSICAL_ADDRESS(_)      (((_) >> 7) & 0x1FFFFFFFFFF)
+#define IA32_RTIT_OUTPUT_BASE_BASE_PHYSICAL_ADDRESS_BIT              7
+#define IA32_RTIT_OUTPUT_BASE_BASE_PHYSICAL_ADDRESS_MASK             0x1FFFFFFFFFF
+#define IA32_RTIT_OUTPUT_BASE_BASE_PHYSICAL_ADDRESS(_)               (((_) >> 7) & 0x1FFFFFFFFFF)
     UINT64 Reserved2                                               : 16;
   };
 
@@ -10401,9 +10401,9 @@ typedef union
      * [Bits 6:0] Forced to 1, writes are ignored.
      */
     UINT64 LowerMask                                               : 7;
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_LOWER_MASK_BIT           0
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_LOWER_MASK_MASK          0x7F
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_LOWER_MASK(_)            (((_) >> 0) & 0x7F)
+#define IA32_RTIT_OUTPUT_MASK_PTRS_LOWER_MASK_BIT                    0
+#define IA32_RTIT_OUTPUT_MASK_PTRS_LOWER_MASK_MASK                   0x7F
+#define IA32_RTIT_OUTPUT_MASK_PTRS_LOWER_MASK(_)                     (((_) >> 0) & 0x7F)
 
     /**
      * @brief MaskOrTableOffset
@@ -10422,9 +10422,9 @@ typedef union
      * @see Vol3C[35.3.9(Operational Errors)]
      */
     UINT64 MaskOrTableOffset                                       : 25;
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_MASK_OR_TABLE_OFFSET_BIT 7
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_MASK_OR_TABLE_OFFSET_MASK 0x1FFFFFF
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_MASK_OR_TABLE_OFFSET(_)  (((_) >> 7) & 0x1FFFFFF)
+#define IA32_RTIT_OUTPUT_MASK_PTRS_MASK_OR_TABLE_OFFSET_BIT          7
+#define IA32_RTIT_OUTPUT_MASK_PTRS_MASK_OR_TABLE_OFFSET_MASK         0x1FFFFFF
+#define IA32_RTIT_OUTPUT_MASK_PTRS_MASK_OR_TABLE_OFFSET(_)           (((_) >> 7) & 0x1FFFFFF)
 
     /**
      * @brief Output Offset
@@ -10442,9 +10442,9 @@ typedef union
      * @see Vol3C[35.3.9(Operational Errors)]
      */
     UINT64 OutputOffset                                            : 32;
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_OUTPUT_OFFSET_BIT        32
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_OUTPUT_OFFSET_MASK       0xFFFFFFFF
-#define IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER_OUTPUT_OFFSET(_)         (((_) >> 32) & 0xFFFFFFFF)
+#define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET_BIT                 32
+#define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET_MASK                0xFFFFFFFF
+#define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET(_)                  (((_) >> 32) & 0xFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -10475,9 +10475,9 @@ typedef union
      * @see Vol3C[35.2.7.3(Enabling and Disabling Packet Generation with TraceEn)]
      */
     UINT64 TraceEnabled                                            : 1;
-#define IA32_RTIT_CTL_REGISTER_TRACE_ENABLED_BIT                     0
-#define IA32_RTIT_CTL_REGISTER_TRACE_ENABLED_MASK                    0x01
-#define IA32_RTIT_CTL_REGISTER_TRACE_ENABLED(_)                      (((_) >> 0) & 0x01)
+#define IA32_RTIT_CTL_TRACE_ENABLED_BIT                              0
+#define IA32_RTIT_CTL_TRACE_ENABLED_MASK                             0x01
+#define IA32_RTIT_CTL_TRACE_ENABLED(_)                               (((_) >> 0) & 0x01)
 
     /**
      * @brief CYCEn
@@ -10489,9 +10489,9 @@ typedef union
      * @see Vol3C[35.4.2.14(Cycle Count (CYC) Packet)]
      */
     UINT64 CycEnabled                                              : 1;
-#define IA32_RTIT_CTL_REGISTER_CYC_ENABLED_BIT                       1
-#define IA32_RTIT_CTL_REGISTER_CYC_ENABLED_MASK                      0x01
-#define IA32_RTIT_CTL_REGISTER_CYC_ENABLED(_)                        (((_) >> 1) & 0x01)
+#define IA32_RTIT_CTL_CYC_ENABLED_BIT                                1
+#define IA32_RTIT_CTL_CYC_ENABLED_MASK                               0x01
+#define IA32_RTIT_CTL_CYC_ENABLED(_)                                 (((_) >> 1) & 0x01)
 
     /**
      * @brief OS
@@ -10500,9 +10500,9 @@ typedef union
      * - 1: Packet generation may be enabled when CPL = 0.
      */
     UINT64 Os                                                      : 1;
-#define IA32_RTIT_CTL_REGISTER_OS_BIT                                2
-#define IA32_RTIT_CTL_REGISTER_OS_MASK                               0x01
-#define IA32_RTIT_CTL_REGISTER_OS(_)                                 (((_) >> 2) & 0x01)
+#define IA32_RTIT_CTL_OS_BIT                                         2
+#define IA32_RTIT_CTL_OS_MASK                                        0x01
+#define IA32_RTIT_CTL_OS(_)                                          (((_) >> 2) & 0x01)
 
     /**
      * @brief User
@@ -10511,9 +10511,9 @@ typedef union
      * - 1: Packet generation may be enabled when CPL > 0.
      */
     UINT64 User                                                    : 1;
-#define IA32_RTIT_CTL_REGISTER_USER_BIT                              3
-#define IA32_RTIT_CTL_REGISTER_USER_MASK                             0x01
-#define IA32_RTIT_CTL_REGISTER_USER(_)                               (((_) >> 3) & 0x01)
+#define IA32_RTIT_CTL_USER_BIT                                       3
+#define IA32_RTIT_CTL_USER_MASK                                      0x01
+#define IA32_RTIT_CTL_USER(_)                                        (((_) >> 3) & 0x01)
 
     /**
      * @brief PwrEvtEn
@@ -10524,9 +10524,9 @@ typedef union
      * @see Vol3C[35.2.3(Power Event Tracing)]
      */
     UINT64 PowerEventTraceEnabled                                  : 1;
-#define IA32_RTIT_CTL_REGISTER_POWER_EVENT_TRACE_ENABLED_BIT         4
-#define IA32_RTIT_CTL_REGISTER_POWER_EVENT_TRACE_ENABLED_MASK        0x01
-#define IA32_RTIT_CTL_REGISTER_POWER_EVENT_TRACE_ENABLED(_)          (((_) >> 4) & 0x01)
+#define IA32_RTIT_CTL_POWER_EVENT_TRACE_ENABLED_BIT                  4
+#define IA32_RTIT_CTL_POWER_EVENT_TRACE_ENABLED_MASK                 0x01
+#define IA32_RTIT_CTL_POWER_EVENT_TRACE_ENABLED(_)                   (((_) >> 4) & 0x01)
 
     /**
      * @brief FUPonPTW
@@ -10535,9 +10535,9 @@ typedef union
      * - 1: PTW packets are followed by FUPs.
      */
     UINT64 FupOnPtw                                                : 1;
-#define IA32_RTIT_CTL_REGISTER_FUP_ON_PTW_BIT                        5
-#define IA32_RTIT_CTL_REGISTER_FUP_ON_PTW_MASK                       0x01
-#define IA32_RTIT_CTL_REGISTER_FUP_ON_PTW(_)                         (((_) >> 5) & 0x01)
+#define IA32_RTIT_CTL_FUP_ON_PTW_BIT                                 5
+#define IA32_RTIT_CTL_FUP_ON_PTW_MASK                                0x01
+#define IA32_RTIT_CTL_FUP_ON_PTW(_)                                  (((_) >> 5) & 0x01)
 
     /**
      * @brief FabricEn
@@ -10548,9 +10548,9 @@ typedef union
      * @remarks If (CPUID.(EAX=07H, ECX=0):ECX[3] = 1) Reserved if CPUID.(EAX=14H, ECX=0):ECX[bit 3] = 0
      */
     UINT64 FabricEnabled                                           : 1;
-#define IA32_RTIT_CTL_REGISTER_FABRIC_ENABLED_BIT                    6
-#define IA32_RTIT_CTL_REGISTER_FABRIC_ENABLED_MASK                   0x01
-#define IA32_RTIT_CTL_REGISTER_FABRIC_ENABLED(_)                     (((_) >> 6) & 0x01)
+#define IA32_RTIT_CTL_FABRIC_ENABLED_BIT                             6
+#define IA32_RTIT_CTL_FABRIC_ENABLED_MASK                            0x01
+#define IA32_RTIT_CTL_FABRIC_ENABLED(_)                              (((_) >> 6) & 0x01)
 
     /**
      * @brief CR3 filter
@@ -10559,9 +10559,9 @@ typedef union
      * - 1: Enables CR3 filtering.
      */
     UINT64 Cr3Filter                                               : 1;
-#define IA32_RTIT_CTL_REGISTER_CR3_FILTER_BIT                        7
-#define IA32_RTIT_CTL_REGISTER_CR3_FILTER_MASK                       0x01
-#define IA32_RTIT_CTL_REGISTER_CR3_FILTER(_)                         (((_) >> 7) & 0x01)
+#define IA32_RTIT_CTL_CR3_FILTER_BIT                                 7
+#define IA32_RTIT_CTL_CR3_FILTER_MASK                                0x01
+#define IA32_RTIT_CTL_CR3_FILTER(_)                                  (((_) >> 7) & 0x01)
 
     /**
      * @brief ToPA
@@ -10577,9 +10577,9 @@ typedef union
      * @see Vol3C[35.2.6.2(Table of Physical Addresses (ToPA))]
      */
     UINT64 Topa                                                    : 1;
-#define IA32_RTIT_CTL_REGISTER_TOPA_BIT                              8
-#define IA32_RTIT_CTL_REGISTER_TOPA_MASK                             0x01
-#define IA32_RTIT_CTL_REGISTER_TOPA(_)                               (((_) >> 8) & 0x01)
+#define IA32_RTIT_CTL_TOPA_BIT                                       8
+#define IA32_RTIT_CTL_TOPA_MASK                                      0x01
+#define IA32_RTIT_CTL_TOPA(_)                                        (((_) >> 8) & 0x01)
 
     /**
      * @brief MTCEn
@@ -10591,9 +10591,9 @@ typedef union
      * @see Vol3C[35.4.2.16(Overflow (OVF) Packet)]
      */
     UINT64 MtcEnabled                                              : 1;
-#define IA32_RTIT_CTL_REGISTER_MTC_ENABLED_BIT                       9
-#define IA32_RTIT_CTL_REGISTER_MTC_ENABLED_MASK                      0x01
-#define IA32_RTIT_CTL_REGISTER_MTC_ENABLED(_)                        (((_) >> 9) & 0x01)
+#define IA32_RTIT_CTL_MTC_ENABLED_BIT                                9
+#define IA32_RTIT_CTL_MTC_ENABLED_MASK                               0x01
+#define IA32_RTIT_CTL_MTC_ENABLED(_)                                 (((_) >> 9) & 0x01)
 
     /**
      * @brief TSCEn
@@ -10604,9 +10604,9 @@ typedef union
      * @see Vol3C[35.4.2.11(Timestamp Counter (TSC) Packet)]
      */
     UINT64 TscEnabled                                              : 1;
-#define IA32_RTIT_CTL_REGISTER_TSC_ENABLED_BIT                       10
-#define IA32_RTIT_CTL_REGISTER_TSC_ENABLED_MASK                      0x01
-#define IA32_RTIT_CTL_REGISTER_TSC_ENABLED(_)                        (((_) >> 10) & 0x01)
+#define IA32_RTIT_CTL_TSC_ENABLED_BIT                                10
+#define IA32_RTIT_CTL_TSC_ENABLED_MASK                               0x01
+#define IA32_RTIT_CTL_TSC_ENABLED(_)                                 (((_) >> 10) & 0x01)
 
     /**
      * @brief DisRETC
@@ -10617,9 +10617,9 @@ typedef union
      * @see Vol3C[35.2.1.2(Indirect Transfer COFI)]
      */
     UINT64 RetCompressionDisabled                                  : 1;
-#define IA32_RTIT_CTL_REGISTER_RET_COMPRESSION_DISABLED_BIT          11
-#define IA32_RTIT_CTL_REGISTER_RET_COMPRESSION_DISABLED_MASK         0x01
-#define IA32_RTIT_CTL_REGISTER_RET_COMPRESSION_DISABLED(_)           (((_) >> 11) & 0x01)
+#define IA32_RTIT_CTL_RET_COMPRESSION_DISABLED_BIT                   11
+#define IA32_RTIT_CTL_RET_COMPRESSION_DISABLED_MASK                  0x01
+#define IA32_RTIT_CTL_RET_COMPRESSION_DISABLED(_)                    (((_) >> 11) & 0x01)
 
     /**
      * @brief PTWEn
@@ -10628,9 +10628,9 @@ typedef union
      * - 1: PTWRITE packet generation enabled.
      */
     UINT64 PtwEnabled                                              : 1;
-#define IA32_RTIT_CTL_REGISTER_PTW_ENABLED_BIT                       12
-#define IA32_RTIT_CTL_REGISTER_PTW_ENABLED_MASK                      0x01
-#define IA32_RTIT_CTL_REGISTER_PTW_ENABLED(_)                        (((_) >> 12) & 0x01)
+#define IA32_RTIT_CTL_PTW_ENABLED_BIT                                12
+#define IA32_RTIT_CTL_PTW_ENABLED_MASK                               0x01
+#define IA32_RTIT_CTL_PTW_ENABLED(_)                                 (((_) >> 12) & 0x01)
 
     /**
      * @brief BranchEn
@@ -10641,9 +10641,9 @@ typedef union
      * @see Vol3C[35.2.5.4(Branch Enable (BranchEn))]
      */
     UINT64 BranchEnabled                                           : 1;
-#define IA32_RTIT_CTL_REGISTER_BRANCH_ENABLED_BIT                    13
-#define IA32_RTIT_CTL_REGISTER_BRANCH_ENABLED_MASK                   0x01
-#define IA32_RTIT_CTL_REGISTER_BRANCH_ENABLED(_)                     (((_) >> 13) & 0x01)
+#define IA32_RTIT_CTL_BRANCH_ENABLED_BIT                             13
+#define IA32_RTIT_CTL_BRANCH_ENABLED_MASK                            0x01
+#define IA32_RTIT_CTL_BRANCH_ENABLED(_)                              (((_) >> 13) & 0x01)
 
     /**
      * @brief MTCFreq
@@ -10657,9 +10657,9 @@ typedef union
      * @see Vol3C[35.3.1(Detection of Intel Processor Trace and Capability Enumeration)]
      */
     UINT64 MtcFrequency                                            : 4;
-#define IA32_RTIT_CTL_REGISTER_MTC_FREQUENCY_BIT                     14
-#define IA32_RTIT_CTL_REGISTER_MTC_FREQUENCY_MASK                    0x0F
-#define IA32_RTIT_CTL_REGISTER_MTC_FREQUENCY(_)                      (((_) >> 14) & 0x0F)
+#define IA32_RTIT_CTL_MTC_FREQUENCY_BIT                              14
+#define IA32_RTIT_CTL_MTC_FREQUENCY_MASK                             0x0F
+#define IA32_RTIT_CTL_MTC_FREQUENCY(_)                               (((_) >> 14) & 0x0F)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -10676,9 +10676,9 @@ typedef union
      * @see Vol3C[35.3.1(Detection of Intel Processor Trace and Capability Enumeration)]
      */
     UINT64 CycThreshold                                            : 4;
-#define IA32_RTIT_CTL_REGISTER_CYC_THRESHOLD_BIT                     19
-#define IA32_RTIT_CTL_REGISTER_CYC_THRESHOLD_MASK                    0x0F
-#define IA32_RTIT_CTL_REGISTER_CYC_THRESHOLD(_)                      (((_) >> 19) & 0x0F)
+#define IA32_RTIT_CTL_CYC_THRESHOLD_BIT                              19
+#define IA32_RTIT_CTL_CYC_THRESHOLD_MASK                             0x0F
+#define IA32_RTIT_CTL_CYC_THRESHOLD(_)                               (((_) >> 19) & 0x0F)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -10695,9 +10695,9 @@ typedef union
      * @see Vol3C[35.3.1(Detection of Intel Processor Trace and Capability Enumeration)]
      */
     UINT64 PsbFrequency                                            : 4;
-#define IA32_RTIT_CTL_REGISTER_PSB_FREQUENCY_BIT                     24
-#define IA32_RTIT_CTL_REGISTER_PSB_FREQUENCY_MASK                    0x0F
-#define IA32_RTIT_CTL_REGISTER_PSB_FREQUENCY(_)                      (((_) >> 24) & 0x0F)
+#define IA32_RTIT_CTL_PSB_FREQUENCY_BIT                              24
+#define IA32_RTIT_CTL_PSB_FREQUENCY_MASK                             0x0F
+#define IA32_RTIT_CTL_PSB_FREQUENCY(_)                               (((_) >> 24) & 0x0F)
     UINT64 Reserved3                                               : 4;
 
     /**
@@ -10716,9 +10716,9 @@ typedef union
      * @see Vol3C[35.4.2.10(Core:Bus Ratio (CBR) Packet)]
      */
     UINT64 Addr0Cfg                                                : 4;
-#define IA32_RTIT_CTL_REGISTER_ADDR0_CFG_BIT                         32
-#define IA32_RTIT_CTL_REGISTER_ADDR0_CFG_MASK                        0x0F
-#define IA32_RTIT_CTL_REGISTER_ADDR0_CFG(_)                          (((_) >> 32) & 0x0F)
+#define IA32_RTIT_CTL_ADDR0_CFG_BIT                                  32
+#define IA32_RTIT_CTL_ADDR0_CFG_MASK                                 0x0F
+#define IA32_RTIT_CTL_ADDR0_CFG(_)                                   (((_) >> 32) & 0x0F)
 
     /**
      * @brief ADDR1_CFG
@@ -10736,9 +10736,9 @@ typedef union
      * @see Vol3C[35.4.2.10(Core:Bus Ratio (CBR) Packet)]
      */
     UINT64 Addr1Cfg                                                : 4;
-#define IA32_RTIT_CTL_REGISTER_ADDR1_CFG_BIT                         36
-#define IA32_RTIT_CTL_REGISTER_ADDR1_CFG_MASK                        0x0F
-#define IA32_RTIT_CTL_REGISTER_ADDR1_CFG(_)                          (((_) >> 36) & 0x0F)
+#define IA32_RTIT_CTL_ADDR1_CFG_BIT                                  36
+#define IA32_RTIT_CTL_ADDR1_CFG_MASK                                 0x0F
+#define IA32_RTIT_CTL_ADDR1_CFG(_)                                   (((_) >> 36) & 0x0F)
 
     /**
      * @brief ADDR2_CFG
@@ -10756,9 +10756,9 @@ typedef union
      * @see Vol3C[35.4.2.10(Core:Bus Ratio (CBR) Packet)]
      */
     UINT64 Addr2Cfg                                                : 4;
-#define IA32_RTIT_CTL_REGISTER_ADDR2_CFG_BIT                         40
-#define IA32_RTIT_CTL_REGISTER_ADDR2_CFG_MASK                        0x0F
-#define IA32_RTIT_CTL_REGISTER_ADDR2_CFG(_)                          (((_) >> 40) & 0x0F)
+#define IA32_RTIT_CTL_ADDR2_CFG_BIT                                  40
+#define IA32_RTIT_CTL_ADDR2_CFG_MASK                                 0x0F
+#define IA32_RTIT_CTL_ADDR2_CFG(_)                                   (((_) >> 40) & 0x0F)
 
     /**
      * @brief ADDR3_CFG
@@ -10776,9 +10776,9 @@ typedef union
      * @see Vol3C[35.4.2.10(Core:Bus Ratio (CBR) Packet)]
      */
     UINT64 Addr3Cfg                                                : 4;
-#define IA32_RTIT_CTL_REGISTER_ADDR3_CFG_BIT                         44
-#define IA32_RTIT_CTL_REGISTER_ADDR3_CFG_MASK                        0x0F
-#define IA32_RTIT_CTL_REGISTER_ADDR3_CFG(_)                          (((_) >> 44) & 0x0F)
+#define IA32_RTIT_CTL_ADDR3_CFG_BIT                                  44
+#define IA32_RTIT_CTL_ADDR3_CFG_MASK                                 0x0F
+#define IA32_RTIT_CTL_ADDR3_CFG(_)                                   (((_) >> 44) & 0x0F)
     UINT64 Reserved4                                               : 8;
 
     /**
@@ -10791,9 +10791,9 @@ typedef union
      * @see Vol3C[35.2.7.4(IA32_RTIT_STATUS MSR)]
      */
     UINT64 InjectPsbPmiOnEnable                                    : 1;
-#define IA32_RTIT_CTL_REGISTER_INJECT_PSB_PMI_ON_ENABLE_BIT          56
-#define IA32_RTIT_CTL_REGISTER_INJECT_PSB_PMI_ON_ENABLE_MASK         0x01
-#define IA32_RTIT_CTL_REGISTER_INJECT_PSB_PMI_ON_ENABLE(_)           (((_) >> 56) & 0x01)
+#define IA32_RTIT_CTL_INJECT_PSB_PMI_ON_ENABLE_BIT                   56
+#define IA32_RTIT_CTL_INJECT_PSB_PMI_ON_ENABLE_MASK                  0x01
+#define IA32_RTIT_CTL_INJECT_PSB_PMI_ON_ENABLE(_)                    (((_) >> 56) & 0x01)
     UINT64 Reserved5                                               : 7;
   };
 
@@ -10821,9 +10821,9 @@ typedef union
      * @see Vol3C[35.2.5.5(Filter Enable (FilterEn))]
      */
     UINT64 FilterEnabled                                           : 1;
-#define IA32_RTIT_STATUS_REGISTER_FILTER_ENABLED_BIT                 0
-#define IA32_RTIT_STATUS_REGISTER_FILTER_ENABLED_MASK                0x01
-#define IA32_RTIT_STATUS_REGISTER_FILTER_ENABLED(_)                  (((_) >> 0) & 0x01)
+#define IA32_RTIT_STATUS_FILTER_ENABLED_BIT                          0
+#define IA32_RTIT_STATUS_FILTER_ENABLED_MASK                         0x01
+#define IA32_RTIT_STATUS_FILTER_ENABLED(_)                           (((_) >> 0) & 0x01)
 
     /**
      * @brief ContexEn (writes ignored)
@@ -10833,9 +10833,9 @@ typedef union
      * @see Vol3C[35.2.5.3(Context Enable (ContextEn))]
      */
     UINT64 ContextEnabled                                          : 1;
-#define IA32_RTIT_STATUS_REGISTER_CONTEXT_ENABLED_BIT                1
-#define IA32_RTIT_STATUS_REGISTER_CONTEXT_ENABLED_MASK               0x01
-#define IA32_RTIT_STATUS_REGISTER_CONTEXT_ENABLED(_)                 (((_) >> 1) & 0x01)
+#define IA32_RTIT_STATUS_CONTEXT_ENABLED_BIT                         1
+#define IA32_RTIT_STATUS_CONTEXT_ENABLED_MASK                        0x01
+#define IA32_RTIT_STATUS_CONTEXT_ENABLED(_)                          (((_) >> 1) & 0x01)
 
     /**
      * @brief TriggerEn (writes ignored)
@@ -10845,9 +10845,9 @@ typedef union
      * @see Vol3C[35.2.5.2(Trigger Enable (TriggerEn))]
      */
     UINT64 TriggerEnabled                                          : 1;
-#define IA32_RTIT_STATUS_REGISTER_TRIGGER_ENABLED_BIT                2
-#define IA32_RTIT_STATUS_REGISTER_TRIGGER_ENABLED_MASK               0x01
-#define IA32_RTIT_STATUS_REGISTER_TRIGGER_ENABLED(_)                 (((_) >> 2) & 0x01)
+#define IA32_RTIT_STATUS_TRIGGER_ENABLED_BIT                         2
+#define IA32_RTIT_STATUS_TRIGGER_ENABLED_MASK                        0x01
+#define IA32_RTIT_STATUS_TRIGGER_ENABLED(_)                          (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -10861,9 +10861,9 @@ typedef union
      * @see Vol3C[35.2.6.2(Table of Physical Addresses (ToPA) | ToPA Errors)]
      */
     UINT64 Error                                                   : 1;
-#define IA32_RTIT_STATUS_REGISTER_ERROR_BIT                          4
-#define IA32_RTIT_STATUS_REGISTER_ERROR_MASK                         0x01
-#define IA32_RTIT_STATUS_REGISTER_ERROR(_)                           (((_) >> 4) & 0x01)
+#define IA32_RTIT_STATUS_ERROR_BIT                                   4
+#define IA32_RTIT_STATUS_ERROR_MASK                                  0x01
+#define IA32_RTIT_STATUS_ERROR(_)                                    (((_) >> 4) & 0x01)
 
     /**
      * @brief Stopped
@@ -10876,9 +10876,9 @@ typedef union
      * @see Vol3C[35.2.6.2(Table of Physical Addresses (ToPA) | ToPA STOP)]
      */
     UINT64 Stopped                                                 : 1;
-#define IA32_RTIT_STATUS_REGISTER_STOPPED_BIT                        5
-#define IA32_RTIT_STATUS_REGISTER_STOPPED_MASK                       0x01
-#define IA32_RTIT_STATUS_REGISTER_STOPPED(_)                         (((_) >> 5) & 0x01)
+#define IA32_RTIT_STATUS_STOPPED_BIT                                 5
+#define IA32_RTIT_STATUS_STOPPED_MASK                                0x01
+#define IA32_RTIT_STATUS_STOPPED(_)                                  (((_) >> 5) & 0x01)
 
     /**
      * @brief Pend PSB
@@ -10891,9 +10891,9 @@ typedef union
      * @remarks If CPUID.(EAX=14H, ECX=0):EBX.INJECTPSBPMI[6] = 1
      */
     UINT64 PendPsb                                                 : 1;
-#define IA32_RTIT_STATUS_REGISTER_PEND_PSB_BIT                       6
-#define IA32_RTIT_STATUS_REGISTER_PEND_PSB_MASK                      0x01
-#define IA32_RTIT_STATUS_REGISTER_PEND_PSB(_)                        (((_) >> 6) & 0x01)
+#define IA32_RTIT_STATUS_PEND_PSB_BIT                                6
+#define IA32_RTIT_STATUS_PEND_PSB_MASK                               0x01
+#define IA32_RTIT_STATUS_PEND_PSB(_)                                 (((_) >> 6) & 0x01)
 
     /**
      * @brief Pend ToPA PMI
@@ -10906,9 +10906,9 @@ typedef union
      * @see Vol3C[35.2.6.2(Table of Physical Addresses (ToPA) | ToPA PMI)]
      */
     UINT64 PendTopaPmi                                             : 1;
-#define IA32_RTIT_STATUS_REGISTER_PEND_TOPA_PMI_BIT                  7
-#define IA32_RTIT_STATUS_REGISTER_PEND_TOPA_PMI_MASK                 0x01
-#define IA32_RTIT_STATUS_REGISTER_PEND_TOPA_PMI(_)                   (((_) >> 7) & 0x01)
+#define IA32_RTIT_STATUS_PEND_TOPA_PMI_BIT                           7
+#define IA32_RTIT_STATUS_PEND_TOPA_PMI_MASK                          0x01
+#define IA32_RTIT_STATUS_PEND_TOPA_PMI(_)                            (((_) >> 7) & 0x01)
     UINT64 Reserved2                                               : 24;
 
     /**
@@ -10923,9 +10923,9 @@ typedef union
      * @see Vol3C[35.4.2.17(Packet Stream Boundary (PSB) Packet)]
      */
     UINT64 PacketByteCount                                         : 17;
-#define IA32_RTIT_STATUS_REGISTER_PACKET_BYTE_COUNT_BIT              32
-#define IA32_RTIT_STATUS_REGISTER_PACKET_BYTE_COUNT_MASK             0x1FFFF
-#define IA32_RTIT_STATUS_REGISTER_PACKET_BYTE_COUNT(_)               (((_) >> 32) & 0x1FFFF)
+#define IA32_RTIT_STATUS_PACKET_BYTE_COUNT_BIT                       32
+#define IA32_RTIT_STATUS_PACKET_BYTE_COUNT_MASK                      0x1FFFF
+#define IA32_RTIT_STATUS_PACKET_BYTE_COUNT(_)                        (((_) >> 32) & 0x1FFFF)
     UINT64 Reserved3                                               : 15;
   };
 
@@ -10954,9 +10954,9 @@ typedef union
      * [Bits 63:5] CR3[63:5] value to match.
      */
     UINT64 Cr3ValueToMatch                                         : 59;
-#define IA32_RTIT_CR3_MATCH_REGISTER_CR3_VALUE_TO_MATCH_BIT          5
-#define IA32_RTIT_CR3_MATCH_REGISTER_CR3_VALUE_TO_MATCH_MASK         0x7FFFFFFFFFFFFFF
-#define IA32_RTIT_CR3_MATCH_REGISTER_CR3_VALUE_TO_MATCH(_)           (((_) >> 5) & 0x7FFFFFFFFFFFFFF)
+#define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH_BIT                   5
+#define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH_MASK                  0x7FFFFFFFFFFFFFF
+#define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH(_)                    (((_) >> 5) & 0x7FFFFFFFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -11016,17 +11016,17 @@ typedef union
      * [Bits 47:0] Virtual Address.
      */
     UINT64 VirtualAddress                                          : 48;
-#define IA32_RTIT_ADDR_REGISTER_VIRTUAL_ADDRESS_BIT                  0
-#define IA32_RTIT_ADDR_REGISTER_VIRTUAL_ADDRESS_MASK                 0xFFFFFFFFFFFF
-#define IA32_RTIT_ADDR_REGISTER_VIRTUAL_ADDRESS(_)                   (((_) >> 0) & 0xFFFFFFFFFFFF)
+#define IA32_RTIT_ADDR_VIRTUAL_ADDRESS_BIT                           0
+#define IA32_RTIT_ADDR_VIRTUAL_ADDRESS_MASK                          0xFFFFFFFFFFFF
+#define IA32_RTIT_ADDR_VIRTUAL_ADDRESS(_)                            (((_) >> 0) & 0xFFFFFFFFFFFF)
 
     /**
      * [Bits 63:48] SignExt_VA.
      */
     UINT64 SignExtVa                                               : 16;
-#define IA32_RTIT_ADDR_REGISTER_SIGN_EXT_VA_BIT                      48
-#define IA32_RTIT_ADDR_REGISTER_SIGN_EXT_VA_MASK                     0xFFFF
-#define IA32_RTIT_ADDR_REGISTER_SIGN_EXT_VA(_)                       (((_) >> 48) & 0xFFFF)
+#define IA32_RTIT_ADDR_SIGN_EXT_VA_BIT                               48
+#define IA32_RTIT_ADDR_SIGN_EXT_VA_MASK                              0xFFFF
+#define IA32_RTIT_ADDR_SIGN_EXT_VA(_)                                (((_) >> 48) & 0xFFFF)
   };
 
   UINT64 Flags;
@@ -11074,9 +11074,9 @@ typedef union
      * @see Vol3B[14.4.2(Enabling HWP)]
      */
     UINT64 HwpEnable                                               : 1;
-#define IA32_PM_ENABLE_REGISTER_HWP_ENABLE_BIT                       0
-#define IA32_PM_ENABLE_REGISTER_HWP_ENABLE_MASK                      0x01
-#define IA32_PM_ENABLE_REGISTER_HWP_ENABLE(_)                        (((_) >> 0) & 0x01)
+#define IA32_PM_ENABLE_HWP_ENABLE_BIT                                0
+#define IA32_PM_ENABLE_HWP_ENABLE_MASK                               0x01
+#define IA32_PM_ENABLE_HWP_ENABLE(_)                                 (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -11101,9 +11101,9 @@ typedef union
      * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 HighestPerformance                                      : 8;
-#define IA32_HWP_CAPABILITIES_REGISTER_HIGHEST_PERFORMANCE_BIT       0
-#define IA32_HWP_CAPABILITIES_REGISTER_HIGHEST_PERFORMANCE_MASK      0xFF
-#define IA32_HWP_CAPABILITIES_REGISTER_HIGHEST_PERFORMANCE(_)        (((_) >> 0) & 0xFF)
+#define IA32_HWP_CAPABILITIES_HIGHEST_PERFORMANCE_BIT                0
+#define IA32_HWP_CAPABILITIES_HIGHEST_PERFORMANCE_MASK               0xFF
+#define IA32_HWP_CAPABILITIES_HIGHEST_PERFORMANCE(_)                 (((_) >> 0) & 0xFF)
 
     /**
      * [Bits 15:8] Guaranteed_Performance.
@@ -11112,9 +11112,9 @@ typedef union
      * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 GuaranteedPerformance                                   : 8;
-#define IA32_HWP_CAPABILITIES_REGISTER_GUARANTEED_PERFORMANCE_BIT    8
-#define IA32_HWP_CAPABILITIES_REGISTER_GUARANTEED_PERFORMANCE_MASK   0xFF
-#define IA32_HWP_CAPABILITIES_REGISTER_GUARANTEED_PERFORMANCE(_)     (((_) >> 8) & 0xFF)
+#define IA32_HWP_CAPABILITIES_GUARANTEED_PERFORMANCE_BIT             8
+#define IA32_HWP_CAPABILITIES_GUARANTEED_PERFORMANCE_MASK            0xFF
+#define IA32_HWP_CAPABILITIES_GUARANTEED_PERFORMANCE(_)              (((_) >> 8) & 0xFF)
 
     /**
      * [Bits 23:16] Most_Efficient_Performance.
@@ -11123,9 +11123,9 @@ typedef union
      * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 MostEfficientPerformance                                : 8;
-#define IA32_HWP_CAPABILITIES_REGISTER_MOST_EFFICIENT_PERFORMANCE_BIT 16
-#define IA32_HWP_CAPABILITIES_REGISTER_MOST_EFFICIENT_PERFORMANCE_MASK 0xFF
-#define IA32_HWP_CAPABILITIES_REGISTER_MOST_EFFICIENT_PERFORMANCE(_) (((_) >> 16) & 0xFF)
+#define IA32_HWP_CAPABILITIES_MOST_EFFICIENT_PERFORMANCE_BIT         16
+#define IA32_HWP_CAPABILITIES_MOST_EFFICIENT_PERFORMANCE_MASK        0xFF
+#define IA32_HWP_CAPABILITIES_MOST_EFFICIENT_PERFORMANCE(_)          (((_) >> 16) & 0xFF)
 
     /**
      * [Bits 31:24] Lowest_Performance.
@@ -11134,9 +11134,9 @@ typedef union
      * @see Vol3B[14.4.3(HWP Performance Range and Dynamic Capabilities)]
      */
     UINT64 LowestPerformance                                       : 8;
-#define IA32_HWP_CAPABILITIES_REGISTER_LOWEST_PERFORMANCE_BIT        24
-#define IA32_HWP_CAPABILITIES_REGISTER_LOWEST_PERFORMANCE_MASK       0xFF
-#define IA32_HWP_CAPABILITIES_REGISTER_LOWEST_PERFORMANCE(_)         (((_) >> 24) & 0xFF)
+#define IA32_HWP_CAPABILITIES_LOWEST_PERFORMANCE_BIT                 24
+#define IA32_HWP_CAPABILITIES_LOWEST_PERFORMANCE_MASK                0xFF
+#define IA32_HWP_CAPABILITIES_LOWEST_PERFORMANCE(_)                  (((_) >> 24) & 0xFF)
     UINT64 Reserved1                                               : 32;
   };
 
@@ -11161,9 +11161,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MinimumPerformance                                      : 8;
-#define IA32_HWP_REQUEST_PKG_REGISTER_MINIMUM_PERFORMANCE_BIT        0
-#define IA32_HWP_REQUEST_PKG_REGISTER_MINIMUM_PERFORMANCE_MASK       0xFF
-#define IA32_HWP_REQUEST_PKG_REGISTER_MINIMUM_PERFORMANCE(_)         (((_) >> 0) & 0xFF)
+#define IA32_HWP_REQUEST_PKG_MINIMUM_PERFORMANCE_BIT                 0
+#define IA32_HWP_REQUEST_PKG_MINIMUM_PERFORMANCE_MASK                0xFF
+#define IA32_HWP_REQUEST_PKG_MINIMUM_PERFORMANCE(_)                  (((_) >> 0) & 0xFF)
 
     /**
      * [Bits 15:8] Maximum_Performance.
@@ -11172,9 +11172,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MaximumPerformance                                      : 8;
-#define IA32_HWP_REQUEST_PKG_REGISTER_MAXIMUM_PERFORMANCE_BIT        8
-#define IA32_HWP_REQUEST_PKG_REGISTER_MAXIMUM_PERFORMANCE_MASK       0xFF
-#define IA32_HWP_REQUEST_PKG_REGISTER_MAXIMUM_PERFORMANCE(_)         (((_) >> 8) & 0xFF)
+#define IA32_HWP_REQUEST_PKG_MAXIMUM_PERFORMANCE_BIT                 8
+#define IA32_HWP_REQUEST_PKG_MAXIMUM_PERFORMANCE_MASK                0xFF
+#define IA32_HWP_REQUEST_PKG_MAXIMUM_PERFORMANCE(_)                  (((_) >> 8) & 0xFF)
 
     /**
      * [Bits 23:16] Desired_Performance.
@@ -11183,9 +11183,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 DesiredPerformance                                      : 8;
-#define IA32_HWP_REQUEST_PKG_REGISTER_DESIRED_PERFORMANCE_BIT        16
-#define IA32_HWP_REQUEST_PKG_REGISTER_DESIRED_PERFORMANCE_MASK       0xFF
-#define IA32_HWP_REQUEST_PKG_REGISTER_DESIRED_PERFORMANCE(_)         (((_) >> 16) & 0xFF)
+#define IA32_HWP_REQUEST_PKG_DESIRED_PERFORMANCE_BIT                 16
+#define IA32_HWP_REQUEST_PKG_DESIRED_PERFORMANCE_MASK                0xFF
+#define IA32_HWP_REQUEST_PKG_DESIRED_PERFORMANCE(_)                  (((_) >> 16) & 0xFF)
 
     /**
      * [Bits 31:24] Energy_Performance_Preference.
@@ -11194,9 +11194,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 EnergyPerformancePreference                             : 8;
-#define IA32_HWP_REQUEST_PKG_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_BIT 24
-#define IA32_HWP_REQUEST_PKG_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_MASK 0xFF
-#define IA32_HWP_REQUEST_PKG_REGISTER_ENERGY_PERFORMANCE_PREFERENCE(_) (((_) >> 24) & 0xFF)
+#define IA32_HWP_REQUEST_PKG_ENERGY_PERFORMANCE_PREFERENCE_BIT       24
+#define IA32_HWP_REQUEST_PKG_ENERGY_PERFORMANCE_PREFERENCE_MASK      0xFF
+#define IA32_HWP_REQUEST_PKG_ENERGY_PERFORMANCE_PREFERENCE(_)        (((_) >> 24) & 0xFF)
 
     /**
      * [Bits 41:32] Activity_Window.
@@ -11205,9 +11205,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 ActivityWindow                                          : 10;
-#define IA32_HWP_REQUEST_PKG_REGISTER_ACTIVITY_WINDOW_BIT            32
-#define IA32_HWP_REQUEST_PKG_REGISTER_ACTIVITY_WINDOW_MASK           0x3FF
-#define IA32_HWP_REQUEST_PKG_REGISTER_ACTIVITY_WINDOW(_)             (((_) >> 32) & 0x3FF)
+#define IA32_HWP_REQUEST_PKG_ACTIVITY_WINDOW_BIT                     32
+#define IA32_HWP_REQUEST_PKG_ACTIVITY_WINDOW_MASK                    0x3FF
+#define IA32_HWP_REQUEST_PKG_ACTIVITY_WINDOW(_)                      (((_) >> 32) & 0x3FF)
     UINT64 Reserved1                                               : 22;
   };
 
@@ -11232,9 +11232,9 @@ typedef union
      * @see Vol3B[14.4.6(HWP Notifications)]
      */
     UINT64 EnGuaranteedPerformanceChange                           : 1;
-#define IA32_HWP_INTERRUPT_REGISTER_EN_GUARANTEED_PERFORMANCE_CHANGE_BIT 0
-#define IA32_HWP_INTERRUPT_REGISTER_EN_GUARANTEED_PERFORMANCE_CHANGE_MASK 0x01
-#define IA32_HWP_INTERRUPT_REGISTER_EN_GUARANTEED_PERFORMANCE_CHANGE(_) (((_) >> 0) & 0x01)
+#define IA32_HWP_INTERRUPT_EN_GUARANTEED_PERFORMANCE_CHANGE_BIT      0
+#define IA32_HWP_INTERRUPT_EN_GUARANTEED_PERFORMANCE_CHANGE_MASK     0x01
+#define IA32_HWP_INTERRUPT_EN_GUARANTEED_PERFORMANCE_CHANGE(_)       (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] EN_Excursion_Minimum.
@@ -11243,9 +11243,9 @@ typedef union
      * @see Vol3B[14.4.6(HWP Notifications)]
      */
     UINT64 EnExcursionMinimum                                      : 1;
-#define IA32_HWP_INTERRUPT_REGISTER_EN_EXCURSION_MINIMUM_BIT         1
-#define IA32_HWP_INTERRUPT_REGISTER_EN_EXCURSION_MINIMUM_MASK        0x01
-#define IA32_HWP_INTERRUPT_REGISTER_EN_EXCURSION_MINIMUM(_)          (((_) >> 1) & 0x01)
+#define IA32_HWP_INTERRUPT_EN_EXCURSION_MINIMUM_BIT                  1
+#define IA32_HWP_INTERRUPT_EN_EXCURSION_MINIMUM_MASK                 0x01
+#define IA32_HWP_INTERRUPT_EN_EXCURSION_MINIMUM(_)                   (((_) >> 1) & 0x01)
     UINT64 Reserved1                                               : 62;
   };
 
@@ -11270,9 +11270,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MinimumPerformance                                      : 8;
-#define IA32_HWP_REQUEST_REGISTER_MINIMUM_PERFORMANCE_BIT            0
-#define IA32_HWP_REQUEST_REGISTER_MINIMUM_PERFORMANCE_MASK           0xFF
-#define IA32_HWP_REQUEST_REGISTER_MINIMUM_PERFORMANCE(_)             (((_) >> 0) & 0xFF)
+#define IA32_HWP_REQUEST_MINIMUM_PERFORMANCE_BIT                     0
+#define IA32_HWP_REQUEST_MINIMUM_PERFORMANCE_MASK                    0xFF
+#define IA32_HWP_REQUEST_MINIMUM_PERFORMANCE(_)                      (((_) >> 0) & 0xFF)
 
     /**
      * [Bits 15:8] Maximum_Performance.
@@ -11281,9 +11281,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 MaximumPerformance                                      : 8;
-#define IA32_HWP_REQUEST_REGISTER_MAXIMUM_PERFORMANCE_BIT            8
-#define IA32_HWP_REQUEST_REGISTER_MAXIMUM_PERFORMANCE_MASK           0xFF
-#define IA32_HWP_REQUEST_REGISTER_MAXIMUM_PERFORMANCE(_)             (((_) >> 8) & 0xFF)
+#define IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE_BIT                     8
+#define IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE_MASK                    0xFF
+#define IA32_HWP_REQUEST_MAXIMUM_PERFORMANCE(_)                      (((_) >> 8) & 0xFF)
 
     /**
      * [Bits 23:16] Desired_Performance.
@@ -11292,9 +11292,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 DesiredPerformance                                      : 8;
-#define IA32_HWP_REQUEST_REGISTER_DESIRED_PERFORMANCE_BIT            16
-#define IA32_HWP_REQUEST_REGISTER_DESIRED_PERFORMANCE_MASK           0xFF
-#define IA32_HWP_REQUEST_REGISTER_DESIRED_PERFORMANCE(_)             (((_) >> 16) & 0xFF)
+#define IA32_HWP_REQUEST_DESIRED_PERFORMANCE_BIT                     16
+#define IA32_HWP_REQUEST_DESIRED_PERFORMANCE_MASK                    0xFF
+#define IA32_HWP_REQUEST_DESIRED_PERFORMANCE(_)                      (((_) >> 16) & 0xFF)
 
     /**
      * [Bits 31:24] Energy_Performance_Preference.
@@ -11303,9 +11303,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 EnergyPerformancePreference                             : 8;
-#define IA32_HWP_REQUEST_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_BIT  24
-#define IA32_HWP_REQUEST_REGISTER_ENERGY_PERFORMANCE_PREFERENCE_MASK 0xFF
-#define IA32_HWP_REQUEST_REGISTER_ENERGY_PERFORMANCE_PREFERENCE(_)   (((_) >> 24) & 0xFF)
+#define IA32_HWP_REQUEST_ENERGY_PERFORMANCE_PREFERENCE_BIT           24
+#define IA32_HWP_REQUEST_ENERGY_PERFORMANCE_PREFERENCE_MASK          0xFF
+#define IA32_HWP_REQUEST_ENERGY_PERFORMANCE_PREFERENCE(_)            (((_) >> 24) & 0xFF)
 
     /**
      * [Bits 41:32] Activity_Window.
@@ -11314,9 +11314,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 ActivityWindow                                          : 10;
-#define IA32_HWP_REQUEST_REGISTER_ACTIVITY_WINDOW_BIT                32
-#define IA32_HWP_REQUEST_REGISTER_ACTIVITY_WINDOW_MASK               0x3FF
-#define IA32_HWP_REQUEST_REGISTER_ACTIVITY_WINDOW(_)                 (((_) >> 32) & 0x3FF)
+#define IA32_HWP_REQUEST_ACTIVITY_WINDOW_BIT                         32
+#define IA32_HWP_REQUEST_ACTIVITY_WINDOW_MASK                        0x3FF
+#define IA32_HWP_REQUEST_ACTIVITY_WINDOW(_)                          (((_) >> 32) & 0x3FF)
 
     /**
      * [Bit 42] Package_Control.
@@ -11325,9 +11325,9 @@ typedef union
      * @see Vol3B[14.4.4(Managing HWP)]
      */
     UINT64 PackageControl                                          : 1;
-#define IA32_HWP_REQUEST_REGISTER_PACKAGE_CONTROL_BIT                42
-#define IA32_HWP_REQUEST_REGISTER_PACKAGE_CONTROL_MASK               0x01
-#define IA32_HWP_REQUEST_REGISTER_PACKAGE_CONTROL(_)                 (((_) >> 42) & 0x01)
+#define IA32_HWP_REQUEST_PACKAGE_CONTROL_BIT                         42
+#define IA32_HWP_REQUEST_PACKAGE_CONTROL_MASK                        0x01
+#define IA32_HWP_REQUEST_PACKAGE_CONTROL(_)                          (((_) >> 42) & 0x01)
     UINT64 Reserved1                                               : 21;
   };
 
@@ -11352,9 +11352,9 @@ typedef union
      * @see Vol3B[14.4.5(HWP Feedback)]
      */
     UINT64 GuaranteedPerformanceChange                             : 1;
-#define IA32_HWP_STATUS_REGISTER_GUARANTEED_PERFORMANCE_CHANGE_BIT   0
-#define IA32_HWP_STATUS_REGISTER_GUARANTEED_PERFORMANCE_CHANGE_MASK  0x01
-#define IA32_HWP_STATUS_REGISTER_GUARANTEED_PERFORMANCE_CHANGE(_)    (((_) >> 0) & 0x01)
+#define IA32_HWP_STATUS_GUARANTEED_PERFORMANCE_CHANGE_BIT            0
+#define IA32_HWP_STATUS_GUARANTEED_PERFORMANCE_CHANGE_MASK           0x01
+#define IA32_HWP_STATUS_GUARANTEED_PERFORMANCE_CHANGE(_)             (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -11364,9 +11364,9 @@ typedef union
      * @see Vol3B[14.4.5(HWP Feedback)]
      */
     UINT64 ExcursionToMinimum                                      : 1;
-#define IA32_HWP_STATUS_REGISTER_EXCURSION_TO_MINIMUM_BIT            2
-#define IA32_HWP_STATUS_REGISTER_EXCURSION_TO_MINIMUM_MASK           0x01
-#define IA32_HWP_STATUS_REGISTER_EXCURSION_TO_MINIMUM(_)             (((_) >> 2) & 0x01)
+#define IA32_HWP_STATUS_EXCURSION_TO_MINIMUM_BIT                     2
+#define IA32_HWP_STATUS_EXCURSION_TO_MINIMUM_MASK                    0x01
+#define IA32_HWP_STATUS_EXCURSION_TO_MINIMUM(_)                      (((_) >> 2) & 0x01)
     UINT64 Reserved2                                               : 61;
   };
 
@@ -11596,9 +11596,9 @@ typedef union
      * @remarks If CPUID.01H:ECX.[11] = 1
      */
     UINT64 Enable                                                  : 1;
-#define IA32_DEBUG_INTERFACE_REGISTER_ENABLE_BIT                     0
-#define IA32_DEBUG_INTERFACE_REGISTER_ENABLE_MASK                    0x01
-#define IA32_DEBUG_INTERFACE_REGISTER_ENABLE(_)                      (((_) >> 0) & 0x01)
+#define IA32_DEBUG_INTERFACE_ENABLE_BIT                              0
+#define IA32_DEBUG_INTERFACE_ENABLE_MASK                             0x01
+#define IA32_DEBUG_INTERFACE_ENABLE(_)                               (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 29;
 
     /**
@@ -11610,9 +11610,9 @@ typedef union
      * @remarks If CPUID.01H:ECX.[11] = 1
      */
     UINT64 Lock                                                    : 1;
-#define IA32_DEBUG_INTERFACE_REGISTER_LOCK_BIT                       30
-#define IA32_DEBUG_INTERFACE_REGISTER_LOCK_MASK                      0x01
-#define IA32_DEBUG_INTERFACE_REGISTER_LOCK(_)                        (((_) >> 30) & 0x01)
+#define IA32_DEBUG_INTERFACE_LOCK_BIT                                30
+#define IA32_DEBUG_INTERFACE_LOCK_MASK                               0x01
+#define IA32_DEBUG_INTERFACE_LOCK(_)                                 (((_) >> 30) & 0x01)
 
     /**
      * @brief Debug Occurred <b>(R/O)</b>
@@ -11622,9 +11622,9 @@ typedef union
      * @remarks If CPUID.01H:ECX.[11] = 1
      */
     UINT64 DebugOccurred                                           : 1;
-#define IA32_DEBUG_INTERFACE_REGISTER_DEBUG_OCCURRED_BIT             31
-#define IA32_DEBUG_INTERFACE_REGISTER_DEBUG_OCCURRED_MASK            0x01
-#define IA32_DEBUG_INTERFACE_REGISTER_DEBUG_OCCURRED(_)              (((_) >> 31) & 0x01)
+#define IA32_DEBUG_INTERFACE_DEBUG_OCCURRED_BIT                      31
+#define IA32_DEBUG_INTERFACE_DEBUG_OCCURRED_MASK                     0x01
+#define IA32_DEBUG_INTERFACE_DEBUG_OCCURRED(_)                       (((_) >> 31) & 0x01)
     UINT64 Reserved2                                               : 32;
   };
 
@@ -11648,9 +11648,9 @@ typedef union
      * [Bit 0] Set 1 to enable L3 CAT masks and COS to operate in Code and Data Prioritization (CDP) mode.
      */
     UINT64 Enable                                                  : 1;
-#define IA32_L3_QOS_CFG_REGISTER_ENABLE_BIT                          0
-#define IA32_L3_QOS_CFG_REGISTER_ENABLE_MASK                         0x01
-#define IA32_L3_QOS_CFG_REGISTER_ENABLE(_)                           (((_) >> 0) & 0x01)
+#define IA32_L3_QOS_CFG_ENABLE_BIT                                   0
+#define IA32_L3_QOS_CFG_ENABLE_MASK                                  0x01
+#define IA32_L3_QOS_CFG_ENABLE(_)                                    (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -11674,9 +11674,9 @@ typedef union
      * [Bit 0] Set 1 to enable L2 CAT masks and COS to operate in Code and Data Prioritization (CDP) mode.
      */
     UINT64 Enable                                                  : 1;
-#define IA32_L2_QOS_CFG_REGISTER_ENABLE_BIT                          0
-#define IA32_L2_QOS_CFG_REGISTER_ENABLE_MASK                         0x01
-#define IA32_L2_QOS_CFG_REGISTER_ENABLE(_)                           (((_) >> 0) & 0x01)
+#define IA32_L2_QOS_CFG_ENABLE_BIT                                   0
+#define IA32_L2_QOS_CFG_ENABLE_MASK                                  0x01
+#define IA32_L2_QOS_CFG_ENABLE(_)                                    (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -11700,9 +11700,9 @@ typedef union
      * [Bits 7:0] ID of a supported monitoring event to report via IA32_QM_CTR.
      */
     UINT64 EventId                                                 : 8;
-#define IA32_QM_EVTSEL_REGISTER_EVENT_ID_BIT                         0
-#define IA32_QM_EVTSEL_REGISTER_EVENT_ID_MASK                        0xFF
-#define IA32_QM_EVTSEL_REGISTER_EVENT_ID(_)                          (((_) >> 0) & 0xFF)
+#define IA32_QM_EVTSEL_EVENT_ID_BIT                                  0
+#define IA32_QM_EVTSEL_EVENT_ID_MASK                                 0xFF
+#define IA32_QM_EVTSEL_EVENT_ID(_)                                   (((_) >> 0) & 0xFF)
     UINT64 Reserved1                                               : 24;
 
     /**
@@ -11713,9 +11713,9 @@ typedef union
      * @remarks Bits [N+31:32] N = Ceil (Log2 (CPUID.(EAX= 0FH,ECX=0H).EBX[31:0] + 1))
      */
     UINT64 ResourceMonitoringId                                    : 32;
-#define IA32_QM_EVTSEL_REGISTER_RESOURCE_MONITORING_ID_BIT           32
-#define IA32_QM_EVTSEL_REGISTER_RESOURCE_MONITORING_ID_MASK          0xFFFFFFFF
-#define IA32_QM_EVTSEL_REGISTER_RESOURCE_MONITORING_ID(_)            (((_) >> 32) & 0xFFFFFFFF)
+#define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID_BIT                    32
+#define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID_MASK                   0xFFFFFFFF
+#define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID(_)                     (((_) >> 32) & 0xFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -11736,9 +11736,9 @@ typedef union
      * [Bits 61:0] Resource Monitored Data.
      */
     UINT64 ResourceMonitoredData                                   : 62;
-#define IA32_QM_CTR_REGISTER_RESOURCE_MONITORED_DATA_BIT             0
-#define IA32_QM_CTR_REGISTER_RESOURCE_MONITORED_DATA_MASK            0x3FFFFFFFFFFFFFFF
-#define IA32_QM_CTR_REGISTER_RESOURCE_MONITORED_DATA(_)              (((_) >> 0) & 0x3FFFFFFFFFFFFFFF)
+#define IA32_QM_CTR_RESOURCE_MONITORED_DATA_BIT                      0
+#define IA32_QM_CTR_RESOURCE_MONITORED_DATA_MASK                     0x3FFFFFFFFFFFFFFF
+#define IA32_QM_CTR_RESOURCE_MONITORED_DATA(_)                       (((_) >> 0) & 0x3FFFFFFFFFFFFFFF)
 
     /**
      * @brief Unavailable
@@ -11746,9 +11746,9 @@ typedef union
      * [Bit 62] If 1, indicates data for this RMID is not available or not monitored for this resource or RMID.
      */
     UINT64 Unavailable                                             : 1;
-#define IA32_QM_CTR_REGISTER_UNAVAILABLE_BIT                         62
-#define IA32_QM_CTR_REGISTER_UNAVAILABLE_MASK                        0x01
-#define IA32_QM_CTR_REGISTER_UNAVAILABLE(_)                          (((_) >> 62) & 0x01)
+#define IA32_QM_CTR_UNAVAILABLE_BIT                                  62
+#define IA32_QM_CTR_UNAVAILABLE_MASK                                 0x01
+#define IA32_QM_CTR_UNAVAILABLE(_)                                   (((_) >> 62) & 0x01)
 
     /**
      * @brief Error
@@ -11756,9 +11756,9 @@ typedef union
      * [Bit 63] If 1, indicates an unsupported RMID or event type was written to IA32_PQR_QM_EVTSEL.
      */
     UINT64 Error                                                   : 1;
-#define IA32_QM_CTR_REGISTER_ERROR_BIT                               63
-#define IA32_QM_CTR_REGISTER_ERROR_MASK                              0x01
-#define IA32_QM_CTR_REGISTER_ERROR(_)                                (((_) >> 63) & 0x01)
+#define IA32_QM_CTR_ERROR_BIT                                        63
+#define IA32_QM_CTR_ERROR_MASK                                       0x01
+#define IA32_QM_CTR_ERROR(_)                                         (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
@@ -11783,9 +11783,9 @@ typedef union
      * @remarks Bits [N-1:0] N = Ceil (Log2 (CPUID.(EAX= 0FH, ECX=0H).EBX[31:0] +1)) 31:N Reserved
      */
     UINT64 ResourceMonitoringId                                    : 32;
-#define IA32_PQR_ASSOC_REGISTER_RESOURCE_MONITORING_ID_BIT           0
-#define IA32_PQR_ASSOC_REGISTER_RESOURCE_MONITORING_ID_MASK          0xFFFFFFFF
-#define IA32_PQR_ASSOC_REGISTER_RESOURCE_MONITORING_ID(_)            (((_) >> 0) & 0xFFFFFFFF)
+#define IA32_PQR_ASSOC_RESOURCE_MONITORING_ID_BIT                    0
+#define IA32_PQR_ASSOC_RESOURCE_MONITORING_ID_MASK                   0xFFFFFFFF
+#define IA32_PQR_ASSOC_RESOURCE_MONITORING_ID(_)                     (((_) >> 0) & 0xFFFFFFFF)
 
     /**
      * @brief COS <b>(R/W)</b>
@@ -11795,9 +11795,9 @@ typedef union
      * @remarks If ( CPUID.(EAX=07H, ECX=0):EBX.[15] = 1 )
      */
     UINT64 Cos                                                     : 32;
-#define IA32_PQR_ASSOC_REGISTER_COS_BIT                              32
-#define IA32_PQR_ASSOC_REGISTER_COS_MASK                             0xFFFFFFFF
-#define IA32_PQR_ASSOC_REGISTER_COS(_)                               (((_) >> 32) & 0xFFFFFFFF)
+#define IA32_PQR_ASSOC_COS_BIT                                       32
+#define IA32_PQR_ASSOC_COS_MASK                                      0xFFFFFFFF
+#define IA32_PQR_ASSOC_COS(_)                                        (((_) >> 32) & 0xFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -11818,26 +11818,26 @@ typedef union
      * [Bit 0] Enable Intel MPX in supervisor mode.
      */
     UINT64 Enable                                                  : 1;
-#define IA32_BNDCFGS_REGISTER_ENABLE_BIT                             0
-#define IA32_BNDCFGS_REGISTER_ENABLE_MASK                            0x01
-#define IA32_BNDCFGS_REGISTER_ENABLE(_)                              (((_) >> 0) & 0x01)
+#define IA32_BNDCFGS_ENABLE_BIT                                      0
+#define IA32_BNDCFGS_ENABLE_MASK                                     0x01
+#define IA32_BNDCFGS_ENABLE(_)                                       (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Preserve the bounds registers for near branch instructions in the absence of the BND prefix.
      */
     UINT64 BndPreserve                                             : 1;
-#define IA32_BNDCFGS_REGISTER_BND_PRESERVE_BIT                       1
-#define IA32_BNDCFGS_REGISTER_BND_PRESERVE_MASK                      0x01
-#define IA32_BNDCFGS_REGISTER_BND_PRESERVE(_)                        (((_) >> 1) & 0x01)
+#define IA32_BNDCFGS_BND_PRESERVE_BIT                                1
+#define IA32_BNDCFGS_BND_PRESERVE_MASK                               0x01
+#define IA32_BNDCFGS_BND_PRESERVE(_)                                 (((_) >> 1) & 0x01)
     UINT64 Reserved1                                               : 10;
 
     /**
      * [Bits 63:12] Base Address of Bound Directory.
      */
     UINT64 BoundDirectoryBaseAddress                               : 52;
-#define IA32_BNDCFGS_REGISTER_BOUND_DIRECTORY_BASE_ADDRESS_BIT       12
-#define IA32_BNDCFGS_REGISTER_BOUND_DIRECTORY_BASE_ADDRESS_MASK      0xFFFFFFFFFFFFF
-#define IA32_BNDCFGS_REGISTER_BOUND_DIRECTORY_BASE_ADDRESS(_)        (((_) >> 12) & 0xFFFFFFFFFFFFF)
+#define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS_BIT                12
+#define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS_MASK               0xFFFFFFFFFFFFF
+#define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS(_)                 (((_) >> 12) & 0xFFFFFFFFFFFFF)
   };
 
   UINT64 Flags;
@@ -11860,9 +11860,9 @@ typedef union
      * [Bit 8] Trace Packet Configuration State.
      */
     UINT64 TracePacketConfigurationState                           : 1;
-#define IA32_XSS_REGISTER_TRACE_PACKET_CONFIGURATION_STATE_BIT       8
-#define IA32_XSS_REGISTER_TRACE_PACKET_CONFIGURATION_STATE_MASK      0x01
-#define IA32_XSS_REGISTER_TRACE_PACKET_CONFIGURATION_STATE(_)        (((_) >> 8) & 0x01)
+#define IA32_XSS_TRACE_PACKET_CONFIGURATION_STATE_BIT                8
+#define IA32_XSS_TRACE_PACKET_CONFIGURATION_STATE_MASK               0x01
+#define IA32_XSS_TRACE_PACKET_CONFIGURATION_STATE(_)                 (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 55;
   };
 
@@ -11889,9 +11889,9 @@ typedef union
      * @see Vol3B[14.5.2(Package level Enabling HDC)]
      */
     UINT64 HdcPkgEnable                                            : 1;
-#define IA32_PKG_HDC_CTL_REGISTER_HDC_PKG_ENABLE_BIT                 0
-#define IA32_PKG_HDC_CTL_REGISTER_HDC_PKG_ENABLE_MASK                0x01
-#define IA32_PKG_HDC_CTL_REGISTER_HDC_PKG_ENABLE(_)                  (((_) >> 0) & 0x01)
+#define IA32_PKG_HDC_CTL_HDC_PKG_ENABLE_BIT                          0
+#define IA32_PKG_HDC_CTL_HDC_PKG_ENABLE_MASK                         0x01
+#define IA32_PKG_HDC_CTL_HDC_PKG_ENABLE(_)                           (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -11918,9 +11918,9 @@ typedef union
      * @see Vol3B[14.5.3(Logical-Processor Level HDC Control)]
      */
     UINT64 HdcAllowBlock                                           : 1;
-#define IA32_PM_CTL1_REGISTER_HDC_ALLOW_BLOCK_BIT                    0
-#define IA32_PM_CTL1_REGISTER_HDC_ALLOW_BLOCK_MASK                   0x01
-#define IA32_PM_CTL1_REGISTER_HDC_ALLOW_BLOCK(_)                     (((_) >> 0) & 0x01)
+#define IA32_PM_CTL1_HDC_ALLOW_BLOCK_BIT                             0
+#define IA32_PM_CTL1_HDC_ALLOW_BLOCK_MASK                            0x01
+#define IA32_PM_CTL1_HDC_ALLOW_BLOCK(_)                              (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 63;
   };
 
@@ -11956,9 +11956,9 @@ typedef union
      * [Bit 0] Enables SYSCALL/SYSRET instructions in 64-bit mode.
      */
     UINT64 SyscallEnable                                           : 1;
-#define IA32_EFER_REGISTER_SYSCALL_ENABLE_BIT                        0
-#define IA32_EFER_REGISTER_SYSCALL_ENABLE_MASK                       0x01
-#define IA32_EFER_REGISTER_SYSCALL_ENABLE(_)                         (((_) >> 0) & 0x01)
+#define IA32_EFER_SYSCALL_ENABLE_BIT                                 0
+#define IA32_EFER_SYSCALL_ENABLE_MASK                                0x01
+#define IA32_EFER_SYSCALL_ENABLE(_)                                  (((_) >> 0) & 0x01)
     UINT64 Reserved1                                               : 7;
 
     /**
@@ -11967,9 +11967,9 @@ typedef union
      * [Bit 8] Enables IA-32e mode operation.
      */
     UINT64 Ia32EModeEnable                                         : 1;
-#define IA32_EFER_REGISTER_IA32E_MODE_ENABLE_BIT                     8
-#define IA32_EFER_REGISTER_IA32E_MODE_ENABLE_MASK                    0x01
-#define IA32_EFER_REGISTER_IA32E_MODE_ENABLE(_)                      (((_) >> 8) & 0x01)
+#define IA32_EFER_IA32E_MODE_ENABLE_BIT                              8
+#define IA32_EFER_IA32E_MODE_ENABLE_MASK                             0x01
+#define IA32_EFER_IA32E_MODE_ENABLE(_)                               (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -11978,17 +11978,17 @@ typedef union
      * [Bit 10] Indicates IA-32e mode is active when set.
      */
     UINT64 Ia32EModeActive                                         : 1;
-#define IA32_EFER_REGISTER_IA32E_MODE_ACTIVE_BIT                     10
-#define IA32_EFER_REGISTER_IA32E_MODE_ACTIVE_MASK                    0x01
-#define IA32_EFER_REGISTER_IA32E_MODE_ACTIVE(_)                      (((_) >> 10) & 0x01)
+#define IA32_EFER_IA32E_MODE_ACTIVE_BIT                              10
+#define IA32_EFER_IA32E_MODE_ACTIVE_MASK                             0x01
+#define IA32_EFER_IA32E_MODE_ACTIVE(_)                               (((_) >> 10) & 0x01)
 
     /**
      * [Bit 11] Execute Disable Bit Enable.
      */
     UINT64 ExecuteDisableBitEnable                                 : 1;
-#define IA32_EFER_REGISTER_EXECUTE_DISABLE_BIT_ENABLE_BIT            11
-#define IA32_EFER_REGISTER_EXECUTE_DISABLE_BIT_ENABLE_MASK           0x01
-#define IA32_EFER_REGISTER_EXECUTE_DISABLE_BIT_ENABLE(_)             (((_) >> 11) & 0x01)
+#define IA32_EFER_EXECUTE_DISABLE_BIT_ENABLE_BIT                     11
+#define IA32_EFER_EXECUTE_DISABLE_BIT_ENABLE_MASK                    0x01
+#define IA32_EFER_EXECUTE_DISABLE_BIT_ENABLE(_)                      (((_) >> 11) & 0x01)
     UINT64 Reserved3                                               : 52;
   };
 
@@ -12063,9 +12063,9 @@ typedef union
      * [Bits 31:0] AUX. Auxiliary signature of TSC.
      */
     UINT64 TscAuxiliarySignature                                   : 32;
-#define IA32_TSC_AUX_REGISTER_TSC_AUXILIARY_SIGNATURE_BIT            0
-#define IA32_TSC_AUX_REGISTER_TSC_AUXILIARY_SIGNATURE_MASK           0xFFFFFFFF
-#define IA32_TSC_AUX_REGISTER_TSC_AUXILIARY_SIGNATURE(_)             (((_) >> 0) & 0xFFFFFFFF)
+#define IA32_TSC_AUX_TSC_AUXILIARY_SIGNATURE_BIT                     0
+#define IA32_TSC_AUX_TSC_AUXILIARY_SIGNATURE_MASK                    0xFFFFFFFF
+#define IA32_TSC_AUX_TSC_AUXILIARY_SIGNATURE(_)                      (((_) >> 0) & 0xFFFFFFFF)
     UINT64 Reserved1                                               : 32;
   };
 

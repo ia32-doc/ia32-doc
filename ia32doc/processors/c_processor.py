@@ -185,25 +185,29 @@ class DocCProcessor(DocProcessor):
         #
         bit_shift = bit_to - bit_from
 
+        if self.opt.bitfield_field_with_define_bit or \
+           self.opt.bitfield_field_with_define_mask or \
+           self.opt.bitfield_field_with_define_get:
+            part1 = self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)
+            part2 = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
+
+            #
+            # !!! INCREDIBLY UGLY HACK !!!
+            # Remove _REGISTER suffix.
+            #
+            if 'name_with_suffix' in doc.parent._doc:
+                part1 = part1[0:(len(part1) - len(doc.parent._doc['name_with_suffix']) - 1)]
+
         if self.opt.bitfield_field_with_define_bit:
-            definition_bit = \
-                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                f'{self.opt.bitfield_field_with_define_bit_suffix}'
-            self.print(f'#define {definition_bit:<{self.opt.align}} {bit_from}')
+            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_bit_suffix}'
+            self.print(f'#define {definition:<{self.opt.align}} {bit_from}')
 
         if self.opt.bitfield_field_with_define_mask:
-            definition_size = \
-                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                f'{self.opt.bitfield_field_with_define_mask_suffix}'
-            self.print(f'#define {definition_size:<{self.opt.align}} 0x{((1 << bit_shift) - 1):02X}')
+            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_mask_suffix}'
+            self.print(f'#define {definition:<{self.opt.align}} 0x{((1 << bit_shift) - 1):02X}')
 
         if self.opt.bitfield_field_with_define_get:
-            definition = \
-                f'{self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)}_' \
-                f'{self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)}' \
-                f'({self.opt.bitfield_field_with_define_get_macro_argument_name})'
+            definition = f'{part1}_{part2}({self.opt.bitfield_field_with_define_get_macro_argument_name})'
             self.print(
                 f'#define {definition:<{self.opt.align}} '
                 f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '

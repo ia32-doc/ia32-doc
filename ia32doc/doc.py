@@ -105,10 +105,10 @@ class DocBase(object):
             return self._doc['short_name']
         elif 'name' in self._doc:
             return self._doc['name']
-        elif 'name_with_postfix' in self._doc:
+        elif 'name_with_suffix' in self._doc:
             if not self.parent:
-                raise Exception('name_with_postfix without parent')
-            return f'{self.parent.short_name}_{self._doc["name_with_postfix"]}'
+                raise Exception('name_with_suffix without parent')
+            return f'{self.parent.short_name}_{self._doc["name_with_suffix"]}'
         else:
             raise Exception('Field missing: short_name')
 
@@ -122,10 +122,10 @@ class DocBase(object):
             return self._doc['long_name']
         elif 'name' in self._doc:
             return self._doc['name']
-        elif 'name_with_postfix' in self._doc:
+        elif 'name_with_suffix' in self._doc:
             if not self.parent:
-                raise Exception('name_with_postfix without parent')
-            return f'{self.parent.long_name}_{self._doc["name_with_postfix"]}'
+                raise Exception('name_with_suffix without parent')
+            return f'{self.parent.long_name}_{self._doc["name_with_suffix"]}'
         else:
             raise Exception('Field missing: long_name')
 
@@ -256,7 +256,7 @@ class DocBase(object):
         return self._doc['path']
 
     def _make_name(self, name: str) -> str:
-        if 'name_with_postfix' not in self._doc and self.type in [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD ]:
+        if 'name_with_suffix' not in self._doc and self.type in [ DOC_DEFINITION, DOC_GROUP, DOC_STRUCT, DOC_BITFIELD ]:
             parent = self.parent
 
             while parent:
