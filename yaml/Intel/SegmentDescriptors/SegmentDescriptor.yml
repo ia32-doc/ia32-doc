@@ -123,7 +123,7 @@
       description: Segment limit field (19:16); see description of $LIMIT_LOW for more details.
 
     - bit: 20
-      short_name: AVAILABLE
+      short_name: AVL
       long_name: AVAILABLE_BIT
       alternative_name: SYSTEM # WDK
       short_description: Available bit

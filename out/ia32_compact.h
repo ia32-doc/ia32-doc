@@ -3781,68 +3781,68 @@ typedef union {
  *           VMX Basic Exit Reasons
  * @{
  */
-#define VMX_EXIT_REASON_XCPT_OR_NMI                                  0x00000000
-#define VMX_EXIT_REASON_EXT_INT                                      0x00000001
-#define VMX_EXIT_REASON_TRIPLE_FAULT                                 0x00000002
-#define VMX_EXIT_REASON_INIT_SIGNAL                                  0x00000003
-#define VMX_EXIT_REASON_SIPI                                         0x00000004
-#define VMX_EXIT_REASON_IO_SMI                                       0x00000005
-#define VMX_EXIT_REASON_SMI                                          0x00000006
-#define VMX_EXIT_REASON_INT_WINDOW                                   0x00000007
-#define VMX_EXIT_REASON_NMI_WINDOW                                   0x00000008
-#define VMX_EXIT_REASON_TASK_SWITCH                                  0x00000009
-#define VMX_EXIT_REASON_CPUID                                        0x0000000A
-#define VMX_EXIT_REASON_GETSEC                                       0x0000000B
-#define VMX_EXIT_REASON_HLT                                          0x0000000C
-#define VMX_EXIT_REASON_INVD                                         0x0000000D
-#define VMX_EXIT_REASON_INVLPG                                       0x0000000E
-#define VMX_EXIT_REASON_RDPMC                                        0x0000000F
-#define VMX_EXIT_REASON_RDTSC                                        0x00000010
-#define VMX_EXIT_REASON_RSM                                          0x00000011
-#define VMX_EXIT_REASON_VMCALL                                       0x00000012
-#define VMX_EXIT_REASON_VMCLEAR                                      0x00000013
-#define VMX_EXIT_REASON_VMLAUNCH                                     0x00000014
-#define VMX_EXIT_REASON_VMPTRLD                                      0x00000015
-#define VMX_EXIT_REASON_VMPTRST                                      0x00000016
-#define VMX_EXIT_REASON_VMREAD                                       0x00000017
-#define VMX_EXIT_REASON_VMRESUME                                     0x00000018
-#define VMX_EXIT_REASON_VMWRITE                                      0x00000019
-#define VMX_EXIT_REASON_VMXOFF                                       0x0000001A
-#define VMX_EXIT_REASON_VMXON                                        0x0000001B
-#define VMX_EXIT_REASON_MOV_CRX                                      0x0000001C
-#define VMX_EXIT_REASON_MOV_DRX                                      0x0000001D
-#define VMX_EXIT_REASON_IO_INSTR                                     0x0000001E
-#define VMX_EXIT_REASON_RDMSR                                        0x0000001F
-#define VMX_EXIT_REASON_WRMSR                                        0x00000020
-#define VMX_EXIT_REASON_ERR_INVALID_GUEST_STATE                      0x00000021
-#define VMX_EXIT_REASON_ERR_MSR_LOAD                                 0x00000022
-#define VMX_EXIT_REASON_MWAIT                                        0x00000024
-#define VMX_EXIT_REASON_MTF                                          0x00000025
-#define VMX_EXIT_REASON_MONITOR                                      0x00000027
-#define VMX_EXIT_REASON_PAUSE                                        0x00000028
-#define VMX_EXIT_REASON_ERR_MACHINE_CHECK                            0x00000029
-#define VMX_EXIT_REASON_TPR_BELOW_THRESHOLD                          0x0000002B
-#define VMX_EXIT_REASON_APIC_ACCESS                                  0x0000002C
-#define VMX_EXIT_REASON_VIRTUALIZED_EOI                              0x0000002D
-#define VMX_EXIT_REASON_XDTR_ACCESS                                  0x0000002E
-#define VMX_EXIT_REASON_TR_ACCESS                                    0x0000002F
-#define VMX_EXIT_REASON_EPT_VIOLATION                                0x00000030
-#define VMX_EXIT_REASON_EPT_MISCONFIG                                0x00000031
-#define VMX_EXIT_REASON_INVEPT                                       0x00000032
-#define VMX_EXIT_REASON_RDTSCP                                       0x00000033
-#define VMX_EXIT_REASON_PREEMPT_TIMER                                0x00000034
-#define VMX_EXIT_REASON_INVVPID                                      0x00000035
-#define VMX_EXIT_REASON_WBINVD                                       0x00000036
-#define VMX_EXIT_REASON_XSETBV                                       0x00000037
-#define VMX_EXIT_REASON_APIC_WRITE                                   0x00000038
-#define VMX_EXIT_REASON_RDRAND                                       0x00000039
-#define VMX_EXIT_REASON_INVPCID                                      0x0000003A
-#define VMX_EXIT_REASON_VMFUNC                                       0x0000003B
-#define VMX_EXIT_REASON_ENCLS                                        0x0000003C
-#define VMX_EXIT_REASON_RDSEED                                       0x0000003D
-#define VMX_EXIT_REASON_PML_FULL                                     0x0000003E
-#define VMX_EXIT_REASON_XSAVES                                       0x0000003F
-#define VMX_EXIT_REASON_XRSTORS                                      0x00000040
+#define VMX_VMX_EXIT_REASON_XCPT_OR_NMI                              0x00000000
+#define VMX_VMX_EXIT_REASON_EXT_INT                                  0x00000001
+#define VMX_VMX_EXIT_REASON_TRIPLE_FAULT                             0x00000002
+#define VMX_VMX_EXIT_REASON_INIT_SIGNAL                              0x00000003
+#define VMX_VMX_EXIT_REASON_SIPI                                     0x00000004
+#define VMX_VMX_EXIT_REASON_IO_SMI                                   0x00000005
+#define VMX_VMX_EXIT_REASON_SMI                                      0x00000006
+#define VMX_VMX_EXIT_REASON_INT_WINDOW                               0x00000007
+#define VMX_VMX_EXIT_REASON_NMI_WINDOW                               0x00000008
+#define VMX_VMX_EXIT_REASON_TASK_SWITCH                              0x00000009
+#define VMX_VMX_EXIT_REASON_CPUID                                    0x0000000A
+#define VMX_VMX_EXIT_REASON_GETSEC                                   0x0000000B
+#define VMX_VMX_EXIT_REASON_HLT                                      0x0000000C
+#define VMX_VMX_EXIT_REASON_INVD                                     0x0000000D
+#define VMX_VMX_EXIT_REASON_INVLPG                                   0x0000000E
+#define VMX_VMX_EXIT_REASON_RDPMC                                    0x0000000F
+#define VMX_VMX_EXIT_REASON_RDTSC                                    0x00000010
+#define VMX_VMX_EXIT_REASON_RSM                                      0x00000011
+#define VMX_VMX_EXIT_REASON_VMCALL                                   0x00000012
+#define VMX_VMX_EXIT_REASON_VMCLEAR                                  0x00000013
+#define VMX_VMX_EXIT_REASON_VMLAUNCH                                 0x00000014
+#define VMX_VMX_EXIT_REASON_VMPTRLD                                  0x00000015
+#define VMX_VMX_EXIT_REASON_VMPTRST                                  0x00000016
+#define VMX_VMX_EXIT_REASON_VMREAD                                   0x00000017
+#define VMX_VMX_EXIT_REASON_VMRESUME                                 0x00000018
+#define VMX_VMX_EXIT_REASON_VMWRITE                                  0x00000019
+#define VMX_VMX_EXIT_REASON_VMXOFF                                   0x0000001A
+#define VMX_VMX_EXIT_REASON_VMXON                                    0x0000001B
+#define VMX_VMX_EXIT_REASON_MOV_CRX                                  0x0000001C
+#define VMX_VMX_EXIT_REASON_MOV_DRX                                  0x0000001D
+#define VMX_VMX_EXIT_REASON_IO_INSTR                                 0x0000001E
+#define VMX_VMX_EXIT_REASON_RDMSR                                    0x0000001F
+#define VMX_VMX_EXIT_REASON_WRMSR                                    0x00000020
+#define VMX_VMX_EXIT_REASON_ERR_INVALID_GUEST_STATE                  0x00000021
+#define VMX_VMX_EXIT_REASON_ERR_MSR_LOAD                             0x00000022
+#define VMX_VMX_EXIT_REASON_MWAIT                                    0x00000024
+#define VMX_VMX_EXIT_REASON_MTF                                      0x00000025
+#define VMX_VMX_EXIT_REASON_MONITOR                                  0x00000027
+#define VMX_VMX_EXIT_REASON_PAUSE                                    0x00000028
+#define VMX_VMX_EXIT_REASON_ERR_MACHINE_CHECK                        0x00000029
+#define VMX_VMX_EXIT_REASON_TPR_BELOW_THRESHOLD                      0x0000002B
+#define VMX_VMX_EXIT_REASON_APIC_ACCESS                              0x0000002C
+#define VMX_VMX_EXIT_REASON_VIRTUALIZED_EOI                          0x0000002D
+#define VMX_VMX_EXIT_REASON_XDTR_ACCESS                              0x0000002E
+#define VMX_VMX_EXIT_REASON_TR_ACCESS                                0x0000002F
+#define VMX_VMX_EXIT_REASON_EPT_VIOLATION                            0x00000030
+#define VMX_VMX_EXIT_REASON_EPT_MISCONFIG                            0x00000031
+#define VMX_VMX_EXIT_REASON_INVEPT                                   0x00000032
+#define VMX_VMX_EXIT_REASON_RDTSCP                                   0x00000033
+#define VMX_VMX_EXIT_REASON_PREEMPT_TIMER                            0x00000034
+#define VMX_VMX_EXIT_REASON_INVVPID                                  0x00000035
+#define VMX_VMX_EXIT_REASON_WBINVD                                   0x00000036
+#define VMX_VMX_EXIT_REASON_XSETBV                                   0x00000037
+#define VMX_VMX_EXIT_REASON_APIC_WRITE                               0x00000038
+#define VMX_VMX_EXIT_REASON_RDRAND                                   0x00000039
+#define VMX_VMX_EXIT_REASON_INVPCID                                  0x0000003A
+#define VMX_VMX_EXIT_REASON_VMFUNC                                   0x0000003B
+#define VMX_VMX_EXIT_REASON_ENCLS                                    0x0000003C
+#define VMX_VMX_EXIT_REASON_RDSEED                                   0x0000003D
+#define VMX_VMX_EXIT_REASON_PML_FULL                                 0x0000003E
+#define VMX_VMX_EXIT_REASON_XSAVES                                   0x0000003F
+#define VMX_VMX_EXIT_REASON_XRSTORS                                  0x00000040
 /**
  * @}
  */
@@ -3852,31 +3852,31 @@ typedef union {
  *           VM Instruction Error Numbers
  * @{
  */
-#define VMX_ERROR_VMCALL                                             0x00000001
-#define VMX_ERROR_VMCLEAR_INVALID_PHYS_ADDR                          0x00000002
-#define VMX_ERROR_VMCLEAR_INVALID_VMXON_PTR                          0x00000003
-#define VMX_ERROR_VMLAUCH_NON_CLEAR_VMCS                             0x00000004
-#define VMX_ERROR_VMRESUME_NON_LAUNCHED_VMCS                         0x00000005
-#define VMX_ERROR_VMRESUME_CORRUPTED_VMCS                            0x00000006
-#define VMX_ERROR_VMENTRY_INVALID_CONTROL_FIELDS                     0x00000007
-#define VMX_ERROR_VMENTRY_INVALID_HOST_STATE                         0x00000008
-#define VMX_ERROR_VMPTRLD_INVALID_PHYS_ADDR                          0x00000009
-#define VMX_ERROR_VMPTRLD_VMXON_PTR                                  0x0000000A
-#define VMX_ERROR_VMPTRLD_WRONG_VMCS_REVISION                        0x0000000B
-#define VMX_ERROR_VMREAD_VMWRITE_INVALID_COMPONENT                   0x0000000C
-#define VMX_ERROR_VMWRITE_READONLY_COMPONENT                         0x0000000D
-#define VMX_ERROR_VMXON_IN_VMX_ROOT_OP                               0x0000000F
-#define VMX_ERROR_VMENTRY_INVALID_VMCS_EXEC_PTR                      0x00000010
-#define VMX_ERROR_VMENTRY_NON_LAUNCHED_EXEC_VMCS                     0x00000011
-#define VMX_ERROR_VMENTRY_EXEC_VMCS_PTR                              0x00000012
-#define VMX_ERROR_VMCALL_NON_CLEAR_VMCS                              0x00000013
-#define VMX_ERROR_VMCALL_INVALID_VMEXIT_FIELDS                       0x00000014
-#define VMX_ERROR_VMCALL_INVALID_MSEG_REVISION                       0x00000016
-#define VMX_ERROR_VMXOFF_DUAL_MONITOR                                0x00000017
-#define VMX_ERROR_VMCALL_INVALID_SMM_MONITOR                         0x00000018
-#define VMX_ERROR_VMENTRY_INVALID_VM_EXEC_CTRL                       0x00000019
-#define VMX_ERROR_VMENTRY_MOV_SS                                     0x0000001A
-#define VMX_ERROR_INVEPTVPID_INVALID_OPERAND                         0x0000001C
+#define VMX_VMX_ERROR_VMCALL                                         0x00000001
+#define VMX_VMX_ERROR_VMCLEAR_INVALID_PHYS_ADDR                      0x00000002
+#define VMX_VMX_ERROR_VMCLEAR_INVALID_VMXON_PTR                      0x00000003
+#define VMX_VMX_ERROR_VMLAUCH_NON_CLEAR_VMCS                         0x00000004
+#define VMX_VMX_ERROR_VMRESUME_NON_LAUNCHED_VMCS                     0x00000005
+#define VMX_VMX_ERROR_VMRESUME_CORRUPTED_VMCS                        0x00000006
+#define VMX_VMX_ERROR_VMENTRY_INVALID_CONTROL_FIELDS                 0x00000007
+#define VMX_VMX_ERROR_VMENTRY_INVALID_HOST_STATE                     0x00000008
+#define VMX_VMX_ERROR_VMPTRLD_INVALID_PHYS_ADDR                      0x00000009
+#define VMX_VMX_ERROR_VMPTRLD_VMXON_PTR                              0x0000000A
+#define VMX_VMX_ERROR_VMPTRLD_WRONG_VMCS_REVISION                    0x0000000B
+#define VMX_VMX_ERROR_VMREAD_VMWRITE_INVALID_COMPONENT               0x0000000C
+#define VMX_VMX_ERROR_VMWRITE_READONLY_COMPONENT                     0x0000000D
+#define VMX_VMX_ERROR_VMXON_IN_VMX_ROOT_OP                           0x0000000F
+#define VMX_VMX_ERROR_VMENTRY_INVALID_VMCS_EXEC_PTR                  0x00000010
+#define VMX_VMX_ERROR_VMENTRY_NON_LAUNCHED_EXEC_VMCS                 0x00000011
+#define VMX_VMX_ERROR_VMENTRY_EXEC_VMCS_PTR                          0x00000012
+#define VMX_VMX_ERROR_VMCALL_NON_CLEAR_VMCS                          0x00000013
+#define VMX_VMX_ERROR_VMCALL_INVALID_VMEXIT_FIELDS                   0x00000014
+#define VMX_VMX_ERROR_VMCALL_INVALID_MSEG_REVISION                   0x00000016
+#define VMX_VMX_ERROR_VMXOFF_DUAL_MONITOR                            0x00000017
+#define VMX_VMX_ERROR_VMCALL_INVALID_SMM_MONITOR                     0x00000018
+#define VMX_VMX_ERROR_VMENTRY_INVALID_VM_EXEC_CTRL                   0x00000019
+#define VMX_VMX_ERROR_VMENTRY_MOV_SS                                 0x0000001A
+#define VMX_VMX_ERROR_INVEPTVPID_INVALID_OPERAND                     0x0000001C
 /**
  * @}
  */
@@ -3893,7 +3893,7 @@ typedef struct {
   uint64_t guest_linear_address;
   uint64_t guest_physical_address;
   uint16_t current_eptp_index;
-} ve_except_info;
+} vmx_ve_except_info;
 
 /**
  * @}
@@ -3913,138 +3913,138 @@ typedef union {
   };
 
   uint64_t flags;
-} vmx_exit_qualification_debug_exception;
+} vmx_vmx_exit_qualification_debug_exception;
 
 typedef union {
   struct {
     uint64_t selector                                                : 16;
     uint64_t reserved_1                                              : 14;
     uint64_t type                                                    : 2;
-#define VMX_EXIT_QUALIFICATION_TYPE_CALL                             0x00000000
-#define VMX_EXIT_QUALIFICATION_TYPE_IRET                             0x00000001
-#define VMX_EXIT_QUALIFICATION_TYPE_JMP                              0x00000002
-#define VMX_EXIT_QUALIFICATION_TYPE_IDT                              0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_CALL                         0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_IRET                         0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_JMP                          0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_IDT                          0x00000003
   };
 
   uint64_t flags;
-} vmx_exit_qualification_task_switch;
+} vmx_vmx_exit_qualification_task_switch;
 
 typedef union {
   struct {
     uint64_t cr_number                                               : 4;
-#define VMX_EXIT_QUALIFICATION_REGISTER_CR0                          0x00000000
-#define VMX_EXIT_QUALIFICATION_REGISTER_CR2                          0x00000002
-#define VMX_EXIT_QUALIFICATION_REGISTER_CR3                          0x00000003
-#define VMX_EXIT_QUALIFICATION_REGISTER_CR4                          0x00000004
-#define VMX_EXIT_QUALIFICATION_REGISTER_CR8                          0x00000008
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR0                      0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR2                      0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR3                      0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR4                      0x00000004
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_CR8                      0x00000008
     uint64_t access_type                                             : 2;
-#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                      0x00000000
-#define VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                    0x00000001
-#define VMX_EXIT_QUALIFICATION_ACCESS_CLTS                           0x00000002
-#define VMX_EXIT_QUALIFICATION_ACCESS_LMSW                           0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_MOV_TO_CR                  0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_MOV_FROM_CR                0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_CLTS                       0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_ACCESS_LMSW                       0x00000003
     uint64_t lmsw_operand_type                                       : 1;
-#define VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                      0x00000000
-#define VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                        0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_LMSW_OP_REGISTER                  0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_LMSW_OP_MEMORY                    0x00000001
     uint64_t reserved_1                                              : 1;
     uint64_t general_purpose_register                                : 4;
-#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
-#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
-#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
-#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
-#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
-#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
-#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
-#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
-#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
-#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
-#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
-#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
-#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
-#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
-#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
-#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RAX                        0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RCX                        0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDX                        0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBX                        0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSP                        0x00000004
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBP                        0x00000005
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSI                        0x00000006
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDI                        0x00000007
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R8                         0x00000008
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R9                         0x00000009
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R10                        0x0000000A
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R11                        0x0000000B
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R12                        0x0000000C
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R13                        0x0000000D
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R14                        0x0000000E
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R15                        0x0000000F
     uint64_t reserved_2                                              : 4;
     uint64_t lmsw_source_data                                        : 16;
   };
 
   uint64_t flags;
-} vmx_exit_qualification_cr_access;
+} vmx_vmx_exit_qualification_cr_access;
 
 typedef union {
   struct {
     uint64_t dr_number                                               : 3;
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR0                          0x00000000
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR1                          0x00000001
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR2                          0x00000002
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR3                          0x00000003
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR6                          0x00000006
-#define VMX_EXIT_QUALIFICATION_REGISTER_DR7                          0x00000007
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR0                      0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR1                      0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR2                      0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR3                      0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR6                      0x00000006
+#define VMX_VMX_EXIT_QUALIFICATION_REGISTER_DR7                      0x00000007
     uint64_t reserved_1                                              : 1;
     uint64_t direction_of_access                                     : 1;
-#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR                   0x00000000
-#define VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR                 0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_MOV_TO_DR               0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_MOV_FROM_DR             0x00000001
     uint64_t reserved_2                                              : 3;
     uint64_t gp_register                                             : 4;
-#define VMX_EXIT_QUALIFICATION_GENREG_RAX                            0x00000000
-#define VMX_EXIT_QUALIFICATION_GENREG_RCX                            0x00000001
-#define VMX_EXIT_QUALIFICATION_GENREG_RDX                            0x00000002
-#define VMX_EXIT_QUALIFICATION_GENREG_RBX                            0x00000003
-#define VMX_EXIT_QUALIFICATION_GENREG_RSP                            0x00000004
-#define VMX_EXIT_QUALIFICATION_GENREG_RBP                            0x00000005
-#define VMX_EXIT_QUALIFICATION_GENREG_RSI                            0x00000006
-#define VMX_EXIT_QUALIFICATION_GENREG_RDI                            0x00000007
-#define VMX_EXIT_QUALIFICATION_GENREG_R8                             0x00000008
-#define VMX_EXIT_QUALIFICATION_GENREG_R9                             0x00000009
-#define VMX_EXIT_QUALIFICATION_GENREG_R10                            0x0000000A
-#define VMX_EXIT_QUALIFICATION_GENREG_R11                            0x0000000B
-#define VMX_EXIT_QUALIFICATION_GENREG_R12                            0x0000000C
-#define VMX_EXIT_QUALIFICATION_GENREG_R13                            0x0000000D
-#define VMX_EXIT_QUALIFICATION_GENREG_R14                            0x0000000E
-#define VMX_EXIT_QUALIFICATION_GENREG_R15                            0x0000000F
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RAX                        0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RCX                        0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDX                        0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBX                        0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSP                        0x00000004
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RBP                        0x00000005
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RSI                        0x00000006
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_RDI                        0x00000007
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R8                         0x00000008
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R9                         0x00000009
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R10                        0x0000000A
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R11                        0x0000000B
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R12                        0x0000000C
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R13                        0x0000000D
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R14                        0x0000000E
+#define VMX_VMX_EXIT_QUALIFICATION_GENREG_R15                        0x0000000F
   };
 
   uint64_t flags;
-} vmx_exit_qualification_dr_access;
+} vmx_vmx_exit_qualification_dr_access;
 
 typedef union {
   struct {
     uint64_t size_of_access                                          : 3;
-#define VMX_EXIT_QUALIFICATION_WIDTH_1B                              0x00000000
-#define VMX_EXIT_QUALIFICATION_WIDTH_2B                              0x00000001
-#define VMX_EXIT_QUALIFICATION_WIDTH_4B                              0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_1B                          0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_2B                          0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_WIDTH_4B                          0x00000003
     uint64_t direction_of_access                                     : 1;
-#define VMX_EXIT_QUALIFICATION_DIRECTION_OUT                         0x00000000
-#define VMX_EXIT_QUALIFICATION_DIRECTION_IN                          0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_OUT                     0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_DIRECTION_IN                      0x00000001
     uint64_t string_instruction                                      : 1;
-#define VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING                  0x00000000
-#define VMX_EXIT_QUALIFICATION_IS_STRING_STRING                      0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_IS_STRING_NOT_STRING              0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_IS_STRING_STRING                  0x00000001
     uint64_t rep_prefixed                                            : 1;
-#define VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                        0x00000000
-#define VMX_EXIT_QUALIFICATION_IS_REP_REP                            0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_IS_REP_NOT_REP                    0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_IS_REP_REP                        0x00000001
     uint64_t operand_encoding                                        : 1;
-#define VMX_EXIT_QUALIFICATION_ENCODING_DX                           0x00000000
-#define VMX_EXIT_QUALIFICATION_ENCODING_IMM                          0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_ENCODING_DX                       0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_ENCODING_IMM                      0x00000001
     uint64_t reserved_1                                              : 9;
     uint64_t port_number                                             : 16;
   };
 
   uint64_t flags;
-} vmx_exit_qualification_io_inst;
+} vmx_vmx_exit_qualification_io_inst;
 
 typedef union {
   struct {
     uint64_t page_offset                                             : 12;
     uint64_t access_type                                             : 4;
-#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                      0x00000000
-#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                     0x00000001
-#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTR_FETCH               0x00000002
-#define VMX_EXIT_QUALIFICATION_TYPE_LINEAR_EVENT_DELIVERY            0x00000003
-#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_EVENT_DELIVERY          0x0000000A
-#define VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTR                   0x0000000F
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_READ                  0x00000000
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_WRITE                 0x00000001
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_INSTR_FETCH           0x00000002
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_LINEAR_EVENT_DELIVERY        0x00000003
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_EVENT_DELIVERY      0x0000000A
+#define VMX_VMX_EXIT_QUALIFICATION_TYPE_PHYSICAL_INSTR               0x0000000F
   };
 
   uint64_t flags;
-} vmx_exit_qualification_apic_access;
+} vmx_vmx_exit_qualification_apic_access;
 
 typedef union {
   struct {
@@ -4064,14 +4064,43 @@ typedef union {
   };
 
   uint64_t flags;
-} vmx_exit_qualification_ept_violation;
+} vmx_vmx_exit_qualification_ept_violation;
 
 /**
  * @}
  */
 
+typedef union {
+  struct {
+    uint32_t type                                                    : 4;
+    uint32_t descriptor_type                                         : 1;
+    uint32_t descriptor_privilege_level                              : 2;
+    uint32_t present                                                 : 1;
+    uint32_t reserved_1                                              : 4;
+    uint32_t available_bit                                           : 1;
+    uint32_t long_mode                                               : 1;
+    uint32_t default_big                                             : 1;
+    uint32_t granularity                                             : 1;
+    uint32_t unusable                                                : 1;
+  };
+
+  uint32_t flags;
+} vmx_access_rights;
+
+typedef union {
+  struct {
+    uint32_t blocking_by_sti                                         : 1;
+    uint32_t blocking_by_mov_ss                                      : 1;
+    uint32_t blocking_by_smi                                         : 1;
+    uint32_t blocking_by_nmi                                         : 1;
+    uint32_t enclave_interruption                                    : 1;
+  };
+
+  uint32_t flags;
+} vmx_interruptibility_state;
+
 /**
- * @defgroup ept \
+ * @defgroup vmx_ept \
  *           The extended page-table mechanism
  * @{
  */
@@ -4085,7 +4114,7 @@ typedef union {
   };
 
   uint64_t flags;
-} eptp;
+} vmx_eptp;
 
 typedef union {
   struct {
@@ -4101,7 +4130,7 @@ typedef union {
   };
 
   uint64_t flags;
-} epml4e;
+} vmx_epml4e;
 
 typedef union {
   struct {
@@ -4121,7 +4150,7 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_pdpte_1gb;
+} vmx_ept_pdpte_1gb;
 
 typedef union {
   struct {
@@ -4137,7 +4166,7 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_pdpte;
+} vmx_ept_pdpte;
 
 typedef union {
   struct {
@@ -4157,7 +4186,7 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_pde_2mb;
+} vmx_ept_pde_2mb;
 
 typedef union {
   struct {
@@ -4173,7 +4202,7 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_pde;
+} vmx_ept_pde;
 
 typedef union {
   struct {
@@ -4193,7 +4222,7 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_pte;
+} vmx_ept_pte;
 
 typedef union {
   struct {
@@ -4213,45 +4242,45 @@ typedef union {
   };
 
   uint64_t flags;
-} ept_entry;
+} vmx_ept_entry;
 
 /**
- * @defgroup ept_table_level \
+ * @defgroup vmx_ept_table_level \
  *           EPT Table level numbers
  * @{
  */
-#define LEVEL_PML4E                                                  0x00000003
-#define LEVEL_PDPTE                                                  0x00000002
-#define LEVEL_PDE                                                    0x00000001
-#define LEVEL_PTE                                                    0x00000000
+#define VMX_LEVEL_PML4E                                              0x00000003
+#define VMX_LEVEL_PDPTE                                              0x00000002
+#define VMX_LEVEL_PDE                                                0x00000001
+#define VMX_LEVEL_PTE                                                0x00000000
 /**
  * @}
  */
 
 /**
- * @defgroup ept_entry_count \
+ * @defgroup vmx_ept_entry_count \
  *           EPT Entry counts
  * @{
  */
-#define PML4_ENTRY_COUNT                                             0x00000200
-#define PDPTE_ENTRY_COUNT                                            0x00000200
-#define PDE_ENTRY_COUNT                                              0x00000200
+#define VMX_PML4_ENTRY_COUNT                                         0x00000200
+#define VMX_PDPTE_ENTRY_COUNT                                        0x00000200
+#define VMX_PDE_ENTRY_COUNT                                          0x00000200
 /**
  * @}
  */
 
 /**
- * @defgroup ept_memory_type \
+ * @defgroup vmx_ept_memory_type \
  *           EPT memory type
  * @{
  */
-#define EPT_MEMORY_TYPE_UC                                           0x00000000
-#define EPT_MEMORY_TYPE_WC                                           0x00000001
-#define EPT_MEMORY_TYPE_WT                                           0x00000004
-#define EPT_MEMORY_TYPE_WP                                           0x00000005
-#define EPT_MEMORY_TYPE_WB                                           0x00000006
-#define EPT_MEMORY_TYPE_UNCACHED                                     0x00000007
-#define EPT_MEMORY_TYPE_INVALID                                      0x000000FF
+#define VMX_EPT_MEMORY_TYPE_UC                                       0x00000000
+#define VMX_EPT_MEMORY_TYPE_WC                                       0x00000001
+#define VMX_EPT_MEMORY_TYPE_WT                                       0x00000004
+#define VMX_EPT_MEMORY_TYPE_WP                                       0x00000005
+#define VMX_EPT_MEMORY_TYPE_WB                                       0x00000006
+#define VMX_EPT_MEMORY_TYPE_UNCACHED                                 0x00000007
+#define VMX_EPT_MEMORY_TYPE_INVALID                                  0x000000FF
 /**
  * @}
  */
@@ -4261,31 +4290,31 @@ typedef union {
  */
 
 typedef enum {
-  invept_single_context                                        = 0x00000001,
-  invept_all_context                                           = 0x00000002,
+  vmx_invept_single_context                                    = 0x00000001,
+  vmx_invept_all_context                                       = 0x00000002,
 } invept_type;
 
 typedef enum {
-  invvpid_individual_address                                   = 0x00000000,
-  invvpid_single_context                                       = 0x00000001,
-  invvpid_all_context                                          = 0x00000002,
-  invvpid_single_context_retaining_globals                     = 0x00000003,
+  vmx_invvpid_individual_address                               = 0x00000000,
+  vmx_invvpid_single_context                                   = 0x00000001,
+  vmx_invvpid_all_context                                      = 0x00000002,
+  vmx_invvpid_single_context_retaining_globals                 = 0x00000003,
 } invvpid_type;
 
 typedef struct {
   uint64_t ept_pointer;
   uint64_t reserved;
-} invept_descriptor;
+} vmx_invept_descriptor;
 
 typedef struct {
   uint16_t vpid;
   uint16_t reserved1;
   uint32_t reserved2;
   uint64_t linear_address;
-} invvpid_descriptor;
+} vmx_invvpid_descriptor;
 
 /**
- * @defgroup vmcs \
+ * @defgroup vmx_vmcs \
  *           VMCS (VM Control Structure)
  * @{
  */
@@ -4299,56 +4328,56 @@ typedef union {
   };
 
   uint16_t flags;
-} vmcs_component_encoding;
+} vmx_vmcs_component_encoding;
 
 /**
- * @defgroup vmcs_16_bit \
+ * @defgroup vmx_vmcs_16_bit \
  *           16-Bit Fields
  * @{
  */
 /**
- * @defgroup vmcs_16_bit_control_fields \
+ * @defgroup vmx_vmcs_16_bit_control_fields \
  *           16-Bit Control Fields
  * @{
  */
-#define VMCS_CTRL_VPID                                               0x00000000
-#define VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                          0x00000002
-#define VMCS_CTRL_EPTP_INDEX                                         0x00000004
+#define VMX_VMCS_CTRL_VPID                                           0x00000000
+#define VMX_VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                      0x00000002
+#define VMX_VMCS_CTRL_EPTP_INDEX                                     0x00000004
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_16_bit_guest_state_fields \
+ * @defgroup vmx_vmcs_16_bit_guest_state_fields \
  *           16-Bit Guest-State Fields
  * @{
  */
-#define VMCS_GUEST_ES_SEL                                            0x00000800
-#define VMCS_GUEST_CS_SEL                                            0x00000802
-#define VMCS_GUEST_SS_SEL                                            0x00000804
-#define VMCS_GUEST_DS_SEL                                            0x00000806
-#define VMCS_GUEST_FS_SEL                                            0x00000808
-#define VMCS_GUEST_GS_SEL                                            0x0000080A
-#define VMCS_GUEST_LDTR_SEL                                          0x0000080C
-#define VMCS_GUEST_TR_SEL                                            0x0000080E
-#define VMCS_GUEST_INTR_STATUS                                       0x00000810
-#define VMCS_GUEST_PML_INDEX                                         0x00000812
+#define VMX_VMCS_GUEST_ES_SEL                                        0x00000800
+#define VMX_VMCS_GUEST_CS_SEL                                        0x00000802
+#define VMX_VMCS_GUEST_SS_SEL                                        0x00000804
+#define VMX_VMCS_GUEST_DS_SEL                                        0x00000806
+#define VMX_VMCS_GUEST_FS_SEL                                        0x00000808
+#define VMX_VMCS_GUEST_GS_SEL                                        0x0000080A
+#define VMX_VMCS_GUEST_LDTR_SEL                                      0x0000080C
+#define VMX_VMCS_GUEST_TR_SEL                                        0x0000080E
+#define VMX_VMCS_GUEST_INTR_STATUS                                   0x00000810
+#define VMX_VMCS_GUEST_PML_INDEX                                     0x00000812
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_16_bit_host_state_fields \
+ * @defgroup vmx_vmcs_16_bit_host_state_fields \
  *           16-Bit Host-State Fields
  * @{
  */
-#define VMCS_HOST_ES_SEL                                             0x00000C00
-#define VMCS_HOST_CS_SEL                                             0x00000C02
-#define VMCS_HOST_SS_SEL                                             0x00000C04
-#define VMCS_HOST_DS_SEL                                             0x00000C06
-#define VMCS_HOST_FS_SEL                                             0x00000C08
-#define VMCS_HOST_GS_SEL                                             0x00000C0A
-#define VMCS_HOST_TR_SEL                                             0x00000C0C
+#define VMX_VMCS_HOST_ES_SEL                                         0x00000C00
+#define VMX_VMCS_HOST_CS_SEL                                         0x00000C02
+#define VMX_VMCS_HOST_SS_SEL                                         0x00000C04
+#define VMX_VMCS_HOST_DS_SEL                                         0x00000C06
+#define VMX_VMCS_HOST_FS_SEL                                         0x00000C08
+#define VMX_VMCS_HOST_GS_SEL                                         0x00000C0A
+#define VMX_VMCS_HOST_TR_SEL                                         0x00000C0C
 /**
  * @}
  */
@@ -4358,80 +4387,80 @@ typedef union {
  */
 
 /**
- * @defgroup vmcs_64_bit \
+ * @defgroup vmx_vmcs_64_bit \
  *           64-Bit Fields
  * @{
  */
 /**
- * @defgroup vmcs_64_bit_control_fields \
+ * @defgroup vmx_vmcs_64_bit_control_fields \
  *           64-Bit Control Fields
  * @{
  */
-#define VMCS_CTRL_IO_BITMAP_A                                        0x00002000
-#define VMCS_CTRL_IO_BITMAP_B                                        0x00002002
-#define VMCS_CTRL_MSR_BITMAP                                         0x00002004
-#define VMCS_CTRL_VMEXIT_MSR_STORE                                   0x00002006
-#define VMCS_CTRL_VMEXIT_MSR_LOAD                                    0x00002008
-#define VMCS_CTRL_VMENTRY_MSR_LOAD                                   0x0000200A
-#define VMCS_CTRL_EXEC_VMCS_PTR                                      0x0000200C
-#define VMCS_CTRL_PML_ADDR                                           0x0000200E
-#define VMCS_CTRL_TSC_OFFSET                                         0x00002010
-#define VMCS_CTRL_VAPIC_PAGEADDR                                     0x00002012
-#define VMCS_CTRL_APIC_ACCESSADDR                                    0x00002014
-#define VMCS_CTRL_POSTED_INTR_DESC                                   0x00002016
-#define VMCS_CTRL_VMFUNC_CTRLS                                       0x00002018
-#define VMCS_CTRL_EPTP                                               0x0000201A
-#define VMCS_CTRL_EOI_BITMAP_0                                       0x0000201C
-#define VMCS_CTRL_EOI_BITMAP_1                                       0x0000201E
-#define VMCS_CTRL_EOI_BITMAP_2                                       0x00002020
-#define VMCS_CTRL_EOI_BITMAP_3                                       0x00002022
-#define VMCS_CTRL_EPTP_LIST                                          0x00002024
-#define VMCS_CTRL_VMREAD_BITMAP                                      0x00002026
-#define VMCS_CTRL_VMWRITE_BITMAP                                     0x00002028
-#define VMCS_CTRL_VIRTXCPT_INFO_ADDR                                 0x0000202A
-#define VMCS_CTRL_XSS_EXITING_BITMAP                                 0x0000202C
-#define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
-#define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
+#define VMX_VMCS_CTRL_IO_BITMAP_A                                    0x00002000
+#define VMX_VMCS_CTRL_IO_BITMAP_B                                    0x00002002
+#define VMX_VMCS_CTRL_MSR_BITMAP                                     0x00002004
+#define VMX_VMCS_CTRL_VMEXIT_MSR_STORE                               0x00002006
+#define VMX_VMCS_CTRL_VMEXIT_MSR_LOAD                                0x00002008
+#define VMX_VMCS_CTRL_VMENTRY_MSR_LOAD                               0x0000200A
+#define VMX_VMCS_CTRL_EXEC_VMCS_PTR                                  0x0000200C
+#define VMX_VMCS_CTRL_PML_ADDR                                       0x0000200E
+#define VMX_VMCS_CTRL_TSC_OFFSET                                     0x00002010
+#define VMX_VMCS_CTRL_VAPIC_PAGEADDR                                 0x00002012
+#define VMX_VMCS_CTRL_APIC_ACCESSADDR                                0x00002014
+#define VMX_VMCS_CTRL_POSTED_INTR_DESC                               0x00002016
+#define VMX_VMCS_CTRL_VMFUNC_CTRLS                                   0x00002018
+#define VMX_VMCS_CTRL_EPTP                                           0x0000201A
+#define VMX_VMCS_CTRL_EOI_BITMAP_0                                   0x0000201C
+#define VMX_VMCS_CTRL_EOI_BITMAP_1                                   0x0000201E
+#define VMX_VMCS_CTRL_EOI_BITMAP_2                                   0x00002020
+#define VMX_VMCS_CTRL_EOI_BITMAP_3                                   0x00002022
+#define VMX_VMCS_CTRL_EPTP_LIST                                      0x00002024
+#define VMX_VMCS_CTRL_VMREAD_BITMAP                                  0x00002026
+#define VMX_VMCS_CTRL_VMWRITE_BITMAP                                 0x00002028
+#define VMX_VMCS_CTRL_VIRTXCPT_INFO_ADDR                             0x0000202A
+#define VMX_VMCS_CTRL_XSS_EXITING_BITMAP                             0x0000202C
+#define VMX_VMCS_CTRL_ENCLS_EXITING_BITMAP                           0x0000202E
+#define VMX_VMCS_CTRL_TSC_MULTIPLIER                                 0x00002032
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_64_bit_read_only_data_fields \
+ * @defgroup vmx_vmcs_64_bit_read_only_data_fields \
  *           64-Bit Read-Only Data Field
  * @{
  */
-#define VMCS_GUEST_PHYS_ADDR                                         0x00002400
+#define VMX_VMCS_GUEST_PHYS_ADDR                                     0x00002400
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_64_bit_guest_state_fields \
+ * @defgroup vmx_vmcs_64_bit_guest_state_fields \
  *           64-Bit Guest-State Fields
  * @{
  */
-#define VMCS_GUEST_VMCS_LINK_PTR                                     0x00002800
-#define VMCS_GUEST_DEBUGCTL                                          0x00002802
-#define VMCS_GUEST_PAT                                               0x00002804
-#define VMCS_GUEST_EFER                                              0x00002806
-#define VMCS_GUEST_PERF_GLOBAL_CTRL                                  0x00002808
-#define VMCS_GUEST_PDPTE0                                            0x0000280A
-#define VMCS_GUEST_PDPTE1                                            0x0000280C
-#define VMCS_GUEST_PDPTE2                                            0x0000280E
-#define VMCS_GUEST_PDPTE3                                            0x00002810
+#define VMX_VMCS_GUEST_VMCS_LINK_PTR                                 0x00002800
+#define VMX_VMCS_GUEST_DEBUGCTL                                      0x00002802
+#define VMX_VMCS_GUEST_PAT                                           0x00002804
+#define VMX_VMCS_GUEST_EFER                                          0x00002806
+#define VMX_VMCS_GUEST_PERF_GLOBAL_CTRL                              0x00002808
+#define VMX_VMCS_GUEST_PDPTE0                                        0x0000280A
+#define VMX_VMCS_GUEST_PDPTE1                                        0x0000280C
+#define VMX_VMCS_GUEST_PDPTE2                                        0x0000280E
+#define VMX_VMCS_GUEST_PDPTE3                                        0x00002810
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_64_bit_host_state_fields \
+ * @defgroup vmx_vmcs_64_bit_host_state_fields \
  *           64-Bit Host-State Fields
  * @{
  */
-#define VMCS_HOST_PAT                                                0x00002C00
-#define VMCS_HOST_EFER                                               0x00002C02
-#define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
+#define VMX_VMCS_HOST_PAT                                            0x00002C00
+#define VMX_VMCS_HOST_EFER                                           0x00002C02
+#define VMX_VMCS_HOST_PERF_GLOBAL_CTRL                               0x00002C04
 /**
  * @}
  */
@@ -4441,92 +4470,96 @@ typedef union {
  */
 
 /**
- * @defgroup vmcs_32_bit \
+ * @defgroup vmx_vmcs_32_bit \
  *           32-Bit Fields
  * @{
  */
 /**
- * @defgroup vmcs_32_bit_control_fields \
+ * @defgroup vmx_vmcs_32_bit_control_fields \
  *           32-Bit Control Fields
  * @{
  */
-#define VMCS_CTRL_PIN_EXEC                                           0x00004000
-#define VMCS_CTRL_PROC_EXEC                                          0x00004002
-#define VMCS_CTRL_EXCEPTION_BITMAP                                   0x00004004
-#define VMCS_CTRL_PAGEFAULT_ERROR_MASK                               0x00004006
-#define VMCS_CTRL_PAGEFAULT_ERROR_MATCH                              0x00004008
-#define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
-#define VMCS_CTRL_EXIT                                               0x0000400C
-#define VMCS_CTRL_EXIT_MSR_STORE_COUNT                               0x0000400E
-#define VMCS_CTRL_EXIT_MSR_LOAD_COUNT                                0x00004010
-#define VMCS_CTRL_ENTRY                                              0x00004012
-#define VMCS_CTRL_ENTRY_MSR_LOAD_COUNT                               0x00004014
-#define VMCS_CTRL_ENTRY_INTERRUPTION_INFO                            0x00004016
-#define VMCS_CTRL_ENTRY_EXCEPTION_ERRCODE                            0x00004018
-#define VMCS_CTRL_ENTRY_INSTR_LENGTH                                 0x0000401A
-#define VMCS_CTRL_TPR_THRESHOLD                                      0x0000401C
-#define VMCS_CTRL_PROC_EXEC2                                         0x0000401E
-#define VMCS_CTRL_PLE_GAP                                            0x00004020
-#define VMCS_CTRL_PLE_WINDOW                                         0x00004022
+#define VMX_VMCS_CTRL_PIN_EXEC                                       0x00004000
+#define VMX_VMCS_CTRL_PROC_EXEC                                      0x00004002
+#define VMX_VMCS_CTRL_EXCEPTION_BITMAP                               0x00004004
+#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_MASK                           0x00004006
+#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_MATCH                          0x00004008
+#define VMX_VMCS_CTRL_CR3_TARGET_COUNT                               0x0000400A
+#define VMX_VMCS_CTRL_EXIT                                           0x0000400C
+#define VMX_VMCS_CTRL_EXIT_MSR_STORE_COUNT                           0x0000400E
+#define VMX_VMCS_CTRL_EXIT_MSR_LOAD_COUNT                            0x00004010
+#define VMX_VMCS_CTRL_ENTRY                                          0x00004012
+#define VMX_VMCS_CTRL_ENTRY_MSR_LOAD_COUNT                           0x00004014
+#define VMX_VMCS_CTRL_ENTRY_INTERRUPTION_INFO                        0x00004016
+#define VMX_VMCS_CTRL_ENTRY_EXCEPTION_ERRCODE                        0x00004018
+#define VMX_VMCS_CTRL_ENTRY_INSTR_LENGTH                             0x0000401A
+#define VMX_VMCS_CTRL_TPR_THRESHOLD                                  0x0000401C
+#define VMX_VMCS_CTRL_PROC_EXEC2                                     0x0000401E
+#define VMX_VMCS_CTRL_PLE_GAP                                        0x00004020
+#define VMX_VMCS_CTRL_PLE_WINDOW                                     0x00004022
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_32_bit_read_only_data_fields \
+ * @defgroup vmx_vmcs_32_bit_read_only_data_fields \
  *           32-Bit Read-Only Data Fields
  * @{
  */
-#define VMCS_VM_INSTR_ERROR                                          0x00004400
-#define VMCS_EXIT_REASON                                             0x00004402
-#define VMCS_EXIT_INTERRUPTION_INFO                                  0x00004404
-#define VMCS_EXIT_INTERRUPTION_ERROR_CODE                            0x00004406
-#define VMCS_IDT_VECTORING_INFO                                      0x00004408
-#define VMCS_IDT_VECTORING_ERROR_CODE                                0x0000440A
-#define VMCS_EXIT_INSTR_LENGTH                                       0x0000440C
-#define VMCS_EXIT_INSTR_INFO                                         0x0000440E
+#define VMX_VMCS_VM_INSTR_ERROR                                      0x00004400
+#define VMX_VMCS_EXIT_REASON                                         0x00004402
+#define VMX_VMCS_EXIT_INTERRUPTION_INFO                              0x00004404
+#define VMX_VMCS_EXIT_INTERRUPTION_ERROR_CODE                        0x00004406
+#define VMX_VMCS_IDT_VECTORING_INFO                                  0x00004408
+#define VMX_VMCS_IDT_VECTORING_ERROR_CODE                            0x0000440A
+#define VMX_VMCS_EXIT_INSTR_LENGTH                                   0x0000440C
+#define VMX_VMCS_EXIT_INSTR_INFO                                     0x0000440E
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_32_bit_guest_state_fields \
+ * @defgroup vmx_vmcs_32_bit_guest_state_fields \
  *           32-Bit Guest-State Fields
  * @{
  */
-#define VMCS_GUEST_ES_LIMIT                                          0x00004800
-#define VMCS_GUEST_CS_LIMIT                                          0x00004802
-#define VMCS_GUEST_SS_LIMIT                                          0x00004804
-#define VMCS_GUEST_DS_LIMIT                                          0x00004806
-#define VMCS_GUEST_FS_LIMIT                                          0x00004808
-#define VMCS_GUEST_GS_LIMIT                                          0x0000480A
-#define VMCS_GUEST_LDTR_LIMIT                                        0x0000480C
-#define VMCS_GUEST_TR_LIMIT                                          0x0000480E
-#define VMCS_GUEST_GDTR_LIMIT                                        0x00004810
-#define VMCS_GUEST_IDTR_LIMIT                                        0x00004812
-#define VMCS_GUEST_ES_ACCESS_RIGHTS                                  0x00004814
-#define VMCS_GUEST_CS_ACCESS_RIGHTS                                  0x00004816
-#define VMCS_GUEST_SS_ACCESS_RIGHTS                                  0x00004818
-#define VMCS_GUEST_DS_ACCESS_RIGHTS                                  0x0000481A
-#define VMCS_GUEST_FS_ACCESS_RIGHTS                                  0x0000481C
-#define VMCS_GUEST_GS_ACCESS_RIGHTS                                  0x0000481E
-#define VMCS_GUEST_LDTR_ACCESS_RIGHTS                                0x00004820
-#define VMCS_GUEST_TR_ACCESS_RIGHTS                                  0x00004822
-#define VMCS_GUEST_INTERRUPTIBILITY_STATE                            0x00004824
-#define VMCS_GUEST_ACTIVITY_STATE                                    0x00004826
-#define VMCS_GUEST_SMBASE                                            0x00004828
-#define VMCS_GUEST_SYSENTER_CS                                       0x0000482A
-#define VMCS_GUEST_PREEMPT_TIMER_VALUE                               0x0000482E
+#define VMX_VMCS_GUEST_ES_LIMIT                                      0x00004800
+#define VMX_VMCS_GUEST_CS_LIMIT                                      0x00004802
+#define VMX_VMCS_GUEST_SS_LIMIT                                      0x00004804
+#define VMX_VMCS_GUEST_DS_LIMIT                                      0x00004806
+#define VMX_VMCS_GUEST_FS_LIMIT                                      0x00004808
+#define VMX_VMCS_GUEST_GS_LIMIT                                      0x0000480A
+#define VMX_VMCS_GUEST_LDTR_LIMIT                                    0x0000480C
+#define VMX_VMCS_GUEST_TR_LIMIT                                      0x0000480E
+#define VMX_VMCS_GUEST_GDTR_LIMIT                                    0x00004810
+#define VMX_VMCS_GUEST_IDTR_LIMIT                                    0x00004812
+#define VMX_VMCS_GUEST_ES_ACCESS_RIGHTS                              0x00004814
+#define VMX_VMCS_GUEST_CS_ACCESS_RIGHTS                              0x00004816
+#define VMX_VMCS_GUEST_SS_ACCESS_RIGHTS                              0x00004818
+#define VMX_VMCS_GUEST_DS_ACCESS_RIGHTS                              0x0000481A
+#define VMX_VMCS_GUEST_FS_ACCESS_RIGHTS                              0x0000481C
+#define VMX_VMCS_GUEST_GS_ACCESS_RIGHTS                              0x0000481E
+#define VMX_VMCS_GUEST_LDTR_ACCESS_RIGHTS                            0x00004820
+#define VMX_VMCS_GUEST_TR_ACCESS_RIGHTS                              0x00004822
+#define VMX_VMCS_GUEST_INTERRUPTIBILITY_STATE                        0x00004824
+#define VMX_VMCS_GUEST_ACTIVITY_STATE                                0x00004826
+#define VMX_VMCS_GUEST_ACTIVE                                        0x00000000
+#define VMX_VMCS_GUEST_HLT                                           0x00000001
+#define VMX_VMCS_GUEST_SHUTDOWN                                      0x00000002
+#define VMX_VMCS_GUEST_WAIT_FOR_SIPI                                 0x00000003
+#define VMX_VMCS_GUEST_SMBASE                                        0x00004828
+#define VMX_VMCS_GUEST_SYSENTER_CS                                   0x0000482A
+#define VMX_VMCS_GUEST_PREEMPT_TIMER_VALUE                           0x0000482E
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_32_bit_host_state_fields \
+ * @defgroup vmx_vmcs_32_bit_host_state_fields \
  *           32-Bit Host-State Field
  * @{
  */
-#define VMCS_SYSENTER_CS                                             0x00004C00
+#define VMX_VMCS_SYSENTER_CS                                         0x00004C00
 /**
  * @}
  */
@@ -4536,88 +4569,88 @@ typedef union {
  */
 
 /**
- * @defgroup vmcs_natural_width \
+ * @defgroup vmx_vmcs_natural_width \
  *           Natural-Width Fields
  * @{
  */
 /**
- * @defgroup vmcs_natural_width_control_fields \
+ * @defgroup vmx_vmcs_natural_width_control_fields \
  *           Natural-Width Control Fields
  * @{
  */
-#define VMCS_CTRL_CR0_MASK                                           0x00006000
-#define VMCS_CTRL_CR4_MASK                                           0x00006002
-#define VMCS_CTRL_CR0_READ_SHADOW                                    0x00006004
-#define VMCS_CTRL_CR4_READ_SHADOW                                    0x00006006
-#define VMCS_CTRL_CR3_TARGET_VAL0                                    0x00006008
-#define VMCS_CTRL_CR3_TARGET_VAL1                                    0x0000600A
-#define VMCS_CTRL_CR3_TARGET_VAL2                                    0x0000600C
-#define VMCS_CTRL_CR3_TARGET_VAL3                                    0x0000600E
+#define VMX_VMCS_CTRL_CR0_MASK                                       0x00006000
+#define VMX_VMCS_CTRL_CR4_MASK                                       0x00006002
+#define VMX_VMCS_CTRL_CR0_READ_SHADOW                                0x00006004
+#define VMX_VMCS_CTRL_CR4_READ_SHADOW                                0x00006006
+#define VMX_VMCS_CTRL_CR3_TARGET_VAL0                                0x00006008
+#define VMX_VMCS_CTRL_CR3_TARGET_VAL1                                0x0000600A
+#define VMX_VMCS_CTRL_CR3_TARGET_VAL2                                0x0000600C
+#define VMX_VMCS_CTRL_CR3_TARGET_VAL3                                0x0000600E
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_natural_width_read_only_data_fields \
+ * @defgroup vmx_vmcs_natural_width_read_only_data_fields \
  *           Natural-Width Read-Only Data Fields
  * @{
  */
-#define VMCS_EXIT_QUALIFICATION                                      0x00006400
-#define VMCS_IO_RCX                                                  0x00006402
-#define VMCS_IO_RSX                                                  0x00006404
-#define VMCS_IO_RDI                                                  0x00006406
-#define VMCS_IO_RIP                                                  0x00006408
-#define VMCS_EXIT_GUEST_LINEAR_ADDR                                  0x0000640A
+#define VMX_VMCS_EXIT_QUALIFICATION                                  0x00006400
+#define VMX_VMCS_IO_RCX                                              0x00006402
+#define VMX_VMCS_IO_RSX                                              0x00006404
+#define VMX_VMCS_IO_RDI                                              0x00006406
+#define VMX_VMCS_IO_RIP                                              0x00006408
+#define VMX_VMCS_EXIT_GUEST_LINEAR_ADDR                              0x0000640A
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_natural_width_guest_state_fields \
+ * @defgroup vmx_vmcs_natural_width_guest_state_fields \
  *           Natural-Width Guest-State Fields
  * @{
  */
-#define VMCS_GUEST_CR0                                               0x00006800
-#define VMCS_GUEST_CR3                                               0x00006802
-#define VMCS_GUEST_CR4                                               0x00006804
-#define VMCS_GUEST_ES_BASE                                           0x00006806
-#define VMCS_GUEST_CS_BASE                                           0x00006808
-#define VMCS_GUEST_SS_BASE                                           0x0000680A
-#define VMCS_GUEST_DS_BASE                                           0x0000680C
-#define VMCS_GUEST_FS_BASE                                           0x0000680E
-#define VMCS_GUEST_GS_BASE                                           0x00006810
-#define VMCS_GUEST_LDTR_BASE                                         0x00006812
-#define VMCS_GUEST_TR_BASE                                           0x00006814
-#define VMCS_GUEST_GDTR_BASE                                         0x00006816
-#define VMCS_GUEST_IDTR_BASE                                         0x00006818
-#define VMCS_GUEST_DR7                                               0x0000681A
-#define VMCS_GUEST_RSP                                               0x0000681C
-#define VMCS_GUEST_RIP                                               0x0000681E
-#define VMCS_GUEST_RFLAGS                                            0x00006820
-#define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
-#define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
-#define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
+#define VMX_VMCS_GUEST_CR0                                           0x00006800
+#define VMX_VMCS_GUEST_CR3                                           0x00006802
+#define VMX_VMCS_GUEST_CR4                                           0x00006804
+#define VMX_VMCS_GUEST_ES_BASE                                       0x00006806
+#define VMX_VMCS_GUEST_CS_BASE                                       0x00006808
+#define VMX_VMCS_GUEST_SS_BASE                                       0x0000680A
+#define VMX_VMCS_GUEST_DS_BASE                                       0x0000680C
+#define VMX_VMCS_GUEST_FS_BASE                                       0x0000680E
+#define VMX_VMCS_GUEST_GS_BASE                                       0x00006810
+#define VMX_VMCS_GUEST_LDTR_BASE                                     0x00006812
+#define VMX_VMCS_GUEST_TR_BASE                                       0x00006814
+#define VMX_VMCS_GUEST_GDTR_BASE                                     0x00006816
+#define VMX_VMCS_GUEST_IDTR_BASE                                     0x00006818
+#define VMX_VMCS_GUEST_DR7                                           0x0000681A
+#define VMX_VMCS_GUEST_RSP                                           0x0000681C
+#define VMX_VMCS_GUEST_RIP                                           0x0000681E
+#define VMX_VMCS_GUEST_RFLAGS                                        0x00006820
+#define VMX_VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                      0x00006822
+#define VMX_VMCS_GUEST_SYSENTER_ESP                                  0x00006824
+#define VMX_VMCS_GUEST_SYSENTER_EIP                                  0x00006826
 /**
  * @}
  */
 
 /**
- * @defgroup vmcs_natural_width_host_state_fields \
+ * @defgroup vmx_vmcs_natural_width_host_state_fields \
  *           Natural-Width Host-State Fields
  * @{
  */
-#define VMCS_HOST_CR0                                                0x00006C00
-#define VMCS_HOST_CR3                                                0x00006C02
-#define VMCS_HOST_CR4                                                0x00006C04
-#define VMCS_HOST_FS_BASE                                            0x00006C06
-#define VMCS_HOST_GS_BASE                                            0x00006C08
-#define VMCS_HOST_TR_BASE                                            0x00006C0A
-#define VMCS_HOST_GDTR_BASE                                          0x00006C0C
-#define VMCS_HOST_IDTR_BASE                                          0x00006C0E
-#define VMCS_HOST_SYSENTER_ESP                                       0x00006C10
-#define VMCS_HOST_SYSENTER_EIP                                       0x00006C12
-#define VMCS_HOST_RSP                                                0x00006C14
-#define VMCS_HOST_RIP                                                0x00006C16
+#define VMX_VMCS_HOST_CR0                                            0x00006C00
+#define VMX_VMCS_HOST_CR3                                            0x00006C02
+#define VMX_VMCS_HOST_CR4                                            0x00006C04
+#define VMX_VMCS_HOST_FS_BASE                                        0x00006C06
+#define VMX_VMCS_HOST_GS_BASE                                        0x00006C08
+#define VMX_VMCS_HOST_TR_BASE                                        0x00006C0A
+#define VMX_VMCS_HOST_GDTR_BASE                                      0x00006C0C
+#define VMX_VMCS_HOST_IDTR_BASE                                      0x00006C0E
+#define VMX_VMCS_HOST_SYSENTER_ESP                                   0x00006C10
+#define VMX_VMCS_HOST_SYSENTER_EIP                                   0x00006C12
+#define VMX_VMCS_HOST_RSP                                            0x00006C14
+#define VMX_VMCS_HOST_RIP                                            0x00006C16
 /**
  * @}
  */

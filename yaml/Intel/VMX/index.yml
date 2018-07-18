@@ -1,9 +1,10 @@
 - name: VMX
   short_description: VMX
+  children_name_with_prefix: VMX
   todo: Long description
   type: group
   fields:
-  - name: VMX_BASIC_EXIT_REASONS
+  - name: BASIC_EXIT_REASONS
     description: VMX Basic Exit Reasons.
     children_name_with_prefix: VMX_EXIT_REASON # Just EXIT_REASON ?
     type: group
@@ -520,7 +521,7 @@
         Guest software attempted to execute XRSTORS, the “enable XSAVES/XRSTORS” was 1, and a bit was set
         in the logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
 
-  - name: VMX_INSTRUCTION_ERROR_NUMBERS
+  - name: INSTRUCTION_ERROR_NUMBERS
     description: VM Instruction Error Numbers.
     children_name_with_prefix: VMX_ERROR
     type: group
@@ -652,7 +653,7 @@
       long_name: INVEPT_INVVPID_INVALID_OPERAND
       description: Invalid operand to INVEPT/INVVPID.
 
-  - name: VMX_EXCEPTIONS
+  - name: EXCEPTIONS
     description: Virtualization Exceptions.
     type: group
     reference: Vol3C[25.5.6(Virtualization Exceptions)]
@@ -703,7 +704,7 @@
         - Vol3C[24.6.18(Controls for Virtualization Exceptions)]
         - Vol3C[25.5.5.3(EPTP Switching)]
 
-  - name: VMX_BASIC_EXIT_INFORMATION
+  - name: BASIC_EXIT_INFORMATION
     description: Basic VM-Exit Information.
     children_name_with_prefix: VMX_EXIT_QUALIFICATION
     type: group
@@ -1165,6 +1166,124 @@
         name: NMI_UNBLOCKING
         description: |
           NMI unblocking due to IRET.
+
+  - name: ACCESS_RIGHTS
+    description: |
+      - The low 16 bits correspond to bits 23:8 of the upper 32 bits of a 64-bit segment descriptor. While bits
+        19:16 of code-segment and data-segment descriptors correspond to the upper 4 bits of the segment
+        limit, the corresponding bits (bits 11:8) are reserved in this VMCS field.
+
+      - Bit 16 indicates an unusable segment. Attempts to use such a segment fault except in 64-bit mode.
+        In general, a segment register is unusable if it has been loaded with a null selector.
+
+      - Bits 31:17 are reserved.
+    note: |
+      There are a few exceptions to this statement. For example, a segment with a non-null selector may be unusable following a task
+      switch that fails after its commit point. In contrast, the TR register
+      is usable after processor reset despite having a null selector
+    see:
+    - SEGMENT_DESCRIPTOR_32
+    - SEGMENT_DESCRIPTOR_64
+    - XXX_ACCESS_RIGHTS fields of 32_BIT_GUEST_STATE_FIELDS
+    reference: Vol3C[24.4.2(Guest Non-Register State)]
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-3
+      name: TYPE
+      description: Segment type.
+
+    - bit: 4
+      short_name: S_FLAG
+      long_name: DESCRIPTOR_TYPE
+      description: S — Descriptor type (0 = system; 1 = code or data).
+
+    - bit: 5-6
+      short_name: DPL
+      long_name: DESCRIPTOR_PRIVILEGE_LEVEL
+      description: DPL — Descriptor privilege level.
+
+    - bit: 7
+      short_name: P
+      long_name: PRESENT
+      alternative_name: PRESENT # WDK
+      description: P — Segment present.
+
+    - bit: 12
+      short_name: AVL
+      long_name: AVAILABLE_BIT
+      description: AVL — Available for use by system software.
+
+    - bit: 13
+      short_name: L
+      long_name: LONG_MODE
+      description: Reserved (except for CS). L — 64-bit mode active (for CS only).
+
+    - bit: 14
+      short_name: DB
+      long_name: DEFAULT_BIG
+      description: D/B — Default operation size (0 = 16-bit segment; 1 = 32-bit segment).
+
+    - bit: 15
+      short_name: G
+      long_name: GRANULARITY
+      alternative_name: GRANULARITY # WDK
+      description: G — Granularity.
+
+    - bit: 16
+      name: UNUSABLE
+      description: Segment unusable (0 = usable; 1 = unusable).
+
+  - name: INTERRUPTIBILITY_STATE
+    description: |
+      The IA-32 architecture includes features that permit certain events to be
+      blocked for a period of time. This field contains information about such blocking
+    see: INTERRUPTIBILITY_STATE of 32_BIT_GUEST_STATE_FIELDS
+    reference: Vol3C[24.4.2(Guest Non-Register State)]
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: BLOCKING_BY_STI
+      description: |
+        Execution of STI with RFLAGS.IF = 0 blocks maskable interrupts on the instruction boundary
+        following its execution.1 Setting this bit indicates that this blocking is in effect.
+      see: Vol2B[4(STI—Set Interrupt Flag)]
+
+    - bit: 1
+      name: BLOCKING_BY_MOV_SS
+      description: |
+        Execution of a MOV to SS or a POP to SS blocks or suppresses certain debug exceptions as well
+        as interrupts (maskable and nonmaskable) on the instruction boundary following its execution.
+        Setting this bit indicates that this blocking is in effect. This document uses the term “blocking
+        by MOV SS,” but it applies equally to POP SS.
+      see: Vol3A[6.8.3(Masking Exceptions and Interrupts When Switching Stacks)]
+
+    - bit: 2
+      name: BLOCKING_BY_SMI
+      description: |
+        System-management interrupts (SMIs) are disabled while the processor is in system-management mode (SMM).
+        Setting this bit indicates that blocking of SMIs is in effect.
+      see: Vol3C[34.2(System Management Interrupt (SMI))]
+
+    - bit: 3
+      name: BLOCKING_BY_NMI
+      description: |
+        Delivery of a non-maskable interrupt (NMI) or a system-management interrupt (SMI) blocks
+        subsequent NMIs until the next execution of IRET. Setting this bit indicates that blocking of NMIs is
+        in effect. Clearing this bit does not imply that NMIs are not (temporarily) blocked for other
+        reasons.
+        If the “virtual NMIs” VM-execution control is 1, this bit does not control the
+        blocking of NMIs. Instead, it refers to “virtual-NMI blocking” (the fact that guest software is not
+        ready for an NMI).
+      see:
+      - Vol3C[6.7.1(Handling Multiple NMIs)]
+      - Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
+      - Vol3C[24.6.1(Pin-Based VM-Execution Controls)]
+
+    - bit: 4
+      name: ENCLAVE_INTERRUPTION
+      description: A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode.
 
   include:
   - EPT

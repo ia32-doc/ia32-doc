@@ -661,6 +661,22 @@
           short_name: ACTIVITY_STATE
           long_name: ACTIVITY_STATE
           description: Guest activity state.
+          fields:
+          - value: 0
+            name: ACTIVE
+            description: The logical processor is executing instructions normally.
+
+          - value: 1
+            name: HLT
+            description: The logical processor is inactive because it executed the HLT instruction.
+
+          - value: 2
+            name: SHUTDOWN
+            description: The logical processor is inactive because it incurred a triple fault1 or some other serious error.
+
+          - value: 3
+            name: WAIT_FOR_SIPI
+            description: The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
 
         - value: 0x4828
           short_name: SMBASE
