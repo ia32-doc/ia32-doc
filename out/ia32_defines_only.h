@@ -2684,6 +2684,14 @@ typedef struct {
 #define VMX_INTERRUPTIBILITY_STATE_ENCLAVE_INTERRUPTION_BIT          4
 #define VMX_INTERRUPTIBILITY_STATE_ENCLAVE_INTERRUPTION_FLAG         0x10
 
+#define VMX_ACTIVE                                                   0x00000000
+#define VMX_HLT                                                      0x00000001
+#define VMX_SHUTDOWN                                                 0x00000002
+#define VMX_WAIT_FOR_SIPI                                            0x00000003
+/**
+ * @}
+ */
+
 /**
  * @defgroup vmx_ept \
  *           The extended page-table mechanism
@@ -3127,10 +3135,6 @@ typedef struct {
 #define VMX_VMCS_GUEST_TR_ACCESS_RIGHTS                              0x00004822
 #define VMX_VMCS_GUEST_INTERRUPTIBILITY_STATE                        0x00004824
 #define VMX_VMCS_GUEST_ACTIVITY_STATE                                0x00004826
-#define VMX_VMCS_GUEST_ACTIVE                                        0x00000000
-#define VMX_VMCS_GUEST_HLT                                           0x00000001
-#define VMX_VMCS_GUEST_SHUTDOWN                                      0x00000002
-#define VMX_VMCS_GUEST_WAIT_FOR_SIPI                                 0x00000003
 #define VMX_VMCS_GUEST_SMBASE                                        0x00004828
 #define VMX_VMCS_GUEST_SYSENTER_CS                                   0x0000482A
 #define VMX_VMCS_GUEST_PREEMPT_TIMER_VALUE                           0x0000482E

@@ -1285,6 +1285,26 @@
       name: ENCLAVE_INTERRUPTION
       description: A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode.
 
+  - name: GUEST_ACTIVITY_STATE
+    see: ACTIVITY_STATE of 32_BIT_GUEST_STATE_FIELDS
+    type: enum
+    fields:
+    - value: 0
+      name: ACTIVE
+      description: The logical processor is executing instructions normally.
+
+    - value: 1
+      name: HLT
+      description: The logical processor is inactive because it executed the HLT instruction.
+
+    - value: 2
+      name: SHUTDOWN
+      description: The logical processor is inactive because it incurred a triple fault1 or some other serious error.
+
+    - value: 3
+      name: WAIT_FOR_SIPI
+      description: The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
+
   include:
   - EPT
   - VMCS

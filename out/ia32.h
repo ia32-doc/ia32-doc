@@ -16713,6 +16713,29 @@ typedef union
   UINT32 Flags;
 } VMX_INTERRUPTIBILITY_STATE;
 
+typedef enum
+{
+  /**
+   * The logical processor is executing instructions normally.
+   */
+  VmxActive                                                    = 0x00000000,
+
+  /**
+   * The logical processor is inactive because it executed the HLT instruction.
+   */
+  VmxHlt                                                       = 0x00000001,
+
+  /**
+   * The logical processor is inactive because it incurred a triple fault1 or some other serious error.
+   */
+  VmxShutdown                                                  = 0x00000002,
+
+  /**
+   * The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
+   */
+  VmxWaitForSipi                                               = 0x00000003,
+} GUEST_ACTIVITY_STATE;
+
 /**
  * @defgroup VMX_EPT \
  *           The extended page-table mechanism
@@ -18374,25 +18397,6 @@ typedef union
  * Guest activity state.
  */
 #define VMX_VMCS_GUEST_ACTIVITY_STATE                                0x00004826
-/**
- * The logical processor is executing instructions normally.
- */
-#define VMX_VMCS_GUEST_ACTIVE                                        0x00000000
-
-/**
- * The logical processor is inactive because it executed the HLT instruction.
- */
-#define VMX_VMCS_GUEST_HLT                                           0x00000001
-
-/**
- * The logical processor is inactive because it incurred a triple fault1 or some other serious error.
- */
-#define VMX_VMCS_GUEST_SHUTDOWN                                      0x00000002
-
-/**
- * The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
- */
-#define VMX_VMCS_GUEST_WAIT_FOR_SIPI                                 0x00000003
 
 /**
  * Guest SMBASE.
