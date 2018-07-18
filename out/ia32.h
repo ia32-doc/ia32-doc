@@ -1502,8 +1502,11 @@ typedef struct
     struct
     {
       /**
-       * [Bits 4:0] - 0 = Null - No more caches. - 1 = Data Cache. - 2 = Instruction Cache. - 3 = Unified Cache. - 4-31 =
-       * Reserved.
+       * [Bits 4:0] - 0 = Null - No more caches.
+       * - 1 = Data Cache.
+       * - 2 = Instruction Cache.
+       * - 3 = Unified Cache.
+       * - 4-31 = Reserved.
        */
       UINT32 CacheTypeField                                        : 5;
 #define CPUID_EAX_CACHE_TYPE_FIELD_BIT                               0

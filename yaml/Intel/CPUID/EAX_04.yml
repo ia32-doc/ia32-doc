@@ -35,9 +35,13 @@
       todo: Create definitions
       description: |
         - 0 = Null - No more caches.
+
         - 1 = Data Cache.
+
         - 2 = Instruction Cache.
+
         - 3 = Unified Cache.
+
         - 4-31 = Reserved.
 
     - bit: 5-7
