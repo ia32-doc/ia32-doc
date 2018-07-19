@@ -2165,10 +2165,10 @@ typedef struct {
  *           EPT Table level numbers
  * @{
  */
-#define LEVEL_PML4E                                                  0x00000003
-#define LEVEL_PDPTE                                                  0x00000002
-#define LEVEL_PDE                                                    0x00000001
-#define LEVEL_PTE                                                    0x00000000
+#define EPT_LEVEL_PML4E                                              0x00000003
+#define EPT_LEVEL_PDPTE                                              0x00000002
+#define EPT_LEVEL_PDE                                                0x00000001
+#define EPT_LEVEL_PTE                                                0x00000000
 /**
  * @}
  */
@@ -2178,9 +2178,9 @@ typedef struct {
  *           EPT Entry counts
  * @{
  */
-#define PML4_ENTRY_COUNT                                             0x00000200
-#define PDPTE_ENTRY_COUNT                                            0x00000200
-#define PDE_ENTRY_COUNT                                              0x00000200
+#define EPML4_ENTRY_COUNT                                            0x00000200
+#define EPDPTE_ENTRY_COUNT                                           0x00000200
+#define EPDE_ENTRY_COUNT                                             0x00000200
 /**
  * @}
  */

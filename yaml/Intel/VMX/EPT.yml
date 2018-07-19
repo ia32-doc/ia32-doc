@@ -508,6 +508,7 @@
   - name: EPT_TABLE_LEVEL
     description: EPT Table level numbers.
     type: group
+    children_name_with_prefix: EPT
     fields:
     - value: 3
       name: LEVEL_PML4E
@@ -526,13 +527,16 @@
     type: group
     fields:
     - value: 512
-      name: PML4_ENTRY_COUNT
+      short_name: EPML4_ENTRY_COUNT
+      long_name: EPT_PML4_ENTRY_COUNT
 
     - value: 512
-      name: PDPTE_ENTRY_COUNT
+      short_name: EPDPTE_ENTRY_COUNT
+      long_name: EPT_PDPTE_ENTRY_COUNT
 
     - value: 512
-      name: PDE_ENTRY_COUNT
+      short_name: EPDE_ENTRY_COUNT
+      long_name: EPT_PDE_ENTRY_COUNT
 
   - name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
     short_description: EPT memory type.
