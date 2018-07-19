@@ -16792,6 +16792,7 @@ typedef union
 #define EPT_POINTER_PAGE_WALK_LENGTH_FLAG                            0x38
 #define EPT_POINTER_PAGE_WALK_LENGTH_MASK                            0x07
 #define EPT_POINTER_PAGE_WALK_LENGTH(_)                              (((_) >> 3) & 0x07)
+#define EPT_PAGE_WALK_LENGTH_4                                       0x00000003
 
     /**
      * [Bit 6] Setting this control to 1 enables accessed and dirty flags for EPT.

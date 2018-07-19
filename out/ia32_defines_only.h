@@ -2089,6 +2089,7 @@ typedef struct {
  */
 #define EPTP_MEMORY_TYPE                                             0x07
 #define EPTP_PAGE_WALK_LENGTH                                        0x38
+#define EPT_PAGE_WALK_LENGTH_4                                       0x00000003
 #define EPTP_ENABLE_ACCESS_AND_DIRTY_FLAGS                           0x40
 #define EPTP_PAGE_FRAME_NUMBER                                       0xFFFFFFFFF000
 

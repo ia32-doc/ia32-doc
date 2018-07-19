@@ -38,6 +38,9 @@
       long_name: PAGE_WALK_LENGTH
       description: This value is 1 less than the EPT page-walk length.
       see: Vol3C[28.2.6(EPT and memory Typing)]
+      fields:
+      - value: 3
+        name: EPT_PAGE_WALK_LENGTH_4
 
     - bit: 6
       short_name: ENABLE_ACCESS_AND_DIRTY_FLAGS
