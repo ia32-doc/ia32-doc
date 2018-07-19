@@ -723,6 +723,9 @@ typedef struct {
  *           IA32_MTRR_PHYSBASE(n)
  * @{
  */
+#define IA32_MTRR_PHYSBASE_TYPE                                      0xFF
+#define IA32_MTRR_PHYSBASE_PHYSICAL_ADDRES_BASE                      0xFFFFFFFFF000
+
 #define IA32_MTRR_PHYSBASE0                                          0x00000200
 #define IA32_MTRR_PHYSBASE1                                          0x00000202
 #define IA32_MTRR_PHYSBASE2                                          0x00000204
@@ -742,6 +745,10 @@ typedef struct {
  *           IA32_MTRR_PHYSMASK(n)
  * @{
  */
+#define IA32_MTRR_PHYSMASK_TYPE                                      0xFF
+#define IA32_MTRR_PHYSMASK_VALID                                     0x800
+#define IA32_MTRR_PHYSMASK_PHYSICAL_ADDRES_MASK                      0xFFFFFFFFF000
+
 #define IA32_MTRR_PHYSMASK0                                          0x00000201
 #define IA32_MTRR_PHYSMASK1                                          0x00000203
 #define IA32_MTRR_PHYSMASK2                                          0x00000205

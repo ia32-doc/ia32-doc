@@ -2230,6 +2230,16 @@ typedef union {
  *           IA32_MTRR_PHYSBASE(n)
  * @{
  */
+typedef union {
+  struct {
+    uint64_t type                                                    : 8;
+    uint64_t reserved_1                                              : 4;
+    uint64_t physical_addres_base                                    : 36;
+  };
+
+  uint64_t flags;
+} ia32_mtrr_physbase_register;
+
 #define IA32_MTRR_PHYSBASE0                                          0x00000200
 #define IA32_MTRR_PHYSBASE1                                          0x00000202
 #define IA32_MTRR_PHYSBASE2                                          0x00000204
@@ -2249,6 +2259,17 @@ typedef union {
  *           IA32_MTRR_PHYSMASK(n)
  * @{
  */
+typedef union {
+  struct {
+    uint64_t type                                                    : 8;
+    uint64_t reserved_1                                              : 3;
+    uint64_t valid                                                   : 1;
+    uint64_t physical_addres_mask                                    : 36;
+  };
+
+  uint64_t flags;
+} ia32_mtrr_physmask_register;
+
 #define IA32_MTRR_PHYSMASK0                                          0x00000201
 #define IA32_MTRR_PHYSMASK1                                          0x00000203
 #define IA32_MTRR_PHYSMASK2                                          0x00000205

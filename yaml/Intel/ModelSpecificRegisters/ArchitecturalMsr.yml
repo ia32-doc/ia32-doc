@@ -1655,6 +1655,24 @@
     If CPUID.01H: EDX.MTRR[12] = 1
   see: Vol3A[11.11.2.3(Variable Range MTRRs)]
   fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    reference: Vol3A[11.11.2.3(Variable Range MTRRs)]
+    fields:
+    - bit: 0-7
+      name: TYPE
+      description: Specifies the memory type for the range.
+
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PHYS_BASE
+      long_name: PHYSICAL_ADDRES_BASE
+      alternative_name: PAGE_FRAME_NUMBER
+      description: |
+        Specifies the base address of the address range.
+        This 24-bit value, in the case where MAXPHYADDR is 36 bits, is extended by 12 bits at the low end to form the
+        base address (this automatically aligns the address on a 4-KByte boundary).
+
   - value: 0x200
     name: MTRR_PHYSBASE0
   - value: 0x202
@@ -1688,6 +1706,40 @@
     If CPUID.01H: EDX.MTRR[12] = 1
   see: Vol3A[11.11.2.3(Variable Range MTRRs)]
   fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    reference: Vol3A[11.11.2.3(Variable Range MTRRs)]
+    fields:
+    - bit: 0-7
+      name: TYPE
+      description: Specifies the memory type for the range.
+
+    - bit: 11
+      name: VALID
+      description: Enables the register pair when set; disables register pair when clear.
+
+    - bit: 12-(MAXPHYADDR-1)
+      short_name: PHYS_MASK
+      long_name: PHYSICAL_ADDRES_MASK
+      alternative_name: PAGE_FRAME_NUMBER
+      description: |
+        Specifies a mask (24 bits if the maximum physical
+        address size is 36 bits, 28 bits if the maximum physical address size is 40 bits). The mask determines the range
+        of the region being mapped, according to the following relationships:
+
+        - Address_Within_Range AND PhysMask = PhysBase AND PhysMask
+
+        - This value is extended by 12 bits at the low end to form the mask value.
+
+        - The width of the PhysMask field depends on the maximum physical address size supported by the
+        processor.
+
+        CPUID.80000008H reports the maximum physical address size supported by the processor. If
+        CPUID.80000008H is not available, software may assume that the processor supports a 36-bit physical
+        address size.
+      see: Vol3A[11.11.3(Example Base and Mask Calculations)]
+
   - value: 0x201
     name: MTRR_PHYSMASK0
   - value: 0x203

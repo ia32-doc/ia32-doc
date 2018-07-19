@@ -8264,6 +8264,36 @@ typedef union
  * @see Vol3A[11.11.2.3(Variable Range MTRRs)]
  * @{
  */
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bits 7:0] Specifies the memory type for the range.
+     */
+    UINT64 Type                                                    : 8;
+#define IA32_MTRR_PHYSBASE_TYPE_BIT                                  0
+#define IA32_MTRR_PHYSBASE_TYPE_FLAG                                 0xFF
+#define IA32_MTRR_PHYSBASE_TYPE_MASK                                 0xFF
+#define IA32_MTRR_PHYSBASE_TYPE(_)                                   (((_) >> 0) & 0xFF)
+    UINT64 Reserved1                                               : 4;
+
+    /**
+     * [Bits 47:12] Specifies the base address of the address range. This 24-bit value, in the case where MAXPHYADDR is 36
+     * bits, is extended by 12 bits at the low end to form the base address (this automatically aligns the address on a 4-KByte
+     * boundary).
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define IA32_MTRR_PHYSBASE_PAGE_FRAME_NUMBER_BIT                     12
+#define IA32_MTRR_PHYSBASE_PAGE_FRAME_NUMBER_FLAG                    0xFFFFFFFFF000
+#define IA32_MTRR_PHYSBASE_PAGE_FRAME_NUMBER_MASK                    0xFFFFFFFFF
+#define IA32_MTRR_PHYSBASE_PAGE_FRAME_NUMBER(_)                      (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved2                                               : 16;
+  };
+
+  UINT64 Flags;
+} IA32_MTRR_PHYSBASE_REGISTER;
+
 #define IA32_MTRR_PHYSBASE0                                          0x00000200
 #define IA32_MTRR_PHYSBASE1                                          0x00000202
 #define IA32_MTRR_PHYSBASE2                                          0x00000204
@@ -8288,6 +8318,52 @@ typedef union
  * @see Vol3A[11.11.2.3(Variable Range MTRRs)]
  * @{
  */
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bits 7:0] Specifies the memory type for the range.
+     */
+    UINT64 Type                                                    : 8;
+#define IA32_MTRR_PHYSMASK_TYPE_BIT                                  0
+#define IA32_MTRR_PHYSMASK_TYPE_FLAG                                 0xFF
+#define IA32_MTRR_PHYSMASK_TYPE_MASK                                 0xFF
+#define IA32_MTRR_PHYSMASK_TYPE(_)                                   (((_) >> 0) & 0xFF)
+    UINT64 Reserved1                                               : 3;
+
+    /**
+     * [Bit 11] Enables the register pair when set; disables register pair when clear.
+     */
+    UINT64 Valid                                                   : 1;
+#define IA32_MTRR_PHYSMASK_VALID_BIT                                 11
+#define IA32_MTRR_PHYSMASK_VALID_FLAG                                0x800
+#define IA32_MTRR_PHYSMASK_VALID_MASK                                0x01
+#define IA32_MTRR_PHYSMASK_VALID(_)                                  (((_) >> 11) & 0x01)
+
+    /**
+     * [Bits 47:12] Specifies a mask (24 bits if the maximum physical address size is 36 bits, 28 bits if the maximum physical
+     * address size is 40 bits). The mask determines the range of the region being mapped, according to the following
+     * relationships:
+     * - Address_Within_Range AND PhysMask = PhysBase AND PhysMask
+     * - This value is extended by 12 bits at the low end to form the mask value.
+     * - The width of the PhysMask field depends on the maximum physical address size supported by the processor.
+     * CPUID.80000008H reports the maximum physical address size supported by the processor. If CPUID.80000008H is not
+     * available, software may assume that the processor supports a 36-bit physical address size.
+     *
+     * @see Vol3A[11.11.3(Example Base and Mask Calculations)]
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define IA32_MTRR_PHYSMASK_PAGE_FRAME_NUMBER_BIT                     12
+#define IA32_MTRR_PHYSMASK_PAGE_FRAME_NUMBER_FLAG                    0xFFFFFFFFF000
+#define IA32_MTRR_PHYSMASK_PAGE_FRAME_NUMBER_MASK                    0xFFFFFFFFF
+#define IA32_MTRR_PHYSMASK_PAGE_FRAME_NUMBER(_)                      (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved2                                               : 16;
+  };
+
+  UINT64 Flags;
+} IA32_MTRR_PHYSMASK_REGISTER;
+
 #define IA32_MTRR_PHYSMASK0                                          0x00000201
 #define IA32_MTRR_PHYSMASK1                                          0x00000203
 #define IA32_MTRR_PHYSMASK2                                          0x00000205
