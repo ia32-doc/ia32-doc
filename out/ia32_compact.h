@@ -4320,8 +4320,14 @@ typedef struct {
   uint64_t linear_address;
 } vmx_invvpid_descriptor;
 
+typedef struct {
+  uint32_t revision_id;
+  uint32_t abort_indicator;
+  uint8_t data[4088];
+} vmx_vmcs;
+
 /**
- * @defgroup vmx_vmcs \
+ * @defgroup vmx_vmcs_group \
  *           VMCS (VM Control Structure)
  * @{
  */

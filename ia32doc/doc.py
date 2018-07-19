@@ -357,6 +357,12 @@ class DocStruct(DocBase):
     def __init__(self, doc: dict, parent: DocBase=None):
         super().__init__(doc, parent)
 
+    @property
+    def size(self) -> int:
+        if isinstance(self._doc['size'], int):
+            return self._doc['size']
+        return -1
+
 
 class DocStructField(DocBase):
     def __init__(self, doc: dict, parent: DocBase=None):
@@ -364,6 +370,16 @@ class DocStructField(DocBase):
 
     @property
     def size(self) -> int:
+        if isinstance(self._doc['size'], str) and self._doc['size'] == '?':
+            assert self.parent                      # Must have parent
+            assert self.parent.fields[-1] == self   # Must be last element
+            sum_of_previous_fields = sum(field.size for field in self.parent.fields[:-1])
+            self._doc['size'] = self.parent.size - sum_of_previous_fields
+        elif isinstance(self._doc['size'], int):
+            pass
+        else:
+            raise Exception('Invalid size')
+
         return self._doc['size']
 
 

@@ -1,0 +1,64 @@
+- name: VMCS
+  type: struct
+  size: 32768 # A VMCS region comprises up to 4-KBytes.
+              #
+              # The exact size is implementation specific and can
+              # be determined by consulting the VMX capability
+              # MSR IA32_VMX_BASIC to determine the size of the VMCS region.
+  reference: Vol3C[24.2(FORMAT OF THE VMCS REGION)]
+  fields:
+  - name: '' # unnamed bitfield
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-30
+      name: REVISION_ID
+      short_description: VMCS revision identifier.
+      long_description: |
+        Processors that maintain VMCS data in different formats (see below) use different VMCS revision identifiers.
+        These identifiers enable software to avoid using a VMCS region formatted for one processor on a processor
+        that uses a different format.
+        Software should write the VMCS revision identifier to the VMCS region before using that region for a VMCS. The
+        VMCS revision identifier is never written by the processor; VMPTRLD fails if its operand references a VMCS region
+        whose VMCS revision identifier differs from that used by the processor (VMPTRLD also fails if the shadow-VMCS
+        indicator is 1 and the processor does not support the 1-setting of the “VMCS shadowing” VM-execution control; see
+        Section 24.6.2) Software can discover the VMCS revision identifier that a processor uses by reading the VMX capability
+        MSR IA32_VMX_BASIC.
+      see:
+      - Vol3C[24.6.2(Processor-Based VM-Execution Controls)]
+      - Vol3D[A.1(BASIC VMX INFORMATION)]
+
+    - bit: 31
+      name: SHADOW_INDICATOR
+      short_description: Shadow-VMCS indicator.
+      long_description: |
+        Software should clear or set the shadow-VMCS indicator depending on whether the VMCS is to be an ordinary
+        VMCS or a shadow VMCS. VMPTRLD fails if the shadow-VMCS indicator is set and the processor
+        does not support the 1-setting of the “VMCS shadowing” VM-execution control. Software can discover support for
+        this setting by reading the VMX capability MSR IA32_VMX_PROCBASED_CTLS2.
+      see:
+      - 'Vol3C[24.10(VMCS Types: Ordinary and Shadow)]'
+      - Vol3D[A.3.3(Secondary Processor-Based VM-Execution Controls)]
+
+  - size: 32
+    name: ABORT_INDICATOR
+    short_description: VMX-abort indicator.
+    long_description: |
+      The contents of these bits do not
+      control processor operation in any way. A logical processor writes a non-zero value into these bits if a VMX abort
+      occurs. Software may also write into this field.
+    see: Vol3D[27.7(VMX Aborts)]
+
+  - size: '?'
+    name: DATA
+    short_description: VMCS data (implementation-specific format).
+    long_description: |
+      These parts of the VMCS control VMX non-root operation and the VMX transitions.
+
+      The format of these data is implementation-specific. To ensure proper behavior in VMX operation,
+      software should maintain the VMCS region and related structures in writeback cacheable memory. Future
+      implementations may allow or require a different memory type. Software should consult the VMX capability MSR
+      IA32_VMX_BASIC.
+    see:
+    - Vol3C[24.11.4(Software Access to Related Structures)]
+    - Vol3D[A.1(BASIC VMX INFORMATION)]

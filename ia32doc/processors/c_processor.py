@@ -1,3 +1,5 @@
+from typing import Union, Tuple
+
 from .base import DocProcessor
 
 from ..doc import DocBase, DocGroup, DocDefinition, DocEnum, DocEnumField,\
@@ -159,6 +161,7 @@ class DocCProcessor(DocProcessor):
                 self.print_details(doc, treat_description_as_short=True)
                 self.print(f' */')
 
+            has_name = doc.short_name or doc.long_name
             optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
             optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
 
@@ -192,7 +195,7 @@ class DocCProcessor(DocProcessor):
                         bit_length = doc.size_max - self._bitfield_position
                         long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
                         self.print(
-                            f'{self.make_size_type(doc.size)} {long_name:<{self.align_indent_adjusted}}: '
+                            f'{self.make_size_type(doc.size)[0]} {long_name:<{self.align_indent_adjusted}}: '
                             f'{bit_length};'
                         )
 
@@ -203,23 +206,28 @@ class DocCProcessor(DocProcessor):
                 self.print(f'')
 
                 #
-                # Print "Flags" member.
+                # Print "Flags" member (only for named bitfields).
                 #
-                if doc.size_min != doc.size_max:
-                    self.print(f'{self.make_size_type(doc.size_min)} {self.opt.bitfield_field_flags_name}{doc.size_min};')
-                    self.print(f'{self.make_size_type(doc.size_max)} {self.opt.bitfield_field_flags_name}{doc.size_max};')
-                else:
-                    self.print(f'{self.make_size_type(doc.size)} {self.opt.bitfield_field_flags_name};')
+                if has_name:
+                    if doc.size_min != doc.size_max:
+                        self.print(f'{self.make_size_type(doc.size_min)[0]} {self.opt.bitfield_field_flags_name}{doc.size_min};')
+                        self.print(f'{self.make_size_type(doc.size_max)[0]} {self.opt.bitfield_field_flags_name}{doc.size_max};')
+                    else:
+                        self.print(f'{self.make_size_type(doc.size)[0]} {self.opt.bitfield_field_flags_name};')
 
             if self._typedef_nesting == 1:
+                assert has_name
                 self.print(f'}} {self.make_name(doc)};')
             else:
-                name = self.make_name(
-                    doc,
-                    standalone=True,
-                    override_name_letter_case=self.opt.bitfield_field_name_letter_case
-                )
-                self.print(f'}} {name};')
+                if has_name:
+                    name = self.make_name(
+                        doc,
+                        standalone=True,
+                        override_name_letter_case=self.opt.bitfield_field_name_letter_case
+                    )
+                    self.print(f'}} {name};')
+                else:
+                    self.print(f'}};')
 
             self._typedef_nesting -= 1
         else:
@@ -245,7 +253,7 @@ class DocCProcessor(DocProcessor):
                 bit_length = bit_from - self._bitfield_position
                 long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
                 self.print(
-                    f'{self.make_size_type(doc.parent.size)} {long_name:<{self.align_indent_adjusted}}: '
+                    f'{self.make_size_type(doc.parent.size)[0]} {long_name:<{self.align_indent_adjusted}}: '
                     f'{bit_length};'
                 )
                 self._bitfield_position = bit_from
@@ -263,7 +271,7 @@ class DocCProcessor(DocProcessor):
                 self.print(f' */')
 
             self.print(
-                f'{self.make_size_type(doc.parent.size)} {self.make_name(doc):<{self.align_indent_adjusted}}: '
+                f'{self.make_size_type(doc.parent.size)[0]} {self.make_name(doc):<{self.align_indent_adjusted}}: '
                 f'{bit_length};'
             )
 
@@ -272,45 +280,49 @@ class DocCProcessor(DocProcessor):
         #
         bit_shift = bit_to - bit_from
 
-        bitfield_field_with_define_any = any([
-            self.opt.bitfield_field_with_define_bit,
-            self.opt.bitfield_field_with_define_flag,
-            self.opt.bitfield_field_with_define_mask,
-            self.opt.bitfield_field_with_define_get
-        ])
+        #
+        # Print definitions only for NAMED bitfields.
+        #
+        if doc.parent.short_name or doc.parent.long_name:
+            bitfield_field_with_define_any = any([
+                self.opt.bitfield_field_with_define_bit,
+                self.opt.bitfield_field_with_define_flag,
+                self.opt.bitfield_field_with_define_mask,
+                self.opt.bitfield_field_with_define_get
+            ])
 
-        if bitfield_field_with_define_any:
-            part1 = self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)
-            part2 = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
-            align = self.opt.align if self.opt.definition_no_indent else \
-                    self.align_indent_adjusted
+            if bitfield_field_with_define_any:
+                part1 = self.make_name(doc.parent, override_name_letter_case=self.opt.definition_name_letter_case)
+                part2 = self.make_name(doc, override_name_letter_case=self.opt.definition_name_letter_case)
+                align = self.opt.align if self.opt.definition_no_indent else \
+                        self.align_indent_adjusted
 
-            #
-            # !!! INCREDIBLY UGLY HACK !!!
-            # Remove _REGISTER suffix.
-            #
-            if 'name_with_suffix' in doc.parent._doc:
-                part1 = part1[0:(len(part1) - len(doc.parent._doc['name_with_suffix']) - 1)]
+                #
+                # !!! INCREDIBLY UGLY HACK !!!
+                # Remove _REGISTER suffix.
+                #
+                if 'name_with_suffix' in doc.parent._doc:
+                    part1 = part1[0:(len(part1) - len(doc.parent._doc['name_with_suffix']) - 1)]
 
-        if self.opt.bitfield_field_with_define_bit:
-            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_bit_suffix}'
-            self.print(f'#define {definition:<{align}} {bit_from}')
+            if self.opt.bitfield_field_with_define_bit:
+                definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_bit_suffix}'
+                self.print(f'#define {definition:<{align}} {bit_from}')
 
-        if self.opt.bitfield_field_with_define_flag:
-            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_flag_suffix}'
-            self.print(f'#define {definition:<{align}} 0x{(((1 << bit_shift) - 1) << bit_from):02X}')
+            if self.opt.bitfield_field_with_define_flag:
+                definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_flag_suffix}'
+                self.print(f'#define {definition:<{align}} 0x{(((1 << bit_shift) - 1) << bit_from):02X}')
 
-        if self.opt.bitfield_field_with_define_mask:
-            definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_mask_suffix}'
-            self.print(f'#define {definition:<{align}} 0x{((1 << bit_shift) - 1):02X}')
+            if self.opt.bitfield_field_with_define_mask:
+                definition = f'{part1}_{part2}{self.opt.bitfield_field_with_define_mask_suffix}'
+                self.print(f'#define {definition:<{align}} 0x{((1 << bit_shift) - 1):02X}')
 
-        if self.opt.bitfield_field_with_define_get:
-            definition = f'{part1}_{part2}({self.opt.bitfield_field_with_define_get_macro_argument_name})'
-            self.print(
-                f'#define {definition:<{align}} '
-                f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '
-                f'0x{((1 << bit_shift) - 1):02X})'
-            )
+            if self.opt.bitfield_field_with_define_get:
+                definition = f'{part1}_{part2}({self.opt.bitfield_field_with_define_get_macro_argument_name})'
+                self.print(
+                    f'#define {definition:<{align}} '
+                    f'((({self.opt.bitfield_field_with_define_get_macro_argument_name}) >> {bit_from}) & '
+                    f'0x{((1 << bit_shift) - 1):02X})'
+                )
 
         self._bitfield_position = bit_to
 
@@ -327,6 +339,7 @@ class DocCProcessor(DocProcessor):
         if doc.tag == 'Packed':
             self.print(f'#pragma pack(push, 1)')
 
+        has_name = doc.short_name or doc.long_name
         optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
         optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
 
@@ -339,19 +352,23 @@ class DocCProcessor(DocProcessor):
                 assert field.type in [ DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
 
                 if isinstance(field, DocBitfield) and not self.opt.bitfield_create_struct:
-                    self.print(f'{self.make_size_type(field.size)} {self.make_name(field, standalone=True)};')
+                    self.print(f'{self.make_size_type(field.size)[0]} {self.make_name(field, standalone=True)};')
                 else:
                     getattr(self, f'process_{field.type}')(field)
 
         if self._typedef_nesting == 1:
+            assert has_name
             self.print(f'}} {self.make_name(doc)};')
         else:
-            name = self.make_name(
-                doc,
-                standalone=True,
-                override_name_letter_case=self.opt.struct_field_name_letter_case
-            )
-            self.print(f'}} {name};')
+            if has_name:
+                name = self.make_name(
+                    doc,
+                    standalone=True,
+                    override_name_letter_case=self.opt.struct_field_name_letter_case
+                )
+                self.print(f'}} {name};')
+            else:
+                self.print(f'}};')
 
         if doc.tag == 'Packed':
             self.print(f'#pragma pack(pop)')
@@ -371,7 +388,8 @@ class DocCProcessor(DocProcessor):
             self.print_details(doc)
             self.print(f' */')
 
-        self.print(f'{self.make_size_type(doc.size)} {self.make_name(doc)};')
+        size_type, size_type_array = self.make_size_type(doc.size)
+        self.print(f'{size_type} {self.make_name(doc)}{size_type_array};')
 
         if doc.fields:
             self.print(f'')
@@ -504,6 +522,15 @@ class DocCProcessor(DocProcessor):
             letter_case = getattr(self.opt, f'{doc.type}_name_letter_case')
 
         return DocText.convert_case(result, letter_case)
+
+    def make_size_type(self, size) -> Union[str, Tuple[str, str]]:
+        if size in [ 8, 16, 32, 64 ]:
+            return getattr(self.opt, f'int_type_{size}'), ''
+        elif size % 8 == 0:
+            size_in_bytes = size // 8
+            return self.opt.int_type_8, f'[{size_in_bytes}]'
+        else:
+            raise Exception('Cannot represent size as type')
 
     @staticmethod
     def make_multiline_comment(text: str, prefix: str='', indent: int=1) -> str:

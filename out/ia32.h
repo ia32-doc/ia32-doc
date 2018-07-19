@@ -17660,8 +17660,51 @@ typedef struct
   UINT64 LinearAddress;
 } VMX_INVVPID_DESCRIPTOR;
 
+typedef struct
+{
+  /**
+   * @brief VMCS revision identifier
+   *
+   * Processors that maintain VMCS data in different formats (see below) use different VMCS revision identifiers. These
+   * identifiers enable software to avoid using a VMCS region formatted for one processor on a processor that uses a
+   * different format. Software should write the VMCS revision identifier to the VMCS region before using that region for a
+   * VMCS. The VMCS revision identifier is never written by the processor; VMPTRLD fails if its operand references a VMCS
+   * region whose VMCS revision identifier differs from that used by the processor (VMPTRLD also fails if the shadow-VMCS
+   * indicator is 1 and the processor does not support the 1-setting of the "VMCS shadowing" VM-execution control; see
+   * Section 24.6.2) Software can discover the VMCS revision identifier that a processor uses by reading the VMX capability
+   * MSR IA32_VMX_BASIC.
+   *
+   * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)]
+   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+   */
+  UINT32 RevisionId;
+
+  /**
+   * @brief VMX-abort indicator
+   *
+   * The contents of these bits do not control processor operation in any way. A logical processor writes a non-zero value
+   * into these bits if a VMX abort occurs. Software may also write into this field.
+   *
+   * @see Vol3D[27.7(VMX Aborts)]
+   */
+  UINT32 AbortIndicator;
+
+  /**
+   * @brief VMCS data (implementation-specific format)
+   *
+   * These parts of the VMCS control VMX non-root operation and the VMX transitions.
+   * The format of these data is implementation-specific. To ensure proper behavior in VMX operation, software should
+   * maintain the VMCS region and related structures in writeback cacheable memory. Future implementations may allow or
+   * require a different memory type. Software should consult the VMX capability MSR IA32_VMX_BASIC.
+   *
+   * @see Vol3C[24.11.4(Software Access to Related Structures)]
+   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+   */
+  UINT8 Data[4088];
+} VMX_VMCS;
+
 /**
- * @defgroup VMX_VMCS \
+ * @defgroup VMX_VMCS_GROUP \
  *           VMCS (VM Control Structure)
  *
  * Every component of the VMCS is encoded by a 32-bit field that can be used by VMREAD and VMWRITE. This enumerates all

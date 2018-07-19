@@ -16,9 +16,10 @@ definition_no_indent: true
 
 bitfield_create_struct: false
 bitfield_field_reserved_prefix: 'reserved_'
-bitfield_field_flags_name: 'flags'
+bitfield_field_with_define_flag_suffix: ''
 # bitfield_field_with_defines: false
-bitfield_field_with_define_bit: true
+bitfield_field_with_define_bit: false
+bitfield_field_with_define_flag: true
 bitfield_field_with_define_get: false
 bitfield_field_with_define_mask: false
 

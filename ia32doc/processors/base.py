@@ -93,9 +93,6 @@ class DocProcessor(object):
     def process_struct_field(self, doc: DocStructField) -> None:
         pass
 
-    def make_size_type(self, size) -> str:
-        return getattr(self.opt, f'int_type_{size}')
-
     @staticmethod
     def _fix_text(text: str) -> str:
         text = text.replace('“', '"')
