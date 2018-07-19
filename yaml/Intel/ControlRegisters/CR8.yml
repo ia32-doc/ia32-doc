@@ -1,6 +1,6 @@
 - name: CR8
   type: bitfield
-  size: [ 32, 64 ]
+  size: 64 # Present only on x64
   reference: Vol3A[10.8.6(Task Priority in IA-32e Mode)]
   fields:
   - bit: 0-3

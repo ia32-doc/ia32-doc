@@ -25,7 +25,6 @@
 
 #define CR3_PAGE_LEVEL_WRITE_THROUGH                                 0x08
 #define CR3_PAGE_LEVEL_CACHE_DISABLE                                 0x10
-#define CR3_ADDRESS_OF_PAGE_DIRECTORY                                0xFFFFFFFFF000
 
 #define CR4_VIRTUAL_MODE_EXTENSIONS                                  0x01
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS                        0x02
@@ -1736,6 +1735,15 @@ typedef struct {
 } descriptor_64;
 #pragma pack(pop)
 
+#define SEGMENT_ACCESS_RIGHTS_TYPE                                   0xF00
+#define SEGMENT_ACCESS_RIGHTS_DESCRIPTOR_TYPE                        0x1000
+#define SEGMENT_ACCESS_RIGHTS_DESCRIPTOR_PRIVILEGE_LEVEL             0x6000
+#define SEGMENT_ACCESS_RIGHTS_PRESENT                                0x8000
+#define SEGMENT_ACCESS_RIGHTS_AVAILABLE_BIT                          0x100000
+#define SEGMENT_ACCESS_RIGHTS_LONG_MODE                              0x200000
+#define SEGMENT_ACCESS_RIGHTS_DEFAULT_BIG                            0x400000
+#define SEGMENT_ACCESS_RIGHTS_GRANULARITY                            0x800000
+
 typedef struct {
   uint16_t segment_limit_low;
   uint16_t base_address_low;
@@ -2061,15 +2069,15 @@ typedef struct {
  * @}
  */
 
-#define VMX_ACCESS_RIGHTS_TYPE                                       0x0F
-#define VMX_ACCESS_RIGHTS_DESCRIPTOR_TYPE                            0x10
-#define VMX_ACCESS_RIGHTS_DESCRIPTOR_PRIVILEGE_LEVEL                 0x60
-#define VMX_ACCESS_RIGHTS_PRESENT                                    0x80
-#define VMX_ACCESS_RIGHTS_AVAILABLE_BIT                              0x1000
-#define VMX_ACCESS_RIGHTS_LONG_MODE                                  0x2000
-#define VMX_ACCESS_RIGHTS_DEFAULT_BIG                                0x4000
-#define VMX_ACCESS_RIGHTS_GRANULARITY                                0x8000
-#define VMX_ACCESS_RIGHTS_UNUSABLE                                   0x10000
+#define VMX_SEGMENT_ACCESS_RIGHTS_TYPE                               0x0F
+#define VMX_SEGMENT_ACCESS_RIGHTS_DESCRIPTOR_TYPE                    0x10
+#define VMX_SEGMENT_ACCESS_RIGHTS_DESCRIPTOR_PRIVILEGE_LEVEL         0x60
+#define VMX_SEGMENT_ACCESS_RIGHTS_PRESENT                            0x80
+#define VMX_SEGMENT_ACCESS_RIGHTS_AVAILABLE_BIT                      0x1000
+#define VMX_SEGMENT_ACCESS_RIGHTS_LONG_MODE                          0x2000
+#define VMX_SEGMENT_ACCESS_RIGHTS_DEFAULT_BIG                        0x4000
+#define VMX_SEGMENT_ACCESS_RIGHTS_GRANULARITY                        0x8000
+#define VMX_SEGMENT_ACCESS_RIGHTS_UNUSABLE                           0x10000
 
 #define VMX_INTERRUPTIBILITY_STATE_BLOCKING_BY_STI                   0x01
 #define VMX_INTERRUPTIBILITY_STATE_BLOCKING_BY_MOV_SS                0x02

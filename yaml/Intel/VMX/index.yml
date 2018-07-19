@@ -1171,7 +1171,7 @@
           description: |
             NMI unblocking due to IRET.
 
-    - name: ACCESS_RIGHTS
+    - name: SEGMENT_ACCESS_RIGHTS
       description: |
         - The low 16 bits correspond to bits 23:8 of the upper 32 bits of a 64-bit segment descriptor. While bits
           19:16 of code-segment and data-segment descriptors correspond to the upper 4 bits of the segment

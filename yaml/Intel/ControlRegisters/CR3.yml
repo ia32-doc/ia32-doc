@@ -23,13 +23,16 @@
       with PAE paging, or with 4-level paging2 if CR4.PCIDE=1.
     see: Vol3A[4.9(PAGING AND MEMORY TYPING)]
 
-  - bit: 12-(MAXPHYADDR-1)
-    short_name: PD_PHYS_ADDR
-    long_name: ADDRESS_OF_PAGE_DIRECTORY
-    short_description: Address of page directory
-    description: |
-      Physical address of the 4-KByte aligned page directory (32-bit paging) or PML4 table (64-bit paging)
-      used for linear-address translation.
+#
+# Does not play well with UINT32 bitfield...
+#
+#  - bit: 12-(MAXPHYADDR-1)
+#    short_name: PD_PHYS_ADDR
+#    long_name: ADDRESS_OF_PAGE_DIRECTORY
+#    short_description: Address of page directory
+#    description: |
+#      Physical address of the 4-KByte aligned page directory (32-bit paging) or PML4 table (64-bit paging)
+#      used for linear-address translation.
 
     see:
     - Vol3A[4.3(32-BIT PAGING)]

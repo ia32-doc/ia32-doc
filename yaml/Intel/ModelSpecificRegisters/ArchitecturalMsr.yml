@@ -99,7 +99,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64 # TODO: [ 32, 64 ]
     fields:
     - bit: 8
       short_name: BSP
@@ -1655,7 +1655,7 @@
     If CPUID.01H: EDX.MTRR[12] = 1
   see: Vol3A[11.11.2.3(Variable Range MTRRs)]
   fields:
-  - name_with_suffix: REGISTER
+  - name_with_suffix: REGISTER # MTRR_VARIABLE_BASE in WDK
     type: bitfield
     size: 64
     reference: Vol3A[11.11.2.3(Variable Range MTRRs)]
@@ -1706,7 +1706,7 @@
     If CPUID.01H: EDX.MTRR[12] = 1
   see: Vol3A[11.11.2.3(Variable Range MTRRs)]
   fields:
-  - name_with_suffix: REGISTER
+  - name_with_suffix: REGISTER # MTRR_VARIABLE_MASK in WDK
     type: bitfield
     size: 64
     reference: Vol3A[11.11.2.3(Variable Range MTRRs)]
@@ -1983,7 +1983,7 @@
       description: CMCI_EN.
 
 - value: 0x2FF
-  name: MTRR_DEF_TYPE
+  name: MTRR_DEF_TYPE # MTRR_DEFAULT in WDK
   description: IA32_MTRR_DEF_TYPE.
   access: R/W
   todo: More description
@@ -2915,7 +2915,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64
+    size: [ 32, 64 ]
     fields:
     - bit: 0
       short_name: EXT_INT_EXIT
@@ -2980,7 +2980,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64
+    size: [ 32, 64 ]
     fields:
     - bit: 2
       short_name: INT_WINDOW_EXIT
@@ -3161,7 +3161,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64
+    size: [ 32, 64 ]
     fields:
     - bit: 2
       short_name: SAVE_DEBUG
@@ -3266,7 +3266,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64
+    size: [ 32, 64 ]
     fields:
     - bit: 2
       short_name: LOAD_DEBUG
@@ -3531,7 +3531,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64
+    size: [ 32, 64 ]
     fields:
     - bit: 0
       short_name: VIRT_APIC

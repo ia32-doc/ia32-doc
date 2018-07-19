@@ -63,7 +63,7 @@ typedef union
      *
      * @see Vol3A[9.9(Mode Switching)]
      */
-    UINT64 ProtectionEnable                                        : 1;
+    UINT32 ProtectionEnable                                        : 1;
 #define CR0_PROTECTION_ENABLE_BIT                                    0
 #define CR0_PROTECTION_ENABLE_FLAG                                   0x01
 #define CR0_PROTECTION_ENABLE_MASK                                   0x01
@@ -76,7 +76,7 @@ typedef union
      * set, a WAIT instruction generates a device-not-available exception (\#NM) if the TS flag is also set. If the MP flag is
      * clear, the WAIT instruction ignores the setting of the TS flag.
      */
-    UINT64 MonitorCoprocessor                                      : 1;
+    UINT32 MonitorCoprocessor                                      : 1;
 #define CR0_MONITOR_COPROCESSOR_BIT                                  1
 #define CR0_MONITOR_COPROCESSOR_FLAG                                 0x02
 #define CR0_MONITOR_COPROCESSOR_MASK                                 0x01
@@ -98,7 +98,7 @@ typedef union
      * execution of these extensions. SSE/SSE2/SSE3/SSSE3/SSE4 instructions not affected by the EM flag include: PAUSE,
      * PREFETCHh, SFENCE, LFENCE, MFENCE, MOVNTI, CLFLUSH, CRC32, and POPCNT.
      */
-    UINT64 EmulateFpu                                              : 1;
+    UINT32 EmulateFpu                                              : 1;
 #define CR0_EMULATE_FPU_BIT                                          2
 #define CR0_EMULATE_FPU_FLAG                                         0x04
 #define CR0_EMULATE_FPU_MASK                                         0x01
@@ -125,7 +125,7 @@ typedef union
      *   the context of the x87 FPU, XMM, and MXCSR registers. If the task never encounters an x87
      *   FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instruction, the x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 context is never saved.
      */
-    UINT64 TaskSwitched                                            : 1;
+    UINT32 TaskSwitched                                            : 1;
 #define CR0_TASK_SWITCHED_BIT                                        3
 #define CR0_TASK_SWITCHED_FLAG                                       0x08
 #define CR0_TASK_SWITCHED_MASK                                       0x01
@@ -138,7 +138,7 @@ typedef union
      * family processors, this flag is hardcoded to 1. In the Intel386 and Intel486 processors, this flag indicates support of
      * Intel 387 DX math coprocessor instructions when set.
      */
-    UINT64 ExtensionType                                           : 1;
+    UINT32 ExtensionType                                           : 1;
 #define CR0_EXTENSION_TYPE_BIT                                       4
 #define CR0_EXTENSION_TYPE_FLAG                                      0x10
 #define CR0_EXTENSION_TYPE_MASK                                      0x01
@@ -161,12 +161,12 @@ typedef union
      * @see Vol1[8.7(Handling x87 FPU Exceptions in Software)]
      * @see Vol1[A.1(APPENDIX A | EFLAGS Cross-Reference)]
      */
-    UINT64 NumericError                                            : 1;
+    UINT32 NumericError                                            : 1;
 #define CR0_NUMERIC_ERROR_BIT                                        5
 #define CR0_NUMERIC_ERROR_FLAG                                       0x20
 #define CR0_NUMERIC_ERROR_MASK                                       0x01
 #define CR0_NUMERIC_ERROR(_)                                         (((_) >> 5) & 0x01)
-    UINT64 Reserved1                                               : 10;
+    UINT32 Reserved1                                               : 10;
 
     /**
      * @brief Write Protect
@@ -178,12 +178,12 @@ typedef union
      * @see Vol3A[4.1.3(Paging-Mode Modifiers)]
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT64 WriteProtect                                            : 1;
+    UINT32 WriteProtect                                            : 1;
 #define CR0_WRITE_PROTECT_BIT                                        16
 #define CR0_WRITE_PROTECT_FLAG                                       0x10000
 #define CR0_WRITE_PROTECT_MASK                                       0x01
 #define CR0_WRITE_PROTECT(_)                                         (((_) >> 16) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT32 Reserved2                                               : 1;
 
     /**
      * @brief Alignment Mask
@@ -192,12 +192,12 @@ typedef union
      * performed only when the AM flag is set, the AC flag in the EFLAGS register is set, CPL is 3, and the processor is
      * operating in either protected or virtual-8086 mode.
      */
-    UINT64 AlignmentMask                                           : 1;
+    UINT32 AlignmentMask                                           : 1;
 #define CR0_ALIGNMENT_MASK_BIT                                       18
 #define CR0_ALIGNMENT_MASK_FLAG                                      0x40000
 #define CR0_ALIGNMENT_MASK_MASK                                      0x01
 #define CR0_ALIGNMENT_MASK(_)                                        (((_) >> 18) & 0x01)
-    UINT64 Reserved3                                               : 10;
+    UINT32 Reserved3                                               : 10;
 
     /**
      * @brief Not Write-through
@@ -205,7 +205,7 @@ typedef union
      * [Bit 29] When the NW and CD flags are clear, write-back (for Pentium 4, Intel Xeon, P6 family, and Pentium processors)
      * or write-through (for Intel486 processors) is enabled for writes that hit the cache and invalidation cycles are enabled.
      */
-    UINT64 NotWriteThrough                                         : 1;
+    UINT32 NotWriteThrough                                         : 1;
 #define CR0_NOT_WRITE_THROUGH_BIT                                    29
 #define CR0_NOT_WRITE_THROUGH_FLAG                                   0x20000000
 #define CR0_NOT_WRITE_THROUGH_MASK                                   0x01
@@ -222,7 +222,7 @@ typedef union
      * @see Vol3A[11.5.3(Preventing Caching)]
      * @see Vol3A[11.5(CACHE CONTROL)]
      */
-    UINT64 CacheDisable                                            : 1;
+    UINT32 CacheDisable                                            : 1;
 #define CR0_CACHE_DISABLE_BIT                                        30
 #define CR0_CACHE_DISABLE_FLAG                                       0x40000000
 #define CR0_CACHE_DISABLE_MASK                                       0x01
@@ -238,7 +238,7 @@ typedef union
      *
      * @see Vol3A[4(PAGING)]
      */
-    UINT64 PagingEnable                                            : 1;
+    UINT32 PagingEnable                                            : 1;
 #define CR0_PAGING_ENABLE_BIT                                        31
 #define CR0_PAGING_ENABLE_FLAG                                       0x80000000
 #define CR0_PAGING_ENABLE_MASK                                       0x01
@@ -254,7 +254,7 @@ typedef union
 {
   struct
   {
-    UINT64 Reserved1                                               : 3;
+    UINT32 Reserved1                                               : 3;
 
     /**
      * @brief Page-level Write-Through
@@ -264,7 +264,7 @@ typedef union
      *
      * @see Vol3A[4.9(PAGING AND MEMORY TYPING)]
      */
-    UINT64 PageLevelWriteThrough                                   : 1;
+    UINT32 PageLevelWriteThrough                                   : 1;
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_BIT                             3
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_FLAG                            0x08
 #define CR3_PAGE_LEVEL_WRITE_THROUGH_MASK                            0x01
@@ -278,12 +278,12 @@ typedef union
      *
      * @see Vol3A[4.9(PAGING AND MEMORY TYPING)]
      */
-    UINT64 PageLevelCacheDisable                                   : 1;
+    UINT32 PageLevelCacheDisable                                   : 1;
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_BIT                             4
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_FLAG                            0x10
 #define CR3_PAGE_LEVEL_CACHE_DISABLE_MASK                            0x01
 #define CR3_PAGE_LEVEL_CACHE_DISABLE(_)                              (((_) >> 4) & 0x01)
-    UINT64 Reserved2                                               : 7;
+    UINT32 Reserved2                                               : 7;
 
     /**
      * @brief Address of page directory
@@ -294,7 +294,7 @@ typedef union
      * @see Vol3A[4.3(32-BIT PAGING)]
      * @see Vol3A[4.5(4-LEVEL PAGING)]
      */
-    UINT64 AddressOfPageDirectory                                  : 36;
+    UINT32 AddressOfPageDirectory                                  : 36;
 #define CR3_ADDRESS_OF_PAGE_DIRECTORY_BIT                            12
 #define CR3_ADDRESS_OF_PAGE_DIRECTORY_FLAG                           0xFFFFFFFFF000
 #define CR3_ADDRESS_OF_PAGE_DIRECTORY_MASK                           0xFFFFFFFFF
@@ -322,7 +322,7 @@ typedef union
      *
      * @see Vol3B[20.3(INTERRUPT AND EXCEPTION HANDLING IN VIRTUAL-8086 MODE)]
      */
-    UINT64 VirtualModeExtensions                                   : 1;
+    UINT32 VirtualModeExtensions                                   : 1;
 #define CR4_VIRTUAL_MODE_EXTENSIONS_BIT                              0
 #define CR4_VIRTUAL_MODE_EXTENSIONS_FLAG                             0x01
 #define CR4_VIRTUAL_MODE_EXTENSIONS_MASK                             0x01
@@ -336,7 +336,7 @@ typedef union
      *
      * @see Vol3B[20.4(PROTECTED-MODE VIRTUAL INTERRUPTS)]
      */
-    UINT64 ProtectedModeVirtualInterrupts                          : 1;
+    UINT32 ProtectedModeVirtualInterrupts                          : 1;
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_BIT                    1
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_FLAG                   0x02
 #define CR4_PROTECTED_MODE_VIRTUAL_INTERRUPTS_MASK                   0x01
@@ -349,7 +349,7 @@ typedef union
      * RDTSC instruction to be executed at any privilege level when clear. This bit also applies to the RDTSCP instruction if
      * supported (if CPUID.80000001H:EDX[27] = 1).
      */
-    UINT64 TimestampDisable                                        : 1;
+    UINT32 TimestampDisable                                        : 1;
 #define CR4_TIMESTAMP_DISABLE_BIT                                    2
 #define CR4_TIMESTAMP_DISABLE_FLAG                                   0x04
 #define CR4_TIMESTAMP_DISABLE_MASK                                   0x01
@@ -364,7 +364,7 @@ typedef union
      *
      * @see Vol3B[17.2.2(Debug Registers DR4 and DR5)]
      */
-    UINT64 DebuggingExtensions                                     : 1;
+    UINT32 DebuggingExtensions                                     : 1;
 #define CR4_DEBUGGING_EXTENSIONS_BIT                                 3
 #define CR4_DEBUGGING_EXTENSIONS_FLAG                                0x08
 #define CR4_DEBUGGING_EXTENSIONS_MASK                                0x01
@@ -377,7 +377,7 @@ typedef union
      *
      * @see Vol3A[4.3(32-BIT PAGING)]
      */
-    UINT64 PageSizeExtensions                                      : 1;
+    UINT32 PageSizeExtensions                                      : 1;
 #define CR4_PAGE_SIZE_EXTENSIONS_BIT                                 4
 #define CR4_PAGE_SIZE_EXTENSIONS_FLAG                                0x10
 #define CR4_PAGE_SIZE_EXTENSIONS_MASK                                0x01
@@ -391,7 +391,7 @@ typedef union
      *
      * @see Vol3A[4(PAGING)]
      */
-    UINT64 PhysicalAddressExtension                                : 1;
+    UINT32 PhysicalAddressExtension                                : 1;
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_BIT                           5
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_FLAG                          0x20
 #define CR4_PHYSICAL_ADDRESS_EXTENSION_MASK                          0x01
@@ -404,7 +404,7 @@ typedef union
      *
      * @see Vol3B[15(MACHINE-CHECK ARCHITECTURE)]
      */
-    UINT64 MachineCheckEnable                                      : 1;
+    UINT32 MachineCheckEnable                                      : 1;
 #define CR4_MACHINE_CHECK_ENABLE_BIT                                 6
 #define CR4_MACHINE_CHECK_ENABLE_FLAG                                0x40
 #define CR4_MACHINE_CHECK_ENABLE_MASK                                0x01
@@ -422,7 +422,7 @@ typedef union
      *
      * @see Vol3A[4.10(CACHING TRANSLATION INFORMATION)]
      */
-    UINT64 PageGlobalEnable                                        : 1;
+    UINT32 PageGlobalEnable                                        : 1;
 #define CR4_PAGE_GLOBAL_ENABLE_BIT                                   7
 #define CR4_PAGE_GLOBAL_ENABLE_FLAG                                  0x80
 #define CR4_PAGE_GLOBAL_ENABLE_MASK                                  0x01
@@ -434,7 +434,7 @@ typedef union
      * [Bit 8] Enables execution of the RDPMC instruction for programs or procedures running at any protection level when set;
      * RDPMC instruction can be executed only at protection level 0 when clear.
      */
-    UINT64 PerformanceMonitoringCounterEnable                      : 1;
+    UINT32 PerformanceMonitoringCounterEnable                      : 1;
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_BIT                8
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_FLAG               0x100
 #define CR4_PERFORMANCE_MONITORING_COUNTER_ENABLE_MASK               0x01
@@ -460,7 +460,7 @@ typedef union
      *          MXCSR registers. Consequently OSFXSR bit indicates that the operating system provides context switch support for
      *          SSE/SSE2/SSE3/SSSE3/SSE4.
      */
-    UINT64 OsFxsaveFxrstorSupport                                  : 1;
+    UINT32 OsFxsaveFxrstorSupport                                  : 1;
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_BIT                            9
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_FLAG                           0x200
 #define CR4_OS_FXSAVE_FXRSTOR_SUPPORT_MASK                           0x01
@@ -476,7 +476,7 @@ typedef union
      * The operating system or executive must explicitly set this flag. If this flag is not set, the processor will generate an
      * invalid opcode exception (\#UD) whenever it detects an unmasked SIMD floating-point exception.
      */
-    UINT64 OsXmmExceptionSupport                                   : 1;
+    UINT32 OsXmmExceptionSupport                                   : 1;
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_BIT                             10
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_FLAG                            0x400
 #define CR4_OS_XMM_EXCEPTION_SUPPORT_MASK                            0x01
@@ -488,12 +488,12 @@ typedef union
      * [Bit 11] When set, the following instructions cannot be executed if CPL > 0: SGDT, SIDT, SLDT, SMSW, and STR. An attempt
      * at such execution causes a generalprotection exception (\#GP).
      */
-    UINT64 UsermodeInstructionPrevention                           : 1;
+    UINT32 UsermodeInstructionPrevention                           : 1;
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_BIT                      11
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_FLAG                     0x800
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_MASK                     0x01
 #define CR4_USERMODE_INSTRUCTION_PREVENTION(_)                       (((_) >> 11) & 0x01)
-    UINT64 Reserved1                                               : 1;
+    UINT32 Reserved1                                               : 1;
 
     /**
      * @brief VMX-Enable
@@ -502,7 +502,7 @@ typedef union
      *
      * @see Vol3C[23(INTRODUCTION TO VIRTUAL MACHINE EXTENSIONS)]
      */
-    UINT64 VmxEnable                                               : 1;
+    UINT32 VmxEnable                                               : 1;
 #define CR4_VMX_ENABLE_BIT                                           13
 #define CR4_VMX_ENABLE_FLAG                                          0x2000
 #define CR4_VMX_ENABLE_MASK                                          0x01
@@ -515,19 +515,19 @@ typedef union
      *
      * @see Vol2[6(SAFER MODE EXTENSIONS REFERENCE)]
      */
-    UINT64 SmxEnable                                               : 1;
+    UINT32 SmxEnable                                               : 1;
 #define CR4_SMX_ENABLE_BIT                                           14
 #define CR4_SMX_ENABLE_FLAG                                          0x4000
 #define CR4_SMX_ENABLE_MASK                                          0x01
 #define CR4_SMX_ENABLE(_)                                            (((_) >> 14) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT32 Reserved2                                               : 1;
 
     /**
      * @brief FSGSBASE-Enable
      *
      * [Bit 16] Enables the instructions RDFSBASE, RDGSBASE, WRFSBASE, and WRGSBASE.
      */
-    UINT64 FsgsbaseEnable                                          : 1;
+    UINT32 FsgsbaseEnable                                          : 1;
 #define CR4_FSGSBASE_ENABLE_BIT                                      16
 #define CR4_FSGSBASE_ENABLE_FLAG                                     0x10000
 #define CR4_FSGSBASE_ENABLE_MASK                                     0x01
@@ -540,7 +540,7 @@ typedef union
      *
      * @see Vol3A[4.10.1(Process-Context Identifiers (PCIDs))]
      */
-    UINT64 PcidEnable                                              : 1;
+    UINT32 PcidEnable                                              : 1;
 #define CR4_PCID_ENABLE_BIT                                          17
 #define CR4_PCID_ENABLE_FLAG                                         0x20000
 #define CR4_PCID_ENABLE_MASK                                         0x01
@@ -559,12 +559,12 @@ typedef union
      * @see Vol3A[2.6(EXTENDED CONTROL REGISTERS (INCLUDING XCR0))]
      * @see Vol3A[13(SYSTEM PROGRAMMING FOR INSTRUCTION SET EXTENSIONS AND PROCESSOR EXTENDED)]
      */
-    UINT64 OsXsave                                                 : 1;
+    UINT32 OsXsave                                                 : 1;
 #define CR4_OS_XSAVE_BIT                                             18
 #define CR4_OS_XSAVE_FLAG                                            0x40000
 #define CR4_OS_XSAVE_MASK                                            0x01
 #define CR4_OS_XSAVE(_)                                              (((_) >> 18) & 0x01)
-    UINT64 Reserved3                                               : 1;
+    UINT32 Reserved3                                               : 1;
 
     /**
      * @brief SMEP-Enable
@@ -573,7 +573,7 @@ typedef union
      *
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT64 SmepEnable                                              : 1;
+    UINT32 SmepEnable                                              : 1;
 #define CR4_SMEP_ENABLE_BIT                                          20
 #define CR4_SMEP_ENABLE_FLAG                                         0x100000
 #define CR4_SMEP_ENABLE_MASK                                         0x01
@@ -586,7 +586,7 @@ typedef union
      *
      * @see Vol3A[4.6(ACCESS RIGHTS)]
      */
-    UINT64 SmapEnable                                              : 1;
+    UINT32 SmapEnable                                              : 1;
 #define CR4_SMAP_ENABLE_BIT                                          21
 #define CR4_SMAP_ENABLE_FLAG                                         0x200000
 #define CR4_SMAP_ENABLE_MASK                                         0x01
@@ -599,7 +599,7 @@ typedef union
      * each protection key, whether user-mode linear addresses with that protection key can be read or written. This bit also
      * enables access to the PKRU register using the RDPKRU and WRPKRU instructions.
      */
-    UINT64 ProtectionKeyEnable                                     : 1;
+    UINT32 ProtectionKeyEnable                                     : 1;
 #define CR4_PROTECTION_KEY_ENABLE_BIT                                22
 #define CR4_PROTECTION_KEY_ENABLE_FLAG                               0x400000
 #define CR4_PROTECTION_KEY_ENABLE_MASK                               0x01
@@ -622,7 +622,7 @@ typedef union
      * means all interrupts are enabled. This field is available in 64- bit mode. A value of 15 means all interrupts will be
      * disabled.
      */
-    UINT64 TaskPriorityLevel                                       : 4;
+    UINT32 TaskPriorityLevel                                       : 4;
 #define CR8_TASK_PRIORITY_LEVEL_BIT                                  0
 #define CR8_TASK_PRIORITY_LEVEL_FLAG                                 0x0F
 #define CR8_TASK_PRIORITY_LEVEL_MASK                                 0x0F
@@ -633,7 +633,7 @@ typedef union
      *
      * [Bits 63:4] Reserved and must be written with zeros. Failure to do this causes a general-protection exception.
      */
-    UINT64 Reserved                                                : 60;
+    UINT32 Reserved                                                : 60;
 #define CR8_RESERVED_BIT                                             4
 #define CR8_RESERVED_FLAG                                            0xFFFFFFFFFFFFFFF0
 #define CR8_RESERVED_MASK                                            0xFFFFFFFFFFFFFFF
@@ -6152,22 +6152,22 @@ typedef union
 {
   struct
   {
-    UINT64 Reserved1                                               : 8;
+    UINT32 Reserved1                                               : 8;
 
     /**
      * [Bit 8] BSP flag.
      */
-    UINT64 BspFlag                                                 : 1;
+    UINT32 BspFlag                                                 : 1;
 #define IA32_APIC_BASE_BSP_FLAG_BIT                                  8
 #define IA32_APIC_BASE_BSP_FLAG_FLAG                                 0x100
 #define IA32_APIC_BASE_BSP_FLAG_MASK                                 0x01
 #define IA32_APIC_BASE_BSP_FLAG(_)                                   (((_) >> 8) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT32 Reserved2                                               : 1;
 
     /**
      * [Bit 10] Enable x2APIC mode.
      */
-    UINT64 EnableX2ApicMode                                        : 1;
+    UINT32 EnableX2ApicMode                                        : 1;
 #define IA32_APIC_BASE_ENABLE_X2APIC_MODE_BIT                        10
 #define IA32_APIC_BASE_ENABLE_X2APIC_MODE_FLAG                       0x400
 #define IA32_APIC_BASE_ENABLE_X2APIC_MODE_MASK                       0x01
@@ -6176,7 +6176,7 @@ typedef union
     /**
      * [Bit 11] APIC Global Enable.
      */
-    UINT64 ApicGlobalEnable                                        : 1;
+    UINT32 ApicGlobalEnable                                        : 1;
 #define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_BIT                        11
 #define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_FLAG                       0x800
 #define IA32_APIC_BASE_APIC_GLOBAL_ENABLE_MASK                       0x01
@@ -6185,7 +6185,7 @@ typedef union
     /**
      * [Bits 47:12] APIC Base.
      */
-    UINT64 ApicBase                                                : 36;
+    UINT32 ApicBase                                                : 36;
 #define IA32_APIC_BASE_APIC_BASE_BIT                                 12
 #define IA32_APIC_BASE_APIC_BASE_FLAG                                0xFFFFFFFFF000
 #define IA32_APIC_BASE_APIC_BASE_MASK                                0xFFFFFFFFF
@@ -6219,7 +6219,7 @@ typedef union
      *       not deasserted.
      * @remarks If any one enumeration condition for defined bit field position greater than bit 0 holds.
      */
-    UINT64 LockBit                                                 : 1;
+    UINT32 LockBit                                                 : 1;
 #define IA32_FEATURE_CONTROL_LOCK_BIT_BIT                            0
 #define IA32_FEATURE_CONTROL_LOCK_BIT_FLAG                           0x01
 #define IA32_FEATURE_CONTROL_LOCK_BIT_MASK                           0x01
@@ -6234,7 +6234,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[5] = 1 && CPUID.01H:ECX[6] = 1
      */
-    UINT64 EnableVmxInsideSmx                                      : 1;
+    UINT32 EnableVmxInsideSmx                                      : 1;
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_BIT               1
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_FLAG              0x02
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_INSIDE_SMX_MASK              0x01
@@ -6248,12 +6248,12 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[5] = 1
      */
-    UINT64 EnableVmxOutsideSmx                                     : 1;
+    UINT32 EnableVmxOutsideSmx                                     : 1;
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_BIT              2
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_FLAG             0x04
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX_MASK             0x01
 #define IA32_FEATURE_CONTROL_ENABLE_VMX_OUTSIDE_SMX(_)               (((_) >> 2) & 0x01)
-    UINT64 Reserved1                                               : 5;
+    UINT32 Reserved1                                               : 5;
 
     /**
      * @brief SENTER Local Function Enable <b>(R/WL)</b>
@@ -6263,7 +6263,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[6] = 1
      */
-    UINT64 SenterLocalFunctionEnables                              : 7;
+    UINT32 SenterLocalFunctionEnables                              : 7;
 #define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_BIT       8
 #define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_FLAG      0x7F00
 #define IA32_FEATURE_CONTROL_SENTER_LOCAL_FUNCTION_ENABLES_MASK      0x7F
@@ -6276,12 +6276,12 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[6] = 1
      */
-    UINT64 SenterGlobalEnable                                      : 1;
+    UINT32 SenterGlobalEnable                                      : 1;
 #define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_BIT                15
 #define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_FLAG               0x8000
 #define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE_MASK               0x01
 #define IA32_FEATURE_CONTROL_SENTER_GLOBAL_ENABLE(_)                 (((_) >> 15) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT32 Reserved2                                               : 1;
 
     /**
      * @brief SGX Launch Control Enable <b>(R/WL)</b>
@@ -6290,7 +6290,7 @@ typedef union
      *
      * @remarks If CPUID.(EAX=07H, ECX=0H): ECX[30] = 1
      */
-    UINT64 SgxLaunchControlEnable                                  : 1;
+    UINT32 SgxLaunchControlEnable                                  : 1;
 #define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_BIT           17
 #define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_FLAG          0x20000
 #define IA32_FEATURE_CONTROL_SGX_LAUNCH_CONTROL_ENABLE_MASK          0x01
@@ -6303,12 +6303,12 @@ typedef union
      *
      * @remarks If CPUID.(EAX=07H, ECX=0H): EBX[2] = 1
      */
-    UINT64 SgxGlobalEnable                                         : 1;
+    UINT32 SgxGlobalEnable                                         : 1;
 #define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_BIT                   18
 #define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_FLAG                  0x40000
 #define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE_MASK                  0x01
 #define IA32_FEATURE_CONTROL_SGX_GLOBAL_ENABLE(_)                    (((_) >> 18) & 0x01)
-    UINT64 Reserved3                                               : 1;
+    UINT32 Reserved3                                               : 1;
 
     /**
      * @brief LMCE On <b>(R/WL)</b>
@@ -6318,7 +6318,7 @@ typedef union
      *
      * @remarks If IA32_MCG_CAP[27] = 1
      */
-    UINT64 LmceOn                                                  : 1;
+    UINT32 LmceOn                                                  : 1;
 #define IA32_FEATURE_CONTROL_LMCE_ON_BIT                             20
 #define IA32_FEATURE_CONTROL_LMCE_ON_FLAG                            0x100000
 #define IA32_FEATURE_CONTROL_LMCE_ON_MASK                            0x01
@@ -6427,12 +6427,12 @@ typedef union
      * @see Vol3C[34.15.6(Activating the Dual-Monitor Treatment)]
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
-    UINT64 Valid                                                   : 1;
+    UINT32 Valid                                                   : 1;
 #define IA32_SMM_MONITOR_CTL_VALID_BIT                               0
 #define IA32_SMM_MONITOR_CTL_VALID_FLAG                              0x01
 #define IA32_SMM_MONITOR_CTL_VALID_MASK                              0x01
 #define IA32_SMM_MONITOR_CTL_VALID(_)                                (((_) >> 0) & 0x01)
-    UINT64 Reserved1                                               : 1;
+    UINT32 Reserved1                                               : 1;
 
     /**
      * @brief Controls SMI unblocking by VMXOFF
@@ -6444,12 +6444,12 @@ typedef union
      * @see Vol3C[34.14.4(VMXOFF and SMI Unblocking)]
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
-    UINT64 SmiUnblockingByVmxoff                                   : 1;
+    UINT32 SmiUnblockingByVmxoff                                   : 1;
 #define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_BIT            2
 #define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_FLAG           0x04
 #define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF_MASK           0x01
 #define IA32_SMM_MONITOR_CTL_SMI_UNBLOCKING_BY_VMXOFF(_)             (((_) >> 2) & 0x01)
-    UINT64 Reserved2                                               : 9;
+    UINT32 Reserved2                                               : 9;
 
     /**
      * @brief MSEG Base <b>(R/W)</b>
@@ -6458,7 +6458,7 @@ typedef union
      *
      * @see Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)] (reference)
      */
-    UINT64 MsegBase                                                : 20;
+    UINT32 MsegBase                                                : 20;
 #define IA32_SMM_MONITOR_CTL_MSEG_BASE_BIT                           12
 #define IA32_SMM_MONITOR_CTL_MSEG_BASE_FLAG                          0xFFFFF000
 #define IA32_SMM_MONITOR_CTL_MSEG_BASE_MASK                          0xFFFFF
@@ -6593,7 +6593,7 @@ typedef union
      *
      * [Bits 7:0] Indicates the number of variable ranges implemented on the processor.
      */
-    UINT64 VariableRangeCount                                      : 8;
+    UINT32 VariableRangeCount                                      : 8;
 #define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT_BIT              0
 #define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT_FLAG             0xFF
 #define IA32_MTRR_CAPABILITIES_VARIABLE_RANGE_COUNT_MASK             0xFF
@@ -6605,19 +6605,19 @@ typedef union
      * [Bit 8] Fixed range MTRRs (IA32_MTRR_FIX64K_00000 through IA32_MTRR_FIX4K_0F8000) are supported when set; no fixed range
      * registers are supported when clear.
      */
-    UINT64 FixedRangeSupported                                     : 1;
+    UINT32 FixedRangeSupported                                     : 1;
 #define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED_BIT             8
 #define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED_FLAG            0x100
 #define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED_MASK            0x01
 #define IA32_MTRR_CAPABILITIES_FIXED_RANGE_SUPPORTED(_)              (((_) >> 8) & 0x01)
-    UINT64 Reserved1                                               : 1;
+    UINT32 Reserved1                                               : 1;
 
     /**
      * @brief WC (write combining) flag
      *
      * [Bit 10] The write-combining (WC) memory type is supported when set; the WC type is not supported when clear.
      */
-    UINT64 WcSupported                                             : 1;
+    UINT32 WcSupported                                             : 1;
 #define IA32_MTRR_CAPABILITIES_WC_SUPPORTED_BIT                      10
 #define IA32_MTRR_CAPABILITIES_WC_SUPPORTED_FLAG                     0x400
 #define IA32_MTRR_CAPABILITIES_WC_SUPPORTED_MASK                     0x01
@@ -6629,7 +6629,7 @@ typedef union
      * [Bit 11] The system-management range register (SMRR) interface is supported when bit 11 is set; the SMRR interface is
      * not supported when clear.
      */
-    UINT64 SmrrSupported                                           : 1;
+    UINT32 SmrrSupported                                           : 1;
 #define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED_BIT                    11
 #define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED_FLAG                   0x800
 #define IA32_MTRR_CAPABILITIES_SMRR_SUPPORTED_MASK                   0x01
@@ -6710,7 +6710,7 @@ typedef union
     /**
      * [Bits 7:0] Number of reporting banks.
      */
-    UINT64 Count                                                   : 8;
+    UINT32 Count                                                   : 8;
 #define IA32_MCG_CAP_COUNT_BIT                                       0
 #define IA32_MCG_CAP_COUNT_FLAG                                      0xFF
 #define IA32_MCG_CAP_COUNT_MASK                                      0xFF
@@ -6719,7 +6719,7 @@ typedef union
     /**
      * [Bit 8] IA32_MCG_CTL is present if this bit is set.
      */
-    UINT64 McgCtlP                                                 : 1;
+    UINT32 McgCtlP                                                 : 1;
 #define IA32_MCG_CAP_MCG_CTL_P_BIT                                   8
 #define IA32_MCG_CAP_MCG_CTL_P_FLAG                                  0x100
 #define IA32_MCG_CAP_MCG_CTL_P_MASK                                  0x01
@@ -6728,7 +6728,7 @@ typedef union
     /**
      * [Bit 9] Extended machine check state registers are present if this bit is set.
      */
-    UINT64 McgExtP                                                 : 1;
+    UINT32 McgExtP                                                 : 1;
 #define IA32_MCG_CAP_MCG_EXT_P_BIT                                   9
 #define IA32_MCG_CAP_MCG_EXT_P_FLAG                                  0x200
 #define IA32_MCG_CAP_MCG_EXT_P_MASK                                  0x01
@@ -6739,7 +6739,7 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 McpCmciP                                                : 1;
+    UINT32 McpCmciP                                                : 1;
 #define IA32_MCG_CAP_MCP_CMCI_P_BIT                                  10
 #define IA32_MCG_CAP_MCP_CMCI_P_FLAG                                 0x400
 #define IA32_MCG_CAP_MCP_CMCI_P_MASK                                 0x01
@@ -6748,17 +6748,17 @@ typedef union
     /**
      * [Bit 11] Threshold-based error status register are present if this bit is set.
      */
-    UINT64 McgTesP                                                 : 1;
+    UINT32 McgTesP                                                 : 1;
 #define IA32_MCG_CAP_MCG_TES_P_BIT                                   11
 #define IA32_MCG_CAP_MCG_TES_P_FLAG                                  0x800
 #define IA32_MCG_CAP_MCG_TES_P_MASK                                  0x01
 #define IA32_MCG_CAP_MCG_TES_P(_)                                    (((_) >> 11) & 0x01)
-    UINT64 Reserved1                                               : 4;
+    UINT32 Reserved1                                               : 4;
 
     /**
      * [Bits 23:16] Number of extended machine check state registers present.
      */
-    UINT64 McgExtCnt                                               : 8;
+    UINT32 McgExtCnt                                               : 8;
 #define IA32_MCG_CAP_MCG_EXT_CNT_BIT                                 16
 #define IA32_MCG_CAP_MCG_EXT_CNT_FLAG                                0xFF0000
 #define IA32_MCG_CAP_MCG_EXT_CNT_MASK                                0xFF
@@ -6767,12 +6767,12 @@ typedef union
     /**
      * [Bit 24] The processor supports software error recovery if this bit is set.
      */
-    UINT64 McgSerP                                                 : 1;
+    UINT32 McgSerP                                                 : 1;
 #define IA32_MCG_CAP_MCG_SER_P_BIT                                   24
 #define IA32_MCG_CAP_MCG_SER_P_FLAG                                  0x1000000
 #define IA32_MCG_CAP_MCG_SER_P_MASK                                  0x01
 #define IA32_MCG_CAP_MCG_SER_P(_)                                    (((_) >> 24) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT32 Reserved2                                               : 1;
 
     /**
      * [Bit 26] Indicates that the processor allows platform firmware to be invoked when an error is detected so that it may
@@ -6781,7 +6781,7 @@ typedef union
      *
      * @remarks 06_3EH
      */
-    UINT64 McgElogP                                                : 1;
+    UINT32 McgElogP                                                : 1;
 #define IA32_MCG_CAP_MCG_ELOG_P_BIT                                  26
 #define IA32_MCG_CAP_MCG_ELOG_P_FLAG                                 0x4000000
 #define IA32_MCG_CAP_MCG_ELOG_P_MASK                                 0x01
@@ -6793,7 +6793,7 @@ typedef union
      *
      * @remarks 06_3EH
      */
-    UINT64 McgLmceP                                                : 1;
+    UINT32 McgLmceP                                                : 1;
 #define IA32_MCG_CAP_MCG_LMCE_P_BIT                                  27
 #define IA32_MCG_CAP_MCG_LMCE_P_FLAG                                 0x8000000
 #define IA32_MCG_CAP_MCG_LMCE_P_MASK                                 0x01
@@ -6821,7 +6821,7 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 Ripv                                                    : 1;
+    UINT32 Ripv                                                    : 1;
 #define IA32_MCG_STATUS_RIPV_BIT                                     0
 #define IA32_MCG_STATUS_RIPV_FLAG                                    0x01
 #define IA32_MCG_STATUS_RIPV_MASK                                    0x01
@@ -6832,7 +6832,7 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 Eipv                                                    : 1;
+    UINT32 Eipv                                                    : 1;
 #define IA32_MCG_STATUS_EIPV_BIT                                     1
 #define IA32_MCG_STATUS_EIPV_FLAG                                    0x02
 #define IA32_MCG_STATUS_EIPV_MASK                                    0x01
@@ -6843,7 +6843,7 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 Mcip                                                    : 1;
+    UINT32 Mcip                                                    : 1;
 #define IA32_MCG_STATUS_MCIP_BIT                                     2
 #define IA32_MCG_STATUS_MCIP_FLAG                                    0x04
 #define IA32_MCG_STATUS_MCIP_MASK                                    0x01
@@ -6852,7 +6852,7 @@ typedef union
     /**
      * [Bit 3] If IA32_MCG_CAP.LMCE_P[27] = 1.
      */
-    UINT64 LmceS                                                   : 1;
+    UINT32 LmceS                                                   : 1;
 #define IA32_MCG_STATUS_LMCE_S_BIT                                   3
 #define IA32_MCG_STATUS_LMCE_S_FLAG                                  0x08
 #define IA32_MCG_STATUS_LMCE_S_MASK                                  0x01
@@ -6891,7 +6891,7 @@ typedef union
     /**
      * [Bits 7:0] Selects a performance event logic unit.
      */
-    UINT64 EventSelect                                             : 8;
+    UINT32 EventSelect                                             : 8;
 #define IA32_PERFEVTSEL_EVENT_SELECT_BIT                             0
 #define IA32_PERFEVTSEL_EVENT_SELECT_FLAG                            0xFF
 #define IA32_PERFEVTSEL_EVENT_SELECT_MASK                            0xFF
@@ -6900,7 +6900,7 @@ typedef union
     /**
      * [Bits 15:8] Qualifies the microarchitectural condition to detect on the selected event logic.
      */
-    UINT64 UMask                                                   : 8;
+    UINT32 UMask                                                   : 8;
 #define IA32_PERFEVTSEL_U_MASK_BIT                                   8
 #define IA32_PERFEVTSEL_U_MASK_FLAG                                  0xFF00
 #define IA32_PERFEVTSEL_U_MASK_MASK                                  0xFF
@@ -6909,7 +6909,7 @@ typedef union
     /**
      * [Bit 16] Counts while in privilege level is not ring 0.
      */
-    UINT64 Usr                                                     : 1;
+    UINT32 Usr                                                     : 1;
 #define IA32_PERFEVTSEL_USR_BIT                                      16
 #define IA32_PERFEVTSEL_USR_FLAG                                     0x10000
 #define IA32_PERFEVTSEL_USR_MASK                                     0x01
@@ -6918,7 +6918,7 @@ typedef union
     /**
      * [Bit 17] Counts while in privilege level is ring 0.
      */
-    UINT64 Os                                                      : 1;
+    UINT32 Os                                                      : 1;
 #define IA32_PERFEVTSEL_OS_BIT                                       17
 #define IA32_PERFEVTSEL_OS_FLAG                                      0x20000
 #define IA32_PERFEVTSEL_OS_MASK                                      0x01
@@ -6927,7 +6927,7 @@ typedef union
     /**
      * [Bit 18] Enables edge detection if set.
      */
-    UINT64 Edge                                                    : 1;
+    UINT32 Edge                                                    : 1;
 #define IA32_PERFEVTSEL_EDGE_BIT                                     18
 #define IA32_PERFEVTSEL_EDGE_FLAG                                    0x40000
 #define IA32_PERFEVTSEL_EDGE_MASK                                    0x01
@@ -6936,7 +6936,7 @@ typedef union
     /**
      * [Bit 19] Enables pin control.
      */
-    UINT64 Pc                                                      : 1;
+    UINT32 Pc                                                      : 1;
 #define IA32_PERFEVTSEL_PC_BIT                                       19
 #define IA32_PERFEVTSEL_PC_FLAG                                      0x80000
 #define IA32_PERFEVTSEL_PC_MASK                                      0x01
@@ -6945,7 +6945,7 @@ typedef union
     /**
      * [Bit 20] Enables interrupt on counter overflow.
      */
-    UINT64 Intr                                                    : 1;
+    UINT32 Intr                                                    : 1;
 #define IA32_PERFEVTSEL_INTR_BIT                                     20
 #define IA32_PERFEVTSEL_INTR_FLAG                                    0x100000
 #define IA32_PERFEVTSEL_INTR_MASK                                    0x01
@@ -6956,7 +6956,7 @@ typedef union
      * sharing a processor core. When set to 0, the counter only increments the associated event conditions occurring in the
      * logical processor which programmed the MSR.
      */
-    UINT64 AnyThread                                               : 1;
+    UINT32 AnyThread                                               : 1;
 #define IA32_PERFEVTSEL_ANY_THREAD_BIT                               21
 #define IA32_PERFEVTSEL_ANY_THREAD_FLAG                              0x200000
 #define IA32_PERFEVTSEL_ANY_THREAD_MASK                              0x01
@@ -6965,7 +6965,7 @@ typedef union
     /**
      * [Bit 22] Enables the corresponding performance counter to commence counting when this bit is set.
      */
-    UINT64 En                                                      : 1;
+    UINT32 En                                                      : 1;
 #define IA32_PERFEVTSEL_EN_BIT                                       22
 #define IA32_PERFEVTSEL_EN_FLAG                                      0x400000
 #define IA32_PERFEVTSEL_EN_MASK                                      0x01
@@ -6974,7 +6974,7 @@ typedef union
     /**
      * [Bit 23] Invert the CMASK.
      */
-    UINT64 Inv                                                     : 1;
+    UINT32 Inv                                                     : 1;
 #define IA32_PERFEVTSEL_INV_BIT                                      23
 #define IA32_PERFEVTSEL_INV_FLAG                                     0x800000
 #define IA32_PERFEVTSEL_INV_MASK                                     0x01
@@ -6984,7 +6984,7 @@ typedef union
      * [Bits 31:24] When CMASK is not zero, the corresponding performance counter increments each cycle if the event count is
      * greater than or equal to the CMASK.
      */
-    UINT64 Cmask                                                   : 8;
+    UINT32 Cmask                                                   : 8;
 #define IA32_PERFEVTSEL_CMASK_BIT                                    24
 #define IA32_PERFEVTSEL_CMASK_FLAG                                   0xFF000000
 #define IA32_PERFEVTSEL_CMASK_MASK                                   0xFF
@@ -7033,19 +7033,19 @@ typedef union
     /**
      * [Bits 15:0] Target performance State Value.
      */
-    UINT64 TargetStateValue                                        : 16;
+    UINT32 TargetStateValue                                        : 16;
 #define IA32_PERF_CTL_TARGET_STATE_VALUE_BIT                         0
 #define IA32_PERF_CTL_TARGET_STATE_VALUE_FLAG                        0xFFFF
 #define IA32_PERF_CTL_TARGET_STATE_VALUE_MASK                        0xFFFF
 #define IA32_PERF_CTL_TARGET_STATE_VALUE(_)                          (((_) >> 0) & 0xFFFF)
-    UINT64 Reserved1                                               : 16;
+    UINT32 Reserved1                                               : 16;
 
     /**
      * [Bit 32] IDA Engage.
      *
      * @remarks 06_0FH (Mobile only)
      */
-    UINT64 IdaEngage                                               : 1;
+    UINT32 IdaEngage                                               : 1;
 #define IA32_PERF_CTL_IDA_ENGAGE_BIT                                 32
 #define IA32_PERF_CTL_IDA_ENGAGE_FLAG                                0x100000000
 #define IA32_PERF_CTL_IDA_ENGAGE_MASK                                0x01
@@ -7074,7 +7074,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[5] = 1
      */
-    UINT64 ExtendedOnDemandClockModulationDutyCycle                : 1;
+    UINT32 ExtendedOnDemandClockModulationDutyCycle                : 1;
 #define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 0
 #define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_FLAG 0x01
 #define IA32_CLOCK_MODULATION_EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x01
@@ -7087,7 +7087,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 OnDemandClockModulationDutyCycle                        : 3;
+    UINT32 OnDemandClockModulationDutyCycle                        : 3;
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_BIT 1
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_FLAG 0x0E
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE_MASK 0x07
@@ -7100,7 +7100,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 OnDemandClockModulationEnable                           : 1;
+    UINT32 OnDemandClockModulationEnable                           : 1;
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_BIT  4
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_FLAG 0x10
 #define IA32_CLOCK_MODULATION_ON_DEMAND_CLOCK_MODULATION_ENABLE_MASK 0x01
@@ -7132,7 +7132,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 HighTemperatureInterruptEnable                          : 1;
+    UINT32 HighTemperatureInterruptEnable                          : 1;
 #define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT   0
 #define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_FLAG  0x01
 #define IA32_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK  0x01
@@ -7143,7 +7143,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 LowTemperatureInterruptEnable                           : 1;
+    UINT32 LowTemperatureInterruptEnable                           : 1;
 #define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT    1
 #define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_FLAG   0x02
 #define IA32_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK   0x01
@@ -7154,7 +7154,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ProchotInterruptEnable                                  : 1;
+    UINT32 ProchotInterruptEnable                                  : 1;
 #define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT            2
 #define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_FLAG           0x04
 #define IA32_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_MASK           0x01
@@ -7165,7 +7165,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ForceprInterruptEnable                                  : 1;
+    UINT32 ForceprInterruptEnable                                  : 1;
 #define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_BIT            3
 #define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_FLAG           0x08
 #define IA32_THERM_INTERRUPT_FORCEPR_INTERRUPT_ENABLE_MASK           0x01
@@ -7176,19 +7176,19 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 CriticalTemperatureInterruptEnable                      : 1;
+    UINT32 CriticalTemperatureInterruptEnable                      : 1;
 #define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_BIT 4
 #define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x10
 #define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
 #define IA32_THERM_INTERRUPT_CRITICAL_TEMPERATURE_INTERRUPT_ENABLE(_) (((_) >> 4) & 0x01)
-    UINT64 Reserved1                                               : 3;
+    UINT32 Reserved1                                               : 3;
 
     /**
      * [Bits 14:8] Threshold \#1 Value
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 Threshold1Value                                         : 7;
+    UINT32 Threshold1Value                                         : 7;
 #define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT                    8
 #define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_FLAG                   0x7F00
 #define IA32_THERM_INTERRUPT_THRESHOLD1_VALUE_MASK                   0x7F
@@ -7199,7 +7199,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 Threshold1InterruptEnable                               : 1;
+    UINT32 Threshold1InterruptEnable                               : 1;
 #define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT         15
 #define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_FLAG        0x8000
 #define IA32_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_MASK        0x01
@@ -7210,7 +7210,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 Threshold2Value                                         : 7;
+    UINT32 Threshold2Value                                         : 7;
 #define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT                    16
 #define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_FLAG                   0x7F0000
 #define IA32_THERM_INTERRUPT_THRESHOLD2_VALUE_MASK                   0x7F
@@ -7221,7 +7221,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 Threshold2InterruptEnable                               : 1;
+    UINT32 Threshold2InterruptEnable                               : 1;
 #define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT         23
 #define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_FLAG        0x800000
 #define IA32_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_MASK        0x01
@@ -7232,7 +7232,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[4] = 1
      */
-    UINT64 PowerLimitNotificationEnable                            : 1;
+    UINT32 PowerLimitNotificationEnable                            : 1;
 #define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT     24
 #define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_FLAG    0x1000000
 #define IA32_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_MASK    0x01
@@ -7264,7 +7264,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ThermalStatus                                           : 1;
+    UINT32 ThermalStatus                                           : 1;
 #define IA32_THERM_STATUS_THERMAL_STATUS_BIT                         0
 #define IA32_THERM_STATUS_THERMAL_STATUS_FLAG                        0x01
 #define IA32_THERM_STATUS_THERMAL_STATUS_MASK                        0x01
@@ -7275,7 +7275,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ThermalStatusLog                                        : 1;
+    UINT32 ThermalStatusLog                                        : 1;
 #define IA32_THERM_STATUS_THERMAL_STATUS_LOG_BIT                     1
 #define IA32_THERM_STATUS_THERMAL_STATUS_LOG_FLAG                    0x02
 #define IA32_THERM_STATUS_THERMAL_STATUS_LOG_MASK                    0x01
@@ -7286,7 +7286,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ProchotForceprEvent                                     : 1;
+    UINT32 ProchotForceprEvent                                     : 1;
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_BIT                  2
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_FLAG                 0x04
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_EVENT_MASK                 0x01
@@ -7297,7 +7297,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 ProchotForceprLog                                       : 1;
+    UINT32 ProchotForceprLog                                       : 1;
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_BIT                    3
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_FLAG                   0x08
 #define IA32_THERM_STATUS_PROCHOT_FORCEPR_LOG_MASK                   0x01
@@ -7308,7 +7308,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 CriticalTemperatureStatus                               : 1;
+    UINT32 CriticalTemperatureStatus                               : 1;
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT            4
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_FLAG           0x10
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_MASK           0x01
@@ -7319,7 +7319,7 @@ typedef union
      *
      * @remarks If CPUID.01H:EDX[22] = 1
      */
-    UINT64 CriticalTemperatureStatusLog                            : 1;
+    UINT32 CriticalTemperatureStatusLog                            : 1;
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT        5
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_FLAG       0x20
 #define IA32_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_MASK       0x01
@@ -7330,7 +7330,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[8] = 1
      */
-    UINT64 ThermalThreshold1Status                                 : 1;
+    UINT32 ThermalThreshold1Status                                 : 1;
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT              6
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_FLAG             0x40
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_MASK             0x01
@@ -7341,7 +7341,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[8] = 1
      */
-    UINT64 ThermalThreshold1Log                                    : 1;
+    UINT32 ThermalThreshold1Log                                    : 1;
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT                 7
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_FLAG                0x80
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD1_LOG_MASK                0x01
@@ -7352,7 +7352,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[8] = 1
      */
-    UINT64 ThermalThreshold2Status                                 : 1;
+    UINT32 ThermalThreshold2Status                                 : 1;
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT              8
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_FLAG             0x100
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_MASK             0x01
@@ -7363,7 +7363,7 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[8] = 1
      */
-    UINT64 ThermalThreshold2Log                                    : 1;
+    UINT32 ThermalThreshold2Log                                    : 1;
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT                 9
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_FLAG                0x200
 #define IA32_THERM_STATUS_THERMAL_THRESHOLD2_LOG_MASK                0x01
@@ -7374,7 +7374,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[4] = 1
      */
-    UINT64 PowerLimitationStatus                                   : 1;
+    UINT32 PowerLimitationStatus                                   : 1;
 #define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_BIT                10
 #define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_FLAG               0x400
 #define IA32_THERM_STATUS_POWER_LIMITATION_STATUS_MASK               0x01
@@ -7385,7 +7385,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[4] = 1
      */
-    UINT64 PowerLimitationLog                                      : 1;
+    UINT32 PowerLimitationLog                                      : 1;
 #define IA32_THERM_STATUS_POWER_LIMITATION_LOG_BIT                   11
 #define IA32_THERM_STATUS_POWER_LIMITATION_LOG_FLAG                  0x800
 #define IA32_THERM_STATUS_POWER_LIMITATION_LOG_MASK                  0x01
@@ -7396,7 +7396,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[7] = 1
      */
-    UINT64 CurrentLimitStatus                                      : 1;
+    UINT32 CurrentLimitStatus                                      : 1;
 #define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_BIT                   12
 #define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_FLAG                  0x1000
 #define IA32_THERM_STATUS_CURRENT_LIMIT_STATUS_MASK                  0x01
@@ -7407,7 +7407,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[7] = 1
      */
-    UINT64 CurrentLimitLog                                         : 1;
+    UINT32 CurrentLimitLog                                         : 1;
 #define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_BIT                      13
 #define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_FLAG                     0x2000
 #define IA32_THERM_STATUS_CURRENT_LIMIT_LOG_MASK                     0x01
@@ -7418,7 +7418,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[7] = 1
      */
-    UINT64 CrossDomainLimitStatus                                  : 1;
+    UINT32 CrossDomainLimitStatus                                  : 1;
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_BIT              14
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_FLAG             0x4000
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_STATUS_MASK             0x01
@@ -7429,7 +7429,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[7] = 1
      */
-    UINT64 CrossDomainLimitLog                                     : 1;
+    UINT32 CrossDomainLimitLog                                     : 1;
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_BIT                 15
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_FLAG                0x8000
 #define IA32_THERM_STATUS_CROSS_DOMAIN_LIMIT_LOG_MASK                0x01
@@ -7440,19 +7440,19 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[0] = 1
      */
-    UINT64 DigitalReadout                                          : 7;
+    UINT32 DigitalReadout                                          : 7;
 #define IA32_THERM_STATUS_DIGITAL_READOUT_BIT                        16
 #define IA32_THERM_STATUS_DIGITAL_READOUT_FLAG                       0x7F0000
 #define IA32_THERM_STATUS_DIGITAL_READOUT_MASK                       0x7F
 #define IA32_THERM_STATUS_DIGITAL_READOUT(_)                         (((_) >> 16) & 0x7F)
-    UINT64 Reserved1                                               : 4;
+    UINT32 Reserved1                                               : 4;
 
     /**
      * [Bits 30:27] Resolution in Degrees Celsius
      *
      * @remarks If CPUID.06H:EAX[0] = 1
      */
-    UINT64 ResolutionInDegreesCelsius                              : 4;
+    UINT32 ResolutionInDegreesCelsius                              : 4;
 #define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_BIT          27
 #define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_FLAG         0x78000000
 #define IA32_THERM_STATUS_RESOLUTION_IN_DEGREES_CELSIUS_MASK         0x0F
@@ -7463,7 +7463,7 @@ typedef union
      *
      * @remarks If CPUID.06H:EAX[0] = 1
      */
-    UINT64 ReadingValid                                            : 1;
+    UINT32 ReadingValid                                            : 1;
 #define IA32_THERM_STATUS_READING_VALID_BIT                          31
 #define IA32_THERM_STATUS_READING_VALID_FLAG                         0x80000000
 #define IA32_THERM_STATUS_READING_VALID_MASK                         0x01
@@ -7494,12 +7494,12 @@ typedef union
      *
      * @remarks 0F_0H
      */
-    UINT64 FastStringsEnable                                       : 1;
+    UINT32 FastStringsEnable                                       : 1;
 #define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_BIT                     0
 #define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_FLAG                    0x01
 #define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE_MASK                    0x01
 #define IA32_MISC_ENABLE_FAST_STRINGS_ENABLE(_)                      (((_) >> 0) & 0x01)
-    UINT64 Reserved1                                               : 2;
+    UINT32 Reserved1                                               : 2;
 
     /**
      * @brief Automatic Thermal Control Circuit Enable <b>(R/W)</b>
@@ -7512,12 +7512,12 @@ typedef union
      *       thermal throttling will still be activated. The default value of this field varies with product.
      * @remarks 0F_0H
      */
-    UINT64 AutomaticThermalControlCircuitEnable                    : 1;
+    UINT32 AutomaticThermalControlCircuitEnable                    : 1;
 #define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_BIT 3
 #define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_FLAG 0x08
 #define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE_MASK 0x01
 #define IA32_MISC_ENABLE_AUTOMATIC_THERMAL_CONTROL_CIRCUIT_ENABLE(_) (((_) >> 3) & 0x01)
-    UINT64 Reserved2                                               : 3;
+    UINT32 Reserved2                                               : 3;
 
     /**
      * @brief Performance Monitoring Available <b>(R)</b>
@@ -7527,12 +7527,12 @@ typedef union
      *
      * @remarks 0F_0H
      */
-    UINT64 PerformanceMonitoringAvailable                          : 1;
+    UINT32 PerformanceMonitoringAvailable                          : 1;
 #define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_BIT        7
 #define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_FLAG       0x80
 #define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE_MASK       0x01
 #define IA32_MISC_ENABLE_PERFORMANCE_MONITORING_AVAILABLE(_)         (((_) >> 7) & 0x01)
-    UINT64 Reserved3                                               : 3;
+    UINT32 Reserved3                                               : 3;
 
     /**
      * @brief Branch Trace Storage Unavailable <b>(RO)</b>
@@ -7542,7 +7542,7 @@ typedef union
      *
      * @remarks 0F_0H
      */
-    UINT64 BranchTraceStorageUnavailable                           : 1;
+    UINT32 BranchTraceStorageUnavailable                           : 1;
 #define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_BIT        11
 #define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_FLAG       0x800
 #define IA32_MISC_ENABLE_BRANCH_TRACE_STORAGE_UNAVAILABLE_MASK       0x01
@@ -7556,12 +7556,12 @@ typedef union
      *
      * @remarks 06_0FH
      */
-    UINT64 ProcessorEventBasedSamplingUnavailable                  : 1;
+    UINT32 ProcessorEventBasedSamplingUnavailable                  : 1;
 #define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_BIT 12
 #define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_FLAG 0x1000
 #define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE_MASK 0x01
 #define IA32_MISC_ENABLE_PROCESSOR_EVENT_BASED_SAMPLING_UNAVAILABLE(_) (((_) >> 12) & 0x01)
-    UINT64 Reserved4                                               : 3;
+    UINT32 Reserved4                                               : 3;
 
     /**
      * @brief Enhanced Intel SpeedStep Technology Enable <b>(R/W)</b>
@@ -7571,12 +7571,12 @@ typedef union
      *
      * @remarks If CPUID.01H: ECX[7] = 1
      */
-    UINT64 EnhancedIntelSpeedstepTechnologyEnable                  : 1;
+    UINT32 EnhancedIntelSpeedstepTechnologyEnable                  : 1;
 #define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_BIT 16
 #define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_FLAG 0x10000
 #define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE_MASK 0x01
 #define IA32_MISC_ENABLE_ENHANCED_INTEL_SPEEDSTEP_TECHNOLOGY_ENABLE(_) (((_) >> 16) & 0x01)
-    UINT64 Reserved5                                               : 1;
+    UINT32 Reserved5                                               : 1;
 
     /**
      * @brief ENABLE MONITOR FSM <b>(R/W)</b>
@@ -7589,12 +7589,12 @@ typedef union
      *
      * @remarks 0F_03H
      */
-    UINT64 EnableMonitorFsm                                        : 1;
+    UINT32 EnableMonitorFsm                                        : 1;
 #define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_BIT                      18
 #define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_FLAG                     0x40000
 #define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM_MASK                     0x01
 #define IA32_MISC_ENABLE_ENABLE_MONITOR_FSM(_)                       (((_) >> 18) & 0x01)
-    UINT64 Reserved6                                               : 3;
+    UINT32 Reserved6                                               : 3;
 
     /**
      * @brief Limit CPUID Maxval <b>(R/W)</b>
@@ -7609,7 +7609,7 @@ typedef union
      *
      * @remarks 0F_03H
      */
-    UINT64 LimitCpuidMaxval                                        : 1;
+    UINT32 LimitCpuidMaxval                                        : 1;
 #define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_BIT                      22
 #define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_FLAG                     0x400000
 #define IA32_MISC_ENABLE_LIMIT_CPUID_MAXVAL_MASK                     0x01
@@ -7623,12 +7623,12 @@ typedef union
      *
      * @remarks If CPUID.01H:ECX[14] = 1
      */
-    UINT64 XtprMessageDisable                                      : 1;
+    UINT32 XtprMessageDisable                                      : 1;
 #define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_BIT                    23
 #define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_FLAG                   0x800000
 #define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE_MASK                   0x01
 #define IA32_MISC_ENABLE_XTPR_MESSAGE_DISABLE(_)                     (((_) >> 23) & 0x01)
-    UINT64 Reserved7                                               : 10;
+    UINT32 Reserved7                                               : 10;
 
     /**
      * @brief XD Bit Disable <b>(R/W)</b>
@@ -7642,7 +7642,7 @@ typedef union
      *
      * @remarks If CPUID.80000001H:EDX[20] = 1
      */
-    UINT64 XdBitDisable                                            : 1;
+    UINT32 XdBitDisable                                            : 1;
 #define IA32_MISC_ENABLE_XD_BIT_DISABLE_BIT                          34
 #define IA32_MISC_ENABLE_XD_BIT_DISABLE_FLAG                         0x400000000
 #define IA32_MISC_ENABLE_XD_BIT_DISABLE_MASK                         0x01
@@ -7671,7 +7671,7 @@ typedef union
      * [Bits 3:0] - 0 indicates preference to highest performance.
      * - 15 indicates preference to maximize energy saving.
      */
-    UINT64 PowerPolicyPreference                                   : 4;
+    UINT32 PowerPolicyPreference                                   : 4;
 #define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_BIT            0
 #define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_FLAG           0x0F
 #define IA32_ENERGY_PERF_BIAS_POWER_POLICY_PREFERENCE_MASK           0x0F
@@ -7700,7 +7700,7 @@ typedef union
     /**
      * [Bit 0] Pkg Thermal Status
      */
-    UINT64 ThermalStatus                                           : 1;
+    UINT32 ThermalStatus                                           : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_BIT                 0
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_FLAG                0x01
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_MASK                0x01
@@ -7709,7 +7709,7 @@ typedef union
     /**
      * [Bit 1] Pkg Thermal Status Log
      */
-    UINT64 ThermalStatusLog                                        : 1;
+    UINT32 ThermalStatusLog                                        : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_BIT             1
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_FLAG            0x02
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_STATUS_LOG_MASK            0x01
@@ -7718,7 +7718,7 @@ typedef union
     /**
      * [Bit 2] Pkg PROCHOT \# event
      */
-    UINT64 ProchotEvent                                            : 1;
+    UINT32 ProchotEvent                                            : 1;
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_BIT                  2
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_FLAG                 0x04
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_EVENT_MASK                 0x01
@@ -7727,7 +7727,7 @@ typedef union
     /**
      * [Bit 3] Pkg PROCHOT \# log
      */
-    UINT64 ProchotLog                                              : 1;
+    UINT32 ProchotLog                                              : 1;
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_BIT                    3
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_FLAG                   0x08
 #define IA32_PACKAGE_THERM_STATUS_PROCHOT_LOG_MASK                   0x01
@@ -7736,7 +7736,7 @@ typedef union
     /**
      * [Bit 4] Pkg Critical Temperature Status
      */
-    UINT64 CriticalTemperatureStatus                               : 1;
+    UINT32 CriticalTemperatureStatus                               : 1;
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_BIT    4
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_FLAG   0x10
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_MASK   0x01
@@ -7745,7 +7745,7 @@ typedef union
     /**
      * [Bit 5] Pkg Critical Temperature Status Log
      */
-    UINT64 CriticalTemperatureStatusLog                            : 1;
+    UINT32 CriticalTemperatureStatusLog                            : 1;
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_BIT 5
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_FLAG 0x20
 #define IA32_PACKAGE_THERM_STATUS_CRITICAL_TEMPERATURE_STATUS_LOG_MASK 0x01
@@ -7754,7 +7754,7 @@ typedef union
     /**
      * [Bit 6] Pkg Thermal Threshold \#1 Status
      */
-    UINT64 ThermalThreshold1Status                                 : 1;
+    UINT32 ThermalThreshold1Status                                 : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_BIT      6
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_FLAG     0x40
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_STATUS_MASK     0x01
@@ -7763,7 +7763,7 @@ typedef union
     /**
      * [Bit 7] Pkg Thermal Threshold \#1 log
      */
-    UINT64 ThermalThreshold1Log                                    : 1;
+    UINT32 ThermalThreshold1Log                                    : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_BIT         7
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_FLAG        0x80
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD1_LOG_MASK        0x01
@@ -7772,7 +7772,7 @@ typedef union
     /**
      * [Bit 8] Pkg Thermal Threshold \#2 Status
      */
-    UINT64 ThermalThreshold2Status                                 : 1;
+    UINT32 ThermalThreshold2Status                                 : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_BIT      8
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_FLAG     0x100
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_STATUS_MASK     0x01
@@ -7781,7 +7781,7 @@ typedef union
     /**
      * [Bit 9] Pkg Thermal Threshold \#2 log
      */
-    UINT64 ThermalThreshold2Log                                    : 1;
+    UINT32 ThermalThreshold2Log                                    : 1;
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_BIT         9
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_FLAG        0x200
 #define IA32_PACKAGE_THERM_STATUS_THERMAL_THRESHOLD2_LOG_MASK        0x01
@@ -7790,7 +7790,7 @@ typedef union
     /**
      * [Bit 10] Pkg Power Limitation Status
      */
-    UINT64 PowerLimitationStatus                                   : 1;
+    UINT32 PowerLimitationStatus                                   : 1;
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_BIT        10
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_FLAG       0x400
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_STATUS_MASK       0x01
@@ -7799,17 +7799,17 @@ typedef union
     /**
      * [Bit 11] Pkg Power Limitation log
      */
-    UINT64 PowerLimitationLog                                      : 1;
+    UINT32 PowerLimitationLog                                      : 1;
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_BIT           11
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_FLAG          0x800
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG_MASK          0x01
 #define IA32_PACKAGE_THERM_STATUS_POWER_LIMITATION_LOG(_)            (((_) >> 11) & 0x01)
-    UINT64 Reserved1                                               : 4;
+    UINT32 Reserved1                                               : 4;
 
     /**
      * [Bits 22:16] Pkg Digital Readout
      */
-    UINT64 DigitalReadout                                          : 7;
+    UINT32 DigitalReadout                                          : 7;
 #define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_BIT                16
 #define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_FLAG               0x7F0000
 #define IA32_PACKAGE_THERM_STATUS_DIGITAL_READOUT_MASK               0x7F
@@ -7839,7 +7839,7 @@ typedef union
     /**
      * [Bit 0] Pkg High-Temperature Interrupt Enable.
      */
-    UINT64 HighTemperatureInterruptEnable                          : 1;
+    UINT32 HighTemperatureInterruptEnable                          : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_BIT 0
 #define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x01
 #define IA32_PACKAGE_THERM_INTERRUPT_HIGH_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
@@ -7848,7 +7848,7 @@ typedef union
     /**
      * [Bit 1] Pkg Low-Temperature Interrupt Enable.
      */
-    UINT64 LowTemperatureInterruptEnable                           : 1;
+    UINT32 LowTemperatureInterruptEnable                           : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_BIT 1
 #define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_FLAG 0x02
 #define IA32_PACKAGE_THERM_INTERRUPT_LOW_TEMPERATURE_INTERRUPT_ENABLE_MASK 0x01
@@ -7857,27 +7857,27 @@ typedef union
     /**
      * [Bit 2] Pkg PROCHOT\# Interrupt Enable.
      */
-    UINT64 ProchotInterruptEnable                                  : 1;
+    UINT32 ProchotInterruptEnable                                  : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_BIT    2
 #define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_FLAG   0x04
 #define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE_MASK   0x01
 #define IA32_PACKAGE_THERM_INTERRUPT_PROCHOT_INTERRUPT_ENABLE(_)     (((_) >> 2) & 0x01)
-    UINT64 Reserved1                                               : 1;
+    UINT32 Reserved1                                               : 1;
 
     /**
      * [Bit 4] Pkg Overheat Interrupt Enable.
      */
-    UINT64 OverheatInterruptEnable                                 : 1;
+    UINT32 OverheatInterruptEnable                                 : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_BIT   4
 #define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_FLAG  0x10
 #define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE_MASK  0x01
 #define IA32_PACKAGE_THERM_INTERRUPT_OVERHEAT_INTERRUPT_ENABLE(_)    (((_) >> 4) & 0x01)
-    UINT64 Reserved2                                               : 3;
+    UINT32 Reserved2                                               : 3;
 
     /**
      * [Bits 14:8] Pkg Threshold \#1 Value
      */
-    UINT64 Threshold1Value                                         : 7;
+    UINT32 Threshold1Value                                         : 7;
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_BIT            8
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_FLAG           0x7F00
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_VALUE_MASK           0x7F
@@ -7886,7 +7886,7 @@ typedef union
     /**
      * [Bit 15] Pkg Threshold \#1 Interrupt Enable.
      */
-    UINT64 Threshold1InterruptEnable                               : 1;
+    UINT32 Threshold1InterruptEnable                               : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_BIT 15
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_FLAG 0x8000
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD1_INTERRUPT_ENABLE_MASK 0x01
@@ -7895,7 +7895,7 @@ typedef union
     /**
      * [Bits 22:16] Pkg Threshold \#2 Value.
      */
-    UINT64 Threshold2Value                                         : 7;
+    UINT32 Threshold2Value                                         : 7;
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_BIT            16
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_FLAG           0x7F0000
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_VALUE_MASK           0x7F
@@ -7904,7 +7904,7 @@ typedef union
     /**
      * [Bit 23] Pkg Threshold \#2 Interrupt Enable.
      */
-    UINT64 Threshold2InterruptEnable                               : 1;
+    UINT32 Threshold2InterruptEnable                               : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_BIT 23
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_FLAG 0x800000
 #define IA32_PACKAGE_THERM_INTERRUPT_THRESHOLD2_INTERRUPT_ENABLE_MASK 0x01
@@ -7913,7 +7913,7 @@ typedef union
     /**
      * [Bit 24] Pkg Power Limit Notification Enable.
      */
-    UINT64 PowerLimitNotificationEnable                            : 1;
+    UINT32 PowerLimitNotificationEnable                            : 1;
 #define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_BIT 24
 #define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_FLAG 0x1000000
 #define IA32_PACKAGE_THERM_INTERRUPT_POWER_LIMIT_NOTIFICATION_ENABLE_MASK 0x01
@@ -7942,7 +7942,7 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 Lbr                                                     : 1;
+    UINT32 Lbr                                                     : 1;
 #define IA32_DEBUGCTL_LBR_BIT                                        0
 #define IA32_DEBUGCTL_LBR_FLAG                                       0x01
 #define IA32_DEBUGCTL_LBR_MASK                                       0x01
@@ -7954,19 +7954,19 @@ typedef union
      *
      * @remarks 06_01H
      */
-    UINT64 Btf                                                     : 1;
+    UINT32 Btf                                                     : 1;
 #define IA32_DEBUGCTL_BTF_BIT                                        1
 #define IA32_DEBUGCTL_BTF_FLAG                                       0x02
 #define IA32_DEBUGCTL_BTF_MASK                                       0x01
 #define IA32_DEBUGCTL_BTF(_)                                         (((_) >> 1) & 0x01)
-    UINT64 Reserved1                                               : 4;
+    UINT32 Reserved1                                               : 4;
 
     /**
      * [Bit 6] Setting this bit to 1 enables branch trace messages to be sent.
      *
      * @remarks 06_0EH
      */
-    UINT64 Tr                                                      : 1;
+    UINT32 Tr                                                      : 1;
 #define IA32_DEBUGCTL_TR_BIT                                         6
 #define IA32_DEBUGCTL_TR_FLAG                                        0x40
 #define IA32_DEBUGCTL_TR_MASK                                        0x01
@@ -7977,7 +7977,7 @@ typedef union
      *
      * @remarks 06_0EH
      */
-    UINT64 Bts                                                     : 1;
+    UINT32 Bts                                                     : 1;
 #define IA32_DEBUGCTL_BTS_BIT                                        7
 #define IA32_DEBUGCTL_BTS_FLAG                                       0x80
 #define IA32_DEBUGCTL_BTS_MASK                                       0x01
@@ -7989,7 +7989,7 @@ typedef union
      *
      * @remarks 06_0EH
      */
-    UINT64 Btint                                                   : 1;
+    UINT32 Btint                                                   : 1;
 #define IA32_DEBUGCTL_BTINT_BIT                                      8
 #define IA32_DEBUGCTL_BTINT_FLAG                                     0x100
 #define IA32_DEBUGCTL_BTINT_MASK                                     0x01
@@ -8000,7 +8000,7 @@ typedef union
      *
      * @remarks 06_0FH
      */
-    UINT64 BtsOffOs                                                : 1;
+    UINT32 BtsOffOs                                                : 1;
 #define IA32_DEBUGCTL_BTS_OFF_OS_BIT                                 9
 #define IA32_DEBUGCTL_BTS_OFF_OS_FLAG                                0x200
 #define IA32_DEBUGCTL_BTS_OFF_OS_MASK                                0x01
@@ -8011,7 +8011,7 @@ typedef union
      *
      * @remarks 06_0FH
      */
-    UINT64 BtsOffUsr                                               : 1;
+    UINT32 BtsOffUsr                                               : 1;
 #define IA32_DEBUGCTL_BTS_OFF_USR_BIT                                10
 #define IA32_DEBUGCTL_BTS_OFF_USR_FLAG                               0x400
 #define IA32_DEBUGCTL_BTS_OFF_USR_MASK                               0x01
@@ -8022,7 +8022,7 @@ typedef union
      *
      * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
-    UINT64 FreezeLbrsOnPmi                                         : 1;
+    UINT32 FreezeLbrsOnPmi                                         : 1;
 #define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_BIT                         11
 #define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_FLAG                        0x800
 #define IA32_DEBUGCTL_FREEZE_LBRS_ON_PMI_MASK                        0x01
@@ -8033,7 +8033,7 @@ typedef union
      *
      * @remarks If CPUID.01H: ECX[15] = 1 && CPUID.0AH: EAX[7:0] > 1
      */
-    UINT64 FreezePerfmonOnPmi                                      : 1;
+    UINT32 FreezePerfmonOnPmi                                      : 1;
 #define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_BIT                      12
 #define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_FLAG                     0x1000
 #define IA32_DEBUGCTL_FREEZE_PERFMON_ON_PMI_MASK                     0x01
@@ -8044,7 +8044,7 @@ typedef union
      *
      * @remarks 06_1AH
      */
-    UINT64 EnableUncorePmi                                         : 1;
+    UINT32 EnableUncorePmi                                         : 1;
 #define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_BIT                          13
 #define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_FLAG                         0x2000
 #define IA32_DEBUGCTL_ENABLE_UNCORE_PMI_MASK                         0x01
@@ -8055,7 +8055,7 @@ typedef union
      *
      * @remarks If IA32_PERF_CAPABILITIES[12] = 1
      */
-    UINT64 FreezeWhileSmm                                          : 1;
+    UINT32 FreezeWhileSmm                                          : 1;
 #define IA32_DEBUGCTL_FREEZE_WHILE_SMM_BIT                           14
 #define IA32_DEBUGCTL_FREEZE_WHILE_SMM_FLAG                          0x4000
 #define IA32_DEBUGCTL_FREEZE_WHILE_SMM_MASK                          0x01
@@ -8066,7 +8066,7 @@ typedef union
      *
      * @remarks If (CPUID.(EAX=07H, ECX=0):EBX[11] = 1)
      */
-    UINT64 RtmDebug                                                : 1;
+    UINT32 RtmDebug                                                : 1;
 #define IA32_DEBUGCTL_RTM_DEBUG_BIT                                  15
 #define IA32_DEBUGCTL_RTM_DEBUG_FLAG                                 0x8000
 #define IA32_DEBUGCTL_RTM_DEBUG_MASK                                 0x01
@@ -8096,17 +8096,17 @@ typedef union
      *
      * [Bits 7:0] Type. Specifies memory type of the range.
      */
-    UINT64 Type                                                    : 8;
+    UINT32 Type                                                    : 8;
 #define IA32_SMRR_PHYSBASE_TYPE_BIT                                  0
 #define IA32_SMRR_PHYSBASE_TYPE_FLAG                                 0xFF
 #define IA32_SMRR_PHYSBASE_TYPE_MASK                                 0xFF
 #define IA32_SMRR_PHYSBASE_TYPE(_)                                   (((_) >> 0) & 0xFF)
-    UINT64 Reserved1                                               : 4;
+    UINT32 Reserved1                                               : 4;
 
     /**
      * [Bits 31:12] SMRR physical Base Address.
      */
-    UINT64 SmrrPhysicalBaseAddress                                 : 20;
+    UINT32 SmrrPhysicalBaseAddress                                 : 20;
 #define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_BIT            12
 #define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_FLAG           0xFFFFF000
 #define IA32_SMRR_PHYSBASE_SMRR_PHYSICAL_BASE_ADDRESS_MASK           0xFFFFF
@@ -8131,12 +8131,12 @@ typedef union
 {
   struct
   {
-    UINT64 Reserved1                                               : 11;
+    UINT32 Reserved1                                               : 11;
 
     /**
      * [Bit 11] Enable range mask.
      */
-    UINT64 EnableRangeMask                                         : 1;
+    UINT32 EnableRangeMask                                         : 1;
 #define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_BIT                     11
 #define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_FLAG                    0x800
 #define IA32_SMRR_PHYSMASK_ENABLE_RANGE_MASK_MASK                    0x01
@@ -8145,7 +8145,7 @@ typedef union
     /**
      * [Bits 31:12] SMRR address range mask.
      */
-    UINT64 SmrrAddressRangeMask                                    : 20;
+    UINT32 SmrrAddressRangeMask                                    : 20;
 #define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_BIT               12
 #define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_FLAG              0xFFFFF000
 #define IA32_SMRR_PHYSMASK_SMRR_ADDRESS_RANGE_MASK_MASK              0xFFFFF
@@ -8185,7 +8185,7 @@ typedef union
     /**
      * [Bit 0] Set by HW when DCA is fuseenabled and no defeatures are set.
      */
-    UINT64 DcaActive                                               : 1;
+    UINT32 DcaActive                                               : 1;
 #define IA32_DCA_0_CAP_DCA_ACTIVE_BIT                                0
 #define IA32_DCA_0_CAP_DCA_ACTIVE_FLAG                               0x01
 #define IA32_DCA_0_CAP_DCA_ACTIVE_MASK                               0x01
@@ -8194,7 +8194,7 @@ typedef union
     /**
      * [Bits 2:1] TRANSACTION.
      */
-    UINT64 Transaction                                             : 2;
+    UINT32 Transaction                                             : 2;
 #define IA32_DCA_0_CAP_TRANSACTION_BIT                               1
 #define IA32_DCA_0_CAP_TRANSACTION_FLAG                              0x06
 #define IA32_DCA_0_CAP_TRANSACTION_MASK                              0x03
@@ -8203,7 +8203,7 @@ typedef union
     /**
      * [Bits 6:3] DCA_TYPE.
      */
-    UINT64 DcaType                                                 : 4;
+    UINT32 DcaType                                                 : 4;
 #define IA32_DCA_0_CAP_DCA_TYPE_BIT                                  3
 #define IA32_DCA_0_CAP_DCA_TYPE_FLAG                                 0x78
 #define IA32_DCA_0_CAP_DCA_TYPE_MASK                                 0x0F
@@ -8212,37 +8212,37 @@ typedef union
     /**
      * [Bits 10:7] DCA_QUEUE_SIZE.
      */
-    UINT64 DcaQueueSize                                            : 4;
+    UINT32 DcaQueueSize                                            : 4;
 #define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_BIT                            7
 #define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_FLAG                           0x780
 #define IA32_DCA_0_CAP_DCA_QUEUE_SIZE_MASK                           0x0F
 #define IA32_DCA_0_CAP_DCA_QUEUE_SIZE(_)                             (((_) >> 7) & 0x0F)
-    UINT64 Reserved1                                               : 2;
+    UINT32 Reserved1                                               : 2;
 
     /**
      * [Bits 16:13] Writes will update the register but have no HW side-effect.
      */
-    UINT64 DcaDelay                                                : 4;
+    UINT32 DcaDelay                                                : 4;
 #define IA32_DCA_0_CAP_DCA_DELAY_BIT                                 13
 #define IA32_DCA_0_CAP_DCA_DELAY_FLAG                                0x1E000
 #define IA32_DCA_0_CAP_DCA_DELAY_MASK                                0x0F
 #define IA32_DCA_0_CAP_DCA_DELAY(_)                                  (((_) >> 13) & 0x0F)
-    UINT64 Reserved2                                               : 7;
+    UINT32 Reserved2                                               : 7;
 
     /**
      * [Bit 24] SW can request DCA block by setting this bit.
      */
-    UINT64 SwBlock                                                 : 1;
+    UINT32 SwBlock                                                 : 1;
 #define IA32_DCA_0_CAP_SW_BLOCK_BIT                                  24
 #define IA32_DCA_0_CAP_SW_BLOCK_FLAG                                 0x1000000
 #define IA32_DCA_0_CAP_SW_BLOCK_MASK                                 0x01
 #define IA32_DCA_0_CAP_SW_BLOCK(_)                                   (((_) >> 24) & 0x01)
-    UINT64 Reserved3                                               : 1;
+    UINT32 Reserved3                                               : 1;
 
     /**
      * [Bit 26] Set when DCA is blocked by HW (e.g. CR0.CD = 1).
      */
-    UINT64 HwBlock                                                 : 1;
+    UINT32 HwBlock                                                 : 1;
 #define IA32_DCA_0_CAP_HW_BLOCK_BIT                                  26
 #define IA32_DCA_0_CAP_HW_BLOCK_FLAG                                 0x4000000
 #define IA32_DCA_0_CAP_HW_BLOCK_MASK                                 0x01
@@ -8600,17 +8600,17 @@ typedef union
     /**
      * [Bits 14:0] Corrected error count threshold.
      */
-    UINT64 CorrectedErrorCountThreshold                            : 15;
+    UINT32 CorrectedErrorCountThreshold                            : 15;
 #define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_BIT             0
 #define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_FLAG            0x7FFF
 #define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD_MASK            0x7FFF
 #define IA32_MC_CTL2_CORRECTED_ERROR_COUNT_THRESHOLD(_)              (((_) >> 0) & 0x7FFF)
-    UINT64 Reserved1                                               : 15;
+    UINT32 Reserved1                                               : 15;
 
     /**
      * [Bit 30] CMCI_EN.
      */
-    UINT64 CmciEn                                                  : 1;
+    UINT32 CmciEn                                                  : 1;
 #define IA32_MC_CTL2_CMCI_EN_BIT                                     30
 #define IA32_MC_CTL2_CMCI_EN_FLAG                                    0x40000000
 #define IA32_MC_CTL2_CMCI_EN_MASK                                    0x01
@@ -8640,17 +8640,17 @@ typedef union
     /**
      * [Bits 2:0] Default Memory Type.
      */
-    UINT64 DefaultMemoryType                                       : 3;
+    UINT32 DefaultMemoryType                                       : 3;
 #define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_BIT                   0
 #define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_FLAG                  0x07
 #define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE_MASK                  0x07
 #define IA32_MTRR_DEF_TYPE_DEFAULT_MEMORY_TYPE(_)                    (((_) >> 0) & 0x07)
-    UINT64 Reserved1                                               : 7;
+    UINT32 Reserved1                                               : 7;
 
     /**
      * [Bit 10] Fixed Range MTRR Enable.
      */
-    UINT64 FixedRangeMtrrEnable                                    : 1;
+    UINT32 FixedRangeMtrrEnable                                    : 1;
 #define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_BIT               10
 #define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_FLAG              0x400
 #define IA32_MTRR_DEF_TYPE_FIXED_RANGE_MTRR_ENABLE_MASK              0x01
@@ -8659,7 +8659,7 @@ typedef union
     /**
      * [Bit 11] MTRR Enable.
      */
-    UINT64 MtrrEnable                                              : 1;
+    UINT32 MtrrEnable                                              : 1;
 #define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_BIT                           11
 #define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_FLAG                          0x800
 #define IA32_MTRR_DEF_TYPE_MTRR_ENABLE_MASK                          0x01
@@ -8712,7 +8712,7 @@ typedef union
     /**
      * [Bits 5:0] LBR format.
      */
-    UINT64 LbrFormat                                               : 6;
+    UINT32 LbrFormat                                               : 6;
 #define IA32_PERF_CAPABILITIES_LBR_FORMAT_BIT                        0
 #define IA32_PERF_CAPABILITIES_LBR_FORMAT_FLAG                       0x3F
 #define IA32_PERF_CAPABILITIES_LBR_FORMAT_MASK                       0x3F
@@ -8721,7 +8721,7 @@ typedef union
     /**
      * [Bit 6] PEBS Trap.
      */
-    UINT64 PebsTrap                                                : 1;
+    UINT32 PebsTrap                                                : 1;
 #define IA32_PERF_CAPABILITIES_PEBS_TRAP_BIT                         6
 #define IA32_PERF_CAPABILITIES_PEBS_TRAP_FLAG                        0x40
 #define IA32_PERF_CAPABILITIES_PEBS_TRAP_MASK                        0x01
@@ -8730,7 +8730,7 @@ typedef union
     /**
      * [Bit 7] PEBSSaveArchRegs.
      */
-    UINT64 PebsSaveArchRegs                                        : 1;
+    UINT32 PebsSaveArchRegs                                        : 1;
 #define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_BIT               7
 #define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_FLAG              0x80
 #define IA32_PERF_CAPABILITIES_PEBS_SAVE_ARCH_REGS_MASK              0x01
@@ -8739,7 +8739,7 @@ typedef union
     /**
      * [Bits 11:8] PEBS Record Format.
      */
-    UINT64 PebsRecordFormat                                        : 4;
+    UINT32 PebsRecordFormat                                        : 4;
 #define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_BIT                8
 #define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_FLAG               0xF00
 #define IA32_PERF_CAPABILITIES_PEBS_RECORD_FORMAT_MASK               0x0F
@@ -8748,7 +8748,7 @@ typedef union
     /**
      * [Bit 12] Freeze while SMM is supported.
      */
-    UINT64 FreezeWhileSmmIsSupported                               : 1;
+    UINT32 FreezeWhileSmmIsSupported                               : 1;
 #define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_BIT     12
 #define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_FLAG    0x1000
 #define IA32_PERF_CAPABILITIES_FREEZE_WHILE_SMM_IS_SUPPORTED_MASK    0x01
@@ -8757,7 +8757,7 @@ typedef union
     /**
      * [Bit 13] Full width of counter writable via IA32_A_PMCx.
      */
-    UINT64 FullWidthCounterWrite                                   : 1;
+    UINT32 FullWidthCounterWrite                                   : 1;
 #define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_BIT          13
 #define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_FLAG         0x2000
 #define IA32_PERF_CAPABILITIES_FULL_WIDTH_COUNTER_WRITE_MASK         0x01
@@ -8786,7 +8786,7 @@ typedef union
     /**
      * [Bit 0] EN0_OS: Enable Fixed Counter 0 to count while CPL = 0.
      */
-    UINT64 En0Os                                                   : 1;
+    UINT32 En0Os                                                   : 1;
 #define IA32_FIXED_CTR_CTRL_EN0_OS_BIT                               0
 #define IA32_FIXED_CTR_CTRL_EN0_OS_FLAG                              0x01
 #define IA32_FIXED_CTR_CTRL_EN0_OS_MASK                              0x01
@@ -8795,7 +8795,7 @@ typedef union
     /**
      * [Bit 1] EN0_Usr: Enable Fixed Counter 0 to count while CPL > 0.
      */
-    UINT64 En0Usr                                                  : 1;
+    UINT32 En0Usr                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN0_USR_BIT                              1
 #define IA32_FIXED_CTR_CTRL_EN0_USR_FLAG                             0x02
 #define IA32_FIXED_CTR_CTRL_EN0_USR_MASK                             0x01
@@ -8806,7 +8806,7 @@ typedef union
      * processors sharing a processor core. When set to 0, the counter only increments the associated event conditions
      * occurring in the logical processor which programmed the MSR.
      */
-    UINT64 AnyThread0                                              : 1;
+    UINT32 AnyThread0                                              : 1;
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD0_BIT                          2
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD0_FLAG                         0x04
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD0_MASK                         0x01
@@ -8815,7 +8815,7 @@ typedef union
     /**
      * [Bit 3] EN0_PMI: Enable PMI when fixed counter 0 overflows.
      */
-    UINT64 En0Pmi                                                  : 1;
+    UINT32 En0Pmi                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN0_PMI_BIT                              3
 #define IA32_FIXED_CTR_CTRL_EN0_PMI_FLAG                             0x08
 #define IA32_FIXED_CTR_CTRL_EN0_PMI_MASK                             0x01
@@ -8824,7 +8824,7 @@ typedef union
     /**
      * [Bit 4] EN1_OS: Enable Fixed Counter 1 to count while CPL = 0.
      */
-    UINT64 En1Os                                                   : 1;
+    UINT32 En1Os                                                   : 1;
 #define IA32_FIXED_CTR_CTRL_EN1_OS_BIT                               4
 #define IA32_FIXED_CTR_CTRL_EN1_OS_FLAG                              0x10
 #define IA32_FIXED_CTR_CTRL_EN1_OS_MASK                              0x01
@@ -8833,7 +8833,7 @@ typedef union
     /**
      * [Bit 5] EN1_Usr: Enable Fixed Counter 1 to count while CPL > 0.
      */
-    UINT64 En1Usr                                                  : 1;
+    UINT32 En1Usr                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN1_USR_BIT                              5
 #define IA32_FIXED_CTR_CTRL_EN1_USR_FLAG                             0x20
 #define IA32_FIXED_CTR_CTRL_EN1_USR_MASK                             0x01
@@ -8846,7 +8846,7 @@ typedef union
      *
      * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
-    UINT64 AnyThread1                                              : 1;
+    UINT32 AnyThread1                                              : 1;
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD1_BIT                          6
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD1_FLAG                         0x40
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD1_MASK                         0x01
@@ -8855,7 +8855,7 @@ typedef union
     /**
      * [Bit 7] EN1_PMI: Enable PMI when fixed counter 1 overflows.
      */
-    UINT64 En1Pmi                                                  : 1;
+    UINT32 En1Pmi                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN1_PMI_BIT                              7
 #define IA32_FIXED_CTR_CTRL_EN1_PMI_FLAG                             0x80
 #define IA32_FIXED_CTR_CTRL_EN1_PMI_MASK                             0x01
@@ -8864,7 +8864,7 @@ typedef union
     /**
      * [Bit 8] EN2_OS: Enable Fixed Counter 2 to count while CPL = 0.
      */
-    UINT64 En2Os                                                   : 1;
+    UINT32 En2Os                                                   : 1;
 #define IA32_FIXED_CTR_CTRL_EN2_OS_BIT                               8
 #define IA32_FIXED_CTR_CTRL_EN2_OS_FLAG                              0x100
 #define IA32_FIXED_CTR_CTRL_EN2_OS_MASK                              0x01
@@ -8873,7 +8873,7 @@ typedef union
     /**
      * [Bit 9] EN2_Usr: Enable Fixed Counter 2 to count while CPL > 0.
      */
-    UINT64 En2Usr                                                  : 1;
+    UINT32 En2Usr                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN2_USR_BIT                              9
 #define IA32_FIXED_CTR_CTRL_EN2_USR_FLAG                             0x200
 #define IA32_FIXED_CTR_CTRL_EN2_USR_MASK                             0x01
@@ -8886,7 +8886,7 @@ typedef union
      *
      * @remarks If CPUID.0AH: EAX[7:0] > 2
      */
-    UINT64 AnyThread2                                              : 1;
+    UINT32 AnyThread2                                              : 1;
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD2_BIT                          10
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD2_FLAG                         0x400
 #define IA32_FIXED_CTR_CTRL_ANY_THREAD2_MASK                         0x01
@@ -8895,7 +8895,7 @@ typedef union
     /**
      * [Bit 11] EN2_PMI: Enable PMI when fixed counter 2 overflows.
      */
-    UINT64 En2Pmi                                                  : 1;
+    UINT32 En2Pmi                                                  : 1;
 #define IA32_FIXED_CTR_CTRL_EN2_PMI_BIT                              11
 #define IA32_FIXED_CTR_CTRL_EN2_PMI_FLAG                             0x800
 #define IA32_FIXED_CTR_CTRL_EN2_PMI_MASK                             0x01

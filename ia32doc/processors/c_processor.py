@@ -253,7 +253,7 @@ class DocCProcessor(DocProcessor):
                 bit_length = bit_from - self._bitfield_position
                 long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
                 self.print(
-                    f'{self.make_size_type(doc.parent.size)[0]} {long_name:<{self.align_indent_adjusted}}: '
+                    f'{self.make_size_type(doc.parent.size_min)[0]} {long_name:<{self.align_indent_adjusted}}: '
                     f'{bit_length};'
                 )
                 self._bitfield_position = bit_from
@@ -271,7 +271,7 @@ class DocCProcessor(DocProcessor):
                 self.print(f' */')
 
             self.print(
-                f'{self.make_size_type(doc.parent.size)[0]} {self.make_name(doc):<{self.align_indent_adjusted}}: '
+                f'{self.make_size_type(doc.parent.size_min)[0]} {self.make_name(doc):<{self.align_indent_adjusted}}: '
                 f'{bit_length};'
             )
 
