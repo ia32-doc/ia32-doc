@@ -408,7 +408,7 @@ class DocCProcessor(DocProcessor):
         if isinstance(doc, DocGroup):
             print_defgroup = self.opt.group_defgroup
 
-            if print_defgroup:
+            if print_defgroup and doc.short_name:
                 group_id   = self.make_name(doc, long=False, raw=True)
                 group_name = self.make_multiline_comment(doc.short_description, '          ')
 

@@ -52,7 +52,7 @@
 # reference: Vol3D[B(Appendix B)]
 #
 
-- name: VMCS_GROUP
+- name: VMCS_FIELDS
   short_description: VMCS (VM Control Structure).
   long_description: |
     Every component of the VMCS is encoded by a 32-bit field that can be used by VMREAD and VMWRITE.

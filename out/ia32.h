@@ -15286,6 +15286,9 @@ typedef union
  * @{
  */
 /**
+ * @{
+ */
+/**
  * @defgroup VMX_BASIC_EXIT_REASONS \
  *           VMX Basic Exit Reasons
  *
@@ -16737,7 +16740,11 @@ typedef enum
 } VMX_GUEST_ACTIVITY_STATE;
 
 /**
- * @defgroup VMX_EPT \
+ * @}
+ */
+
+/**
+ * @defgroup EPT \
  *           The extended page-table mechanism
  *
  * The extended page-table mechanism (EPT) is a feature that can be used to support the virtualization of physical memory.
@@ -16770,10 +16777,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define VMX_EPT_POINTER_MEMORY_TYPE_BIT                              0
-#define VMX_EPT_POINTER_MEMORY_TYPE_FLAG                             0x07
-#define VMX_EPT_POINTER_MEMORY_TYPE_MASK                             0x07
-#define VMX_EPT_POINTER_MEMORY_TYPE(_)                               (((_) >> 0) & 0x07)
+#define EPT_POINTER_MEMORY_TYPE_BIT                                  0
+#define EPT_POINTER_MEMORY_TYPE_FLAG                                 0x07
+#define EPT_POINTER_MEMORY_TYPE_MASK                                 0x07
+#define EPT_POINTER_MEMORY_TYPE(_)                                   (((_) >> 0) & 0x07)
 
     /**
      * [Bits 5:3] This value is 1 less than the EPT page-walk length.
@@ -16781,10 +16788,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 PageWalkLength                                          : 3;
-#define VMX_EPT_POINTER_PAGE_WALK_LENGTH_BIT                         3
-#define VMX_EPT_POINTER_PAGE_WALK_LENGTH_FLAG                        0x38
-#define VMX_EPT_POINTER_PAGE_WALK_LENGTH_MASK                        0x07
-#define VMX_EPT_POINTER_PAGE_WALK_LENGTH(_)                          (((_) >> 3) & 0x07)
+#define EPT_POINTER_PAGE_WALK_LENGTH_BIT                             3
+#define EPT_POINTER_PAGE_WALK_LENGTH_FLAG                            0x38
+#define EPT_POINTER_PAGE_WALK_LENGTH_MASK                            0x07
+#define EPT_POINTER_PAGE_WALK_LENGTH(_)                              (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Setting this control to 1 enables accessed and dirty flags for EPT.
@@ -16792,25 +16799,25 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 EnableAccessAndDirtyFlags                               : 1;
-#define VMX_EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_BIT            6
-#define VMX_EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_FLAG           0x40
-#define VMX_EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_MASK           0x01
-#define VMX_EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS(_)             (((_) >> 6) & 0x01)
+#define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_BIT                6
+#define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_FLAG               0x40
+#define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_MASK               0x01
+#define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS(_)                 (((_) >> 6) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
      * [Bits 47:12] Bits N-1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPT_POINTER_PAGE_FRAME_NUMBER_BIT                        12
-#define VMX_EPT_POINTER_PAGE_FRAME_NUMBER_FLAG                       0xFFFFFFFFF000
-#define VMX_EPT_POINTER_PAGE_FRAME_NUMBER_MASK                       0xFFFFFFFFF
-#define VMX_EPT_POINTER_PAGE_FRAME_NUMBER(_)                         (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_POINTER_PAGE_FRAME_NUMBER_BIT                            12
+#define EPT_POINTER_PAGE_FRAME_NUMBER_FLAG                           0xFFFFFFFFF000
+#define EPT_POINTER_PAGE_FRAME_NUMBER_MASK                           0xFFFFFFFFF
+#define EPT_POINTER_PAGE_FRAME_NUMBER(_)                             (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved2                                               : 16;
   };
 
   UINT64 Flags;
-} VMX_EPT_POINTER;
+} EPT_POINTER;
 
 /**
  * @brief Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
@@ -16835,19 +16842,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPT_PML4_READ_ACCESS_BIT                                 0
-#define VMX_EPT_PML4_READ_ACCESS_FLAG                                0x01
-#define VMX_EPT_PML4_READ_ACCESS_MASK                                0x01
-#define VMX_EPT_PML4_READ_ACCESS(_)                                  (((_) >> 0) & 0x01)
+#define EPT_PML4_READ_ACCESS_BIT                                     0
+#define EPT_PML4_READ_ACCESS_FLAG                                    0x01
+#define EPT_PML4_READ_ACCESS_MASK                                    0x01
+#define EPT_PML4_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPT_PML4_WRITE_ACCESS_BIT                                1
-#define VMX_EPT_PML4_WRITE_ACCESS_FLAG                               0x02
-#define VMX_EPT_PML4_WRITE_ACCESS_MASK                               0x01
-#define VMX_EPT_PML4_WRITE_ACCESS(_)                                 (((_) >> 1) & 0x01)
+#define EPT_PML4_WRITE_ACCESS_BIT                                    1
+#define EPT_PML4_WRITE_ACCESS_FLAG                                   0x02
+#define EPT_PML4_WRITE_ACCESS_MASK                                   0x01
+#define EPT_PML4_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -16856,10 +16863,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 512-GByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPT_PML4_EXECUTE_ACCESS_BIT                              2
-#define VMX_EPT_PML4_EXECUTE_ACCESS_FLAG                             0x04
-#define VMX_EPT_PML4_EXECUTE_ACCESS_MASK                             0x01
-#define VMX_EPT_PML4_EXECUTE_ACCESS(_)                               (((_) >> 2) & 0x01)
+#define EPT_PML4_EXECUTE_ACCESS_BIT                                  2
+#define EPT_PML4_EXECUTE_ACCESS_FLAG                                 0x04
+#define EPT_PML4_EXECUTE_ACCESS_MASK                                 0x01
+#define EPT_PML4_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -16869,10 +16876,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPT_PML4_ACCESSED_BIT                                    8
-#define VMX_EPT_PML4_ACCESSED_FLAG                                   0x100
-#define VMX_EPT_PML4_ACCESSED_MASK                                   0x01
-#define VMX_EPT_PML4_ACCESSED(_)                                     (((_) >> 8) & 0x01)
+#define EPT_PML4_ACCESSED_BIT                                        8
+#define EPT_PML4_ACCESSED_FLAG                                       0x100
+#define EPT_PML4_ACCESSED_MASK                                       0x01
+#define EPT_PML4_ACCESSED(_)                                         (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -16881,25 +16888,25 @@ typedef union
      * controlled by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPT_PML4_USER_MODE_EXECUTE_BIT                           10
-#define VMX_EPT_PML4_USER_MODE_EXECUTE_FLAG                          0x400
-#define VMX_EPT_PML4_USER_MODE_EXECUTE_MASK                          0x01
-#define VMX_EPT_PML4_USER_MODE_EXECUTE(_)                            (((_) >> 10) & 0x01)
+#define EPT_PML4_USER_MODE_EXECUTE_BIT                               10
+#define EPT_PML4_USER_MODE_EXECUTE_FLAG                              0x400
+#define EPT_PML4_USER_MODE_EXECUTE_MASK                              0x01
+#define EPT_PML4_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPT_PML4_PAGE_FRAME_NUMBER_BIT                           12
-#define VMX_EPT_PML4_PAGE_FRAME_NUMBER_FLAG                          0xFFFFFFFFF000
-#define VMX_EPT_PML4_PAGE_FRAME_NUMBER_MASK                          0xFFFFFFFFF
-#define VMX_EPT_PML4_PAGE_FRAME_NUMBER(_)                            (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_PML4_PAGE_FRAME_NUMBER_BIT                               12
+#define EPT_PML4_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
+#define EPT_PML4_PAGE_FRAME_NUMBER_MASK                              0xFFFFFFFFF
+#define EPT_PML4_PAGE_FRAME_NUMBER(_)                                (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} VMX_EPT_PML4;
+} EPT_PML4;
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
@@ -16912,19 +16919,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPDPTE_1GB_READ_ACCESS_BIT                               0
-#define VMX_EPDPTE_1GB_READ_ACCESS_FLAG                              0x01
-#define VMX_EPDPTE_1GB_READ_ACCESS_MASK                              0x01
-#define VMX_EPDPTE_1GB_READ_ACCESS(_)                                (((_) >> 0) & 0x01)
+#define EPDPTE_1GB_READ_ACCESS_BIT                                   0
+#define EPDPTE_1GB_READ_ACCESS_FLAG                                  0x01
+#define EPDPTE_1GB_READ_ACCESS_MASK                                  0x01
+#define EPDPTE_1GB_READ_ACCESS(_)                                    (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPDPTE_1GB_WRITE_ACCESS_BIT                              1
-#define VMX_EPDPTE_1GB_WRITE_ACCESS_FLAG                             0x02
-#define VMX_EPDPTE_1GB_WRITE_ACCESS_MASK                             0x01
-#define VMX_EPDPTE_1GB_WRITE_ACCESS(_)                               (((_) >> 1) & 0x01)
+#define EPDPTE_1GB_WRITE_ACCESS_BIT                                  1
+#define EPDPTE_1GB_WRITE_ACCESS_FLAG                                 0x02
+#define EPDPTE_1GB_WRITE_ACCESS_MASK                                 0x01
+#define EPDPTE_1GB_WRITE_ACCESS(_)                                   (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -16933,10 +16940,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 1-GByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPDPTE_1GB_EXECUTE_ACCESS_BIT                            2
-#define VMX_EPDPTE_1GB_EXECUTE_ACCESS_FLAG                           0x04
-#define VMX_EPDPTE_1GB_EXECUTE_ACCESS_MASK                           0x01
-#define VMX_EPDPTE_1GB_EXECUTE_ACCESS(_)                             (((_) >> 2) & 0x01)
+#define EPDPTE_1GB_EXECUTE_ACCESS_BIT                                2
+#define EPDPTE_1GB_EXECUTE_ACCESS_FLAG                               0x04
+#define EPDPTE_1GB_EXECUTE_ACCESS_MASK                               0x01
+#define EPDPTE_1GB_EXECUTE_ACCESS(_)                                 (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 1-GByte page.
@@ -16944,10 +16951,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define VMX_EPDPTE_1GB_MEMORY_TYPE_BIT                               3
-#define VMX_EPDPTE_1GB_MEMORY_TYPE_FLAG                              0x38
-#define VMX_EPDPTE_1GB_MEMORY_TYPE_MASK                              0x07
-#define VMX_EPDPTE_1GB_MEMORY_TYPE(_)                                (((_) >> 3) & 0x07)
+#define EPDPTE_1GB_MEMORY_TYPE_BIT                                   3
+#define EPDPTE_1GB_MEMORY_TYPE_FLAG                                  0x38
+#define EPDPTE_1GB_MEMORY_TYPE_MASK                                  0x07
+#define EPDPTE_1GB_MEMORY_TYPE(_)                                    (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 1-GByte page.
@@ -16955,19 +16962,19 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define VMX_EPDPTE_1GB_IGNORE_PAT_BIT                                6
-#define VMX_EPDPTE_1GB_IGNORE_PAT_FLAG                               0x40
-#define VMX_EPDPTE_1GB_IGNORE_PAT_MASK                               0x01
-#define VMX_EPDPTE_1GB_IGNORE_PAT(_)                                 (((_) >> 6) & 0x01)
+#define EPDPTE_1GB_IGNORE_PAT_BIT                                    6
+#define EPDPTE_1GB_IGNORE_PAT_FLAG                                   0x40
+#define EPDPTE_1GB_IGNORE_PAT_MASK                                   0x01
+#define EPDPTE_1GB_IGNORE_PAT(_)                                     (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Must be 1 (otherwise, this entry references an EPT page directory).
      */
     UINT64 LargePage                                               : 1;
-#define VMX_EPDPTE_1GB_LARGE_PAGE_BIT                                7
-#define VMX_EPDPTE_1GB_LARGE_PAGE_FLAG                               0x80
-#define VMX_EPDPTE_1GB_LARGE_PAGE_MASK                               0x01
-#define VMX_EPDPTE_1GB_LARGE_PAGE(_)                                 (((_) >> 7) & 0x01)
+#define EPDPTE_1GB_LARGE_PAGE_BIT                                    7
+#define EPDPTE_1GB_LARGE_PAGE_FLAG                                   0x80
+#define EPDPTE_1GB_LARGE_PAGE_MASK                                   0x01
+#define EPDPTE_1GB_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page
@@ -16976,10 +16983,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPDPTE_1GB_ACCESSED_BIT                                  8
-#define VMX_EPDPTE_1GB_ACCESSED_FLAG                                 0x100
-#define VMX_EPDPTE_1GB_ACCESSED_MASK                                 0x01
-#define VMX_EPDPTE_1GB_ACCESSED(_)                                   (((_) >> 8) & 0x01)
+#define EPDPTE_1GB_ACCESSED_BIT                                      8
+#define EPDPTE_1GB_ACCESSED_FLAG                                     0x100
+#define EPDPTE_1GB_ACCESSED_MASK                                     0x01
+#define EPDPTE_1GB_ACCESSED(_)                                       (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced
@@ -16988,10 +16995,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define VMX_EPDPTE_1GB_DIRTY_BIT                                     9
-#define VMX_EPDPTE_1GB_DIRTY_FLAG                                    0x200
-#define VMX_EPDPTE_1GB_DIRTY_MASK                                    0x01
-#define VMX_EPDPTE_1GB_DIRTY(_)                                      (((_) >> 9) & 0x01)
+#define EPDPTE_1GB_DIRTY_BIT                                         9
+#define EPDPTE_1GB_DIRTY_FLAG                                        0x200
+#define EPDPTE_1GB_DIRTY_MASK                                        0x01
+#define EPDPTE_1GB_DIRTY(_)                                          (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -16999,20 +17006,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPDPTE_1GB_USER_MODE_EXECUTE_BIT                         10
-#define VMX_EPDPTE_1GB_USER_MODE_EXECUTE_FLAG                        0x400
-#define VMX_EPDPTE_1GB_USER_MODE_EXECUTE_MASK                        0x01
-#define VMX_EPDPTE_1GB_USER_MODE_EXECUTE(_)                          (((_) >> 10) & 0x01)
+#define EPDPTE_1GB_USER_MODE_EXECUTE_BIT                             10
+#define EPDPTE_1GB_USER_MODE_EXECUTE_FLAG                            0x400
+#define EPDPTE_1GB_USER_MODE_EXECUTE_MASK                            0x01
+#define EPDPTE_1GB_USER_MODE_EXECUTE(_)                              (((_) >> 10) & 0x01)
     UINT64 Reserved1                                               : 19;
 
     /**
      * [Bits 47:30] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 18;
-#define VMX_EPDPTE_1GB_PAGE_FRAME_NUMBER_BIT                         30
-#define VMX_EPDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                        0xFFFFC0000000
-#define VMX_EPDPTE_1GB_PAGE_FRAME_NUMBER_MASK                        0x3FFFF
-#define VMX_EPDPTE_1GB_PAGE_FRAME_NUMBER(_)                          (((_) >> 30) & 0x3FFFF)
+#define EPDPTE_1GB_PAGE_FRAME_NUMBER_BIT                             30
+#define EPDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                            0xFFFFC0000000
+#define EPDPTE_1GB_PAGE_FRAME_NUMBER_MASK                            0x3FFFF
+#define EPDPTE_1GB_PAGE_FRAME_NUMBER(_)                              (((_) >> 30) & 0x3FFFF)
     UINT64 Reserved2                                               : 15;
 
     /**
@@ -17023,14 +17030,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define VMX_EPDPTE_1GB_SUPPRESS_VE_BIT                               63
-#define VMX_EPDPTE_1GB_SUPPRESS_VE_FLAG                              0x8000000000000000
-#define VMX_EPDPTE_1GB_SUPPRESS_VE_MASK                              0x01
-#define VMX_EPDPTE_1GB_SUPPRESS_VE(_)                                (((_) >> 63) & 0x01)
+#define EPDPTE_1GB_SUPPRESS_VE_BIT                                   63
+#define EPDPTE_1GB_SUPPRESS_VE_FLAG                                  0x8000000000000000
+#define EPDPTE_1GB_SUPPRESS_VE_MASK                                  0x01
+#define EPDPTE_1GB_SUPPRESS_VE(_)                                    (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} VMX_EPDPTE_1GB;
+} EPDPTE_1GB;
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory
@@ -17043,19 +17050,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPDPTE_READ_ACCESS_BIT                                   0
-#define VMX_EPDPTE_READ_ACCESS_FLAG                                  0x01
-#define VMX_EPDPTE_READ_ACCESS_MASK                                  0x01
-#define VMX_EPDPTE_READ_ACCESS(_)                                    (((_) >> 0) & 0x01)
+#define EPDPTE_READ_ACCESS_BIT                                       0
+#define EPDPTE_READ_ACCESS_FLAG                                      0x01
+#define EPDPTE_READ_ACCESS_MASK                                      0x01
+#define EPDPTE_READ_ACCESS(_)                                        (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPDPTE_WRITE_ACCESS_BIT                                  1
-#define VMX_EPDPTE_WRITE_ACCESS_FLAG                                 0x02
-#define VMX_EPDPTE_WRITE_ACCESS_MASK                                 0x01
-#define VMX_EPDPTE_WRITE_ACCESS(_)                                   (((_) >> 1) & 0x01)
+#define EPDPTE_WRITE_ACCESS_BIT                                      1
+#define EPDPTE_WRITE_ACCESS_FLAG                                     0x02
+#define EPDPTE_WRITE_ACCESS_MASK                                     0x01
+#define EPDPTE_WRITE_ACCESS(_)                                       (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -17064,10 +17071,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 1-GByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPDPTE_EXECUTE_ACCESS_BIT                                2
-#define VMX_EPDPTE_EXECUTE_ACCESS_FLAG                               0x04
-#define VMX_EPDPTE_EXECUTE_ACCESS_MASK                               0x01
-#define VMX_EPDPTE_EXECUTE_ACCESS(_)                                 (((_) >> 2) & 0x01)
+#define EPDPTE_EXECUTE_ACCESS_BIT                                    2
+#define EPDPTE_EXECUTE_ACCESS_FLAG                                   0x04
+#define EPDPTE_EXECUTE_ACCESS_MASK                                   0x01
+#define EPDPTE_EXECUTE_ACCESS(_)                                     (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -17077,10 +17084,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPDPTE_ACCESSED_BIT                                      8
-#define VMX_EPDPTE_ACCESSED_FLAG                                     0x100
-#define VMX_EPDPTE_ACCESSED_MASK                                     0x01
-#define VMX_EPDPTE_ACCESSED(_)                                       (((_) >> 8) & 0x01)
+#define EPDPTE_ACCESSED_BIT                                          8
+#define EPDPTE_ACCESSED_FLAG                                         0x100
+#define EPDPTE_ACCESSED_MASK                                         0x01
+#define EPDPTE_ACCESSED(_)                                           (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -17089,25 +17096,25 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPDPTE_USER_MODE_EXECUTE_BIT                             10
-#define VMX_EPDPTE_USER_MODE_EXECUTE_FLAG                            0x400
-#define VMX_EPDPTE_USER_MODE_EXECUTE_MASK                            0x01
-#define VMX_EPDPTE_USER_MODE_EXECUTE(_)                              (((_) >> 10) & 0x01)
+#define EPDPTE_USER_MODE_EXECUTE_BIT                                 10
+#define EPDPTE_USER_MODE_EXECUTE_FLAG                                0x400
+#define EPDPTE_USER_MODE_EXECUTE_MASK                                0x01
+#define EPDPTE_USER_MODE_EXECUTE(_)                                  (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPDPTE_PAGE_FRAME_NUMBER_BIT                             12
-#define VMX_EPDPTE_PAGE_FRAME_NUMBER_FLAG                            0xFFFFFFFFF000
-#define VMX_EPDPTE_PAGE_FRAME_NUMBER_MASK                            0xFFFFFFFFF
-#define VMX_EPDPTE_PAGE_FRAME_NUMBER(_)                              (((_) >> 12) & 0xFFFFFFFFF)
+#define EPDPTE_PAGE_FRAME_NUMBER_BIT                                 12
+#define EPDPTE_PAGE_FRAME_NUMBER_FLAG                                0xFFFFFFFFF000
+#define EPDPTE_PAGE_FRAME_NUMBER_MASK                                0xFFFFFFFFF
+#define EPDPTE_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} VMX_EPDPTE;
+} EPDPTE;
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page
@@ -17120,19 +17127,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPDE_2MB_READ_ACCESS_BIT                                 0
-#define VMX_EPDE_2MB_READ_ACCESS_FLAG                                0x01
-#define VMX_EPDE_2MB_READ_ACCESS_MASK                                0x01
-#define VMX_EPDE_2MB_READ_ACCESS(_)                                  (((_) >> 0) & 0x01)
+#define EPDE_2MB_READ_ACCESS_BIT                                     0
+#define EPDE_2MB_READ_ACCESS_FLAG                                    0x01
+#define EPDE_2MB_READ_ACCESS_MASK                                    0x01
+#define EPDE_2MB_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPDE_2MB_WRITE_ACCESS_BIT                                1
-#define VMX_EPDE_2MB_WRITE_ACCESS_FLAG                               0x02
-#define VMX_EPDE_2MB_WRITE_ACCESS_MASK                               0x01
-#define VMX_EPDE_2MB_WRITE_ACCESS(_)                                 (((_) >> 1) & 0x01)
+#define EPDE_2MB_WRITE_ACCESS_BIT                                    1
+#define EPDE_2MB_WRITE_ACCESS_FLAG                                   0x02
+#define EPDE_2MB_WRITE_ACCESS_MASK                                   0x01
+#define EPDE_2MB_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -17141,10 +17148,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 2-MByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPDE_2MB_EXECUTE_ACCESS_BIT                              2
-#define VMX_EPDE_2MB_EXECUTE_ACCESS_FLAG                             0x04
-#define VMX_EPDE_2MB_EXECUTE_ACCESS_MASK                             0x01
-#define VMX_EPDE_2MB_EXECUTE_ACCESS(_)                               (((_) >> 2) & 0x01)
+#define EPDE_2MB_EXECUTE_ACCESS_BIT                                  2
+#define EPDE_2MB_EXECUTE_ACCESS_FLAG                                 0x04
+#define EPDE_2MB_EXECUTE_ACCESS_MASK                                 0x01
+#define EPDE_2MB_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 2-MByte page.
@@ -17152,10 +17159,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define VMX_EPDE_2MB_MEMORY_TYPE_BIT                                 3
-#define VMX_EPDE_2MB_MEMORY_TYPE_FLAG                                0x38
-#define VMX_EPDE_2MB_MEMORY_TYPE_MASK                                0x07
-#define VMX_EPDE_2MB_MEMORY_TYPE(_)                                  (((_) >> 3) & 0x07)
+#define EPDE_2MB_MEMORY_TYPE_BIT                                     3
+#define EPDE_2MB_MEMORY_TYPE_FLAG                                    0x38
+#define EPDE_2MB_MEMORY_TYPE_MASK                                    0x07
+#define EPDE_2MB_MEMORY_TYPE(_)                                      (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 2-MByte page.
@@ -17163,19 +17170,19 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define VMX_EPDE_2MB_IGNORE_PAT_BIT                                  6
-#define VMX_EPDE_2MB_IGNORE_PAT_FLAG                                 0x40
-#define VMX_EPDE_2MB_IGNORE_PAT_MASK                                 0x01
-#define VMX_EPDE_2MB_IGNORE_PAT(_)                                   (((_) >> 6) & 0x01)
+#define EPDE_2MB_IGNORE_PAT_BIT                                      6
+#define EPDE_2MB_IGNORE_PAT_FLAG                                     0x40
+#define EPDE_2MB_IGNORE_PAT_MASK                                     0x01
+#define EPDE_2MB_IGNORE_PAT(_)                                       (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Must be 1 (otherwise, this entry references an EPT page table).
      */
     UINT64 LargePage                                               : 1;
-#define VMX_EPDE_2MB_LARGE_PAGE_BIT                                  7
-#define VMX_EPDE_2MB_LARGE_PAGE_FLAG                                 0x80
-#define VMX_EPDE_2MB_LARGE_PAGE_MASK                                 0x01
-#define VMX_EPDE_2MB_LARGE_PAGE(_)                                   (((_) >> 7) & 0x01)
+#define EPDE_2MB_LARGE_PAGE_BIT                                      7
+#define EPDE_2MB_LARGE_PAGE_FLAG                                     0x80
+#define EPDE_2MB_LARGE_PAGE_MASK                                     0x01
+#define EPDE_2MB_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page
@@ -17184,10 +17191,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPDE_2MB_ACCESSED_BIT                                    8
-#define VMX_EPDE_2MB_ACCESSED_FLAG                                   0x100
-#define VMX_EPDE_2MB_ACCESSED_MASK                                   0x01
-#define VMX_EPDE_2MB_ACCESSED(_)                                     (((_) >> 8) & 0x01)
+#define EPDE_2MB_ACCESSED_BIT                                        8
+#define EPDE_2MB_ACCESSED_FLAG                                       0x100
+#define EPDE_2MB_ACCESSED_MASK                                       0x01
+#define EPDE_2MB_ACCESSED(_)                                         (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced
@@ -17196,10 +17203,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define VMX_EPDE_2MB_DIRTY_BIT                                       9
-#define VMX_EPDE_2MB_DIRTY_FLAG                                      0x200
-#define VMX_EPDE_2MB_DIRTY_MASK                                      0x01
-#define VMX_EPDE_2MB_DIRTY(_)                                        (((_) >> 9) & 0x01)
+#define EPDE_2MB_DIRTY_BIT                                           9
+#define EPDE_2MB_DIRTY_FLAG                                          0x200
+#define EPDE_2MB_DIRTY_MASK                                          0x01
+#define EPDE_2MB_DIRTY(_)                                            (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -17207,20 +17214,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPDE_2MB_USER_MODE_EXECUTE_BIT                           10
-#define VMX_EPDE_2MB_USER_MODE_EXECUTE_FLAG                          0x400
-#define VMX_EPDE_2MB_USER_MODE_EXECUTE_MASK                          0x01
-#define VMX_EPDE_2MB_USER_MODE_EXECUTE(_)                            (((_) >> 10) & 0x01)
+#define EPDE_2MB_USER_MODE_EXECUTE_BIT                               10
+#define EPDE_2MB_USER_MODE_EXECUTE_FLAG                              0x400
+#define EPDE_2MB_USER_MODE_EXECUTE_MASK                              0x01
+#define EPDE_2MB_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
     UINT64 Reserved1                                               : 10;
 
     /**
      * [Bits 47:21] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 27;
-#define VMX_EPDE_2MB_PAGE_FRAME_NUMBER_BIT                           21
-#define VMX_EPDE_2MB_PAGE_FRAME_NUMBER_FLAG                          0xFFFFFFE00000
-#define VMX_EPDE_2MB_PAGE_FRAME_NUMBER_MASK                          0x7FFFFFF
-#define VMX_EPDE_2MB_PAGE_FRAME_NUMBER(_)                            (((_) >> 21) & 0x7FFFFFF)
+#define EPDE_2MB_PAGE_FRAME_NUMBER_BIT                               21
+#define EPDE_2MB_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFE00000
+#define EPDE_2MB_PAGE_FRAME_NUMBER_MASK                              0x7FFFFFF
+#define EPDE_2MB_PAGE_FRAME_NUMBER(_)                                (((_) >> 21) & 0x7FFFFFF)
     UINT64 Reserved2                                               : 15;
 
     /**
@@ -17231,14 +17238,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define VMX_EPDE_2MB_SUPPRESS_VE_BIT                                 63
-#define VMX_EPDE_2MB_SUPPRESS_VE_FLAG                                0x8000000000000000
-#define VMX_EPDE_2MB_SUPPRESS_VE_MASK                                0x01
-#define VMX_EPDE_2MB_SUPPRESS_VE(_)                                  (((_) >> 63) & 0x01)
+#define EPDE_2MB_SUPPRESS_VE_BIT                                     63
+#define EPDE_2MB_SUPPRESS_VE_FLAG                                    0x8000000000000000
+#define EPDE_2MB_SUPPRESS_VE_MASK                                    0x01
+#define EPDE_2MB_SUPPRESS_VE(_)                                      (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} VMX_EPDE_2MB;
+} EPDE_2MB;
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table
@@ -17251,19 +17258,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPDE_READ_ACCESS_BIT                                     0
-#define VMX_EPDE_READ_ACCESS_FLAG                                    0x01
-#define VMX_EPDE_READ_ACCESS_MASK                                    0x01
-#define VMX_EPDE_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
+#define EPDE_READ_ACCESS_BIT                                         0
+#define EPDE_READ_ACCESS_FLAG                                        0x01
+#define EPDE_READ_ACCESS_MASK                                        0x01
+#define EPDE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPDE_WRITE_ACCESS_BIT                                    1
-#define VMX_EPDE_WRITE_ACCESS_FLAG                                   0x02
-#define VMX_EPDE_WRITE_ACCESS_MASK                                   0x01
-#define VMX_EPDE_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
+#define EPDE_WRITE_ACCESS_BIT                                        1
+#define EPDE_WRITE_ACCESS_FLAG                                       0x02
+#define EPDE_WRITE_ACCESS_MASK                                       0x01
+#define EPDE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -17272,10 +17279,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 2-MByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPDE_EXECUTE_ACCESS_BIT                                  2
-#define VMX_EPDE_EXECUTE_ACCESS_FLAG                                 0x04
-#define VMX_EPDE_EXECUTE_ACCESS_MASK                                 0x01
-#define VMX_EPDE_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
+#define EPDE_EXECUTE_ACCESS_BIT                                      2
+#define EPDE_EXECUTE_ACCESS_FLAG                                     0x04
+#define EPDE_EXECUTE_ACCESS_MASK                                     0x01
+#define EPDE_EXECUTE_ACCESS(_)                                       (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -17285,10 +17292,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPDE_ACCESSED_BIT                                        8
-#define VMX_EPDE_ACCESSED_FLAG                                       0x100
-#define VMX_EPDE_ACCESSED_MASK                                       0x01
-#define VMX_EPDE_ACCESSED(_)                                         (((_) >> 8) & 0x01)
+#define EPDE_ACCESSED_BIT                                            8
+#define EPDE_ACCESSED_FLAG                                           0x100
+#define EPDE_ACCESSED_MASK                                           0x01
+#define EPDE_ACCESSED(_)                                             (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -17297,25 +17304,25 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPDE_USER_MODE_EXECUTE_BIT                               10
-#define VMX_EPDE_USER_MODE_EXECUTE_FLAG                              0x400
-#define VMX_EPDE_USER_MODE_EXECUTE_MASK                              0x01
-#define VMX_EPDE_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
+#define EPDE_USER_MODE_EXECUTE_BIT                                   10
+#define EPDE_USER_MODE_EXECUTE_FLAG                                  0x400
+#define EPDE_USER_MODE_EXECUTE_MASK                                  0x01
+#define EPDE_USER_MODE_EXECUTE(_)                                    (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPDE_PAGE_FRAME_NUMBER_BIT                               12
-#define VMX_EPDE_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
-#define VMX_EPDE_PAGE_FRAME_NUMBER_MASK                              0xFFFFFFFFF
-#define VMX_EPDE_PAGE_FRAME_NUMBER(_)                                (((_) >> 12) & 0xFFFFFFFFF)
+#define EPDE_PAGE_FRAME_NUMBER_BIT                                   12
+#define EPDE_PAGE_FRAME_NUMBER_FLAG                                  0xFFFFFFFFF000
+#define EPDE_PAGE_FRAME_NUMBER_MASK                                  0xFFFFFFFFF
+#define EPDE_PAGE_FRAME_NUMBER(_)                                    (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} VMX_EPDE;
+} EPDE;
 
 /**
  * @brief Format of an EPT Page-Table Entry that Maps a 4-KByte Page
@@ -17328,19 +17335,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPTE_READ_ACCESS_BIT                                     0
-#define VMX_EPTE_READ_ACCESS_FLAG                                    0x01
-#define VMX_EPTE_READ_ACCESS_MASK                                    0x01
-#define VMX_EPTE_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
+#define EPTE_READ_ACCESS_BIT                                         0
+#define EPTE_READ_ACCESS_FLAG                                        0x01
+#define EPTE_READ_ACCESS_MASK                                        0x01
+#define EPTE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPTE_WRITE_ACCESS_BIT                                    1
-#define VMX_EPTE_WRITE_ACCESS_FLAG                                   0x02
-#define VMX_EPTE_WRITE_ACCESS_MASK                                   0x01
-#define VMX_EPTE_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
+#define EPTE_WRITE_ACCESS_BIT                                        1
+#define EPTE_WRITE_ACCESS_FLAG                                       0x02
+#define EPTE_WRITE_ACCESS_MASK                                       0x01
+#define EPTE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -17349,10 +17356,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 4-KByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPTE_EXECUTE_ACCESS_BIT                                  2
-#define VMX_EPTE_EXECUTE_ACCESS_FLAG                                 0x04
-#define VMX_EPTE_EXECUTE_ACCESS_MASK                                 0x01
-#define VMX_EPTE_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
+#define EPTE_EXECUTE_ACCESS_BIT                                      2
+#define EPTE_EXECUTE_ACCESS_FLAG                                     0x04
+#define EPTE_EXECUTE_ACCESS_MASK                                     0x01
+#define EPTE_EXECUTE_ACCESS(_)                                       (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 4-KByte page.
@@ -17360,10 +17367,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define VMX_EPTE_MEMORY_TYPE_BIT                                     3
-#define VMX_EPTE_MEMORY_TYPE_FLAG                                    0x38
-#define VMX_EPTE_MEMORY_TYPE_MASK                                    0x07
-#define VMX_EPTE_MEMORY_TYPE(_)                                      (((_) >> 3) & 0x07)
+#define EPTE_MEMORY_TYPE_BIT                                         3
+#define EPTE_MEMORY_TYPE_FLAG                                        0x38
+#define EPTE_MEMORY_TYPE_MASK                                        0x07
+#define EPTE_MEMORY_TYPE(_)                                          (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 4-KByte page.
@@ -17371,10 +17378,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define VMX_EPTE_IGNORE_PAT_BIT                                      6
-#define VMX_EPTE_IGNORE_PAT_FLAG                                     0x40
-#define VMX_EPTE_IGNORE_PAT_MASK                                     0x01
-#define VMX_EPTE_IGNORE_PAT(_)                                       (((_) >> 6) & 0x01)
+#define EPTE_IGNORE_PAT_BIT                                          6
+#define EPTE_IGNORE_PAT_FLAG                                         0x40
+#define EPTE_IGNORE_PAT_MASK                                         0x01
+#define EPTE_IGNORE_PAT(_)                                           (((_) >> 6) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -17384,10 +17391,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define VMX_EPTE_ACCESSED_BIT                                        8
-#define VMX_EPTE_ACCESSED_FLAG                                       0x100
-#define VMX_EPTE_ACCESSED_MASK                                       0x01
-#define VMX_EPTE_ACCESSED(_)                                         (((_) >> 8) & 0x01)
+#define EPTE_ACCESSED_BIT                                            8
+#define EPTE_ACCESSED_FLAG                                           0x100
+#define EPTE_ACCESSED_MASK                                           0x01
+#define EPTE_ACCESSED(_)                                             (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced
@@ -17396,10 +17403,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define VMX_EPTE_DIRTY_BIT                                           9
-#define VMX_EPTE_DIRTY_FLAG                                          0x200
-#define VMX_EPTE_DIRTY_MASK                                          0x01
-#define VMX_EPTE_DIRTY(_)                                            (((_) >> 9) & 0x01)
+#define EPTE_DIRTY_BIT                                               9
+#define EPTE_DIRTY_FLAG                                              0x200
+#define EPTE_DIRTY_MASK                                              0x01
+#define EPTE_DIRTY(_)                                                (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -17407,20 +17414,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPTE_USER_MODE_EXECUTE_BIT                               10
-#define VMX_EPTE_USER_MODE_EXECUTE_FLAG                              0x400
-#define VMX_EPTE_USER_MODE_EXECUTE_MASK                              0x01
-#define VMX_EPTE_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
+#define EPTE_USER_MODE_EXECUTE_BIT                                   10
+#define EPTE_USER_MODE_EXECUTE_FLAG                                  0x400
+#define EPTE_USER_MODE_EXECUTE_MASK                                  0x01
+#define EPTE_USER_MODE_EXECUTE(_)                                    (((_) >> 10) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of the 4-KByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPTE_PAGE_FRAME_NUMBER_BIT                               12
-#define VMX_EPTE_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
-#define VMX_EPTE_PAGE_FRAME_NUMBER_MASK                              0xFFFFFFFFF
-#define VMX_EPTE_PAGE_FRAME_NUMBER(_)                                (((_) >> 12) & 0xFFFFFFFFF)
+#define EPTE_PAGE_FRAME_NUMBER_BIT                                   12
+#define EPTE_PAGE_FRAME_NUMBER_FLAG                                  0xFFFFFFFFF000
+#define EPTE_PAGE_FRAME_NUMBER_MASK                                  0xFFFFFFFFF
+#define EPTE_PAGE_FRAME_NUMBER(_)                                    (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved3                                               : 15;
 
     /**
@@ -17431,14 +17438,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define VMX_EPTE_SUPPRESS_VE_BIT                                     63
-#define VMX_EPTE_SUPPRESS_VE_FLAG                                    0x8000000000000000
-#define VMX_EPTE_SUPPRESS_VE_MASK                                    0x01
-#define VMX_EPTE_SUPPRESS_VE(_)                                      (((_) >> 63) & 0x01)
+#define EPTE_SUPPRESS_VE_BIT                                         63
+#define EPTE_SUPPRESS_VE_FLAG                                        0x8000000000000000
+#define EPTE_SUPPRESS_VE_MASK                                        0x01
+#define EPTE_SUPPRESS_VE(_)                                          (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} VMX_EPTE;
+} EPTE;
 
 /**
  * @brief Format of a common EPT Entry
@@ -17448,98 +17455,98 @@ typedef union
   struct
   {
     UINT64 ReadAccess                                              : 1;
-#define VMX_EPT_ENTRY_READ_ACCESS_BIT                                0
-#define VMX_EPT_ENTRY_READ_ACCESS_FLAG                               0x01
-#define VMX_EPT_ENTRY_READ_ACCESS_MASK                               0x01
-#define VMX_EPT_ENTRY_READ_ACCESS(_)                                 (((_) >> 0) & 0x01)
+#define EPT_ENTRY_READ_ACCESS_BIT                                    0
+#define EPT_ENTRY_READ_ACCESS_FLAG                                   0x01
+#define EPT_ENTRY_READ_ACCESS_MASK                                   0x01
+#define EPT_ENTRY_READ_ACCESS(_)                                     (((_) >> 0) & 0x01)
     UINT64 WriteAccess                                             : 1;
-#define VMX_EPT_ENTRY_WRITE_ACCESS_BIT                               1
-#define VMX_EPT_ENTRY_WRITE_ACCESS_FLAG                              0x02
-#define VMX_EPT_ENTRY_WRITE_ACCESS_MASK                              0x01
-#define VMX_EPT_ENTRY_WRITE_ACCESS(_)                                (((_) >> 1) & 0x01)
+#define EPT_ENTRY_WRITE_ACCESS_BIT                                   1
+#define EPT_ENTRY_WRITE_ACCESS_FLAG                                  0x02
+#define EPT_ENTRY_WRITE_ACCESS_MASK                                  0x01
+#define EPT_ENTRY_WRITE_ACCESS(_)                                    (((_) >> 1) & 0x01)
     UINT64 ExecuteAccess                                           : 1;
-#define VMX_EPT_ENTRY_EXECUTE_ACCESS_BIT                             2
-#define VMX_EPT_ENTRY_EXECUTE_ACCESS_FLAG                            0x04
-#define VMX_EPT_ENTRY_EXECUTE_ACCESS_MASK                            0x01
-#define VMX_EPT_ENTRY_EXECUTE_ACCESS(_)                              (((_) >> 2) & 0x01)
+#define EPT_ENTRY_EXECUTE_ACCESS_BIT                                 2
+#define EPT_ENTRY_EXECUTE_ACCESS_FLAG                                0x04
+#define EPT_ENTRY_EXECUTE_ACCESS_MASK                                0x01
+#define EPT_ENTRY_EXECUTE_ACCESS(_)                                  (((_) >> 2) & 0x01)
     UINT64 MemoryType                                              : 3;
-#define VMX_EPT_ENTRY_MEMORY_TYPE_BIT                                3
-#define VMX_EPT_ENTRY_MEMORY_TYPE_FLAG                               0x38
-#define VMX_EPT_ENTRY_MEMORY_TYPE_MASK                               0x07
-#define VMX_EPT_ENTRY_MEMORY_TYPE(_)                                 (((_) >> 3) & 0x07)
+#define EPT_ENTRY_MEMORY_TYPE_BIT                                    3
+#define EPT_ENTRY_MEMORY_TYPE_FLAG                                   0x38
+#define EPT_ENTRY_MEMORY_TYPE_MASK                                   0x07
+#define EPT_ENTRY_MEMORY_TYPE(_)                                     (((_) >> 3) & 0x07)
     UINT64 IgnorePat                                               : 1;
-#define VMX_EPT_ENTRY_IGNORE_PAT_BIT                                 6
-#define VMX_EPT_ENTRY_IGNORE_PAT_FLAG                                0x40
-#define VMX_EPT_ENTRY_IGNORE_PAT_MASK                                0x01
-#define VMX_EPT_ENTRY_IGNORE_PAT(_)                                  (((_) >> 6) & 0x01)
+#define EPT_ENTRY_IGNORE_PAT_BIT                                     6
+#define EPT_ENTRY_IGNORE_PAT_FLAG                                    0x40
+#define EPT_ENTRY_IGNORE_PAT_MASK                                    0x01
+#define EPT_ENTRY_IGNORE_PAT(_)                                      (((_) >> 6) & 0x01)
     UINT64 LargePage                                               : 1;
-#define VMX_EPT_ENTRY_LARGE_PAGE_BIT                                 7
-#define VMX_EPT_ENTRY_LARGE_PAGE_FLAG                                0x80
-#define VMX_EPT_ENTRY_LARGE_PAGE_MASK                                0x01
-#define VMX_EPT_ENTRY_LARGE_PAGE(_)                                  (((_) >> 7) & 0x01)
+#define EPT_ENTRY_LARGE_PAGE_BIT                                     7
+#define EPT_ENTRY_LARGE_PAGE_FLAG                                    0x80
+#define EPT_ENTRY_LARGE_PAGE_MASK                                    0x01
+#define EPT_ENTRY_LARGE_PAGE(_)                                      (((_) >> 7) & 0x01)
     UINT64 Accessed                                                : 1;
-#define VMX_EPT_ENTRY_ACCESSED_BIT                                   8
-#define VMX_EPT_ENTRY_ACCESSED_FLAG                                  0x100
-#define VMX_EPT_ENTRY_ACCESSED_MASK                                  0x01
-#define VMX_EPT_ENTRY_ACCESSED(_)                                    (((_) >> 8) & 0x01)
+#define EPT_ENTRY_ACCESSED_BIT                                       8
+#define EPT_ENTRY_ACCESSED_FLAG                                      0x100
+#define EPT_ENTRY_ACCESSED_MASK                                      0x01
+#define EPT_ENTRY_ACCESSED(_)                                        (((_) >> 8) & 0x01)
     UINT64 Dirty                                                   : 1;
-#define VMX_EPT_ENTRY_DIRTY_BIT                                      9
-#define VMX_EPT_ENTRY_DIRTY_FLAG                                     0x200
-#define VMX_EPT_ENTRY_DIRTY_MASK                                     0x01
-#define VMX_EPT_ENTRY_DIRTY(_)                                       (((_) >> 9) & 0x01)
+#define EPT_ENTRY_DIRTY_BIT                                          9
+#define EPT_ENTRY_DIRTY_FLAG                                         0x200
+#define EPT_ENTRY_DIRTY_MASK                                         0x01
+#define EPT_ENTRY_DIRTY(_)                                           (((_) >> 9) & 0x01)
     UINT64 UserModeExecute                                         : 1;
-#define VMX_EPT_ENTRY_USER_MODE_EXECUTE_BIT                          10
-#define VMX_EPT_ENTRY_USER_MODE_EXECUTE_FLAG                         0x400
-#define VMX_EPT_ENTRY_USER_MODE_EXECUTE_MASK                         0x01
-#define VMX_EPT_ENTRY_USER_MODE_EXECUTE(_)                           (((_) >> 10) & 0x01)
+#define EPT_ENTRY_USER_MODE_EXECUTE_BIT                              10
+#define EPT_ENTRY_USER_MODE_EXECUTE_FLAG                             0x400
+#define EPT_ENTRY_USER_MODE_EXECUTE_MASK                             0x01
+#define EPT_ENTRY_USER_MODE_EXECUTE(_)                               (((_) >> 10) & 0x01)
     UINT64 Reserved1                                               : 1;
     UINT64 PageFrameNumber                                         : 36;
-#define VMX_EPT_ENTRY_PAGE_FRAME_NUMBER_BIT                          12
-#define VMX_EPT_ENTRY_PAGE_FRAME_NUMBER_FLAG                         0xFFFFFFFFF000
-#define VMX_EPT_ENTRY_PAGE_FRAME_NUMBER_MASK                         0xFFFFFFFFF
-#define VMX_EPT_ENTRY_PAGE_FRAME_NUMBER(_)                           (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_ENTRY_PAGE_FRAME_NUMBER_BIT                              12
+#define EPT_ENTRY_PAGE_FRAME_NUMBER_FLAG                             0xFFFFFFFFF000
+#define EPT_ENTRY_PAGE_FRAME_NUMBER_MASK                             0xFFFFFFFFF
+#define EPT_ENTRY_PAGE_FRAME_NUMBER(_)                               (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved2                                               : 15;
     UINT64 SuppressVe                                              : 1;
-#define VMX_EPT_ENTRY_SUPPRESS_VE_BIT                                63
-#define VMX_EPT_ENTRY_SUPPRESS_VE_FLAG                               0x8000000000000000
-#define VMX_EPT_ENTRY_SUPPRESS_VE_MASK                               0x01
-#define VMX_EPT_ENTRY_SUPPRESS_VE(_)                                 (((_) >> 63) & 0x01)
+#define EPT_ENTRY_SUPPRESS_VE_BIT                                    63
+#define EPT_ENTRY_SUPPRESS_VE_FLAG                                   0x8000000000000000
+#define EPT_ENTRY_SUPPRESS_VE_MASK                                   0x01
+#define EPT_ENTRY_SUPPRESS_VE(_)                                     (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} VMX_EPT_ENTRY;
+} EPT_ENTRY;
 
 /**
- * @defgroup VMX_EPT_TABLE_LEVEL \
+ * @defgroup EPT_TABLE_LEVEL \
  *           EPT Table level numbers
  *
  * EPT Table level numbers.
  * @{
  */
-#define VMX_LEVEL_PML4E                                              0x00000003
-#define VMX_LEVEL_PDPTE                                              0x00000002
-#define VMX_LEVEL_PDE                                                0x00000001
-#define VMX_LEVEL_PTE                                                0x00000000
+#define LEVEL_PML4E                                                  0x00000003
+#define LEVEL_PDPTE                                                  0x00000002
+#define LEVEL_PDE                                                    0x00000001
+#define LEVEL_PTE                                                    0x00000000
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_EPT_ENTRY_COUNT \
+ * @defgroup EPT_ENTRY_COUNT \
  *           EPT Entry counts
  *
  * EPT Entry counts.
  * @{
  */
-#define VMX_PML4_ENTRY_COUNT                                         0x00000200
-#define VMX_PDPTE_ENTRY_COUNT                                        0x00000200
-#define VMX_PDE_ENTRY_COUNT                                          0x00000200
+#define PML4_ENTRY_COUNT                                             0x00000200
+#define PDPTE_ENTRY_COUNT                                            0x00000200
+#define PDE_ENTRY_COUNT                                              0x00000200
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_EPT_MEMORY_TYPE \
+ * @defgroup EPT_MEMORY_TYPE \
  *           EPT memory type
  *
  * The effective memory type of a memory access using a guest-physical address (an access that is translated using EPT) is
@@ -17565,13 +17572,13 @@ typedef union
  * @see Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))] (reference)
  * @{
  */
-#define VMX_EPT_MEMORY_TYPE_UNCACHEABLE                              0x00000000
-#define VMX_EPT_MEMORY_TYPE_WRITE_COMBINING                          0x00000001
-#define VMX_EPT_MEMORY_TYPE_WRITE_THROUGH                            0x00000004
-#define VMX_EPT_MEMORY_TYPE_WRITE_PROTECTED                          0x00000005
-#define VMX_EPT_MEMORY_TYPE_WRITE_BACK                               0x00000006
-#define VMX_EPT_MEMORY_TYPE_UNCACHED                                 0x00000007
-#define VMX_EPT_MEMORY_TYPE_INVALID                                  0x000000FF
+#define EPT_MEMORY_TYPE_UNCACHEABLE                                  0x00000000
+#define EPT_MEMORY_TYPE_WRITE_COMBINING                              0x00000001
+#define EPT_MEMORY_TYPE_WRITE_THROUGH                                0x00000004
+#define EPT_MEMORY_TYPE_WRITE_PROTECTED                              0x00000005
+#define EPT_MEMORY_TYPE_WRITE_BACK                                   0x00000006
+#define EPT_MEMORY_TYPE_UNCACHED                                     0x00000007
+#define EPT_MEMORY_TYPE_INVALID                                      0x000000FF
 /**
  * @}
  */
@@ -17587,14 +17594,14 @@ typedef enum
    * with the EP4TA specified in the INVEPT descriptor. Combined mappings for that EP4TA are invalidated for all VPIDs and
    * all PCIDs. (The instruction may invalidate mappings associated with other EP4TAs.)
    */
-  VmxInveptSingleContext                                       = 0x00000001,
+  InveptSingleContext                                          = 0x00000001,
 
   /**
    * If the INVEPT type is 2, the logical processor invalidates guest-physical mappings and combined mappings associated with
    * all EP4TAs (and, for combined mappings, for all VPIDs and PCIDs).
    */
-  VmxInveptAllContext                                          = 0x00000002,
-} VMX_INVEPT_TYPE;
+  InveptAllContext                                             = 0x00000002,
+} INVEPT_TYPE;
 
 typedef enum
 {
@@ -17605,7 +17612,7 @@ typedef enum
    * and, for combined mappings, all EP4TAs. (The instruction may also invalidate mappings associated with other VPIDs and
    * for other linear addresses).
    */
-  VmxInvvpidIndividualAddress                                  = 0x00000000,
+  InvvpidIndividualAddress                                     = 0x00000000,
 
   /**
    * If the INVVPID type is 1, the logical processor invalidates all linear mappings and combined mappings associated with
@@ -17613,14 +17620,14 @@ typedef enum
    * all PCIDs and, for combined mappings, all EP4TAs. (The instruction may also invalidate mappings associated with other
    * VPIDs).
    */
-  VmxInvvpidSingleContext                                      = 0x00000001,
+  InvvpidSingleContext                                         = 0x00000001,
 
   /**
    * If the INVVPID type is 2, the logical processor invalidates linear mappings and combined mappings associated with all
    * VPIDs except VPID 0000H and with all PCIDs. (The instruction may also invalidate linear mappings with VPID 0000H.)
    * Combined mappings are invalidated for all EP4TAs.
    */
-  VmxInvvpidAllContext                                         = 0x00000002,
+  InvvpidAllContext                                            = 0x00000002,
 
   /**
    * If the INVVPID type is 3, the logical processor invalidates linear mappings and combined mappings associated with the
@@ -17631,8 +17638,8 @@ typedef enum
    *
    * @see Vol3C[4.10(Caching Translation Information)]
    */
-  VmxInvvpidSingleContextRetainingGlobals                      = 0x00000003,
-} VMX_INVVPID_TYPE;
+  InvvpidSingleContextRetainingGlobals                         = 0x00000003,
+} INVVPID_TYPE;
 
 typedef struct
 {
@@ -17642,7 +17649,7 @@ typedef struct
    * Must be zero.
    */
   UINT64 Reserved;
-} VMX_INVEPT_DESCRIPTOR;
+} INVEPT_DESCRIPTOR;
 
 typedef struct
 {
@@ -17658,7 +17665,7 @@ typedef struct
    */
   UINT32 Reserved2;
   UINT64 LinearAddress;
-} VMX_INVVPID_DESCRIPTOR;
+} INVVPID_DESCRIPTOR;
 
 typedef struct
 {
@@ -17701,10 +17708,10 @@ typedef struct
    * @see Vol3D[A.1(BASIC VMX INFORMATION)]
    */
   UINT8 Data[4088];
-} VMX_VMCS;
+} VMCS;
 
 /**
- * @defgroup VMX_VMCS_GROUP \
+ * @defgroup VMCS_FIELDS \
  *           VMCS (VM Control Structure)
  *
  * Every component of the VMCS is encoded by a 32-bit field that can be used by VMREAD and VMWRITE. This enumerates all
@@ -17722,19 +17729,19 @@ typedef union
      * [Bit 0] Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields.
      */
     UINT16 AccessType                                              : 1;
-#define VMX_VMCS_COMPONENT_ENCODING_ACCESS_TYPE_BIT                  0
-#define VMX_VMCS_COMPONENT_ENCODING_ACCESS_TYPE_FLAG                 0x01
-#define VMX_VMCS_COMPONENT_ENCODING_ACCESS_TYPE_MASK                 0x01
-#define VMX_VMCS_COMPONENT_ENCODING_ACCESS_TYPE(_)                   (((_) >> 0) & 0x01)
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_BIT                      0
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_FLAG                     0x01
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE_MASK                     0x01
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE(_)                       (((_) >> 0) & 0x01)
 
     /**
      * [Bits 9:1] Index.
      */
     UINT16 Index                                                   : 9;
-#define VMX_VMCS_COMPONENT_ENCODING_INDEX_BIT                        1
-#define VMX_VMCS_COMPONENT_ENCODING_INDEX_FLAG                       0x3FE
-#define VMX_VMCS_COMPONENT_ENCODING_INDEX_MASK                       0x1FF
-#define VMX_VMCS_COMPONENT_ENCODING_INDEX(_)                         (((_) >> 1) & 0x1FF)
+#define VMCS_COMPONENT_ENCODING_INDEX_BIT                            1
+#define VMCS_COMPONENT_ENCODING_INDEX_FLAG                           0x3FE
+#define VMCS_COMPONENT_ENCODING_INDEX_MASK                           0x1FF
+#define VMCS_COMPONENT_ENCODING_INDEX(_)                             (((_) >> 1) & 0x1FF)
 
     /**
      * [Bits 11:10] Type:
@@ -17744,19 +17751,19 @@ typedef union
      * 3: host state
      */
     UINT16 Type                                                    : 2;
-#define VMX_VMCS_COMPONENT_ENCODING_TYPE_BIT                         10
-#define VMX_VMCS_COMPONENT_ENCODING_TYPE_FLAG                        0xC00
-#define VMX_VMCS_COMPONENT_ENCODING_TYPE_MASK                        0x03
-#define VMX_VMCS_COMPONENT_ENCODING_TYPE(_)                          (((_) >> 10) & 0x03)
+#define VMCS_COMPONENT_ENCODING_TYPE_BIT                             10
+#define VMCS_COMPONENT_ENCODING_TYPE_FLAG                            0xC00
+#define VMCS_COMPONENT_ENCODING_TYPE_MASK                            0x03
+#define VMCS_COMPONENT_ENCODING_TYPE(_)                              (((_) >> 10) & 0x03)
 
     /**
      * [Bit 12] Reserved (must be 0).
      */
     UINT16 MustBeZero                                              : 1;
-#define VMX_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_BIT                 12
-#define VMX_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_FLAG                0x1000
-#define VMX_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_MASK                0x01
-#define VMX_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO(_)                  (((_) >> 12) & 0x01)
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_BIT                     12
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_FLAG                    0x1000
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO_MASK                    0x01
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO(_)                      (((_) >> 12) & 0x01)
 
     /**
      * [Bits 14:13] Width:
@@ -17766,18 +17773,18 @@ typedef union
      * 3: natural-width
      */
     UINT16 Width                                                   : 2;
-#define VMX_VMCS_COMPONENT_ENCODING_WIDTH_BIT                        13
-#define VMX_VMCS_COMPONENT_ENCODING_WIDTH_FLAG                       0x6000
-#define VMX_VMCS_COMPONENT_ENCODING_WIDTH_MASK                       0x03
-#define VMX_VMCS_COMPONENT_ENCODING_WIDTH(_)                         (((_) >> 13) & 0x03)
+#define VMCS_COMPONENT_ENCODING_WIDTH_BIT                            13
+#define VMCS_COMPONENT_ENCODING_WIDTH_FLAG                           0x6000
+#define VMCS_COMPONENT_ENCODING_WIDTH_MASK                           0x03
+#define VMCS_COMPONENT_ENCODING_WIDTH(_)                             (((_) >> 13) & 0x03)
     UINT16 Reserved1                                               : 1;
   };
 
   UINT16 Flags;
-} VMX_VMCS_COMPONENT_ENCODING;
+} VMCS_COMPONENT_ENCODING;
 
 /**
- * @defgroup VMX_VMCS_16_BIT \
+ * @defgroup VMCS_16_BIT \
  *           16-Bit Fields
  *
  * 16-Bit Fields.
@@ -17786,7 +17793,7 @@ typedef union
  * @{
  */
 /**
- * @defgroup VMX_VMCS_16_BIT_CONTROL_FIELDS \
+ * @defgroup VMCS_16_BIT_CONTROL_FIELDS \
  *           16-Bit Control Fields
  *
  * 16-Bit Control Fields.
@@ -17797,7 +17804,7 @@ typedef union
  *
  * @remarks This field exists only on processors that support the 1-setting of the "enable VPID" VM-execution control.
  */
-#define VMX_VMCS_CTRL_VIRTUAL_PROCESSOR_IDENTIFIER                   0x00000000
+#define VMCS_CTRL_VIRTUAL_PROCESSOR_IDENTIFIER                       0x00000000
 
 /**
  * Posted-interrupt notification vector.
@@ -17805,7 +17812,7 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "process posted interrupts" VM-execution
  *          control.
  */
-#define VMX_VMCS_CTRL_POSTED_INTERRUPT_NOTIFICATION_VECTOR           0x00000002
+#define VMCS_CTRL_POSTED_INTERRUPT_NOTIFICATION_VECTOR               0x00000002
 
 /**
  * EPTP index.
@@ -17813,13 +17820,13 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "EPT-violation \#VE" VM-execution
  *          control.
  */
-#define VMX_VMCS_CTRL_EPTP_INDEX                                     0x00000004
+#define VMCS_CTRL_EPTP_INDEX                                         0x00000004
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_16_BIT_GUEST_STATE_FIELDS \
+ * @defgroup VMCS_16_BIT_GUEST_STATE_FIELDS \
  *           16-Bit Guest-State Fields
  *
  * 16-Bit Guest-State Fields.
@@ -17828,42 +17835,42 @@ typedef union
 /**
  * Guest ES selector.
  */
-#define VMX_VMCS_GUEST_ES_SELECTOR                                   0x00000800
+#define VMCS_GUEST_ES_SELECTOR                                       0x00000800
 
 /**
  * Guest CS selector.
  */
-#define VMX_VMCS_GUEST_CS_SELECTOR                                   0x00000802
+#define VMCS_GUEST_CS_SELECTOR                                       0x00000802
 
 /**
  * Guest SS selector.
  */
-#define VMX_VMCS_GUEST_SS_SELECTOR                                   0x00000804
+#define VMCS_GUEST_SS_SELECTOR                                       0x00000804
 
 /**
  * Guest DS selector.
  */
-#define VMX_VMCS_GUEST_DS_SELECTOR                                   0x00000806
+#define VMCS_GUEST_DS_SELECTOR                                       0x00000806
 
 /**
  * Guest FS selector.
  */
-#define VMX_VMCS_GUEST_FS_SELECTOR                                   0x00000808
+#define VMCS_GUEST_FS_SELECTOR                                       0x00000808
 
 /**
  * Guest GS selector.
  */
-#define VMX_VMCS_GUEST_GS_SELECTOR                                   0x0000080A
+#define VMCS_GUEST_GS_SELECTOR                                       0x0000080A
 
 /**
  * Guest LDTR selector.
  */
-#define VMX_VMCS_GUEST_LDTR_SELECTOR                                 0x0000080C
+#define VMCS_GUEST_LDTR_SELECTOR                                     0x0000080C
 
 /**
  * Guest TR selector.
  */
-#define VMX_VMCS_GUEST_TR_SELECTOR                                   0x0000080E
+#define VMCS_GUEST_TR_SELECTOR                                       0x0000080E
 
 /**
  * Guest interrupt status.
@@ -17871,20 +17878,20 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "virtual-interrupt delivery"
  *          VM-execution control.
  */
-#define VMX_VMCS_GUEST_INTERRUPT_STATUS                              0x00000810
+#define VMCS_GUEST_INTERRUPT_STATUS                                  0x00000810
 
 /**
  * PML index.
  *
  * @remarks This field exists only on processors that support the 1-setting of the "enable PML" VM-execution control.
  */
-#define VMX_VMCS_GUEST_PML_INDEX                                     0x00000812
+#define VMCS_GUEST_PML_INDEX                                         0x00000812
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_16_BIT_HOST_STATE_FIELDS \
+ * @defgroup VMCS_16_BIT_HOST_STATE_FIELDS \
  *           16-Bit Host-State Fields
  *
  * 16-Bit Host-State Fields.
@@ -17893,37 +17900,37 @@ typedef union
 /**
  * Host ES selector.
  */
-#define VMX_VMCS_HOST_ES_SELECTOR                                    0x00000C00
+#define VMCS_HOST_ES_SELECTOR                                        0x00000C00
 
 /**
  * Host CS selector.
  */
-#define VMX_VMCS_HOST_CS_SELECTOR                                    0x00000C02
+#define VMCS_HOST_CS_SELECTOR                                        0x00000C02
 
 /**
  * Host SS selector.
  */
-#define VMX_VMCS_HOST_SS_SELECTOR                                    0x00000C04
+#define VMCS_HOST_SS_SELECTOR                                        0x00000C04
 
 /**
  * Host DS selector.
  */
-#define VMX_VMCS_HOST_DS_SELECTOR                                    0x00000C06
+#define VMCS_HOST_DS_SELECTOR                                        0x00000C06
 
 /**
  * Host FS selector.
  */
-#define VMX_VMCS_HOST_FS_SELECTOR                                    0x00000C08
+#define VMCS_HOST_FS_SELECTOR                                        0x00000C08
 
 /**
  * Host GS selector.
  */
-#define VMX_VMCS_HOST_GS_SELECTOR                                    0x00000C0A
+#define VMCS_HOST_GS_SELECTOR                                        0x00000C0A
 
 /**
  * Host TR selector.
  */
-#define VMX_VMCS_HOST_TR_SELECTOR                                    0x00000C0C
+#define VMCS_HOST_TR_SELECTOR                                        0x00000C0C
 /**
  * @}
  */
@@ -17933,7 +17940,7 @@ typedef union
  */
 
 /**
- * @defgroup VMX_VMCS_64_BIT \
+ * @defgroup VMCS_64_BIT \
  *           64-Bit Fields
  *
  * 64-Bit Fields.
@@ -17942,7 +17949,7 @@ typedef union
  * @{
  */
 /**
- * @defgroup VMX_VMCS_64_BIT_CONTROL_FIELDS \
+ * @defgroup VMCS_64_BIT_CONTROL_FIELDS \
  *           64-Bit Control Fields
  *
  * 64-Bit Control Fields.
@@ -17951,133 +17958,133 @@ typedef union
 /**
  * Address of I/O bitmap A.
  */
-#define VMX_VMCS_CTRL_IO_BITMAP_A_ADDRESS                            0x00002000
+#define VMCS_CTRL_IO_BITMAP_A_ADDRESS                                0x00002000
 
 /**
  * Address of I/O bitmap B.
  */
-#define VMX_VMCS_CTRL_IO_BITMAP_B_ADDRESS                            0x00002002
+#define VMCS_CTRL_IO_BITMAP_B_ADDRESS                                0x00002002
 
 /**
  * Address of MSR bitmaps.
  */
-#define VMX_VMCS_CTRL_MSR_BITMAP_ADDRESS                             0x00002004
+#define VMCS_CTRL_MSR_BITMAP_ADDRESS                                 0x00002004
 
 /**
  * VM-exit MSR-store address.
  */
-#define VMX_VMCS_CTRL_VMEXIT_MSR_STORE_ADDRESS                       0x00002006
+#define VMCS_CTRL_VMEXIT_MSR_STORE_ADDRESS                           0x00002006
 
 /**
  * VM-exit MSR-load address.
  */
-#define VMX_VMCS_CTRL_VMEXIT_MSR_LOAD_ADDRESS                        0x00002008
+#define VMCS_CTRL_VMEXIT_MSR_LOAD_ADDRESS                            0x00002008
 
 /**
  * VM-entry MSR-load address.
  */
-#define VMX_VMCS_CTRL_VMENTRY_MSR_LOAD_ADDRESS                       0x0000200A
+#define VMCS_CTRL_VMENTRY_MSR_LOAD_ADDRESS                           0x0000200A
 
 /**
  * Executive-VMCS pointer.
  */
-#define VMX_VMCS_CTRL_EXECUTIVE_VMCS_POINTER                         0x0000200C
+#define VMCS_CTRL_EXECUTIVE_VMCS_POINTER                             0x0000200C
 
 /**
  * PML address.
  */
-#define VMX_VMCS_CTRL_PML_ADDRESS                                    0x0000200E
+#define VMCS_CTRL_PML_ADDRESS                                        0x0000200E
 
 /**
  * TSC offset.
  */
-#define VMX_VMCS_CTRL_TSC_OFFSET                                     0x00002010
+#define VMCS_CTRL_TSC_OFFSET                                         0x00002010
 
 /**
  * Virtual-APIC address.
  */
-#define VMX_VMCS_CTRL_VIRTUAL_APIC_ADDRESS                           0x00002012
+#define VMCS_CTRL_VIRTUAL_APIC_ADDRESS                               0x00002012
 
 /**
  * APIC-access address.
  */
-#define VMX_VMCS_CTRL_APIC_ACCESS_ADDRESS                            0x00002014
+#define VMCS_CTRL_APIC_ACCESS_ADDRESS                                0x00002014
 
 /**
  * Posted-interrupt descriptor address
  */
-#define VMX_VMCS_CTRL_POSTED_INTERRUPT_DESCRIPTOR_ADDRESS            0x00002016
+#define VMCS_CTRL_POSTED_INTERRUPT_DESCRIPTOR_ADDRESS                0x00002016
 
 /**
  * VM-function controls.
  */
-#define VMX_VMCS_CTRL_VMFUNC_CONTROLS                                0x00002018
+#define VMCS_CTRL_VMFUNC_CONTROLS                                    0x00002018
 
 /**
  * EPT pointer.
  */
-#define VMX_VMCS_CTRL_EPT_POINTER                                    0x0000201A
+#define VMCS_CTRL_EPT_POINTER                                        0x0000201A
 
 /**
  * EOI-exit bitmap 0.
  */
-#define VMX_VMCS_CTRL_EOI_EXIT_BITMAP_0                              0x0000201C
+#define VMCS_CTRL_EOI_EXIT_BITMAP_0                                  0x0000201C
 
 /**
  * EOI-exit bitmap 1.
  */
-#define VMX_VMCS_CTRL_EOI_EXIT_BITMAP_1                              0x0000201E
+#define VMCS_CTRL_EOI_EXIT_BITMAP_1                                  0x0000201E
 
 /**
  * EOI-exit bitmap 2.
  */
-#define VMX_VMCS_CTRL_EOI_EXIT_BITMAP_2                              0x00002020
+#define VMCS_CTRL_EOI_EXIT_BITMAP_2                                  0x00002020
 
 /**
  * EOI-exit bitmap 3.
  */
-#define VMX_VMCS_CTRL_EOI_EXIT_BITMAP_3                              0x00002022
+#define VMCS_CTRL_EOI_EXIT_BITMAP_3                                  0x00002022
 
 /**
  * EPTP-list address.
  */
-#define VMX_VMCS_CTRL_EPT_POINTER_LIST_ADDRESS                       0x00002024
+#define VMCS_CTRL_EPT_POINTER_LIST_ADDRESS                           0x00002024
 
 /**
  * VMREAD-bitmap address.
  */
-#define VMX_VMCS_CTRL_VMREAD_BITMAP_ADDRESS                          0x00002026
+#define VMCS_CTRL_VMREAD_BITMAP_ADDRESS                              0x00002026
 
 /**
  * VMWRITE-bitmap address.
  */
-#define VMX_VMCS_CTRL_VMWRITE_BITMAP_ADDRESS                         0x00002028
+#define VMCS_CTRL_VMWRITE_BITMAP_ADDRESS                             0x00002028
 
 /**
  * Virtualization-exception information address.
  */
-#define VMX_VMCS_CTRL_VIRTUALIZATION_EXCEPTION_INFORMATION_ADDRESS   0x0000202A
+#define VMCS_CTRL_VIRTUALIZATION_EXCEPTION_INFORMATION_ADDRESS       0x0000202A
 
 /**
  * XSS-exiting bitmap.
  */
-#define VMX_VMCS_CTRL_XSS_EXITING_BITMAP                             0x0000202C
+#define VMCS_CTRL_XSS_EXITING_BITMAP                                 0x0000202C
 
 /**
  * ENCLS-exiting bitmap.
  */
-#define VMX_VMCS_CTRL_ENCLS_EXITING_BITMAP                           0x0000202E
+#define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
 
 /**
  * TSC multiplier.
  */
-#define VMX_VMCS_CTRL_TSC_MULTIPLIER                                 0x00002032
+#define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_64_BIT_READ_ONLY_DATA_FIELDS \
+ * @defgroup VMCS_64_BIT_READ_ONLY_DATA_FIELDS \
  *           64-Bit Read-Only Data Field
  *
  * 64-Bit Read-Only Data Field.
@@ -18086,13 +18093,13 @@ typedef union
 /**
  * Guest-physical address.
  */
-#define VMX_VMCS_GUEST_PHYSICAL_ADDRESS                              0x00002400
+#define VMCS_GUEST_PHYSICAL_ADDRESS                                  0x00002400
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_64_BIT_GUEST_STATE_FIELDS \
+ * @defgroup VMCS_64_BIT_GUEST_STATE_FIELDS \
  *           64-Bit Guest-State Fields
  *
  * 64-Bit Guest-State Fields.
@@ -18101,53 +18108,53 @@ typedef union
 /**
  * VMCS link pointer.
  */
-#define VMX_VMCS_GUEST_VMCS_LINK_POINTER                             0x00002800
+#define VMCS_GUEST_VMCS_LINK_POINTER                                 0x00002800
 
 /**
  * Guest IA32_DEBUGCTL.
  */
-#define VMX_VMCS_GUEST_DEBUGCTL                                      0x00002802
+#define VMCS_GUEST_DEBUGCTL                                          0x00002802
 
 /**
  * Guest IA32_PAT.
  */
-#define VMX_VMCS_GUEST_PAT                                           0x00002804
+#define VMCS_GUEST_PAT                                               0x00002804
 
 /**
  * Guest IA32_EFER.
  */
-#define VMX_VMCS_GUEST_EFER                                          0x00002806
+#define VMCS_GUEST_EFER                                              0x00002806
 
 /**
  * Guest IA32_PERF_GLOBAL_CTRL.
  */
-#define VMX_VMCS_GUEST_PERF_GLOBAL_CTRL                              0x00002808
+#define VMCS_GUEST_PERF_GLOBAL_CTRL                                  0x00002808
 
 /**
  * Guest PDPTE0.
  */
-#define VMX_VMCS_GUEST_PDPTE0                                        0x0000280A
+#define VMCS_GUEST_PDPTE0                                            0x0000280A
 
 /**
  * Guest PDPTE1.
  */
-#define VMX_VMCS_GUEST_PDPTE1                                        0x0000280C
+#define VMCS_GUEST_PDPTE1                                            0x0000280C
 
 /**
  * Guest PDPTE2.
  */
-#define VMX_VMCS_GUEST_PDPTE2                                        0x0000280E
+#define VMCS_GUEST_PDPTE2                                            0x0000280E
 
 /**
  * Guest PDPTE3.
  */
-#define VMX_VMCS_GUEST_PDPTE3                                        0x00002810
+#define VMCS_GUEST_PDPTE3                                            0x00002810
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_64_BIT_HOST_STATE_FIELDS \
+ * @defgroup VMCS_64_BIT_HOST_STATE_FIELDS \
  *           64-Bit Host-State Fields
  *
  * 64-Bit Host-State Fields.
@@ -18156,17 +18163,17 @@ typedef union
 /**
  * Host IA32_PAT.
  */
-#define VMX_VMCS_HOST_PAT                                            0x00002C00
+#define VMCS_HOST_PAT                                                0x00002C00
 
 /**
  * Host IA32_EFER.
  */
-#define VMX_VMCS_HOST_EFER                                           0x00002C02
+#define VMCS_HOST_EFER                                               0x00002C02
 
 /**
  * Host IA32_PERF_GLOBAL_CTRL.
  */
-#define VMX_VMCS_HOST_PERF_GLOBAL_CTRL                               0x00002C04
+#define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
 /**
  * @}
  */
@@ -18176,7 +18183,7 @@ typedef union
  */
 
 /**
- * @defgroup VMX_VMCS_32_BIT \
+ * @defgroup VMCS_32_BIT \
  *           32-Bit Fields
  *
  * 32-Bit Fields.
@@ -18185,7 +18192,7 @@ typedef union
  * @{
  */
 /**
- * @defgroup VMX_VMCS_32_BIT_CONTROL_FIELDS \
+ * @defgroup VMCS_32_BIT_CONTROL_FIELDS \
  *           32-Bit Control Fields
  *
  * 32-Bit Control Fields.
@@ -18194,98 +18201,98 @@ typedef union
 /**
  * Pin-based VM-execution controls.
  */
-#define VMX_VMCS_CTRL_PIN_BASED_VM_EXECUTION_CONTROLS                0x00004000
+#define VMCS_CTRL_PIN_BASED_VM_EXECUTION_CONTROLS                    0x00004000
 
 /**
  * Primary processor-based VM-execution controls.
  */
-#define VMX_VMCS_CTRL_PROCESSOR_BASED_VM_EXECUTION_CONTROLS          0x00004002
+#define VMCS_CTRL_PROCESSOR_BASED_VM_EXECUTION_CONTROLS              0x00004002
 
 /**
  * Exception bitmap.
  */
-#define VMX_VMCS_CTRL_EXCEPTION_BITMAP                               0x00004004
+#define VMCS_CTRL_EXCEPTION_BITMAP                                   0x00004004
 
 /**
  * Page-fault error-code mask.
  */
-#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_CODE_MASK                      0x00004006
+#define VMCS_CTRL_PAGEFAULT_ERROR_CODE_MASK                          0x00004006
 
 /**
  * Page-fault error-code match.
  */
-#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_CODE_MATCH                     0x00004008
+#define VMCS_CTRL_PAGEFAULT_ERROR_CODE_MATCH                         0x00004008
 
 /**
  * CR3-target count.
  */
-#define VMX_VMCS_CTRL_CR3_TARGET_COUNT                               0x0000400A
+#define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
 
 /**
  * VM-exit controls.
  */
-#define VMX_VMCS_CTRL_VMEXIT_CONTROLS                                0x0000400C
+#define VMCS_CTRL_VMEXIT_CONTROLS                                    0x0000400C
 
 /**
  * VM-exit MSR-store count.
  */
-#define VMX_VMCS_CTRL_VMEXIT_MSR_STORE_COUNT                         0x0000400E
+#define VMCS_CTRL_VMEXIT_MSR_STORE_COUNT                             0x0000400E
 
 /**
  * VM-exit MSR-load count.
  */
-#define VMX_VMCS_CTRL_VMEXIT_MSR_LOAD_COUNT                          0x00004010
+#define VMCS_CTRL_VMEXIT_MSR_LOAD_COUNT                              0x00004010
 
 /**
  * VM-entry controls.
  */
-#define VMX_VMCS_CTRL_VMENTRY_CONTROLS                               0x00004012
+#define VMCS_CTRL_VMENTRY_CONTROLS                                   0x00004012
 
 /**
  * VM-entry MSR-load count.
  */
-#define VMX_VMCS_CTRL_VMENTRY_MSR_LOAD_COUNT                         0x00004014
+#define VMCS_CTRL_VMENTRY_MSR_LOAD_COUNT                             0x00004014
 
 /**
  * VM-entry interruption-information field.
  */
-#define VMX_VMCS_CTRL_VMENTRY_INTERRUPTION_INFORMATION_FIELD         0x00004016
+#define VMCS_CTRL_VMENTRY_INTERRUPTION_INFORMATION_FIELD             0x00004016
 
 /**
  * VM-entry exception error code.
  */
-#define VMX_VMCS_CTRL_VMENTRY_EXCEPTION_ERROR_CODE                   0x00004018
+#define VMCS_CTRL_VMENTRY_EXCEPTION_ERROR_CODE                       0x00004018
 
 /**
  * VM-entry instruction length.
  */
-#define VMX_VMCS_CTRL_VMENTRY_INSTRUCTION_LENGTH                     0x0000401A
+#define VMCS_CTRL_VMENTRY_INSTRUCTION_LENGTH                         0x0000401A
 
 /**
  * TPR threshold.
  */
-#define VMX_VMCS_CTRL_TPR_THRESHOLD                                  0x0000401C
+#define VMCS_CTRL_TPR_THRESHOLD                                      0x0000401C
 
 /**
  * Secondary processor-based VM-execution controls.
  */
-#define VMX_VMCS_CTRL_SECONDARY_PROCESSOR_BASED_VM_EXECUTION_CONTROLS 0x0000401E
+#define VMCS_CTRL_SECONDARY_PROCESSOR_BASED_VM_EXECUTION_CONTROLS    0x0000401E
 
 /**
  * PLE_Gap.
  */
-#define VMX_VMCS_CTRL_PLE_GAP                                        0x00004020
+#define VMCS_CTRL_PLE_GAP                                            0x00004020
 
 /**
  * PLE_Window.
  */
-#define VMX_VMCS_CTRL_PLE_WINDOW                                     0x00004022
+#define VMCS_CTRL_PLE_WINDOW                                         0x00004022
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_32_BIT_READ_ONLY_DATA_FIELDS \
+ * @defgroup VMCS_32_BIT_READ_ONLY_DATA_FIELDS \
  *           32-Bit Read-Only Data Fields
  *
  * 32-Bit Read-Only Data Fields.
@@ -18294,48 +18301,48 @@ typedef union
 /**
  * VM-instruction error.
  */
-#define VMX_VMCS_VM_INSTRUCTION_ERROR                                0x00004400
+#define VMCS_VM_INSTRUCTION_ERROR                                    0x00004400
 
 /**
  * Exit reason.
  */
-#define VMX_VMCS_EXIT_REASON                                         0x00004402
+#define VMCS_EXIT_REASON                                             0x00004402
 
 /**
  * VM-exit interruption information.
  */
-#define VMX_VMCS_VMEXIT_INTERRUPTION_INFORMATION                     0x00004404
+#define VMCS_VMEXIT_INTERRUPTION_INFORMATION                         0x00004404
 
 /**
  * VM-exit interruption error code.
  */
-#define VMX_VMCS_VMEXIT_INTERRUPTION_ERROR_CODE                      0x00004406
+#define VMCS_VMEXIT_INTERRUPTION_ERROR_CODE                          0x00004406
 
 /**
  * IDT-vectoring information field.
  */
-#define VMX_VMCS_IDT_VECTORING_INFORMATION                           0x00004408
+#define VMCS_IDT_VECTORING_INFORMATION                               0x00004408
 
 /**
  * IDT-vectoring error code.
  */
-#define VMX_VMCS_IDT_VECTORING_ERROR_CODE                            0x0000440A
+#define VMCS_IDT_VECTORING_ERROR_CODE                                0x0000440A
 
 /**
  * VM-exit instruction length.
  */
-#define VMX_VMCS_VMEXIT_INSTRUCTION_LENGTH                           0x0000440C
+#define VMCS_VMEXIT_INSTRUCTION_LENGTH                               0x0000440C
 
 /**
  * VM-exit instruction information.
  */
-#define VMX_VMCS_VMEXIT_INSTRUCTION_INFO                             0x0000440E
+#define VMCS_VMEXIT_INSTRUCTION_INFO                                 0x0000440E
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_32_BIT_GUEST_STATE_FIELDS \
+ * @defgroup VMCS_32_BIT_GUEST_STATE_FIELDS \
  *           32-Bit Guest-State Fields
  *
  * 32-Bit Guest-State Fields.
@@ -18344,123 +18351,123 @@ typedef union
 /**
  * Guest ES limit.
  */
-#define VMX_VMCS_GUEST_ES_LIMIT                                      0x00004800
+#define VMCS_GUEST_ES_LIMIT                                          0x00004800
 
 /**
  * Guest CS limit.
  */
-#define VMX_VMCS_GUEST_CS_LIMIT                                      0x00004802
+#define VMCS_GUEST_CS_LIMIT                                          0x00004802
 
 /**
  * Guest SS limit.
  */
-#define VMX_VMCS_GUEST_SS_LIMIT                                      0x00004804
+#define VMCS_GUEST_SS_LIMIT                                          0x00004804
 
 /**
  * Guest DS limit.
  */
-#define VMX_VMCS_GUEST_DS_LIMIT                                      0x00004806
+#define VMCS_GUEST_DS_LIMIT                                          0x00004806
 
 /**
  * Guest FS limit.
  */
-#define VMX_VMCS_GUEST_FS_LIMIT                                      0x00004808
+#define VMCS_GUEST_FS_LIMIT                                          0x00004808
 
 /**
  * Guest GS limit.
  */
-#define VMX_VMCS_GUEST_GS_LIMIT                                      0x0000480A
+#define VMCS_GUEST_GS_LIMIT                                          0x0000480A
 
 /**
  * Guest LDTR limit.
  */
-#define VMX_VMCS_GUEST_LDTR_LIMIT                                    0x0000480C
+#define VMCS_GUEST_LDTR_LIMIT                                        0x0000480C
 
 /**
  * Guest TR limit.
  */
-#define VMX_VMCS_GUEST_TR_LIMIT                                      0x0000480E
+#define VMCS_GUEST_TR_LIMIT                                          0x0000480E
 
 /**
  * Guest GDTR limit.
  */
-#define VMX_VMCS_GUEST_GDTR_LIMIT                                    0x00004810
+#define VMCS_GUEST_GDTR_LIMIT                                        0x00004810
 
 /**
  * Guest IDTR limit.
  */
-#define VMX_VMCS_GUEST_IDTR_LIMIT                                    0x00004812
+#define VMCS_GUEST_IDTR_LIMIT                                        0x00004812
 
 /**
  * Guest ES access rights.
  */
-#define VMX_VMCS_GUEST_ES_ACCESS_RIGHTS                              0x00004814
+#define VMCS_GUEST_ES_ACCESS_RIGHTS                                  0x00004814
 
 /**
  * Guest CS access rights.
  */
-#define VMX_VMCS_GUEST_CS_ACCESS_RIGHTS                              0x00004816
+#define VMCS_GUEST_CS_ACCESS_RIGHTS                                  0x00004816
 
 /**
  * Guest SS access rights.
  */
-#define VMX_VMCS_GUEST_SS_ACCESS_RIGHTS                              0x00004818
+#define VMCS_GUEST_SS_ACCESS_RIGHTS                                  0x00004818
 
 /**
  * Guest DS access rights.
  */
-#define VMX_VMCS_GUEST_DS_ACCESS_RIGHTS                              0x0000481A
+#define VMCS_GUEST_DS_ACCESS_RIGHTS                                  0x0000481A
 
 /**
  * Guest FS access rights.
  */
-#define VMX_VMCS_GUEST_FS_ACCESS_RIGHTS                              0x0000481C
+#define VMCS_GUEST_FS_ACCESS_RIGHTS                                  0x0000481C
 
 /**
  * Guest GS access rights.
  */
-#define VMX_VMCS_GUEST_GS_ACCESS_RIGHTS                              0x0000481E
+#define VMCS_GUEST_GS_ACCESS_RIGHTS                                  0x0000481E
 
 /**
  * Guest LDTR access rights.
  */
-#define VMX_VMCS_GUEST_LDTR_ACCESS_RIGHTS                            0x00004820
+#define VMCS_GUEST_LDTR_ACCESS_RIGHTS                                0x00004820
 
 /**
  * Guest TR access rights.
  */
-#define VMX_VMCS_GUEST_TR_ACCESS_RIGHTS                              0x00004822
+#define VMCS_GUEST_TR_ACCESS_RIGHTS                                  0x00004822
 
 /**
  * Guest interruptibility state.
  */
-#define VMX_VMCS_GUEST_INTERRUPTIBILITY_STATE                        0x00004824
+#define VMCS_GUEST_INTERRUPTIBILITY_STATE                            0x00004824
 
 /**
  * Guest activity state.
  */
-#define VMX_VMCS_GUEST_ACTIVITY_STATE                                0x00004826
+#define VMCS_GUEST_ACTIVITY_STATE                                    0x00004826
 
 /**
  * Guest SMBASE.
  */
-#define VMX_VMCS_GUEST_SMBASE                                        0x00004828
+#define VMCS_GUEST_SMBASE                                            0x00004828
 
 /**
  * Guest IA32_SYSENTER_CS.
  */
-#define VMX_VMCS_GUEST_SYSENTER_CS                                   0x0000482A
+#define VMCS_GUEST_SYSENTER_CS                                       0x0000482A
 
 /**
  * VMX-preemption timer value.
  */
-#define VMX_VMCS_GUEST_VMX_PREEMPTION_TIMER_VALUE                    0x0000482E
+#define VMCS_GUEST_VMX_PREEMPTION_TIMER_VALUE                        0x0000482E
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_32_BIT_HOST_STATE_FIELDS \
+ * @defgroup VMCS_32_BIT_HOST_STATE_FIELDS \
  *           32-Bit Host-State Field
  *
  * 32-Bit Host-State Field.
@@ -18469,7 +18476,7 @@ typedef union
 /**
  * Host IA32_SYSENTER_CS.
  */
-#define VMX_VMCS_SYSENTER_CS                                         0x00004C00
+#define VMCS_SYSENTER_CS                                             0x00004C00
 /**
  * @}
  */
@@ -18479,7 +18486,7 @@ typedef union
  */
 
 /**
- * @defgroup VMX_VMCS_NATURAL_WIDTH \
+ * @defgroup VMCS_NATURAL_WIDTH \
  *           Natural-Width Fields
  *
  * Natural-Width Fields.
@@ -18488,7 +18495,7 @@ typedef union
  * @{
  */
 /**
- * @defgroup VMX_VMCS_NATURAL_WIDTH_CONTROL_FIELDS \
+ * @defgroup VMCS_NATURAL_WIDTH_CONTROL_FIELDS \
  *           Natural-Width Control Fields
  *
  * Natural-Width Control Fields
@@ -18497,48 +18504,48 @@ typedef union
 /**
  * CR0 guest/host mask.
  */
-#define VMX_VMCS_CTRL_CR0_GUEST_HOST_MASK                            0x00006000
+#define VMCS_CTRL_CR0_GUEST_HOST_MASK                                0x00006000
 
 /**
  * CR4 guest/host mask.
  */
-#define VMX_VMCS_CTRL_CR4_GUEST_HOST_MASK                            0x00006002
+#define VMCS_CTRL_CR4_GUEST_HOST_MASK                                0x00006002
 
 /**
  * CR0 read shadow.
  */
-#define VMX_VMCS_CTRL_CR0_READ_SHADOW                                0x00006004
+#define VMCS_CTRL_CR0_READ_SHADOW                                    0x00006004
 
 /**
  * CR4 read shadow.
  */
-#define VMX_VMCS_CTRL_CR4_READ_SHADOW                                0x00006006
+#define VMCS_CTRL_CR4_READ_SHADOW                                    0x00006006
 
 /**
  * CR3-target value 0.
  */
-#define VMX_VMCS_CTRL_CR3_TARGET_VALUE_0                             0x00006008
+#define VMCS_CTRL_CR3_TARGET_VALUE_0                                 0x00006008
 
 /**
  * CR3-target value 1.
  */
-#define VMX_VMCS_CTRL_CR3_TARGET_VALUE_1                             0x0000600A
+#define VMCS_CTRL_CR3_TARGET_VALUE_1                                 0x0000600A
 
 /**
  * CR3-target value 2.
  */
-#define VMX_VMCS_CTRL_CR3_TARGET_VALUE_2                             0x0000600C
+#define VMCS_CTRL_CR3_TARGET_VALUE_2                                 0x0000600C
 
 /**
  * CR3-target value 3.
  */
-#define VMX_VMCS_CTRL_CR3_TARGET_VALUE_3                             0x0000600E
+#define VMCS_CTRL_CR3_TARGET_VALUE_3                                 0x0000600E
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_NATURAL_WIDTH_READ_ONLY_DATA_FIELDS \
+ * @defgroup VMCS_NATURAL_WIDTH_READ_ONLY_DATA_FIELDS \
  *           Natural-Width Read-Only Data Fields
  *
  * Natural-Width Read-Only Data Fields.
@@ -18547,38 +18554,38 @@ typedef union
 /**
  * Exit qualification.
  */
-#define VMX_VMCS_EXIT_QUALIFICATION                                  0x00006400
+#define VMCS_EXIT_QUALIFICATION                                      0x00006400
 
 /**
  * I/O RCX.
  */
-#define VMX_VMCS_IO_RCX                                              0x00006402
+#define VMCS_IO_RCX                                                  0x00006402
 
 /**
  * I/O RSI.
  */
-#define VMX_VMCS_IO_RSX                                              0x00006404
+#define VMCS_IO_RSX                                                  0x00006404
 
 /**
  * I/O RDI.
  */
-#define VMX_VMCS_IO_RDI                                              0x00006406
+#define VMCS_IO_RDI                                                  0x00006406
 
 /**
  * I/O RIP.
  */
-#define VMX_VMCS_IO_RIP                                              0x00006408
+#define VMCS_IO_RIP                                                  0x00006408
 
 /**
  * Guest-linear address.
  */
-#define VMX_VMCS_EXIT_GUEST_LINEAR_ADDRESS                           0x0000640A
+#define VMCS_EXIT_GUEST_LINEAR_ADDRESS                               0x0000640A
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_NATURAL_WIDTH_GUEST_STATE_FIELDS \
+ * @defgroup VMCS_NATURAL_WIDTH_GUEST_STATE_FIELDS \
  *           Natural-Width Guest-State Fields
  *
  * Natural-Width Guest-State Fields.
@@ -18587,108 +18594,108 @@ typedef union
 /**
  * Guest CR0.
  */
-#define VMX_VMCS_GUEST_CR0                                           0x00006800
+#define VMCS_GUEST_CR0                                               0x00006800
 
 /**
  * Guest CR3.
  */
-#define VMX_VMCS_GUEST_CR3                                           0x00006802
+#define VMCS_GUEST_CR3                                               0x00006802
 
 /**
  * Guest CR4.
  */
-#define VMX_VMCS_GUEST_CR4                                           0x00006804
+#define VMCS_GUEST_CR4                                               0x00006804
 
 /**
  * Guest ES base.
  */
-#define VMX_VMCS_GUEST_ES_BASE                                       0x00006806
+#define VMCS_GUEST_ES_BASE                                           0x00006806
 
 /**
  * Guest CS base.
  */
-#define VMX_VMCS_GUEST_CS_BASE                                       0x00006808
+#define VMCS_GUEST_CS_BASE                                           0x00006808
 
 /**
  * Guest SS base.
  */
-#define VMX_VMCS_GUEST_SS_BASE                                       0x0000680A
+#define VMCS_GUEST_SS_BASE                                           0x0000680A
 
 /**
  * Guest DS base.
  */
-#define VMX_VMCS_GUEST_DS_BASE                                       0x0000680C
+#define VMCS_GUEST_DS_BASE                                           0x0000680C
 
 /**
  * Guest FS base.
  */
-#define VMX_VMCS_GUEST_FS_BASE                                       0x0000680E
+#define VMCS_GUEST_FS_BASE                                           0x0000680E
 
 /**
  * Guest GS base.
  */
-#define VMX_VMCS_GUEST_GS_BASE                                       0x00006810
+#define VMCS_GUEST_GS_BASE                                           0x00006810
 
 /**
  * Guest LDTR base.
  */
-#define VMX_VMCS_GUEST_LDTR_BASE                                     0x00006812
+#define VMCS_GUEST_LDTR_BASE                                         0x00006812
 
 /**
  * Guest TR base.
  */
-#define VMX_VMCS_GUEST_TR_BASE                                       0x00006814
+#define VMCS_GUEST_TR_BASE                                           0x00006814
 
 /**
  * Guest GDTR base.
  */
-#define VMX_VMCS_GUEST_GDTR_BASE                                     0x00006816
+#define VMCS_GUEST_GDTR_BASE                                         0x00006816
 
 /**
  * Guest IDTR base.
  */
-#define VMX_VMCS_GUEST_IDTR_BASE                                     0x00006818
+#define VMCS_GUEST_IDTR_BASE                                         0x00006818
 
 /**
  * Guest DR7.
  */
-#define VMX_VMCS_GUEST_DR7                                           0x0000681A
+#define VMCS_GUEST_DR7                                               0x0000681A
 
 /**
  * Guest RSP.
  */
-#define VMX_VMCS_GUEST_RSP                                           0x0000681C
+#define VMCS_GUEST_RSP                                               0x0000681C
 
 /**
  * Guest RIP.
  */
-#define VMX_VMCS_GUEST_RIP                                           0x0000681E
+#define VMCS_GUEST_RIP                                               0x0000681E
 
 /**
  * Guest RFLAGS.
  */
-#define VMX_VMCS_GUEST_RFLAGS                                        0x00006820
+#define VMCS_GUEST_RFLAGS                                            0x00006820
 
 /**
  * Guest pending debug exceptions.
  */
-#define VMX_VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                      0x00006822
+#define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
 
 /**
  * Guest IA32_SYSENTER_ESP.
  */
-#define VMX_VMCS_GUEST_SYSENTER_ESP                                  0x00006824
+#define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
 
 /**
  * Guest IA32_SYSENTER_EIP.
  */
-#define VMX_VMCS_GUEST_SYSENTER_EIP                                  0x00006826
+#define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
 /**
  * @}
  */
 
 /**
- * @defgroup VMX_VMCS_NATURAL_WIDTH_HOST_STATE_FIELDS \
+ * @defgroup VMCS_NATURAL_WIDTH_HOST_STATE_FIELDS \
  *           Natural-Width Host-State Fields
  *
  * Natural-Width Host-State Fields.
@@ -18697,62 +18704,62 @@ typedef union
 /**
  * Host CR0.
  */
-#define VMX_VMCS_HOST_CR0                                            0x00006C00
+#define VMCS_HOST_CR0                                                0x00006C00
 
 /**
  * Host CR3.
  */
-#define VMX_VMCS_HOST_CR3                                            0x00006C02
+#define VMCS_HOST_CR3                                                0x00006C02
 
 /**
  * Host CR4.
  */
-#define VMX_VMCS_HOST_CR4                                            0x00006C04
+#define VMCS_HOST_CR4                                                0x00006C04
 
 /**
  * Host FS base.
  */
-#define VMX_VMCS_HOST_FS_BASE                                        0x00006C06
+#define VMCS_HOST_FS_BASE                                            0x00006C06
 
 /**
  * Host GS base.
  */
-#define VMX_VMCS_HOST_GS_BASE                                        0x00006C08
+#define VMCS_HOST_GS_BASE                                            0x00006C08
 
 /**
  * Host TR base.
  */
-#define VMX_VMCS_HOST_TR_BASE                                        0x00006C0A
+#define VMCS_HOST_TR_BASE                                            0x00006C0A
 
 /**
  * Host GDTR base.
  */
-#define VMX_VMCS_HOST_GDTR_BASE                                      0x00006C0C
+#define VMCS_HOST_GDTR_BASE                                          0x00006C0C
 
 /**
  * Host IDTR base.
  */
-#define VMX_VMCS_HOST_IDTR_BASE                                      0x00006C0E
+#define VMCS_HOST_IDTR_BASE                                          0x00006C0E
 
 /**
  * Host IA32_SYSENTER_ESP.
  */
-#define VMX_VMCS_HOST_SYSENTER_ESP                                   0x00006C10
+#define VMCS_HOST_SYSENTER_ESP                                       0x00006C10
 
 /**
  * Host IA32_SYSENTER_EIP.
  */
-#define VMX_VMCS_HOST_SYSENTER_EIP                                   0x00006C12
+#define VMCS_HOST_SYSENTER_EIP                                       0x00006C12
 
 /**
  * Host RSP.
  */
-#define VMX_VMCS_HOST_RSP                                            0x00006C14
+#define VMCS_HOST_RSP                                                0x00006C14
 
 /**
  * Host RIP.
  */
-#define VMX_VMCS_HOST_RIP                                            0x00006C16
+#define VMCS_HOST_RIP                                                0x00006C16
 /**
  * @}
  */

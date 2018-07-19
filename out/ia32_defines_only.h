@@ -1807,6 +1807,9 @@ typedef struct {
  * @{
  */
 /**
+ * @{
+ */
+/**
  * @defgroup vmx_basic_exit_reasons \
  *           VMX Basic Exit Reasons
  * @{
@@ -2076,120 +2079,124 @@ typedef struct {
  */
 
 /**
- * @defgroup vmx_ept \
+ * @}
+ */
+
+/**
+ * @defgroup ept \
  *           The extended page-table mechanism
  * @{
  */
-#define VMX_EPTP_MEMORY_TYPE                                         0x07
-#define VMX_EPTP_PAGE_WALK_LENGTH                                    0x38
-#define VMX_EPTP_ENABLE_ACCESS_AND_DIRTY_FLAGS                       0x40
-#define VMX_EPTP_PAGE_FRAME_NUMBER                                   0xFFFFFFFFF000
+#define EPTP_MEMORY_TYPE                                             0x07
+#define EPTP_PAGE_WALK_LENGTH                                        0x38
+#define EPTP_ENABLE_ACCESS_AND_DIRTY_FLAGS                           0x40
+#define EPTP_PAGE_FRAME_NUMBER                                       0xFFFFFFFFF000
 
-#define VMX_EPML4E_READ_ACCESS                                       0x01
-#define VMX_EPML4E_WRITE_ACCESS                                      0x02
-#define VMX_EPML4E_EXECUTE_ACCESS                                    0x04
-#define VMX_EPML4E_ACCESSED                                          0x100
-#define VMX_EPML4E_USER_MODE_EXECUTE                                 0x400
-#define VMX_EPML4E_PAGE_FRAME_NUMBER                                 0xFFFFFFFFF000
+#define EPML4E_READ_ACCESS                                           0x01
+#define EPML4E_WRITE_ACCESS                                          0x02
+#define EPML4E_EXECUTE_ACCESS                                        0x04
+#define EPML4E_ACCESSED                                              0x100
+#define EPML4E_USER_MODE_EXECUTE                                     0x400
+#define EPML4E_PAGE_FRAME_NUMBER                                     0xFFFFFFFFF000
 
-#define VMX_EPT_PDPTE_1GB_READ_ACCESS                                0x01
-#define VMX_EPT_PDPTE_1GB_WRITE_ACCESS                               0x02
-#define VMX_EPT_PDPTE_1GB_EXECUTE_ACCESS                             0x04
-#define VMX_EPT_PDPTE_1GB_MEMORY_TYPE                                0x38
-#define VMX_EPT_PDPTE_1GB_IGNORE_PAT                                 0x40
-#define VMX_EPT_PDPTE_1GB_LARGE_PAGE                                 0x80
-#define VMX_EPT_PDPTE_1GB_ACCESSED                                   0x100
-#define VMX_EPT_PDPTE_1GB_DIRTY                                      0x200
-#define VMX_EPT_PDPTE_1GB_USER_MODE_EXECUTE                          0x400
-#define VMX_EPT_PDPTE_1GB_PAGE_FRAME_NUMBER                          0xFFFFC0000000
-#define VMX_EPT_PDPTE_1GB_SUPPRESS_VE                                0x8000000000000000
+#define EPT_PDPTE_1GB_READ_ACCESS                                    0x01
+#define EPT_PDPTE_1GB_WRITE_ACCESS                                   0x02
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS                                 0x04
+#define EPT_PDPTE_1GB_MEMORY_TYPE                                    0x38
+#define EPT_PDPTE_1GB_IGNORE_PAT                                     0x40
+#define EPT_PDPTE_1GB_LARGE_PAGE                                     0x80
+#define EPT_PDPTE_1GB_ACCESSED                                       0x100
+#define EPT_PDPTE_1GB_DIRTY                                          0x200
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE                              0x400
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER                              0xFFFFC0000000
+#define EPT_PDPTE_1GB_SUPPRESS_VE                                    0x8000000000000000
 
-#define VMX_EPT_PDPTE_READ_ACCESS                                    0x01
-#define VMX_EPT_PDPTE_WRITE_ACCESS                                   0x02
-#define VMX_EPT_PDPTE_EXECUTE_ACCESS                                 0x04
-#define VMX_EPT_PDPTE_ACCESSED                                       0x100
-#define VMX_EPT_PDPTE_USER_MODE_EXECUTE                              0x400
-#define VMX_EPT_PDPTE_PAGE_FRAME_NUMBER                              0xFFFFFFFFF000
+#define EPT_PDPTE_READ_ACCESS                                        0x01
+#define EPT_PDPTE_WRITE_ACCESS                                       0x02
+#define EPT_PDPTE_EXECUTE_ACCESS                                     0x04
+#define EPT_PDPTE_ACCESSED                                           0x100
+#define EPT_PDPTE_USER_MODE_EXECUTE                                  0x400
+#define EPT_PDPTE_PAGE_FRAME_NUMBER                                  0xFFFFFFFFF000
 
-#define VMX_EPT_PDE_2MB_READ_ACCESS                                  0x01
-#define VMX_EPT_PDE_2MB_WRITE_ACCESS                                 0x02
-#define VMX_EPT_PDE_2MB_EXECUTE_ACCESS                               0x04
-#define VMX_EPT_PDE_2MB_MEMORY_TYPE                                  0x38
-#define VMX_EPT_PDE_2MB_IGNORE_PAT                                   0x40
-#define VMX_EPT_PDE_2MB_LARGE_PAGE                                   0x80
-#define VMX_EPT_PDE_2MB_ACCESSED                                     0x100
-#define VMX_EPT_PDE_2MB_DIRTY                                        0x200
-#define VMX_EPT_PDE_2MB_USER_MODE_EXECUTE                            0x400
-#define VMX_EPT_PDE_2MB_PAGE_FRAME_NUMBER                            0xFFFFFFE00000
-#define VMX_EPT_PDE_2MB_SUPPRESS_VE                                  0x8000000000000000
+#define EPT_PDE_2MB_READ_ACCESS                                      0x01
+#define EPT_PDE_2MB_WRITE_ACCESS                                     0x02
+#define EPT_PDE_2MB_EXECUTE_ACCESS                                   0x04
+#define EPT_PDE_2MB_MEMORY_TYPE                                      0x38
+#define EPT_PDE_2MB_IGNORE_PAT                                       0x40
+#define EPT_PDE_2MB_LARGE_PAGE                                       0x80
+#define EPT_PDE_2MB_ACCESSED                                         0x100
+#define EPT_PDE_2MB_DIRTY                                            0x200
+#define EPT_PDE_2MB_USER_MODE_EXECUTE                                0x400
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER                                0xFFFFFFE00000
+#define EPT_PDE_2MB_SUPPRESS_VE                                      0x8000000000000000
 
-#define VMX_EPT_PDE_READ_ACCESS                                      0x01
-#define VMX_EPT_PDE_WRITE_ACCESS                                     0x02
-#define VMX_EPT_PDE_EXECUTE_ACCESS                                   0x04
-#define VMX_EPT_PDE_ACCESSED                                         0x100
-#define VMX_EPT_PDE_USER_MODE_EXECUTE                                0x400
-#define VMX_EPT_PDE_PAGE_FRAME_NUMBER                                0xFFFFFFFFF000
+#define EPT_PDE_READ_ACCESS                                          0x01
+#define EPT_PDE_WRITE_ACCESS                                         0x02
+#define EPT_PDE_EXECUTE_ACCESS                                       0x04
+#define EPT_PDE_ACCESSED                                             0x100
+#define EPT_PDE_USER_MODE_EXECUTE                                    0x400
+#define EPT_PDE_PAGE_FRAME_NUMBER                                    0xFFFFFFFFF000
 
-#define VMX_EPT_PTE_READ_ACCESS                                      0x01
-#define VMX_EPT_PTE_WRITE_ACCESS                                     0x02
-#define VMX_EPT_PTE_EXECUTE_ACCESS                                   0x04
-#define VMX_EPT_PTE_MEMORY_TYPE                                      0x38
-#define VMX_EPT_PTE_IGNORE_PAT                                       0x40
-#define VMX_EPT_PTE_ACCESSED                                         0x100
-#define VMX_EPT_PTE_DIRTY                                            0x200
-#define VMX_EPT_PTE_USER_MODE_EXECUTE                                0x400
-#define VMX_EPT_PTE_PAGE_FRAME_NUMBER                                0xFFFFFFFFF000
-#define VMX_EPT_PTE_SUPPRESS_VE                                      0x8000000000000000
+#define EPT_PTE_READ_ACCESS                                          0x01
+#define EPT_PTE_WRITE_ACCESS                                         0x02
+#define EPT_PTE_EXECUTE_ACCESS                                       0x04
+#define EPT_PTE_MEMORY_TYPE                                          0x38
+#define EPT_PTE_IGNORE_PAT                                           0x40
+#define EPT_PTE_ACCESSED                                             0x100
+#define EPT_PTE_DIRTY                                                0x200
+#define EPT_PTE_USER_MODE_EXECUTE                                    0x400
+#define EPT_PTE_PAGE_FRAME_NUMBER                                    0xFFFFFFFFF000
+#define EPT_PTE_SUPPRESS_VE                                          0x8000000000000000
 
-#define VMX_EPT_ENTRY_READ_ACCESS                                    0x01
-#define VMX_EPT_ENTRY_WRITE_ACCESS                                   0x02
-#define VMX_EPT_ENTRY_EXECUTE_ACCESS                                 0x04
-#define VMX_EPT_ENTRY_MEMORY_TYPE                                    0x38
-#define VMX_EPT_ENTRY_IGNORE_PAT                                     0x40
-#define VMX_EPT_ENTRY_LARGE_PAGE                                     0x80
-#define VMX_EPT_ENTRY_ACCESSED                                       0x100
-#define VMX_EPT_ENTRY_DIRTY                                          0x200
-#define VMX_EPT_ENTRY_USER_MODE_EXECUTE                              0x400
-#define VMX_EPT_ENTRY_PAGE_FRAME_NUMBER                              0xFFFFFFFFF000
-#define VMX_EPT_ENTRY_SUPPRESS_VE                                    0x8000000000000000
+#define EPT_ENTRY_READ_ACCESS                                        0x01
+#define EPT_ENTRY_WRITE_ACCESS                                       0x02
+#define EPT_ENTRY_EXECUTE_ACCESS                                     0x04
+#define EPT_ENTRY_MEMORY_TYPE                                        0x38
+#define EPT_ENTRY_IGNORE_PAT                                         0x40
+#define EPT_ENTRY_LARGE_PAGE                                         0x80
+#define EPT_ENTRY_ACCESSED                                           0x100
+#define EPT_ENTRY_DIRTY                                              0x200
+#define EPT_ENTRY_USER_MODE_EXECUTE                                  0x400
+#define EPT_ENTRY_PAGE_FRAME_NUMBER                                  0xFFFFFFFFF000
+#define EPT_ENTRY_SUPPRESS_VE                                        0x8000000000000000
 
 /**
- * @defgroup vmx_ept_table_level \
+ * @defgroup ept_table_level \
  *           EPT Table level numbers
  * @{
  */
-#define VMX_LEVEL_PML4E                                              0x00000003
-#define VMX_LEVEL_PDPTE                                              0x00000002
-#define VMX_LEVEL_PDE                                                0x00000001
-#define VMX_LEVEL_PTE                                                0x00000000
+#define LEVEL_PML4E                                                  0x00000003
+#define LEVEL_PDPTE                                                  0x00000002
+#define LEVEL_PDE                                                    0x00000001
+#define LEVEL_PTE                                                    0x00000000
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_ept_entry_count \
+ * @defgroup ept_entry_count \
  *           EPT Entry counts
  * @{
  */
-#define VMX_PML4_ENTRY_COUNT                                         0x00000200
-#define VMX_PDPTE_ENTRY_COUNT                                        0x00000200
-#define VMX_PDE_ENTRY_COUNT                                          0x00000200
+#define PML4_ENTRY_COUNT                                             0x00000200
+#define PDPTE_ENTRY_COUNT                                            0x00000200
+#define PDE_ENTRY_COUNT                                              0x00000200
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_ept_memory_type \
+ * @defgroup ept_memory_type \
  *           EPT memory type
  * @{
  */
-#define VMX_EPT_MEMORY_TYPE_UC                                       0x00000000
-#define VMX_EPT_MEMORY_TYPE_WC                                       0x00000001
-#define VMX_EPT_MEMORY_TYPE_WT                                       0x00000004
-#define VMX_EPT_MEMORY_TYPE_WP                                       0x00000005
-#define VMX_EPT_MEMORY_TYPE_WB                                       0x00000006
-#define VMX_EPT_MEMORY_TYPE_UNCACHED                                 0x00000007
-#define VMX_EPT_MEMORY_TYPE_INVALID                                  0x000000FF
+#define EPT_MEMORY_TYPE_UC                                           0x00000000
+#define EPT_MEMORY_TYPE_WC                                           0x00000001
+#define EPT_MEMORY_TYPE_WT                                           0x00000004
+#define EPT_MEMORY_TYPE_WP                                           0x00000005
+#define EPT_MEMORY_TYPE_WB                                           0x00000006
+#define EPT_MEMORY_TYPE_UNCACHED                                     0x00000007
+#define EPT_MEMORY_TYPE_INVALID                                      0x000000FF
 /**
  * @}
  */
@@ -2198,16 +2205,16 @@ typedef struct {
  * @}
  */
 
-#define VMX_INVEPT_SINGLE_CONTEXT                                    0x00000001
-#define VMX_INVEPT_ALL_CONTEXT                                       0x00000002
+#define INVEPT_SINGLE_CONTEXT                                        0x00000001
+#define INVEPT_ALL_CONTEXT                                           0x00000002
 /**
  * @}
  */
 
-#define VMX_INVVPID_INDIVIDUAL_ADDRESS                               0x00000000
-#define VMX_INVVPID_SINGLE_CONTEXT                                   0x00000001
-#define VMX_INVVPID_ALL_CONTEXT                                      0x00000002
-#define VMX_INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS                 0x00000003
+#define INVVPID_INDIVIDUAL_ADDRESS                                   0x00000000
+#define INVVPID_SINGLE_CONTEXT                                       0x00000001
+#define INVVPID_ALL_CONTEXT                                          0x00000002
+#define INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS                     0x00000003
 /**
  * @}
  */
@@ -2215,80 +2222,80 @@ typedef struct {
 typedef struct {
   uint64_t ept_pointer;
   uint64_t reserved;
-} vmx_invept_descriptor;
+} invept_descriptor;
 
 typedef struct {
   uint16_t vpid;
   uint16_t reserved1;
   uint32_t reserved2;
   uint64_t linear_address;
-} vmx_invvpid_descriptor;
+} invvpid_descriptor;
 
 typedef struct {
   uint32_t revision_id;
   uint32_t abort_indicator;
   uint8_t data[4088];
-} vmx_vmcs;
+} vmcs;
 
 /**
- * @defgroup vmx_vmcs_group \
+ * @defgroup vmcs_fields \
  *           VMCS (VM Control Structure)
  * @{
  */
-#define VMX_VMCS_COMPONENT_ENCODING_ACCESS_TYPE                      0x01
-#define VMX_VMCS_COMPONENT_ENCODING_INDEX                            0x3FE
-#define VMX_VMCS_COMPONENT_ENCODING_TYPE                             0xC00
-#define VMX_VMCS_COMPONENT_ENCODING_MUST_BE_ZERO                     0x1000
-#define VMX_VMCS_COMPONENT_ENCODING_WIDTH                            0x6000
+#define VMCS_COMPONENT_ENCODING_ACCESS_TYPE                          0x01
+#define VMCS_COMPONENT_ENCODING_INDEX                                0x3FE
+#define VMCS_COMPONENT_ENCODING_TYPE                                 0xC00
+#define VMCS_COMPONENT_ENCODING_MUST_BE_ZERO                         0x1000
+#define VMCS_COMPONENT_ENCODING_WIDTH                                0x6000
 
 /**
- * @defgroup vmx_vmcs_16_bit \
+ * @defgroup vmcs_16_bit \
  *           16-Bit Fields
  * @{
  */
 /**
- * @defgroup vmx_vmcs_16_bit_control_fields \
+ * @defgroup vmcs_16_bit_control_fields \
  *           16-Bit Control Fields
  * @{
  */
-#define VMX_VMCS_CTRL_VPID                                           0x00000000
-#define VMX_VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                      0x00000002
-#define VMX_VMCS_CTRL_EPTP_INDEX                                     0x00000004
+#define VMCS_CTRL_VPID                                               0x00000000
+#define VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                          0x00000002
+#define VMCS_CTRL_EPTP_INDEX                                         0x00000004
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_16_bit_guest_state_fields \
+ * @defgroup vmcs_16_bit_guest_state_fields \
  *           16-Bit Guest-State Fields
  * @{
  */
-#define VMX_VMCS_GUEST_ES_SEL                                        0x00000800
-#define VMX_VMCS_GUEST_CS_SEL                                        0x00000802
-#define VMX_VMCS_GUEST_SS_SEL                                        0x00000804
-#define VMX_VMCS_GUEST_DS_SEL                                        0x00000806
-#define VMX_VMCS_GUEST_FS_SEL                                        0x00000808
-#define VMX_VMCS_GUEST_GS_SEL                                        0x0000080A
-#define VMX_VMCS_GUEST_LDTR_SEL                                      0x0000080C
-#define VMX_VMCS_GUEST_TR_SEL                                        0x0000080E
-#define VMX_VMCS_GUEST_INTR_STATUS                                   0x00000810
-#define VMX_VMCS_GUEST_PML_INDEX                                     0x00000812
+#define VMCS_GUEST_ES_SEL                                            0x00000800
+#define VMCS_GUEST_CS_SEL                                            0x00000802
+#define VMCS_GUEST_SS_SEL                                            0x00000804
+#define VMCS_GUEST_DS_SEL                                            0x00000806
+#define VMCS_GUEST_FS_SEL                                            0x00000808
+#define VMCS_GUEST_GS_SEL                                            0x0000080A
+#define VMCS_GUEST_LDTR_SEL                                          0x0000080C
+#define VMCS_GUEST_TR_SEL                                            0x0000080E
+#define VMCS_GUEST_INTR_STATUS                                       0x00000810
+#define VMCS_GUEST_PML_INDEX                                         0x00000812
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_16_bit_host_state_fields \
+ * @defgroup vmcs_16_bit_host_state_fields \
  *           16-Bit Host-State Fields
  * @{
  */
-#define VMX_VMCS_HOST_ES_SEL                                         0x00000C00
-#define VMX_VMCS_HOST_CS_SEL                                         0x00000C02
-#define VMX_VMCS_HOST_SS_SEL                                         0x00000C04
-#define VMX_VMCS_HOST_DS_SEL                                         0x00000C06
-#define VMX_VMCS_HOST_FS_SEL                                         0x00000C08
-#define VMX_VMCS_HOST_GS_SEL                                         0x00000C0A
-#define VMX_VMCS_HOST_TR_SEL                                         0x00000C0C
+#define VMCS_HOST_ES_SEL                                             0x00000C00
+#define VMCS_HOST_CS_SEL                                             0x00000C02
+#define VMCS_HOST_SS_SEL                                             0x00000C04
+#define VMCS_HOST_DS_SEL                                             0x00000C06
+#define VMCS_HOST_FS_SEL                                             0x00000C08
+#define VMCS_HOST_GS_SEL                                             0x00000C0A
+#define VMCS_HOST_TR_SEL                                             0x00000C0C
 /**
  * @}
  */
@@ -2298,80 +2305,80 @@ typedef struct {
  */
 
 /**
- * @defgroup vmx_vmcs_64_bit \
+ * @defgroup vmcs_64_bit \
  *           64-Bit Fields
  * @{
  */
 /**
- * @defgroup vmx_vmcs_64_bit_control_fields \
+ * @defgroup vmcs_64_bit_control_fields \
  *           64-Bit Control Fields
  * @{
  */
-#define VMX_VMCS_CTRL_IO_BITMAP_A                                    0x00002000
-#define VMX_VMCS_CTRL_IO_BITMAP_B                                    0x00002002
-#define VMX_VMCS_CTRL_MSR_BITMAP                                     0x00002004
-#define VMX_VMCS_CTRL_VMEXIT_MSR_STORE                               0x00002006
-#define VMX_VMCS_CTRL_VMEXIT_MSR_LOAD                                0x00002008
-#define VMX_VMCS_CTRL_VMENTRY_MSR_LOAD                               0x0000200A
-#define VMX_VMCS_CTRL_EXEC_VMCS_PTR                                  0x0000200C
-#define VMX_VMCS_CTRL_PML_ADDR                                       0x0000200E
-#define VMX_VMCS_CTRL_TSC_OFFSET                                     0x00002010
-#define VMX_VMCS_CTRL_VAPIC_PAGEADDR                                 0x00002012
-#define VMX_VMCS_CTRL_APIC_ACCESSADDR                                0x00002014
-#define VMX_VMCS_CTRL_POSTED_INTR_DESC                               0x00002016
-#define VMX_VMCS_CTRL_VMFUNC_CTRLS                                   0x00002018
-#define VMX_VMCS_CTRL_EPTP                                           0x0000201A
-#define VMX_VMCS_CTRL_EOI_BITMAP_0                                   0x0000201C
-#define VMX_VMCS_CTRL_EOI_BITMAP_1                                   0x0000201E
-#define VMX_VMCS_CTRL_EOI_BITMAP_2                                   0x00002020
-#define VMX_VMCS_CTRL_EOI_BITMAP_3                                   0x00002022
-#define VMX_VMCS_CTRL_EPTP_LIST                                      0x00002024
-#define VMX_VMCS_CTRL_VMREAD_BITMAP                                  0x00002026
-#define VMX_VMCS_CTRL_VMWRITE_BITMAP                                 0x00002028
-#define VMX_VMCS_CTRL_VIRTXCPT_INFO_ADDR                             0x0000202A
-#define VMX_VMCS_CTRL_XSS_EXITING_BITMAP                             0x0000202C
-#define VMX_VMCS_CTRL_ENCLS_EXITING_BITMAP                           0x0000202E
-#define VMX_VMCS_CTRL_TSC_MULTIPLIER                                 0x00002032
+#define VMCS_CTRL_IO_BITMAP_A                                        0x00002000
+#define VMCS_CTRL_IO_BITMAP_B                                        0x00002002
+#define VMCS_CTRL_MSR_BITMAP                                         0x00002004
+#define VMCS_CTRL_VMEXIT_MSR_STORE                                   0x00002006
+#define VMCS_CTRL_VMEXIT_MSR_LOAD                                    0x00002008
+#define VMCS_CTRL_VMENTRY_MSR_LOAD                                   0x0000200A
+#define VMCS_CTRL_EXEC_VMCS_PTR                                      0x0000200C
+#define VMCS_CTRL_PML_ADDR                                           0x0000200E
+#define VMCS_CTRL_TSC_OFFSET                                         0x00002010
+#define VMCS_CTRL_VAPIC_PAGEADDR                                     0x00002012
+#define VMCS_CTRL_APIC_ACCESSADDR                                    0x00002014
+#define VMCS_CTRL_POSTED_INTR_DESC                                   0x00002016
+#define VMCS_CTRL_VMFUNC_CTRLS                                       0x00002018
+#define VMCS_CTRL_EPTP                                               0x0000201A
+#define VMCS_CTRL_EOI_BITMAP_0                                       0x0000201C
+#define VMCS_CTRL_EOI_BITMAP_1                                       0x0000201E
+#define VMCS_CTRL_EOI_BITMAP_2                                       0x00002020
+#define VMCS_CTRL_EOI_BITMAP_3                                       0x00002022
+#define VMCS_CTRL_EPTP_LIST                                          0x00002024
+#define VMCS_CTRL_VMREAD_BITMAP                                      0x00002026
+#define VMCS_CTRL_VMWRITE_BITMAP                                     0x00002028
+#define VMCS_CTRL_VIRTXCPT_INFO_ADDR                                 0x0000202A
+#define VMCS_CTRL_XSS_EXITING_BITMAP                                 0x0000202C
+#define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
+#define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_64_bit_read_only_data_fields \
+ * @defgroup vmcs_64_bit_read_only_data_fields \
  *           64-Bit Read-Only Data Field
  * @{
  */
-#define VMX_VMCS_GUEST_PHYS_ADDR                                     0x00002400
+#define VMCS_GUEST_PHYS_ADDR                                         0x00002400
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_64_bit_guest_state_fields \
+ * @defgroup vmcs_64_bit_guest_state_fields \
  *           64-Bit Guest-State Fields
  * @{
  */
-#define VMX_VMCS_GUEST_VMCS_LINK_PTR                                 0x00002800
-#define VMX_VMCS_GUEST_DEBUGCTL                                      0x00002802
-#define VMX_VMCS_GUEST_PAT                                           0x00002804
-#define VMX_VMCS_GUEST_EFER                                          0x00002806
-#define VMX_VMCS_GUEST_PERF_GLOBAL_CTRL                              0x00002808
-#define VMX_VMCS_GUEST_PDPTE0                                        0x0000280A
-#define VMX_VMCS_GUEST_PDPTE1                                        0x0000280C
-#define VMX_VMCS_GUEST_PDPTE2                                        0x0000280E
-#define VMX_VMCS_GUEST_PDPTE3                                        0x00002810
+#define VMCS_GUEST_VMCS_LINK_PTR                                     0x00002800
+#define VMCS_GUEST_DEBUGCTL                                          0x00002802
+#define VMCS_GUEST_PAT                                               0x00002804
+#define VMCS_GUEST_EFER                                              0x00002806
+#define VMCS_GUEST_PERF_GLOBAL_CTRL                                  0x00002808
+#define VMCS_GUEST_PDPTE0                                            0x0000280A
+#define VMCS_GUEST_PDPTE1                                            0x0000280C
+#define VMCS_GUEST_PDPTE2                                            0x0000280E
+#define VMCS_GUEST_PDPTE3                                            0x00002810
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_64_bit_host_state_fields \
+ * @defgroup vmcs_64_bit_host_state_fields \
  *           64-Bit Host-State Fields
  * @{
  */
-#define VMX_VMCS_HOST_PAT                                            0x00002C00
-#define VMX_VMCS_HOST_EFER                                           0x00002C02
-#define VMX_VMCS_HOST_PERF_GLOBAL_CTRL                               0x00002C04
+#define VMCS_HOST_PAT                                                0x00002C00
+#define VMCS_HOST_EFER                                               0x00002C02
+#define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
 /**
  * @}
  */
@@ -2381,92 +2388,92 @@ typedef struct {
  */
 
 /**
- * @defgroup vmx_vmcs_32_bit \
+ * @defgroup vmcs_32_bit \
  *           32-Bit Fields
  * @{
  */
 /**
- * @defgroup vmx_vmcs_32_bit_control_fields \
+ * @defgroup vmcs_32_bit_control_fields \
  *           32-Bit Control Fields
  * @{
  */
-#define VMX_VMCS_CTRL_PIN_EXEC                                       0x00004000
-#define VMX_VMCS_CTRL_PROC_EXEC                                      0x00004002
-#define VMX_VMCS_CTRL_EXCEPTION_BITMAP                               0x00004004
-#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_MASK                           0x00004006
-#define VMX_VMCS_CTRL_PAGEFAULT_ERROR_MATCH                          0x00004008
-#define VMX_VMCS_CTRL_CR3_TARGET_COUNT                               0x0000400A
-#define VMX_VMCS_CTRL_EXIT                                           0x0000400C
-#define VMX_VMCS_CTRL_EXIT_MSR_STORE_COUNT                           0x0000400E
-#define VMX_VMCS_CTRL_EXIT_MSR_LOAD_COUNT                            0x00004010
-#define VMX_VMCS_CTRL_ENTRY                                          0x00004012
-#define VMX_VMCS_CTRL_ENTRY_MSR_LOAD_COUNT                           0x00004014
-#define VMX_VMCS_CTRL_ENTRY_INTERRUPTION_INFO                        0x00004016
-#define VMX_VMCS_CTRL_ENTRY_EXCEPTION_ERRCODE                        0x00004018
-#define VMX_VMCS_CTRL_ENTRY_INSTR_LENGTH                             0x0000401A
-#define VMX_VMCS_CTRL_TPR_THRESHOLD                                  0x0000401C
-#define VMX_VMCS_CTRL_PROC_EXEC2                                     0x0000401E
-#define VMX_VMCS_CTRL_PLE_GAP                                        0x00004020
-#define VMX_VMCS_CTRL_PLE_WINDOW                                     0x00004022
+#define VMCS_CTRL_PIN_EXEC                                           0x00004000
+#define VMCS_CTRL_PROC_EXEC                                          0x00004002
+#define VMCS_CTRL_EXCEPTION_BITMAP                                   0x00004004
+#define VMCS_CTRL_PAGEFAULT_ERROR_MASK                               0x00004006
+#define VMCS_CTRL_PAGEFAULT_ERROR_MATCH                              0x00004008
+#define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
+#define VMCS_CTRL_EXIT                                               0x0000400C
+#define VMCS_CTRL_EXIT_MSR_STORE_COUNT                               0x0000400E
+#define VMCS_CTRL_EXIT_MSR_LOAD_COUNT                                0x00004010
+#define VMCS_CTRL_ENTRY                                              0x00004012
+#define VMCS_CTRL_ENTRY_MSR_LOAD_COUNT                               0x00004014
+#define VMCS_CTRL_ENTRY_INTERRUPTION_INFO                            0x00004016
+#define VMCS_CTRL_ENTRY_EXCEPTION_ERRCODE                            0x00004018
+#define VMCS_CTRL_ENTRY_INSTR_LENGTH                                 0x0000401A
+#define VMCS_CTRL_TPR_THRESHOLD                                      0x0000401C
+#define VMCS_CTRL_PROC_EXEC2                                         0x0000401E
+#define VMCS_CTRL_PLE_GAP                                            0x00004020
+#define VMCS_CTRL_PLE_WINDOW                                         0x00004022
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_32_bit_read_only_data_fields \
+ * @defgroup vmcs_32_bit_read_only_data_fields \
  *           32-Bit Read-Only Data Fields
  * @{
  */
-#define VMX_VMCS_VM_INSTR_ERROR                                      0x00004400
-#define VMX_VMCS_EXIT_REASON                                         0x00004402
-#define VMX_VMCS_EXIT_INTERRUPTION_INFO                              0x00004404
-#define VMX_VMCS_EXIT_INTERRUPTION_ERROR_CODE                        0x00004406
-#define VMX_VMCS_IDT_VECTORING_INFO                                  0x00004408
-#define VMX_VMCS_IDT_VECTORING_ERROR_CODE                            0x0000440A
-#define VMX_VMCS_EXIT_INSTR_LENGTH                                   0x0000440C
-#define VMX_VMCS_EXIT_INSTR_INFO                                     0x0000440E
+#define VMCS_VM_INSTR_ERROR                                          0x00004400
+#define VMCS_EXIT_REASON                                             0x00004402
+#define VMCS_EXIT_INTERRUPTION_INFO                                  0x00004404
+#define VMCS_EXIT_INTERRUPTION_ERROR_CODE                            0x00004406
+#define VMCS_IDT_VECTORING_INFO                                      0x00004408
+#define VMCS_IDT_VECTORING_ERROR_CODE                                0x0000440A
+#define VMCS_EXIT_INSTR_LENGTH                                       0x0000440C
+#define VMCS_EXIT_INSTR_INFO                                         0x0000440E
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_32_bit_guest_state_fields \
+ * @defgroup vmcs_32_bit_guest_state_fields \
  *           32-Bit Guest-State Fields
  * @{
  */
-#define VMX_VMCS_GUEST_ES_LIMIT                                      0x00004800
-#define VMX_VMCS_GUEST_CS_LIMIT                                      0x00004802
-#define VMX_VMCS_GUEST_SS_LIMIT                                      0x00004804
-#define VMX_VMCS_GUEST_DS_LIMIT                                      0x00004806
-#define VMX_VMCS_GUEST_FS_LIMIT                                      0x00004808
-#define VMX_VMCS_GUEST_GS_LIMIT                                      0x0000480A
-#define VMX_VMCS_GUEST_LDTR_LIMIT                                    0x0000480C
-#define VMX_VMCS_GUEST_TR_LIMIT                                      0x0000480E
-#define VMX_VMCS_GUEST_GDTR_LIMIT                                    0x00004810
-#define VMX_VMCS_GUEST_IDTR_LIMIT                                    0x00004812
-#define VMX_VMCS_GUEST_ES_ACCESS_RIGHTS                              0x00004814
-#define VMX_VMCS_GUEST_CS_ACCESS_RIGHTS                              0x00004816
-#define VMX_VMCS_GUEST_SS_ACCESS_RIGHTS                              0x00004818
-#define VMX_VMCS_GUEST_DS_ACCESS_RIGHTS                              0x0000481A
-#define VMX_VMCS_GUEST_FS_ACCESS_RIGHTS                              0x0000481C
-#define VMX_VMCS_GUEST_GS_ACCESS_RIGHTS                              0x0000481E
-#define VMX_VMCS_GUEST_LDTR_ACCESS_RIGHTS                            0x00004820
-#define VMX_VMCS_GUEST_TR_ACCESS_RIGHTS                              0x00004822
-#define VMX_VMCS_GUEST_INTERRUPTIBILITY_STATE                        0x00004824
-#define VMX_VMCS_GUEST_ACTIVITY_STATE                                0x00004826
-#define VMX_VMCS_GUEST_SMBASE                                        0x00004828
-#define VMX_VMCS_GUEST_SYSENTER_CS                                   0x0000482A
-#define VMX_VMCS_GUEST_PREEMPT_TIMER_VALUE                           0x0000482E
+#define VMCS_GUEST_ES_LIMIT                                          0x00004800
+#define VMCS_GUEST_CS_LIMIT                                          0x00004802
+#define VMCS_GUEST_SS_LIMIT                                          0x00004804
+#define VMCS_GUEST_DS_LIMIT                                          0x00004806
+#define VMCS_GUEST_FS_LIMIT                                          0x00004808
+#define VMCS_GUEST_GS_LIMIT                                          0x0000480A
+#define VMCS_GUEST_LDTR_LIMIT                                        0x0000480C
+#define VMCS_GUEST_TR_LIMIT                                          0x0000480E
+#define VMCS_GUEST_GDTR_LIMIT                                        0x00004810
+#define VMCS_GUEST_IDTR_LIMIT                                        0x00004812
+#define VMCS_GUEST_ES_ACCESS_RIGHTS                                  0x00004814
+#define VMCS_GUEST_CS_ACCESS_RIGHTS                                  0x00004816
+#define VMCS_GUEST_SS_ACCESS_RIGHTS                                  0x00004818
+#define VMCS_GUEST_DS_ACCESS_RIGHTS                                  0x0000481A
+#define VMCS_GUEST_FS_ACCESS_RIGHTS                                  0x0000481C
+#define VMCS_GUEST_GS_ACCESS_RIGHTS                                  0x0000481E
+#define VMCS_GUEST_LDTR_ACCESS_RIGHTS                                0x00004820
+#define VMCS_GUEST_TR_ACCESS_RIGHTS                                  0x00004822
+#define VMCS_GUEST_INTERRUPTIBILITY_STATE                            0x00004824
+#define VMCS_GUEST_ACTIVITY_STATE                                    0x00004826
+#define VMCS_GUEST_SMBASE                                            0x00004828
+#define VMCS_GUEST_SYSENTER_CS                                       0x0000482A
+#define VMCS_GUEST_PREEMPT_TIMER_VALUE                               0x0000482E
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_32_bit_host_state_fields \
+ * @defgroup vmcs_32_bit_host_state_fields \
  *           32-Bit Host-State Field
  * @{
  */
-#define VMX_VMCS_SYSENTER_CS                                         0x00004C00
+#define VMCS_SYSENTER_CS                                             0x00004C00
 /**
  * @}
  */
@@ -2476,88 +2483,88 @@ typedef struct {
  */
 
 /**
- * @defgroup vmx_vmcs_natural_width \
+ * @defgroup vmcs_natural_width \
  *           Natural-Width Fields
  * @{
  */
 /**
- * @defgroup vmx_vmcs_natural_width_control_fields \
+ * @defgroup vmcs_natural_width_control_fields \
  *           Natural-Width Control Fields
  * @{
  */
-#define VMX_VMCS_CTRL_CR0_MASK                                       0x00006000
-#define VMX_VMCS_CTRL_CR4_MASK                                       0x00006002
-#define VMX_VMCS_CTRL_CR0_READ_SHADOW                                0x00006004
-#define VMX_VMCS_CTRL_CR4_READ_SHADOW                                0x00006006
-#define VMX_VMCS_CTRL_CR3_TARGET_VAL0                                0x00006008
-#define VMX_VMCS_CTRL_CR3_TARGET_VAL1                                0x0000600A
-#define VMX_VMCS_CTRL_CR3_TARGET_VAL2                                0x0000600C
-#define VMX_VMCS_CTRL_CR3_TARGET_VAL3                                0x0000600E
+#define VMCS_CTRL_CR0_MASK                                           0x00006000
+#define VMCS_CTRL_CR4_MASK                                           0x00006002
+#define VMCS_CTRL_CR0_READ_SHADOW                                    0x00006004
+#define VMCS_CTRL_CR4_READ_SHADOW                                    0x00006006
+#define VMCS_CTRL_CR3_TARGET_VAL0                                    0x00006008
+#define VMCS_CTRL_CR3_TARGET_VAL1                                    0x0000600A
+#define VMCS_CTRL_CR3_TARGET_VAL2                                    0x0000600C
+#define VMCS_CTRL_CR3_TARGET_VAL3                                    0x0000600E
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_natural_width_read_only_data_fields \
+ * @defgroup vmcs_natural_width_read_only_data_fields \
  *           Natural-Width Read-Only Data Fields
  * @{
  */
-#define VMX_VMCS_EXIT_QUALIFICATION                                  0x00006400
-#define VMX_VMCS_IO_RCX                                              0x00006402
-#define VMX_VMCS_IO_RSX                                              0x00006404
-#define VMX_VMCS_IO_RDI                                              0x00006406
-#define VMX_VMCS_IO_RIP                                              0x00006408
-#define VMX_VMCS_EXIT_GUEST_LINEAR_ADDR                              0x0000640A
+#define VMCS_EXIT_QUALIFICATION                                      0x00006400
+#define VMCS_IO_RCX                                                  0x00006402
+#define VMCS_IO_RSX                                                  0x00006404
+#define VMCS_IO_RDI                                                  0x00006406
+#define VMCS_IO_RIP                                                  0x00006408
+#define VMCS_EXIT_GUEST_LINEAR_ADDR                                  0x0000640A
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_natural_width_guest_state_fields \
+ * @defgroup vmcs_natural_width_guest_state_fields \
  *           Natural-Width Guest-State Fields
  * @{
  */
-#define VMX_VMCS_GUEST_CR0                                           0x00006800
-#define VMX_VMCS_GUEST_CR3                                           0x00006802
-#define VMX_VMCS_GUEST_CR4                                           0x00006804
-#define VMX_VMCS_GUEST_ES_BASE                                       0x00006806
-#define VMX_VMCS_GUEST_CS_BASE                                       0x00006808
-#define VMX_VMCS_GUEST_SS_BASE                                       0x0000680A
-#define VMX_VMCS_GUEST_DS_BASE                                       0x0000680C
-#define VMX_VMCS_GUEST_FS_BASE                                       0x0000680E
-#define VMX_VMCS_GUEST_GS_BASE                                       0x00006810
-#define VMX_VMCS_GUEST_LDTR_BASE                                     0x00006812
-#define VMX_VMCS_GUEST_TR_BASE                                       0x00006814
-#define VMX_VMCS_GUEST_GDTR_BASE                                     0x00006816
-#define VMX_VMCS_GUEST_IDTR_BASE                                     0x00006818
-#define VMX_VMCS_GUEST_DR7                                           0x0000681A
-#define VMX_VMCS_GUEST_RSP                                           0x0000681C
-#define VMX_VMCS_GUEST_RIP                                           0x0000681E
-#define VMX_VMCS_GUEST_RFLAGS                                        0x00006820
-#define VMX_VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                      0x00006822
-#define VMX_VMCS_GUEST_SYSENTER_ESP                                  0x00006824
-#define VMX_VMCS_GUEST_SYSENTER_EIP                                  0x00006826
+#define VMCS_GUEST_CR0                                               0x00006800
+#define VMCS_GUEST_CR3                                               0x00006802
+#define VMCS_GUEST_CR4                                               0x00006804
+#define VMCS_GUEST_ES_BASE                                           0x00006806
+#define VMCS_GUEST_CS_BASE                                           0x00006808
+#define VMCS_GUEST_SS_BASE                                           0x0000680A
+#define VMCS_GUEST_DS_BASE                                           0x0000680C
+#define VMCS_GUEST_FS_BASE                                           0x0000680E
+#define VMCS_GUEST_GS_BASE                                           0x00006810
+#define VMCS_GUEST_LDTR_BASE                                         0x00006812
+#define VMCS_GUEST_TR_BASE                                           0x00006814
+#define VMCS_GUEST_GDTR_BASE                                         0x00006816
+#define VMCS_GUEST_IDTR_BASE                                         0x00006818
+#define VMCS_GUEST_DR7                                               0x0000681A
+#define VMCS_GUEST_RSP                                               0x0000681C
+#define VMCS_GUEST_RIP                                               0x0000681E
+#define VMCS_GUEST_RFLAGS                                            0x00006820
+#define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
+#define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
+#define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
 /**
  * @}
  */
 
 /**
- * @defgroup vmx_vmcs_natural_width_host_state_fields \
+ * @defgroup vmcs_natural_width_host_state_fields \
  *           Natural-Width Host-State Fields
  * @{
  */
-#define VMX_VMCS_HOST_CR0                                            0x00006C00
-#define VMX_VMCS_HOST_CR3                                            0x00006C02
-#define VMX_VMCS_HOST_CR4                                            0x00006C04
-#define VMX_VMCS_HOST_FS_BASE                                        0x00006C06
-#define VMX_VMCS_HOST_GS_BASE                                        0x00006C08
-#define VMX_VMCS_HOST_TR_BASE                                        0x00006C0A
-#define VMX_VMCS_HOST_GDTR_BASE                                      0x00006C0C
-#define VMX_VMCS_HOST_IDTR_BASE                                      0x00006C0E
-#define VMX_VMCS_HOST_SYSENTER_ESP                                   0x00006C10
-#define VMX_VMCS_HOST_SYSENTER_EIP                                   0x00006C12
-#define VMX_VMCS_HOST_RSP                                            0x00006C14
-#define VMX_VMCS_HOST_RIP                                            0x00006C16
+#define VMCS_HOST_CR0                                                0x00006C00
+#define VMCS_HOST_CR3                                                0x00006C02
+#define VMCS_HOST_CR4                                                0x00006C04
+#define VMCS_HOST_FS_BASE                                            0x00006C06
+#define VMCS_HOST_GS_BASE                                            0x00006C08
+#define VMCS_HOST_TR_BASE                                            0x00006C0A
+#define VMCS_HOST_GDTR_BASE                                          0x00006C0C
+#define VMCS_HOST_IDTR_BASE                                          0x00006C0E
+#define VMCS_HOST_SYSENTER_ESP                                       0x00006C10
+#define VMCS_HOST_SYSENTER_EIP                                       0x00006C12
+#define VMCS_HOST_RSP                                                0x00006C14
+#define VMCS_HOST_RIP                                                0x00006C16
 /**
  * @}
  */
