@@ -7,11 +7,13 @@
   type: group
   include:
   - ControlRegisters
+  - DebugRegisters
   - CPUID
   - ModelSpecificRegisters
   - Paging
-  - SegmentDescriptors
+  - Segment
   - VMX
   - APIC
   - EFLAGS
+  - Exceptions
   - MemoryType

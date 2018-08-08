@@ -1,0 +1,65 @@
+- name: PAGE_FAULT_EXCEPTION
+  description: Page fault exception.
+  type: bitfield
+  size: 32
+  reference: Vol3A[4.7(PAGE-FAULT EXCEPTIONS)]
+  fields:
+  - bit: 0
+    short_name: P
+    long_name: PRESENT
+    description: |
+      This flag is 0 if there is no translation for the linear address because the P flag was 0 in one of the pagingstructure
+      entries used to translate that address.
+
+  - bit: 1
+    short_name: W
+    long_name: WRITE
+    description: |
+      If the access causing the page-fault exception was a write, this flag is 1; otherwise, it is 0. This flag describes
+      the access causing the page-fault exception, not the access rights specified by paging.
+
+  - bit: 2
+    short_name: U
+    long_name: USER_MODE_ACCESS
+    description: |
+      If a user-mode access caused the page-fault exception, this flag is 1; it is 0 if a supervisor-mode access did so.
+      This flag describes the access causing the page-fault exception, not the access rights specified by paging.
+    see: Vol3A[4.6(ACCESS RIGHTS)]
+
+  - bit: 3
+    short_name: RSVD
+    long_name: RESERVED_BIT_VIOLATION
+    description: |
+      This flag is 1 if there is no translation for the linear address because a reserved bit was set in one of the pagingstructure
+      entries used to translate that address. (Because reserved bits are not checked in a paging-structure
+      entry whose P flag is 0, bit 3 of the error code can be set only if bit 0 is also set).
+      Bits reserved in the paging-structure entries are reserved for future functionality. Software developers should
+      be aware that such bits may be used in the future and that a paging-structure entry that causes a page-fault
+      exception on one processor might not do so in the future.
+
+  - bit: 4
+    short_name: I
+    long_name: EXECUTE
+    description: |
+      This flag is 1 if (1) the access causing the page-fault exception was an instruction fetch; and (2) either
+      (a) CR4.SMEP = 1; or (b) both (i) CR4.PAE = 1 (either PAE paging or 4-level paging is in use); and
+      (ii) IA32_EFER.NXE = 1. Otherwise, the flag is 0. This flag describes the access causing the page-fault
+      exception, not the access rights specified by paging.
+
+  - bit: 5
+    short_name: PK
+    long_name: PROTECTION_KEY_VIOLATION
+    description: |
+      This flag is 1 if (1) IA32_EFER.LMA = CR4.PKE = 1; (2) the access causing the page-fault exception was a data
+      access; (3) the linear address was a user-mode address with protection key i; and (5) the PKRU register
+      is such that either (a) ADi = 1; or (b) the following all hold: (i) WDi = 1; (ii) the access is a write
+      access; and (iii) either CR0.WP = 1 or the access causing the page-fault exception was a user-mode access.
+    see: Vol3A[4.6.2(Protection Keys)]
+
+  - bit: 15
+    short_name: SGX
+    long_name: SGX
+    description: |
+      This flag is 1 if the exception is unrelated to paging and resulted from violation of SGX-specific access-control
+      requirements. Because such a violation can occur only if there is no ordinary page fault, this flag is set only if
+      the P flag (bit 0) is 1 and the RSVD flag (bit 3) and the PK flag (bit 5) are both 0.

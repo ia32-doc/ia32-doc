@@ -1,5 +1,4 @@
-- short_name: CODE_AND_DATA_SEGMENT_DESCRIPTOR_TYPE
-  long_name: CODE_AND_DATA_SEGMENT_DESCRIPTOR_TYPE
+- name: DESCRIPTOR_CODE_AND_DATA_TYPE
   short_description: Code- and Data-Segment Descriptor Types
   long_description: |
     When the S (descriptor type) flag in a segment descriptor is set, the descriptor is for either a code or a data
@@ -99,8 +98,7 @@
     long_name: CODE_EXECUTE_READ_CONFORMING_ACCESSED
     description: Code Execute/Read, conforming, accessed.
 
-- short_name: SYSTEM_DESCRIPTOR_TYPE
-  long_name: SYSTEM_DESCRIPTOR_TYPE
+- name: DESCRIPTOR_SYSTEM_TYPE
   short_description: System Descriptor Types
   long_description: |
     When the S (descriptor type) flag in a segment descriptor is clear, the descriptor type is a system descriptor. The

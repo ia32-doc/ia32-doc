@@ -1,9 +1,10 @@
 - name: SEGMENT_DESCRIPTORS
   short_description: Segment descriptors
+  children_name_with_prefix: SEGMENT
   todo: Long description
   type: group
   include:
+  - DescriptorRegister
   - Descriptor
-  - SegmentDescriptor
-  - SegmentDescriptorTypes
-  - SegmentSelector
+  - DescriptorTypes
+  - Selector

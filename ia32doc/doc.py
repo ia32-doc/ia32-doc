@@ -209,9 +209,9 @@ class DocBase(object):
             if self.parent:
                 if self.parent.type == DOC_ENUM:
                     self._doc['type'] = DOC_ENUM_FIELD
-                elif self.parent.type == DOC_STRUCT:
+                elif self.parent.type == DOC_STRUCT and 'size' in self._doc:
                     self._doc['type'] = DOC_STRUCT_FIELD
-                elif self.parent.type == DOC_BITFIELD:
+                elif self.parent.type == DOC_BITFIELD and 'bit' in self._doc:
                     self._doc['type'] = DOC_BITFIELD_FIELD
                 else:
                     self._doc['type'] = DOC_DEFINITION
@@ -388,22 +388,8 @@ class DocBitfield(DocBase):
         super().__init__(doc, parent)
 
     @property
-    def size_min(self):
-        if isinstance(self._doc['size'], int):
-            return self._doc['size']
-        else:
-            return self._doc['size'][0]
-
-    @property
-    def size_max(self):
-        if isinstance(self._doc['size'], int):
-            return self._doc['size']
-        else:
-            return self._doc['size'][1]
-
-    @property
     def size(self) -> int:
-        return self.size_max
+        return self._doc['size']
 
 
 class DocBitfieldField(DocBase):

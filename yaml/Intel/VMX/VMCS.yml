@@ -17,8 +17,8 @@
       Software should write the VMCS revision identifier to the VMCS region before using that region for a VMCS. The
       VMCS revision identifier is never written by the processor; VMPTRLD fails if its operand references a VMCS region
       whose VMCS revision identifier differs from that used by the processor (VMPTRLD also fails if the shadow-VMCS
-      indicator is 1 and the processor does not support the 1-setting of the “VMCS shadowing” VM-execution control; see
-      Section 24.6.2) Software can discover the VMCS revision identifier that a processor uses by reading the VMX capability
+      indicator is 1 and the processor does not support the 1-setting of the “VMCS shadowing” VM-execution control.
+      Software can discover the VMCS revision identifier that a processor uses by reading the VMX capability
       MSR IA32_VMX_BASIC.
     see:
     - Vol3C[24.6.2(Processor-Based VM-Execution Controls)]

@@ -53,8 +53,6 @@
   tag: BOOKMARK                           # General tag
 
   type: [group|definition|enum|struct|bitfield] # Type of the object
-  alternative_type: [Struct|Bitfield]     # Alternative type of the object
-
   size: [Bytes|Bits]                      # Size of the object
 
   remarks: 06_01H                         # Additional notes

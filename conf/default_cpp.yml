@@ -1,0 +1,285 @@
+#
+# Default configuration. Prints everything.
+#
+
+#
+# Column align when printing bitfields and #define macros.
+#
+#     UINT64 ProtectionEnable                                        : 1;
+# #define CR0_PROTECTION_ENABLE_BIT                                    0
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^~
+#
+align: 60
+
+#
+# Number of spaces added when entering struct/union.
+#
+indent: 2
+
+#
+# If true, structs/unions are printed like:
+#   struct
+#   {
+#   }
+#
+# If false:
+#   struct {
+#   }
+#
+brace_on_next_line: true
+
+#
+# If true, enum fields are printed out as #define macros.
+#
+enum_as_define: false
+
+#
+# Print @defgroup when entering group.
+#
+group_defgroup: true
+
+#
+# If true, #define macros do not obey indentation and always start at the beggining of the line:
+#
+#     UINT64 ProtectionEnable                                        : 1;
+# #define CR0_PROTECTION_ENABLE_BIT                                    0
+#
+# If false:
+#
+#     UINT64 ProtectionEnable                                        : 1;
+#    #define CR0_PROTECTION_ENABLE_BIT                                 0
+#
+definition_no_indent: true
+
+#
+# If true, create bitfield struct:
+# struct {
+#   UINT64 ProtectionEnable: 1;
+#   ...
+# }
+#
+# If false, do not create bitfield struct (definition of bit numbers can be still
+# created via bitfield_field_with_define* options).
+#
+bitfield_create_struct: true
+
+#
+# If true, each long_description is printed with prepended bit range of the
+# bitfield field (bitfield_field_long_description must be also true):
+#
+# ...
+# * [Bits 47:12] Physical address of the 4-KByte aligned page directory
+# ...
+#
+bitfield_field_long_description_with_bit_range: true
+
+#
+# If true, each bitfield struct is guaranted to be filled so that sum of all fields
+# equals to the size of the bitfield.
+#
+bitfield_field_fill_with_reserved: true
+
+#
+# Prefix of 'Reserved' bitfield fields.
+#
+bitfield_field_reserved_prefix: 'reserved'
+
+#
+# Common name of union member in bitfields.
+#
+#   typedef union {
+#     struct {
+#       UINT64 ProtectionEnable: 1;
+#       ...
+#     }
+#     UINT64 Flags; //<<<<<<<<<<<<<
+#   }
+#
+bitfield_field_flags_name: 'flags'
+
+#
+# Common option for:
+# - bitfield_field_with_define_bit
+# - bitfield_field_with_define_flag
+# - bitfield_field_with_define_get
+# - bitfield_field_with_define_mask
+#
+bitfield_field_with_defines: true
+
+#
+# If true, definition of bitfield position is printed with each bitfield field:
+#
+#     UINT64 ProtectionEnable                                        : 1;
+# #define CR0_PROTECTION_ENABLE_BIT                                    0
+#
+# bitfield_field_with_define_bit: true
+
+#
+# If true, definition of bitfield flag is printed with each bitfield field:
+#
+#     UINT64 ProtectionEnable                                        : 1;
+# #define CR0_PROTECTION_ENABLE_FLAG                                   0x01
+#
+# bitfield_field_with_define_flag: true
+
+#
+# If true, definition of bitfield mask is printed with each bitfield field:
+#     UINT64 ProtectionEnable                                        : 1;
+#    #define CR0_PROTECTION_ENABLE_MASK                                0x01
+#
+# bitfield_field_with_define_mask: true
+
+#
+# If true, definition of bitfield field getter is printed with each bitfield field:
+#     UINT64 ProtectionEnable                                        : 1;
+#    #define CR0_PROTECTION_ENABLE(_)                                  (((_) >> 0) & 0x01)
+#
+# bitfield_field_with_define_get: true
+
+#
+# Define suffix for macros printed with bitfield_field_with_define_bit.
+#
+bitfield_field_with_define_bit_suffix: '_BIT'
+
+#
+# Define suffix for macros printed with bitfield_field_with_define_flag.
+#
+bitfield_field_with_define_flag_suffix: '_FLAG'
+
+#
+# Define suffix for macros printed with bitfield_field_with_define_mask.
+#
+bitfield_field_with_define_mask_suffix: '_MASK'
+
+#
+# Define argument name for macros printed with bitfield_field_with_define_get.
+#
+bitfield_field_with_define_get_macro_argument_name: '_'
+
+#
+# Common option for all options below. Verbosity of each field can be controlled via its own option value.
+#
+comments: true
+# group_comments: true
+#   group_short_description: true
+#   group_long_description: true
+#   group_note: true
+#   group_access: true
+#   group_remarks: true
+#   group_see: true
+#   group_reference: true
+#
+# definition_comments: true
+#   definition_short_description: true
+#   definition_long_description: true
+#   definition_note: true
+#   definition_access: true
+#   definition_remarks: true
+#   definition_see: true
+#   definition_reference: true
+#
+# struct_comments: true
+#   struct_short_description: true
+#   struct_long_description: true
+#   struct_note: true
+#   struct_access: true
+#   struct_remarks: true
+#   struct_see: true
+#   struct_reference: true
+#
+# struct_field_comments: true
+#   struct_field_short_description: true
+#   struct_field_long_description: true
+#   struct_field_note: true
+#   struct_field_access: true
+#   struct_field_remarks: true
+#   struct_field_see: true
+#   struct_field_reference: true
+#
+# bitfield_comments: true
+#   bitfield_short_description: true
+#   bitfield_long_description: true
+#   bitfield_note: true
+#   bitfield_access: true
+#   bitfield_remarks: true
+#   bitfield_see: true
+#   bitfield_reference: true
+#
+# bitfield_field_comments: true
+#   bitfield_field_short_description: true
+#   bitfield_field_long_description: true
+#   bitfield_field_note: true
+#   bitfield_field_access: true
+#   bitfield_field_remarks: true
+#   bitfield_field_see: true
+#   bitfield_field_reference: true
+
+#
+# Common option for all options below.
+# If true, long_name is prefered over short_name for chosen category (group, definition, struct, ...)
+#
+prefer_long_names: true
+# group_prefer_long_names: true
+# definition_prefer_long_names: true
+# struct_prefer_long_names: true
+# struct_field_prefer_long_names: true
+# bitfield_prefer_long_names: true
+# bitfield_field_prefer_long_names: true
+
+#
+# Common option for all options below.
+# If true, alternative_name is prefered over BOTH short_name AND long_name for chosen category (group,
+# definition, struct, ...)
+#
+prefer_alternative_names: true
+# group_prefer_alternative_names: true
+# definition_prefer_alternative_names: true
+# struct_prefer_alternative_names: true
+# struct_field_prefer_alternative_names: true
+# bitfield_prefer_alternative_names: true
+# bitfield_field_prefer_alternative_names: true
+
+#
+# Control name letter case for each category. Valid values are:
+# - snake_case       (result: two_words)
+# - snake_case_upper (result: TWO_WORDS)
+# - camel_case       (result: TwoWords)
+#
+group_name_letter_case: snake_case
+definition_name_letter_case: snake_case_upper
+enum_name_letter_case: snake_case
+enum_field_name_letter_case: snake_case
+struct_name_letter_case: snake_case
+struct_field_name_letter_case: snake_case
+bitfield_name_letter_case: snake_case
+bitfield_field_name_letter_case: snake_case
+
+#
+# Name of types for unsigned integers of bit length 8, 16, 32 and 64.
+#
+int_type_8:  'uint8_t'
+int_type_16: 'uint16_t'
+int_type_32: 'uint32_t'
+int_type_64: 'uint64_t'
+
+#
+# Text prepended to the output file.
+#
+output_prepend: |
+  /** @file */
+  #pragma once
+  using uint8_t   = unsigned char     ;
+  using uint16_t  = unsigned short    ;
+  using uint32_t  = unsigned int      ;
+  using uint64_t  = unsigned long long;
+
+#
+# Text appended to the output file.
+#
+output_append: ''
+
+#
+# Output filename.
+#
+output_filename: out/ia32.hpp
+#output_filename: C:\Users\benesp\Documents\Visual Studio 2017\Projects\avmext\src\avmext\hv\ia32.h

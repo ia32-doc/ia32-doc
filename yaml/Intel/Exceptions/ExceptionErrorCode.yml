@@ -1,0 +1,44 @@
+- name: EXCEPTION_ERROR_CODE
+  description: |
+    When an exception condition is related to a specific segment selector or IDT vector, the processor pushes an error
+    code onto the stack of the exception handler (whether it is a procedure or task). The error code resembles a segment
+    selector; however, instead of a TI flag and RPL field, the error code contains 3 different flags.
+  type: bitfield
+  size: 32
+  reference: Vol3A[6.13(ERROR CODE)]
+  fields:
+  - bit: 0
+    short_name: EXT
+    long_name: EXTERNAL_EVENT
+    description: |
+      When set, indicates that the exception occurred during delivery of an
+      event external to the program, such as an interrupt or an earlier exception. The bit is cleared if the
+      exception occurred during delivery of a software interrupt (INT n, INT3, or INTO).
+
+  - bit: 1
+    short_name: IDT
+    long_name: DESCRIPTOR_LOCATION
+    description: |
+      When set, indicates that the index portion of the error code refers
+      to a gate descriptor in the IDT; when clear, indicates that the index refers to a descriptor in the GDT
+      or the current LDT.
+
+  - bit: 2
+    short_name: TI
+    long_name: GDT_LDT
+    description: |
+      Only used when the IDT flag is clear. When set, the TI flag indicates that the
+      index portion of the error code refers to a segment or gate descriptor in the LDT; when clear, it indicates
+      that the index refers to a descriptor in the current GDT.
+
+  - bit: 3-15
+    short_name: INDEX
+    long_name: INDEX
+    description: |
+      The segment selector index field provides an index into the IDT, GDT, or current LDT to the segment or gate
+      selector being referenced by the error code. In some cases the error code is null (all bits are clear except possibly
+      EXT). A null error code indicates that the error was not caused by a reference to a specific segment or that a null
+      segment selector was referenced in an operation.
+
+    note: |
+      The format of the error code is different for page-fault exceptions (#PF).

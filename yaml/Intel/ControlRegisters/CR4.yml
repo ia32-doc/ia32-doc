@@ -1,6 +1,6 @@
 - name: CR4
   type: bitfield
-  size: [ 32, 64 ]
+  size: 64
   fields:
   - bit: 0
     short_name: VME

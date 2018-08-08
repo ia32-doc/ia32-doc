@@ -23,7 +23,7 @@
       Specifies the descriptor table to use: clearing this flag selects the GDT; setting this flag
       selects the current LDT.
 
-  - bit: 3-16
+  - bit: 3-15
     short_name: INDEX
     long_name: INDEX
     description: |

@@ -27,6 +27,11 @@ class DocCProcessor(DocProcessor):
         #
         self._bitfield_reserved_count = None
 
+        #
+        # Make C++ code.
+        #
+        self._output_cpp = False
+
     def process_group(self, doc: DocGroup) -> None:
         if self.opt.group_comments and doc.long_description or self.opt.group_defgroup:
             self.print(f'/**')
@@ -108,9 +113,17 @@ class DocCProcessor(DocProcessor):
                 self.print(f' */')
 
             optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
-            optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+            optional_typedef = ''
+            optional_name_begin = ''
+            optional_name_end = ''
 
-            self.print(f'{optional_typedef}enum{optional_curly_brace}')
+            if self._output_cpp:
+                optional_name_begin = f' {self.make_name(doc)}'
+            else:
+                optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+                optional_name_end = f' {self.make_name(doc)}'
+
+            self.print(f'{optional_typedef}enum{optional_name_begin}{optional_curly_brace}')
             if self.opt.brace_on_next_line:
                 self.print(f'{{')
 
@@ -120,7 +133,7 @@ class DocCProcessor(DocProcessor):
                     getattr(self, f'process_{field.type}')(field)
 
             if self._typedef_nesting == 1:
-                self.print(f'}} {self.make_name(doc)};')
+                self.print(f'}}{optional_name_end};')
             else:
                 name = self.make_name(
                     doc,
@@ -152,6 +165,81 @@ class DocCProcessor(DocProcessor):
 
         self.process(doc.fields)
 
+    def process_struct(self, doc: DocStruct) -> None:
+        self._typedef_nesting += 1
+
+        if self.opt.struct_comments and doc.long_description:
+            self.print(f'/**')
+            self.print_details(doc, treat_description_as_short=True)
+            self.print(f' */')
+
+        if doc.tag == 'Packed':
+            self.print(f'#pragma pack(push, 1)')
+
+        has_name = doc.short_name or doc.long_name
+        optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
+        optional_typedef = ''
+        optional_name_begin = ''
+        optional_name_end = ''
+
+        if self._output_cpp:
+            optional_name_begin = f' {self.make_name(doc)}'
+        else:
+            optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+            optional_name_end = f' {self.make_name(doc)}'
+
+        self.print(f'{optional_typedef}struct{optional_name_begin}{optional_curly_brace}')
+        if self.opt.brace_on_next_line:
+            self.print(f'{{')
+
+        with self.indent:
+            for field in doc.fields:
+                assert field.type in [ DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
+
+                if isinstance(field, DocBitfield) and not self.opt.bitfield_create_struct:
+                    self.print(f'{self.make_size_type(field.size)[0]} {self.make_name(field, standalone=True)};')
+                else:
+                    getattr(self, f'process_{field.type}')(field)
+
+        if self._typedef_nesting == 1:
+            assert has_name
+            self.print(f'}}{optional_name_end};')
+        else:
+            if has_name:
+                name = self.make_name(
+                    doc,
+                    standalone=True,
+                    override_name_letter_case=self.opt.struct_field_name_letter_case
+                )
+                self.print(f'}} {name};')
+            else:
+                self.print(f'}};')
+
+        if doc.tag == 'Packed':
+            self.print(f'#pragma pack(pop)')
+
+        self.print(f'')
+
+        self._typedef_nesting -= 1
+
+    def process_struct_field(self, doc: DocStructField) -> None:
+        if self.opt.struct_field_comments and doc.long_description:
+            #
+            # Do not print empty line for the first element.
+            #
+            if next(iter(doc.parent.fields)) != doc:
+                self.print(f'')
+            self.print(f'/**')
+            self.print_details(doc)
+            self.print(f' */')
+
+        size_type, size_type_array = self.make_size_type(doc.size)
+        self.print(f'{size_type} {self.make_name(doc)}{size_type_array};')
+
+        if doc.fields:
+            self.print(f'')
+            self.process(doc.fields)
+
     def process_bitfield(self, doc: DocBitfield) -> None:
         if self.opt.bitfield_create_struct:
             self._typedef_nesting += 1
@@ -163,9 +251,17 @@ class DocCProcessor(DocProcessor):
 
             has_name = doc.short_name or doc.long_name
             optional_curly_brace = ' {' if not self.opt.brace_on_next_line else ''
-            optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+            optional_typedef = ''
+            optional_name_begin = ''
+            optional_name_end = ''
 
-            self.print(f'{optional_typedef}union{optional_curly_brace}')
+            if self._output_cpp:
+                optional_name_begin = f' {self.make_name(doc)}'
+            else:
+                optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
+                optional_name_end = f' {self.make_name(doc)}'
+
+            self.print(f'{optional_typedef}union{optional_name_begin}{optional_curly_brace}')
             if self.opt.brace_on_next_line:
                 self.print(f'{{')
 
@@ -190,9 +286,9 @@ class DocCProcessor(DocProcessor):
                     # Check if we have to create last "Reserved" field.
                     #
                     last_bit_from, last_bit_to = last_field.bit
-                    if last_bit_to < doc.size_max and self.opt.bitfield_field_fill_with_reserved:
+                    if last_bit_to < doc.size and self.opt.bitfield_field_fill_with_reserved:
                         self._bitfield_reserved_count += 1
-                        bit_length = doc.size_max - self._bitfield_position
+                        bit_length = doc.size - self._bitfield_position
                         long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
                         self.print(
                             f'{self.make_size_type(doc.size)[0]} {long_name:<{self.align_indent_adjusted}}: '
@@ -209,15 +305,11 @@ class DocCProcessor(DocProcessor):
                 # Print "Flags" member (only for named bitfields).
                 #
                 if has_name:
-                    if doc.size_min != doc.size_max:
-                        self.print(f'{self.make_size_type(doc.size_min)[0]} {self.opt.bitfield_field_flags_name}{doc.size_min};')
-                        self.print(f'{self.make_size_type(doc.size_max)[0]} {self.opt.bitfield_field_flags_name}{doc.size_max};')
-                    else:
-                        self.print(f'{self.make_size_type(doc.size)[0]} {self.opt.bitfield_field_flags_name};')
+                    self.print(f'{self.make_size_type(doc.size)[0]} {self.opt.bitfield_field_flags_name};')
 
             if self._typedef_nesting == 1:
                 assert has_name
-                self.print(f'}} {self.make_name(doc)};')
+                self.print(f'}}{optional_name_end};')
             else:
                 if has_name:
                     name = self.make_name(
@@ -253,7 +345,7 @@ class DocCProcessor(DocProcessor):
                 bit_length = bit_from - self._bitfield_position
                 long_name = f'{self.opt.bitfield_field_reserved_prefix}{self._bitfield_reserved_count}'
                 self.print(
-                    f'{self.make_size_type(doc.parent.size_min)[0]} {long_name:<{self.align_indent_adjusted}}: '
+                    f'{self.make_size_type(doc.parent.size)[0]} {long_name:<{self.align_indent_adjusted}}: '
                     f'{bit_length};'
                 )
                 self._bitfield_position = bit_from
@@ -271,7 +363,7 @@ class DocCProcessor(DocProcessor):
                 self.print(f' */')
 
             self.print(
-                f'{self.make_size_type(doc.parent.size_min)[0]} {self.make_name(doc):<{self.align_indent_adjusted}}: '
+                f'{self.make_size_type(doc.parent.size)[0]} {self.make_name(doc):<{self.align_indent_adjusted}}: '
                 f'{bit_length};'
             )
 
@@ -349,7 +441,7 @@ class DocCProcessor(DocProcessor):
 
         with self.indent:
             for field in doc.fields:
-                assert field.type in [ DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
+                assert field.type in [ DOC_DEFINITION, DOC_STRUCT, DOC_BITFIELD, DOC_STRUCT_FIELD ]
 
                 if isinstance(field, DocBitfield) and not self.opt.bitfield_create_struct:
                     self.print(f'{self.make_size_type(field.size)[0]} {self.make_name(field, standalone=True)};')
@@ -524,13 +616,18 @@ class DocCProcessor(DocProcessor):
         return DocText.convert_case(result, letter_case)
 
     def make_size_type(self, size) -> Union[str, Tuple[str, str]]:
-        if size in [ 8, 16, 32, 64 ]:
-            return getattr(self.opt, f'int_type_{size}'), ''
-        elif size % 8 == 0:
-            size_in_bytes = size // 8
-            return self.opt.int_type_8, f'[{size_in_bytes}]'
-        else:
-            raise Exception('Cannot represent size as type')
+        try:
+            if size in [ 8, 16, 32, 64 ]:
+                return getattr(self.opt, f'int_type_{size}'), ''
+            elif size % 8 == 0:
+                size_in_bytes = size // 8
+                return self.opt.int_type_8, f'[{size_in_bytes}]'
+            else:
+                raise Exception('Cannot represent size as type')
+        except:
+            import sys
+            print(size, file=sys.stderr)
+            raise
 
     @staticmethod
     def make_multiline_comment(text: str, prefix: str='', indent: int=1) -> str:

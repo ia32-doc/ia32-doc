@@ -99,7 +99,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: 64 # TODO: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 8
       short_name: BSP
@@ -131,7 +131,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: LOCK
@@ -276,13 +276,14 @@
   remarks: 06_01H
   fields:
   - name_with_suffix: REGISTER
-    type: struct
+    type: bitfield
+    size: 64
     fields:
-    - size: 32
+    - bit: 0-31
       name: Reserved
       description: Reserved.
 
-    - size: 32
+    - bit: 32-63
       name: MICROCODE_UPDATE_SIGNATURE
       short_description: Microcode update signature
       long_description: |
@@ -325,7 +326,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: VALID
@@ -497,7 +498,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-7
       short_name: VCNT
@@ -553,24 +554,20 @@
   reference: Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)]
   fields:
   - name_with_suffix: REGISTER
-    type: struct
-    alternative_type: Bitfield
-    size: [ 32, 64 ]
+    type: bitfield
+    size: 64
     fields:
-    - size: 16
-      bit: 0-15
+    - bit: 0-15
       short_name: CS
       long_name: CS_SELECTOR
       description: CS Selector.
 
-    - size: 16
-      bit: 16-31
+    - bit: 16-31
       name: NOT_USED_1
       description: Not used.
       remarks: Can be read and written.
 
-    - size: 32
-      bit: 32-63
+    - bit: 32-63
       name: NOT_USED_2
       description: Not used.
       remarks: Writes ignored; reads return zero.
@@ -607,7 +604,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-7
       short_name: COUNT
@@ -665,7 +662,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: RIPV
@@ -712,7 +709,7 @@
 
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-7
       name: EVENT_SELECT
@@ -774,9 +771,8 @@
   see: Vol3B[14.1.1(Software Interface For Initiating Performance State Transitions)]
   fields:
   - name_with_suffix: REGISTER
-    type: struct
-    alternative_type: Bitfield
-    size: [ 32, 64 ]
+    type: bitfield
+    size: 64
     fields:
     - size: 16
       bit: 0-15
@@ -797,7 +793,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-15
       short_name: TARGET_STATE
@@ -823,7 +819,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: EXTENDED_ON_DEMAND_CLOCK_MODULATION_DUTY_CYCLE
@@ -862,7 +858,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: HIGH_TEMP_ENABLE
@@ -956,7 +952,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: THERMAL_STATUS
@@ -1121,7 +1117,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: FAST_STRINGS
@@ -1268,7 +1264,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-3
       name: POWER_POLICY_PREFERENCE
@@ -1291,7 +1287,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: THERMAL_STATUS
@@ -1387,7 +1383,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: HIGH_TEMP_ENABLE
@@ -1450,7 +1446,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: LBR
@@ -1553,7 +1549,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-7
       short_name: TYPE
@@ -1578,7 +1574,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 11
       short_name: VALID
@@ -1611,7 +1607,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: DCA_ACTIVE
@@ -1973,7 +1969,7 @@
 
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-14
       name: CORRECTED_ERROR_COUNT_THRESHOLD
@@ -1992,7 +1988,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-2
       short_name: TYPE
@@ -2045,7 +2041,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0-5
       short_name: LBR_FMT
@@ -2091,7 +2087,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       name: EN0_OS
@@ -2915,7 +2911,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: EXT_INT_EXIT
@@ -2980,7 +2976,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 2
       short_name: INT_WINDOW_EXIT
@@ -3161,7 +3157,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 2
       short_name: SAVE_DEBUG
@@ -3266,7 +3262,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 2
       short_name: LOAD_DEBUG
@@ -3531,7 +3527,7 @@
   fields:
   - name_with_suffix: REGISTER
     type: bitfield
-    size: [ 32, 64 ]
+    size: 64
     fields:
     - bit: 0
       short_name: VIRT_APIC
@@ -3883,20 +3879,20 @@
     name: VMX_TRUE_ENTRY_CTLS
 
   #
-  # Result struct.
+  # Result.
   #
   - name_with_suffix: REGISTER
-    type: struct
+    type: bitfield
     size: 64
     fields:
-    - size: 32
+    - bit: 0-31
       name: ALLOWED_0_SETTINGS
       description: |
         Indicate the allowed 0-settings of these controls. VM entry allows control X to be 0 if
         bit X in the MSR is cleared to 0; if bit X in the MSR is set to 1, VM entry fails if
         control X is 0.
 
-    - size: 32
+    - bit: 32-63
       name: ALLOWED_1_SETTINGS
       description: |
         Indicate the allowed 1-settings of these controls. VM entry allows control X to be 1 if bit 32+X in
@@ -4666,7 +4662,7 @@
   name: HWP_CAPABILITIES
   description: HWP Performance Range Enumeration.
   access: RO
-  todo: More description + alternative_type Struct
+  todo: More description
   remarks: |
     If CPUID.06H:EAX.[7] = 1
   fields:
@@ -4780,7 +4776,7 @@
   name: HWP_REQUEST
   description: Power Management Control Hints to a Logical Processor.
   access: R/W
-  todo: More description + alternative_type Struct
+  todo: More description
   remarks: |
     If CPUID.06H:EAX.[7] = 1
   fields:

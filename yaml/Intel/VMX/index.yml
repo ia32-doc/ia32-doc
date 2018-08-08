@@ -721,7 +721,7 @@
         fields:
         - bit: 0-3
           name: BREAKPOINT_CONDITION
-          short_description: B3 – B0
+          short_description: B0 – B3
           long_description: |
             When set, each of these bits indicates that the corresponding breakpoint condition was met. Any of
             these bits may be set even if its corresponding enabling bit in DR7 is not set.
@@ -827,7 +827,7 @@
         - bit: 8-11
           short_name: GENREG
           long_name: GP_REGISTER
-          long_name: GENERAL_PURPOSE_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
           description: For MOV CR, the general-purpose register.
           children_name_with_prefix: $
           fields:
@@ -914,40 +914,40 @@
           long_name: GP_REGISTER
           alternative_name: GENERAL_PURPOSE_REGISTER
           description: General-purpose register.
-          children_name_with_prefix: $
-          fields:
-          - value: 0
-            name: RAX
-          - value: 1
-            name: RCX
-          - value: 2
-            name: RDX
-          - value: 3
-            name: RBX
-          - value: 4
-            name: RSP
-          - value: 5
-            name: RBP
-          - value: 6
-            name: RSI
-          - value: 7
-            name: RDI
-          - value: 8
-            name: R8
-          - value: 9
-            name: R9
-          - value: 10
-            name: R10
-          - value: 11
-            name: R11
-          - value: 12
-            name: R12
-          - value: 13
-            name: R13
-          - value: 14
-            name: R14
-          - value: 15
-            name: R15
+#          children_name_with_prefix: $
+#          fields:
+#          - value: 0
+#            name: RAX
+#          - value: 1
+#            name: RCX
+#          - value: 2
+#            name: RDX
+#          - value: 3
+#            name: RBX
+#          - value: 4
+#            name: RSP
+#          - value: 5
+#            name: RBP
+#          - value: 6
+#            name: RSI
+#          - value: 7
+#            name: RDI
+#          - value: 8
+#            name: R8
+#          - value: 9
+#            name: R9
+#          - value: 10
+#            name: R10
+#          - value: 11
+#            name: R11
+#          - value: 12
+#            name: R12
+#          - value: 13
+#            name: R13
+#          - value: 14
+#            name: R14
+#          - value: 15
+#            name: R15
 
       - short_name: IO_INST
         long_name: IO_INSTRUCTION
@@ -1171,6 +1171,520 @@
           description: |
             NMI unblocking due to IRET.
 
+    - name: VMEXIT_INSTRUCTION_INFORMATION
+      description: Information for VM Exits Due to Instruction Execution.
+      children_name_with_prefix: VMEXIT_INSTRUCTION_INFO
+      type: group
+      reference: Vol3C[27.2.4(Information for VM Exits Due to Instruction Execution)]
+      fields:
+      - name: INS_OUTS
+        description: VM-Exit Instruction-Information Field as Used for INS and OUTS.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used.
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used. Undefined for VM exits due to execution of INS.
+
+      - name: INVALIDATE
+        description: VM-Exit Instruction-Information Field as Used for INVEPT, INVPCID, and INVVPID.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 0-1
+          name: SCALING
+          short_description: Scaling
+          long_description: |
+            0: no scaling
+
+            1: scale by 2
+
+            2: scale by 4
+
+            3: scale by 8 (used only on processors that support Intel 64 architecture)
+
+            Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used.
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used. Undefined for VM exits due to execution of INS.
+
+        - bit: 18-21
+          short_name: INDEX_REG
+          long_name: GP_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
+          description: General-purpose register. Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 22
+          short_name: INDEX_REG_INVALID
+          long_name: GP_REGISTER_INVALID
+          alternative_name: GENERAL_PURPOSE_REGISTER_INVALID
+          description: IndexReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 23-26
+          short_name: BASE_REG
+          long_name: BASE_REGISTER
+          alternative_name: BASE_REGISTER
+          description: |
+            BaseReg (encoded as IndexReg above).
+            Undefined for memory instructions with no base register (bit 27 is set).
+
+        - bit: 27
+          short_name: BASE_REG_INVALID
+          long_name: BASE_REGISTER_INVALID
+          alternative_name: BASE_REGISTER_INVALID
+          description: BaseReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 28-31
+          short_name: REG_2
+          long_name: REGISTER_2
+          alternative_name: REGISTER_2
+          description: Reg2 (same encoding as IndexReg above).
+
+      - name: GDTR_IDTR_ACCESS
+        description: VM-Exit Instruction-Information Field as Used for LIDT, LGDT, SIDT, or SGDT.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 0-1
+          name: SCALING
+          short_description: Scaling
+          long_description: |
+            0: no scaling
+
+            1: scale by 2
+
+            2: scale by 4
+
+            3: scale by 8 (used only on processors that support Intel 64 architecture)
+
+            Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used.
+
+        - bit: 11
+          name: OPERAND_SIZE
+          short_description: Operand size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            Undefined for VM exits from 64-bit mode.
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used.
+
+        - bit: 18-21
+          short_name: INDEX_REG
+          long_name: GP_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
+          description: General-purpose register. Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 22
+          short_name: INDEX_REG_INVALID
+          long_name: GP_REGISTER_INVALID
+          alternative_name: GENERAL_PURPOSE_REGISTER_INVALID
+          description: IndexReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 23-26
+          short_name: BASE_REG
+          long_name: BASE_REGISTER
+          alternative_name: BASE_REGISTER
+          description: |
+            BaseReg (encoded as IndexReg above).
+            Undefined for memory instructions with no base register (bit 27 is set).
+
+        - bit: 27
+          short_name: BASE_REG_INVALID
+          long_name: BASE_REGISTER_INVALID
+          alternative_name: BASE_REGISTER_INVALID
+          description: BaseReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 28-29
+          short_name: INSTR
+          long_name: INSTRUCTION_IDENTITY
+          alternative_name: INSTRUCTION
+          short_description: Instruction identity
+          long_description: |
+            0: SGDT
+
+            1: SIDT
+
+            2: LGDT
+
+            3: LIDT
+
+      - name: LDTR_TR_ACCESS
+        description: VM-Exit Instruction-Information Field as Used for LLDT, LTR, SLDT, and STR.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 0-1
+          name: SCALING
+          short_description: Scaling
+          long_description: |
+            0: no scaling
+
+            1: scale by 2
+
+            2: scale by 4
+
+            3: scale by 8 (used only on processors that support Intel 64 architecture)
+
+            Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 3-6
+          name: REG_1
+          description: Reg1. Undefined for memory instructions (bit 10 is clear).
+
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used. Undefined for register instructions (bit 10 is set).
+
+        - bit: 10
+          short_name: MEM_REG
+          long_name: MEMORY_REGISTER
+          description: Mem/Reg (0 = memory; 1 = register).
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used. Undefined for register instructions (bit 10 is set).
+
+        - bit: 18-21
+          short_name: INDEX_REG
+          long_name: GP_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
+          description: |
+            General-purpose register. Undefined for register instructions (bit 10 is set) and for memory
+            instructions with no index register (bit 10 is clear and bit 22 is set).
+
+        - bit: 22
+          short_name: INDEX_REG_INVALID
+          long_name: GP_REGISTER_INVALID
+          alternative_name: GENERAL_PURPOSE_REGISTER_INVALID
+          description: IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set).
+
+        - bit: 23-26
+          short_name: BASE_REG
+          long_name: BASE_REGISTER
+          alternative_name: BASE_REGISTER
+          description: |
+            BaseReg (encoded as IndexReg above).
+            Undefined for register instructions (bit 10 is set) and for memory instructions with no base register
+            (bit 10 is clear and bit 27 is set).
+
+        - bit: 27
+          short_name: BASE_REG_INVALID
+          long_name: BASE_REGISTER_INVALID
+          alternative_name: BASE_REGISTER_INVALID
+          description: BaseReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set).
+
+        - bit: 28-29
+          short_name: INSTR
+          long_name: INSTRUCTION_IDENTITY
+          alternative_name: INSTRUCTION
+          short_description: Instruction identity
+          long_description: |
+            0: SLDT
+
+            1: STR
+
+            2: LLDT
+
+            3: LTR
+
+      - name: RDRAND_RDSEED
+        description: VM-Exit Instruction-Information Field as Used for RDRAND and RDSEED.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 3-6
+          short_name: DEST_REGISTER
+          long_name: DESTINATION_REGISTER
+          description: Destination register.
+
+        - bit: 11-12
+          name: OPERAND_SIZE
+          short_description: Operand size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit
+
+            The value 3 is not used.
+
+      - name: VMX_AND_XSAVES
+        description: VM-Exit Instruction-Information Field as Used for VMCLEAR, VMPTRLD, VMPTRST, VMXON, XRSTORS, and XSAVES.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 0-1
+          name: SCALING
+          short_description: Scaling
+          long_description: |
+            0: no scaling
+
+            1: scale by 2
+
+            2: scale by 4
+
+            3: scale by 8 (used only on processors that support Intel 64 architecture)
+
+            Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used.
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used.
+
+        - bit: 18-21
+          short_name: INDEX_REG
+          long_name: GP_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
+          description: General-purpose register. Undefined for instructions with no index register (bit 22 is set).
+
+        - bit: 22
+          short_name: INDEX_REG_INVALID
+          long_name: GP_REGISTER_INVALID
+          alternative_name: GENERAL_PURPOSE_REGISTER_INVALID
+          description: IndexReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 23-26
+          short_name: BASE_REG
+          long_name: BASE_REGISTER
+          alternative_name: BASE_REGISTER
+          description: |
+            BaseReg (encoded as IndexReg above).
+            Undefined for memory instructions with no base register (bit 27 is set).
+
+        - bit: 27
+          short_name: BASE_REG_INVALID
+          long_name: BASE_REGISTER_INVALID
+          alternative_name: BASE_REGISTER_INVALID
+          description: BaseReg invalid (0 = valid; 1 = invalid).
+
+      - name: VMREAD_VMWRITE
+        description: VM-Exit Instruction-Information Field as Used for VMREAD and VMWRITE.
+        type: bitfield
+        size: 64
+        fields:
+        - bit: 0-1
+          name: SCALING
+          short_description: Scaling
+          long_description: |
+            0: no scaling
+
+            1: scale by 2
+
+            2: scale by 4
+
+            3: scale by 8 (used only on processors that support Intel 64 architecture)
+
+            Undefined for register instructions (bit 10 is set) and for memory instructions with no index register
+            (bit 10 is clear and bit 22 is set).
+
+        - bit: 3-6
+          short_name: REG_1
+          long_name: REGISTER_1
+          description: Reg1. Undefined for memory instructions (bit 10 is clear).
+
+        - bit: 7-9
+          name: ADDRESS_SIZE
+          short_description: Address size
+          long_description: |
+            0: 16-bit
+
+            1: 32-bit
+
+            2: 64-bit (used only on processors that support Intel 64 architecture)
+
+            Other values not used. Undefined for register instructions (bit 10 is set).
+
+        - bit: 10
+          short_name: MEM_REG
+          long_name: MEMORY_REGISTER
+          description: Mem/Reg (0 = memory; 1 = register).
+
+        - bit: 15-17
+          name: SEGMENT_REGISTER
+          short_description: Segment register
+          long_description: |
+            0: ES
+
+            1: CS
+
+            2: SS
+
+            3: DS
+
+            4: FS
+
+            5: GS
+
+            Other values not used. Undefined for register instructions (bit 10 is set).
+
+        - bit: 18-21
+          short_name: INDEX_REG
+          long_name: GP_REGISTER
+          alternative_name: GENERAL_PURPOSE_REGISTER
+          description: |
+            General-purpose register. Undefined for register instructions (bit 10 is set) and for
+            memory instructions with no index register (bit 10 is clear and bit 22 is set).
+
+        - bit: 22
+          short_name: INDEX_REG_INVALID
+          long_name: GP_REGISTER_INVALID
+          alternative_name: GENERAL_PURPOSE_REGISTER_INVALID
+          description: IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set).
+
+        - bit: 23-26
+          short_name: BASE_REG
+          long_name: BASE_REGISTER
+          alternative_name: BASE_REGISTER
+          description: |
+            BaseReg (encoded as Reg1 above).
+            Undefined for register instructions (bit 10 is set) and for memory instructions with no base
+            register (bit 10 is clear and bit 27 is set).
+
+        - bit: 27
+          short_name: BASE_REG_INVALID
+          long_name: BASE_REGISTER_INVALID
+          alternative_name: BASE_REGISTER_INVALID
+          description: BaseReg invalid (0 = valid; 1 = invalid).
+
+        - bit: 28-31
+          short_name: REG_2
+          long_name: REGISTER_2
+          alternative_name: REGISTER_2
+          description: Reg2 (same encoding as IndexReg above).
+
     - name: SEGMENT_ACCESS_RIGHTS
       description: |
         - The low 16 bits correspond to bits 23:8 of the upper 32 bits of a 64-bit segment descriptor. While bits
@@ -1312,6 +1826,52 @@
   #
   # Without VMX prefix.
   #
+  - name: VMX_IO_BITMAP
+    type: struct
+    size: 8192
+    fields:
+    - value: 0x00000000
+      name: IO_BITMAP_A_MIN
+    - value: 0x00007fff
+      name: IO_BITMAP_A_MAX
+    - value: 0x00008000
+      name: IO_BITMAP_B_MIN
+    - value: 0x0000ffff
+      name: IO_BITMAP_B_MAX
+    - size: 4096
+      short_name: A
+      long_name: IO_A
+
+    - size: 4096
+      short_name: B
+      long_name: IO_B
+
+  - name: VMX_MSR_BITMAP
+    type: struct
+    size: 4096
+    fields:
+    - value: 0x00000000
+      name: MSR_ID_LOW_MIN
+    - value: 0x00001fff
+      name: MSR_ID_LOW_MAX
+    - value: 0xc0000000
+      name: MSR_ID_HIGH_MIN
+    - value: 0xc0001fff
+      name: MSR_ID_HIGH_MAX
+
+    - size: 1024
+      name: RDMSR_LOW
+
+    - size: 1024
+      name: RDMSR_HIGH
+
+    - size: 1024
+      name: WRMSR_LOW
+
+    - size: 1024
+      name: WRMSR_HIGH
+
   include:
   - EPT
   - VMCS
+  - Interrupt

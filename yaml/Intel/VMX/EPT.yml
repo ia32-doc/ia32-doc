@@ -531,7 +531,7 @@
     fields:
     - value: 512
       short_name: EPML4_ENTRY_COUNT
-      long_name: EPT_PML4_ENTRY_COUNT
+      long_name: EPT_PML4E_ENTRY_COUNT
 
     - value: 512
       short_name: EPDPTE_ENTRY_COUNT
@@ -541,71 +541,67 @@
       short_name: EPDE_ENTRY_COUNT
       long_name: EPT_PDE_ENTRY_COUNT
 
-  - name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
-    short_description: EPT memory type.
-    long_description: |
-      The effective memory type of a memory access using a guest-physical address (an access that is translated
-      using EPT) is the memory type that is used to access memory. The effective memory type is based on the value of
-      bit 30 (cache disable—CD) in control register CR0; the last EPT paging-structure entry used to translate the guestphysical
-      address (either an EPT PDE with bit 7 set to 1 or an EPT PTE); and the PAT memory type (see below):
-
-      - The PAT memory type depends on the value of CR0.PG:
-
-        * If CR0.PG = 0, the PAT memory type is WB (writeback).
-
-        * If CR0.PG = 1, the PAT memory type is the memory type selected from the IA32_PAT MSR.
-
-      - The EPT memory type is specified in bits 5:3 of the last EPT paging-structure entry: 0 = UC; 1 = WC; 4 =
-        WT; 5 = WP; and 6 = WB. Other values are reserved and cause EPT misconfigurations.
-
-      - If CR0.CD = 0, the effective memory type depends upon the value of bit 6 of the last EPT paging-structure
-        entry:
-
-        * If the value is 0, the effective memory type is the combination of the EPT memory type and the PAT
-          memory type, using the EPT memory type in place of the MTRR
-          memory type.
-
-        * If the value is 1, the memory type used for the access is the EPT memory type. The PAT memory type is
-          ignored.
-
-      - If CR0.CD = 1, the effective memory type is UC.
-
-        The MTRRs have no effect on the memory type used for an access to a guest-physical address.
-    children_name_with_prefix: EPT_MEMORY_TYPE
-    type: group
-    see:
-    - MemoryType.yml
-    - Vol3A[11.5.2.2(Selecting Memory Types for Pentium III and More Recent Processor Families)]
-    - Vol3A[11.12.3(Selecting a Memory Type from the PAT)]
-    - Vol3C[28.2.3(EPT-Induced VM Exits)]
-    reference: Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
-    fields:
-    - value: 0
-      short_name: UC
-      long_name: UNCACHEABLE
-
-    - value: 1
-      short_name: WC
-      long_name: WRITE_COMBINING
-
-    - value: 4
-      short_name: WT
-      long_name: WRITE_THROUGH
-
-    - value: 5
-      short_name: WP
-      long_name: WRITE_PROTECTED
-
-    - value: 6
-      short_name: WB
-      long_name: WRITE_BACK
-
-    - value: 7
-      name: UNCACHED
-      todo: Source???
-
-    - value: 0xFF
-      name: INVALID
+#  - name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
+#    short_description: EPT memory type.
+#    long_description: |
+#      The effective memory type of a memory access using a guest-physical address (an access that is translated
+#      using EPT) is the memory type that is used to access memory. The effective memory type is based on the value of
+#      bit 30 (cache disable—CD) in control register CR0; the last EPT paging-structure entry used to translate the guestphysical
+#      address (either an EPT PDE with bit 7 set to 1 or an EPT PTE); and the PAT memory type (see below):
+#
+#      - The PAT memory type depends on the value of CR0.PG:
+#
+#        * If CR0.PG = 0, the PAT memory type is WB (writeback).
+#
+#        * If CR0.PG = 1, the PAT memory type is the memory type selected from the IA32_PAT MSR.
+#
+#      - The EPT memory type is specified in bits 5:3 of the last EPT paging-structure entry: 0 = UC; 1 = WC; 4 =
+#        WT; 5 = WP; and 6 = WB. Other values are reserved and cause EPT misconfigurations.
+#
+#      - If CR0.CD = 0, the effective memory type depends upon the value of bit 6 of the last EPT paging-structure
+#        entry:
+#
+#        * If the value is 0, the effective memory type is the combination of the EPT memory type and the PAT
+#          memory type, using the EPT memory type in place of the MTRR
+#          memory type.
+#
+#        * If the value is 1, the memory type used for the access is the EPT memory type. The PAT memory type is
+#          ignored.
+#
+#      - If CR0.CD = 1, the effective memory type is UC.
+#
+#        The MTRRs have no effect on the memory type used for an access to a guest-physical address.
+#    children_name_with_prefix: EPT_MEMORY_TYPE
+#    type: enum
+#    see:
+#    - MemoryType.yml
+#    - Vol3A[11.5.2.2(Selecting Memory Types for Pentium III and More Recent Processor Families)]
+#    - Vol3A[11.12.3(Selecting a Memory Type from the PAT)]
+#    - Vol3C[28.2.3(EPT-Induced VM Exits)]
+#    reference: Vol3A[11.11(MEMORY TYPE RANGE REGISTERS (MTRRS))]
+#    fields:
+#    - value: 0
+#      short_name: UC
+#      long_name: UNCACHEABLE
+#
+#    - value: 1
+#      short_name: WC
+#      long_name: WRITE_COMBINING
+#
+#    - value: 4
+#      short_name: WT
+#      long_name: WRITE_THROUGH
+#
+#    - value: 5
+#      short_name: WP
+#      long_name: WRITE_PROTECTED
+#
+#    - value: 6
+#      short_name: WB
+#      long_name: WRITE_BACK
+#
+#    - value: 0xFF
+#      name: INVALID
 
 #
 # Not in EPT group.

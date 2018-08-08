@@ -8,7 +8,7 @@ ALL = False
 
 TEST = False
 TEST_CONFIG = 'conf/default.yml'
-TEST_FILE = 'yaml/Intel/VMX/VMCS.yml'
+TEST_FILE = 'yaml/Intel/VMX/index.yml'
 
 
 def process(config, file):
@@ -21,6 +21,7 @@ def process(config, file):
 def process_all():
     index = 'yaml/Intel/index.yml'
     process('conf/default.yml', index)
+    process('conf/default_cpp.yml', index)
     process('conf/compact.yml', index)
     process('conf/defines_only.yml', index)
 

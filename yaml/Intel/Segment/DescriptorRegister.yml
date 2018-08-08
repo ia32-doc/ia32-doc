@@ -1,5 +1,4 @@
-- short_name: DESCRIPTOR_32
-  long_name: DESCRIPTOR_32
+- name: DESCRIPTOR_REGISTER_32
   description: Pseudo-Descriptor Format (32-bit).
   type: struct
   tag: Packed
@@ -16,8 +15,7 @@
     long_name: BASE_ADDRESS
     description: Base Address.
 
-- short_name: DESCRIPTOR_64
-  long_name: DESCRIPTOR_64
+- name: DESCRIPTOR_REGISTER_64
   description: Pseudo-Descriptor Format (64-bit).
   type: struct
   tag: Packed

@@ -52,17 +52,16 @@
   - name: EBX
     alternative_name: ADDITIONAL_INFORMATION
     description: When CPUID executes with EAX set to 01H, additional information is returned to the EBX register.
-    type: struct
-    alternative_type: Bitfield
+    type: bitfield
     size: 32
     fields:
-    - size: 8
+    - bit: 0-7
       name: BRAND_INDEX
       description: |
         This number provides an entry into a brand string table that contains brand
         strings for IA-32 processors. More information about this field is provided later in this section.
 
-    - size: 8
+    - bit: 8-15
       name: CLFLUSH_LINE_SIZE
       short_description: Value ∗ 8 = cache line size in bytes; used also by CLFLUSHOPT
       long_description: |
@@ -70,7 +69,7 @@
         flushed by the CLFLUSH and CLFLUSHOPT instructions in 8-byte increments. This field was introduced in the
         Pentium 4 processor.
 
-    - size: 8
+    - bit: 16-23
       name: MAX_ADDRESSABLE_IDS
       description: |
         Maximum number of addressable IDs for logical processors in this physical package.
@@ -79,7 +78,7 @@
         IDs reserved for addressing different logical processors in a physical package. This field is only valid if
         CPUID.1.EDX.HTT[bit 28] = 1.
 
-    - size: 8
+    - bit: 24-31
       name: INITIAL_APIC_ID
       description: |
         This number is the 8-bit ID that is assigned to the local APIC on the

@@ -14,7 +14,7 @@ group_defgroup: true
 
 definition_no_indent: true
 
-bitfield_create_struct: false
+bitfield_create_struct: true
 bitfield_field_reserved_prefix: 'reserved_'
 bitfield_field_with_define_flag_suffix: ''
 # bitfield_field_with_defines: false

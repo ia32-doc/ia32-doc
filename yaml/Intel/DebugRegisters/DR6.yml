@@ -1,0 +1,54 @@
+- name: DR6
+  type: bitfield
+  size: 64
+  reference: Vol3B[17.2.3(Debug Control Register (DR6)]
+  fields:
+  - bit: 0-3
+    name: BREAKPOINT_CONDITION
+    short_description: B0 through B3 (breakpoint condition detected) flags
+    long_description: |
+      Indicates (when set) that its
+      associated breakpoint condition was met when a debug exception was generated. These flags are set if the
+      condition described for each breakpoint by the LENn, and R/Wn flags in debug control register DR7 is true. They
+      may or may not be set if the breakpoint is not enabled by the Ln or the Gn flags in register DR7. Therefore on
+      a #DB, a debug handler should check only those B0-B3 bits which correspond to an enabled breakpoint.
+
+  - bit: 13
+    short_name: BD
+    long_name: DEBUG_REGISTER_ACCESS_DETECTED
+    short_description: BD (debug register access detected) flag
+    long_description: |
+      Indicates that the next instruction in the instruction
+      stream accesses one of the debug registers (DR0 through DR7). This flag is enabled when the GD (general
+      detect) flag in debug control register DR7 is set.
+    see: Vol3B[17.2.4(Debug Control Register (DR7))]
+
+  - bit: 14
+    short_name: BS
+    long_name: SINGLE_INSTRUCTION
+    short_description: BS (single step) flag
+    long_description: |
+      Indicates (when set) that the debug exception was triggered by the singlestep
+      execution mode (enabled with the TF flag in the EFLAGS register). The single-step mode is the highestpriority
+      debug exception. When the BS flag is set, any of the other debug status bits also may be set.
+
+  - bit: 15
+    short_name: BT
+    long_name: TASK_SWITCH
+    short_description: BT (task switch) flag
+    long_description: |
+      Indicates (when set) that the debug exception was triggered by the singlestep
+      execution mode (enabled with the TF flag in the EFLAGS register). The single-step mode is the highestpriority
+      debug exception. When the BS flag is set, any of the other debug status bits also may be set.
+
+  - bit: 16
+    short_name: RTM
+    long_name: RESTRICTED_TRANSACTIONAL_MEMORY
+    short_description: RTM (restricted transactional memory) flag
+    long_description: |
+      Indicates (when clear) that a debug exception
+      (#DB) or breakpoint exception (#BP) occurred inside an RTM region while advanced debugging of RTM transactional
+      regions was enabled. This bit is set for any other debug exception (including all
+      those that occur when advanced debugging of RTM transactional regions is not enabled). This bit is always 1 if
+      the processor does not support RTM.
+    see: Vol3B[17.3.3(Debug Exceptions, Breakpoint Exceptions, and Restricted Transactional Memory (RTM))]

@@ -1,0 +1,113 @@
+- short_name: INTERRUPT_TYPE
+  long_name: INTERRUPTION_TYPE
+  description: Valid interruption types.
+  type: enum
+  fields:
+  - value: 0
+    short_name: EXTERNAL
+    long_name: EXTERNAL_INTERRUPT
+    description: |
+      External interrupt.
+
+  - value: 2
+    short_name: NMI
+    long_name: NON_MASKABLE_INTERRUPT
+    description: |
+      Non-maskable interrupt (NMI).
+
+  - value: 3
+    short_name: HARDWARE_EXCEPTION
+    long_name: HARDWARE_EXCEPTION
+    description: |
+      Hardware exception (e.g,. #PF).
+
+  - value: 4
+    short_name: SOFTWARE
+    long_name: SOFTWARE_INTERRUPT
+    description: |
+      Software interrupt (INT n).
+
+  - value: 5
+    short_name: PRIVILEGED_EXCEPTION
+    long_name: PRIVILEGED_SOFTWARE_EXCEPTION
+    description: |
+      Privileged software exception (INT1).
+
+  - value: 6
+    short_name: SOFTWARE_EXCEPTION
+    long_name: SOFTWARE_EXCEPTION
+    description: |
+      Software exception (INT3 or INTO).
+
+  - value: 7
+    short_name: OTHER
+    long_name: OTHER_EVENT
+    description: |
+      Other event. This type is used for injection of events that are not delivered through the IDT.
+
+- short_name: VMENTRY_INTERRUPT_INFO
+  long_name: VMENTRY_INTERRUPT_INFORMATION
+  description: |
+    VM entry can be configured to conclude by delivering an event through the IDT (after all guest state and MSRs have
+    been loaded). This process is called event injection and is controlled by these VM-entry control
+    fields.
+  type: bitfield
+  size: 32
+  reference: Vol3A[24.8.3(VM-Entry Controls for Event Injection)]
+  fields:
+  - bit: 0-7
+    name: VECTOR
+    short_description: Vector of interrupt or exception
+    long_description: |
+      Determines which entry in the IDT is used or which other event is injected.
+
+  - bit: 8-10
+    short_name: TYPE
+    long_name: INTERRUPTION_TYPE
+    short_description: Interruption type
+    long_description: |
+      Determines details of how the injection is performed.
+
+  - bit: 11
+    name: DELIVER_ERROR_CODE
+    short_description: Deliver error code (0 = do not deliver; 1 = deliver)
+    long_description: |
+      Determines whether delivery pushes an error code on the guest stack.
+
+  - bit: 31
+    name: VALID
+    short_description: Valid
+    long_description: |
+      VM entry injects an event if and only if the valid bit is 1. The valid bit in this field is cleared on every
+      VM exit.
+
+- short_name: VMEXIT_INTERRUPT_INFO
+  long_name: VMEXIT_INTERRUPT_INFORMATION
+  description: |
+    VM entry can be configured to conclude by delivering an event through the IDT (after all guest state and MSRs have
+    been loaded). This process is called event injection and is controlled by these VM-entry control
+    fields.
+  type: bitfield
+  size: 32
+  reference: Vol3A[24.9.2(Information for VM Exits Due to Vectored Events)]
+  fields:
+  - bit: 0-7
+    name: VECTOR
+    description: Vector of interrupt or exception.
+
+  - bit: 8-10
+    short_name: TYPE
+    long_name: INTERRUPTION_TYPE
+    description: Interruption type.
+
+  - bit: 11
+    name: ERROR_CODE_VALID
+    description: Deliver error code (0 = do not deliver; 1 = deliver).
+
+  - bit: 12
+    name: NMI_UNBLOCKING
+    description: NMI unblocking due to IRET.
+
+  - bit: 31
+    name: VALID
+    description: Valid.

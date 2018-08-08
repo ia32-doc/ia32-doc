@@ -1,5 +1,4 @@
-- short_name: SEGMENT_ACCESS_RIGHTS
-  long_name: SEGMENT_ACCESS_RIGHTS
+- name: ACCESS_RIGHTS
   description: Segment access rights.
   type: bitfield
   size: 32
@@ -114,8 +113,7 @@
 #
 
 
-- short_name: SEGMENT_DESCRIPTOR_32
-  long_name: SEGMENT_DESCRIPTOR_32
+- name: DESCRIPTOR_32
   short_description: General Segment Descriptor (32-bit)
   long_description: |
     A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of
@@ -176,8 +174,7 @@
 
   - size: 32
     type: bitfield
-    short_name: BITS
-    long_name: BITS
+    name: ''
     description: Segment descriptor fields.
     fields:
     - bit: 0-7
@@ -304,8 +301,7 @@
 # Copy-paste of SEGMENT_DESCRIPTOR_32 + BASE_UPPER + MUST_BE_ZERO
 #
 
-- short_name: SEGMENT_DESCRIPTOR_64
-  long_name: SEGMENT_DESCRIPTOR_64
+- name: DESCRIPTOR_64
   short_description: General Segment Descriptor (64-bit)
   long_description: |
     A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of
@@ -357,8 +353,7 @@
 
   - size: 32
     type: bitfield
-    short_name: BITS
-    long_name: BITS
+    name: ''
     description: Segment descriptor fields.
     fields:
     - bit: 0-7
@@ -492,3 +487,14 @@
     long_name: MUST_BE_ZERO
     description: |
       Base address field (32:63); see description of $BASE_LOW for more details.
+
+
+#
+# DESCRIPTOR_TYPE values.
+#
+
+- value: 0
+  name: DESCRIPTOR_TYPE_SYSTEM
+
+- value: 1
+  name: DESCRIPTOR_TYPE_CODE_OR_DATA

@@ -81,16 +81,16 @@ class DocProcessor(object):
     def process_enum_field(self, doc: DocEnumField) -> None:
         pass
 
-    def process_bitfield(self, doc: DocBitfield) -> None:
-        pass
-
-    def process_bitfield_field(self, doc: DocBitfieldField) -> None:
-        pass
-
     def process_struct(self, doc: DocStruct) -> None:
         pass
 
     def process_struct_field(self, doc: DocStructField) -> None:
+        pass
+
+    def process_bitfield(self, doc: DocBitfield) -> None:
+        pass
+
+    def process_bitfield_field(self, doc: DocBitfieldField) -> None:
         pass
 
     @staticmethod

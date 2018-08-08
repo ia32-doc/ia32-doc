@@ -1,0 +1,202 @@
+- name: EXCEPTION_VECTOR
+  description: |
+    Exceptions that can occur when the instruction is executed in protected mode.
+
+    Each exception is given a mnemonic that consists of a pound
+    sign (#) followed by two letters and an optional error code in parentheses. For example, #GP(0) denotes a general
+    protection exception with an error code of 0.
+  type: enum
+  reference:
+  - Vol2A[3.1.1.13(Protected Mode Exceptions Section)]
+  - Vol3A[6.3.1(External Interrupts)]
+  fields:
+  - value: 0
+    short_name: DE
+    long_name: DIVIDE_ERROR
+    description: |
+      #DE - Divide Error.
+
+      Source: DIV and IDIV instructions.
+
+      Error Code: No.
+
+  - value: 1
+    short_name: DB
+    long_name: DEBUG
+    description: |
+      #DB - Debug.
+
+      Source: Any code or data reference.
+
+      Error Code: No.
+
+  - value: 3
+    short_name: BP
+    long_name: BREAKPOINT
+    description: |
+      #BP - Breakpoint.
+
+      Source: INT3 instruction.
+
+      Error Code: No.
+
+  - value: 4
+    short_name: OF
+    long_name: OVERFLOW
+    description: |
+      #OF - Overflow.
+
+      Source: INTO instruction.
+
+      Error Code: No.
+
+  - value: 5
+    short_name: BR
+    long_name: BOUND_RANGE_EXCEEDED
+    description: |
+      #BR - BOUND Range Exceeded.
+
+      Source: BOUND instruction.
+
+      Error Code: No.
+
+  - value: 6
+    short_name: UD
+    long_name: INVALID_OPCODE
+    description: |
+      #UD - Invalid Opcode (Undefined Opcode).
+
+      Source: UD instruction or reserved opcode.
+
+      Error Code: No.
+
+  - value: 7
+    short_name: NM
+    long_name: DEVICE_NOT_AVAILABLE
+    description: |
+      #NM - Device Not Available (No Math Coprocessor).
+
+      Source: Floating-point or WAIT/FWAIT instruction.
+
+      Error Code: No.
+
+  - value: 8
+    short_name: DF
+    long_name: DOUBLE_FAULT
+    description: |
+      #DF - Double Fault.
+
+      Source: Any instruction that can generate an exception, an NMI, or an INTR.
+
+      Error Code: Yes (zero).
+
+  - value: 9
+    short_name: CO
+    long_name: COPROCESSOR_SEGMENT_OVERRUN
+    description: |
+      ### - Coprocessor Segment Overrun (reserved).
+
+      Source: Floating-point instruction.
+
+      Error Code: No.
+    note: Processors after the Intel386 processor do not generate this exception.
+
+  - value: 10
+    short_name: TS
+    long_name: INVALID_TSS
+    description: |
+      #TS - Invalid TSS.
+
+      Source: Task switch or TSS access.
+
+      Error Code: Yes.
+
+  - value: 11
+    short_name: NP
+    long_name: SEGMENT_NOT_PRESENT
+    description: |
+      #NP - Segment Not Present.
+
+      Source: Loading segment registers or accessing system segments.
+
+      Error Code: Yes.
+
+  - value: 12
+    short_name: SS
+    long_name: STACK_SEGMENT_FAULT
+    description: |
+      #SS - Stack Segment Fault.
+
+      Source: Stack operations and SS register loads.
+
+      Error Code: Yes.
+
+  - value: 13
+    short_name: GP
+    long_name: GENERAL_PROTECTION
+    description: |
+      #GP - General Protection.
+
+      Source: Any memory reference and other protection checks.
+
+      Error Code: Yes.
+
+  - value: 14
+    short_name: PF
+    long_name: PAGE_FAULT
+    description: |
+      #PF - Page Fault.
+
+      Source: Any memory reference.
+
+      Error Code: Yes.
+
+  - value: 16
+    short_name: MF
+    long_name: X87_FLOATING_POINT_ERROR
+    description: |
+      #MF - Floating-Point Error (Math Fault).
+
+      Source: Floating-point or WAIT/FWAIT instruction.
+
+      Error Code: No.
+
+  - value: 17
+    short_name: AC
+    long_name: ALIGNMENT_CHECK
+    description: |
+      #AC - Alignment Check.
+
+      Source: Any data reference in memory.
+
+      Error Code: Yes.
+
+  - value: 18
+    short_name: MC
+    long_name: MACHINE_CHECK
+    description: |
+      #MC - Machine Check.
+
+      Source: Model dependent machine check errors.
+
+      Error Code: No.
+
+  - value: 19
+    short_name: XM
+    long_name: SIMD_FLOATING_POINT_ERROR
+    description: |
+      #XM - SIMD Floating-Point Numeric Error.
+
+      Source: SSE/SSE2/SSE3 floating-point instructions.
+
+      Error Code: No.
+
+  - value: 20
+    short_name: VE
+    long_name: VIRTUALIZATION_EXCEPTION
+    description: |
+      #VE - Virtualization Exception.
+
+      Source: EPT violations.
+
+      Error Code: No.

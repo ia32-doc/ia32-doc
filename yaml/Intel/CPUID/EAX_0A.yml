@@ -10,7 +10,6 @@
 
 - short_name: EAX_0A
   long_name: EAX_0A
-  todo: Can be struct
   type: struct
   fields:
   - name: EAX

@@ -53,10 +53,6 @@
   - value: 5
     short_name: WP
     long_name: WRITE_PROTECTED
-
-  - value: 6
-    short_name: WB
-    long_name: WRITE_BACK
     short_description: Write protected (WP)
     long_description: |
       Reads come from cache lines when possible, and read misses cause cache fills.
@@ -64,9 +60,22 @@
       be invalidated. Speculative reads are allowed. This memory type is available in processor families starting from
       the P6 family processors by programming the MTRRs.
 
-  - value: 7
-    name: UNCACHED
-    todo: Source???
+  - value: 6
+    short_name: WB
+    long_name: WRITE_BACK
+    short_description: Write-back (WB)
+    long_description: |
+      Writes and reads to and from system memory are cached. Reads come from cache lines
+      on cache hits; read misses cause cache fills. Speculative reads are allowed. Write misses cause cache line fills
+      (in processor families starting with the P6 family processors), and writes are performed entirely in the cache,
+      when possible. Write combining is allowed. The write-back memory type reduces bus traffic by eliminating
+      many unnecessary writes to system memory. Writes to a cache line are not immediately forwarded to system
+      memory; instead, they are accumulated in the cache. The modified cache lines are written to system memory
+      later, when a write-back operation is performed. Write-back operations are triggered when cache lines need to
+      be deallocated, such as when new cache lines are being allocated in a cache that is already full. They also are
+      triggered by the mechanisms used to maintain cache consistency. This type of cache-control provides the best
+      performance, but it requires that all devices that access system memory on the system bus be able to snoop
+      memory accesses to insure system memory and cache coherency.
 
   - value: 0xFF
     name: INVALID

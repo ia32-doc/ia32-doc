@@ -1,5 +1,5 @@
 - name: PAGING_64
-  short_description: 64-Bit (4-Level Paging)
+  short_description: 64-Bit (4-Level) Paging
   long_description: |
     A logical processor uses 4-level paging if CR0.PG = 1, CR4.PAE = 1, and IA32_EFER.LME = 1. With 4-level paging,
     linear address are translated using a hierarchy of in-memory paging structures located using the contents of CR3.
