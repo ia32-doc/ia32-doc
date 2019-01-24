@@ -2378,7 +2378,7 @@ typedef union {
  * @}
  */
 
-#define IA32_MTRR_FIX_COUNT                                          (1 + 2 + 8)
+#define IA32_MTRR_FIX_COUNT                                          ((1 + 2 + 8) * 8)
 #define IA32_MTRR_VARIABLE_COUNT                                     0x000000FF
 #define IA32_MTRR_COUNT                                              (IA32_MTRR_FIX_COUNT + IA32_MTRR_VARIABLE_COUNT)
 /**

@@ -8776,7 +8776,7 @@ typedef union
 /**
  * Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k).
  */
-#define IA32_MTRR_FIX_COUNT                                          (1 + 2 + 8)
+#define IA32_MTRR_FIX_COUNT                                          ((1 + 2 + 8) * 8)
 
 /**
  * Architecture defined number of variable range MTRRs.

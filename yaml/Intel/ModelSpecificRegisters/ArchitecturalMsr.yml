@@ -1830,7 +1830,7 @@
     description: |
       Architecture defined number of fixed range MTRRs (1 for 64k, 2 for 16k, 8 for 4k).
     tag: Custom
-    value: (1 + 2 + 8)
+    value: ((1 + 2 + 8) * 8)
 
   - name: MTRR_VARIABLE_COUNT
     description: |
