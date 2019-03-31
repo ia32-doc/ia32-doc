@@ -17974,8 +17974,8 @@ typedef struct
 #define IO_BITMAP_A_MAX                                              0x00007FFF
 #define IO_BITMAP_B_MIN                                              0x00008000
 #define IO_BITMAP_B_MAX                                              0x0000FFFF
-  UINT8 IoA[512];
-  UINT8 IoB[512];
+  UINT8 IoA[4096];
+  UINT8 IoB[4096];
 } VMX_IO_BITMAP;
 
 typedef struct
@@ -17984,10 +17984,10 @@ typedef struct
 #define MSR_ID_LOW_MAX                                               0x00001FFF
 #define MSR_ID_HIGH_MIN                                              0xC0000000
 #define MSR_ID_HIGH_MAX                                              0xC0001FFF
-  UINT8 RdmsrLow[128];
-  UINT8 RdmsrHigh[128];
-  UINT8 WrmsrLow[128];
-  UINT8 WrmsrHigh[128];
+  UINT8 RdmsrLow[1024];
+  UINT8 RdmsrHigh[1024];
+  UINT8 WrmsrLow[1024];
+  UINT8 WrmsrHigh[1024];
 } VMX_MSR_BITMAP;
 
 /**

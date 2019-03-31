@@ -365,7 +365,7 @@
 - name: MSEG_HEADER
   todo: More description
   type: struct
-  size: 2048
+  size: 16384           # 2 kb
   reference: Vol3C[34.15.5(Enabling the Dual-Monitor Treatment)]
   fields:
   - size: 32

@@ -1828,7 +1828,7 @@
   #
   - name: VMX_IO_BITMAP
     type: struct
-    size: 8192
+    size: 65536         # 8 kb
     fields:
     - value: 0x00000000
       name: IO_BITMAP_A_MIN
@@ -1838,17 +1838,17 @@
       name: IO_BITMAP_B_MIN
     - value: 0x0000ffff
       name: IO_BITMAP_B_MAX
-    - size: 4096
+    - size: 32768       # 4 kb
       short_name: A
       long_name: IO_A
 
-    - size: 4096
+    - size: 32768       # 4 kb
       short_name: B
       long_name: IO_B
 
   - name: VMX_MSR_BITMAP
     type: struct
-    size: 4096
+    size: 32768         # 4 kb
     fields:
     - value: 0x00000000
       name: MSR_ID_LOW_MIN
@@ -1859,16 +1859,16 @@
     - value: 0xc0001fff
       name: MSR_ID_HIGH_MAX
 
-    - size: 1024
+    - size: 8192        # 1 kb
       name: RDMSR_LOW
 
-    - size: 1024
+    - size: 8192        # 1 kb
       name: RDMSR_HIGH
 
-    - size: 1024
+    - size: 8192        # 1 kb
       name: WRMSR_LOW
 
-    - size: 1024
+    - size: 8192        # 1 kb
       name: WRMSR_HIGH
 
   include:

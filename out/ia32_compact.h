@@ -4308,8 +4308,8 @@ typedef struct {
 #define IO_BITMAP_A_MAX                                              0x00007FFF
 #define IO_BITMAP_B_MIN                                              0x00008000
 #define IO_BITMAP_B_MAX                                              0x0000FFFF
-  uint8_t io_a[512];
-  uint8_t io_b[512];
+  uint8_t io_a[4096];
+  uint8_t io_b[4096];
 } vmx_io_bitmap;
 
 typedef struct {
@@ -4317,10 +4317,10 @@ typedef struct {
 #define MSR_ID_LOW_MAX                                               0x00001FFF
 #define MSR_ID_HIGH_MIN                                              0xC0000000
 #define MSR_ID_HIGH_MAX                                              0xC0001FFF
-  uint8_t rdmsr_low[128];
-  uint8_t rdmsr_high[128];
-  uint8_t wrmsr_low[128];
-  uint8_t wrmsr_high[128];
+  uint8_t rdmsr_low[1024];
+  uint8_t rdmsr_high[1024];
+  uint8_t wrmsr_low[1024];
+  uint8_t wrmsr_high[1024];
 } vmx_msr_bitmap;
 
 /**
