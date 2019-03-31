@@ -320,10 +320,10 @@
       see: Vol3A[4.9.2(Paging and Memory Typing When the PAT is Supported (Pentium III and More Recent Processor Families))]
       note: The PAT is supported on all processors that support 4-level paging.
 
-    - bit: 30-(MAXPHYADDR-1)
+    - bit: 21-(MAXPHYADDR-1)
       short_name: PFN
       long_name: PAGE_FRAME_NUMBER
-      description: Physical address of the 1-GByte page referenced by this entry.
+      description: Physical address of the 2-MByte page referenced by this entry.
 
     - bit: 52-58
       name: IGNORED_2
@@ -338,7 +338,7 @@
       short_name: XD
       long_name: EXECUTE_DISABLE
       description: |
-        If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page
+        If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 2-MByte page
         controlled by this entry); otherwise, reserved (must be 0).
       see: Vol3A[4.6(Access Rights)]
 

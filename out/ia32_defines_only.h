@@ -4652,9 +4652,9 @@ typedef union {
 #define PDE_2MB_64_IGNORED_1                                         0xE00
     uint64_t pat                                                     : 1;
 #define PDE_2MB_64_PAT                                               0x1000
-    uint64_t reserved_1                                              : 17;
-    uint64_t page_frame_number                                       : 18;
-#define PDE_2MB_64_PAGE_FRAME_NUMBER                                 0xFFFFC0000000
+    uint64_t reserved_1                                              : 8;
+    uint64_t page_frame_number                                       : 27;
+#define PDE_2MB_64_PAGE_FRAME_NUMBER                                 0xFFFFFFE00000
     uint64_t reserved_2                                              : 4;
     uint64_t ignored_2                                               : 7;
 #define PDE_2MB_64_IGNORED_2                                         0x7F0000000000000

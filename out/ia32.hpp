@@ -14527,16 +14527,16 @@ typedef union
 #define PDE_2MB_64_PAT_FLAG                                          0x1000
 #define PDE_2MB_64_PAT_MASK                                          0x01
 #define PDE_2MB_64_PAT(_)                                            (((_) >> 12) & 0x01)
-    uint64_t reserved1                                               : 17;
+    uint64_t reserved1                                               : 8;
 
     /**
-     * [Bits 47:30] Physical address of the 1-GByte page referenced by this entry.
+     * [Bits 47:21] Physical address of the 2-MByte page referenced by this entry.
      */
-    uint64_t page_frame_number                                       : 18;
-#define PDE_2MB_64_PAGE_FRAME_NUMBER_BIT                             30
-#define PDE_2MB_64_PAGE_FRAME_NUMBER_FLAG                            0xFFFFC0000000
-#define PDE_2MB_64_PAGE_FRAME_NUMBER_MASK                            0x3FFFF
-#define PDE_2MB_64_PAGE_FRAME_NUMBER(_)                              (((_) >> 30) & 0x3FFFF)
+    uint64_t page_frame_number                                       : 27;
+#define PDE_2MB_64_PAGE_FRAME_NUMBER_BIT                             21
+#define PDE_2MB_64_PAGE_FRAME_NUMBER_FLAG                            0xFFFFFFE00000
+#define PDE_2MB_64_PAGE_FRAME_NUMBER_MASK                            0x7FFFFFF
+#define PDE_2MB_64_PAGE_FRAME_NUMBER(_)                              (((_) >> 21) & 0x7FFFFFF)
     uint64_t reserved2                                               : 4;
 
     /**
@@ -14560,7 +14560,7 @@ typedef union
 #define PDE_2MB_64_PROTECTION_KEY(_)                                 (((_) >> 59) & 0x0F)
 
     /**
-     * [Bit 63] If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 1-GByte page
+     * [Bit 63] If IA32_EFER.NXE = 1, execute-disable (if 1, instruction fetches are not allowed from the 2-MByte page
      * controlled by this entry); otherwise, reserved (must be 0).
      *
      * @see Vol3A[4.6(Access Rights)]

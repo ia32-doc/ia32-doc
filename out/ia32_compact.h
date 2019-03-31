@@ -3623,8 +3623,8 @@ typedef union {
     uint64_t global                                                  : 1;
     uint64_t ignored_1                                               : 3;
     uint64_t pat                                                     : 1;
-    uint64_t reserved_1                                              : 17;
-    uint64_t page_frame_number                                       : 18;
+    uint64_t reserved_1                                              : 8;
+    uint64_t page_frame_number                                       : 27;
     uint64_t reserved_2                                              : 4;
     uint64_t ignored_2                                               : 7;
     uint64_t protection_key                                          : 4;
