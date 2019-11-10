@@ -4303,6 +4303,21 @@ typedef enum {
  * @}
  */
 
+typedef union {
+  struct {
+    uint32_t basic_exit_reason                                       : 16;
+    uint32_t always0                                                 : 1;
+    uint32_t reserved1                                               : 10;
+    uint32_t enclave_mode                                            : 1;
+    uint32_t pending_mtf_vm_exit                                     : 1;
+    uint32_t vm_exit_from_vmx_roor                                   : 1;
+    uint32_t reserved2                                               : 1;
+    uint32_t vm_entry_failure                                        : 1;
+  };
+
+  uint32_t flags;
+} vmx_vmexit_reason;
+
 typedef struct {
 #define IO_BITMAP_A_MIN                                              0x00000000
 #define IO_BITMAP_A_MAX                                              0x00007FFF
@@ -4528,6 +4543,11 @@ typedef struct {
   uint8_t data[4088];
 } vmcs;
 
+typedef struct {
+  uint32_t revision_id;
+  uint8_t data[4092];
+} vmxon;
+
 /**
  * @defgroup vmcs_fields \
  *           VMCS (VM Control Structure)
@@ -4664,6 +4684,8 @@ typedef union {
 #define VMCS_GUEST_PDPTE1                                            0x0000280C
 #define VMCS_GUEST_PDPTE2                                            0x0000280E
 #define VMCS_GUEST_PDPTE3                                            0x00002810
+#define VMCS_GUEST_BNDCFGS                                           0x00002812
+#define VMCS_GUEST_RTIT_CTL                                          0x00002814
 /**
  * @}
  */
@@ -4770,7 +4792,7 @@ typedef union {
  *           32-Bit Host-State Field
  * @{
  */
-#define VMCS_SYSENTER_CS                                             0x00004C00
+#define VMCS_HOST_SYSENTER_CS                                        0x00004C00
 /**
  * @}
  */
@@ -4997,6 +5019,34 @@ typedef union {
 
   uint32_t flags;
 } efl;
+
+typedef union {
+  struct {
+    uint64_t carry_flag                                              : 1;
+    uint64_t read_as_1                                               : 1;
+    uint64_t parity_flag                                             : 1;
+    uint64_t reserved_1                                              : 1;
+    uint64_t auxiliary_carry_flag                                    : 1;
+    uint64_t reserved_2                                              : 1;
+    uint64_t zero_flag                                               : 1;
+    uint64_t sign_flag                                               : 1;
+    uint64_t trap_flag                                               : 1;
+    uint64_t interrupt_enable_flag                                   : 1;
+    uint64_t direction_flag                                          : 1;
+    uint64_t overflow_flag                                           : 1;
+    uint64_t io_privilege_level                                      : 2;
+    uint64_t nested_task_flag                                        : 1;
+    uint64_t reserved_3                                              : 1;
+    uint64_t resume_flag                                             : 1;
+    uint64_t virtual_8086_mode_flag                                  : 1;
+    uint64_t alignment_check_flag                                    : 1;
+    uint64_t virtual_interrupt_flag                                  : 1;
+    uint64_t virtual_interrupt_pending_flag                          : 1;
+    uint64_t identification_flag                                     : 1;
+  };
+
+  uint64_t flags;
+} rfl;
 
 /**
  * @defgroup exceptions \
