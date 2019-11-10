@@ -739,6 +739,7 @@
 
       - name: 32_BIT_HOST_STATE_FIELDS
         description: 32-Bit Host-State Field.
+        children_name_with_prefix: HOST
         type: group
         fields:
         - value: 0x4C00
