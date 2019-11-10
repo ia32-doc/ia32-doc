@@ -441,6 +441,16 @@
           long_name: PDPTE3
           description: Guest PDPTE3.
 
+        - value: 0x2812
+          short_name: BNDCFGS
+          long_name: BNDCFGS
+          description: Guest IA32_BNDCFGS.
+
+        - value: 0x2814
+          short_name: RTIT_CTL
+          long_name: RTIT_CTL
+          description: Guest IA32_RTIT_CTL.
+
       - name: 64_BIT_HOST_STATE_FIELDS
         description: 64-Bit Host-State Fields.
         children_name_with_prefix: HOST
