@@ -1826,6 +1826,55 @@
   #
   # Without VMX prefix.
   #
+  - name: VMX_VMEXIT_REASON
+    short_description: Format of Exit Reason.
+    long_description: |
+      Exit reason (32 bits). This field encodes the reason for the VM exit and has the structure.
+    reference: Vol3C[24.9.1(Basic VM-Exit Information)]
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-15
+      name: BASIC_EXIT_REASON
+      description: |
+        Provides basic information about the cause of the VM exit (if bit 31 is clear) or of the VM-entry
+        failure (if bit 31 is set).
+
+    - bit: 16
+      name: ALWAYS0
+      description: |
+        Always cleared to 0.
+
+    - bit: 17-26
+      name: RESERVED1
+
+    - bit: 27
+      name: ENCLAVE_MODE
+      description: |
+        A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode.
+
+    - bit: 28
+      name: PENDING_MTF_VM_EXIT
+      description: |
+        Pending MTF VM exit.
+
+    - bit: 29
+      name: VM_EXIT_FROM_VMX_ROOR
+      description: |
+        VM exit from VMX root operation.
+
+    - bit: 30
+      name: RESERVED2
+
+    - bit: 31
+      name: VM_ENTRY_FAILURE
+      description: |
+        VM-entry failure:
+
+          - 0 = true VM exit
+
+          - 1 = VM-entry failure
+
   - name: VMX_IO_BITMAP
     type: struct
     size: 65536         # 8 kb
