@@ -177,3 +177,139 @@
     long_description: |
       The ability of a program to set or clear this flag indicates support for
       the CPUID instruction.
+
+- short_name: RFL
+  long_name: RFLAGS
+  long_description: |
+    The 64-bit RFLAGS register contains a group of status flags, a control flag, and a group of system flags in 64-bit mode.
+
+    The upper 32 bits of RFLAGS register is reserved. The lower 32 bits of RFLAGS is the same as EFLAGS.
+  type: bitfield
+  size: 64
+  reference: Vol1[3.4.3.4(RFLAGS Register in 64-Bit Mode)]
+  see: EFLAGS
+  fields:
+  - bit: 0
+    Category: Status
+    short_name: CF
+    long_name: CARRY_FLAG
+    short_description: Carry flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 1
+    Category:
+    short_name: RA1
+    long_name: READ_AS_1
+    description: Reserved - always 1
+
+  - bit: 2
+    Category: Status
+    short_name: PF
+    long_name: PARITY_FLAG
+    short_description: Parity flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 4
+    Category: Status
+    short_name: AF
+    long_name: AUXILIARY_CARRY_FLAG
+    short_description: Auxiliary Carry flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 6
+    Category: Status
+    short_name: ZF
+    long_name: ZERO_FLAG
+    short_description: Zero flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 7
+    Category: Status
+    short_name: SF
+    long_name: SIGN_FLAG
+    short_description: Sign flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 8
+    Category: System
+    short_name: TF
+    long_name: TRAP_FLAG
+    short_description: Trap flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 9
+    Category: System
+    short_name: IF
+    long_name: INTERRUPT_ENABLE_FLAG
+    short_description: Interrupt enable flag
+    long_description: See the description in EFLAGS.
+  - bit: 10
+    Category: Control
+    short_name: DF
+    long_name: DIRECTION_FLAG
+    short_description: Direction flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 11
+    Category: Status
+    short_name: OF
+    long_name: OVERFLOW_FLAG
+    short_description: Overflow flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 12-13
+    Category: System
+    short_name: IOPL
+    long_name: IO_PRIVILEGE_LEVEL
+    short_description: I/O privilege level field
+    long_description: See the description in EFLAGS.
+
+  - bit: 14
+    Category: System
+    short_name: NT
+    long_name: NESTED_TASK_FLAG
+    short_description: Nested task flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 16
+    Category: System
+    short_name: RF
+    long_name: RESUME_FLAG
+    short_description: Resume flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 17
+    Category: System
+    short_name: VM
+    long_name: VIRTUAL_8086_MODE_FLAG
+    short_description: Virtual-8086 mode flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 18
+    Category: System
+    short_name: AC
+    long_name: ALIGNMENT_CHECK_FLAG
+    short_description: Alignment check (or access control) flag
+    long_description: See the description in EFLAGS.
+    see: Vol3A[4.6(ACCESS RIGHTS)]
+
+  - bit: 19
+    Category: System
+    short_name: VIF
+    long_name: VIRTUAL_INTERRUPT_FLAG
+    short_description: Virtual interrupt flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 20
+    Category: System
+    short_name: VIP
+    long_name: VIRTUAL_INTERRUPT_PENDING_FLAG
+    short_description: Virtual interrupt pending flag
+    long_description: See the description in EFLAGS.
+
+  - bit: 21
+    Category: System
+    short_name: IF
+    long_name: IDENTIFICATION_FLAG
+    short_description: Identification flag
+    long_description: See the description in EFLAGS.
