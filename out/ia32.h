@@ -17968,6 +17968,88 @@ typedef enum
  * @}
  */
 
+/**
+ * @brief Format of Exit Reason
+ *
+ * Exit reason (32 bits). This field encodes the reason for the VM exit and has the structure.
+ *
+ * @see Vol3C[24.9.1(Basic VM-Exit Information)] (reference)
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bits 15:0] Provides basic information about the cause of the VM exit (if bit 31 is clear) or of the VM-entry failure
+     * (if bit 31 is set).
+     */
+    UINT32 BasicExitReason                                         : 16;
+#define VMX_VMEXIT_REASON_BASIC_EXIT_REASON_BIT                      0
+#define VMX_VMEXIT_REASON_BASIC_EXIT_REASON_FLAG                     0xFFFF
+#define VMX_VMEXIT_REASON_BASIC_EXIT_REASON_MASK                     0xFFFF
+#define VMX_VMEXIT_REASON_BASIC_EXIT_REASON(_)                       (((_) >> 0) & 0xFFFF)
+
+    /**
+     * [Bit 16] Always cleared to 0.
+     */
+    UINT32 Always0                                                 : 1;
+#define VMX_VMEXIT_REASON_ALWAYS0_BIT                                16
+#define VMX_VMEXIT_REASON_ALWAYS0_FLAG                               0x10000
+#define VMX_VMEXIT_REASON_ALWAYS0_MASK                               0x01
+#define VMX_VMEXIT_REASON_ALWAYS0(_)                                 (((_) >> 16) & 0x01)
+    UINT32 Reserved1                                               : 10;
+#define VMX_VMEXIT_REASON_RESERVED1_BIT                              17
+#define VMX_VMEXIT_REASON_RESERVED1_FLAG                             0x7FE0000
+#define VMX_VMEXIT_REASON_RESERVED1_MASK                             0x3FF
+#define VMX_VMEXIT_REASON_RESERVED1(_)                               (((_) >> 17) & 0x3FF)
+
+    /**
+     * [Bit 27] A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode.
+     */
+    UINT32 EnclaveMode                                             : 1;
+#define VMX_VMEXIT_REASON_ENCLAVE_MODE_BIT                           27
+#define VMX_VMEXIT_REASON_ENCLAVE_MODE_FLAG                          0x8000000
+#define VMX_VMEXIT_REASON_ENCLAVE_MODE_MASK                          0x01
+#define VMX_VMEXIT_REASON_ENCLAVE_MODE(_)                            (((_) >> 27) & 0x01)
+
+    /**
+     * [Bit 28] Pending MTF VM exit.
+     */
+    UINT32 PendingMtfVmExit                                        : 1;
+#define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT_BIT                    28
+#define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT_FLAG                   0x10000000
+#define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT_MASK                   0x01
+#define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT(_)                     (((_) >> 28) & 0x01)
+
+    /**
+     * [Bit 29] VM exit from VMX root operation.
+     */
+    UINT32 VmExitFromVmxRoor                                       : 1;
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_BIT                  29
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_FLAG                 0x20000000
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_MASK                 0x01
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR(_)                   (((_) >> 29) & 0x01)
+    UINT32 Reserved2                                               : 1;
+#define VMX_VMEXIT_REASON_RESERVED2_BIT                              30
+#define VMX_VMEXIT_REASON_RESERVED2_FLAG                             0x40000000
+#define VMX_VMEXIT_REASON_RESERVED2_MASK                             0x01
+#define VMX_VMEXIT_REASON_RESERVED2(_)                               (((_) >> 30) & 0x01)
+
+    /**
+     * [Bit 31] VM-entry failure:
+     *   - 0 = true VM exit
+     *   - 1 = VM-entry failure
+     */
+    UINT32 VmEntryFailure                                          : 1;
+#define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE_BIT                       31
+#define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE_FLAG                      0x80000000
+#define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE_MASK                      0x01
+#define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE(_)                        (((_) >> 31) & 0x01)
+  };
+
+  UINT32 Flags;
+} VMX_VMEXIT_REASON;
+
 typedef struct
 {
 #define IO_BITMAP_A_MIN                                              0x00000000
@@ -18877,6 +18959,17 @@ typedef struct
   UINT64 LinearAddress;
 } INVVPID_DESCRIPTOR;
 
+/**
+ * @brief Format of the VMCS Region
+ *
+ * A logical processor uses virtual-machine control data structures (VMCSs) while it is in VMX operation. These manage
+ * transitions into and out of VMX non-root operation (VM entries and VM exits) as well as processor behavior in VMX
+ * non-root operation. This structure is manipulated by the new instructions VMCLEAR, VMPTRLD, VMREAD, and VMWRITE.
+ * A VMCS region comprises up to 4-KBytes. The exact size is implementation specific and can be determined by consulting
+ * the VMX capability MSR IA32_VMX_BASIC.
+ *
+ * @see Vol3C[24.2(FORMAT OF THE VMCS REGION)] (reference)
+ */
 typedef struct
 {
   /**
@@ -18918,6 +19011,44 @@ typedef struct
    */
   UINT8 Data[4088];
 } VMCS;
+
+/**
+ * @brief Format of the VMXON Region
+ *
+ * Before executing VMXON, software allocates a region of memory that the logical processor uses to support VMX operation.
+ * This region is called the VMXON region.
+ * A VMXON region comprises up to 4-KBytes. The exact size is implementation specific and can be determined by consulting
+ * the VMX capability MSR IA32_VMX_BASIC.
+ *
+ * @see Vol3C[24.11.5(VMXON Region)] (reference)
+ */
+typedef struct
+{
+  /**
+   * @brief VMCS revision identifier
+   *
+   * Before executing VMXON, software should write the VMCS revision identifier to the VMXON region. (Specifically, it should
+   * write the 31-bit VMCS revision identifier to bits 30:0 of the first 4 bytes of the VMXON region; bit 31 should be
+   * cleared to 0.)
+   *
+   * @see VMCS
+   * @see Vol3C[24.2(FORMAT OF THE VMCS REGION)]
+   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+   */
+  UINT32 RevisionId;
+
+  /**
+   * @brief VMXON data (implementation-specific format)
+   *
+   * The format of these data is implementation-specific. To ensure proper behavior in VMX operation, software should not
+   * access or modify the VMXON region of a logical processor between execution of VMXON and VMXOFF on that logical
+   * processor. Doing otherwise may lead to unpredictable behavior.
+   *
+   * @see Vol3C[24.11.4(Software Access to Related Structures)]
+   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+   */
+  UINT8 Data[4092];
+} VMXON;
 
 /**
  * @defgroup VMCS_FIELDS \
@@ -19358,6 +19489,16 @@ typedef union
  * Guest PDPTE3.
  */
 #define VMCS_GUEST_PDPTE3                                            0x00002810
+
+/**
+ * Guest IA32_BNDCFGS.
+ */
+#define VMCS_GUEST_BNDCFGS                                           0x00002812
+
+/**
+ * Guest IA32_RTIT_CTL.
+ */
+#define VMCS_GUEST_RTIT_CTL                                          0x00002814
 /**
  * @}
  */
@@ -19685,7 +19826,7 @@ typedef union
 /**
  * Host IA32_SYSENTER_CS.
  */
-#define VMCS_SYSENTER_CS                                             0x00004C00
+#define VMCS_HOST_SYSENTER_CS                                        0x00004C00
 /**
  * @}
  */
@@ -20646,6 +20787,223 @@ typedef union
 
   UINT32 Flags;
 } EFLAGS;
+
+/**
+ * The 64-bit RFLAGS register contains a group of status flags, a control flag, and a group of system flags in 64-bit mode.
+ * The upper 32 bits of RFLAGS register is reserved. The lower 32 bits of RFLAGS is the same as EFLAGS.
+ *
+ * @see EFLAGS
+ * @see Vol1[3.4.3.4(RFLAGS Register in 64-Bit Mode)] (reference)
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Carry flag
+     *
+     * [Bit 0] See the description in EFLAGS.
+     */
+    UINT64 CarryFlag                                               : 1;
+#define RFLAGS_CARRY_FLAG_BIT                                        0
+#define RFLAGS_CARRY_FLAG_FLAG                                       0x01
+#define RFLAGS_CARRY_FLAG_MASK                                       0x01
+#define RFLAGS_CARRY_FLAG(_)                                         (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] Reserved - always 1
+     */
+    UINT64 ReadAs1                                                 : 1;
+#define RFLAGS_READ_AS_1_BIT                                         1
+#define RFLAGS_READ_AS_1_FLAG                                        0x02
+#define RFLAGS_READ_AS_1_MASK                                        0x01
+#define RFLAGS_READ_AS_1(_)                                          (((_) >> 1) & 0x01)
+
+    /**
+     * @brief Parity flag
+     *
+     * [Bit 2] See the description in EFLAGS.
+     */
+    UINT64 ParityFlag                                              : 1;
+#define RFLAGS_PARITY_FLAG_BIT                                       2
+#define RFLAGS_PARITY_FLAG_FLAG                                      0x04
+#define RFLAGS_PARITY_FLAG_MASK                                      0x01
+#define RFLAGS_PARITY_FLAG(_)                                        (((_) >> 2) & 0x01)
+    UINT64 Reserved1                                               : 1;
+
+    /**
+     * @brief Auxiliary Carry flag
+     *
+     * [Bit 4] See the description in EFLAGS.
+     */
+    UINT64 AuxiliaryCarryFlag                                      : 1;
+#define RFLAGS_AUXILIARY_CARRY_FLAG_BIT                              4
+#define RFLAGS_AUXILIARY_CARRY_FLAG_FLAG                             0x10
+#define RFLAGS_AUXILIARY_CARRY_FLAG_MASK                             0x01
+#define RFLAGS_AUXILIARY_CARRY_FLAG(_)                               (((_) >> 4) & 0x01)
+    UINT64 Reserved2                                               : 1;
+
+    /**
+     * @brief Zero flag
+     *
+     * [Bit 6] See the description in EFLAGS.
+     */
+    UINT64 ZeroFlag                                                : 1;
+#define RFLAGS_ZERO_FLAG_BIT                                         6
+#define RFLAGS_ZERO_FLAG_FLAG                                        0x40
+#define RFLAGS_ZERO_FLAG_MASK                                        0x01
+#define RFLAGS_ZERO_FLAG(_)                                          (((_) >> 6) & 0x01)
+
+    /**
+     * @brief Sign flag
+     *
+     * [Bit 7] See the description in EFLAGS.
+     */
+    UINT64 SignFlag                                                : 1;
+#define RFLAGS_SIGN_FLAG_BIT                                         7
+#define RFLAGS_SIGN_FLAG_FLAG                                        0x80
+#define RFLAGS_SIGN_FLAG_MASK                                        0x01
+#define RFLAGS_SIGN_FLAG(_)                                          (((_) >> 7) & 0x01)
+
+    /**
+     * @brief Trap flag
+     *
+     * [Bit 8] See the description in EFLAGS.
+     */
+    UINT64 TrapFlag                                                : 1;
+#define RFLAGS_TRAP_FLAG_BIT                                         8
+#define RFLAGS_TRAP_FLAG_FLAG                                        0x100
+#define RFLAGS_TRAP_FLAG_MASK                                        0x01
+#define RFLAGS_TRAP_FLAG(_)                                          (((_) >> 8) & 0x01)
+
+    /**
+     * @brief Interrupt enable flag
+     *
+     * [Bit 9] See the description in EFLAGS.
+     */
+    UINT64 InterruptEnableFlag                                     : 1;
+#define RFLAGS_INTERRUPT_ENABLE_FLAG_BIT                             9
+#define RFLAGS_INTERRUPT_ENABLE_FLAG_FLAG                            0x200
+#define RFLAGS_INTERRUPT_ENABLE_FLAG_MASK                            0x01
+#define RFLAGS_INTERRUPT_ENABLE_FLAG(_)                              (((_) >> 9) & 0x01)
+
+    /**
+     * @brief Direction flag
+     *
+     * [Bit 10] See the description in EFLAGS.
+     */
+    UINT64 DirectionFlag                                           : 1;
+#define RFLAGS_DIRECTION_FLAG_BIT                                    10
+#define RFLAGS_DIRECTION_FLAG_FLAG                                   0x400
+#define RFLAGS_DIRECTION_FLAG_MASK                                   0x01
+#define RFLAGS_DIRECTION_FLAG(_)                                     (((_) >> 10) & 0x01)
+
+    /**
+     * @brief Overflow flag
+     *
+     * [Bit 11] See the description in EFLAGS.
+     */
+    UINT64 OverflowFlag                                            : 1;
+#define RFLAGS_OVERFLOW_FLAG_BIT                                     11
+#define RFLAGS_OVERFLOW_FLAG_FLAG                                    0x800
+#define RFLAGS_OVERFLOW_FLAG_MASK                                    0x01
+#define RFLAGS_OVERFLOW_FLAG(_)                                      (((_) >> 11) & 0x01)
+
+    /**
+     * @brief I/O privilege level field
+     *
+     * [Bits 13:12] See the description in EFLAGS.
+     */
+    UINT64 IoPrivilegeLevel                                        : 2;
+#define RFLAGS_IO_PRIVILEGE_LEVEL_BIT                                12
+#define RFLAGS_IO_PRIVILEGE_LEVEL_FLAG                               0x3000
+#define RFLAGS_IO_PRIVILEGE_LEVEL_MASK                               0x03
+#define RFLAGS_IO_PRIVILEGE_LEVEL(_)                                 (((_) >> 12) & 0x03)
+
+    /**
+     * @brief Nested task flag
+     *
+     * [Bit 14] See the description in EFLAGS.
+     */
+    UINT64 NestedTaskFlag                                          : 1;
+#define RFLAGS_NESTED_TASK_FLAG_BIT                                  14
+#define RFLAGS_NESTED_TASK_FLAG_FLAG                                 0x4000
+#define RFLAGS_NESTED_TASK_FLAG_MASK                                 0x01
+#define RFLAGS_NESTED_TASK_FLAG(_)                                   (((_) >> 14) & 0x01)
+    UINT64 Reserved3                                               : 1;
+
+    /**
+     * @brief Resume flag
+     *
+     * [Bit 16] See the description in EFLAGS.
+     */
+    UINT64 ResumeFlag                                              : 1;
+#define RFLAGS_RESUME_FLAG_BIT                                       16
+#define RFLAGS_RESUME_FLAG_FLAG                                      0x10000
+#define RFLAGS_RESUME_FLAG_MASK                                      0x01
+#define RFLAGS_RESUME_FLAG(_)                                        (((_) >> 16) & 0x01)
+
+    /**
+     * @brief Virtual-8086 mode flag
+     *
+     * [Bit 17] See the description in EFLAGS.
+     */
+    UINT64 Virtual8086ModeFlag                                     : 1;
+#define RFLAGS_VIRTUAL_8086_MODE_FLAG_BIT                            17
+#define RFLAGS_VIRTUAL_8086_MODE_FLAG_FLAG                           0x20000
+#define RFLAGS_VIRTUAL_8086_MODE_FLAG_MASK                           0x01
+#define RFLAGS_VIRTUAL_8086_MODE_FLAG(_)                             (((_) >> 17) & 0x01)
+
+    /**
+     * @brief Alignment check (or access control) flag
+     *
+     * [Bit 18] See the description in EFLAGS.
+     *
+     * @see Vol3A[4.6(ACCESS RIGHTS)]
+     */
+    UINT64 AlignmentCheckFlag                                      : 1;
+#define RFLAGS_ALIGNMENT_CHECK_FLAG_BIT                              18
+#define RFLAGS_ALIGNMENT_CHECK_FLAG_FLAG                             0x40000
+#define RFLAGS_ALIGNMENT_CHECK_FLAG_MASK                             0x01
+#define RFLAGS_ALIGNMENT_CHECK_FLAG(_)                               (((_) >> 18) & 0x01)
+
+    /**
+     * @brief Virtual interrupt flag
+     *
+     * [Bit 19] See the description in EFLAGS.
+     */
+    UINT64 VirtualInterruptFlag                                    : 1;
+#define RFLAGS_VIRTUAL_INTERRUPT_FLAG_BIT                            19
+#define RFLAGS_VIRTUAL_INTERRUPT_FLAG_FLAG                           0x80000
+#define RFLAGS_VIRTUAL_INTERRUPT_FLAG_MASK                           0x01
+#define RFLAGS_VIRTUAL_INTERRUPT_FLAG(_)                             (((_) >> 19) & 0x01)
+
+    /**
+     * @brief Virtual interrupt pending flag
+     *
+     * [Bit 20] See the description in EFLAGS.
+     */
+    UINT64 VirtualInterruptPendingFlag                             : 1;
+#define RFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_BIT                    20
+#define RFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_FLAG                   0x100000
+#define RFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG_MASK                   0x01
+#define RFLAGS_VIRTUAL_INTERRUPT_PENDING_FLAG(_)                     (((_) >> 20) & 0x01)
+
+    /**
+     * @brief Identification flag
+     *
+     * [Bit 21] See the description in EFLAGS.
+     */
+    UINT64 IdentificationFlag                                      : 1;
+#define RFLAGS_IDENTIFICATION_FLAG_BIT                               21
+#define RFLAGS_IDENTIFICATION_FLAG_FLAG                              0x200000
+#define RFLAGS_IDENTIFICATION_FLAG_MASK                              0x01
+#define RFLAGS_IDENTIFICATION_FLAG(_)                                (((_) >> 21) & 0x01)
+    UINT64 Reserved4                                               : 42;
+  };
+
+  UINT64 Flags;
+} RFLAGS;
 
 /**
  * @defgroup EXCEPTIONS \

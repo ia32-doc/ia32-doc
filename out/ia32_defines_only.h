@@ -5522,6 +5522,29 @@ typedef union {
  * @}
  */
 
+typedef union {
+  struct {
+    uint32_t basic_exit_reason                                       : 16;
+#define VMX_VMEXIT_REASON_BASIC_EXIT_REASON                          0xFFFF
+    uint32_t always0                                                 : 1;
+#define VMX_VMEXIT_REASON_ALWAYS0                                    0x10000
+    uint32_t reserved1                                               : 10;
+#define VMX_VMEXIT_REASON_RESERVED1                                  0x7FE0000
+    uint32_t enclave_mode                                            : 1;
+#define VMX_VMEXIT_REASON_ENCLAVE_MODE                               0x8000000
+    uint32_t pending_mtf_vm_exit                                     : 1;
+#define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT                        0x10000000
+    uint32_t vm_exit_from_vmx_roor                                   : 1;
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR                      0x20000000
+    uint32_t reserved2                                               : 1;
+#define VMX_VMEXIT_REASON_RESERVED2                                  0x40000000
+    uint32_t vm_entry_failure                                        : 1;
+#define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE                           0x80000000
+  };
+
+  uint32_t Flags;
+} vmx_vmexit_reason;
+
 typedef struct {
 #define IO_BITMAP_A_MIN                                              0x00000000
 #define IO_BITMAP_A_MAX                                              0x00007FFF
@@ -5818,6 +5841,11 @@ typedef struct {
   uint8_t data[4088];
 } vmcs;
 
+typedef struct {
+  uint32_t revision_id;
+  uint8_t data[4092];
+} vmxon;
+
 /**
  * @defgroup vmcs_fields \
  *           VMCS (VM Control Structure)
@@ -5960,6 +5988,8 @@ typedef union {
 #define VMCS_GUEST_PDPTE1                                            0x0000280C
 #define VMCS_GUEST_PDPTE2                                            0x0000280E
 #define VMCS_GUEST_PDPTE3                                            0x00002810
+#define VMCS_GUEST_BNDCFGS                                           0x00002812
+#define VMCS_GUEST_RTIT_CTL                                          0x00002814
 /**
  * @}
  */
@@ -6066,7 +6096,7 @@ typedef union {
  *           32-Bit Host-State Field
  * @{
  */
-#define VMCS_SYSENTER_CS                                             0x00004C00
+#define VMCS_HOST_SYSENTER_CS                                        0x00004C00
 /**
  * @}
  */
@@ -6322,6 +6352,53 @@ typedef union {
 
   uint32_t Flags;
 } efl;
+
+typedef union {
+  struct {
+    uint64_t carry_flag                                              : 1;
+#define RFL_CARRY_FLAG                                               0x01
+    uint64_t read_as_1                                               : 1;
+#define RFL_READ_AS_1                                                0x02
+    uint64_t parity_flag                                             : 1;
+#define RFL_PARITY_FLAG                                              0x04
+    uint64_t reserved_1                                              : 1;
+    uint64_t auxiliary_carry_flag                                    : 1;
+#define RFL_AUXILIARY_CARRY_FLAG                                     0x10
+    uint64_t reserved_2                                              : 1;
+    uint64_t zero_flag                                               : 1;
+#define RFL_ZERO_FLAG                                                0x40
+    uint64_t sign_flag                                               : 1;
+#define RFL_SIGN_FLAG                                                0x80
+    uint64_t trap_flag                                               : 1;
+#define RFL_TRAP_FLAG                                                0x100
+    uint64_t interrupt_enable_flag                                   : 1;
+#define RFL_INTERRUPT_ENABLE_FLAG                                    0x200
+    uint64_t direction_flag                                          : 1;
+#define RFL_DIRECTION_FLAG                                           0x400
+    uint64_t overflow_flag                                           : 1;
+#define RFL_OVERFLOW_FLAG                                            0x800
+    uint64_t io_privilege_level                                      : 2;
+#define RFL_IO_PRIVILEGE_LEVEL                                       0x3000
+    uint64_t nested_task_flag                                        : 1;
+#define RFL_NESTED_TASK_FLAG                                         0x4000
+    uint64_t reserved_3                                              : 1;
+    uint64_t resume_flag                                             : 1;
+#define RFL_RESUME_FLAG                                              0x10000
+    uint64_t virtual_8086_mode_flag                                  : 1;
+#define RFL_VIRTUAL_8086_MODE_FLAG                                   0x20000
+    uint64_t alignment_check_flag                                    : 1;
+#define RFL_ALIGNMENT_CHECK_FLAG                                     0x40000
+    uint64_t virtual_interrupt_flag                                  : 1;
+#define RFL_VIRTUAL_INTERRUPT_FLAG                                   0x80000
+    uint64_t virtual_interrupt_pending_flag                          : 1;
+#define RFL_VIRTUAL_INTERRUPT_PENDING_FLAG                           0x100000
+    uint64_t identification_flag                                     : 1;
+#define RFL_IDENTIFICATION_FLAG                                      0x200000
+    uint64_t reserved_4                                              : 42;
+  };
+
+  uint64_t Flags;
+} rfl;
 
 /**
  * @defgroup exceptions \
