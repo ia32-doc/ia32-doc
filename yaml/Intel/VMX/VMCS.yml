@@ -1,10 +1,15 @@
 - name: VMCS
+  description: Format of the VMCS Region
+  long_description: |
+    A logical processor uses virtual-machine control data structures (VMCSs) while it is in VMX operation. These
+    manage transitions into and out of VMX non-root operation (VM entries and VM exits) as well as processor behavior
+    in VMX non-root operation. This structure is manipulated by the new instructions VMCLEAR, VMPTRLD, VMREAD,
+    and VMWRITE.
+
+    A VMCS region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
+    by consulting the VMX capability MSR IA32_VMX_BASIC.
   type: struct
-  size: 32768 # A VMCS region comprises up to 4-KBytes.
-              #
-              # The exact size is implementation specific and can
-              # be determined by consulting the VMX capability
-              # MSR IA32_VMX_BASIC to determine the size of the VMCS region.
+  size: 32768
   reference: Vol3C[24.2(FORMAT OF THE VMCS REGION)]
   fields:
   - size: 32
@@ -47,6 +52,40 @@
     - Vol3C[24.11.4(Software Access to Related Structures)]
     - Vol3D[A.1(BASIC VMX INFORMATION)]
 
+- name: VMXON
+  description: Format of the VMXON Region
+  long_description: |
+    Before executing VMXON, software allocates a region of memory that the logical processor uses to support
+    VMX operation. This region is called the VMXON region.
+
+    A VMXON region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
+    by consulting the VMX capability MSR IA32_VMX_BASIC.
+  type: struct
+  size: 32768
+  reference: Vol3C[24.11.5(VMXON Region)]
+  fields:
+  - size: 32
+    name: REVISION_ID
+    short_description: VMCS revision identifier.
+    long_description: |
+      Before executing VMXON, software should write the VMCS revision identifier to the VMXON region.
+      (Specifically, it should write the 31-bit VMCS revision identifier to bits 30:0 of the first 4 bytes of
+      the VMXON region; bit 31 should be cleared to 0.)
+    see:
+    - VMCS
+    - Vol3C[24.2(FORMAT OF THE VMCS REGION)]
+    - Vol3D[A.1(BASIC VMX INFORMATION)]
+
+  - size: '?'
+    name: DATA
+    short_description: VMXON data (implementation-specific format).
+    long_description: |
+      The format of these data is implementation-specific. To ensure proper behavior in VMX operation,
+      software should not access or modify the VMXON region of a logical processor between execution of VMXON and
+      VMXOFF on that logical processor. Doing otherwise may lead to unpredictable behavior.
+    see:
+    - Vol3C[24.11.4(Software Access to Related Structures)]
+    - Vol3D[A.1(BASIC VMX INFORMATION)]
 
 #
 # reference: Vol3D[B(Appendix B)]
