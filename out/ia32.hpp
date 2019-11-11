@@ -18972,21 +18972,38 @@ typedef struct
  */
 typedef struct
 {
-  /**
-   * @brief VMCS revision identifier
-   *
-   * Processors that maintain VMCS data in different formats (see below) use different VMCS revision identifiers. These
-   * identifiers enable software to avoid using a VMCS region formatted for one processor on a processor that uses a
-   * different format. Software should write the VMCS revision identifier to the VMCS region before using that region for a
-   * VMCS. The VMCS revision identifier is never written by the processor; VMPTRLD fails if its operand references a VMCS
-   * region whose VMCS revision identifier differs from that used by the processor (VMPTRLD also fails if the shadow-VMCS
-   * indicator is 1 and the processor does not support the 1-setting of the "VMCS shadowing" VM-execution control. Software
-   * can discover the VMCS revision identifier that a processor uses by reading the VMX capability MSR IA32_VMX_BASIC.
-   *
-   * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)]
-   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
-   */
-  uint32_t revision_id;
+  struct
+  {
+    /**
+     * @brief VMCS revision identifier
+     *
+     * [Bits 30:0] Processors that maintain VMCS data in different formats (see below) use different VMCS revision identifiers.
+     * These identifiers enable software to avoid using a VMCS region formatted for one processor on a processor that uses a
+     * different format.
+     * Software should write the VMCS revision identifier to the VMCS region before using that region for a VMCS. The VMCS
+     * revision identifier is never written by the processor; VMPTRLD fails if its operand references a VMCS region whose VMCS
+     * revision identifier differs from that used by the processor.
+     * Software can discover the VMCS revision identifier that a processor uses by reading the VMX capability MSR
+     * IA32_VMX_BASIC.
+     *
+     * @see Vol3C[24.6.2(Processor-Based VM-Execution Controls)]
+     * @see Vol3D[A.1(BASIC VMX INFORMATION)]
+     */
+    uint32_t revision_id                                             : 31;
+
+    /**
+     * @brief Shadow-VMCS indicator
+     *
+     * [Bit 31] Software should clear or set the shadow-VMCS indicator depending on whether the VMCS is to be an ordinary VMCS
+     * or a shadow VMCS. VMPTRLD fails if the shadow-VMCS indicator is set and the processor does not support the 1-setting of
+     * the "VMCS shadowing" VM-execution control. Software can discover support for this setting by reading the VMX capability
+     * MSR IA32_VMX_PROCBASED_CTLS2.
+     *
+     * @see Vol3C[24.10(VMCS TYPES ORDINARY AND SHADOW)]
+     */
+    uint32_t shadow_vmcs_indicator                                   : 1;
+  };
+
 
   /**
    * @brief VMX-abort indicator
@@ -19024,18 +19041,27 @@ typedef struct
  */
 typedef struct
 {
-  /**
-   * @brief VMCS revision identifier
-   *
-   * Before executing VMXON, software should write the VMCS revision identifier to the VMXON region. (Specifically, it should
-   * write the 31-bit VMCS revision identifier to bits 30:0 of the first 4 bytes of the VMXON region; bit 31 should be
-   * cleared to 0.)
-   *
-   * @see VMCS
-   * @see Vol3C[24.2(FORMAT OF THE VMCS REGION)]
-   * @see Vol3D[A.1(BASIC VMX INFORMATION)]
-   */
-  uint32_t revision_id;
+  struct
+  {
+    /**
+     * @brief VMCS revision identifier
+     *
+     * [Bits 30:0] Before executing VMXON, software should write the VMCS revision identifier to the VMXON region.
+     * (Specifically, it should write the 31-bit VMCS revision identifier to bits 30:0 of the first 4 bytes of the VMXON
+     * region; bit 31 should be cleared to 0.)
+     *
+     * @see VMCS
+     * @see Vol3C[24.2(FORMAT OF THE VMCS REGION)]
+     * @see Vol3C[24.11.5(VMXON Region)]
+     */
+    uint32_t revision_id                                             : 31;
+
+    /**
+     * [Bit 31] Bit 31 is always 0.
+     */
+    uint32_t must_be_zero                                            : 1;
+  };
+
 
   /**
    * @brief VMXON data (implementation-specific format)
