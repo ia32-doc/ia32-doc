@@ -255,15 +255,30 @@ class DocCProcessor(DocProcessor):
             optional_name_begin = ''
             optional_name_end = ''
 
+            #
+            # Bitfields at root level MUST have name.
+            #
+            if self._typedef_nesting == 1:
+                assert has_name
+
             if self._output_cpp:
                 optional_name_begin = f' {self.make_name(doc)}'
             else:
                 optional_typedef = 'typedef ' if self._typedef_nesting == 1 else ''
                 optional_name_end = f' {self.make_name(doc)}'
 
-            self.print(f'{optional_typedef}union{optional_name_begin}{optional_curly_brace}')
-            if self.opt.brace_on_next_line:
-                self.print(f'{{')
+            #
+            # Create union (only for named bitfields).
+            #
+            if has_name:
+                self.print(f'{optional_typedef}union{optional_name_begin}{optional_curly_brace}')
+                if self.opt.brace_on_next_line:
+                    self.print(f'{{')
+            else:
+                #
+                # If the bitfield is unnamed, do not double-indent the struct.
+                #
+                self.indent.indent_next = 0
 
             with self.indent:
                 self.print(f'struct{optional_curly_brace}')
@@ -299,27 +314,27 @@ class DocCProcessor(DocProcessor):
                     self._bitfield_reserved_count = None
 
                 self.print(f'}};')
-                self.print(f'')
 
                 #
                 # Print "Flags" member (only for named bitfields).
                 #
                 if has_name:
+                    self.print(f'')
                     self.print(f'{self.make_size_type(doc.size)[0]} {self.opt.bitfield_field_flags_name};')
 
-            if self._typedef_nesting == 1:
-                assert has_name
-                self.print(f'}}{optional_name_end};')
-            else:
-                if has_name:
+            #
+            # End of the union (only for named bitfields).
+            #
+            if has_name:
+                if self._typedef_nesting == 1:
+                    self.print(f'}}{optional_name_end};')
+                else:
                     name = self.make_name(
                         doc,
                         standalone=True,
                         override_name_letter_case=self.opt.bitfield_field_name_letter_case
                     )
                     self.print(f'}} {name};')
-                else:
-                    self.print(f'}};')
 
             self._typedef_nesting -= 1
         else:

@@ -64,6 +64,8 @@ class Doc(object):
 
 
 class DocBase(object):
+    REQUIRED_NAME = True
+
     def __init__(self, doc: dict, parent: DocBase=None):
         self._doc = doc
         self._fields = []
@@ -112,7 +114,10 @@ class DocBase(object):
                 raise Exception('name_with_suffix without parent')
             return f'{self.parent.short_name}_{self._doc["name_with_suffix"]}'
         else:
-            raise Exception('Field missing: short_name')
+            if self.REQUIRED_NAME:
+                raise Exception('Field missing: short_name')
+            else:
+                return ''
 
     @property
     def long_name_raw(self) -> str:
@@ -129,7 +134,10 @@ class DocBase(object):
                 raise Exception('name_with_suffix without parent')
             return f'{self.parent.long_name}_{self._doc["name_with_suffix"]}'
         else:
-            raise Exception('Field missing: long_name')
+            if self.REQUIRED_NAME:
+                raise Exception('Field missing: long_name')
+            else:
+                return ''
 
     @property
     def short_description(self) -> str:
@@ -384,6 +392,8 @@ class DocStructField(DocBase):
 
 
 class DocBitfield(DocBase):
+    REQUIRED_NAME = False
+
     def __init__(self, doc: dict, parent: DocBase=None):
         super().__init__(doc, parent)
 

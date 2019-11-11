@@ -4,14 +4,20 @@ from ..options import DocProcessorOptionsStack
 
 class DocIndent(object):
     def __init__(self, ctx: DocProcessorOptionsStack):
-        self.indent = 0
         self.ctx = ctx
 
+        self.indent = 0
+        self.indent_next = self.ctx.indent
+        self.indent_stack = []
+
     def __enter__(self):
-        self.indent += self.ctx.indent
+        self.indent += self.indent_next
+
+        self.indent_stack.append(self.indent_next)
+        self.indent_next = self.ctx.indent
 
     def __exit__(self, type, value, traceback):
-        self.indent -= self.ctx.indent
+        self.indent -= self.indent_stack.pop()
 
     def __str__(self):
         return ' ' * self.indent
