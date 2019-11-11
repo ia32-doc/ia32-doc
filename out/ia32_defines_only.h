@@ -5836,13 +5836,21 @@ typedef struct {
 } invvpid_descriptor;
 
 typedef struct {
-  uint32_t revision_id;
+  struct {
+    uint32_t revision_id                                             : 31;
+    uint32_t shadow_vmcs_indicator                                   : 1;
+  };
+
   uint32_t abort_indicator;
   uint8_t data[4088];
 } vmcs;
 
 typedef struct {
-  uint32_t revision_id;
+  struct {
+    uint32_t revision_id                                             : 31;
+    uint32_t must_be_zero                                            : 1;
+  };
+
   uint8_t data[4092];
 } vmxon;
 
