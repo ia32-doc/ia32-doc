@@ -526,7 +526,7 @@
           in the logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
 
     - name: INSTRUCTION_ERROR_NUMBERS
-      description: VM Instruction Error Numbers.
+      description: VM-Instruction Error Numbers.
       children_name_with_prefix: ERROR
       type: group
       reference: Vol3C[30.4(VM INSTRUCTION ERROR NUMBERS)]
