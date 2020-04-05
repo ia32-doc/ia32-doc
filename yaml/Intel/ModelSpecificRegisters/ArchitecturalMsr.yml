@@ -3321,7 +3321,7 @@
       long_description: This control determines whether the IA32_EFER MSR is loaded on VM entry.
 
     - bit: 16
-      short_name: LOAD_BNDCFGS
+      short_name: LOAD_GUEST_BNDCFGS
       long_name: LOAD_IA32_BNDCFGS
       description: This control determines whether the IA32_BNDCFGS MSR is loaded on VM entry.
 
@@ -3331,6 +3331,15 @@
         If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on
         a VM entry or a VMCS packet on a VM entry that returns from SMM.
       see: Vol3C[35(INTEL® PROCESSOR TRACE)]
+
+    - bit: 18
+      short_name: LOAD_GUEST_RTIT_CTL
+      long_name: LOAD_IA32_RTIT_CTL
+      description: This control determines whether the IA32_RTIT_CTL MSR is loaded on VM entry.
+
+    - bit: 20
+      name: LOAD_CET_STATE
+      description: This control determines whether CET-related MSRs and SPP are loaded on VM entry.
 
 - value: 0x485
   name: VMX_MISC

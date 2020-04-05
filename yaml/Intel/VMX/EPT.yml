@@ -541,6 +541,10 @@
       short_name: EPDE_ENTRY_COUNT
       long_name: EPT_PDE_ENTRY_COUNT
 
+    - value: 512
+      short_name: EPTE_ENTRY_COUNT
+      long_name: EPT_PTE_ENTRY_COUNT
+
 #  - name: EPT_MEMORY_TYPE # TODO: typedef to MEMORY_TYPE
 #    short_description: EPT memory type.
 #    long_description: |

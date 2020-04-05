@@ -999,6 +999,21 @@
           long_name: SYSENTER_EIP
           description: Guest IA32_SYSENTER_EIP.
 
+        - value: 0x6C28
+          short_name: S_CET
+          long_name: S_CET
+          description: Guest IA32_S_CET.
+
+        - value: 0x6C2A
+          short_name: SSP
+          long_name: SSP
+          description: Guest SSP.
+
+        - value: 0x6C2C
+          short_name: INTERRUPT_SSP_TABLE_ADDR
+          long_name: INTERRUPT_SSP_TABLE_ADDR
+          description: Guest IA32_INTERRUPT_SSP_TABLE_ADDR.
+
       - name: NATURAL_WIDTH_HOST_STATE_FIELDS
         description: Natural-Width Host-State Fields.
         children_name_with_prefix: HOST
@@ -1063,3 +1078,18 @@
           short_name: RIP
           long_name: RIP
           description: Host RIP.
+
+        - value: 0x6C18
+          short_name: S_CET
+          long_name: S_CET
+          description: Host IA32_S_CET.
+
+        - value: 0x6C1A
+          short_name: SSP
+          long_name: SSP
+          description: Host SSP.
+
+        - value: 0x6C1C
+          short_name: INTERRUPT_SSP_TABLE_ADDR
+          long_name: INTERRUPT_SSP_TABLE_ADDR
+          description: Host IA32_INTERRUPT_SSP_TABLE_ADDR.
