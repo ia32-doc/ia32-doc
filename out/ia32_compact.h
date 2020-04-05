@@ -2867,6 +2867,9 @@ typedef union {
     uint64_t load_ia32_efer                                          : 1;
     uint64_t load_ia32_bndcfgs                                       : 1;
     uint64_t conceal_vmx_from_pt                                     : 1;
+    uint64_t load_ia32_rtit_ctl                                      : 1;
+    uint64_t reserved_4                                              : 1;
+    uint64_t load_cet_state                                          : 1;
   };
 
   uint64_t flags;
@@ -3538,6 +3541,17 @@ typedef union {
 } pt_entry_32;
 
 /**
+ * @defgroup paging_structures_entry_count_32 \
+ *           Paging structures entry counts
+ * @{
+ */
+#define PDE_ENTRY_COUNT_32                                           0x00000400
+#define PTE_ENTRY_COUNT_32                                           0x00000400
+/**
+ * @}
+ */
+
+/**
  * @}
  */
 
@@ -3697,6 +3711,19 @@ typedef union {
 
   uint64_t flags;
 } pt_entry_64;
+
+/**
+ * @defgroup paging_structures_entry_count_64 \
+ *           Paging structures entry counts
+ * @{
+ */
+#define PML4_ENTRY_COUNT_64                                          0x00000200
+#define PDPTE_ENTRY_COUNT_64                                         0x00000200
+#define PDE_ENTRY_COUNT_64                                           0x00000200
+#define PTE_ENTRY_COUNT_64                                           0x00000200
+/**
+ * @}
+ */
 
 /**
  * @}
@@ -3937,7 +3964,7 @@ typedef union {
 
 /**
  * @defgroup vmx_instruction_error_numbers \
- *           VM Instruction Error Numbers
+ *           VM-Instruction Error Numbers
  * @{
  */
 #define VMX_ERROR_VMCALL                                             0x00000001
@@ -4505,6 +4532,7 @@ typedef union {
 #define EPML4_ENTRY_COUNT                                            0x00000200
 #define EPDPTE_ENTRY_COUNT                                           0x00000200
 #define EPDE_ENTRY_COUNT                                             0x00000200
+#define EPTE_ENTRY_COUNT                                             0x00000200
 /**
  * @}
  */
@@ -4871,6 +4899,9 @@ typedef union {
 #define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
 #define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
 #define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
+#define VMCS_GUEST_S_CET                                             0x00006C28
+#define VMCS_GUEST_SSP                                               0x00006C2A
+#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x00006C2C
 /**
  * @}
  */
@@ -4892,6 +4923,9 @@ typedef union {
 #define VMCS_HOST_SYSENTER_EIP                                       0x00006C12
 #define VMCS_HOST_RSP                                                0x00006C14
 #define VMCS_HOST_RIP                                                0x00006C16
+#define VMCS_HOST_S_CET                                              0x00006C18
+#define VMCS_HOST_SSP                                                0x00006C1A
+#define VMCS_HOST_INTERRUPT_SSP_TABLE_ADDR                           0x00006C1C
 /**
  * @}
  */
@@ -5064,6 +5098,7 @@ typedef union {
 typedef enum {
   divide_error                                                 = 0x00000000,
   debug                                                        = 0x00000001,
+  nmi                                                          = 0x00000002,
   breakpoint                                                   = 0x00000003,
   overflow                                                     = 0x00000004,
   bound_range_exceeded                                         = 0x00000005,
@@ -5123,6 +5158,7 @@ typedef union {
 #define MEMORY_TYPE_WT                                               0x00000004
 #define MEMORY_TYPE_WP                                               0x00000005
 #define MEMORY_TYPE_WB                                               0x00000006
+#define MEMORY_TYPE_UC_MINUS                                         0x00000007
 #define MEMORY_TYPE_INVALID                                          0x000000FF
 /**
  * @}
