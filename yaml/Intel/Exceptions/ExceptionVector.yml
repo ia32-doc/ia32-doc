@@ -30,6 +30,17 @@
 
       Error Code: No.
 
+  - value: 2
+    name: NMI
+    description: |
+      Nonmaskable Interrupt.
+
+      Source: Generated externally by asserting the processor’s NMI pin or
+
+              through an NMI request set by the I/O APIC to the local APIC.
+
+      Error Code: No.
+
   - value: 3
     short_name: BP
     long_name: BREAKPOINT
