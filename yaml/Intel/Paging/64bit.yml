@@ -560,3 +560,23 @@
     - bit: 63
       short_name: XD
       long_name: EXECUTE_DISABLE
+
+  - name: PAGING_STRUCTURES_ENTRY_COUNT
+    description: Paging structures entry counts.
+    type: group
+    fields:
+    - value: 512
+      short_name: PML4_ENTRY_COUNT
+      long_name: PML4E_ENTRY_COUNT
+
+    - value: 512
+      short_name: PDPTE_ENTRY_COUNT
+      long_name: PDPTE_ENTRY_COUNT
+
+    - value: 512
+      short_name: PDE_ENTRY_COUNT
+      long_name: PDE_ENTRY_COUNT
+
+    - value: 512
+      short_name: PTE_ENTRY_COUNT
+      long_name: PTE_ENTRY_COUNT

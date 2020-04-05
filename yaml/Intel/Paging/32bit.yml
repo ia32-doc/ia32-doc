@@ -275,3 +275,15 @@
       short_name: PFN
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of the 4-KByte page referenced by this entry.
+
+  - name: PAGING_STRUCTURES_ENTRY_COUNT
+    description: Paging structures entry counts.
+    type: group
+    fields:
+    - value: 1024
+      short_name: PDE_ENTRY_COUNT
+      long_name: PDE_ENTRY_COUNT
+
+    - value: 1024
+      short_name: PTE_ENTRY_COUNT
+      long_name: PTE_ENTRY_COUNT
