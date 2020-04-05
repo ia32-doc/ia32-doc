@@ -77,5 +77,14 @@
       performance, but it requires that all devices that access system memory on the system bus be able to snoop
       memory accesses to insure system memory and cache coherency.
 
+  - value: 7
+    short_name: UC_MINUS
+    long_name: UNCACHEABLE_MINUS
+    short_description: Uncacheable (UC-)
+    long_description: |
+      Has same characteristics as the strong uncacheable (UC) memory type, except that this memory
+      type can be overridden by programming the MTRRs for the WC memory type. This memory type is available
+      in processor families starting from the Pentium III processors and can only be selected through the PAT.
+
   - value: 0xFF
     name: INVALID
