@@ -10710,7 +10710,26 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_FLAG                 0x20000
 #define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT_MASK                 0x01
 #define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT(_)                   (((_) >> 17) & 0x01)
-    uint64_t reserved4                                               : 46;
+
+    /**
+     * [Bit 18] This control determines whether the IA32_RTIT_CTL MSR is loaded on VM entry.
+     */
+    uint64_t load_ia32_rtit_ctl                                      : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL_BIT                   18
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL_FLAG                  0x40000
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL_MASK                  0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL(_)                    (((_) >> 18) & 0x01)
+    uint64_t reserved4                                               : 1;
+
+    /**
+     * [Bit 20] This control determines whether CET-related MSRs and SPP are loaded on VM entry.
+     */
+    uint64_t load_cet_state                                          : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_BIT                       20
+#define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_FLAG                      0x100000
+#define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_MASK                      0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE(_)                        (((_) >> 20) & 0x01)
+    uint64_t reserved5                                               : 43;
   };
 
   uint64_t flags;
@@ -13959,6 +13978,19 @@ typedef union
 } pt_entry_32;
 
 /**
+ * @defgroup paging_structures_entry_count_32 \
+ *           Paging structures entry counts
+ *
+ * Paging structures entry counts.
+ * @{
+ */
+#define PDE_ENTRY_COUNT_32                                           0x00000400
+#define PTE_ENTRY_COUNT_32                                           0x00000400
+/**
+ * @}
+ */
+
+/**
  * @}
  */
 
@@ -14957,6 +14989,21 @@ typedef union
 
   uint64_t flags;
 } pt_entry_64;
+
+/**
+ * @defgroup paging_structures_entry_count_64 \
+ *           Paging structures entry counts
+ *
+ * Paging structures entry counts.
+ * @{
+ */
+#define PML4E_ENTRY_COUNT_64                                         0x00000200
+#define PDPTE_ENTRY_COUNT_64                                         0x00000200
+#define PDE_ENTRY_COUNT_64                                           0x00000200
+#define PTE_ENTRY_COUNT_64                                           0x00000200
+/**
+ * @}
+ */
 
 /**
  * @}
@@ -16359,9 +16406,9 @@ typedef union
 
 /**
  * @defgroup vmx_instruction_error_numbers \
- *           VM Instruction Error Numbers
+ *           VM-Instruction Error Numbers
  *
- * VM Instruction Error Numbers.
+ * VM-Instruction Error Numbers.
  *
  * @see Vol3C[30.4(VM INSTRUCTION ERROR NUMBERS)] (reference)
  * @{
@@ -18871,6 +18918,7 @@ typedef union
 #define EPT_PML4E_ENTRY_COUNT                                        0x00000200
 #define EPT_PDPTE_ENTRY_COUNT                                        0x00000200
 #define EPT_PDE_ENTRY_COUNT                                          0x00000200
+#define EPT_PTE_ENTRY_COUNT                                          0x00000200
 /**
  * @}
  */
@@ -20066,6 +20114,21 @@ typedef union
  * Guest IA32_SYSENTER_EIP.
  */
 #define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
+
+/**
+ * Guest IA32_S_CET.
+ */
+#define VMCS_GUEST_S_CET                                             0x00006C28
+
+/**
+ * Guest SSP.
+ */
+#define VMCS_GUEST_SSP                                               0x00006C2A
+
+/**
+ * Guest IA32_INTERRUPT_SSP_TABLE_ADDR.
+ */
+#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x00006C2C
 /**
  * @}
  */
@@ -20136,6 +20199,21 @@ typedef union
  * Host RIP.
  */
 #define VMCS_HOST_RIP                                                0x00006C16
+
+/**
+ * Host IA32_S_CET.
+ */
+#define VMCS_HOST_S_CET                                              0x00006C18
+
+/**
+ * Host SSP.
+ */
+#define VMCS_HOST_SSP                                                0x00006C1A
+
+/**
+ * Host IA32_INTERRUPT_SSP_TABLE_ADDR.
+ */
+#define VMCS_HOST_INTERRUPT_SSP_TABLE_ADDR                           0x00006C1C
 /**
  * @}
  */
@@ -21061,6 +21139,14 @@ typedef enum
   debug                                                        = 0x00000001,
 
   /**
+   * Nonmaskable Interrupt.
+   * Source: Generated externally by asserting the processor's NMI pin or
+   *         through an NMI request set by the I/O APIC to the local APIC.
+   * Error Code: No.
+   */
+  nmi                                                          = 0x00000002,
+
+  /**
    * #BP - Breakpoint.
    * Source: INT3 instruction.
    * Error Code: No.
@@ -21421,6 +21507,15 @@ typedef union
  * memory accesses to insure system memory and cache coherency.
  */
 #define MEMORY_TYPE_WRITE_BACK                                       0x00000006
+
+/**
+ * @brief Uncacheable (UC-)
+ *
+ * Has same characteristics as the strong uncacheable (UC) memory type, except that this memory type can be overridden by
+ * programming the MTRRs for the WC memory type. This memory type is available in processor families starting from the
+ * Pentium III processors and can only be selected through the PAT.
+ */
+#define MEMORY_TYPE_UNCACHEABLE_MINUS                                0x00000007
 #define MEMORY_TYPE_INVALID                                          0x000000FF
 /**
  * @}
