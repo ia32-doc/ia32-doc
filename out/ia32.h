@@ -11281,7 +11281,29 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_FLAG 0x400000
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT_MASK 0x01
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT(_) (((_) >> 22) & 0x01)
-    UINT64 Reserved2                                               : 2;
+
+    /**
+     * [Bit 23] If this control is 1, EPT write permissions may be specified at the granularity of 128 bytes.
+     *
+     * @see Vol3C[28.2.4(Sub-Page Write Permissions)]
+     */
+    UINT64 SubPageWritePermissionsForEpt                           : 1;
+#define IA32_VMX_PROCBASED_CTLS2_SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT_BIT 23
+#define IA32_VMX_PROCBASED_CTLS2_SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT_FLAG 0x800000
+#define IA32_VMX_PROCBASED_CTLS2_SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT_MASK 0x01
+#define IA32_VMX_PROCBASED_CTLS2_SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT(_) (((_) >> 23) & 0x01)
+
+    /**
+     * [Bit 24] If this control is 1, all output addresses used by Intel Processor Trace are treated as guestphysical addresses
+     * and translated using EPT.
+     *
+     * @see Vol3C[25.5.3(Translation of Guest-Physical Addresses Using EPT)]
+     */
+    UINT64 PtUsesGuestPhysicalAddresses                            : 1;
+#define IA32_VMX_PROCBASED_CTLS2_PT_USES_GUEST_PHYSICAL_ADDRESSES_BIT 24
+#define IA32_VMX_PROCBASED_CTLS2_PT_USES_GUEST_PHYSICAL_ADDRESSES_FLAG 0x1000000
+#define IA32_VMX_PROCBASED_CTLS2_PT_USES_GUEST_PHYSICAL_ADDRESSES_MASK 0x01
+#define IA32_VMX_PROCBASED_CTLS2_PT_USES_GUEST_PHYSICAL_ADDRESSES(_) (((_) >> 24) & 0x01)
 
     /**
      * @brief Use TSC scaling
@@ -11297,7 +11319,34 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_FLAG                0x2000000
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING_MASK                0x01
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING(_)                  (((_) >> 25) & 0x01)
-    UINT64 Reserved3                                               : 38;
+
+    /**
+     * @brief Enables TPAUSE/UMONITOR/UMWAIT instructions
+     *
+     * [Bit 26] If this control is 0, any execution of TPAUSE, UMONITOR, or UMWAIT causes a \#UD.
+     */
+    UINT64 EnableUserWaitPause                                     : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE_BIT          26
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE_FLAG         0x4000000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE_MASK         0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE(_)           (((_) >> 26) & 0x01)
+    UINT64 Reserved2                                               : 1;
+
+    /**
+     * @brief Enables ENCLV VM-exits
+     *
+     * [Bit 28] If this control is 1, executions of ENCLV consult the ENCLV-exiting bitmap to determine whether the instruction
+     * causes a VM exit.
+     *
+     * @see Vol3C[24.6.17(ENCLV-Exiting Bitmap)]
+     * @see Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
+     */
+    UINT64 EnableEnclvExiting                                      : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING_BIT            28
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING_FLAG           0x10000000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING_MASK           0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING(_)             (((_) >> 28) & 0x01)
+    UINT64 Reserved3                                               : 35;
   };
 
   UINT64 Flags;
