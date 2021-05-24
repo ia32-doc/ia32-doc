@@ -5571,8 +5571,8 @@ typedef union {
 #define VMX_VMEXIT_REASON_ENCLAVE_MODE                               0x8000000
     uint32_t pending_mtf_vm_exit                                     : 1;
 #define VMX_VMEXIT_REASON_PENDING_MTF_VM_EXIT                        0x10000000
-    uint32_t vm_exit_from_vmx_roor                                   : 1;
-#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR                      0x20000000
+    uint32_t vm_exit_from_vmx_root                                   : 1;
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOT                      0x20000000
     uint32_t reserved2                                               : 1;
 #define VMX_VMEXIT_REASON_RESERVED2                                  0x40000000
     uint32_t vm_entry_failure                                        : 1;

@@ -4341,7 +4341,7 @@ typedef union {
     uint32_t reserved1                                               : 10;
     uint32_t enclave_mode                                            : 1;
     uint32_t pending_mtf_vm_exit                                     : 1;
-    uint32_t vm_exit_from_vmx_roor                                   : 1;
+    uint32_t vm_exit_from_vmx_root                                   : 1;
     uint32_t reserved2                                               : 1;
     uint32_t vm_entry_failure                                        : 1;
   };

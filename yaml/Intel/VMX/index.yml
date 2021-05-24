@@ -1859,7 +1859,7 @@
         Pending MTF VM exit.
 
     - bit: 29
-      name: VM_EXIT_FROM_VMX_ROOR
+      name: VM_EXIT_FROM_VMX_ROOT
       description: |
         VM exit from VMX root operation.
 
