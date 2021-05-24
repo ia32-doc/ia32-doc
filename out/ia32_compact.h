@@ -2939,8 +2939,12 @@ typedef union {
     uint64_t enable_xsaves                                           : 1;
     uint64_t reserved_1                                              : 1;
     uint64_t mode_based_execute_control_for_ept                      : 1;
-    uint64_t reserved_2                                              : 2;
+    uint64_t sub_page_write_permissions_for_ept                      : 1;
+    uint64_t pt_uses_guest_physical_addresses                        : 1;
     uint64_t use_tsc_scaling                                         : 1;
+    uint64_t enable_user_wait_pause                                  : 1;
+    uint64_t reserved_2                                              : 1;
+    uint64_t enable_enclv_exiting                                    : 1;
   };
 
   uint64_t flags;

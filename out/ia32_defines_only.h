@@ -3752,10 +3752,18 @@ typedef union {
     uint64_t reserved_1                                              : 1;
     uint64_t mode_based_execute_control_for_ept                      : 1;
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT  0x400000
-    uint64_t reserved_2                                              : 2;
+    uint64_t sub_page_write_permissions_for_ept                      : 1;
+#define IA32_VMX_PROCBASED_CTLS2_SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT  0x800000
+    uint64_t pt_uses_guest_physical_addresses                        : 1;
+#define IA32_VMX_PROCBASED_CTLS2_PT_USES_GUEST_PHYSICAL_ADDRESSES    0x1000000
     uint64_t use_tsc_scaling                                         : 1;
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING                     0x2000000
-    uint64_t reserved_3                                              : 38;
+    uint64_t enable_user_wait_pause                                  : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE              0x4000000
+    uint64_t reserved_2                                              : 1;
+    uint64_t enable_enclv_exiting                                    : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING                0x10000000
+    uint64_t reserved_3                                              : 35;
   };
 
   uint64_t Flags;

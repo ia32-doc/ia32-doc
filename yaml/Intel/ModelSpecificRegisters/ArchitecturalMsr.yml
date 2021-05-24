@@ -3724,6 +3724,21 @@
         accessed is supervisor mode or user mode.
       see: Vol3C[28(VMX SUPPORT FOR ADDRESS TRANSLATION)]
 
+    - bit: 23
+      short_name: SP_WRITE_PERM_EPT
+      long_name: SUB_PAGE_WRITE_PERMISSIONS_FOR_EPT
+      description: |
+        If this control is 1, EPT write permissions may be specified at the granularity of 128 bytes.
+      see: Vol3C[28.2.4(Sub-Page Write Permissions)]
+
+    - bit: 24
+      short_name: PT_GUEST_PA
+      long_name: PT_USES_GUEST_PHYSICAL_ADDRESSES
+      description: |
+        If this control is 1, all output addresses used by Intel Processor Trace are treated as guestphysical
+        addresses and translated using EPT.
+      see: Vol3C[25.5.3(Translation of Guest-Physical Addresses Using EPT)]
+
     - bit: 25
       short_name: TSC_SCALING
       long_name: USE_TSC_SCALING
@@ -3735,6 +3750,24 @@
       see:
       - Vol3C[24.6.5(Time-Stamp Counter Offset and Multiplier)]
       - Vol3C[25.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
+
+    - bit: 26
+      short_name: WAIT_PAUSE
+      long_name: ENABLE_USER_WAIT_PAUSE
+      short_description: Enables TPAUSE/UMONITOR/UMWAIT instructions
+      long_description: |
+        If this control is 0, any execution of TPAUSE, UMONITOR, or UMWAIT causes a #UD.
+
+    - bit: 28
+      short_name: ENCLV_EXIT
+      long_name: ENABLE_ENCLV_EXITING
+      short_description: Enables ENCLV VM-exits
+      long_description: |
+        If this control is 1, executions of ENCLV consult the ENCLV-exiting bitmap to determine whether
+        the instruction causes a VM exit.
+      see:
+        - Vol3C[24.6.17(ENCLV-Exiting Bitmap)]
+        - Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
 
 - value: 0x48C
   name: VMX_EPT_VPID_CAP
