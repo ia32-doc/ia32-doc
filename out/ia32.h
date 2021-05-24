@@ -18120,11 +18120,11 @@ typedef union
     /**
      * [Bit 29] VM exit from VMX root operation.
      */
-    UINT32 VmExitFromVmxRoor                                       : 1;
-#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_BIT                  29
-#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_FLAG                 0x20000000
-#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR_MASK                 0x01
-#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOR(_)                   (((_) >> 29) & 0x01)
+    UINT32 VmExitFromVmxRoot                                       : 1;
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOT_BIT                  29
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOT_FLAG                 0x20000000
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOT_MASK                 0x01
+#define VMX_VMEXIT_REASON_VM_EXIT_FROM_VMX_ROOT(_)                   (((_) >> 29) & 0x01)
     UINT32 Reserved2                                               : 1;
 #define VMX_VMEXIT_REASON_RESERVED2_BIT                              30
 #define VMX_VMEXIT_REASON_RESERVED2_FLAG                             0x40000000
