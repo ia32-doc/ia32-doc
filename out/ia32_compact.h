@@ -3737,6 +3737,23 @@ typedef union {
  * @}
  */
 
+typedef enum {
+  invpcid_individual_address                                   = 0x00000000,
+  invpcid_single_context                                       = 0x00000001,
+  invpcid_all_context_with_globals                             = 0x00000002,
+  invpcid_all_context                                          = 0x00000003,
+} invpcid_type;
+
+typedef union {
+  struct {
+    uint64_t pcid                                                    : 12;
+    uint64_t reserved1                                               : 52;
+    uint64_t linear_address                                          : 64;
+  };
+
+  uint64_t flags;
+} invpcid_descriptor;
+
 /**
  * @defgroup segment_descriptors \
  *           Segment descriptors
