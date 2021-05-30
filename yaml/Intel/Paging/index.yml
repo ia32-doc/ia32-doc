@@ -5,3 +5,50 @@
   include:
   - 32bit
   - 64bit
+
+- name: INVPCID_TYPE
+  children_name_with_prefix: INVPCID
+  type: enum
+  size: 128
+  reference: Vol3C[4.10.4.1(Operations that Invalidate TLBs and Paging-Structure Caches)]
+  fields:
+  - value: 0
+    name: INDIVIDUAL_ADDRESS
+    description: |
+      If the INVPCID type is 0, the logical processor invalidates mappings-except global
+      translations-associated with the PCID specified in the INVPCID descriptor and that would be used to
+      translate the linear address specified in the INVPCID descriptor.2 (The instruction may also invalidate global
+      translations, as well as mappings associated with other PCIDs and for other linear addresses.)
+
+  - value: 1
+    name: SINGLE_CONTEXT
+    description: |
+      If the INVPCID type is 1, the logical processor invalidates all mappings-except global
+      translations-associated with the PCID specified in the INVPCID descriptor. (The instruction may also
+      invalidate global translations, as well as mappings associated with other PCIDs.)
+
+  - value: 2
+    name: ALL_CONTEXT_WITH_GLOBALS
+    description: |
+      If the INVPCID type is 2, the logical processor invalidates
+      mappings-including global translations-associated with all PCIDs.
+
+  - value: 3
+    name: ALL_CONTEXT
+    description: |
+      If the INVPCID type is 3, the logical processor invalidates mappings-except global translations-
+      associated with all PCIDs. (The instruction may also invalidate global translations.)
+
+- name: INVPCID_DESCRIPTOR
+  type: bitfield
+  size: 64
+  fields:
+  - bit: 0-11
+    name: PCID
+
+  - bit: 12-63
+    name: RESERVED1
+    description: Must be zero.
+
+  - bit: 64-127
+    name: LINEAR_ADDRESS
