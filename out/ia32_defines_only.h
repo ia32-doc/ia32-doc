@@ -4815,6 +4815,27 @@ typedef union {
  * @}
  */
 
+#define INVPCID_INDIVIDUAL_ADDRESS                                   0x00000000
+#define INVPCID_SINGLE_CONTEXT                                       0x00000001
+#define INVPCID_ALL_CONTEXT_WITH_GLOBALS                             0x00000002
+#define INVPCID_ALL_CONTEXT                                          0x00000003
+/**
+ * @}
+ */
+
+typedef union {
+  struct {
+    uint64_t pcid                                                    : 12;
+#define INVPCID_DESCRIPTOR_PCID                                      0xFFF
+    uint64_t reserved1                                               : 52;
+#define INVPCID_DESCRIPTOR_RESERVED1                                 0xFFFFFFFFFFFFF000
+    uint64_t linear_address                                          : 64;
+#define INVPCID_DESCRIPTOR_LINEAR_ADDRESS                            0xFFFFFFFFFFFFFFFF0000000000000000
+  };
+
+  uint64_t Flags;
+} invpcid_descriptor;
+
 /**
  * @defgroup segment_descriptors \
  *           Segment descriptors

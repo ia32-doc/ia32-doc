@@ -15062,6 +15062,64 @@ typedef union
  * @}
  */
 
+typedef enum
+{
+  /**
+   * If the INVPCID type is 0, the logical processor invalidates mappings-except global translations-associated with the PCID
+   * specified in the INVPCID descriptor and that would be used to translate the linear address specified in the INVPCID
+   * descriptor.2 (The instruction may also invalidate global translations, as well as mappings associated with other PCIDs
+   * and for other linear addresses.)
+   */
+  InvpcidIndividualAddress                                     = 0x00000000,
+
+  /**
+   * If the INVPCID type is 1, the logical processor invalidates all mappings-except global translations-associated with the
+   * PCID specified in the INVPCID descriptor. (The instruction may also invalidate global translations, as well as mappings
+   * associated with other PCIDs.)
+   */
+  InvpcidSingleContext                                         = 0x00000001,
+
+  /**
+   * If the INVPCID type is 2, the logical processor invalidates mappings-including global translations-associated with all
+   * PCIDs.
+   */
+  InvpcidAllContextWithGlobals                                 = 0x00000002,
+
+  /**
+   * If the INVPCID type is 3, the logical processor invalidates mappings-except global translations- associated with all
+   * PCIDs. (The instruction may also invalidate global translations.)
+   */
+  InvpcidAllContext                                            = 0x00000003,
+} INVPCID_TYPE;
+
+typedef union
+{
+  struct
+  {
+    UINT64 Pcid                                                    : 12;
+#define INVPCID_DESCRIPTOR_PCID_BIT                                  0
+#define INVPCID_DESCRIPTOR_PCID_FLAG                                 0xFFF
+#define INVPCID_DESCRIPTOR_PCID_MASK                                 0xFFF
+#define INVPCID_DESCRIPTOR_PCID(_)                                   (((_) >> 0) & 0xFFF)
+
+    /**
+     * [Bits 63:12] Must be zero.
+     */
+    UINT64 Reserved1                                               : 52;
+#define INVPCID_DESCRIPTOR_RESERVED1_BIT                             12
+#define INVPCID_DESCRIPTOR_RESERVED1_FLAG                            0xFFFFFFFFFFFFF000
+#define INVPCID_DESCRIPTOR_RESERVED1_MASK                            0xFFFFFFFFFFFFF
+#define INVPCID_DESCRIPTOR_RESERVED1(_)                              (((_) >> 12) & 0xFFFFFFFFFFFFF)
+    UINT64 LinearAddress                                           : 64;
+#define INVPCID_DESCRIPTOR_LINEAR_ADDRESS_BIT                        64
+#define INVPCID_DESCRIPTOR_LINEAR_ADDRESS_FLAG                       0xFFFFFFFFFFFFFFFF0000000000000000
+#define INVPCID_DESCRIPTOR_LINEAR_ADDRESS_MASK                       0xFFFFFFFFFFFFFFFF
+#define INVPCID_DESCRIPTOR_LINEAR_ADDRESS(_)                         (((_) >> 64) & 0xFFFFFFFFFFFFFFFF)
+  };
+
+  UINT64 Flags;
+} INVPCID_DESCRIPTOR;
+
 /**
  * @defgroup SEGMENT_DESCRIPTORS \
  *           Segment descriptors
