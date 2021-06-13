@@ -54,7 +54,7 @@
       description: Bits N–1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
 
   - short_name: EPML4E
-    long_name: EPT_PML4
+    long_name: EPT_PML4E
     short_description: Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
     long_description: |
       A 4-KByte naturally aligned EPT PML4 table is located at the physical address specified in bits 51:12 of the
@@ -117,8 +117,8 @@
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-  - short_name: EPT_PDPTE_1GB
-    long_name: EPDPTE_1GB
+  - short_name: EPDPTE_1GB
+    long_name: EPT_PDPTE_1GB
     description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page.
     type: bitfield
     size: 64
@@ -199,8 +199,8 @@
         control is 0, this bit is ignored.
       see: Vol3C[25.5.6.1(Convertible EPT Violations)]
 
-  - short_name: EPT_PDPTE
-    long_name: EPDPTE
+  - short_name: EPDPTE
+    long_name: EPT_PDPTE
     description: Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory.
     type: bitfield
     size: 64
@@ -246,8 +246,8 @@
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
-  - short_name: EPT_PDE_2MB
-    long_name: EPDE_2MB
+  - short_name: EPDE_2MB
+    long_name: EPT_PDE_2MB
     description: Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page.
     type: bitfield
     size: 64
@@ -328,8 +328,8 @@
         control is 0, this bit is ignored.
       see: Vol3C[25.5.6.1(Convertible EPT Violations)]
 
-  - short_name: EPT_PDE
-    long_name: EPDE
+  - short_name: EPDE
+    long_name: EPT_PDE
     description: Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table.
     type: bitfield
     size: 64
@@ -375,8 +375,8 @@
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of 4-KByte aligned EPT page table referenced by this entry.
 
-  - short_name: EPT_PTE
-    long_name: EPTE
+  - short_name: EPTE
+    long_name: EPT_PTE
     description: Format of an EPT Page-Table Entry that Maps a 4-KByte Page.
     type: bitfield
     size: 64
