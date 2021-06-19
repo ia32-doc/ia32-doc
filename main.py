@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from ia32doc.doc import Doc
 from ia32doc.processors.python.python_processor import DocPythonProcessor
@@ -12,7 +13,7 @@ TEST_FILE = 'yaml/Intel/VMX/index.yml'
 
 
 def process(config, file):
-    processor = DocPythonProcessor()
+    processor = DocPythonProcessor(os.path.join("out", "python"))
     options = DocProcessorOptions(file=config)
     with processor.opt.push(options):
         processor.run(Doc.parse(file))

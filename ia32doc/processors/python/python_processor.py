@@ -14,16 +14,21 @@ from ia32doc.doc import DocGroup,\
 
 
 class DocPythonProcessor(DocProcessor):
-    def __init__(self):
+    def __init__(self, out_dir):
         super().__init__()
         directory = os.path.split(__file__)[0]
         self._templates_dir = os.path.join(directory, 'python-templates')
-        self._out_dir = os.path.join('out', 'python')
+        self._out_dir = out_dir
+        print("Output dir: {}".format(os.path.abspath(self._out_dir)))
         os.makedirs(self._out_dir, exist_ok=True)
+
+        # Copy utils directory to the outer module
         dst_utils_dir = os.path.join(self._out_dir, 'utils')
         src_utils_dir = os.path.join(directory, 'utils')
         shutil.rmtree(dst_utils_dir, ignore_errors=True)
         shutil.copytree(src_utils_dir, dst_utils_dir)
+
+        self._current_group_file = None
 
     def _get_template(self, template_name: str) -> jinja2.Template:
         try:
@@ -33,22 +38,17 @@ class DocPythonProcessor(DocProcessor):
         except (FileNotFoundError, OSError) as e:
             raise jinja2.TemplateError(e)
 
-    def _render_template_to_file(self, doc, template_name, output_path):
-        full_output_path = os.path.join(self._out_dir, output_path)
-        # Create directories if not exists
-        directories = os.path.split(full_output_path)[0]
-        os.makedirs(directories, exist_ok=True)
-        with open(full_output_path, 'w') as output_file:
-            template = self._get_template(template_name)
-            # strip non-ascii characters from the description
-            description = \
-                doc.long_description.encode('ascii', 'ignore').decode('ascii')
-            content = template.render(
-                doc=doc,
-                strip_description=lambda d: d.encode('ascii', 'ignore').decode('ascii'),
-                humps=humps,
-            )
-            output_file.write(content)
+    def _append_template_to_group(self, doc, template_name):
+        template = self._get_template(template_name)
+        # strip non-ascii characters from the description
+        description = \
+            doc.long_description.encode('ascii', 'ignore').decode('ascii')
+        content = template.render(
+            doc=doc,
+            strip_description=lambda d: d.encode('ascii', 'ignore').decode('ascii'),
+            humps=humps,
+        )
+        self._current_group_file.write(content)
 
     @staticmethod
     def _get_parent_directory(doc):
@@ -62,29 +62,36 @@ class DocPythonProcessor(DocProcessor):
     def process_group(self, doc: DocGroup) -> None:
         # Create a package for the given group
         init_file_path = os.path.join(
+            self._out_dir,
             self._get_parent_directory(doc),
             doc.short_name.lower(),
             "__init__.py"
         )
-        description = doc.long_description
-        fields = list(map(lambda f: f.short_name.lower(), doc.fields))
-        self._render_template_to_file(
+
+        if self._current_group_file is not None:
+            self._current_group_file.close()
+
+        # Create directories that do not exists
+        directories = os.path.split(init_file_path)[0]
+        os.makedirs(directories, exist_ok=True)
+        self._current_group_file = open(init_file_path, "w")
+
+        # Include utils
+        self._current_group_file.write(
+            "from future.utils import with_metaclass\n"
+            "from utils.bit_field import *\n\n\n"
+        )
+
+        self._append_template_to_group(
             doc,
             "group.j2",
-            init_file_path,
         )
         self.process(doc.fields)
 
     def process_enum(self, doc: DocEnum) -> None:
-        breakpoint()
-        name = humps.pascalize(doc.short_name.lower())
-        description = doc.long_description
-        fields = doc.fields
-        enum_file_path = name
-        self._render_template_to_file(
+        self._append_template_to_group(
             doc,
             "enum.j2",
-            enum_file_path,
         )
 
     def process_enum_field(self, doc: DocEnumField) -> None:
@@ -100,17 +107,9 @@ class DocPythonProcessor(DocProcessor):
         breakpoint()
 
     def process_bitfield(self, doc: DocBitfield) -> None:
-        name = humps.pascalize(doc.short_name.lower())
-        description = doc.long_description
-        fields = doc.fields
-        bitfield_file_path = os.path.join(
-            self._get_parent_directory(doc),
-            doc.short_name.lower() + '.py'
-        )
-        self._render_template_to_file(
+        self._append_template_to_group(
             doc,
             "bitfield.j2",
-            bitfield_file_path,
         )
 
     def process_bitfield_field(self, doc: DocBitfieldField) -> None:

@@ -1,6 +1,4 @@
-from utils.bit_field import BitField
-
-class {{ humps.pascalize(doc.short_name.lower()) }}(BitField):
+class {{ humps.pascalize(doc.short_name.lower()) }}(with_metaclass(BitFieldMeta, BitField)):
     """{{ strip_description(doc.long_description) }}"""
     def __init__(self, value):
         super().__init__(value, size_in_bytes={{ doc.size // 8 }})
@@ -12,15 +10,16 @@ class {{ humps.pascalize(doc.short_name.lower()) }}(BitField):
     ]
 
     {% for field in doc.fields %}
-    @property
-    def {{ field.short_name }}(self):
+    {{ field.short_name }} = BitFieldMember(
+        "{{ field.short_name }}",
         """
-        {{ strip_description(field.short_description) }}
+        {{ strip_description(field.short_description) }}:
         {{ strip_description(field.long_description) }}
-        """
-        return self[{{ field.bit[0] }}:{{ field.bit[1] }}]
+        """,
+        {{ field.bit[0] }},
+        {{ field.bit[1] - field.bit[0] }}
+    )
 
-    @{{ field.short_name }}.setter
-    def {{ field.short_name }}(self, value):
-        self[{{ field.bit[0] }}:{{ field.bit[1] }}] = value
     {% endfor %}
+
+
