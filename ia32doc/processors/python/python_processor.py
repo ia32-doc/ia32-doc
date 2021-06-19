@@ -101,9 +101,6 @@ class DocPythonProcessor(DocProcessor):
             "enum.j2",
         )
 
-    def process_enum_field(self, doc: DocEnumField) -> None:
-        breakpoint()
-
     def process_struct(self, doc: DocStruct) -> None:
         struct_fields = [f for f in doc.fields if 'struct_field' == f.type]
         definitions = [
@@ -121,9 +118,6 @@ class DocPythonProcessor(DocProcessor):
             definitions=definitions,
         )
 
-    def process_struct_field(self, doc: DocStructField) -> None:
-        breakpoint()
-
     def process_definition(self, doc: DocDefinition) -> None:
         definition = self._create_definition(doc)
         self._current_group_file.write(definition + "\n\n")
@@ -133,6 +127,3 @@ class DocPythonProcessor(DocProcessor):
             doc,
             "bitfield.j2",
         )
-
-    def process_bitfield_field(self, doc: DocBitfieldField) -> None:
-        breakpoint()
