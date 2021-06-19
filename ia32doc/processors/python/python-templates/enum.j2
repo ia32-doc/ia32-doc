@@ -1,0 +1,16 @@
+import enum
+
+class {{ name }}:
+    """
+    {{ description }}
+    """
+    def __init__(self):
+        self._size = {{ size }}
+
+    {% for name, value in fields %}
+      {{ name }} = {{ value }}
+    {% endfor %}
+
+    @property
+    def size(self):
+        return self._size

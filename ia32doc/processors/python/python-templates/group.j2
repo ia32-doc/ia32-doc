@@ -1,0 +1,14 @@
+description = """
+{{ strip_description(doc.long_description) }}
+"""
+
+{% for member in doc.fields -%}
+    from .{{ member.short_name.lower() }} import *
+{% endfor %}
+
+
+__all__ = [
+    {% for member in doc.fields %}
+        "{{ member.short_name.lower() }}",
+    {%- endfor %}
+]

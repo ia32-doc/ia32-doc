@@ -37,13 +37,7 @@ class DocProcessor(object):
         self.last_new_line_count = 0
 
     def run(self, doc_list: List[DocBase]) -> None:
-        from contextlib import redirect_stdout
-
-        with open(self.opt.output_filename, 'w') as f:
-            with redirect_stdout(f):
-                print(self.opt.output_prepend)
-                self.process(doc_list)
-                print(self.opt.output_append)
+        self.process(doc_list)
 
     def print(self, text: str) -> None:
         if text:
