@@ -43,6 +43,13 @@ class BitFieldMember(object):
         methods['offset'] = self.offset
         methods['__doc__'] = self._description
 
+        # Overload __str__ in case of integer
+        def custom_str(instance, *args, **kwargs):
+            return hex(instance)
+
+        if self._type is int:
+            methods['__str__'] = custom_str
+
         container = type.__new__(
             type,
             self._name,
@@ -68,7 +75,10 @@ class BitFieldMeta(type):
     def __new__(cls, name, bases, dct):
         # Build both bitmask and supported methods
         fields = [
-            key for key, value in dct.items() if hasattr(value, 'field')
+            key for
+            key, value in
+            dct.items() if
+            hasattr(value, 'field') and "reserved" not in key.lower()
         ]
         # Create bitmask
         total_bits = \
@@ -119,7 +129,7 @@ class BitField(object):
                 v == '1' and m == '0'
             ]
             raise ValueError(
-                "Invalid assignment: bits {} must be 0!".format(unmatching_bits)
+                "Invalid assignment: bit(s) {} must be 0!".format(unmatching_bits)
             )
 
     @property
@@ -155,11 +165,26 @@ class BitField(object):
     def __repr__(self):
         return '0x' + '{0:x}'.format(self.raw).zfill(self._total_bits // 4)
 
-    def __str__(self):
+    def flags(self):
         enabled = [
-            field for field in self._fields if 0 != self.__getattribute__(field)
+            field for
+            field in
+            self._fields if
+            0 != self.__getattribute__(field) and
+            1 == self.__getattribute__(field).width
         ]
         return ",".join(enabled)
+
+    def __str__(self):
+        return "\n".join(
+            ["[{} ({}:{})] {}".format(
+                field,
+                self.__getattribute__(field).offset,
+                self.__getattribute__(field).offset +
+                self.__getattribute__(field).width,
+                self.__getattribute__(field)
+            ) for field in self._fields]
+        )
 
     def bin_str(self):
         return '0b' + self._to_binary_string(self._raw)[::-1]
