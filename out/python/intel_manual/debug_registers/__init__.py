@@ -2,7 +2,7 @@ from future.utils import with_metaclass
 from utils.bit_field import *
 
 
-description = """
+__doc__ = """
 Eight debug registers control the debug
 operation of the processor. These registers can be written to and read using the move to/from debug register form
 of the MOV instruction. A debug register may be the source or destination operand for one of these instructions.
@@ -28,7 +28,6 @@ class Dr6(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["BREAKPOINT_CONDITION","BD","BS","BT","RTM",]
 
     
     BREAKPOINT_CONDITION = BitFieldMember(
@@ -106,7 +105,6 @@ class Dr7(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["L0","G0","L1","G1","L2","G2","L3","G3","LE","GE","RTM","GD","RW0","LEN0","RW1","LEN1","RW2","LEN2","RW3","LEN3",]
 
     
     L0 = BitFieldMember(

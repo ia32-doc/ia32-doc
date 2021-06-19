@@ -3,11 +3,6 @@ class {{ humps.pascalize(doc.short_name.lower()) }}(with_metaclass(BitFieldMeta,
     def __init__(self, value):
         super().__init__(value, size_in_bytes={{ doc.size // 8 }})
 
-    _FIELDS = [
-    {%- for field in doc.fields -%}
-    "{{ field.short_name }}",
-    {%- endfor -%}
-    ]
 
     {% for field in doc.fields %}
     {{ field.short_name }} = BitFieldMember(

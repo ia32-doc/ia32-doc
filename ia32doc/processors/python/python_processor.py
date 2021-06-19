@@ -38,15 +38,15 @@ class DocPythonProcessor(DocProcessor):
         except (FileNotFoundError, OSError) as e:
             raise jinja2.TemplateError(e)
 
-    def _append_template_to_group(self, doc, template_name):
+    def _append_template_to_group(self, doc, template_name, **kwargs):
         template = self._get_template(template_name)
         # strip non-ascii characters from the description
-        description = \
-            doc.long_description.encode('ascii', 'ignore').decode('ascii')
         content = template.render(
             doc=doc,
             strip_description=lambda d: d.encode('ascii', 'ignore').decode('ascii'),
             humps=humps,
+            hex=hex,
+            **kwargs
         )
         self._current_group_file.write(content)
 
@@ -58,6 +58,13 @@ class DocPythonProcessor(DocProcessor):
             doc = doc.parent
 
         return os.path.join(*directories)
+
+    @staticmethod
+    def _create_definition(doc):
+        value = doc.value
+        if isinstance(value, int):
+            value = hex(value)
+        return "{} = {}".format(doc.short_name, value)
 
     def process_group(self, doc: DocGroup) -> None:
         # Create a package for the given group
@@ -98,13 +105,28 @@ class DocPythonProcessor(DocProcessor):
         breakpoint()
 
     def process_struct(self, doc: DocStruct) -> None:
-        breakpoint()
+        struct_fields = [f for f in doc.fields if 'struct_field' == f.type]
+        definitions = [
+            self._create_definition(f) for
+            f in
+            doc.fields if
+            'definitions' == doc.type
+        ]
+        total_size = sum(map(lambda f: f.size, struct_fields))
+        self._append_template_to_group(
+            doc,
+            "struct.j2",
+            total_size=total_size,
+            struct_fields=struct_fields,
+            definitions=definitions,
+        )
 
     def process_struct_field(self, doc: DocStructField) -> None:
         breakpoint()
 
     def process_definition(self, doc: DocDefinition) -> None:
-        breakpoint()
+        definition = self._create_definition(doc)
+        self._current_group_file.write(definition + "\n\n")
 
     def process_bitfield(self, doc: DocBitfield) -> None:
         self._append_template_to_group(

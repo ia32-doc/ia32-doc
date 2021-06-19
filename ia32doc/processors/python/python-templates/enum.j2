@@ -1,16 +1,7 @@
-import enum
+class {{ humps.pascalize(doc.short_name.lower()) }}:
+    """{{ strip_description(doc.long_description) }}"""
 
-class {{ name }}:
-    """
-    {{ description }}
-    """
-    def __init__(self):
-        self._size = {{ size }}
-
-    {% for name, value in fields %}
-      {{ name }} = {{ value }}
+    {% for field in doc.fields %}
+      {{ field.short_name }} = {{ hex(field.value) }}
     {% endfor %}
 
-    @property
-    def size(self):
-        return self._size

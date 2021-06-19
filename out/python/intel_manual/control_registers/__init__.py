@@ -2,7 +2,7 @@ from future.utils import with_metaclass
 from utils.bit_field import *
 
 
-description = """
+__doc__ = """
 Control registers (CR0, CR1, CR2, CR3, and CR4) determine operating mode of the processor and
 the characteristics of the currently executing task. These registers are 32 bits in all 32-bit modes and compatibility
 mode.
@@ -56,7 +56,6 @@ class Cr0(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["PE","MP","EM","TS","ET","NE","WP","AM","NW","CD","PG",]
 
     
     PE = BitFieldMember(
@@ -260,7 +259,6 @@ class Cr3(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["PWT","PCD","PD_PHYS_ADDR",]
 
     
     PWT = BitFieldMember(
@@ -307,7 +305,6 @@ class Cr4(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["VME","PVI","TSD","DE","PSE","PAE","MCE","PGE","PCE","OSFXSR","OSXMMEXCPT","UMIP","VMXE","SMXE","FSGSBASE","PCIDE","OSXSAVE","SMEP","SMAP","PKE",]
 
     
     VME = BitFieldMember(
@@ -599,7 +596,6 @@ class Cr8(with_metaclass(BitFieldMeta, BitField)):
     def __init__(self, value):
         super().__init__(value, size_in_bytes=8)
 
-    _FIELDS = ["TPL","RESERVED",]
 
     
     TPL = BitFieldMember(
