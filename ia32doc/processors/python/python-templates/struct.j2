@@ -15,7 +15,7 @@ class {{ class_name(doc) }}(Struct):
         self._{{ member.short_name }} = self.{{ "_MemberContainer" + class_name(member) }}(0, {{ offset.value }}, {{ member.size // 8 }} )
 {%- set offset.value = offset.value + (member.size // 8) %}
 {%- endfor %}
-        super().__init__(value)
+        super({{ class_name(doc) }}, self).__init__(value)
 
 {% for member in struct_members %}
     @property

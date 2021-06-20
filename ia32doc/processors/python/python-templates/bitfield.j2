@@ -3,7 +3,7 @@ class {{ name_prefix + class_name(doc) }}(with_metaclass(BitFieldMeta, BitField)
     {{ get_description(doc) }}
     """
     def __init__(self, value=0, byte_offset=None, byte_width=None):
-        super().__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
+        super({{ name_prefix + class_name(doc) }}, self).__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
 
 {% if 'struct_field' == doc.type %}
     value = BitFieldMember('value', 'value', 0, {{ doc.size }})
