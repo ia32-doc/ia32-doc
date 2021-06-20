@@ -1,8 +1,0 @@
-setup.py
-ia32_python/__init__.py
-ia32_python.egg-info/PKG-INFO
-ia32_python.egg-info/SOURCES.txt
-ia32_python.egg-info/dependency_links.txt
-ia32_python.egg-info/requires.txt
-ia32_python.egg-info/top_level.txt
-ia32_python/intel_manual/__init__.py
