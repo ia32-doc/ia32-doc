@@ -16,7 +16,7 @@ class DocPythonProcessor(DocProcessor):
         directory = os.path.split(__file__)[0]
         self._templates_dir = os.path.join(directory, 'python-templates')
         self._out_dir = out_dir
-        self._package_dir = os.path.join(out_dir, "ia32_doc")
+        self._package_dir = os.path.join(out_dir, "ia32_python")
         os.makedirs(self._package_dir, exist_ok=True)
 
         # Create empty __init__.py
@@ -139,8 +139,8 @@ class DocPythonProcessor(DocProcessor):
         # Include utils
         self._current_group_file.write(
             "from future.utils import with_metaclass\n"
-            "from utils.ia32_struct import *\n"
-            "from utils.ia32_bit_field import *\n\n\n"
+            "from ia32_python.utils.ia32_struct import *\n"
+            "from ia32_python.utils.ia32_bit_field import *\n\n\n"
         )
 
         self._append_template_to_group(
