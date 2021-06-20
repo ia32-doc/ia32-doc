@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -13,7 +13,7 @@ traversing a set of EPT paging structures to produce physical addresses that are
 """
 
 
-class EptPointer(with_metaclass(BitFieldMeta, BitField)):
+class EptPointer(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Extended-Page-Table Pointer (EPTP)
 
@@ -27,7 +27,7 @@ as well as other EPT configuration information.
 
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief EPT paging-structure memory type:
@@ -55,7 +55,7 @@ Other values are reserved.
     )
 
 
-    PAGE_WALK_LENGTH = BitFieldMember(
+    PAGE_WALK_LENGTH = Ia32BitFieldMember(
         "PAGE_WALK_LENGTH",
         """
         @brief This value is 1 less than the EPT page-walk length
@@ -71,7 +71,7 @@ This value is 1 less than the EPT page-walk length.
     )
 
 
-    ENABLE_ACCESS_AND_DIRTY_FLAGS = BitFieldMember(
+    ENABLE_ACCESS_AND_DIRTY_FLAGS = Ia32BitFieldMember(
         "ENABLE_ACCESS_AND_DIRTY_FLAGS",
         """
         @brief Setting this control to 1 enables accessed and dirty flags for EPT
@@ -87,7 +87,7 @@ Setting this control to 1 enables accessed and dirty flags for EPT.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Bits N1:12 of the physical address of the 4-KByte aligned EPT PML4 table
@@ -101,7 +101,7 @@ Bits N1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
     )
 
 
-class EptPml4(with_metaclass(BitFieldMeta, BitField)):
+class EptPml4(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT PML4 Entry (PML4E) that References an EPT Page-Directory-Pointer Table
 
@@ -128,7 +128,7 @@ GByte region of the guest-physical-address space.
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry
@@ -142,7 +142,7 @@ Read access; indicates whether reads are allowed from the 512-GByte region contr
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry
@@ -156,7 +156,7 @@ Write access; indicates whether writes are allowed from the 512-GByte region con
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether instruction
@@ -178,7 +178,7 @@ allowed from supervisor-mode linear addresses in the 512-GByte region controlled
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 512-GByte region
@@ -196,7 +196,7 @@ controlled by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -214,7 +214,7 @@ controlled by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
@@ -228,7 +228,7 @@ Physical address of 4-KByte aligned EPT page-directory-pointer table referenced 
     )
 
 
-class Epdpte1gb(with_metaclass(BitFieldMeta, BitField)):
+class Epdpte1gb(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
 
@@ -239,7 +239,7 @@ Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte 
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry
@@ -253,7 +253,7 @@ Read access; indicates whether reads are allowed from the 1-GByte page reference
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry
@@ -267,7 +267,7 @@ Write access; indicates whether writes are allowed from the 1-GByte page referen
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether
@@ -289,7 +289,7 @@ allowed from supervisor-mode linear addresses in the 1-GByte page controlled by 
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief EPT memory type for this 1-GByte page
@@ -305,7 +305,7 @@ EPT memory type for this 1-GByte page.
     )
 
 
-    IGNORE_PAT = BitFieldMember(
+    IGNORE_PAT = Ia32BitFieldMember(
         "IGNORE_PAT",
         """
         @brief Ignore PAT memory type for this 1-GByte page
@@ -321,7 +321,7 @@ Ignore PAT memory type for this 1-GByte page.
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         @brief Must be 1 (otherwise, this entry references an EPT page directory)
@@ -335,7 +335,7 @@ Must be 1 (otherwise, this entry references an EPT page directory).
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page referenced
@@ -353,7 +353,7 @@ by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    DIRTY = BitFieldMember(
+    DIRTY = Ia32BitFieldMember(
         "DIRTY",
         """
         @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced by
@@ -371,7 +371,7 @@ this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -389,7 +389,7 @@ by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
@@ -403,7 +403,7 @@ Physical address of 4-KByte aligned EPT page-directory-pointer table referenced 
     )
 
 
-    SUPPRESS_VE = BitFieldMember(
+    SUPPRESS_VE = Ia32BitFieldMember(
         "SUPPRESS_VE",
         """
         @brief Suppress \#VE. If the EPT-violation \#VE VM-execution control is 1, EPT violations caused by accesses to this page
@@ -423,7 +423,7 @@ control is 0, this bit is ignored.
     )
 
 
-class Epdpte(with_metaclass(BitFieldMeta, BitField)):
+class Epdpte(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory
 
@@ -434,7 +434,7 @@ Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an E
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry
@@ -448,7 +448,7 @@ Read access; indicates whether reads are allowed from the 1-GByte region control
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry
@@ -462,7 +462,7 @@ Write access; indicates whether writes are allowed from the 1-GByte region contr
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether instruction
@@ -484,7 +484,7 @@ allowed from supervisor-mode linear addresses in the 1-GByte region controlled b
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte region controlled
@@ -502,7 +502,7 @@ by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -520,7 +520,7 @@ controlled by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
@@ -534,7 +534,7 @@ Physical address of 4-KByte aligned EPT page-directory-pointer table referenced 
     )
 
 
-class Epde2mb(with_metaclass(BitFieldMeta, BitField)):
+class Epde2mb(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page
 
@@ -545,7 +545,7 @@ Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page.
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry
@@ -559,7 +559,7 @@ Read access; indicates whether reads are allowed from the 2-MByte page reference
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry
@@ -573,7 +573,7 @@ Write access; indicates whether writes are allowed from the 2-MByte page referen
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether instruction
@@ -595,7 +595,7 @@ allowed from supervisor-mode linear addresses in the 2-MByte page controlled by 
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief EPT memory type for this 2-MByte page
@@ -611,7 +611,7 @@ EPT memory type for this 2-MByte page.
     )
 
 
-    IGNORE_PAT = BitFieldMember(
+    IGNORE_PAT = Ia32BitFieldMember(
         "IGNORE_PAT",
         """
         @brief Ignore PAT memory type for this 2-MByte page
@@ -627,7 +627,7 @@ Ignore PAT memory type for this 2-MByte page.
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         @brief Must be 1 (otherwise, this entry references an EPT page table)
@@ -641,7 +641,7 @@ Must be 1 (otherwise, this entry references an EPT page table).
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page referenced
@@ -659,7 +659,7 @@ by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    DIRTY = BitFieldMember(
+    DIRTY = Ia32BitFieldMember(
         "DIRTY",
         """
         @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced by
@@ -677,7 +677,7 @@ this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -695,7 +695,7 @@ by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry
@@ -709,7 +709,7 @@ Physical address of 4-KByte aligned EPT page-directory-pointer table referenced 
     )
 
 
-    SUPPRESS_VE = BitFieldMember(
+    SUPPRESS_VE = Ia32BitFieldMember(
         "SUPPRESS_VE",
         """
         @brief Suppress \#VE. If the EPT-violation \#VE VM-execution control is 1, EPT violations caused by accesses to this page
@@ -729,7 +729,7 @@ control is 0, this bit is ignored.
     )
 
 
-class Epde(with_metaclass(BitFieldMeta, BitField)):
+class Epde(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table
 
@@ -740,7 +740,7 @@ Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table.
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry
@@ -754,7 +754,7 @@ Read access; indicates whether reads are allowed from the 2-MByte region control
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry
@@ -768,7 +768,7 @@ Write access; indicates whether writes are allowed from the 2-MByte region contr
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether instruction
@@ -790,7 +790,7 @@ allowed from supervisor-mode linear addresses in the 2-MByte region controlled b
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte region controlled
@@ -808,7 +808,7 @@ by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -826,7 +826,7 @@ controlled by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned EPT page table referenced by this entry
@@ -840,7 +840,7 @@ Physical address of 4-KByte aligned EPT page table referenced by this entry.
     )
 
 
-class Epte(with_metaclass(BitFieldMeta, BitField)):
+class Epte(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of an EPT Page-Table Entry that Maps a 4-KByte Page
 
@@ -851,7 +851,7 @@ Format of an EPT Page-Table Entry that Maps a 4-KByte Page.
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         @brief Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry
@@ -865,7 +865,7 @@ Read access; indicates whether reads are allowed from the 4-KByte page reference
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         @brief Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry
@@ -879,7 +879,7 @@ Write access; indicates whether writes are allowed from the 4-KByte page referen
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         @brief If the mode-based execute control for EPT VM-execution control is 0, execute access; indicates whether
@@ -901,7 +901,7 @@ allowed from supervisor-mode linear addresses in the 4-KByte page controlled by 
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief EPT memory type for this 4-KByte page
@@ -917,7 +917,7 @@ EPT memory type for this 4-KByte page.
     )
 
 
-    IGNORE_PAT = BitFieldMember(
+    IGNORE_PAT = Ia32BitFieldMember(
         "IGNORE_PAT",
         """
         @brief Ignore PAT memory type for this 4-KByte page
@@ -933,7 +933,7 @@ Ignore PAT memory type for this 4-KByte page.
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         @brief If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 4-KByte page referenced
@@ -951,7 +951,7 @@ by this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    DIRTY = BitFieldMember(
+    DIRTY = Ia32BitFieldMember(
         "DIRTY",
         """
         @brief If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced by
@@ -969,7 +969,7 @@ this entry. Ignored if bit 6 of EPTP is 0.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         @brief Execute access for user-mode linear addresses. If the mode-based execute control for EPT VM-execution control is
@@ -987,7 +987,7 @@ by this entry. If that control is 0, this bit is ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of the 4-KByte page referenced by this entry
@@ -1001,7 +1001,7 @@ Physical address of the 4-KByte page referenced by this entry.
     )
 
 
-    SUPPRESS_VE = BitFieldMember(
+    SUPPRESS_VE = Ia32BitFieldMember(
         "SUPPRESS_VE",
         """
         @brief Suppress \#VE. If the EPT-violation \#VE VM-execution control is 1, EPT violations caused by accesses to this page
@@ -1021,7 +1021,7 @@ control is 0, this bit is ignored.
     )
 
 
-class EptEntry(with_metaclass(BitFieldMeta, BitField)):
+class EptEntry(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of a common EPT Entry
 
@@ -1032,7 +1032,7 @@ Format of a common EPT Entry.
 
 
 
-    READ = BitFieldMember(
+    READ = Ia32BitFieldMember(
         "READ",
         """
         
@@ -1044,7 +1044,7 @@ Format of a common EPT Entry.
     )
 
 
-    WRITE = BitFieldMember(
+    WRITE = Ia32BitFieldMember(
         "WRITE",
         """
         
@@ -1056,7 +1056,7 @@ Format of a common EPT Entry.
     )
 
 
-    EXECUTE = BitFieldMember(
+    EXECUTE = Ia32BitFieldMember(
         "EXECUTE",
         """
         
@@ -1068,7 +1068,7 @@ Format of a common EPT Entry.
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         
@@ -1080,7 +1080,7 @@ Format of a common EPT Entry.
     )
 
 
-    IGNORE_PAT = BitFieldMember(
+    IGNORE_PAT = Ia32BitFieldMember(
         "IGNORE_PAT",
         """
         
@@ -1092,7 +1092,7 @@ Format of a common EPT Entry.
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         
@@ -1104,7 +1104,7 @@ Format of a common EPT Entry.
     )
 
 
-    ACCESSED = BitFieldMember(
+    ACCESSED = Ia32BitFieldMember(
         "ACCESSED",
         """
         
@@ -1116,7 +1116,7 @@ Format of a common EPT Entry.
     )
 
 
-    DIRTY = BitFieldMember(
+    DIRTY = Ia32BitFieldMember(
         "DIRTY",
         """
         
@@ -1128,7 +1128,7 @@ Format of a common EPT Entry.
     )
 
 
-    USER_MODE_EXECUTE = BitFieldMember(
+    USER_MODE_EXECUTE = Ia32BitFieldMember(
         "USER_MODE_EXECUTE",
         """
         
@@ -1140,7 +1140,7 @@ Format of a common EPT Entry.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         
@@ -1152,7 +1152,7 @@ Format of a common EPT Entry.
     )
 
 
-    SUPPRESS_VE = BitFieldMember(
+    SUPPRESS_VE = Ia32BitFieldMember(
         "SUPPRESS_VE",
         """
         

@@ -1,7 +1,7 @@
-from .byte_operations import *
+from .ia32_byte_operations import *
 
 
-class Struct(object):
+class Ia32Struct(object):
     def __init__(self, value=0):
         if not isinstance(value, (int, str, bytes)):
             raise TypeError("argument must in int or bytes!")

@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -18,20 +18,20 @@ Enclave Page Cache.
 CPUID_INTEL_SGX = 0x12
 
 
-class CpuidEax12Ecx00(Struct):
+class CpuidEax12Ecx00(Ia32Struct):
     """@brief Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)
 
 Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx00._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SGX1 = BitFieldMember(
+        SGX1 = Ia32BitFieldMember(
             "SGX1",
             """
             @brief If 1, Indicates Intel SGX supports the collection of SGX1 leaf functions
@@ -45,7 +45,7 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
         )
     
     
-        SGX2 = BitFieldMember(
+        SGX2 = Ia32BitFieldMember(
             "SGX2",
             """
             @brief If 1, Indicates Intel SGX supports the collection of SGX2 leaf functions
@@ -59,7 +59,7 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
         )
     
     
-        SGX_ENCLV_ADVANCED = BitFieldMember(
+        SGX_ENCLV_ADVANCED = Ia32BitFieldMember(
             "SGX_ENCLV_ADVANCED",
             """
             @brief If 1, indicates Intel SGX supports ENCLV instruction leaves EINCVIRTCHILD, EDECVIRTCHILD, and ESETCONTEXT
@@ -73,7 +73,7 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
         )
     
     
-        SGX_ENCLS_ADVANCED = BitFieldMember(
+        SGX_ENCLS_ADVANCED = Ia32BitFieldMember(
             "SGX_ENCLS_ADVANCED",
             """
             @brief If 1, indicates Intel SGX supports ENCLS instruction leaves ETRACKC, ERDINFO, ELDBC, and ELDUC
@@ -88,16 +88,16 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx00._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        MISCSELECT = BitFieldMember(
+        MISCSELECT = Ia32BitFieldMember(
             "MISCSELECT",
             """
             @brief Bit vector of supported extended SGX features
@@ -112,16 +112,16 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx00._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief ECX is reserved
@@ -136,16 +136,16 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx00._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        MAX_ENCLAVE_SIZE_NOT64 = BitFieldMember(
+        MAX_ENCLAVE_SIZE_NOT64 = Ia32BitFieldMember(
             "MAX_ENCLAVE_SIZE_NOT64",
             """
             @brief The maximum supported enclave size in non-64-bit mode is 2^(EDX[7:0])
@@ -159,7 +159,7 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
         )
     
     
-        MAX_ENCLAVE_SIZE_64 = BitFieldMember(
+        MAX_ENCLAVE_SIZE_64 = Ia32BitFieldMember(
             "MAX_ENCLAVE_SIZE_64",
             """
             @brief The maximum supported enclave size in 64-bit mode is 2^(EDX[15:8])
@@ -217,20 +217,20 @@ Intel SGX Capability Enumeration Leaf, sub-leaf 0 (EAX = 12H, ECX = 0)."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax12Ecx01(Struct):
+class CpuidEax12Ecx01(Ia32Struct):
     """@brief Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)
 
 Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx01._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        VALID_SECS_ATTRIBUTES_0 = BitFieldMember(
+        VALID_SECS_ATTRIBUTES_0 = Ia32BitFieldMember(
             "VALID_SECS_ATTRIBUTES_0",
             """
             @brief Reports the valid bits of SECS.ATTRIBUTES[31:0] that software can set with ECREATE
@@ -245,16 +245,16 @@ Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx01._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        VALID_SECS_ATTRIBUTES_1 = BitFieldMember(
+        VALID_SECS_ATTRIBUTES_1 = Ia32BitFieldMember(
             "VALID_SECS_ATTRIBUTES_1",
             """
             @brief Reports the valid bits of SECS.ATTRIBUTES[63:32] that software can set with ECREATE
@@ -269,16 +269,16 @@ Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx01._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        VALID_SECS_ATTRIBUTES_2 = BitFieldMember(
+        VALID_SECS_ATTRIBUTES_2 = Ia32BitFieldMember(
             "VALID_SECS_ATTRIBUTES_2",
             """
             @brief Reports the valid bits of SECS.ATTRIBUTES[95:64] that software can set with ECREATE
@@ -293,16 +293,16 @@ Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx01._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        VALID_SECS_ATTRIBUTES_3 = BitFieldMember(
+        VALID_SECS_ATTRIBUTES_3 = Ia32BitFieldMember(
             "VALID_SECS_ATTRIBUTES_3",
             """
             @brief Reports the valid bits of SECS.ATTRIBUTES[127:96] that software can set with ECREATE
@@ -360,20 +360,20 @@ Intel SGX Attributes Enumeration Leaf, sub-leaf 1 (EAX = 12H, ECX = 1)."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax12Ecx02pSlt0(Struct):
+class CpuidEax12Ecx02pSlt0(Ia32Struct):
     """@brief Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)
 
 Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt0._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SUB_LEAF_TYPE = BitFieldMember(
+        SUB_LEAF_TYPE = Ia32BitFieldMember(
             "SUB_LEAF_TYPE",
             """
             @brief Sub-leaf Type 0. Indicates this sub-leaf is invalid
@@ -388,16 +388,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt0._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        ZERO = BitFieldMember(
+        ZERO = Ia32BitFieldMember(
             "ZERO",
             """
             @brief EBX is zero
@@ -412,16 +412,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt0._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        ZERO = BitFieldMember(
+        ZERO = Ia32BitFieldMember(
             "ZERO",
             """
             @brief ECX is zero
@@ -436,16 +436,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt0._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        ZERO = BitFieldMember(
+        ZERO = Ia32BitFieldMember(
             "ZERO",
             """
             @brief EDX is zero
@@ -503,20 +503,20 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax12Ecx02pSlt1(Struct):
+class CpuidEax12Ecx02pSlt1(Ia32Struct):
     """@brief Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)
 
 Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt1._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SUB_LEAF_TYPE = BitFieldMember(
+        SUB_LEAF_TYPE = Ia32BitFieldMember(
             "SUB_LEAF_TYPE",
             """
             @brief Sub-leaf Type 1. This sub-leaf enumerates an EPC section. EBX:EAX and EDX:ECX provide information on the
@@ -532,7 +532,7 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
         )
     
     
-        EPC_BASE_PHYSICAL_ADDRESS_1 = BitFieldMember(
+        EPC_BASE_PHYSICAL_ADDRESS_1 = Ia32BitFieldMember(
             "EPC_BASE_PHYSICAL_ADDRESS_1",
             """
             @brief Bits 31:12 of the physical address of the base of the EPC section
@@ -547,16 +547,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt1._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        EPC_BASE_PHYSICAL_ADDRESS_2 = BitFieldMember(
+        EPC_BASE_PHYSICAL_ADDRESS_2 = Ia32BitFieldMember(
             "EPC_BASE_PHYSICAL_ADDRESS_2",
             """
             @brief Bits 51:32 of the physical address of the base of the EPC section
@@ -571,16 +571,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt1._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        EPC_SECTION_PROPERTY = BitFieldMember(
+        EPC_SECTION_PROPERTY = Ia32BitFieldMember(
             "EPC_SECTION_PROPERTY",
             """
             @brief EPC section property encoding defined as follows:
@@ -606,7 +606,7 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
         )
     
     
-        EPC_SIZE_1 = BitFieldMember(
+        EPC_SIZE_1 = Ia32BitFieldMember(
             "EPC_SIZE_1",
             """
             @brief Bits 31:12 of the size of the corresponding EPC section within the Processor Reserved Memory
@@ -621,16 +621,16 @@ Intel SGX EPC Enumeration Leaf, sub-leaves (EAX = 12H, ECX = 2 or higher)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax12Ecx02pSlt1._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        EPC_SIZE_2 = BitFieldMember(
+        EPC_SIZE_2 = Ia32BitFieldMember(
             "EPC_SIZE_2",
             """
             @brief Bits 51:32 of the size of the corresponding EPC section within the Processor Reserved Memory

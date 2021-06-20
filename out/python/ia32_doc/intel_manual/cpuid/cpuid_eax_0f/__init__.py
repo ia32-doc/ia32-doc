@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -21,20 +21,20 @@ IA32_QM_CTR MSR.
 CPUID_INTEL_RDT_MONITORING = 0xf
 
 
-class CpuidEax0fEcx00(Struct):
+class CpuidEax0fEcx00(Ia32Struct):
     """@brief Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0)
 
 Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (EAX = 0FH, ECX = 0)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx00._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EAX is reserved
@@ -49,16 +49,16 @@ Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx00._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RMID_MAX_RANGE = BitFieldMember(
+        RMID_MAX_RANGE = Ia32BitFieldMember(
             "RMID_MAX_RANGE",
             """
             @brief Maximum range (zero-based) of RMID within this physical processor of all types
@@ -73,16 +73,16 @@ Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx00._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief ECX is reserved
@@ -97,16 +97,16 @@ Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx00._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SUPPORTS_L3_CACHE_INTEL_RDT_MONITORING = BitFieldMember(
+        SUPPORTS_L3_CACHE_INTEL_RDT_MONITORING = Ia32BitFieldMember(
             "SUPPORTS_L3_CACHE_INTEL_RDT_MONITORING",
             """
             @brief Supports L3 Cache Intel RDT Monitoring if 1
@@ -164,20 +164,20 @@ Intel Resource Director Technology (Intel RDT) Monitoring Enumeration Sub-leaf (
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax0fEcx01(Struct):
+class CpuidEax0fEcx01(Ia32Struct):
     """@brief L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1)
 
 L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 1)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx01._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EAX is reserved
@@ -192,16 +192,16 @@ L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx01._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        CONVERSION_FACTOR = BitFieldMember(
+        CONVERSION_FACTOR = Ia32BitFieldMember(
             "CONVERSION_FACTOR",
             """
             @brief Conversion factor from reported IA32_QM_CTR value to occupancy metric (bytes)
@@ -216,16 +216,16 @@ L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx01._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RMID_MAX_RANGE = BitFieldMember(
+        RMID_MAX_RANGE = Ia32BitFieldMember(
             "RMID_MAX_RANGE",
             """
             @brief Maximum range (zero-based) of RMID within this physical processor of all types
@@ -240,16 +240,16 @@ L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0fEcx01._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SUPPORTS_L3_OCCUPANCY_MONITORING = BitFieldMember(
+        SUPPORTS_L3_OCCUPANCY_MONITORING = Ia32BitFieldMember(
             "SUPPORTS_L3_OCCUPANCY_MONITORING",
             """
             @brief Supports L3 occupancy monitoring if 1
@@ -263,7 +263,7 @@ L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 
         )
     
     
-        SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING = BitFieldMember(
+        SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING = Ia32BitFieldMember(
             "SUPPORTS_L3_TOTAL_BANDWIDTH_MONITORING",
             """
             @brief Supports L3 Total Bandwidth monitoring if 1
@@ -277,7 +277,7 @@ L3 Cache Intel RDT Monitoring Capability Enumeration Sub-leaf (EAX = 0FH, ECX = 
         )
     
     
-        SUPPORTS_L3_LOCAL_BANDWIDTH_MONITORING = BitFieldMember(
+        SUPPORTS_L3_LOCAL_BANDWIDTH_MONITORING = Ia32BitFieldMember(
             "SUPPORTS_L3_LOCAL_BANDWIDTH_MONITORING",
             """
             @brief Supports L3 Local Bandwidth monitoring if 1

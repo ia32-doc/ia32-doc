@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -32,7 +32,7 @@ IA32_VMX_TRUE_EXIT_CTLS = 0x48f
 IA32_VMX_TRUE_ENTRY_CTLS = 0x490
 
 
-class Ia32VmxTrueCtlsRegister(with_metaclass(BitFieldMeta, BitField)):
+class Ia32VmxTrueCtlsRegister(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -41,7 +41,7 @@ class Ia32VmxTrueCtlsRegister(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    ALLOWED_0_SETTINGS = BitFieldMember(
+    ALLOWED_0_SETTINGS = Ia32BitFieldMember(
         "ALLOWED_0_SETTINGS",
         """
         @brief Indicate the allowed 0-settings of these controls. VM entry allows control X to be 0 if
@@ -59,7 +59,7 @@ control X is 0.
     )
 
 
-    ALLOWED_1_SETTINGS = BitFieldMember(
+    ALLOWED_1_SETTINGS = Ia32BitFieldMember(
         "ALLOWED_1_SETTINGS",
         """
         @brief Indicate the allowed 1-settings of these controls. VM entry allows control X to be 1 if bit 32+X in

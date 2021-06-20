@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -16,7 +16,7 @@ locate the first paging-structure, the page directory.
 """
 
 
-class Pde4mb32(with_metaclass(BitFieldMeta, BitField)):
+class Pde4mb32(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page
 
@@ -27,7 +27,7 @@ Format of a 32-Bit Page-Directory Entry that Maps a 4-MByte Page.
 
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief Present; must be 1 to map a 4-MByte page
@@ -41,7 +41,7 @@ Present; must be 1 to map a 4-MByte page.
     )
 
 
-    RW = BitFieldMember(
+    RW = Ia32BitFieldMember(
         "RW",
         """
         @brief Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by this entry
@@ -57,7 +57,7 @@ Read/write; if 0, writes may not be allowed to the 4-MByte page referenced by th
     )
 
 
-    US = BitFieldMember(
+    US = Ia32BitFieldMember(
         "US",
         """
         @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page referenced by this entry
@@ -73,7 +73,7 @@ User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte page re
     )
 
 
-    PWT = BitFieldMember(
+    PWT = Ia32BitFieldMember(
         "PWT",
         """
         @brief Page-level write-through; indirectly determines the memory type used to access the 4-MByte page referenced by
@@ -91,7 +91,7 @@ this entry.
     )
 
 
-    PCD = BitFieldMember(
+    PCD = Ia32BitFieldMember(
         "PCD",
         """
         @brief Page-level cache disable; indirectly determines the memory type used to access the 4-MByte page referenced by
@@ -109,7 +109,7 @@ this entry.
     )
 
 
-    A = BitFieldMember(
+    A = Ia32BitFieldMember(
         "A",
         """
         @brief Accessed; indicates whether software has accessed the 4-MByte page referenced by this entry
@@ -125,7 +125,7 @@ Accessed; indicates whether software has accessed the 4-MByte page referenced by
     )
 
 
-    D = BitFieldMember(
+    D = Ia32BitFieldMember(
         "D",
         """
         @brief Dirty; indicates whether software has written to the 4-MByte page referenced by this entry
@@ -141,7 +141,7 @@ Dirty; indicates whether software has written to the 4-MByte page referenced by 
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         @brief Page size; must be 1 (otherwise, this entry references a page table)
@@ -155,7 +155,7 @@ Page size; must be 1 (otherwise, this entry references a page table).
     )
 
 
-    G = BitFieldMember(
+    G = Ia32BitFieldMember(
         "G",
         """
         @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
@@ -171,7 +171,7 @@ Global; if CR4.PGE = 1, determines whether the translation is global; ignored ot
     )
 
 
-    IGNORED_1 = BitFieldMember(
+    IGNORED_1 = Ia32BitFieldMember(
         "IGNORED_1",
         """
         @brief Ignored
@@ -185,7 +185,7 @@ Ignored.
     )
 
 
-    PAT = BitFieldMember(
+    PAT = Ia32BitFieldMember(
         "PAT",
         """
         @brief Indirectly determines the memory type used to access the 4-MByte page referenced by this entry
@@ -201,7 +201,7 @@ Indirectly determines the memory type used to access the 4-MByte page referenced
     )
 
 
-    PFN_LOW = BitFieldMember(
+    PFN_LOW = Ia32BitFieldMember(
         "PFN_LOW",
         """
         @brief Bits (M1):32 of physical address of the 4-MByte page referenced by this entry
@@ -215,7 +215,7 @@ Bits (M1):32 of physical address of the 4-MByte page referenced by this entry.
     )
 
 
-    PFN_HIGH = BitFieldMember(
+    PFN_HIGH = Ia32BitFieldMember(
         "PFN_HIGH",
         """
         @brief Bits 31:22 of physical address of the 4-MByte page referenced by this entry
@@ -229,7 +229,7 @@ Bits 31:22 of physical address of the 4-MByte page referenced by this entry.
     )
 
 
-class Pde32(with_metaclass(BitFieldMeta, BitField)):
+class Pde32(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of a 32-Bit Page-Directory Entry that References a Page Table
 
@@ -240,7 +240,7 @@ Format of a 32-Bit Page-Directory Entry that References a Page Table.
 
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief Present; must be 1 to reference a page table
@@ -254,7 +254,7 @@ Present; must be 1 to reference a page table.
     )
 
 
-    RW = BitFieldMember(
+    RW = Ia32BitFieldMember(
         "RW",
         """
         @brief Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by this entry
@@ -270,7 +270,7 @@ Read/write; if 0, writes may not be allowed to the 4-MByte region controlled by 
     )
 
 
-    US = BitFieldMember(
+    US = Ia32BitFieldMember(
         "US",
         """
         @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region controlled by this entry
@@ -286,7 +286,7 @@ User/supervisor; if 0, user-mode accesses are not allowed to the 4-MByte region 
     )
 
 
-    PWT = BitFieldMember(
+    PWT = Ia32BitFieldMember(
         "PWT",
         """
         @brief Page-level write-through; indirectly determines the memory type used to access the page table referenced by this
@@ -304,7 +304,7 @@ entry.
     )
 
 
-    PCD = BitFieldMember(
+    PCD = Ia32BitFieldMember(
         "PCD",
         """
         @brief Page-level cache disable; indirectly determines the memory type used to access the page table referenced by this
@@ -322,7 +322,7 @@ entry.
     )
 
 
-    A = BitFieldMember(
+    A = Ia32BitFieldMember(
         "A",
         """
         @brief Accessed; indicates whether this entry has been used for linear-address translation
@@ -338,7 +338,7 @@ Accessed; indicates whether this entry has been used for linear-address translat
     )
 
 
-    IGNORED_1 = BitFieldMember(
+    IGNORED_1 = Ia32BitFieldMember(
         "IGNORED_1",
         """
         @brief Ignored
@@ -352,7 +352,7 @@ Ignored.
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         @brief If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise, ignored
@@ -366,7 +366,7 @@ If CR4.PSE = 1, must be 0 (otherwise, this entry maps a 4-MByte page); otherwise
     )
 
 
-    IGNORED_2 = BitFieldMember(
+    IGNORED_2 = Ia32BitFieldMember(
         "IGNORED_2",
         """
         @brief Ignored
@@ -380,7 +380,7 @@ Ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned page table referenced by this entry
@@ -394,7 +394,7 @@ Physical address of 4-KByte aligned page table referenced by this entry.
     )
 
 
-class Pte32(with_metaclass(BitFieldMeta, BitField)):
+class Pte32(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page
 
@@ -405,7 +405,7 @@ Format of a 32-Bit Page-Table Entry that Maps a 4-KByte Page.
 
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief Present; must be 1 to map a 4-KByte page
@@ -419,7 +419,7 @@ Present; must be 1 to map a 4-KByte page.
     )
 
 
-    RW = BitFieldMember(
+    RW = Ia32BitFieldMember(
         "RW",
         """
         @brief Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by this entry
@@ -435,7 +435,7 @@ Read/write; if 0, writes may not be allowed to the 4-KByte page referenced by th
     )
 
 
-    US = BitFieldMember(
+    US = Ia32BitFieldMember(
         "US",
         """
         @brief User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page referenced by this entry
@@ -451,7 +451,7 @@ User/supervisor; if 0, user-mode accesses are not allowed to the 4-KByte page re
     )
 
 
-    PWT = BitFieldMember(
+    PWT = Ia32BitFieldMember(
         "PWT",
         """
         @brief Page-level write-through; indirectly determines the memory type used to access the 4-KByte page referenced by
@@ -469,7 +469,7 @@ this entry.
     )
 
 
-    PCD = BitFieldMember(
+    PCD = Ia32BitFieldMember(
         "PCD",
         """
         @brief Page-level cache disable; indirectly determines the memory type used to access the 4-KByte page referenced by this
@@ -487,7 +487,7 @@ entry.
     )
 
 
-    A = BitFieldMember(
+    A = Ia32BitFieldMember(
         "A",
         """
         @brief Accessed; indicates whether software has accessed the 4-KByte page referenced by this entry
@@ -503,7 +503,7 @@ Accessed; indicates whether software has accessed the 4-KByte page referenced by
     )
 
 
-    D = BitFieldMember(
+    D = Ia32BitFieldMember(
         "D",
         """
         @brief Dirty; indicates whether software has written to the 4-KByte page referenced by this entry
@@ -519,7 +519,7 @@ Dirty; indicates whether software has written to the 4-KByte page referenced by 
     )
 
 
-    PAT = BitFieldMember(
+    PAT = Ia32BitFieldMember(
         "PAT",
         """
         @brief Indirectly determines the memory type used to access the 4-KByte page referenced by this entry
@@ -535,7 +535,7 @@ Indirectly determines the memory type used to access the 4-KByte page referenced
     )
 
 
-    G = BitFieldMember(
+    G = Ia32BitFieldMember(
         "G",
         """
         @brief Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise
@@ -551,7 +551,7 @@ Global; if CR4.PGE = 1, determines whether the translation is global; ignored ot
     )
 
 
-    IGNORED_1 = BitFieldMember(
+    IGNORED_1 = Ia32BitFieldMember(
         "IGNORED_1",
         """
         @brief Ignored
@@ -565,7 +565,7 @@ Ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of 4-KByte aligned page table referenced by this entry
@@ -579,7 +579,7 @@ Physical address of 4-KByte aligned page table referenced by this entry.
     )
 
 
-class PtEntry32(with_metaclass(BitFieldMeta, BitField)):
+class PtEntry32(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of a common Page-Table Entry
 
@@ -590,7 +590,7 @@ Format of a common Page-Table Entry.
 
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         
@@ -602,7 +602,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    RW = BitFieldMember(
+    RW = Ia32BitFieldMember(
         "RW",
         """
         
@@ -614,7 +614,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    US = BitFieldMember(
+    US = Ia32BitFieldMember(
         "US",
         """
         
@@ -626,7 +626,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    PWT = BitFieldMember(
+    PWT = Ia32BitFieldMember(
         "PWT",
         """
         
@@ -638,7 +638,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    PCD = BitFieldMember(
+    PCD = Ia32BitFieldMember(
         "PCD",
         """
         
@@ -650,7 +650,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    A = BitFieldMember(
+    A = Ia32BitFieldMember(
         "A",
         """
         
@@ -662,7 +662,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    D = BitFieldMember(
+    D = Ia32BitFieldMember(
         "D",
         """
         
@@ -674,7 +674,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    LARGE = BitFieldMember(
+    LARGE = Ia32BitFieldMember(
         "LARGE",
         """
         
@@ -686,7 +686,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    G = BitFieldMember(
+    G = Ia32BitFieldMember(
         "G",
         """
         
@@ -698,7 +698,7 @@ Format of a common Page-Table Entry.
     )
 
 
-    IGNORED_1 = BitFieldMember(
+    IGNORED_1 = Ia32BitFieldMember(
         "IGNORED_1",
         """
         @brief Ignored
@@ -712,7 +712,7 @@ Ignored.
     )
 
 
-    PFN = BitFieldMember(
+    PFN = Ia32BitFieldMember(
         "PFN",
         """
         @brief Physical address of the 4-KByte page referenced by this entry

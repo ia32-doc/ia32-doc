@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -46,30 +46,30 @@ class InvvpidType:
     
       INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS = 0x3
     
-class InveptDescriptor(Struct):
+class InveptDescriptor(Ia32Struct):
     """"""
-    class _MemberContainerEptPointer(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEptPointer(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEptPointer, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(InveptDescriptor._MemberContainerEptPointer, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
-    class _MemberContainerReserved(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerReserved(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Must be zero
     
     Must be zero.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerReserved, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(InveptDescriptor._MemberContainerReserved, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
     _members = ["EPTP","RESERVED",]
@@ -97,54 +97,54 @@ class InveptDescriptor(Struct):
         return self._RESERVED.set(value)
 
 
-class InvvpidDescriptor(Struct):
+class InvvpidDescriptor(Ia32Struct):
     """"""
-    class _MemberContainerVpid(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerVpid(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerVpid, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(InvvpidDescriptor._MemberContainerVpid, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerReserved1(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerReserved1(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Must be zero
     
     Must be zero.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerReserved1, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(InvvpidDescriptor._MemberContainerReserved1, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerReserved2(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerReserved2(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Must be zero
     
     Must be zero.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerReserved2, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(InvvpidDescriptor._MemberContainerReserved2, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerLinearAddress(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerLinearAddress(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerLinearAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(InvvpidDescriptor._MemberContainerLinearAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
     _members = ["VPID","RESERVED1","RESERVED2","LINEAR_ADDRESS",]
@@ -190,7 +190,7 @@ class InvvpidDescriptor(Struct):
         return self._LINEAR_ADDRESS.set(value)
 
 
-class Vmcs(Struct):
+class Vmcs(Ia32Struct):
     """@brief Format of the VMCS Region
 
 A logical processor uses virtual-machine control data structures (VMCSs) while it is in VMX operation. These
@@ -200,16 +200,16 @@ and VMWRITE.
 
 A VMCS region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
 by consulting the VMX capability MSR IA32_VMX_BASIC."""
-    class _MemberContainerDummy(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerDummy(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Vmcs._MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        REVISION_ID = BitFieldMember(
+        REVISION_ID = Ia32BitFieldMember(
             "REVISION_ID",
             """
             @brief VMCS revision identifier
@@ -236,7 +236,7 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
         )
     
     
-        SHADOW_VMCS_INDICATOR = BitFieldMember(
+        SHADOW_VMCS_INDICATOR = Ia32BitFieldMember(
             "SHADOW_VMCS_INDICATOR",
             """
             @brief Shadow-VMCS indicator
@@ -256,7 +256,7 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
     
     
     
-    class _MemberContainerAbortIndicator(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerAbortIndicator(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief VMX-abort indicator
     
@@ -267,13 +267,13 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
     @see Vol3D[27.7(VMX Aborts)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerAbortIndicator, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Vmcs._MemberContainerAbortIndicator, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerData(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerData(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief VMCS data (implementation-specific format)
     
@@ -289,10 +289,10 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
     @see Vol3D[A.1(BASIC VMX INFORMATION)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerData, self).__init__(value, byte_offset, byte_width, max_bytes=4088)
+            super(Vmcs._MemberContainerData, self).__init__(value, byte_offset, byte_width, max_bytes=4088)
     
     
-        value = BitFieldMember('value', 'value', 0, 32704)
+        value = Ia32BitFieldMember('value', 'value', 0, 32704)
     
     
     _members = ["","ABORT_INDICATOR","DATA",]
@@ -329,7 +329,7 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
         return self._DATA.set(value)
 
 
-class Vmxon(Struct):
+class Vmxon(Ia32Struct):
     """@brief Format of the VMXON Region
 
 Before executing VMXON, software allocates a region of memory that the logical processor uses to support
@@ -337,16 +337,16 @@ VMX operation. This region is called the VMXON region.
 
 A VMXON region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
 by consulting the VMX capability MSR IA32_VMX_BASIC."""
-    class _MemberContainerDummy(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerDummy(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Vmxon._MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        REVISION_ID = BitFieldMember(
+        REVISION_ID = Ia32BitFieldMember(
             "REVISION_ID",
             """
             @brief VMCS revision identifier
@@ -368,7 +368,7 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
         )
     
     
-        MUST_BE_ZERO = BitFieldMember(
+        MUST_BE_ZERO = Ia32BitFieldMember(
             "MUST_BE_ZERO",
             """
             @brief Bit 31 is always 0
@@ -383,7 +383,7 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
     
     
     
-    class _MemberContainerData(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerData(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief VMXON data (implementation-specific format)
     
@@ -396,10 +396,10 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
     @see Vol3D[A.1(BASIC VMX INFORMATION)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerData, self).__init__(value, byte_offset, byte_width, max_bytes=4092)
+            super(Vmxon._MemberContainerData, self).__init__(value, byte_offset, byte_width, max_bytes=4092)
     
     
-        value = BitFieldMember('value', 'value', 0, 32736)
+        value = Ia32BitFieldMember('value', 'value', 0, 32736)
     
     
     _members = ["","DATA",]

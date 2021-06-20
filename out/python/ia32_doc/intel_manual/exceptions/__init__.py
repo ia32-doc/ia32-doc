@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -66,7 +66,7 @@ protection exception with an error code of 0.
     
       VE = 0x14
     
-class ExceptionErrorCode(with_metaclass(BitFieldMeta, BitField)):
+class ExceptionErrorCode(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief When an exception condition is related to a specific segment selector or IDT vector, the processor pushes an error
 code onto the stack of the exception handler (whether it is a procedure or task). The error code resembles a segment
@@ -81,7 +81,7 @@ selector; however, instead of a TI flag and RPL field, the error code contains 3
 
 
 
-    EXT = BitFieldMember(
+    EXT = Ia32BitFieldMember(
         "EXT",
         """
         @brief When set, indicates that the exception occurred during delivery of an
@@ -99,7 +99,7 @@ exception occurred during delivery of a software interrupt (INT n, INT3, or INTO
     )
 
 
-    IDT = BitFieldMember(
+    IDT = Ia32BitFieldMember(
         "IDT",
         """
         @brief When set, indicates that the index portion of the error code refers
@@ -117,7 +117,7 @@ or the current LDT.
     )
 
 
-    TI = BitFieldMember(
+    TI = Ia32BitFieldMember(
         "TI",
         """
         @brief Only used when the IDT flag is clear. When set, the TI flag indicates that the
@@ -135,7 +135,7 @@ that the index refers to a descriptor in the current GDT.
     )
 
 
-    INDEX = BitFieldMember(
+    INDEX = Ia32BitFieldMember(
         "INDEX",
         """
         @brief The segment selector index field provides an index into the IDT, GDT, or current LDT to the segment or gate
@@ -155,7 +155,7 @@ segment selector was referenced in an operation.
     )
 
 
-class PageFaultException(with_metaclass(BitFieldMeta, BitField)):
+class PageFaultException(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Page fault exception
 
@@ -166,7 +166,7 @@ Page fault exception.
 
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief This flag is 0 if there is no translation for the linear address because the P flag was 0 in one of the pagingstructure
@@ -182,7 +182,7 @@ entries used to translate that address.
     )
 
 
-    W = BitFieldMember(
+    W = Ia32BitFieldMember(
         "W",
         """
         @brief If the access causing the page-fault exception was a write, this flag is 1; otherwise, it is 0. This flag describes
@@ -198,7 +198,7 @@ the access causing the page-fault exception, not the access rights specified by 
     )
 
 
-    U = BitFieldMember(
+    U = Ia32BitFieldMember(
         "U",
         """
         @brief If a user-mode access caused the page-fault exception, this flag is 1; it is 0 if a supervisor-mode access did so.
@@ -216,7 +216,7 @@ This flag describes the access causing the page-fault exception, not the access 
     )
 
 
-    RSVD = BitFieldMember(
+    RSVD = Ia32BitFieldMember(
         "RSVD",
         """
         @brief This flag is 1 if there is no translation for the linear address because a reserved bit was set in one of the pagingstructure
@@ -240,7 +240,7 @@ exception on one processor might not do so in the future.
     )
 
 
-    I = BitFieldMember(
+    I = Ia32BitFieldMember(
         "I",
         """
         @brief This flag is 1 if (1) the access causing the page-fault exception was an instruction fetch; and (2) either
@@ -260,7 +260,7 @@ exception, not the access rights specified by paging.
     )
 
 
-    PK = BitFieldMember(
+    PK = Ia32BitFieldMember(
         "PK",
         """
         @brief This flag is 1 if (1) IA32_EFER.LMA = CR4.PKE = 1; (2) the access causing the page-fault exception was a data
@@ -282,7 +282,7 @@ access; and (iii) either CR0.WP = 1 or the access causing the page-fault excepti
     )
 
 
-    SGX = BitFieldMember(
+    SGX = Ia32BitFieldMember(
         "SGX",
         """
         @brief This flag is 1 if the exception is unrelated to paging and resulted from violation of SGX-specific access-control

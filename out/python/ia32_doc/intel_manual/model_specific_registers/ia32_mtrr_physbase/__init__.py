@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -12,7 +12,7 @@ IA32_MTRR_PHYSBASE(0-9).
 """
 
 
-class Ia32MtrrPhysbaseRegister(with_metaclass(BitFieldMeta, BitField)):
+class Ia32MtrrPhysbaseRegister(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -21,7 +21,7 @@ class Ia32MtrrPhysbaseRegister(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Specifies the memory type for the range
@@ -35,7 +35,7 @@ Specifies the memory type for the range.
     )
 
 
-    PHYS_BASE = BitFieldMember(
+    PHYS_BASE = Ia32BitFieldMember(
         "PHYS_BASE",
         """
         @brief Specifies the base address of the address range.

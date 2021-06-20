@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -27,22 +27,22 @@ For i = 2 to 62 // sub-leaf 1 is reserved
 CPUID_EXTENDED_STATE = 0xd
 
 
-class CpuidEax0dEcx00(Struct):
+class CpuidEax0dEcx00(Ia32Struct):
     """@brief Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)
 
 Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Reports the supported bits of the lower 32 bits of XCR0. XCR0[n] can be set to 1 only if EAX[n] is 1
     
     Reports the supported bits of the lower 32 bits of XCR0. XCR0[n] can be set to 1 only if EAX[n] is 1.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx00._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        X87_STATE = BitFieldMember(
+        X87_STATE = Ia32BitFieldMember(
             "X87_STATE",
             """
             @brief x87 state
@@ -56,7 +56,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        SSE_STATE = BitFieldMember(
+        SSE_STATE = Ia32BitFieldMember(
             "SSE_STATE",
             """
             @brief SSE state
@@ -70,7 +70,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        AVX_STATE = BitFieldMember(
+        AVX_STATE = Ia32BitFieldMember(
             "AVX_STATE",
             """
             @brief AVX state
@@ -84,7 +84,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        MPX_STATE = BitFieldMember(
+        MPX_STATE = Ia32BitFieldMember(
             "MPX_STATE",
             """
             @brief MPX state
@@ -98,7 +98,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        AVX_512_STATE = BitFieldMember(
+        AVX_512_STATE = Ia32BitFieldMember(
             "AVX_512_STATE",
             """
             @brief AVX-512 state
@@ -112,7 +112,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        USED_FOR_IA32_XSS_1 = BitFieldMember(
+        USED_FOR_IA32_XSS_1 = Ia32BitFieldMember(
             "USED_FOR_IA32_XSS_1",
             """
             @brief Used for IA32_XSS
@@ -126,7 +126,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        PKRU_STATE = BitFieldMember(
+        PKRU_STATE = Ia32BitFieldMember(
             "PKRU_STATE",
             """
             @brief PKRU state
@@ -140,7 +140,7 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         )
     
     
-        USED_FOR_IA32_XSS_2 = BitFieldMember(
+        USED_FOR_IA32_XSS_2 = Ia32BitFieldMember(
             "USED_FOR_IA32_XSS_2",
             """
             @brief Used for IA32_XSS
@@ -155,16 +155,16 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx00._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        MAX_SIZE_REQUIRED_BY_ENABLED_FEATURES_IN_XCR0 = BitFieldMember(
+        MAX_SIZE_REQUIRED_BY_ENABLED_FEATURES_IN_XCR0 = Ia32BitFieldMember(
             "MAX_SIZE_REQUIRED_BY_ENABLED_FEATURES_IN_XCR0",
             """
             @brief Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) required by
@@ -183,16 +183,16 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx00._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        MAX_SIZE_OF_XSAVE_XRSTOR_SAVE_AREA = BitFieldMember(
+        MAX_SIZE_OF_XSAVE_XRSTOR_SAVE_AREA = Ia32BitFieldMember(
             "MAX_SIZE_OF_XSAVE_XRSTOR_SAVE_AREA",
             """
             @brief Maximum size (bytes, from the beginning of the XSAVE/XRSTOR save area) of the
@@ -211,16 +211,16 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx00._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        XCR0_SUPPORTED_BITS = BitFieldMember(
+        XCR0_SUPPORTED_BITS = Ia32BitFieldMember(
             "XCR0_SUPPORTED_BITS",
             """
             @brief Reports the supported bits of the upper 32 bits of XCR0. XCR0[n+32] can be set to 1 only if EDX[n] is 1
@@ -278,20 +278,20 @@ Processor Extended State Enumeration Main Leaf (EAX = 0DH, ECX = 0)."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax0dEcx01(Struct):
+class CpuidEax0dEcx01(Ia32Struct):
     """@brief Direct Cache Access Information Leaf
 
 Direct Cache Access Information Leaf."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx01._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SUPPORTS_XSAVEC_AND_COMPACTED_XRSTOR = BitFieldMember(
+        SUPPORTS_XSAVEC_AND_COMPACTED_XRSTOR = Ia32BitFieldMember(
             "SUPPORTS_XSAVEC_AND_COMPACTED_XRSTOR",
             """
             @brief Supports XSAVEC and the compacted form of XRSTOR if set
@@ -305,7 +305,7 @@ Direct Cache Access Information Leaf."""
         )
     
     
-        SUPPORTS_XGETBV_WITH_ECX_1 = BitFieldMember(
+        SUPPORTS_XGETBV_WITH_ECX_1 = Ia32BitFieldMember(
             "SUPPORTS_XGETBV_WITH_ECX_1",
             """
             @brief Supports XGETBV with ECX = 1 if set
@@ -319,7 +319,7 @@ Direct Cache Access Information Leaf."""
         )
     
     
-        SUPPORTS_XSAVE_XRSTOR_AND_IA32_XSS = BitFieldMember(
+        SUPPORTS_XSAVE_XRSTOR_AND_IA32_XSS = Ia32BitFieldMember(
             "SUPPORTS_XSAVE_XRSTOR_AND_IA32_XSS",
             """
             @brief Supports XSAVES/XRSTORS and IA32_XSS if set
@@ -334,16 +334,16 @@ Direct Cache Access Information Leaf."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx01._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SIZE_OF_XSAVE_AREAD = BitFieldMember(
+        SIZE_OF_XSAVE_AREAD = Ia32BitFieldMember(
             "SIZE_OF_XSAVE_AREAD",
             """
             @brief The size in bytes of the XSAVE area containing all states enabled by XCRO | IA32_XSS
@@ -358,16 +358,16 @@ Direct Cache Access Information Leaf."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx01._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        USED_FOR_XCR0_1 = BitFieldMember(
+        USED_FOR_XCR0_1 = Ia32BitFieldMember(
             "USED_FOR_XCR0_1",
             """
             @brief Used for XCR0
@@ -381,7 +381,7 @@ Direct Cache Access Information Leaf."""
         )
     
     
-        PT_STATE = BitFieldMember(
+        PT_STATE = Ia32BitFieldMember(
             "PT_STATE",
             """
             @brief PT state
@@ -395,7 +395,7 @@ Direct Cache Access Information Leaf."""
         )
     
     
-        USED_FOR_XCR0_2 = BitFieldMember(
+        USED_FOR_XCR0_2 = Ia32BitFieldMember(
             "USED_FOR_XCR0_2",
             """
             @brief Used for XCR0
@@ -409,7 +409,7 @@ Direct Cache Access Information Leaf."""
         )
     
     
-        HWP_STATE = BitFieldMember(
+        HWP_STATE = Ia32BitFieldMember(
             "HWP_STATE",
             """
             @brief HWP state
@@ -424,16 +424,16 @@ Direct Cache Access Information Leaf."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcx01._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -491,20 +491,20 @@ Direct Cache Access Information Leaf."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax0dEcxN(Struct):
+class CpuidEax0dEcxN(Ia32Struct):
     """@brief Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)
 
 Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcxN._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        IA32_PLATFORM_DCA_CAP = BitFieldMember(
+        IA32_PLATFORM_DCA_CAP = Ia32BitFieldMember(
             "IA32_PLATFORM_DCA_CAP",
             """
             @brief The size in bytes (from the offset specified in EBX) of the save area for an extended state
@@ -521,16 +521,16 @@ Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcxN._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief The offset in bytes of this extended state components save area from the beginning of the
@@ -551,16 +551,16 @@ Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcxN._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        ECX_2 = BitFieldMember(
+        ECX_2 = Ia32BitFieldMember(
             "ECX_2",
             """
             @brief Is set if the bit n (corresponding to the sub-leaf index) is supported in the IA32_XSS MSR; it is clear
@@ -576,7 +576,7 @@ Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)."""
         )
     
     
-        ECX_1 = BitFieldMember(
+        ECX_1 = Ia32BitFieldMember(
             "ECX_1",
             """
             @brief Is set if, when the compacted format of an XSAVE area is used, this extended state component
@@ -595,16 +595,16 @@ Processor Extended State Enumeration Sub-leaves (EAX = 0DH, ECX = n, n > 1)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0dEcxN._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief This field reports 0 if the sub-leaf index, n, is invalid; otherwise it is reserved

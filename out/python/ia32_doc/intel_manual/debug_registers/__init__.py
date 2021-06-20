@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -30,7 +30,7 @@ The primary function of the debug registers is to set up and monitor from 1 to 4
 """
 
 
-class Dr6(with_metaclass(BitFieldMeta, BitField)):
+class Dr6(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -39,7 +39,7 @@ class Dr6(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    BREAKPOINT_CONDITION = BitFieldMember(
+    BREAKPOINT_CONDITION = Ia32BitFieldMember(
         "BREAKPOINT_CONDITION",
         """
         @brief B0 through B3 (breakpoint condition detected) flags
@@ -57,7 +57,7 @@ a \#DB, a debug handler should check only those B0-B3 bits which correspond to a
     )
 
 
-    BD = BitFieldMember(
+    BD = Ia32BitFieldMember(
         "BD",
         """
         @brief BD (debug register access detected) flag
@@ -75,7 +75,7 @@ detect) flag in debug control register DR7 is set.
     )
 
 
-    BS = BitFieldMember(
+    BS = Ia32BitFieldMember(
         "BS",
         """
         @brief BS (single step) flag
@@ -91,7 +91,7 @@ debug exception. When the BS flag is set, any of the other debug status bits als
     )
 
 
-    BT = BitFieldMember(
+    BT = Ia32BitFieldMember(
         "BT",
         """
         @brief BT (task switch) flag
@@ -107,7 +107,7 @@ debug exception. When the BS flag is set, any of the other debug status bits als
     )
 
 
-    RTM = BitFieldMember(
+    RTM = Ia32BitFieldMember(
         "RTM",
         """
         @brief RTM (restricted transactional memory) flag
@@ -127,7 +127,7 @@ the processor does not support RTM.
     )
 
 
-class Dr7(with_metaclass(BitFieldMeta, BitField)):
+class Dr7(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -136,7 +136,7 @@ class Dr7(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    L0 = BitFieldMember(
+    L0 = Ia32BitFieldMember(
         "L0",
         """
         @brief L0 through L3 (local breakpoint enable) flags (bits 0, 2, 4, and 6)
@@ -153,7 +153,7 @@ every task switch to avoid unwanted breakpoint conditions in the new task.
     )
 
 
-    G0 = BitFieldMember(
+    G0 = Ia32BitFieldMember(
         "G0",
         """
         @brief G0 through G3 (global breakpoint enable) flags (bits 1, 3, 5, and 7)
@@ -170,7 +170,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    L1 = BitFieldMember(
+    L1 = Ia32BitFieldMember(
         "L1",
         """
         
@@ -184,7 +184,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    G1 = BitFieldMember(
+    G1 = Ia32BitFieldMember(
         "G1",
         """
         
@@ -198,7 +198,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    L2 = BitFieldMember(
+    L2 = Ia32BitFieldMember(
         "L2",
         """
         
@@ -212,7 +212,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    G2 = BitFieldMember(
+    G2 = Ia32BitFieldMember(
         "G2",
         """
         
@@ -226,7 +226,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    L3 = BitFieldMember(
+    L3 = Ia32BitFieldMember(
         "L3",
         """
         
@@ -240,7 +240,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    G3 = BitFieldMember(
+    G3 = Ia32BitFieldMember(
         "G3",
         """
         
@@ -254,7 +254,7 @@ switch, allowing a breakpoint to be enabled for all tasks.
     )
 
 
-    LE = BitFieldMember(
+    LE = Ia32BitFieldMember(
         "LE",
         """
         @brief LE (local exact breakpoint enable)
@@ -272,7 +272,7 @@ breakpoints are required.
     )
 
 
-    GE = BitFieldMember(
+    GE = Ia32BitFieldMember(
         "GE",
         """
         @brief GE (global exact breakpoint enable)
@@ -288,7 +288,7 @@ breakpoints are required.
     )
 
 
-    RTM = BitFieldMember(
+    RTM = Ia32BitFieldMember(
         "RTM",
         """
         @brief RTM (restricted transactional memory) flag
@@ -306,7 +306,7 @@ also set.
     )
 
 
-    GD = BitFieldMember(
+    GD = Ia32BitFieldMember(
         "GD",
         """
         @brief GD (general detect enable) flag
@@ -329,7 +329,7 @@ the debug registers.
     )
 
 
-    RW0 = BitFieldMember(
+    RW0 = Ia32BitFieldMember(
         "RW0",
         """
         @brief R/W0 through R/W3 (read/write) fields (bits 16, 17, 20, 21, 24, 25, 28, and 29)
@@ -365,7 +365,7 @@ processors, which is as follows:
     )
 
 
-    LEN0 = BitFieldMember(
+    LEN0 = Ia32BitFieldMember(
         "LEN0",
         """
         @brief LEN0 through LEN3 (Length) fields (bits 18, 19, 22, 23, 26, 27, 30, and 31)
@@ -394,7 +394,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    RW1 = BitFieldMember(
+    RW1 = Ia32BitFieldMember(
         "RW1",
         """
         
@@ -408,7 +408,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    LEN1 = BitFieldMember(
+    LEN1 = Ia32BitFieldMember(
         "LEN1",
         """
         
@@ -422,7 +422,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    RW2 = BitFieldMember(
+    RW2 = Ia32BitFieldMember(
         "RW2",
         """
         
@@ -436,7 +436,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    LEN2 = BitFieldMember(
+    LEN2 = Ia32BitFieldMember(
         "LEN2",
         """
         
@@ -450,7 +450,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    RW3 = BitFieldMember(
+    RW3 = Ia32BitFieldMember(
         "RW3",
         """
         
@@ -464,7 +464,7 @@ The effect of using other lengths is undefined.
     )
 
 
-    LEN3 = BitFieldMember(
+    LEN3 = Ia32BitFieldMember(
         "LEN3",
         """
         

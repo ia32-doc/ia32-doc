@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -157,7 +157,7 @@ APIC_CURRENT_COUNT = 0x390
 APIC_DIVIDE_CONFIGURATION = 0x3e0
 
 
-class Eflags(with_metaclass(BitFieldMeta, BitField)):
+class Eflags(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     The 32-bit EFLAGS register contains a group of status flags, a control flag, and a group of system flags.
 The status flags (bits 0, 2, 4, 6, 7, and 11) of the EFLAGS register indicate the results of arithmetic instructions,
@@ -170,7 +170,7 @@ The system flags and IOPL field in the EFLAGS register control operating-system 
 
 
 
-    CF = BitFieldMember(
+    CF = Ia32BitFieldMember(
         "CF",
         """
         @brief Carry flag
@@ -186,7 +186,7 @@ unsigned-integer arithmetic. It is also used in multiple-precision arithmetic.
     )
 
 
-    RA1 = BitFieldMember(
+    RA1 = Ia32BitFieldMember(
         "RA1",
         """
         @brief Reserved - always 1
@@ -200,7 +200,7 @@ Reserved - always 1
     )
 
 
-    PF = BitFieldMember(
+    PF = Ia32BitFieldMember(
         "PF",
         """
         @brief Parity flag
@@ -215,7 +215,7 @@ cleared otherwise.
     )
 
 
-    AF = BitFieldMember(
+    AF = Ia32BitFieldMember(
         "AF",
         """
         @brief Auxiliary Carry flag
@@ -230,7 +230,7 @@ Set if an arithmetic operation generates a carry or a borrow out of bit
     )
 
 
-    ZF = BitFieldMember(
+    ZF = Ia32BitFieldMember(
         "ZF",
         """
         @brief Zero flag
@@ -244,7 +244,7 @@ Set if the result is zero; cleared otherwise.
     )
 
 
-    SF = BitFieldMember(
+    SF = Ia32BitFieldMember(
         "SF",
         """
         @brief Sign flag
@@ -259,7 +259,7 @@ integer. (0 indicates a positive value and 1 indicates a negative value.)
     )
 
 
-    TF = BitFieldMember(
+    TF = Ia32BitFieldMember(
         "TF",
         """
         @brief Trap flag
@@ -273,7 +273,7 @@ Set to enable single-step mode for debugging; clear to disable single-step mode.
     )
 
 
-    IF = BitFieldMember(
+    IF = Ia32BitFieldMember(
         "IF",
         """
         @brief Interrupt enable flag
@@ -288,7 +288,7 @@ requests. Set to respond to maskable interrupts; cleared to inhibit maskable int
     )
 
 
-    DF = BitFieldMember(
+    DF = Ia32BitFieldMember(
         "DF",
         """
         @brief Direction flag
@@ -305,7 +305,7 @@ to high addresses).
     )
 
 
-    OF = BitFieldMember(
+    OF = Ia32BitFieldMember(
         "OF",
         """
         @brief Overflow flag
@@ -321,7 +321,7 @@ indicates an overflow condition for signed-integer (twos complement) arithmetic.
     )
 
 
-    IOPL = BitFieldMember(
+    IOPL = Ia32BitFieldMember(
         "IOPL",
         """
         @brief I/O privilege level field
@@ -338,7 +338,7 @@ instructions can modify this field only when operating at a CPL of 0.
     )
 
 
-    NT = BitFieldMember(
+    NT = Ia32BitFieldMember(
         "NT",
         """
         @brief Nested task flag
@@ -354,7 +354,7 @@ linked to another task.
     )
 
 
-    RF = BitFieldMember(
+    RF = Ia32BitFieldMember(
         "RF",
         """
         @brief Resume flag
@@ -368,7 +368,7 @@ Controls the processors response to debug exceptions.
     )
 
 
-    VM = BitFieldMember(
+    VM = Ia32BitFieldMember(
         "VM",
         """
         @brief Virtual-8086 mode flag
@@ -383,7 +383,7 @@ mode without virtual-8086 mode semantics.
     )
 
 
-    AC = BitFieldMember(
+    AC = Ia32BitFieldMember(
         "AC",
         """
         @brief Alignment check (or access control) flag
@@ -402,7 +402,7 @@ pages are allowed if and only if this bit is 1.
     )
 
 
-    VIF = BitFieldMember(
+    VIF = Ia32BitFieldMember(
         "VIF",
         """
         @brief Virtual interrupt flag
@@ -418,7 +418,7 @@ flag in control register CR4.)
     )
 
 
-    VIP = BitFieldMember(
+    VIP = Ia32BitFieldMember(
         "VIP",
         """
         @brief Virtual interrupt pending flag
@@ -434,7 +434,7 @@ conjunction with the VIF flag.
     )
 
 
-    IF = BitFieldMember(
+    IF = Ia32BitFieldMember(
         "IF",
         """
         @brief Identification flag
@@ -449,7 +449,7 @@ the CPUID instruction.
     )
 
 
-class Rflags(with_metaclass(BitFieldMeta, BitField)):
+class Rflags(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     The 64-bit RFLAGS register contains a group of status flags, a control flag, and a group of system flags in 64-bit mode.
 
@@ -462,7 +462,7 @@ The upper 32 bits of RFLAGS register is reserved. The lower 32 bits of RFLAGS is
 
 
 
-    CF = BitFieldMember(
+    CF = Ia32BitFieldMember(
         "CF",
         """
         @brief Carry flag
@@ -476,7 +476,7 @@ See the description in EFLAGS.
     )
 
 
-    RA1 = BitFieldMember(
+    RA1 = Ia32BitFieldMember(
         "RA1",
         """
         @brief Reserved - always 1
@@ -490,7 +490,7 @@ Reserved - always 1
     )
 
 
-    PF = BitFieldMember(
+    PF = Ia32BitFieldMember(
         "PF",
         """
         @brief Parity flag
@@ -504,7 +504,7 @@ See the description in EFLAGS.
     )
 
 
-    AF = BitFieldMember(
+    AF = Ia32BitFieldMember(
         "AF",
         """
         @brief Auxiliary Carry flag
@@ -518,7 +518,7 @@ See the description in EFLAGS.
     )
 
 
-    ZF = BitFieldMember(
+    ZF = Ia32BitFieldMember(
         "ZF",
         """
         @brief Zero flag
@@ -532,7 +532,7 @@ See the description in EFLAGS.
     )
 
 
-    SF = BitFieldMember(
+    SF = Ia32BitFieldMember(
         "SF",
         """
         @brief Sign flag
@@ -546,7 +546,7 @@ See the description in EFLAGS.
     )
 
 
-    TF = BitFieldMember(
+    TF = Ia32BitFieldMember(
         "TF",
         """
         @brief Trap flag
@@ -560,7 +560,7 @@ See the description in EFLAGS.
     )
 
 
-    IF = BitFieldMember(
+    IF = Ia32BitFieldMember(
         "IF",
         """
         @brief Interrupt enable flag
@@ -574,7 +574,7 @@ See the description in EFLAGS.
     )
 
 
-    DF = BitFieldMember(
+    DF = Ia32BitFieldMember(
         "DF",
         """
         @brief Direction flag
@@ -588,7 +588,7 @@ See the description in EFLAGS.
     )
 
 
-    OF = BitFieldMember(
+    OF = Ia32BitFieldMember(
         "OF",
         """
         @brief Overflow flag
@@ -602,7 +602,7 @@ See the description in EFLAGS.
     )
 
 
-    IOPL = BitFieldMember(
+    IOPL = Ia32BitFieldMember(
         "IOPL",
         """
         @brief I/O privilege level field
@@ -616,7 +616,7 @@ See the description in EFLAGS.
     )
 
 
-    NT = BitFieldMember(
+    NT = Ia32BitFieldMember(
         "NT",
         """
         @brief Nested task flag
@@ -630,7 +630,7 @@ See the description in EFLAGS.
     )
 
 
-    RF = BitFieldMember(
+    RF = Ia32BitFieldMember(
         "RF",
         """
         @brief Resume flag
@@ -644,7 +644,7 @@ See the description in EFLAGS.
     )
 
 
-    VM = BitFieldMember(
+    VM = Ia32BitFieldMember(
         "VM",
         """
         @brief Virtual-8086 mode flag
@@ -658,7 +658,7 @@ See the description in EFLAGS.
     )
 
 
-    AC = BitFieldMember(
+    AC = Ia32BitFieldMember(
         "AC",
         """
         @brief Alignment check (or access control) flag
@@ -674,7 +674,7 @@ See the description in EFLAGS.
     )
 
 
-    VIF = BitFieldMember(
+    VIF = Ia32BitFieldMember(
         "VIF",
         """
         @brief Virtual interrupt flag
@@ -688,7 +688,7 @@ See the description in EFLAGS.
     )
 
 
-    VIP = BitFieldMember(
+    VIP = Ia32BitFieldMember(
         "VIP",
         """
         @brief Virtual interrupt pending flag
@@ -702,7 +702,7 @@ See the description in EFLAGS.
     )
 
 
-    IF = BitFieldMember(
+    IF = Ia32BitFieldMember(
         "IF",
         """
         @brief Identification flag

@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -10,7 +10,7 @@ Information for VM Exits Due to Instruction Execution.
 """
 
 
-class VmxVmexitInstructionInfoInsOuts(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoInsOuts(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for INS and OUTS
 
@@ -21,7 +21,7 @@ VM-Exit Instruction-Information Field as Used for INS and OUTS.
 
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -41,7 +41,7 @@ Other values not used.
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -67,7 +67,7 @@ Other values not used. Undefined for VM exits due to execution of INS.
     )
 
 
-class VmxVmexitInstructionInfoInvalidate(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoInvalidate(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for INVEPT, INVPCID, and INVVPID
 
@@ -78,7 +78,7 @@ VM-Exit Instruction-Information Field as Used for INVEPT, INVPCID, and INVVPID.
 
 
 
-    SCALING = BitFieldMember(
+    SCALING = Ia32BitFieldMember(
         "SCALING",
         """
         @brief Scaling
@@ -100,7 +100,7 @@ Undefined for instructions with no index register (bit 22 is set).
     )
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -120,7 +120,7 @@ Other values not used.
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -146,7 +146,7 @@ Other values not used. Undefined for VM exits due to execution of INS.
     )
 
 
-    INDEX_REG = BitFieldMember(
+    INDEX_REG = Ia32BitFieldMember(
         "INDEX_REG",
         """
         @brief General-purpose register. Undefined for instructions with no index register (bit 22 is set)
@@ -160,7 +160,7 @@ General-purpose register. Undefined for instructions with no index register (bit
     )
 
 
-    INDEX_REG_INVALID = BitFieldMember(
+    INDEX_REG_INVALID = Ia32BitFieldMember(
         "INDEX_REG_INVALID",
         """
         @brief IndexReg invalid (0 = valid; 1 = invalid)
@@ -174,7 +174,7 @@ IndexReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    BASE_REG = BitFieldMember(
+    BASE_REG = Ia32BitFieldMember(
         "BASE_REG",
         """
         @brief BaseReg (encoded as IndexReg above).
@@ -190,7 +190,7 @@ Undefined for memory instructions with no base register (bit 27 is set).
     )
 
 
-    BASE_REG_INVALID = BitFieldMember(
+    BASE_REG_INVALID = Ia32BitFieldMember(
         "BASE_REG_INVALID",
         """
         @brief BaseReg invalid (0 = valid; 1 = invalid)
@@ -204,7 +204,7 @@ BaseReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    REG_2 = BitFieldMember(
+    REG_2 = Ia32BitFieldMember(
         "REG_2",
         """
         @brief Reg2 (same encoding as IndexReg above)
@@ -218,7 +218,7 @@ Reg2 (same encoding as IndexReg above).
     )
 
 
-class VmxVmexitInstructionInfoGdtrIdtrAccess(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoGdtrIdtrAccess(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for LIDT, LGDT, SIDT, or SGDT
 
@@ -229,7 +229,7 @@ VM-Exit Instruction-Information Field as Used for LIDT, LGDT, SIDT, or SGDT.
 
 
 
-    SCALING = BitFieldMember(
+    SCALING = Ia32BitFieldMember(
         "SCALING",
         """
         @brief Scaling
@@ -251,7 +251,7 @@ Undefined for instructions with no index register (bit 22 is set).
     )
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -271,7 +271,7 @@ Other values not used.
     )
 
 
-    OPERAND_SIZE = BitFieldMember(
+    OPERAND_SIZE = Ia32BitFieldMember(
         "OPERAND_SIZE",
         """
         @brief Operand size
@@ -289,7 +289,7 @@ Undefined for VM exits from 64-bit mode.
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -315,7 +315,7 @@ Other values not used.
     )
 
 
-    INDEX_REG = BitFieldMember(
+    INDEX_REG = Ia32BitFieldMember(
         "INDEX_REG",
         """
         @brief General-purpose register. Undefined for instructions with no index register (bit 22 is set)
@@ -329,7 +329,7 @@ General-purpose register. Undefined for instructions with no index register (bit
     )
 
 
-    INDEX_REG_INVALID = BitFieldMember(
+    INDEX_REG_INVALID = Ia32BitFieldMember(
         "INDEX_REG_INVALID",
         """
         @brief IndexReg invalid (0 = valid; 1 = invalid)
@@ -343,7 +343,7 @@ IndexReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    BASE_REG = BitFieldMember(
+    BASE_REG = Ia32BitFieldMember(
         "BASE_REG",
         """
         @brief BaseReg (encoded as IndexReg above).
@@ -359,7 +359,7 @@ Undefined for memory instructions with no base register (bit 27 is set).
     )
 
 
-    BASE_REG_INVALID = BitFieldMember(
+    BASE_REG_INVALID = Ia32BitFieldMember(
         "BASE_REG_INVALID",
         """
         @brief BaseReg invalid (0 = valid; 1 = invalid)
@@ -373,7 +373,7 @@ BaseReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    INSTR = BitFieldMember(
+    INSTR = Ia32BitFieldMember(
         "INSTR",
         """
         @brief Instruction identity
@@ -393,7 +393,7 @@ BaseReg invalid (0 = valid; 1 = invalid).
     )
 
 
-class VmxVmexitInstructionInfoLdtrTrAccess(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoLdtrTrAccess(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for LLDT, LTR, SLDT, and STR
 
@@ -404,7 +404,7 @@ VM-Exit Instruction-Information Field as Used for LLDT, LTR, SLDT, and STR.
 
 
 
-    SCALING = BitFieldMember(
+    SCALING = Ia32BitFieldMember(
         "SCALING",
         """
         @brief Scaling
@@ -426,7 +426,7 @@ Undefined for instructions with no index register (bit 22 is set).
     )
 
 
-    REG_1 = BitFieldMember(
+    REG_1 = Ia32BitFieldMember(
         "REG_1",
         """
         @brief Reg1. Undefined for memory instructions (bit 10 is clear)
@@ -440,7 +440,7 @@ Reg1. Undefined for memory instructions (bit 10 is clear).
     )
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -460,7 +460,7 @@ Other values not used. Undefined for register instructions (bit 10 is set).
     )
 
 
-    MEM_REG = BitFieldMember(
+    MEM_REG = Ia32BitFieldMember(
         "MEM_REG",
         """
         @brief Mem/Reg (0 = memory; 1 = register)
@@ -474,7 +474,7 @@ Mem/Reg (0 = memory; 1 = register).
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -500,7 +500,7 @@ Other values not used. Undefined for register instructions (bit 10 is set).
     )
 
 
-    INDEX_REG = BitFieldMember(
+    INDEX_REG = Ia32BitFieldMember(
         "INDEX_REG",
         """
         @brief General-purpose register. Undefined for register instructions (bit 10 is set) and for memory
@@ -516,7 +516,7 @@ instructions with no index register (bit 10 is clear and bit 22 is set).
     )
 
 
-    INDEX_REG_INVALID = BitFieldMember(
+    INDEX_REG_INVALID = Ia32BitFieldMember(
         "INDEX_REG_INVALID",
         """
         @brief IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set)
@@ -530,7 +530,7 @@ IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (
     )
 
 
-    BASE_REG = BitFieldMember(
+    BASE_REG = Ia32BitFieldMember(
         "BASE_REG",
         """
         @brief BaseReg (encoded as IndexReg above).
@@ -548,7 +548,7 @@ Undefined for register instructions (bit 10 is set) and for memory instructions 
     )
 
 
-    BASE_REG_INVALID = BitFieldMember(
+    BASE_REG_INVALID = Ia32BitFieldMember(
         "BASE_REG_INVALID",
         """
         @brief BaseReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set)
@@ -562,7 +562,7 @@ BaseReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (b
     )
 
 
-    INSTR = BitFieldMember(
+    INSTR = Ia32BitFieldMember(
         "INSTR",
         """
         @brief Instruction identity
@@ -582,7 +582,7 @@ BaseReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (b
     )
 
 
-class VmxVmexitInstructionInfoRdrandRdseed(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoRdrandRdseed(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for RDRAND and RDSEED
 
@@ -593,7 +593,7 @@ VM-Exit Instruction-Information Field as Used for RDRAND and RDSEED.
 
 
 
-    DEST_REGISTER = BitFieldMember(
+    DEST_REGISTER = Ia32BitFieldMember(
         "DEST_REGISTER",
         """
         @brief Destination register
@@ -607,7 +607,7 @@ Destination register.
     )
 
 
-    OPERAND_SIZE = BitFieldMember(
+    OPERAND_SIZE = Ia32BitFieldMember(
         "OPERAND_SIZE",
         """
         @brief Operand size
@@ -627,7 +627,7 @@ The value 3 is not used.
     )
 
 
-class VmxVmexitInstructionInfoVmxAndXsaves(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoVmxAndXsaves(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for VMCLEAR, VMPTRLD, VMPTRST, VMXON, XRSTORS, and XSAVES
 
@@ -638,7 +638,7 @@ VM-Exit Instruction-Information Field as Used for VMCLEAR, VMPTRLD, VMPTRST, VMX
 
 
 
-    SCALING = BitFieldMember(
+    SCALING = Ia32BitFieldMember(
         "SCALING",
         """
         @brief Scaling
@@ -660,7 +660,7 @@ Undefined for instructions with no index register (bit 22 is set).
     )
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -680,7 +680,7 @@ Other values not used.
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -706,7 +706,7 @@ Other values not used.
     )
 
 
-    INDEX_REG = BitFieldMember(
+    INDEX_REG = Ia32BitFieldMember(
         "INDEX_REG",
         """
         @brief General-purpose register. Undefined for instructions with no index register (bit 22 is set)
@@ -720,7 +720,7 @@ General-purpose register. Undefined for instructions with no index register (bit
     )
 
 
-    INDEX_REG_INVALID = BitFieldMember(
+    INDEX_REG_INVALID = Ia32BitFieldMember(
         "INDEX_REG_INVALID",
         """
         @brief IndexReg invalid (0 = valid; 1 = invalid)
@@ -734,7 +734,7 @@ IndexReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    BASE_REG = BitFieldMember(
+    BASE_REG = Ia32BitFieldMember(
         "BASE_REG",
         """
         @brief BaseReg (encoded as IndexReg above).
@@ -750,7 +750,7 @@ Undefined for memory instructions with no base register (bit 27 is set).
     )
 
 
-    BASE_REG_INVALID = BitFieldMember(
+    BASE_REG_INVALID = Ia32BitFieldMember(
         "BASE_REG_INVALID",
         """
         @brief BaseReg invalid (0 = valid; 1 = invalid)
@@ -764,7 +764,7 @@ BaseReg invalid (0 = valid; 1 = invalid).
     )
 
 
-class VmxVmexitInstructionInfoVmreadVmwrite(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitInstructionInfoVmreadVmwrite(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM-Exit Instruction-Information Field as Used for VMREAD and VMWRITE
 
@@ -775,7 +775,7 @@ VM-Exit Instruction-Information Field as Used for VMREAD and VMWRITE.
 
 
 
-    SCALING = BitFieldMember(
+    SCALING = Ia32BitFieldMember(
         "SCALING",
         """
         @brief Scaling
@@ -798,7 +798,7 @@ Undefined for register instructions (bit 10 is set) and for memory instructions 
     )
 
 
-    REG_1 = BitFieldMember(
+    REG_1 = Ia32BitFieldMember(
         "REG_1",
         """
         @brief Reg1. Undefined for memory instructions (bit 10 is clear)
@@ -812,7 +812,7 @@ Reg1. Undefined for memory instructions (bit 10 is clear).
     )
 
 
-    ADDRESS_SIZE = BitFieldMember(
+    ADDRESS_SIZE = Ia32BitFieldMember(
         "ADDRESS_SIZE",
         """
         @brief Address size
@@ -832,7 +832,7 @@ Other values not used. Undefined for register instructions (bit 10 is set).
     )
 
 
-    MEM_REG = BitFieldMember(
+    MEM_REG = Ia32BitFieldMember(
         "MEM_REG",
         """
         @brief Mem/Reg (0 = memory; 1 = register)
@@ -846,7 +846,7 @@ Mem/Reg (0 = memory; 1 = register).
     )
 
 
-    SEGMENT_REGISTER = BitFieldMember(
+    SEGMENT_REGISTER = Ia32BitFieldMember(
         "SEGMENT_REGISTER",
         """
         @brief Segment register
@@ -872,7 +872,7 @@ Other values not used. Undefined for register instructions (bit 10 is set).
     )
 
 
-    INDEX_REG = BitFieldMember(
+    INDEX_REG = Ia32BitFieldMember(
         "INDEX_REG",
         """
         @brief General-purpose register. Undefined for register instructions (bit 10 is set) and for
@@ -888,7 +888,7 @@ memory instructions with no index register (bit 10 is clear and bit 22 is set).
     )
 
 
-    INDEX_REG_INVALID = BitFieldMember(
+    INDEX_REG_INVALID = Ia32BitFieldMember(
         "INDEX_REG_INVALID",
         """
         @brief IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (bit 10 is set)
@@ -902,7 +902,7 @@ IndexReg invalid (0 = valid; 1 = invalid). Undefined for register instructions (
     )
 
 
-    BASE_REG = BitFieldMember(
+    BASE_REG = Ia32BitFieldMember(
         "BASE_REG",
         """
         @brief BaseReg (encoded as Reg1 above).
@@ -920,7 +920,7 @@ register (bit 10 is clear and bit 27 is set).
     )
 
 
-    BASE_REG_INVALID = BitFieldMember(
+    BASE_REG_INVALID = Ia32BitFieldMember(
         "BASE_REG_INVALID",
         """
         @brief BaseReg invalid (0 = valid; 1 = invalid)
@@ -934,7 +934,7 @@ BaseReg invalid (0 = valid; 1 = invalid).
     )
 
 
-    REG_2 = BitFieldMember(
+    REG_2 = Ia32BitFieldMember(
         "REG_2",
         """
         @brief Reg2 (same encoding as IndexReg above)
@@ -948,7 +948,7 @@ Reg2 (same encoding as IndexReg above).
     )
 
 
-class VmxSegmentAccessRights(with_metaclass(BitFieldMeta, BitField)):
+class VmxSegmentAccessRights(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief - The low 16 bits correspond to bits 23:8 of the upper 32 bits of a 64-bit segment descriptor. While bits
   19:16 of code-segment and data-segment descriptors correspond to the upper 4 bits of the segment
@@ -979,7 +979,7 @@ class VmxSegmentAccessRights(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Segment type
@@ -993,7 +993,7 @@ Segment type.
     )
 
 
-    S_FLAG = BitFieldMember(
+    S_FLAG = Ia32BitFieldMember(
         "S_FLAG",
         """
         @brief S  Descriptor type (0 = system; 1 = code or data)
@@ -1007,7 +1007,7 @@ S  Descriptor type (0 = system; 1 = code or data).
     )
 
 
-    DPL = BitFieldMember(
+    DPL = Ia32BitFieldMember(
         "DPL",
         """
         @brief DPL  Descriptor privilege level
@@ -1021,7 +1021,7 @@ DPL  Descriptor privilege level.
     )
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief P  Segment present
@@ -1035,7 +1035,7 @@ P  Segment present.
     )
 
 
-    AVL = BitFieldMember(
+    AVL = Ia32BitFieldMember(
         "AVL",
         """
         @brief AVL  Available for use by system software
@@ -1049,7 +1049,7 @@ AVL  Available for use by system software.
     )
 
 
-    L = BitFieldMember(
+    L = Ia32BitFieldMember(
         "L",
         """
         @brief Reserved (except for CS). L  64-bit mode active (for CS only)
@@ -1063,7 +1063,7 @@ Reserved (except for CS). L  64-bit mode active (for CS only).
     )
 
 
-    DB = BitFieldMember(
+    DB = Ia32BitFieldMember(
         "DB",
         """
         @brief D/B  Default operation size (0 = 16-bit segment; 1 = 32-bit segment)
@@ -1077,7 +1077,7 @@ D/B  Default operation size (0 = 16-bit segment; 1 = 32-bit segment).
     )
 
 
-    G = BitFieldMember(
+    G = Ia32BitFieldMember(
         "G",
         """
         @brief G  Granularity
@@ -1091,7 +1091,7 @@ G  Granularity.
     )
 
 
-    UNUSABLE = BitFieldMember(
+    UNUSABLE = Ia32BitFieldMember(
         "UNUSABLE",
         """
         @brief Segment unusable (0 = usable; 1 = unusable)
@@ -1105,7 +1105,7 @@ Segment unusable (0 = usable; 1 = unusable).
     )
 
 
-class VmxInterruptibilityState(with_metaclass(BitFieldMeta, BitField)):
+class VmxInterruptibilityState(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief The IA-32 architecture includes features that permit certain events to be
 blocked for a period of time. This field contains information about such blocking
@@ -1120,7 +1120,7 @@ blocked for a period of time. This field contains information about such blockin
 
 
 
-    BLOCKING_BY_STI = BitFieldMember(
+    BLOCKING_BY_STI = Ia32BitFieldMember(
         "BLOCKING_BY_STI",
         """
         @brief Execution of STI with RFLAGS.IF = 0 blocks maskable interrupts on the instruction boundary
@@ -1138,7 +1138,7 @@ following its execution.1 Setting this bit indicates that this blocking is in ef
     )
 
 
-    BLOCKING_BY_MOV_SS = BitFieldMember(
+    BLOCKING_BY_MOV_SS = Ia32BitFieldMember(
         "BLOCKING_BY_MOV_SS",
         """
         @brief Execution of a MOV to SS or a POP to SS blocks or suppresses certain debug exceptions as well
@@ -1160,7 +1160,7 @@ by MOV SS, but it applies equally to POP SS.
     )
 
 
-    BLOCKING_BY_SMI = BitFieldMember(
+    BLOCKING_BY_SMI = Ia32BitFieldMember(
         "BLOCKING_BY_SMI",
         """
         @brief System-management interrupts (SMIs) are disabled while the processor is in system-management mode (SMM).
@@ -1178,7 +1178,7 @@ Setting this bit indicates that blocking of SMIs is in effect.
     )
 
 
-    BLOCKING_BY_NMI = BitFieldMember(
+    BLOCKING_BY_NMI = Ia32BitFieldMember(
         "BLOCKING_BY_NMI",
         """
         @brief Delivery of a non-maskable interrupt (NMI) or a system-management interrupt (SMI) blocks
@@ -1210,7 +1210,7 @@ ready for an NMI).
     )
 
 
-    ENCLAVE_INTERRUPTION = BitFieldMember(
+    ENCLAVE_INTERRUPTION = Ia32BitFieldMember(
         "ENCLAVE_INTERRUPTION",
         """
         @brief A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode
@@ -1240,7 +1240,7 @@ class VmxGuestActivityState:
     
       VMX_WAIT_FOR_SIPI = 0x3
     
-class VmxVmexitReason(with_metaclass(BitFieldMeta, BitField)):
+class VmxVmexitReason(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of Exit Reason
 
@@ -1251,7 +1251,7 @@ Exit reason (32 bits). This field encodes the reason for the VM exit and has the
 
 
 
-    BASIC_EXIT_REASON = BitFieldMember(
+    BASIC_EXIT_REASON = Ia32BitFieldMember(
         "BASIC_EXIT_REASON",
         """
         @brief Provides basic information about the cause of the VM exit (if bit 31 is clear) or of the VM-entry
@@ -1267,7 +1267,7 @@ failure (if bit 31 is set).
     )
 
 
-    ALWAYS0 = BitFieldMember(
+    ALWAYS0 = Ia32BitFieldMember(
         "ALWAYS0",
         """
         @brief Always cleared to 0
@@ -1281,7 +1281,7 @@ Always cleared to 0.
     )
 
 
-    RESERVED1 = BitFieldMember(
+    RESERVED1 = Ia32BitFieldMember(
         "RESERVED1",
         """
         
@@ -1293,7 +1293,7 @@ Always cleared to 0.
     )
 
 
-    ENCLAVE_MODE = BitFieldMember(
+    ENCLAVE_MODE = Ia32BitFieldMember(
         "ENCLAVE_MODE",
         """
         @brief A VM exit saves this bit as 1 to indicate that the VM exit was incident to enclave mode
@@ -1307,7 +1307,7 @@ A VM exit saves this bit as 1 to indicate that the VM exit was incident to encla
     )
 
 
-    PENDING_MTF_VM_EXIT = BitFieldMember(
+    PENDING_MTF_VM_EXIT = Ia32BitFieldMember(
         "PENDING_MTF_VM_EXIT",
         """
         @brief Pending MTF VM exit
@@ -1321,7 +1321,7 @@ Pending MTF VM exit.
     )
 
 
-    VM_EXIT_FROM_VMX_ROOT = BitFieldMember(
+    VM_EXIT_FROM_VMX_ROOT = Ia32BitFieldMember(
         "VM_EXIT_FROM_VMX_ROOT",
         """
         @brief VM exit from VMX root operation
@@ -1335,7 +1335,7 @@ VM exit from VMX root operation.
     )
 
 
-    RESERVED2 = BitFieldMember(
+    RESERVED2 = Ia32BitFieldMember(
         "RESERVED2",
         """
         
@@ -1347,7 +1347,7 @@ VM exit from VMX root operation.
     )
 
 
-    VM_ENTRY_FAILURE = BitFieldMember(
+    VM_ENTRY_FAILURE = Ia32BitFieldMember(
         "VM_ENTRY_FAILURE",
         """
         @brief VM-entry failure:
@@ -1369,28 +1369,28 @@ VM-entry failure:
     )
 
 
-class VmxIoBitmap(Struct):
+class VmxIoBitmap(Ia32Struct):
     """"""
-    class _MemberContainerIoA(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerIoA(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerIoA, self).__init__(value, byte_offset, byte_width, max_bytes=4096)
+            super(VmxIoBitmap._MemberContainerIoA, self).__init__(value, byte_offset, byte_width, max_bytes=4096)
     
     
-        value = BitFieldMember('value', 'value', 0, 32768)
+        value = Ia32BitFieldMember('value', 'value', 0, 32768)
     
     
-    class _MemberContainerIoB(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerIoB(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerIoB, self).__init__(value, byte_offset, byte_width, max_bytes=4096)
+            super(VmxIoBitmap._MemberContainerIoB, self).__init__(value, byte_offset, byte_width, max_bytes=4096)
     
     
-        value = BitFieldMember('value', 'value', 0, 32768)
+        value = Ia32BitFieldMember('value', 'value', 0, 32768)
     
     
     _members = ["A","B",]
@@ -1418,50 +1418,50 @@ class VmxIoBitmap(Struct):
         return self._B.set(value)
 
 
-class VmxMsrBitmap(Struct):
+class VmxMsrBitmap(Ia32Struct):
     """"""
-    class _MemberContainerRdmsrLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerRdmsrLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerRdmsrLow, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
+            super(VmxMsrBitmap._MemberContainerRdmsrLow, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
     
     
-        value = BitFieldMember('value', 'value', 0, 8192)
+        value = Ia32BitFieldMember('value', 'value', 0, 8192)
     
     
-    class _MemberContainerRdmsrHigh(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerRdmsrHigh(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerRdmsrHigh, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
+            super(VmxMsrBitmap._MemberContainerRdmsrHigh, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
     
     
-        value = BitFieldMember('value', 'value', 0, 8192)
+        value = Ia32BitFieldMember('value', 'value', 0, 8192)
     
     
-    class _MemberContainerWrmsrLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerWrmsrLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerWrmsrLow, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
+            super(VmxMsrBitmap._MemberContainerWrmsrLow, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
     
     
-        value = BitFieldMember('value', 'value', 0, 8192)
+        value = Ia32BitFieldMember('value', 'value', 0, 8192)
     
     
-    class _MemberContainerWrmsrHigh(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerWrmsrHigh(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerWrmsrHigh, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
+            super(VmxMsrBitmap._MemberContainerWrmsrHigh, self).__init__(value, byte_offset, byte_width, max_bytes=1024)
     
     
-        value = BitFieldMember('value', 'value', 0, 8192)
+        value = Ia32BitFieldMember('value', 'value', 0, 8192)
     
     
     _members = ["RDMSR_LOW","RDMSR_HIGH","WRMSR_LOW","WRMSR_HIGH",]

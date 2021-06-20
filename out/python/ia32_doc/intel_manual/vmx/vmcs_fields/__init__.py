@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -12,7 +12,7 @@ etc.) and type (guest-state, host-state, etc.).
 """
 
 
-class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
+class VmcsComponentEncoding(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -21,7 +21,7 @@ class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    ACCESS_TYPE = BitFieldMember(
+    ACCESS_TYPE = Ia32BitFieldMember(
         "ACCESS_TYPE",
         """
         @brief Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields
@@ -35,7 +35,7 @@ Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-w
     )
 
 
-    INDEX = BitFieldMember(
+    INDEX = Ia32BitFieldMember(
         "INDEX",
         """
         @brief Index
@@ -49,7 +49,7 @@ Index.
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Type:
@@ -79,7 +79,7 @@ Type:
     )
 
 
-    MUST_BE_ZERO = BitFieldMember(
+    MUST_BE_ZERO = Ia32BitFieldMember(
         "MUST_BE_ZERO",
         """
         @brief Reserved (must be 0)
@@ -93,7 +93,7 @@ Reserved (must be 0).
     )
 
 
-    WIDTH = BitFieldMember(
+    WIDTH = Ia32BitFieldMember(
         "WIDTH",
         """
         @brief Width:

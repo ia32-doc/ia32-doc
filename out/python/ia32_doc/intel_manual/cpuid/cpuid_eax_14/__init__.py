@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -18,20 +18,20 @@ Trace.
 CPUID_INTEL_PROCESSOR_TRACE = 0x14
 
 
-class CpuidEax14Ecx00(Struct):
+class CpuidEax14Ecx00(Ia32Struct):
     """@brief Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)
 
 Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx00._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        MAX_SUB_LEAF = BitFieldMember(
+        MAX_SUB_LEAF = Ia32BitFieldMember(
             "MAX_SUB_LEAF",
             """
             @brief Reports the maximum sub-leaf supported in leaf 14H
@@ -46,16 +46,16 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx00._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        FLAG0 = BitFieldMember(
+        FLAG0 = Ia32BitFieldMember(
             "FLAG0",
             """
             @brief If 1, indicates that IA32_RTIT_CTL.CR3Filter can be set to 1, and that IA32_RTIT_CR3_MATCH MSR can be accessed
@@ -69,7 +69,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG1 = BitFieldMember(
+        FLAG1 = Ia32BitFieldMember(
             "FLAG1",
             """
             @brief If 1, indicates support of Configurable PSB and Cycle-Accurate Mode
@@ -83,7 +83,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG2 = BitFieldMember(
+        FLAG2 = Ia32BitFieldMember(
             "FLAG2",
             """
             @brief If 1, indicates support of IP Filtering, TraceStop filtering, and preservation of Intel PT MSRs across warm reset
@@ -97,7 +97,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG3 = BitFieldMember(
+        FLAG3 = Ia32BitFieldMember(
             "FLAG3",
             """
             @brief If 1, indicates support of MTC timing packet and suppression of COFI-based packets
@@ -111,7 +111,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG4 = BitFieldMember(
+        FLAG4 = Ia32BitFieldMember(
             "FLAG4",
             """
             @brief If 1, indicates support of PTWRITE. Writes can set IA32_RTIT_CTL[12] (PTWEn) and IA32_RTIT_CTL[5] (FUPonPTW), and PTWRITE can generate packets
@@ -125,7 +125,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG5 = BitFieldMember(
+        FLAG5 = Ia32BitFieldMember(
             "FLAG5",
             """
             @brief If 1, indicates support of Power Event Trace. Writes can set IA32_RTIT_CTL[4] (PwrEvtEn), enabling Power Event Trace packet generation
@@ -140,16 +140,16 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx00._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        FLAG0 = BitFieldMember(
+        FLAG0 = Ia32BitFieldMember(
             "FLAG0",
             """
             @brief If 1, Tracing can be enabled with IA32_RTIT_CTL.ToPA = 1, hence utilizing the ToPA output scheme; IA32_RTIT_OUTPUT_BASE and IA32_RTIT_OUTPUT_MASK_PTRS MSRs can be accessed
@@ -163,7 +163,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG1 = BitFieldMember(
+        FLAG1 = Ia32BitFieldMember(
             "FLAG1",
             """
             @brief If 1, ToPA tables can hold any number of output entries, up to the maximum allowed by the MaskOrTableOffset field of IA32_RTIT_OUTPUT_MASK_PTRS
@@ -177,7 +177,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG2 = BitFieldMember(
+        FLAG2 = Ia32BitFieldMember(
             "FLAG2",
             """
             @brief If 1, indicates support of Single-Range Output scheme
@@ -191,7 +191,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG3 = BitFieldMember(
+        FLAG3 = Ia32BitFieldMember(
             "FLAG3",
             """
             @brief If 1, indicates support of output to Trace Transport subsystem
@@ -205,7 +205,7 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         )
     
     
-        FLAG31 = BitFieldMember(
+        FLAG31 = Ia32BitFieldMember(
             "FLAG31",
             """
             @brief If 1, generated packets which contain IP payloads have LIP values, which include the CS base component
@@ -220,16 +220,16 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx00._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -287,20 +287,20 @@ Intel Processor Trace Enumeration Main Leaf (EAX = 14H, ECX = 0)."""
         return self._CPUID_EDX.set(value)
 
 
-class CpuidEax14Ecx01(Struct):
+class CpuidEax14Ecx01(Ia32Struct):
     """@brief Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)
 
 Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx01._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING = BitFieldMember(
+        NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING = Ia32BitFieldMember(
             "NUMBER_OF_CONFIGURABLE_ADDRESS_RANGES_FOR_FILTERING",
             """
             @brief Number of configurable Address Ranges for filtering
@@ -314,7 +314,7 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
         )
     
     
-        BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS = BitFieldMember(
+        BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS = Ia32BitFieldMember(
             "BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS",
             """
             @brief Bitmap of supported MTC period encodings
@@ -329,16 +329,16 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx01._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS = BitFieldMember(
+        BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS = Ia32BitFieldMember(
             "BITMAP_OF_SUPPORTED_CYCLE_THRESHOLD_VALUE_ENCODINGS",
             """
             @brief Bitmap of supported Cycle Threshold value encodings
@@ -352,7 +352,7 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
         )
     
     
-        BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS = BitFieldMember(
+        BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS = Ia32BitFieldMember(
             "BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS",
             """
             @brief Bitmap of supported Configurable PSB frequency encodings
@@ -367,16 +367,16 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx01._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief ECX is reserved
@@ -391,16 +391,16 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax14Ecx01._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -461,18 +461,18 @@ Intel Processor Trace Enumeration Sub-leaf (EAX = 14H, ECX = 1)."""
 CPUID_TIME_STAMP_COUNTER = 0x15
 
 
-class CpuidEax15(Struct):
+class CpuidEax15(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax15._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        DENOMINATOR = BitFieldMember(
+        DENOMINATOR = Ia32BitFieldMember(
             "DENOMINATOR",
             """
             @brief An unsigned integer which is the denominator of the TSC/core crystal clock ratio
@@ -487,16 +487,16 @@ class CpuidEax15(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax15._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMERATOR = BitFieldMember(
+        NUMERATOR = Ia32BitFieldMember(
             "NUMERATOR",
             """
             @brief An unsigned integer which is the numerator of the TSC/core crystal clock ratio
@@ -511,16 +511,16 @@ class CpuidEax15(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax15._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NOMINAL_FREQUENCY = BitFieldMember(
+        NOMINAL_FREQUENCY = Ia32BitFieldMember(
             "NOMINAL_FREQUENCY",
             """
             @brief An unsigned integer which is the nominal frequency of the core crystal clock in Hz
@@ -535,16 +535,16 @@ class CpuidEax15(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax15._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -605,18 +605,18 @@ class CpuidEax15(Struct):
 CPUID_PROCESSOR_FREQUENCY = 0x16
 
 
-class CpuidEax16(Struct):
+class CpuidEax16(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax16._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        PROCESOR_BASE_FREQUENCY_MHZ = BitFieldMember(
+        PROCESOR_BASE_FREQUENCY_MHZ = Ia32BitFieldMember(
             "PROCESOR_BASE_FREQUENCY_MHZ",
             """
             @brief Processor Base Frequency (in MHz)
@@ -631,16 +631,16 @@ class CpuidEax16(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax16._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        PROCESSOR_MAXIMUM_FREQUENCY_MHZ = BitFieldMember(
+        PROCESSOR_MAXIMUM_FREQUENCY_MHZ = Ia32BitFieldMember(
             "PROCESSOR_MAXIMUM_FREQUENCY_MHZ",
             """
             @brief Maximum Frequency (in MHz)
@@ -655,16 +655,16 @@ class CpuidEax16(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax16._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        BUS_FREQUENCY_MHZ = BitFieldMember(
+        BUS_FREQUENCY_MHZ = Ia32BitFieldMember(
             "BUS_FREQUENCY_MHZ",
             """
             @brief Bus (Reference) Frequency (in MHz)
@@ -679,16 +679,16 @@ class CpuidEax16(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax16._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved

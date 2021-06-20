@@ -1,16 +1,16 @@
-class {{ name_prefix + class_name(doc) }}(with_metaclass(BitFieldMeta, BitField)):
+class {{ name_prefix + class_name(doc) }}(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     {{ get_description(doc) }}
     """
     def __init__(self, value=0, byte_offset=None, byte_width=None):
-        super({{ name_prefix + class_name(doc) }}, self).__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
+        super({{ container_class + name_prefix + class_name(doc) }}, self).__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
 
 {% if 'struct_field' == doc.type %}
-    value = BitFieldMember('value', 'value', 0, {{ doc.size }})
+    value = Ia32BitFieldMember('value', 'value', 0, {{ doc.size }})
 
 {%- endif %}
 {% for field in doc.fields %}
-    {{ field.short_name }} = BitFieldMember(
+    {{ field.short_name }} = Ia32BitFieldMember(
         "{{ field.short_name }}",
         """
         {{ get_description(field) }}

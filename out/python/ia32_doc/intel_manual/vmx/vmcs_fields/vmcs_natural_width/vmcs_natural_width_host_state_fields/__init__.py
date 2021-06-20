@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -77,7 +77,7 @@ Valid interruption types.
     
       OTHER = 0x7
     
-class VmentryInterruptInformation(with_metaclass(BitFieldMeta, BitField)):
+class VmentryInterruptInformation(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM entry can be configured to conclude by delivering an event through the IDT (after all guest state and MSRs have
 been loaded). This process is called event injection and is controlled by these VM-entry control
@@ -92,7 +92,7 @@ fields.
 
 
 
-    VECTOR = BitFieldMember(
+    VECTOR = Ia32BitFieldMember(
         "VECTOR",
         """
         @brief Vector of interrupt or exception
@@ -106,7 +106,7 @@ Determines which entry in the IDT is used or which other event is injected.
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Interruption type
@@ -120,7 +120,7 @@ Determines details of how the injection is performed.
     )
 
 
-    DELIVER_ERROR_CODE = BitFieldMember(
+    DELIVER_ERROR_CODE = Ia32BitFieldMember(
         "DELIVER_ERROR_CODE",
         """
         @brief Deliver error code (0 = do not deliver; 1 = deliver)
@@ -134,7 +134,7 @@ Determines whether delivery pushes an error code on the guest stack.
     )
 
 
-    VALID = BitFieldMember(
+    VALID = Ia32BitFieldMember(
         "VALID",
         """
         @brief Valid
@@ -149,7 +149,7 @@ VM exit.
     )
 
 
-class VmexitInterruptInformation(with_metaclass(BitFieldMeta, BitField)):
+class VmexitInterruptInformation(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM entry can be configured to conclude by delivering an event through the IDT (after all guest state and MSRs have
 been loaded). This process is called event injection and is controlled by these VM-entry control
@@ -164,7 +164,7 @@ fields.
 
 
 
-    VECTOR = BitFieldMember(
+    VECTOR = Ia32BitFieldMember(
         "VECTOR",
         """
         @brief Vector of interrupt or exception
@@ -178,7 +178,7 @@ Vector of interrupt or exception.
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Interruption type
@@ -192,7 +192,7 @@ Interruption type.
     )
 
 
-    ERROR_CODE_VALID = BitFieldMember(
+    ERROR_CODE_VALID = Ia32BitFieldMember(
         "ERROR_CODE_VALID",
         """
         @brief Deliver error code (0 = do not deliver; 1 = deliver)
@@ -206,7 +206,7 @@ Deliver error code (0 = do not deliver; 1 = deliver).
     )
 
 
-    NMI_UNBLOCKING = BitFieldMember(
+    NMI_UNBLOCKING = Ia32BitFieldMember(
         "NMI_UNBLOCKING",
         """
         @brief NMI unblocking due to IRET
@@ -220,7 +220,7 @@ NMI unblocking due to IRET.
     )
 
 
-    VALID = BitFieldMember(
+    VALID = Ia32BitFieldMember(
         "VALID",
         """
         @brief Valid

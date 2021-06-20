@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -10,70 +10,70 @@ Virtualization Exceptions.
 """
 
 
-class VmxVirtualizationExceptionInformation(Struct):
+class VmxVirtualizationExceptionInformation(Ia32Struct):
     """"""
-    class _MemberContainerReason(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerReason(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         The 32-bit value that would have been saved into the VMCS as an exit reason had a VM exit occurred
     instead of the virtualization exception. For EPT violations, this value is 48 (00000030H).
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerReason, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(VmxVirtualizationExceptionInformation._MemberContainerReason, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerExceptionMask(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerExceptionMask(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief FFFFFFFFH
     
     FFFFFFFFH
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerExceptionMask, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(VmxVirtualizationExceptionInformation._MemberContainerExceptionMask, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerExit(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerExit(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         The 64-bit value that would have been saved into the VMCS as an exit qualification had a VM exit
     occurred instead of the virtualization exception.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerExit, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(VmxVirtualizationExceptionInformation._MemberContainerExit, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
-    class _MemberContainerGuestLinearAddress(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerGuestLinearAddress(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         The 64-bit value that would have been saved into the VMCS as a guest-linear address had a VM exit
     occurred instead of the virtualization exception.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerGuestLinearAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(VmxVirtualizationExceptionInformation._MemberContainerGuestLinearAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
-    class _MemberContainerGuestPhysicalAddress(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerGuestPhysicalAddress(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         The 64-bit value that would have been saved into the VMCS as a guest-physical address had a VM
     exit occurred instead of the virtualization exception.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerGuestPhysicalAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(VmxVirtualizationExceptionInformation._MemberContainerGuestPhysicalAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
-    class _MemberContainerCurrentEptpIndex(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCurrentEptpIndex(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         The current 16-bit value of the EPTP index VM-execution control.
     
@@ -82,10 +82,10 @@ class VmxVirtualizationExceptionInformation(Struct):
     @see Vol3C[25.5.5.3(EPTP Switching)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCurrentEptpIndex, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(VmxVirtualizationExceptionInformation._MemberContainerCurrentEptpIndex, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
     _members = ["REASON","EXCEPT_MASK","EXIT","GLA","GPA","EPTP",]

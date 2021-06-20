@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -13,58 +13,58 @@ __doc__ = """
 CPUID_SIGNATURE = 0x0
 
 
-class CpuidEax00(Struct):
+class CpuidEax00(Ia32Struct):
     """"""
-    class _MemberContainerMaxCpuidInputValue(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerMaxCpuidInputValue(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief EAX
     
     Maximum Input Value for Basic CPUID Information.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerMaxCpuidInputValue, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax00._MemberContainerMaxCpuidInputValue, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerEbxValueGenu(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEbxValueGenu(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief EBX
     
     Genu
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEbxValueGenu, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax00._MemberContainerEbxValueGenu, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerEcxValueNtel(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEcxValueNtel(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief ECX
     
     ntel
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEcxValueNtel, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax00._MemberContainerEcxValueNtel, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerEdxValueInei(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEdxValueInei(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief EDX
     
     ineI
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEdxValueInei, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax00._MemberContainerEdxValueInei, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
     _members = ["MAXCPUIDINPUT","VALUEGENU","VALUENTEL","VALUEINEI",]
@@ -113,20 +113,20 @@ class CpuidEax00(Struct):
 CPUID_VERSION_INFO = 0x1
 
 
-class CpuidEax01(Struct):
+class CpuidEax01(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief When CPUID executes with EAX set to 01H, version information is returned in EAX
     
     When CPUID executes with EAX set to 01H, version information is returned in EAX.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax01._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        STEPPING_ID = BitFieldMember(
+        STEPPING_ID = Ia32BitFieldMember(
             "STEPPING_ID",
             """
             
@@ -138,7 +138,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MODEL = BitFieldMember(
+        MODEL = Ia32BitFieldMember(
             "MODEL",
             """
             
@@ -150,7 +150,7 @@ class CpuidEax01(Struct):
         )
     
     
-        FAMILY_ID = BitFieldMember(
+        FAMILY_ID = Ia32BitFieldMember(
             "FAMILY_ID",
             """
             
@@ -162,7 +162,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PROCESSOR_TYPE = BitFieldMember(
+        PROCESSOR_TYPE = Ia32BitFieldMember(
             "PROCESSOR_TYPE",
             """
             @brief - 0 - Original OEM Processor
@@ -188,7 +188,7 @@ class CpuidEax01(Struct):
         )
     
     
-        EXTENDED_MODEL_ID = BitFieldMember(
+        EXTENDED_MODEL_ID = Ia32BitFieldMember(
             "EXTENDED_MODEL_ID",
             """
             @brief The Extended Model ID needs to be examined only when the Family ID is 06H or 0FH
@@ -202,7 +202,7 @@ class CpuidEax01(Struct):
         )
     
     
-        EXTENDED_FAMILY_ID = BitFieldMember(
+        EXTENDED_FAMILY_ID = Ia32BitFieldMember(
             "EXTENDED_FAMILY_ID",
             """
             @brief The Extended Family ID needs to be examined only when the Family ID is 0FH
@@ -217,18 +217,18 @@ class CpuidEax01(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief When CPUID executes with EAX set to 01H, additional information is returned to the EBX register
     
     When CPUID executes with EAX set to 01H, additional information is returned to the EBX register.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax01._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        BRAND_INDEX = BitFieldMember(
+        BRAND_INDEX = Ia32BitFieldMember(
             "BRAND_INDEX",
             """
             @brief This number provides an entry into a brand string table that contains brand
@@ -244,7 +244,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CLFLUSH_LINE_SIZE = BitFieldMember(
+        CLFLUSH_LINE_SIZE = Ia32BitFieldMember(
             "CLFLUSH_LINE_SIZE",
             """
             @brief Value  8 = cache line size in bytes; used also by CLFLUSHOPT
@@ -260,7 +260,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MAX_ADDRESSABLE_IDS = BitFieldMember(
+        MAX_ADDRESSABLE_IDS = Ia32BitFieldMember(
             "MAX_ADDRESSABLE_IDS",
             """
             @brief Maximum number of addressable IDs for logical processors in this physical package
@@ -274,7 +274,7 @@ class CpuidEax01(Struct):
         )
     
     
-        INITIAL_APIC_ID = BitFieldMember(
+        INITIAL_APIC_ID = Ia32BitFieldMember(
             "INITIAL_APIC_ID",
             """
             @brief This number is the 8-bit ID that is assigned to the local APIC on the
@@ -291,18 +291,18 @@ class CpuidEax01(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX
     
     When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax01._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SSE3 = BitFieldMember(
+        SSE3 = Ia32BitFieldMember(
             "SSE3",
             """
             @brief Streaming SIMD Extensions 3 (SSE3)
@@ -316,7 +316,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PCLMULQDQ = BitFieldMember(
+        PCLMULQDQ = Ia32BitFieldMember(
             "PCLMULQDQ",
             """
             @brief PCLMULQDQ instruction
@@ -330,7 +330,7 @@ class CpuidEax01(Struct):
         )
     
     
-        DTES64 = BitFieldMember(
+        DTES64 = Ia32BitFieldMember(
             "DTES64",
             """
             @brief 64-bit DS Area
@@ -344,7 +344,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MONITOR = BitFieldMember(
+        MONITOR = Ia32BitFieldMember(
             "MONITOR",
             """
             @brief MONITOR/MWAIT instruction
@@ -358,7 +358,7 @@ class CpuidEax01(Struct):
         )
     
     
-        DSCPL = BitFieldMember(
+        DSCPL = Ia32BitFieldMember(
             "DSCPL",
             """
             @brief CPL Qualified Debug Store
@@ -373,7 +373,7 @@ class CpuidEax01(Struct):
         )
     
     
-        VMX = BitFieldMember(
+        VMX = Ia32BitFieldMember(
             "VMX",
             """
             @brief Virtual Machine Extensions
@@ -387,7 +387,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SMX = BitFieldMember(
+        SMX = Ia32BitFieldMember(
             "SMX",
             """
             @brief Safer Mode Extensions
@@ -403,7 +403,7 @@ class CpuidEax01(Struct):
         )
     
     
-        EIST = BitFieldMember(
+        EIST = Ia32BitFieldMember(
             "EIST",
             """
             @brief Enhanced Intel SpeedStep technology
@@ -417,7 +417,7 @@ class CpuidEax01(Struct):
         )
     
     
-        TM2 = BitFieldMember(
+        TM2 = Ia32BitFieldMember(
             "TM2",
             """
             @brief Thermal Monitor 2
@@ -431,7 +431,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SSSE3 = BitFieldMember(
+        SSSE3 = Ia32BitFieldMember(
             "SSSE3",
             """
             @brief Supplemental Streaming SIMD Extensions 3 (SSSE3)
@@ -446,7 +446,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CNXTID = BitFieldMember(
+        CNXTID = Ia32BitFieldMember(
             "CNXTID",
             """
             @brief L1 Context ID
@@ -462,7 +462,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SDBG = BitFieldMember(
+        SDBG = Ia32BitFieldMember(
             "SDBG",
             """
             @brief IA32_DEBUG_INTERFACE MSR for silicon debug
@@ -476,7 +476,7 @@ class CpuidEax01(Struct):
         )
     
     
-        FMA = BitFieldMember(
+        FMA = Ia32BitFieldMember(
             "FMA",
             """
             @brief FMA extensions using YMM state
@@ -490,7 +490,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CMPXCHG16B = BitFieldMember(
+        CMPXCHG16B = Ia32BitFieldMember(
             "CMPXCHG16B",
             """
             @brief CMPXCHG16B instruction
@@ -504,7 +504,7 @@ class CpuidEax01(Struct):
         )
     
     
-        XTPR_UPDATE_CONTROL = BitFieldMember(
+        XTPR_UPDATE_CONTROL = Ia32BitFieldMember(
             "XTPR_UPDATE_CONTROL",
             """
             @brief xTPR Update Control
@@ -518,7 +518,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PDCM = BitFieldMember(
+        PDCM = Ia32BitFieldMember(
             "PDCM",
             """
             @brief Perfmon and Debug Capability
@@ -533,7 +533,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PCID = BitFieldMember(
+        PCID = Ia32BitFieldMember(
             "PCID",
             """
             @brief Process-context identifiers
@@ -547,7 +547,7 @@ class CpuidEax01(Struct):
         )
     
     
-        DCA = BitFieldMember(
+        DCA = Ia32BitFieldMember(
             "DCA",
             """
             @brief Direct Cache Access
@@ -562,7 +562,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SSE41 = BitFieldMember(
+        SSE41 = Ia32BitFieldMember(
             "SSE41",
             """
             @brief SSE4.1 support
@@ -576,7 +576,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SSE42 = BitFieldMember(
+        SSE42 = Ia32BitFieldMember(
             "SSE42",
             """
             @brief SSE4.2 support
@@ -590,7 +590,7 @@ class CpuidEax01(Struct):
         )
     
     
-        X2APIC = BitFieldMember(
+        X2APIC = Ia32BitFieldMember(
             "X2APIC",
             """
             @brief x2APIC support
@@ -604,7 +604,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MOVBE = BitFieldMember(
+        MOVBE = Ia32BitFieldMember(
             "MOVBE",
             """
             @brief MOVBE instruction
@@ -618,7 +618,7 @@ class CpuidEax01(Struct):
         )
     
     
-        POPCNT = BitFieldMember(
+        POPCNT = Ia32BitFieldMember(
             "POPCNT",
             """
             @brief POPCNT instruction
@@ -632,7 +632,7 @@ class CpuidEax01(Struct):
         )
     
     
-        TSC_DEADLINE = BitFieldMember(
+        TSC_DEADLINE = Ia32BitFieldMember(
             "TSC_DEADLINE",
             """
             @brief TSC Deadline
@@ -647,7 +647,7 @@ class CpuidEax01(Struct):
         )
     
     
-        AESNI = BitFieldMember(
+        AESNI = Ia32BitFieldMember(
             "AESNI",
             """
             @brief AESNI instruction extensions
@@ -661,7 +661,7 @@ class CpuidEax01(Struct):
         )
     
     
-        XSAVE = BitFieldMember(
+        XSAVE = Ia32BitFieldMember(
             "XSAVE",
             """
             @brief XSAVE/XRSTOR instruction extensions
@@ -676,7 +676,7 @@ class CpuidEax01(Struct):
         )
     
     
-        OSXSAVE = BitFieldMember(
+        OSXSAVE = Ia32BitFieldMember(
             "OSXSAVE",
             """
             @brief CR4.OSXSAVE[bit 18] set
@@ -692,7 +692,7 @@ class CpuidEax01(Struct):
         )
     
     
-        AVX = BitFieldMember(
+        AVX = Ia32BitFieldMember(
             "AVX",
             """
             @brief AVX instruction extensions support
@@ -706,7 +706,7 @@ class CpuidEax01(Struct):
         )
     
     
-        F16C = BitFieldMember(
+        F16C = Ia32BitFieldMember(
             "F16C",
             """
             @brief 16-bit floating-point conversion instructions support
@@ -720,7 +720,7 @@ class CpuidEax01(Struct):
         )
     
     
-        RDRAND = BitFieldMember(
+        RDRAND = Ia32BitFieldMember(
             "RDRAND",
             """
             @brief RDRAND instruction support
@@ -735,18 +735,18 @@ class CpuidEax01(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX
     
     When CPUID executes with EAX set to 01H, feature information is returned in ECX and EDX.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax01._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        FPU = BitFieldMember(
+        FPU = Ia32BitFieldMember(
             "FPU",
             """
             @brief Floating Point Unit On-Chip
@@ -760,7 +760,7 @@ class CpuidEax01(Struct):
         )
     
     
-        VME = BitFieldMember(
+        VME = Ia32BitFieldMember(
             "VME",
             """
             @brief Virtual 8086 Mode Enhancements
@@ -776,7 +776,7 @@ class CpuidEax01(Struct):
         )
     
     
-        DE = BitFieldMember(
+        DE = Ia32BitFieldMember(
             "DE",
             """
             @brief Debugging Extensions
@@ -791,7 +791,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PSE = BitFieldMember(
+        PSE = Ia32BitFieldMember(
             "PSE",
             """
             @brief Page Size Extension
@@ -807,7 +807,7 @@ class CpuidEax01(Struct):
         )
     
     
-        TSC = BitFieldMember(
+        TSC = Ia32BitFieldMember(
             "TSC",
             """
             @brief Time Stamp Counter
@@ -821,7 +821,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MSR = BitFieldMember(
+        MSR = Ia32BitFieldMember(
             "MSR",
             """
             @brief Model Specific Registers RDMSR and WRMSR Instructions
@@ -835,7 +835,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PAE = BitFieldMember(
+        PAE = Ia32BitFieldMember(
             "PAE",
             """
             @brief Physical Address Extension
@@ -851,7 +851,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MCE = BitFieldMember(
+        MCE = Ia32BitFieldMember(
             "MCE",
             """
             @brief Machine Check Exception
@@ -868,7 +868,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CX8 = BitFieldMember(
+        CX8 = Ia32BitFieldMember(
             "CX8",
             """
             @brief CMPXCHG8B Instruction
@@ -883,7 +883,7 @@ class CpuidEax01(Struct):
         )
     
     
-        APIC = BitFieldMember(
+        APIC = Ia32BitFieldMember(
             "APIC",
             """
             @brief APIC On-Chip
@@ -899,7 +899,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SEP = BitFieldMember(
+        SEP = Ia32BitFieldMember(
             "SEP",
             """
             @brief SYSENTER and SYSEXIT Instructions
@@ -913,7 +913,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MTRR = BitFieldMember(
+        MTRR = Ia32BitFieldMember(
             "MTRR",
             """
             @brief Memory Type Range Registers
@@ -929,7 +929,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PGE = BitFieldMember(
+        PGE = Ia32BitFieldMember(
             "PGE",
             """
             @brief Page Global Bit
@@ -944,7 +944,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MCA = BitFieldMember(
+        MCA = Ia32BitFieldMember(
             "MCA",
             """
             @brief Machine Check Architecture
@@ -960,7 +960,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CMOV = BitFieldMember(
+        CMOV = Ia32BitFieldMember(
             "CMOV",
             """
             @brief Conditional Move Instructions
@@ -975,7 +975,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PAT = BitFieldMember(
+        PAT = Ia32BitFieldMember(
             "PAT",
             """
             @brief Page Attribute Table
@@ -991,7 +991,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PSE36 = BitFieldMember(
+        PSE36 = Ia32BitFieldMember(
             "PSE36",
             """
             @brief 36-Bit Page Size Extension
@@ -1008,7 +1008,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PSN = BitFieldMember(
+        PSN = Ia32BitFieldMember(
             "PSN",
             """
             @brief Processor Serial Number
@@ -1023,7 +1023,7 @@ class CpuidEax01(Struct):
         )
     
     
-        CLFSH = BitFieldMember(
+        CLFSH = Ia32BitFieldMember(
             "CLFSH",
             """
             @brief CLFLUSH Instruction
@@ -1037,7 +1037,7 @@ class CpuidEax01(Struct):
         )
     
     
-        DS = BitFieldMember(
+        DS = Ia32BitFieldMember(
             "DS",
             """
             @brief Debug Store
@@ -1055,7 +1055,7 @@ class CpuidEax01(Struct):
         )
     
     
-        ACPI = BitFieldMember(
+        ACPI = Ia32BitFieldMember(
             "ACPI",
             """
             @brief Thermal Monitor and Software Controlled Clock Facilities
@@ -1071,7 +1071,7 @@ class CpuidEax01(Struct):
         )
     
     
-        MMX = BitFieldMember(
+        MMX = Ia32BitFieldMember(
             "MMX",
             """
             @brief Intel MMX Technology
@@ -1085,7 +1085,7 @@ class CpuidEax01(Struct):
         )
     
     
-        FXSR = BitFieldMember(
+        FXSR = Ia32BitFieldMember(
             "FXSR",
             """
             @brief FXSAVE and FXRSTOR Instructions
@@ -1101,7 +1101,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SSE = BitFieldMember(
+        SSE = Ia32BitFieldMember(
             "SSE",
             """
             @brief SSE extensions support
@@ -1115,7 +1115,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SSE2 = BitFieldMember(
+        SSE2 = Ia32BitFieldMember(
             "SSE2",
             """
             @brief SSE2 extensions support
@@ -1129,7 +1129,7 @@ class CpuidEax01(Struct):
         )
     
     
-        SS = BitFieldMember(
+        SS = Ia32BitFieldMember(
             "SS",
             """
             @brief Self Snoop
@@ -1144,7 +1144,7 @@ class CpuidEax01(Struct):
         )
     
     
-        HTT = BitFieldMember(
+        HTT = Ia32BitFieldMember(
             "HTT",
             """
             @brief Max APIC IDs reserved field is Valid
@@ -1161,7 +1161,7 @@ class CpuidEax01(Struct):
         )
     
     
-        TM = BitFieldMember(
+        TM = Ia32BitFieldMember(
             "TM",
             """
             @brief Thermal Monitor
@@ -1175,7 +1175,7 @@ class CpuidEax01(Struct):
         )
     
     
-        PBE = BitFieldMember(
+        PBE = Ia32BitFieldMember(
             "PBE",
             """
             @brief Pending Break Enable
@@ -1239,18 +1239,18 @@ class CpuidEax01(Struct):
 CPUID_CACHE_PARAMS = 0x4
 
 
-class CpuidEax04(Struct):
+class CpuidEax04(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax04._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        CACHE_TYPE_FIELD = BitFieldMember(
+        CACHE_TYPE_FIELD = Ia32BitFieldMember(
             "CACHE_TYPE_FIELD",
             """
             @brief - 0 = Null - No more caches.
@@ -1280,7 +1280,7 @@ class CpuidEax04(Struct):
         )
     
     
-        CACHE_LEVEL = BitFieldMember(
+        CACHE_LEVEL = Ia32BitFieldMember(
             "CACHE_LEVEL",
             """
             @brief Cache Level (starts at 1)
@@ -1294,7 +1294,7 @@ class CpuidEax04(Struct):
         )
     
     
-        SELF_INITIALIZING_CACHE_LEVEL = BitFieldMember(
+        SELF_INITIALIZING_CACHE_LEVEL = Ia32BitFieldMember(
             "SELF_INITIALIZING_CACHE_LEVEL",
             """
             @brief Self Initializing cache level (does not need SW initialization)
@@ -1308,7 +1308,7 @@ class CpuidEax04(Struct):
         )
     
     
-        FULLY_ASSOCIATIVE_CACHE = BitFieldMember(
+        FULLY_ASSOCIATIVE_CACHE = Ia32BitFieldMember(
             "FULLY_ASSOCIATIVE_CACHE",
             """
             @brief Fully Associative cache
@@ -1322,7 +1322,7 @@ class CpuidEax04(Struct):
         )
     
     
-        MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE = BitFieldMember(
+        MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE = Ia32BitFieldMember(
             "MAX_ADDRESSABLE_IDS_FOR_LOGICAL_PROCESSORS_SHARING_THIS_CACHE",
             """
             @brief Maximum number of addressable IDs for logical processors sharing this cache
@@ -1336,7 +1336,7 @@ class CpuidEax04(Struct):
         )
     
     
-        MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE = BitFieldMember(
+        MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE = Ia32BitFieldMember(
             "MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE",
             """
             @brief Maximum number of addressable IDs for processor cores in the physical package
@@ -1351,16 +1351,16 @@ class CpuidEax04(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax04._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        L = BitFieldMember(
+        L = Ia32BitFieldMember(
             "L",
             """
             @brief System Coherency Line Size
@@ -1374,7 +1374,7 @@ class CpuidEax04(Struct):
         )
     
     
-        P = BitFieldMember(
+        P = Ia32BitFieldMember(
             "P",
             """
             @brief Physical Line partitions
@@ -1388,7 +1388,7 @@ class CpuidEax04(Struct):
         )
     
     
-        W = BitFieldMember(
+        W = Ia32BitFieldMember(
             "W",
             """
             @brief Ways of associativity
@@ -1403,16 +1403,16 @@ class CpuidEax04(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax04._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        S = BitFieldMember(
+        S = Ia32BitFieldMember(
             "S",
             """
             @brief Number of Sets
@@ -1427,16 +1427,16 @@ class CpuidEax04(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax04._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        WBINVD_INVD = BitFieldMember(
+        WBINVD_INVD = Ia32BitFieldMember(
             "WBINVD_INVD",
             """
             @brief Write-Back Invalidate/Invalidate
@@ -1454,7 +1454,7 @@ class CpuidEax04(Struct):
         )
     
     
-        CACHE_INCLUSIVENESS = BitFieldMember(
+        CACHE_INCLUSIVENESS = Ia32BitFieldMember(
             "CACHE_INCLUSIVENESS",
             """
             @brief Cache Inclusiveness
@@ -1470,7 +1470,7 @@ class CpuidEax04(Struct):
         )
     
     
-        COMPLEX_CACHE_INDEXING = BitFieldMember(
+        COMPLEX_CACHE_INDEXING = Ia32BitFieldMember(
             "COMPLEX_CACHE_INDEXING",
             """
             @brief Complex Cache Indexing
@@ -1533,18 +1533,18 @@ class CpuidEax04(Struct):
 CPUID_MONITOR_MWAIT = 0x5
 
 
-class CpuidEax05(Struct):
+class CpuidEax05(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax05._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        SMALLEST_MONITOR_LINE_SIZE = BitFieldMember(
+        SMALLEST_MONITOR_LINE_SIZE = Ia32BitFieldMember(
             "SMALLEST_MONITOR_LINE_SIZE",
             """
             @brief Smallest monitor-line size in bytes (default is processor's monitor granularity)
@@ -1559,16 +1559,16 @@ class CpuidEax05(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax05._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        LARGEST_MONITOR_LINE_SIZE = BitFieldMember(
+        LARGEST_MONITOR_LINE_SIZE = Ia32BitFieldMember(
             "LARGEST_MONITOR_LINE_SIZE",
             """
             @brief Largest monitor-line size in bytes (default is processor's monitor granularity)
@@ -1583,16 +1583,16 @@ class CpuidEax05(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax05._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS = BitFieldMember(
+        ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS = Ia32BitFieldMember(
             "ENUMERATION_OF_MONITOR_MWAIT_EXTENSIONS",
             """
             @brief Enumeration of Monitor-Mwait extensions (beyond EAX and EBX registers) supported
@@ -1606,7 +1606,7 @@ class CpuidEax05(Struct):
         )
     
     
-        SUPPORTS_TREATING_INTERRUPTS_AS_BREAK_EVENT_FOR_MWAIT = BitFieldMember(
+        SUPPORTS_TREATING_INTERRUPTS_AS_BREAK_EVENT_FOR_MWAIT = Ia32BitFieldMember(
             "SUPPORTS_TREATING_INTERRUPTS_AS_BREAK_EVENT_FOR_MWAIT",
             """
             @brief Supports treating interrupts as break-event for MWAIT, even when interrupts disabled
@@ -1621,16 +1621,16 @@ class CpuidEax05(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax05._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_C0_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C0_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C0_SUB_C_STATES",
             """
             @brief Number of C0 sub C-states supported using MWAIT
@@ -1644,7 +1644,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C1_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C1_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C1_SUB_C_STATES",
             """
             @brief Number of C1 sub C-states supported using MWAIT
@@ -1658,7 +1658,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C2_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C2_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C2_SUB_C_STATES",
             """
             @brief Number of C2 sub C-states supported using MWAIT
@@ -1672,7 +1672,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C3_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C3_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C3_SUB_C_STATES",
             """
             @brief Number of C3 sub C-states supported using MWAIT
@@ -1686,7 +1686,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C4_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C4_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C4_SUB_C_STATES",
             """
             @brief Number of C4 sub C-states supported using MWAIT
@@ -1700,7 +1700,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C5_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C5_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C5_SUB_C_STATES",
             """
             @brief Number of C5 sub C-states supported using MWAIT
@@ -1714,7 +1714,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C6_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C6_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C6_SUB_C_STATES",
             """
             @brief Number of C6 sub C-states supported using MWAIT
@@ -1728,7 +1728,7 @@ class CpuidEax05(Struct):
         )
     
     
-        NUMBER_OF_C7_SUB_C_STATES = BitFieldMember(
+        NUMBER_OF_C7_SUB_C_STATES = Ia32BitFieldMember(
             "NUMBER_OF_C7_SUB_C_STATES",
             """
             @brief Number of C7 sub C-states supported using MWAIT
@@ -1789,18 +1789,18 @@ class CpuidEax05(Struct):
 CPUID_THERMAL_POWER_MANAGEMENT = 0x6
 
 
-class CpuidEax06(Struct):
+class CpuidEax06(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax06._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        TEMPERATURE_SENSOR_SUPPORTED = BitFieldMember(
+        TEMPERATURE_SENSOR_SUPPORTED = Ia32BitFieldMember(
             "TEMPERATURE_SENSOR_SUPPORTED",
             """
             @brief Digital temperature sensor is supported if set
@@ -1814,7 +1814,7 @@ class CpuidEax06(Struct):
         )
     
     
-        INTEL_TURBO_BOOST_TECHNOLOGY_AVAILABLE = BitFieldMember(
+        INTEL_TURBO_BOOST_TECHNOLOGY_AVAILABLE = Ia32BitFieldMember(
             "INTEL_TURBO_BOOST_TECHNOLOGY_AVAILABLE",
             """
             @brief Intel Turbo Boost Technology available (see description of IA32_MISC_ENABLE[38])
@@ -1828,7 +1828,7 @@ class CpuidEax06(Struct):
         )
     
     
-        ARAT = BitFieldMember(
+        ARAT = Ia32BitFieldMember(
             "ARAT",
             """
             @brief ARAT. APIC-Timer-always-running feature is supported if set
@@ -1842,7 +1842,7 @@ class CpuidEax06(Struct):
         )
     
     
-        PLN = BitFieldMember(
+        PLN = Ia32BitFieldMember(
             "PLN",
             """
             @brief PLN. Power limit notification controls are supported if set
@@ -1856,7 +1856,7 @@ class CpuidEax06(Struct):
         )
     
     
-        ECMD = BitFieldMember(
+        ECMD = Ia32BitFieldMember(
             "ECMD",
             """
             @brief ECMD. Clock modulation duty cycle extension is supported if set
@@ -1870,7 +1870,7 @@ class CpuidEax06(Struct):
         )
     
     
-        PTM = BitFieldMember(
+        PTM = Ia32BitFieldMember(
             "PTM",
             """
             @brief PTM. Package thermal management is supported if set
@@ -1884,7 +1884,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP = BitFieldMember(
+        HWP = Ia32BitFieldMember(
             "HWP",
             """
             @brief HWP. HWP base registers (IA32_PM_ENABLE[bit 0], IA32_HWP_CAPABILITIES,
@@ -1900,7 +1900,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_NOTIFICATION = BitFieldMember(
+        HWP_NOTIFICATION = Ia32BitFieldMember(
             "HWP_NOTIFICATION",
             """
             @brief HWP_Notification. IA32_HWP_INTERRUPT MSR is supported if set
@@ -1914,7 +1914,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_ACTIVITY_WINDOW = BitFieldMember(
+        HWP_ACTIVITY_WINDOW = Ia32BitFieldMember(
             "HWP_ACTIVITY_WINDOW",
             """
             @brief HWP_Activity_Window. IA32_HWP_REQUEST[bits 41:32] is supported if set
@@ -1928,7 +1928,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_ENERGY_PERFORMANCE_PREFERENCE = BitFieldMember(
+        HWP_ENERGY_PERFORMANCE_PREFERENCE = Ia32BitFieldMember(
             "HWP_ENERGY_PERFORMANCE_PREFERENCE",
             """
             @brief HWP_Energy_Performance_Preference. IA32_HWP_REQUEST[bits 31:24] is supported if set
@@ -1942,7 +1942,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_PACKAGE_LEVEL_REQUEST = BitFieldMember(
+        HWP_PACKAGE_LEVEL_REQUEST = Ia32BitFieldMember(
             "HWP_PACKAGE_LEVEL_REQUEST",
             """
             @brief HWP_Package_Level_Request. IA32_HWP_REQUEST_PKG MSR is supported if set
@@ -1956,7 +1956,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HDC = BitFieldMember(
+        HDC = Ia32BitFieldMember(
             "HDC",
             """
             @brief HDC. HDC base registers IA32_PKG_HDC_CTL, IA32_PM_CTL1, IA32_THREAD_STALL MSRs are supported if set
@@ -1970,7 +1970,7 @@ class CpuidEax06(Struct):
         )
     
     
-        INTEL_TURBO_BOOST_MAX_TECHNOLOGY_3_AVAILABLE = BitFieldMember(
+        INTEL_TURBO_BOOST_MAX_TECHNOLOGY_3_AVAILABLE = Ia32BitFieldMember(
             "INTEL_TURBO_BOOST_MAX_TECHNOLOGY_3_AVAILABLE",
             """
             @brief Intel Turbo Boost Max Technology 3.0 available
@@ -1984,7 +1984,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_CAPABILITIES = BitFieldMember(
+        HWP_CAPABILITIES = Ia32BitFieldMember(
             "HWP_CAPABILITIES",
             """
             @brief HWP Capabilities. Highest Performance change is supported if set
@@ -1998,7 +1998,7 @@ class CpuidEax06(Struct):
         )
     
     
-        HWP_PECI_OVERRIDE = BitFieldMember(
+        HWP_PECI_OVERRIDE = Ia32BitFieldMember(
             "HWP_PECI_OVERRIDE",
             """
             @brief HWP PECI override is supported if set
@@ -2012,7 +2012,7 @@ class CpuidEax06(Struct):
         )
     
     
-        FLEXIBLE_HWP = BitFieldMember(
+        FLEXIBLE_HWP = Ia32BitFieldMember(
             "FLEXIBLE_HWP",
             """
             @brief Flexible HWP is supported if set
@@ -2026,7 +2026,7 @@ class CpuidEax06(Struct):
         )
     
     
-        FAST_ACCESS_MODE_FOR_HWP_REQUEST_MSR = BitFieldMember(
+        FAST_ACCESS_MODE_FOR_HWP_REQUEST_MSR = Ia32BitFieldMember(
             "FAST_ACCESS_MODE_FOR_HWP_REQUEST_MSR",
             """
             @brief Fast access mode for the IA32_HWP_REQUEST MSR is supported if set
@@ -2040,7 +2040,7 @@ class CpuidEax06(Struct):
         )
     
     
-        IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST = BitFieldMember(
+        IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST = Ia32BitFieldMember(
             "IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST",
             """
             @brief Ignoring Idle Logical Processor HWP request is supported if set
@@ -2055,16 +2055,16 @@ class CpuidEax06(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax06._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_INTERRUPT_THRESHOLDS = BitFieldMember(
+        NUMBER_OF_INTERRUPT_THRESHOLDS = Ia32BitFieldMember(
             "NUMBER_OF_INTERRUPT_THRESHOLDS",
             """
             @brief Number of Interrupt Thresholds in Digital Thermal Sensor
@@ -2079,16 +2079,16 @@ class CpuidEax06(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax06._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        HARDWARE_COORDINATION_FEEDBACK_CAPABILITY = BitFieldMember(
+        HARDWARE_COORDINATION_FEEDBACK_CAPABILITY = Ia32BitFieldMember(
             "HARDWARE_COORDINATION_FEEDBACK_CAPABILITY",
             """
             @brief Hardware Coordination Feedback Capability (Presence of IA32_MPERF and IA32_APERF). The
@@ -2106,7 +2106,7 @@ class CpuidEax06(Struct):
         )
     
     
-        PERFORMANCE_ENERGY_BIAS_PREFERENCE = BitFieldMember(
+        PERFORMANCE_ENERGY_BIAS_PREFERENCE = Ia32BitFieldMember(
             "PERFORMANCE_ENERGY_BIAS_PREFERENCE",
             """
             @brief The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set
@@ -2123,16 +2123,16 @@ class CpuidEax06(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax06._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -2193,18 +2193,18 @@ class CpuidEax06(Struct):
 CPUID_STRUCTURED_EXTENDED_FEATURE_FLAGS = 0x7
 
 
-class CpuidEax07(Struct):
+class CpuidEax07(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax07._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_SUB_LEAVES = BitFieldMember(
+        NUMBER_OF_SUB_LEAVES = Ia32BitFieldMember(
             "NUMBER_OF_SUB_LEAVES",
             """
             @brief Reports the maximum input value for supported leaf 7 sub-leaves
@@ -2219,16 +2219,16 @@ class CpuidEax07(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax07._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        FSGSBASE = BitFieldMember(
+        FSGSBASE = Ia32BitFieldMember(
             "FSGSBASE",
             """
             @brief Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1
@@ -2242,7 +2242,7 @@ class CpuidEax07(Struct):
         )
     
     
-        IA32_TSC_ADJUST_MSR = BitFieldMember(
+        IA32_TSC_ADJUST_MSR = Ia32BitFieldMember(
             "IA32_TSC_ADJUST_MSR",
             """
             @brief IA32_TSC_ADJUST MSR is supported if 1
@@ -2256,7 +2256,7 @@ class CpuidEax07(Struct):
         )
     
     
-        SGX = BitFieldMember(
+        SGX = Ia32BitFieldMember(
             "SGX",
             """
             @brief Supports Intel Software Guard Extensions (Intel SGX Extensions) if 1
@@ -2270,7 +2270,7 @@ class CpuidEax07(Struct):
         )
     
     
-        BMI1 = BitFieldMember(
+        BMI1 = Ia32BitFieldMember(
             "BMI1",
             """
             @brief BMI1
@@ -2284,7 +2284,7 @@ class CpuidEax07(Struct):
         )
     
     
-        HLE = BitFieldMember(
+        HLE = Ia32BitFieldMember(
             "HLE",
             """
             @brief HLE
@@ -2298,7 +2298,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX2 = BitFieldMember(
+        AVX2 = Ia32BitFieldMember(
             "AVX2",
             """
             @brief AVX2
@@ -2312,7 +2312,7 @@ class CpuidEax07(Struct):
         )
     
     
-        FDP_EXCPTN_ONLY = BitFieldMember(
+        FDP_EXCPTN_ONLY = Ia32BitFieldMember(
             "FDP_EXCPTN_ONLY",
             """
             @brief x87 FPU Data Pointer updated only on x87 exceptions if 1
@@ -2326,7 +2326,7 @@ class CpuidEax07(Struct):
         )
     
     
-        SMEP = BitFieldMember(
+        SMEP = Ia32BitFieldMember(
             "SMEP",
             """
             @brief Supports Supervisor-Mode Execution Prevention if 1
@@ -2340,7 +2340,7 @@ class CpuidEax07(Struct):
         )
     
     
-        BMI2 = BitFieldMember(
+        BMI2 = Ia32BitFieldMember(
             "BMI2",
             """
             @brief BMI2
@@ -2354,7 +2354,7 @@ class CpuidEax07(Struct):
         )
     
     
-        ENHANCED_REP_MOVSB_STOSB = BitFieldMember(
+        ENHANCED_REP_MOVSB_STOSB = Ia32BitFieldMember(
             "ENHANCED_REP_MOVSB_STOSB",
             """
             @brief Supports Enhanced REP MOVSB/STOSB if 1
@@ -2368,7 +2368,7 @@ class CpuidEax07(Struct):
         )
     
     
-        INVPCID = BitFieldMember(
+        INVPCID = Ia32BitFieldMember(
             "INVPCID",
             """
             @brief If 1, supports INVPCID instruction for system software that manages process-context identifiers
@@ -2382,7 +2382,7 @@ class CpuidEax07(Struct):
         )
     
     
-        RTM = BitFieldMember(
+        RTM = Ia32BitFieldMember(
             "RTM",
             """
             @brief RTM
@@ -2396,7 +2396,7 @@ class CpuidEax07(Struct):
         )
     
     
-        RDT_M = BitFieldMember(
+        RDT_M = Ia32BitFieldMember(
             "RDT_M",
             """
             @brief Supports Intel Resource Director Technology (Intel RDT) Monitoring capability if 1
@@ -2410,7 +2410,7 @@ class CpuidEax07(Struct):
         )
     
     
-        DEPRECATES = BitFieldMember(
+        DEPRECATES = Ia32BitFieldMember(
             "DEPRECATES",
             """
             @brief Deprecates FPU CS and FPU DS values if 1
@@ -2424,7 +2424,7 @@ class CpuidEax07(Struct):
         )
     
     
-        MPX = BitFieldMember(
+        MPX = Ia32BitFieldMember(
             "MPX",
             """
             @brief Supports Intel Memory Protection Extensions if 1
@@ -2438,7 +2438,7 @@ class CpuidEax07(Struct):
         )
     
     
-        RDT = BitFieldMember(
+        RDT = Ia32BitFieldMember(
             "RDT",
             """
             @brief Supports Intel Resource Director Technology (Intel RDT) Allocation capability if 1
@@ -2452,7 +2452,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512F = BitFieldMember(
+        AVX512F = Ia32BitFieldMember(
             "AVX512F",
             """
             @brief AVX512F
@@ -2466,7 +2466,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512DQ = BitFieldMember(
+        AVX512DQ = Ia32BitFieldMember(
             "AVX512DQ",
             """
             @brief AVX512DQ
@@ -2480,7 +2480,7 @@ class CpuidEax07(Struct):
         )
     
     
-        RDSEED = BitFieldMember(
+        RDSEED = Ia32BitFieldMember(
             "RDSEED",
             """
             @brief RDSEED
@@ -2494,7 +2494,7 @@ class CpuidEax07(Struct):
         )
     
     
-        ADX = BitFieldMember(
+        ADX = Ia32BitFieldMember(
             "ADX",
             """
             @brief ADX
@@ -2508,7 +2508,7 @@ class CpuidEax07(Struct):
         )
     
     
-        SMAP = BitFieldMember(
+        SMAP = Ia32BitFieldMember(
             "SMAP",
             """
             @brief Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1
@@ -2522,7 +2522,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512_IFMA = BitFieldMember(
+        AVX512_IFMA = Ia32BitFieldMember(
             "AVX512_IFMA",
             """
             @brief AVX512_IFMA
@@ -2536,7 +2536,7 @@ class CpuidEax07(Struct):
         )
     
     
-        CLFLUSHOPT = BitFieldMember(
+        CLFLUSHOPT = Ia32BitFieldMember(
             "CLFLUSHOPT",
             """
             @brief CLFLUSHOPT
@@ -2550,7 +2550,7 @@ class CpuidEax07(Struct):
         )
     
     
-        CLWB = BitFieldMember(
+        CLWB = Ia32BitFieldMember(
             "CLWB",
             """
             @brief CLWB
@@ -2564,7 +2564,7 @@ class CpuidEax07(Struct):
         )
     
     
-        INTEL = BitFieldMember(
+        INTEL = Ia32BitFieldMember(
             "INTEL",
             """
             @brief Intel Processor Trace
@@ -2578,7 +2578,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512PF = BitFieldMember(
+        AVX512PF = Ia32BitFieldMember(
             "AVX512PF",
             """
             @brief (Intel Xeon Phi only)
@@ -2592,7 +2592,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512ER = BitFieldMember(
+        AVX512ER = Ia32BitFieldMember(
             "AVX512ER",
             """
             @brief (Intel Xeon Phi only)
@@ -2606,7 +2606,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512CD = BitFieldMember(
+        AVX512CD = Ia32BitFieldMember(
             "AVX512CD",
             """
             @brief AVX512CD
@@ -2620,7 +2620,7 @@ class CpuidEax07(Struct):
         )
     
     
-        SHA = BitFieldMember(
+        SHA = Ia32BitFieldMember(
             "SHA",
             """
             @brief Supports Intel Secure Hash Algorithm Extensions (Intel SHA Extensions) if 1
@@ -2634,7 +2634,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512BW = BitFieldMember(
+        AVX512BW = Ia32BitFieldMember(
             "AVX512BW",
             """
             @brief AVX512BW
@@ -2648,7 +2648,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512VL = BitFieldMember(
+        AVX512VL = Ia32BitFieldMember(
             "AVX512VL",
             """
             @brief AVX512VL
@@ -2663,16 +2663,16 @@ class CpuidEax07(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax07._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        PREFETCHWT1 = BitFieldMember(
+        PREFETCHWT1 = Ia32BitFieldMember(
             "PREFETCHWT1",
             """
             @brief (Intel Xeon Phi only)
@@ -2686,7 +2686,7 @@ class CpuidEax07(Struct):
         )
     
     
-        AVX512_VBMI = BitFieldMember(
+        AVX512_VBMI = Ia32BitFieldMember(
             "AVX512_VBMI",
             """
             @brief AVX512_VBMI
@@ -2700,7 +2700,7 @@ class CpuidEax07(Struct):
         )
     
     
-        UMIP = BitFieldMember(
+        UMIP = Ia32BitFieldMember(
             "UMIP",
             """
             @brief Supports user-mode instruction prevention if 1
@@ -2714,7 +2714,7 @@ class CpuidEax07(Struct):
         )
     
     
-        PKU = BitFieldMember(
+        PKU = Ia32BitFieldMember(
             "PKU",
             """
             @brief Supports protection keys for user-mode pages if 1
@@ -2728,7 +2728,7 @@ class CpuidEax07(Struct):
         )
     
     
-        OSPKE = BitFieldMember(
+        OSPKE = Ia32BitFieldMember(
             "OSPKE",
             """
             @brief If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions)
@@ -2742,7 +2742,7 @@ class CpuidEax07(Struct):
         )
     
     
-        MAWAU = BitFieldMember(
+        MAWAU = Ia32BitFieldMember(
             "MAWAU",
             """
             @brief The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode
@@ -2756,7 +2756,7 @@ class CpuidEax07(Struct):
         )
     
     
-        RDPID = BitFieldMember(
+        RDPID = Ia32BitFieldMember(
             "RDPID",
             """
             @brief RDPID and IA32_TSC_AUX are available if 1
@@ -2770,7 +2770,7 @@ class CpuidEax07(Struct):
         )
     
     
-        SGX_LC = BitFieldMember(
+        SGX_LC = Ia32BitFieldMember(
             "SGX_LC",
             """
             @brief Supports SGX Launch Configuration if 1
@@ -2785,16 +2785,16 @@ class CpuidEax07(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax07._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -2855,18 +2855,18 @@ class CpuidEax07(Struct):
 CPUID_DIRECT_CACHE_ACCESS_INFO = 0x9
 
 
-class CpuidEax09(Struct):
+class CpuidEax09(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax09._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        IA32_PLATFORM_DCA_CAP = BitFieldMember(
+        IA32_PLATFORM_DCA_CAP = Ia32BitFieldMember(
             "IA32_PLATFORM_DCA_CAP",
             """
             @brief Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR (address 1F8H)
@@ -2881,16 +2881,16 @@ class CpuidEax09(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax09._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EBX is reserved
@@ -2905,16 +2905,16 @@ class CpuidEax09(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax09._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief ECX is reserved
@@ -2929,16 +2929,16 @@ class CpuidEax09(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax09._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief EDX is reserved
@@ -2999,18 +2999,18 @@ class CpuidEax09(Struct):
 CPUID_ARCHITECTURAL_PERFORMANCE_MONITORING = 0xa
 
 
-class CpuidEax0a(Struct):
+class CpuidEax0a(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0a._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        VERSION_ID_OF_ARCHITECTURAL_PERFORMANCE_MONITORING = BitFieldMember(
+        VERSION_ID_OF_ARCHITECTURAL_PERFORMANCE_MONITORING = Ia32BitFieldMember(
             "VERSION_ID_OF_ARCHITECTURAL_PERFORMANCE_MONITORING",
             """
             @brief Version ID of architectural performance monitoring
@@ -3024,7 +3024,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        NUMBER_OF_PERFORMANCE_MONITORING_COUNTER_PER_LOGICAL_PROCESSOR = BitFieldMember(
+        NUMBER_OF_PERFORMANCE_MONITORING_COUNTER_PER_LOGICAL_PROCESSOR = Ia32BitFieldMember(
             "NUMBER_OF_PERFORMANCE_MONITORING_COUNTER_PER_LOGICAL_PROCESSOR",
             """
             @brief Number of general-purpose performance monitoring counter per logical processor
@@ -3038,7 +3038,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        BIT_WIDTH_OF_PERFORMANCE_MONITORING_COUNTER = BitFieldMember(
+        BIT_WIDTH_OF_PERFORMANCE_MONITORING_COUNTER = Ia32BitFieldMember(
             "BIT_WIDTH_OF_PERFORMANCE_MONITORING_COUNTER",
             """
             @brief Bit width of general-purpose, performance monitoring counter
@@ -3052,7 +3052,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        EBX_BIT_VECTOR_LENGTH = BitFieldMember(
+        EBX_BIT_VECTOR_LENGTH = Ia32BitFieldMember(
             "EBX_BIT_VECTOR_LENGTH",
             """
             @brief Length of EBX bit vector to enumerate architectural performance monitoring events
@@ -3067,16 +3067,16 @@ class CpuidEax0a(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0a._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        CORE_CYCLE_EVENT_NOT_AVAILABLE = BitFieldMember(
+        CORE_CYCLE_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "CORE_CYCLE_EVENT_NOT_AVAILABLE",
             """
             @brief Core cycle event not available if 1
@@ -3090,7 +3090,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE = BitFieldMember(
+        INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE",
             """
             @brief Instruction retired event not available if 1
@@ -3104,7 +3104,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        REFERENCE_CYCLES_EVENT_NOT_AVAILABLE = BitFieldMember(
+        REFERENCE_CYCLES_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "REFERENCE_CYCLES_EVENT_NOT_AVAILABLE",
             """
             @brief Reference cycles event not available if 1
@@ -3118,7 +3118,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        LAST_LEVEL_CACHE_REFERENCE_EVENT_NOT_AVAILABLE = BitFieldMember(
+        LAST_LEVEL_CACHE_REFERENCE_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "LAST_LEVEL_CACHE_REFERENCE_EVENT_NOT_AVAILABLE",
             """
             @brief Last-level cache reference event not available if 1
@@ -3132,7 +3132,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        LAST_LEVEL_CACHE_MISSES_EVENT_NOT_AVAILABLE = BitFieldMember(
+        LAST_LEVEL_CACHE_MISSES_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "LAST_LEVEL_CACHE_MISSES_EVENT_NOT_AVAILABLE",
             """
             @brief Last-level cache misses event not available if 1
@@ -3146,7 +3146,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        BRANCH_INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE = BitFieldMember(
+        BRANCH_INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "BRANCH_INSTRUCTION_RETIRED_EVENT_NOT_AVAILABLE",
             """
             @brief Branch instruction retired event not available if 1
@@ -3160,7 +3160,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        BRANCH_MISPREDICT_RETIRED_EVENT_NOT_AVAILABLE = BitFieldMember(
+        BRANCH_MISPREDICT_RETIRED_EVENT_NOT_AVAILABLE = Ia32BitFieldMember(
             "BRANCH_MISPREDICT_RETIRED_EVENT_NOT_AVAILABLE",
             """
             @brief Branch mispredict retired event not available if 1
@@ -3175,16 +3175,16 @@ class CpuidEax0a(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0a._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        RESERVED = BitFieldMember(
+        RESERVED = Ia32BitFieldMember(
             "RESERVED",
             """
             @brief ECX is reserved
@@ -3199,16 +3199,16 @@ class CpuidEax0a(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0a._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS = BitFieldMember(
+        NUMBER_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS = Ia32BitFieldMember(
             "NUMBER_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS",
             """
             @brief Number of fixed-function performance counters (if Version ID > 1)
@@ -3222,7 +3222,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        BIT_WIDTH_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS = BitFieldMember(
+        BIT_WIDTH_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS = Ia32BitFieldMember(
             "BIT_WIDTH_OF_FIXED_FUNCTION_PERFORMANCE_COUNTERS",
             """
             @brief Bit width of fixed-function performance counters (if Version ID > 1)
@@ -3236,7 +3236,7 @@ class CpuidEax0a(Struct):
         )
     
     
-        ANY_THREAD_DEPRECATION = BitFieldMember(
+        ANY_THREAD_DEPRECATION = Ia32BitFieldMember(
             "ANY_THREAD_DEPRECATION",
             """
             @brief AnyThread deprecation
@@ -3297,18 +3297,18 @@ class CpuidEax0a(Struct):
 CPUID_EXTENDED_TOPOLOGY = 0xb
 
 
-class CpuidEax0b(Struct):
+class CpuidEax0b(Ia32Struct):
     """"""
-    class _MemberContainerCpuidEax(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEax(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0b._MemberContainerCpuidEax, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        X2APIC_ID_TO_UNIQUE_TOPOLOGY_ID_SHIFT = BitFieldMember(
+        X2APIC_ID_TO_UNIQUE_TOPOLOGY_ID_SHIFT = Ia32BitFieldMember(
             "X2APIC_ID_TO_UNIQUE_TOPOLOGY_ID_SHIFT",
             """
             @brief Number of bits to shift right on x2APIC ID to get a unique topology ID of the next level type.
@@ -3325,16 +3325,16 @@ class CpuidEax0b(Struct):
     
     
     
-    class _MemberContainerCpuidEbx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEbx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0b._MemberContainerCpuidEbx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        NUMBER_OF_LOGICAL_PROCESSORS_AT_THIS_LEVEL_TYPE = BitFieldMember(
+        NUMBER_OF_LOGICAL_PROCESSORS_AT_THIS_LEVEL_TYPE = Ia32BitFieldMember(
             "NUMBER_OF_LOGICAL_PROCESSORS_AT_THIS_LEVEL_TYPE",
             """
             @brief Number of logical processors at this level type. The number reflects configuration as shipped by Intel
@@ -3349,16 +3349,16 @@ class CpuidEax0b(Struct):
     
     
     
-    class _MemberContainerCpuidEcx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEcx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0b._MemberContainerCpuidEcx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        LEVEL_NUMBER = BitFieldMember(
+        LEVEL_NUMBER = Ia32BitFieldMember(
             "LEVEL_NUMBER",
             """
             @brief Level number. Same value in ECX input
@@ -3372,7 +3372,7 @@ class CpuidEax0b(Struct):
         )
     
     
-        LEVEL_TYPE = BitFieldMember(
+        LEVEL_TYPE = Ia32BitFieldMember(
             "LEVEL_TYPE",
             """
             @brief Level type
@@ -3387,16 +3387,16 @@ class CpuidEax0b(Struct):
     
     
     
-    class _MemberContainerCpuidEdx(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCpuidEdx(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(CpuidEax0b._MemberContainerCpuidEdx, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        X2APIC_ID = BitFieldMember(
+        X2APIC_ID = Ia32BitFieldMember(
             "X2APIC_ID",
             """
             @brief x2APIC ID the current logical processor

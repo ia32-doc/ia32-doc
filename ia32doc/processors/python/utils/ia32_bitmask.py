@@ -4,10 +4,10 @@ try:
 except ImportError:
     from itertools import izip_longest as zip_longest
 
-from .byte_operations import bin_str
+from .ia32_byte_operations import bin_str
 
 
-class BitMask(object):
+class Ia32BitMask(object):
     def __init__(self, *fields):
         # Note: can't use default argument because
         # of python2 compatibility

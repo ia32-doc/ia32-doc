@@ -50,40 +50,42 @@ class DocPythonProcessor(DocProcessor):
         except (FileNotFoundError, OSError) as e:
             raise jinja2.TemplateError(e)
 
+    @staticmethod
+    def get_description(document):
+        description = []
+
+        if document.short_description != '':
+            description.append("@brief " + document.short_description)
+        description.append(document.long_description)
+        if document.see != '':
+            see_list = []
+            if isinstance(document.see, str):
+                see_list.append(document.see)
+            elif isinstance(document.see, list):
+                see_list = document.see
+            else:
+                raise RuntimeError("Unsupported type!")
+            description.extend("@see " + reference for reference in see_list)
+        # strip non-ascii characters from the description
+        description_str = \
+            "\n\n".join(description).encode('ascii', 'ignore').decode('ascii')
+        return description_str
+
+    @staticmethod
+    def class_name(document):
+        if document.long_name_raw != '':
+            return humps.pascalize(document.long_name_raw.lower())
+        else:
+            # TODO: aviod collisions
+            return "Dummy"
+
     def _generate_gemplate(self, doc, template_name, ident=0, name_prefix='', **kwargs):
         template = self._get_template(template_name)
 
-        def get_description(document):
-            description = []
-
-            if document.short_description != '':
-                description.append("@brief " + document.short_description)
-            description.append(document.long_description)
-            if document.see != '':
-                see_list = []
-                if isinstance(document.see, str):
-                    see_list.append(document.see)
-                elif isinstance(document.see, list):
-                    see_list = document.see
-                else:
-                    raise RuntimeError("Unsupported type!")
-                description.extend("@see " + reference for reference in see_list)
-            # strip non-ascii characters from the description
-            description_str = \
-                "\n\n".join(description).encode('ascii', 'ignore').decode('ascii')
-            return description_str
-
-        def class_name(document):
-            if document.long_name_raw != '':
-                return humps.pascalize(document.long_name_raw.lower())
-            else:
-                # TODO: aviod collisions
-                return "Dummy"
-
         content = template.render(
             doc=doc,
-            get_description=get_description,
-            class_name=class_name,
+            get_description=self.get_description,
+            class_name=self.class_name,
             humps=humps,
             hex=hex,
             zip=zip,
@@ -135,8 +137,8 @@ class DocPythonProcessor(DocProcessor):
         # Include utils
         self._current_group_file.write(
             "from future.utils import with_metaclass\n"
-            "from utils.struct import *\n"
-            "from utils.bit_field import *\n\n\n"
+            "from utils.ia32_struct import *\n"
+            "from utils.ia32_bit_field import *\n\n\n"
         )
 
         self._append_template_to_group(
@@ -167,6 +169,7 @@ class DocPythonProcessor(DocProcessor):
                 ident=1,
                 name_prefix='_MemberContainer',
                 struct_members=struct_members,
+                container_class=self.class_name(doc)+".",
             ) for
             member in
             struct_members
@@ -195,4 +198,5 @@ class DocPythonProcessor(DocProcessor):
         self._append_template_to_group(
             doc,
             "bitfield.j2",
+            container_class='',
         )

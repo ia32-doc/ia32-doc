@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -27,9 +27,9 @@ IA32_SGXLEPUBKEYHASH3 = 0x8f
 IA32_SMM_MONITOR_CTL = 0x9b
 
 
-class Ia32MsegHeader(Struct):
+class Ia32MsegHeader(Ia32Struct):
     """"""
-    class _MemberContainerMsegHeaderRevision(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerMsegHeaderRevision(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief MSEG revision identifier
     
@@ -41,13 +41,13 @@ class Ia32MsegHeader(Struct):
     @see Vol3D[A.6(MISCELLANEOUS DATA)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerMsegHeaderRevision, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerMsegHeaderRevision, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerMonitorFeatures(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerMonitorFeatures(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief SMM-transfer monitor features field
     
@@ -58,12 +58,12 @@ class Ia32MsegHeader(Struct):
     @see Vol3C[34.15.6(Activating the Dual-Monitor Treatment)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerMonitorFeatures, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerMonitorFeatures, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
-        IA32_STM_FEATURES_IA32E = BitFieldMember(
+        IA32_STM_FEATURES_IA32E = Ia32BitFieldMember(
             "IA32_STM_FEATURES_IA32E",
             """
             @brief Define values for the MonitorFeatures field of MSEG_HEADER
@@ -78,7 +78,7 @@ class Ia32MsegHeader(Struct):
     
     
     
-    class _MemberContainerGdtrLimit(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerGdtrLimit(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Fields that determine how processor state is loaded when the STM is activated.
     SMM code should establish these fields so that activating of the STM invokes the STMs initialization
@@ -91,65 +91,65 @@ class Ia32MsegHeader(Struct):
     @see Vol3C[34.15.6.5(Loading Host State)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerGdtrLimit, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerGdtrLimit, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerGdtrBaseOffset(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerGdtrBaseOffset(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerGdtrBaseOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerGdtrBaseOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerCsSelector(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCsSelector(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCsSelector, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerCsSelector, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerEipOffset(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEipOffset(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEipOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerEipOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerEspOffset(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerEspOffset(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerEspOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerEspOffset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerCr3Offset(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerCr3Offset(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerCr3Offset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Ia32MsegHeader._MemberContainerCr3Offset, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
     _members = ["MSEG_HEADER_REVISION","MONITOR_FEATURES","GDTR_LIMIT","GDTR_BASE_OFFSET","CS_SELECTOR","EIP_OFFSET","ESP_OFFSET","CR3_OFFSET",]

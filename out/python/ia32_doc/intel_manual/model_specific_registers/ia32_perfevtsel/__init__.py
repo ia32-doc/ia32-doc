@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -22,7 +22,7 @@ IA32_PERFEVTSEL2 = 0x188
 IA32_PERFEVTSEL3 = 0x189
 
 
-class Ia32PerfevtselRegister(with_metaclass(BitFieldMeta, BitField)):
+class Ia32PerfevtselRegister(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -31,7 +31,7 @@ class Ia32PerfevtselRegister(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    EVENT_SELECT = BitFieldMember(
+    EVENT_SELECT = Ia32BitFieldMember(
         "EVENT_SELECT",
         """
         @brief Selects a performance event logic unit
@@ -45,7 +45,7 @@ Selects a performance event logic unit.
     )
 
 
-    U_MASK = BitFieldMember(
+    U_MASK = Ia32BitFieldMember(
         "U_MASK",
         """
         @brief Qualifies the microarchitectural condition to detect on the selected event logic
@@ -59,7 +59,7 @@ Qualifies the microarchitectural condition to detect on the selected event logic
     )
 
 
-    USR = BitFieldMember(
+    USR = Ia32BitFieldMember(
         "USR",
         """
         @brief Counts while in privilege level is not ring 0
@@ -73,7 +73,7 @@ Counts while in privilege level is not ring 0.
     )
 
 
-    OS = BitFieldMember(
+    OS = Ia32BitFieldMember(
         "OS",
         """
         @brief Counts while in privilege level is ring 0
@@ -87,7 +87,7 @@ Counts while in privilege level is ring 0.
     )
 
 
-    EDGE = BitFieldMember(
+    EDGE = Ia32BitFieldMember(
         "EDGE",
         """
         @brief Enables edge detection if set
@@ -101,7 +101,7 @@ Enables edge detection if set.
     )
 
 
-    PC = BitFieldMember(
+    PC = Ia32BitFieldMember(
         "PC",
         """
         @brief Enables pin control
@@ -115,7 +115,7 @@ Enables pin control.
     )
 
 
-    INTR = BitFieldMember(
+    INTR = Ia32BitFieldMember(
         "INTR",
         """
         @brief Enables interrupt on counter overflow
@@ -129,7 +129,7 @@ Enables interrupt on counter overflow.
     )
 
 
-    ANY_THREAD = BitFieldMember(
+    ANY_THREAD = Ia32BitFieldMember(
         "ANY_THREAD",
         """
         @brief When set to 1, it enables counting the associated event conditions
@@ -149,7 +149,7 @@ processor which programmed the MSR.
     )
 
 
-    EN = BitFieldMember(
+    EN = Ia32BitFieldMember(
         "EN",
         """
         @brief Enables the corresponding performance counter to commence counting when this
@@ -165,7 +165,7 @@ bit is set.
     )
 
 
-    INV = BitFieldMember(
+    INV = Ia32BitFieldMember(
         "INV",
         """
         @brief Invert the CMASK
@@ -179,7 +179,7 @@ Invert the CMASK.
     )
 
 
-    CMASK = BitFieldMember(
+    CMASK = Ia32BitFieldMember(
         "CMASK",
         """
         @brief When CMASK is not zero, the corresponding performance counter

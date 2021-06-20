@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -22,7 +22,7 @@ IA32_RTIT_ADDR2_B = 0x585
 IA32_RTIT_ADDR3_B = 0x587
 
 
-class Ia32RtitAddrRegister(with_metaclass(BitFieldMeta, BitField)):
+class Ia32RtitAddrRegister(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -31,7 +31,7 @@ class Ia32RtitAddrRegister(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    VIRTUAL_ADDRESS = BitFieldMember(
+    VIRTUAL_ADDRESS = Ia32BitFieldMember(
         "VIRTUAL_ADDRESS",
         """
         @brief Virtual Address
@@ -45,7 +45,7 @@ Virtual Address.
     )
 
 
-    SIGN_EXT_VA = BitFieldMember(
+    SIGN_EXT_VA = Ia32BitFieldMember(
         "SIGN_EXT_VA",
         """
         @brief SignExt_VA

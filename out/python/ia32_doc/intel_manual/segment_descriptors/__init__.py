@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -10,34 +10,34 @@ __doc__ = """
 """
 
 
-class SegmentDescriptorRegister32(Struct):
+class SegmentDescriptorRegister32(Ia32Struct):
     """@brief Pseudo-Descriptor Format (32-bit)
 
 Pseudo-Descriptor Format (32-bit)."""
-    class _MemberContainerLimit(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerLimit(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Limit
     
     Limit.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerLimit, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptorRegister32._MemberContainerLimit, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerBaseAddress(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerBaseAddress(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base Address
     
     Base Address.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerBaseAddress, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(SegmentDescriptorRegister32._MemberContainerBaseAddress, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
     _members = ["LIMIT","BASE_ADDRESS",]
@@ -65,34 +65,34 @@ Pseudo-Descriptor Format (32-bit)."""
         return self._BASE_ADDRESS.set(value)
 
 
-class SegmentDescriptorRegister64(Struct):
+class SegmentDescriptorRegister64(Ia32Struct):
     """@brief Pseudo-Descriptor Format (64-bit)
 
 Pseudo-Descriptor Format (64-bit)."""
-    class _MemberContainerLimit(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerLimit(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Limit
     
     Limit.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerLimit, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptorRegister64._MemberContainerLimit, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerBaseAddress(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerBaseAddress(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base Address
     
     Base Address.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerBaseAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
+            super(SegmentDescriptorRegister64._MemberContainerBaseAddress, self).__init__(value, byte_offset, byte_width, max_bytes=8)
     
     
-        value = BitFieldMember('value', 'value', 0, 64)
+        value = Ia32BitFieldMember('value', 'value', 0, 64)
     
     
     _members = ["LIMIT","BASE",]
@@ -120,7 +120,7 @@ Pseudo-Descriptor Format (64-bit)."""
         return self._BASE.set(value)
 
 
-class SegmentAccessRights(with_metaclass(BitFieldMeta, BitField)):
+class SegmentAccessRights(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Segment access rights
 
@@ -131,7 +131,7 @@ Segment access rights.
 
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Type field
@@ -150,7 +150,7 @@ encoding of the type field is different for code, data, and system descriptors.
     )
 
 
-    S_FLAG = BitFieldMember(
+    S_FLAG = Ia32BitFieldMember(
         "S_FLAG",
         """
         @brief S (descriptor type) flag
@@ -165,7 +165,7 @@ segment (S flag is set).
     )
 
 
-    DPL = BitFieldMember(
+    DPL = Ia32BitFieldMember(
         "DPL",
         """
         @brief DPL (descriptor privilege level) field
@@ -182,7 +182,7 @@ segment and the RPL of a segment selector.
     )
 
 
-    P = BitFieldMember(
+    P = Ia32BitFieldMember(
         "P",
         """
         @brief P (segment-present) flag
@@ -200,7 +200,7 @@ time. It offers a control in addition to paging for managing virtual memory.
     )
 
 
-    AVAILABLE = BitFieldMember(
+    AVAILABLE = Ia32BitFieldMember(
         "AVAILABLE",
         """
         @brief Available bit
@@ -214,7 +214,7 @@ Bit 20 of the second doubleword of the segment descriptor is available for use b
     )
 
 
-    L = BitFieldMember(
+    L = Ia32BitFieldMember(
         "L",
         """
         @brief L (64-bit code segment) flag
@@ -232,7 +232,7 @@ or for non-code segments, bit 21 is reserved and should always be set to 0.
     )
 
 
-    DB = BitFieldMember(
+    DB = Ia32BitFieldMember(
         "DB",
         """
         @brief D/B (default operation size/default stack pointer size and/or upper bound) flag
@@ -266,7 +266,7 @@ for 32-bit code and data segments and to 0 for 16-bit code and data segments.)
     )
 
 
-    G = BitFieldMember(
+    G = Ia32BitFieldMember(
         "G",
         """
         @brief G (granularity) flag
@@ -285,7 +285,7 @@ valid offsets from 0 to 4095.
     )
 
 
-class SegmentDescriptor32(Struct):
+class SegmentDescriptor32(Ia32Struct):
     """@brief General Segment Descriptor (32-bit)
 
 A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of
@@ -307,7 +307,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
 @see Vol3A[7.2.3(TSS Descriptor in 64-bit mode)]
 
 @see Vol3A[7.2.5(Task-Gate Descriptor)]"""
-    class _MemberContainerSegmentLimitLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerSegmentLimitLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Segment limit field (15:00)
     
@@ -335,13 +335,13 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
     @see Vol3A[3.4.5.1(Code- and Data-Segment Descriptor Types)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerSegmentLimitLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptor32._MemberContainerSegmentLimitLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerBaseAddressLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerBaseAddressLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base address field (15:00)
     
@@ -352,24 +352,24 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
     boundaries.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerBaseAddressLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptor32._MemberContainerBaseAddressLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerSegment_(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerSegment_(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Segment descriptor fields
     
     Segment descriptor fields.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerSegment_, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(SegmentDescriptor32._MemberContainerSegment_, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        BASE_MIDDLE = BitFieldMember(
+        BASE_MIDDLE = Ia32BitFieldMember(
             "BASE_MIDDLE",
             """
             @brief Base address field (23:16); see description of $BASE_LOW for more details
@@ -383,7 +383,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        TYPE = BitFieldMember(
+        TYPE = Ia32BitFieldMember(
             "TYPE",
             """
             @brief Type field
@@ -402,7 +402,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        S_FLAG = BitFieldMember(
+        S_FLAG = Ia32BitFieldMember(
             "S_FLAG",
             """
             @brief S (descriptor type) flag
@@ -417,7 +417,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        DPL = BitFieldMember(
+        DPL = Ia32BitFieldMember(
             "DPL",
             """
             @brief DPL (descriptor privilege level) field
@@ -434,7 +434,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        P = BitFieldMember(
+        P = Ia32BitFieldMember(
             "P",
             """
             @brief P (segment-present) flag
@@ -452,7 +452,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        LIMIT_HIGH = BitFieldMember(
+        LIMIT_HIGH = Ia32BitFieldMember(
             "LIMIT_HIGH",
             """
             @brief Segment limit field (19:16); see description of $LIMIT_LOW for more details
@@ -466,7 +466,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        AVL = BitFieldMember(
+        AVL = Ia32BitFieldMember(
             "AVL",
             """
             @brief Available bit
@@ -480,7 +480,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        L = BitFieldMember(
+        L = Ia32BitFieldMember(
             "L",
             """
             @brief L (64-bit code segment) flag
@@ -498,7 +498,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        DB = BitFieldMember(
+        DB = Ia32BitFieldMember(
             "DB",
             """
             @brief D/B (default operation size/default stack pointer size and/or upper bound) flag
@@ -532,7 +532,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        G = BitFieldMember(
+        G = Ia32BitFieldMember(
             "G",
             """
             @brief G (granularity) flag
@@ -551,7 +551,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        BASE_HIGH = BitFieldMember(
+        BASE_HIGH = Ia32BitFieldMember(
             "BASE_HIGH",
             """
             @brief Base address field (31:24); see description of $BASE_LOW for more details
@@ -600,13 +600,13 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         return self._SEGMENT_.set(value)
 
 
-class SegmentDescriptor64(Struct):
+class SegmentDescriptor64(Ia32Struct):
     """@brief General Segment Descriptor (64-bit)
 
 A segment descriptor is a data structure in a GDT or LDT that provides the processor with the size and location of
 a segment, as well as access control and status information. Segment descriptors are typically created by
 compilers, linkers, loaders, or the operating system or executive, but not application programs."""
-    class _MemberContainerSegmentLimitLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerSegmentLimitLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Segment limit field (15:00)
     
@@ -634,13 +634,13 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
     @see Vol3A[3.4.5.1(Code- and Data-Segment Descriptor Types)]
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerSegmentLimitLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptor64._MemberContainerSegmentLimitLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerBaseAddressLow(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerBaseAddressLow(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base address field (15:00)
     
@@ -651,24 +651,24 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
     boundaries.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerBaseAddressLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
+            super(SegmentDescriptor64._MemberContainerBaseAddressLow, self).__init__(value, byte_offset, byte_width, max_bytes=2)
     
     
-        value = BitFieldMember('value', 'value', 0, 16)
+        value = Ia32BitFieldMember('value', 'value', 0, 16)
     
     
-    class _MemberContainerSegment_(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerSegment_(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Segment descriptor fields
     
     Segment descriptor fields.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerSegment_, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(SegmentDescriptor64._MemberContainerSegment_, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
-        BASE_MIDDLE = BitFieldMember(
+        BASE_MIDDLE = Ia32BitFieldMember(
             "BASE_MIDDLE",
             """
             @brief Base address field (23:16); see description of $BASE_LOW for more details
@@ -682,7 +682,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        TYPE = BitFieldMember(
+        TYPE = Ia32BitFieldMember(
             "TYPE",
             """
             @brief Type field
@@ -701,7 +701,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        S_FLAG = BitFieldMember(
+        S_FLAG = Ia32BitFieldMember(
             "S_FLAG",
             """
             @brief S (descriptor type) flag
@@ -716,7 +716,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        DPL = BitFieldMember(
+        DPL = Ia32BitFieldMember(
             "DPL",
             """
             @brief DPL (descriptor privilege level) field
@@ -733,7 +733,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        P = BitFieldMember(
+        P = Ia32BitFieldMember(
             "P",
             """
             @brief P (segment-present) flag
@@ -751,7 +751,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        LIMIT_HIGH = BitFieldMember(
+        LIMIT_HIGH = Ia32BitFieldMember(
             "LIMIT_HIGH",
             """
             @brief Segment limit field (19:16); see description of $LIMIT_LOW for more details
@@ -765,7 +765,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        AVAILABLE = BitFieldMember(
+        AVAILABLE = Ia32BitFieldMember(
             "AVAILABLE",
             """
             @brief Available bit
@@ -779,7 +779,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        L = BitFieldMember(
+        L = Ia32BitFieldMember(
             "L",
             """
             @brief L (64-bit code segment) flag
@@ -797,7 +797,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        DB = BitFieldMember(
+        DB = Ia32BitFieldMember(
             "DB",
             """
             @brief D/B (default operation size/default stack pointer size and/or upper bound) flag
@@ -831,7 +831,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        G = BitFieldMember(
+        G = Ia32BitFieldMember(
             "G",
             """
             @brief G (granularity) flag
@@ -850,7 +850,7 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
         )
     
     
-        BASE_HIGH = BitFieldMember(
+        BASE_HIGH = Ia32BitFieldMember(
             "BASE_HIGH",
             """
             @brief Base address field (31:24); see description of $BASE_LOW for more details
@@ -865,30 +865,30 @@ compilers, linkers, loaders, or the operating system or executive, but not appli
     
     
     
-    class _MemberContainerBaseAddressUpper(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerBaseAddressUpper(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base address field (32:63); see description of $BASE_LOW for more details
     
     Base address field (32:63); see description of $BASE_LOW for more details.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerBaseAddressUpper, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(SegmentDescriptor64._MemberContainerBaseAddressUpper, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
-    class _MemberContainerMustBeZero(with_metaclass(BitFieldMeta, BitField)):
+    class _MemberContainerMustBeZero(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         @brief Base address field (32:63); see description of $BASE_LOW for more details
     
     Base address field (32:63); see description of $BASE_LOW for more details.
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(_MemberContainerMustBeZero, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(SegmentDescriptor64._MemberContainerMustBeZero, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
-        value = BitFieldMember('value', 'value', 0, 32)
+        value = Ia32BitFieldMember('value', 'value', 0, 32)
     
     
     _members = ["LIMIT_LOW","BASE_LOW","SEGMENT_","BASE_UPPER","MUST_BE_ZERO",]

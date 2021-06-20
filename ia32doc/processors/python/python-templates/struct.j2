@@ -1,4 +1,4 @@
-class {{ class_name(doc) }}(Struct):
+class {{ class_name(doc) }}(Ia32Struct):
     """{{ get_description(doc) }}"""
 {%- for container in member_containers %}
 {{container}}

@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -10,7 +10,7 @@ Basic VM-Exit Information.
 """
 
 
-class VmxExitQualificationDebugException(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationDebugException(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for Debug Exceptions
 
@@ -21,7 +21,7 @@ Exit Qualification for Debug Exceptions.
 
 
 
-    BREAKPOINT_CONDITION = BitFieldMember(
+    BREAKPOINT_CONDITION = Ia32BitFieldMember(
         "BREAKPOINT_CONDITION",
         """
         @brief B0  B3
@@ -36,7 +36,7 @@ these bits may be set even if its corresponding enabling bit in DR7 is not set.
     )
 
 
-    BD = BitFieldMember(
+    BD = Ia32BitFieldMember(
         "BD",
         """
         @brief BD
@@ -50,7 +50,7 @@ When set, this bit indicates that the cause of the debug exception is debug regi
     )
 
 
-    BS = BitFieldMember(
+    BS = Ia32BitFieldMember(
         "BS",
         """
         @brief BS
@@ -66,7 +66,7 @@ RFLAGS.TF = DEBUGCTL.BTF = 1).
     )
 
 
-class VmxExitQualificationTaskSwitch(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationTaskSwitch(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for Task Switch
 
@@ -77,7 +77,7 @@ Exit Qualification for Task Switch.
 
 
 
-    SELECTOR = BitFieldMember(
+    SELECTOR = Ia32BitFieldMember(
         "SELECTOR",
         """
         @brief Selector of task-state segment (TSS) to which the guest attempted to switch
@@ -91,7 +91,7 @@ Selector of task-state segment (TSS) to which the guest attempted to switch.
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Source of task switch initiation
@@ -105,7 +105,7 @@ Source of task switch initiation.
     )
 
 
-class VmxExitQualificationControlRegisterAccess(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationControlRegisterAccess(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for Control-Register Accesses
 
@@ -116,7 +116,7 @@ Exit Qualification for Control-Register Accesses.
 
 
 
-    REGISTER = BitFieldMember(
+    REGISTER = Ia32BitFieldMember(
         "REGISTER",
         """
         @brief Number of control register (0 for CLTS and LMSW). Bit 3 is always 0 on processors that do not support Intel 64
@@ -132,7 +132,7 @@ architecture as they do not support CR8.
     )
 
 
-    ACCESS = BitFieldMember(
+    ACCESS = Ia32BitFieldMember(
         "ACCESS",
         """
         @brief Access type
@@ -146,7 +146,7 @@ Access type.
     )
 
 
-    LMSW_OP = BitFieldMember(
+    LMSW_OP = Ia32BitFieldMember(
         "LMSW_OP",
         """
         @brief LMSW operand type. For CLTS and MOV CR, cleared to 0
@@ -160,7 +160,7 @@ LMSW operand type. For CLTS and MOV CR, cleared to 0.
     )
 
 
-    GENREG = BitFieldMember(
+    GENREG = Ia32BitFieldMember(
         "GENREG",
         """
         @brief For MOV CR, the general-purpose register
@@ -174,7 +174,7 @@ For MOV CR, the general-purpose register.
     )
 
 
-    LMSW_DATA = BitFieldMember(
+    LMSW_DATA = Ia32BitFieldMember(
         "LMSW_DATA",
         """
         @brief For LMSW, the LMSW source data.
@@ -190,7 +190,7 @@ For CLTS and MOV CR, cleared to 0.
     )
 
 
-class VmxExitQualificationDebugRegisterAccess(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationDebugRegisterAccess(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for MOV DR
 
@@ -201,7 +201,7 @@ Exit Qualification for MOV DR
 
 
 
-    REGISTER = BitFieldMember(
+    REGISTER = Ia32BitFieldMember(
         "REGISTER",
         """
         @brief Number of debug register
@@ -215,7 +215,7 @@ Number of debug register.
     )
 
 
-    DIRECTION = BitFieldMember(
+    DIRECTION = Ia32BitFieldMember(
         "DIRECTION",
         """
         @brief Direction of access (0 = MOV to DR; 1 = MOV from DR)
@@ -229,7 +229,7 @@ Direction of access (0 = MOV to DR; 1 = MOV from DR).
     )
 
 
-    GENREG = BitFieldMember(
+    GENREG = Ia32BitFieldMember(
         "GENREG",
         """
         @brief General-purpose register
@@ -243,7 +243,7 @@ General-purpose register.
     )
 
 
-class VmxExitQualificationIoInstruction(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationIoInstruction(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for I/O Instructions
 
@@ -254,7 +254,7 @@ Exit Qualification for I/O Instructions.
 
 
 
-    WIDTH = BitFieldMember(
+    WIDTH = Ia32BitFieldMember(
         "WIDTH",
         """
         @brief Size of access
@@ -268,7 +268,7 @@ Size of access.
     )
 
 
-    DIRECTION = BitFieldMember(
+    DIRECTION = Ia32BitFieldMember(
         "DIRECTION",
         """
         @brief Direction of the attempted access (0 = OUT, 1 = IN)
@@ -282,7 +282,7 @@ Direction of the attempted access (0 = OUT, 1 = IN).
     )
 
 
-    IS_STRING = BitFieldMember(
+    IS_STRING = Ia32BitFieldMember(
         "IS_STRING",
         """
         @brief String instruction (0 = not string; 1 = string)
@@ -296,7 +296,7 @@ String instruction (0 = not string; 1 = string).
     )
 
 
-    IS_REP = BitFieldMember(
+    IS_REP = Ia32BitFieldMember(
         "IS_REP",
         """
         @brief REP prefixed (0 = not REP; 1 = REP)
@@ -310,7 +310,7 @@ REP prefixed (0 = not REP; 1 = REP).
     )
 
 
-    ENCODING = BitFieldMember(
+    ENCODING = Ia32BitFieldMember(
         "ENCODING",
         """
         @brief Operand encoding (0 = DX, 1 = immediate)
@@ -324,7 +324,7 @@ Operand encoding (0 = DX, 1 = immediate).
     )
 
 
-    PORT = BitFieldMember(
+    PORT = Ia32BitFieldMember(
         "PORT",
         """
         @brief Port number (as specified in DX or in an immediate operand)
@@ -338,7 +338,7 @@ Port number (as specified in DX or in an immediate operand).
     )
 
 
-class VmxExitQualificationApicAccess(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationApicAccess(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physical Accesses
 
@@ -349,7 +349,7 @@ Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physi
 
 
 
-    OFFSET = BitFieldMember(
+    OFFSET = Ia32BitFieldMember(
         "OFFSET",
         """
         @brief - If the APIC-access VM exit is due to a linear access, the offset of access within the APIC page.
@@ -367,7 +367,7 @@ Exit Qualification for APIC-Access VM Exits from Linear Accesses and Guest-Physi
     )
 
 
-    TYPE = BitFieldMember(
+    TYPE = Ia32BitFieldMember(
         "TYPE",
         """
         @brief Access type
@@ -381,7 +381,7 @@ Access type.
     )
 
 
-class VmxExitQualificationEptViolation(with_metaclass(BitFieldMeta, BitField)):
+class VmxExitQualificationEptViolation(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Exit Qualification for EPT Violations
 
@@ -392,7 +392,7 @@ Exit Qualification for EPT Violations.
 
 
 
-    DATA_READ = BitFieldMember(
+    DATA_READ = Ia32BitFieldMember(
         "DATA_READ",
         """
         @brief Set if the access causing the EPT violation was a data read
@@ -406,7 +406,7 @@ Set if the access causing the EPT violation was a data read.
     )
 
 
-    DATA_WRITE = BitFieldMember(
+    DATA_WRITE = Ia32BitFieldMember(
         "DATA_WRITE",
         """
         @brief Set if the access causing the EPT violation was a data write
@@ -420,7 +420,7 @@ Set if the access causing the EPT violation was a data write.
     )
 
 
-    INSTR_FETCH = BitFieldMember(
+    INSTR_FETCH = Ia32BitFieldMember(
         "INSTR_FETCH",
         """
         @brief Set if the access causing the EPT violation was an instruction fetch
@@ -434,7 +434,7 @@ Set if the access causing the EPT violation was an instruction fetch.
     )
 
 
-    ENTRY_PRESENT = BitFieldMember(
+    ENTRY_PRESENT = Ia32BitFieldMember(
         "ENTRY_PRESENT",
         """
         @brief The logical-AND of bit 0 in the EPT paging-structure entries used to translate the guest-physical address of the
@@ -450,7 +450,7 @@ access causing the EPT violation (indicates whether the guest-physical address w
     )
 
 
-    ENTRY_WRITE = BitFieldMember(
+    ENTRY_WRITE = Ia32BitFieldMember(
         "ENTRY_WRITE",
         """
         @brief The logical-AND of bit 1 in the EPT paging-structure entries used to translate the guest-physical address of the
@@ -466,7 +466,7 @@ access causing the EPT violation (indicates whether the guest-physical address w
     )
 
 
-    ENTRY_EXECUTE = BitFieldMember(
+    ENTRY_EXECUTE = Ia32BitFieldMember(
         "ENTRY_EXECUTE",
         """
         @brief The logical-AND of bit 2 in the EPT paging-structure entries used to translate the guest-physical address of the
@@ -490,7 +490,7 @@ for supervisor-mode linear addresses.
     )
 
 
-    ENTRY_EXECUTE_UM = BitFieldMember(
+    ENTRY_EXECUTE_UM = Ia32BitFieldMember(
         "ENTRY_EXECUTE_UM",
         """
         @brief If the mode-based execute control VM-execution control is 0, the value of this bit is undefined. If that control is
@@ -510,7 +510,7 @@ executable for user-mode linear addresses.
     )
 
 
-    GUEST_ADDR_VALID = BitFieldMember(
+    GUEST_ADDR_VALID = Ia32BitFieldMember(
         "GUEST_ADDR_VALID",
         """
         @brief Set if the guest linear-address field is valid.
@@ -528,7 +528,7 @@ guest PDPTEs as part of the execution of the MOV CR instruction.
     )
 
 
-    EPT_TRANSLATED_ACCESS = BitFieldMember(
+    EPT_TRANSLATED_ACCESS = Ia32BitFieldMember(
         "EPT_TRANSLATED_ACCESS",
         """
         @brief If bit 7 is 1:
@@ -558,7 +558,7 @@ Reserved if bit 7 is 0 (cleared to 0).
     )
 
 
-    USER_MODE_LINEAR_ADDRESS = BitFieldMember(
+    USER_MODE_LINEAR_ADDRESS = Ia32BitFieldMember(
         "USER_MODE_LINEAR_ADDRESS",
         """
         @brief This bit is 0 if the linear address is a supervisor-mode linear address and 1 if it is a user-mode linear address.
@@ -574,7 +574,7 @@ Otherwise, this bit is undefined.
     )
 
 
-    READABLE_WRITABLE_PAGE = BitFieldMember(
+    READABLE_WRITABLE_PAGE = Ia32BitFieldMember(
         "READABLE_WRITABLE_PAGE",
         """
         @brief This bit is 0 if paging translates the linear address to a read-only page and 1 if it translates to a read/write page.
@@ -590,7 +590,7 @@ Otherwise, this bit is undefined
     )
 
 
-    EXECUTE_DISABLE_PAGE = BitFieldMember(
+    EXECUTE_DISABLE_PAGE = Ia32BitFieldMember(
         "EXECUTE_DISABLE_PAGE",
         """
         @brief This bit is 0 if paging translates the linear address to an executable page and 1 if it translates to an execute-disable page.
@@ -606,7 +606,7 @@ Otherwise, this bit is undefined.
     )
 
 
-    NMI_UNBLOCKING = BitFieldMember(
+    NMI_UNBLOCKING = Ia32BitFieldMember(
         "NMI_UNBLOCKING",
         """
         @brief NMI unblocking due to IRET

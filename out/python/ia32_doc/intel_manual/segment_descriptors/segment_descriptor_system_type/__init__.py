@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -76,7 +76,7 @@ SEGMENT_DESCRIPTOR_TYPE_INTERRUPT_GATE = 0xe
 SEGMENT_DESCRIPTOR_TYPE_TRAP_GATE = 0xf
 
 
-class SegmentSelector(with_metaclass(BitFieldMeta, BitField)):
+class SegmentSelector(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief A segment selector is a 16-bit identifier for a segment. It does not point directly to the segment,
 but instead points to the segment descriptor that defines the segment
@@ -89,7 +89,7 @@ but instead points to the segment descriptor that defines the segment.
 
 
 
-    RPL = BitFieldMember(
+    RPL = Ia32BitFieldMember(
         "RPL",
         """
         @brief Specifies the privilege level of the selector. The privilege level can range from 0 to
@@ -107,7 +107,7 @@ Specifies the privilege level of the selector. The privilege level can range fro
     )
 
 
-    TI = BitFieldMember(
+    TI = Ia32BitFieldMember(
         "TI",
         """
         @brief Specifies the descriptor table to use: clearing this flag selects the GDT; setting this flag
@@ -123,7 +123,7 @@ selects the current LDT.
     )
 
 
-    INDEX = BitFieldMember(
+    INDEX = Ia32BitFieldMember(
         "INDEX",
         """
         @brief Selects one of 8192 descriptors in the GDT or LDT. The processor multiplies

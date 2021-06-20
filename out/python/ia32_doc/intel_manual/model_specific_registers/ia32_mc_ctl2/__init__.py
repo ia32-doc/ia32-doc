@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -108,7 +108,7 @@ IA32_MC30_CTL2 = 0x29e
 IA32_MC31_CTL2 = 0x29f
 
 
-class Ia32McCtl2Register(with_metaclass(BitFieldMeta, BitField)):
+class Ia32McCtl2Register(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -117,7 +117,7 @@ class Ia32McCtl2Register(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    CORRECTED_ERROR_COUNT_THRESHOLD = BitFieldMember(
+    CORRECTED_ERROR_COUNT_THRESHOLD = Ia32BitFieldMember(
         "CORRECTED_ERROR_COUNT_THRESHOLD",
         """
         @brief Corrected error count threshold
@@ -131,7 +131,7 @@ Corrected error count threshold.
     )
 
 
-    CMCI_EN = BitFieldMember(
+    CMCI_EN = Ia32BitFieldMember(
         "CMCI_EN",
         """
         @brief CMCI_EN

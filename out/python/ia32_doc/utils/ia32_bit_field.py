@@ -1,8 +1,8 @@
-from .bitmask import BitMask
-from .byte_operations import *
+from .ia32_bitmask import Ia32BitMask
+from .ia32_byte_operations import *
 
 
-class BitFieldMember(object):
+class Ia32BitFieldMember(object):
     def __init__(self, name, description, offset, width, custom_type=None):
         # Create explicit attributes so that the metaclass will have access
         self.offset = offset
@@ -58,7 +58,7 @@ class BitFieldMember(object):
         instance[self.offset:(self.offset + self.width)] = value
 
 
-class BitFieldMeta(type):
+class Ia32BitFieldMeta(type):
     def __new__(cls, name, bases, dct):
         # Build both bitmask and supported methods
         fields = [
@@ -67,7 +67,7 @@ class BitFieldMeta(type):
             dct.items() if
             hasattr(value, 'field') and "reserved" not in key.lower()
         ]
-        bitmask = BitMask(*tuple((dct[f].offset, dct[f].width) for f in fields))
+        bitmask = Ia32BitMask(*tuple((dct[f].offset, dct[f].width) for f in fields))
 
         dct['bitmask'] = bitmask
         dct['_total_bits'] = bitmask.size
@@ -76,7 +76,7 @@ class BitFieldMeta(type):
         return type.__new__(cls, name, bases, dct)
 
 
-class BitField(object):
+class Ia32BitField(object):
     def __init__(self, value=0, byte_offset=None, byte_width=None, max_bytes=None):
         if max_bytes is None:
             self._size = size_in_bytes(value)

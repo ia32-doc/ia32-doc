@@ -1,6 +1,6 @@
 from future.utils import with_metaclass
-from utils.struct import *
-from utils.bit_field import *
+from utils.ia32_struct import *
+from utils.ia32_bit_field import *
 
 
 __doc__ = """
@@ -56,7 +56,7 @@ register bits. Operand-size prefixes for these instructions are ignored. The fol
 """
 
 
-class Cr0(with_metaclass(BitFieldMeta, BitField)):
+class Cr0(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -65,7 +65,7 @@ class Cr0(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    PE = BitFieldMember(
+    PE = Ia32BitFieldMember(
         "PE",
         """
         @brief Protection Enable
@@ -83,7 +83,7 @@ both the PE and PG flags must be set.
     )
 
 
-    MP = BitFieldMember(
+    MP = Ia32BitFieldMember(
         "MP",
         """
         @brief Monitor Coprocessor
@@ -99,7 +99,7 @@ the TS flag (bit 3 of CR0). If the MP flag is set, a WAIT instruction generates 
     )
 
 
-    EM = BitFieldMember(
+    EM = Ia32BitFieldMember(
         "EM",
         """
         @brief FPU Emulation
@@ -130,7 +130,7 @@ CLFLUSH, CRC32, and POPCNT.
     )
 
 
-    TS = BitFieldMember(
+    TS = Ia32BitFieldMember(
         "TS",
         """
         @brief Task Switched
@@ -167,7 +167,7 @@ executing x87 FPU/MMX/SSE/SSE2/SSE3/SSSE3/SSE4 instructions.
     )
 
 
-    ET = BitFieldMember(
+    ET = Ia32BitFieldMember(
         "ET",
         """
         @brief Extension Type
@@ -184,7 +184,7 @@ set.
     )
 
 
-    NE = BitFieldMember(
+    NE = Ia32BitFieldMember(
         "NE",
         """
         @brief Numeric Error
@@ -213,7 +213,7 @@ newer processors to operate with one logical processor active.
     )
 
 
-    WP = BitFieldMember(
+    WP = Ia32BitFieldMember(
         "WP",
         """
         @brief Write Protect
@@ -234,7 +234,7 @@ method of creating a new process (forking) used by operating systems such as UNI
     )
 
 
-    AM = BitFieldMember(
+    AM = Ia32BitFieldMember(
         "AM",
         """
         @brief Alignment Mask
@@ -250,7 +250,7 @@ EFLAGS register is set, CPL is 3, and the processor is operating in either prote
     )
 
 
-    NW = BitFieldMember(
+    NW = Ia32BitFieldMember(
         "NW",
         """
         @brief Not Write-through
@@ -266,7 +266,7 @@ writes that hit the cache and invalidation cycles are enabled.
     )
 
 
-    CD = BitFieldMember(
+    CD = Ia32BitFieldMember(
         "CD",
         """
         @brief Cache Disable
@@ -288,7 +288,7 @@ occur.
     )
 
 
-    PG = BitFieldMember(
+    PG = Ia32BitFieldMember(
         "PG",
         """
         @brief Paging Enable
@@ -309,7 +309,7 @@ On Intel 64 processors, enabling and disabling IA-32e mode operation also requir
     )
 
 
-class Cr3(with_metaclass(BitFieldMeta, BitField)):
+class Cr3(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
 
@@ -320,7 +320,7 @@ class Cr3(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    PWT = BitFieldMember(
+    PWT = Ia32BitFieldMember(
         "PWT",
         """
         @brief Page-level Write-Through
@@ -338,7 +338,7 @@ with PAE paging, or with 4-level paging if CR4.PCIDE=1.
     )
 
 
-    PCD = BitFieldMember(
+    PCD = Ia32BitFieldMember(
         "PCD",
         """
         @brief Page-level Cache Disable
@@ -356,7 +356,7 @@ with PAE paging, or with 4-level paging2 if CR4.PCIDE=1.
     )
 
 
-    PD_PHYS_ADDR = BitFieldMember(
+    PD_PHYS_ADDR = Ia32BitFieldMember(
         "PD_PHYS_ADDR",
         """
         @brief Address of page directory
@@ -375,7 +375,7 @@ used for linear-address translation.
     )
 
 
-class Cr4(with_metaclass(BitFieldMeta, BitField)):
+class Cr4(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -384,7 +384,7 @@ class Cr4(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    VME = BitFieldMember(
+    VME = Ia32BitFieldMember(
         "VME",
         """
         @brief Virtual-8086 Mode Extensions
@@ -406,7 +406,7 @@ and multiple-processor environments.
     )
 
 
-    PVI = BitFieldMember(
+    PVI = Ia32BitFieldMember(
         "PVI",
         """
         @brief Protected-Mode Virtual Interrupts
@@ -423,7 +423,7 @@ flag (VIF) in protected mode when set; disables the VIF flag in protected mode w
     )
 
 
-    TSD = BitFieldMember(
+    TSD = Ia32BitFieldMember(
         "TSD",
         """
         @brief Time Stamp Disable
@@ -439,7 +439,7 @@ clear. This bit also applies to the RDTSCP instruction if supported (if CPUID.80
     )
 
 
-    DE = BitFieldMember(
+    DE = Ia32BitFieldMember(
         "DE",
         """
         @brief Debugging Extensions
@@ -457,7 +457,7 @@ DR4 and DR5 for compatibility with software written to run on earlier IA-32 proc
     )
 
 
-    PSE = BitFieldMember(
+    PSE = Ia32BitFieldMember(
         "PSE",
         """
         @brief Page Size Extensions
@@ -474,7 +474,7 @@ Enables 4-MByte pages with 32-bit paging when set; restricts
     )
 
 
-    PAE = BitFieldMember(
+    PAE = Ia32BitFieldMember(
         "PAE",
         """
         @brief Physical Address Extension
@@ -492,7 +492,7 @@ IA-32e mode.
     )
 
 
-    MCE = BitFieldMember(
+    MCE = Ia32BitFieldMember(
         "MCE",
         """
         @brief Machine-Check Enable
@@ -509,7 +509,7 @@ machine-check exception when clear.
     )
 
 
-    PGE = BitFieldMember(
+    PGE = Ia32BitFieldMember(
         "PGE",
         """
         @brief Page Global Enable
@@ -532,7 +532,7 @@ performance will be impacted.
     )
 
 
-    PCE = BitFieldMember(
+    PCE = Ia32BitFieldMember(
         "PCE",
         """
         @brief Performance-Monitoring Counter Enable
@@ -548,7 +548,7 @@ executed only at protection level 0 when clear.
     )
 
 
-    OSFXSR = BitFieldMember(
+    OSFXSR = Ia32BitFieldMember(
         "OSFXSR",
         """
         @brief Operating System Support for FXSAVE and FXRSTOR instructions
@@ -577,7 +577,7 @@ MOVNTI, CLFLUSH, CRC32, and POPCNT. The operating system or executive must expli
     )
 
 
-    OSXMMEXCPT = BitFieldMember(
+    OSXMMEXCPT = Ia32BitFieldMember(
         "OSXMMEXCPT",
         """
         @brief Operating System Support for Unmasked SIMD Floating-Point Exceptions
@@ -598,7 +598,7 @@ generate an invalid opcode exception (\#UD) whenever it detects an unmasked SIMD
     )
 
 
-    UMIP = BitFieldMember(
+    UMIP = Ia32BitFieldMember(
         "UMIP",
         """
         @brief User-Mode Instruction Prevention
@@ -614,7 +614,7 @@ exception (\#GP).
     )
 
 
-    VMXE = BitFieldMember(
+    VMXE = Ia32BitFieldMember(
         "VMXE",
         """
         @brief VMX-Enable
@@ -630,7 +630,7 @@ Enables VMX operation when set.
     )
 
 
-    SMXE = BitFieldMember(
+    SMXE = Ia32BitFieldMember(
         "SMXE",
         """
         @brief SMX-Enable
@@ -646,7 +646,7 @@ Enables SMX operation when set.
     )
 
 
-    FSGSBASE = BitFieldMember(
+    FSGSBASE = Ia32BitFieldMember(
         "FSGSBASE",
         """
         @brief FSGSBASE-Enable
@@ -661,7 +661,7 @@ and WRGSBASE.
     )
 
 
-    PCIDE = BitFieldMember(
+    PCIDE = Ia32BitFieldMember(
         "PCIDE",
         """
         @brief PCID-Enable
@@ -678,7 +678,7 @@ Can be set only in IA-32e mode (if IA32_EFER.LMA = 1).
     )
 
 
-    OSXSAVE = BitFieldMember(
+    OSXSAVE = Ia32BitFieldMember(
         "OSXSAVE",
         """
         @brief XSAVE and Processor Extended States-Enable
@@ -706,7 +706,7 @@ When set, this flag:
     )
 
 
-    SMEP = BitFieldMember(
+    SMEP = Ia32BitFieldMember(
         "SMEP",
         """
         @brief SMEP-Enable
@@ -722,7 +722,7 @@ Enables supervisor-mode execution prevention (SMEP) when set.
     )
 
 
-    SMAP = BitFieldMember(
+    SMAP = Ia32BitFieldMember(
         "SMAP",
         """
         @brief SMAP-Enable
@@ -738,7 +738,7 @@ Enables supervisor-mode access prevention (SMAP) when set.
     )
 
 
-    PKE = BitFieldMember(
+    PKE = Ia32BitFieldMember(
         "PKE",
         """
         @brief Protection-Key-Enable
@@ -755,7 +755,7 @@ using the RDPKRU and WRPKRU instructions.
     )
 
 
-class Cr8(with_metaclass(BitFieldMeta, BitField)):
+class Cr8(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     
     """
@@ -764,7 +764,7 @@ class Cr8(with_metaclass(BitFieldMeta, BitField)):
 
 
 
-    TPL = BitFieldMember(
+    TPL = Ia32BitFieldMember(
         "TPL",
         """
         @brief Task Priority Level
@@ -780,7 +780,7 @@ bit mode. A value of 15 means all interrupts will be disabled.
     )
 
 
-    RESERVED = BitFieldMember(
+    RESERVED = Ia32BitFieldMember(
         "RESERVED",
         """
         @brief Reserved
