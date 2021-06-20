@@ -17,8 +17,10 @@ class DocPythonProcessor(DocProcessor):
         self._templates_dir = os.path.join(directory, 'python-templates')
         self._out_dir = out_dir
         self._package_dir = os.path.join(out_dir, "ia32_doc")
-        print("Output dir: {}".format(os.path.abspath(self._out_dir)))
-        os.makedirs(self._out_dir, exist_ok=True)
+        os.makedirs(self._package_dir, exist_ok=True)
+
+        # Create empty __init__.py
+        open(os.path.join(self._package_dir, "__init__.py"), "w").close()
 
         # Copy utils directory to the outer module
         dst_utils_dir = os.path.join(self._package_dir, 'utils')
