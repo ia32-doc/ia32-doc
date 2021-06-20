@@ -1,5 +1,6 @@
 import codecs
 import textwrap
+from .bitmask import BitMask
 
 
 def _size_in_bits(value):
@@ -80,20 +81,10 @@ class BitFieldMeta(type):
             dct.items() if
             hasattr(value, 'field') and "reserved" not in key.lower()
         ]
-        # Create bitmask
-        total_bits = \
-            max(map(lambda k: dct[k].offset + dct[k].width, fields), default=0)
-        bitmask = '0' * total_bits
-        for key in fields:
-            field = dct[key]
-            bitmask = \
-                bitmask[:field.offset] +\
-                '1' * field.width +\
-                bitmask[field.offset+field.width:]
+        bitmask = BitMask(*tuple((dct[f].offset, dct[f].width) for f in fields))
 
-        # Reverse bitmask
-        bitmask = bitmask[::-1]
-        dct['bitmask'] = int(bitmask, base=2)
+        dct['bitmask'] = bitmask
+        dct['_total_bits'] = bitmask.size
         dct['_fields'] = fields
 
         return type.__new__(cls, name, bases, dct)
@@ -113,24 +104,8 @@ class BitField(object):
         self._assert_value(value)
         self._raw = value
 
-    def _to_binary_string(self, value):
-        bin_str = '{0:b}'.format(value).zfill(self._total_bits)
-        # reverse so indexing will work OK
-        return bin_str[::-1]
-
     def _assert_value(self, value):
-        if value != value & self.bitmask:
-            value_str = self._to_binary_string(value)
-            bitmask_str = self._to_binary_string(self.bitmask)
-            unmatching_bits = [
-                i for
-                i, (v, m) in
-                enumerate(zip(value_str, bitmask_str)) if
-                v == '1' and m == '0'
-            ]
-            raise ValueError(
-                "Invalid assignment: bit(s) {} must be 0!".format(unmatching_bits)
-            )
+        return self.bitmask.validate(value)
 
     @property
     def size(self):
@@ -187,7 +162,7 @@ class BitField(object):
         )
 
     def bin_str(self):
-        return '0b' + self._to_binary_string(self._raw)[::-1]
+        return "0b" + "{0:b}".format(self._raw).zfill(self._total_bits)
 
     def __setitem__(self, key, value):
         if not (isinstance(key, slice) or isinstance(key, int)):
