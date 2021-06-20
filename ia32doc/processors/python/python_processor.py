@@ -16,14 +16,29 @@ class DocPythonProcessor(DocProcessor):
         directory = os.path.split(__file__)[0]
         self._templates_dir = os.path.join(directory, 'python-templates')
         self._out_dir = out_dir
+        self._package_dir = os.path.join(out_dir, "ia32_doc")
         print("Output dir: {}".format(os.path.abspath(self._out_dir)))
         os.makedirs(self._out_dir, exist_ok=True)
 
         # Copy utils directory to the outer module
-        dst_utils_dir = os.path.join(self._out_dir, 'utils')
+        dst_utils_dir = os.path.join(self._package_dir, 'utils')
         src_utils_dir = os.path.join(directory, 'utils')
         shutil.rmtree(dst_utils_dir, ignore_errors=True)
         shutil.copytree(src_utils_dir, dst_utils_dir)
+
+        # Copy additional files to the outer module
+        src_additional_dir = os.path.join(directory, 'additional-files')
+        for file in os.listdir(src_additional_dir):
+            if os.path.isdir(file):
+                shutil.copytree(
+                    os.path.join(src_additional_dir, file),
+                    os.path.join(out_dir, file)
+                )
+            else:
+                shutil.copy2(
+                    os.path.join(src_additional_dir, file),
+                    os.path.join(out_dir, file)
+                )
 
         self._current_group_file = None
 
@@ -103,7 +118,7 @@ class DocPythonProcessor(DocProcessor):
     def process_group(self, doc: DocGroup) -> None:
         # Create a package for the given group
         init_file_path = os.path.join(
-            self._out_dir,
+            self._package_dir,
             self._get_parent_directory(doc),
             doc.short_name.lower(),
             "__init__.py"
