@@ -1,4 +1,9 @@
-import itertools
+try:
+    from itertools import zip_longest
+# Python 2.7 uses izip_longest
+except ImportError:
+    from itertools import izip_longest as zip_longest
+
 from .byte_operations import bin_str
 
 
@@ -36,7 +41,7 @@ class BitMask(object):
         invalid_bits = [
             index for
             index, (value_bit, mask_bit) in
-            enumerate(itertools.zip_longest(value_str, self._bitmask, fillvalue='0')) if
+            enumerate(zip_longest(value_str, self._bitmask, fillvalue='0')) if
             value_bit == '1' and mask_bit == '0'
         ]
 
