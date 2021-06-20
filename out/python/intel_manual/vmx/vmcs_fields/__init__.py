@@ -1,45 +1,58 @@
 from future.utils import with_metaclass
+from utils.struct import *
 from utils.bit_field import *
 
 
 __doc__ = """
+@brief VMCS (VM Control Structure)
+
 Every component of the VMCS is encoded by a 32-bit field that can be used by VMREAD and VMWRITE.
 This enumerates all fields in the VMCS and their encodings. Fields are grouped by width (16-bit, 32-bit,
 etc.) and type (guest-state, host-state, etc.).
 """
+
+
 class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
-    """"""
-    def __init__(self, value):
-        super().__init__(value, size_in_bytes=2)
-
-
+    """
     
+    """
+    def __init__(self, value=0, byte_offset=None, byte_width=None):
+        super().__init__(value, byte_offset, byte_width, max_bytes=2)
+
+
+
     ACCESS_TYPE = BitFieldMember(
         "ACCESS_TYPE",
         """
-        Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields:
-        Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields.
+        @brief Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields
+
+Access type (0 = full; 1 = high); must be full for 16-bit, 32-bit, and natural-width fields.
         """,
+
         0,
         1
+
     )
 
-    
+
     INDEX = BitFieldMember(
         "INDEX",
         """
-        Index:
-        Index.
+        @brief Index
+
+Index.
         """,
+
         1,
         9
+
     )
 
-    
+
     TYPE = BitFieldMember(
         "TYPE",
         """
-        Type:
+        @brief Type:
 
 0: control
 
@@ -47,8 +60,9 @@ class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
 
 2: guest state
 
-3: host state:
-        Type:
+3: host state
+
+Type:
 
 0: control
 
@@ -58,26 +72,31 @@ class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
 
 3: host state
         """,
+
         10,
         2
+
     )
 
-    
+
     MUST_BE_ZERO = BitFieldMember(
         "MUST_BE_ZERO",
         """
-        Reserved (must be 0):
-        Reserved (must be 0).
+        @brief Reserved (must be 0)
+
+Reserved (must be 0).
         """,
+
         12,
         1
+
     )
 
-    
+
     WIDTH = BitFieldMember(
         "WIDTH",
         """
-        Width:
+        @brief Width:
 
 0: 16-bit
 
@@ -85,8 +104,9 @@ class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
 
 2: 32-bit
 
-3: natural-width:
-        Width:
+3: natural-width
+
+Width:
 
 0: 16-bit
 
@@ -96,9 +116,10 @@ class VmcsComponentEncoding(with_metaclass(BitFieldMeta, BitField)):
 
 3: natural-width
         """,
+
         13,
         2
+
     )
 
-    
 

@@ -1,5 +1,7 @@
 class {{ humps.pascalize(doc.short_name.lower()) }}:
-    """{{ strip_description(doc.long_description) }}"""
+    """
+    {{ get_description(doc) }}
+    """
 
     {% for field in doc.fields %}
       {{ field.short_name }} = {{ hex(field.value) }}

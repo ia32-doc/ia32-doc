@@ -1,4 +1,5 @@
 import itertools
+from .byte_operations import bin_str
 
 
 class BitMask(object):
@@ -25,17 +26,12 @@ class BitMask(object):
     def __repr__(self):
         return str(self)
 
-    def _to_binary_string(self, value):
-        bin_str = '{0:b}'.format(value).zfill(self._size)
-        # reverse so indexing will work OK
-        return bin_str[::-1]
-
     @property
     def size(self):
         return self._size
 
     def validate(self, value):
-        value_str = self._to_binary_string(value)
+        value_str = bin_str(value, self.size)
         invalid_bits = [
             index for
             index, (value_bit, mask_bit) in

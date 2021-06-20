@@ -5,12 +5,9 @@ import shutil
 from ia32doc.processors.base import DocProcessor
 from ia32doc.doc import DocGroup,\
     DocEnum,\
-    DocEnumField,\
     DocBitfield,\
     DocStruct,\
-    DocDefinition,\
-    DocStructField,\
-    DocBitfieldField
+    DocDefinition
 
 
 class DocPythonProcessor(DocProcessor):
@@ -34,20 +31,57 @@ class DocPythonProcessor(DocProcessor):
         try:
             template_path = os.path.join(self._templates_dir, template_name)
             content = open(template_path, 'r').read()
-            return jinja2.Template(content)
+            return jinja2.Template(content, keep_trailing_newline=True)
         except (FileNotFoundError, OSError) as e:
             raise jinja2.TemplateError(e)
 
-    def _append_template_to_group(self, doc, template_name, **kwargs):
+    def _generate_gemplate(self, doc, template_name, ident=0, name_prefix='', **kwargs):
         template = self._get_template(template_name)
-        # strip non-ascii characters from the description
+
+        def get_description(document):
+            description = []
+
+            if document.short_description != '':
+                description.append("@brief " + document.short_description)
+            description.append(document.long_description)
+            if document.see != '':
+                see_list = []
+                if isinstance(document.see, str):
+                    see_list.append(document.see)
+                elif isinstance(document.see, list):
+                    see_list = document.see
+                else:
+                    raise RuntimeError("Unsupported type!")
+                description.extend("@see " + reference for reference in see_list)
+            # strip non-ascii characters from the description
+            description_str = \
+                "\n\n".join(description).encode('ascii', 'ignore').decode('ascii')
+            return description_str
+
+        def class_name(document):
+            if document.long_name_raw != '':
+                return humps.pascalize(document.long_name_raw.lower())
+            else:
+                # TODO: aviod collisions
+                return "Dummy"
+
         content = template.render(
             doc=doc,
-            strip_description=lambda d: d.encode('ascii', 'ignore').decode('ascii'),
+            get_description=get_description,
+            class_name=class_name,
             humps=humps,
             hex=hex,
+            zip=zip,
+            hasattr=hasattr,
+            name_prefix=name_prefix,
             **kwargs
         )
+        content = '\n'.join('    ' * ident + line for line in content.splitlines())
+        return content
+
+    def _append_template_to_group(self, doc, template_name, ident=0, name_prefix='', **kwargs):
+        content = \
+            self._generate_gemplate(doc, template_name, ident, name_prefix, **kwargs)
         self._current_group_file.write(content)
 
     @staticmethod
@@ -64,7 +98,7 @@ class DocPythonProcessor(DocProcessor):
         value = doc.value
         if isinstance(value, int):
             value = hex(value)
-        return "{} = {}".format(doc.short_name, value)
+        return "{} = {}\n".format(doc.short_name, value)
 
     def process_group(self, doc: DocGroup) -> None:
         # Create a package for the given group
@@ -86,6 +120,7 @@ class DocPythonProcessor(DocProcessor):
         # Include utils
         self._current_group_file.write(
             "from future.utils import with_metaclass\n"
+            "from utils.struct import *\n"
             "from utils.bit_field import *\n\n\n"
         )
 
@@ -102,19 +137,38 @@ class DocPythonProcessor(DocProcessor):
         )
 
     def process_struct(self, doc: DocStruct) -> None:
-        struct_fields = [f for f in doc.fields if 'struct_field' == f.type]
+        struct_members = [
+            f for
+            f in
+            doc.fields if
+            'struct_field' == f.type or 'bitfield' == f.type
+        ]
+
+        # Render bitfield for each struct member
+        member_containers = [
+            self._generate_gemplate(
+                member,
+                "bitfield.j2",
+                ident=1,
+                name_prefix='_MemberContainer',
+                struct_members=struct_members,
+            ) for
+            member in
+            struct_members
+        ]
+
         definitions = [
             self._create_definition(f) for
             f in
             doc.fields if
             'definitions' == doc.type
         ]
-        total_size = sum(map(lambda f: f.size, struct_fields))
+
         self._append_template_to_group(
             doc,
             "struct.j2",
-            total_size=total_size,
-            struct_fields=struct_fields,
+            struct_members=struct_members,
+            member_containers=member_containers,
             definitions=definitions,
         )
 

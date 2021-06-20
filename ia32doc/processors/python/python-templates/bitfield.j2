@@ -1,20 +1,28 @@
-class {{ humps.pascalize(doc.short_name.lower()) }}(with_metaclass(BitFieldMeta, BitField)):
-    """{{ strip_description(doc.long_description) }}"""
-    def __init__(self, value):
-        super().__init__(value, size_in_bytes={{ doc.size // 8 }})
+class {{ name_prefix + class_name(doc) }}(with_metaclass(BitFieldMeta, BitField)):
+    """
+    {{ get_description(doc) }}
+    """
+    def __init__(self, value=0, byte_offset=None, byte_width=None):
+        super().__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
 
+{% if 'struct_field' == doc.type %}
+    value = BitFieldMember('value', 'value', 0, {{ doc.size }})
 
-    {% for field in doc.fields %}
+{%- endif %}
+{% for field in doc.fields %}
     {{ field.short_name }} = BitFieldMember(
         "{{ field.short_name }}",
         """
-        {{ strip_description(field.short_description) }}:
-        {{ strip_description(field.long_description) }}
+        {{ get_description(field) }}
         """,
+{% if hasattr(field, "bit") %}
         {{ field.bit[0] }},
         {{ field.bit[1] - field.bit[0] }}
+{% else %}
+        0,
+        {{ field.size }}
+{% endif %}
     )
 
-    {% endfor %}
-
+{% endfor %}
 

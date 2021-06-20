@@ -1,23 +1,5 @@
-import codecs
-import textwrap
 from .bitmask import BitMask
-
-
-def _size_in_bits(value):
-    if isinstance(value, bool):
-        return 1
-    if isinstance(value, int):
-        return len('{0:b}'.format(value))
-
-    raise TypeError("invalid type: {}".format(type(value)))
-
-
-def _bytes_in_int(value):
-    total_bytes = 0
-    while value != 0:
-        total_bytes += 1
-        value = value >> 8
-    return total_bytes
+from .byte_operations import *
 
 
 class BitFieldMember(object):
@@ -25,6 +7,8 @@ class BitFieldMember(object):
         # Create explicit attributes so that the metaclass will have access
         self.offset = offset
         self.width = width
+        self.byte_offset = 8 * offset
+        self.byte_width = 8 * width
         self.field = True
 
         self._name = name
@@ -42,6 +26,8 @@ class BitFieldMember(object):
         methods = dict()
         methods['width'] = self.width
         methods['offset'] = self.offset
+        methods['byte_width'] = self.byte_width
+        methods['byte_offset'] = self.byte_offset
         methods['__doc__'] = self._description
 
         # Overload __str__ in case of integer
@@ -64,7 +50,7 @@ class BitFieldMember(object):
         return self._container(raw)
 
     def __set__(self, instance, value):
-        value_width = _size_in_bits(value)
+        value_width = size_in_bits(value)
         if value_width > self.width:
             raise ValueError(
                 "{} does not fit in {} bits".format(value, self.width)
@@ -91,18 +77,27 @@ class BitFieldMeta(type):
 
 
 class BitField(object):
-    def __init__(self, value=0, size_in_bytes=None):
-        self._raw = 0
-        if not isinstance(value, int):
-            raise TypeError("`value` must in `int`!")
-        if size_in_bytes is None:
-            self._size = _bytes_in_int(value)
+    def __init__(self, value=0, byte_offset=None, byte_width=None, max_bytes=None):
+        if max_bytes is None:
+            self._size = size_in_bytes(value)
         else:
-            self._size = size_in_bytes
+            self._size = max_bytes
+
+        self._bytes = b'\x00' * self._size
         self._total_bits = 8 * self._size
 
+        if byte_offset is None:
+            self._byte_offset = 0
+        else:
+            self._byte_offset = byte_offset
+
+        if byte_width is None:
+            self._byte_width = self._size
+        else:
+            self._byte_width = byte_width
+
         self._assert_value(value)
-        self._raw = value
+        self._bytes = to_bytes(value, self._byte_width)
 
     def _assert_value(self, value):
         return self.bitmask.validate(value)
@@ -112,33 +107,35 @@ class BitField(object):
         return self._size
 
     @property
+    def bytes(self):
+        return self._bytes
+
+    @property
     def raw(self):
-        # Using a python 2 and 3 compatible method
-        return self._raw
+        return self.bytes
+
+    @bytes.setter
+    def bytes(self, value):
+        self._assert_value(value)
+        self._bytes = to_bytes(value, self._byte_width)
 
     @raw.setter
     def raw(self, value):
-        value_bytes = _bytes_in_int(value)
-        max_bytes = self._total_bits // 8
-        if value_bytes > max_bytes:
-            raise ValueError(
-                "Value too large ({} bytes). Should be {} bytes at max".format(
-                    value_bytes,
-                    max_bytes
-                )
-            )
-        self._assert_value(value)
-        self._raw = value
+        self.bytes = value
 
     @property
-    def bytes(self):
-        hex_value = '{0:x}'.format(self._raw).zfill(self._total_bits // 4)
-        # must convert to big endian
-        hex_value = "".join(textwrap.wrap(hex_value, 2)[::-1])
-        return codecs.decode(hex_value, 'hex_codec')
+    def byte_offset(self):
+        return self._byte_offset
+
+    @property
+    def byte_width(self):
+        return self._byte_width
 
     def __repr__(self):
-        return '0x' + '{0:x}'.format(self.raw).zfill(self._total_bits // 4)
+        return repr(self.bytes)
+
+    def __int__(self):
+        return bytes_to_int(self.bytes)
 
     def flags(self):
         enabled = [
@@ -151,6 +148,9 @@ class BitField(object):
         return ",".join(enabled)
 
     def __str__(self):
+        if 0 == len(self._fields):
+            return hex(int(self))
+
         return "\n".join(
             ["[{} ({}:{})] {}".format(
                 field,
@@ -161,8 +161,8 @@ class BitField(object):
             ) for field in self._fields]
         )
 
-    def bin_str(self):
-        return "0b" + "{0:b}".format(self._raw).zfill(self._total_bits)
+    def bin(self):
+        return "0b" + bin_str(self.bytes, self._total_bits)[::-1]
 
     def __setitem__(self, key, value):
         if not (isinstance(key, slice) or isinstance(key, int)):
@@ -183,7 +183,7 @@ class BitField(object):
 
         # Check that value fits in range
         max_size_in_bits = stop - start
-        if max_size_in_bits < _size_in_bits(value):
+        if max_size_in_bits < size_in_bits(value):
             raise ValueError(
                 "{} can not fit in {} bits!".format(
                     value, max_size_in_bits
@@ -196,11 +196,11 @@ class BitField(object):
         # Note that the mask is reversed!
         mask_str = mask_str[::-1]
         mask = int(mask_str, base=2)
-        new_value = self._raw & mask
+        new_value = bytes_to_int(self._bytes) & mask
         # Add the value
         new_value += (value << start)
         self._assert_value(new_value)
-        self._raw = new_value
+        self._bytes = to_bytes(new_value, self._byte_width)
 
     # Support slicing
     def __getitem__(self, item):
@@ -223,7 +223,17 @@ class BitField(object):
         # Note that the mask is reversed!
         mask_str = mask_str[::-1]
         mask = int(mask_str, base=2)
-        raw = self._raw & mask
+        raw = bytes_to_int(self._bytes) & mask
         # shift-right the remaining bits
         raw = raw >> start
         return raw
+
+    def set(self, value):
+        self.bytes = value
+
+    def __get__(self, instance, owner):
+        return self
+
+    # For support inside struct
+    def __set__(self, instance, value):
+        self.bytes = value

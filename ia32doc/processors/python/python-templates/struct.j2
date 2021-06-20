@@ -1,26 +1,32 @@
-class {{ humps.pascalize(doc.short_name.lower()) }}(with_metaclass(BitFieldMeta, BitField)):
-    """{{ strip_description(doc.long_description) }}"""
-
-    {% for definition in definitions %}
-      {{ definition.short_name }} = {{ definition.value }}
-    {%- endfor %}
+class {{ class_name(doc) }}(Struct):
+    """{{ get_description(doc) }}"""
+{%- for container in member_containers %}
+{{container}}
+{%- endfor %}
+    _members = [
+{%- for member in struct_members -%}
+        "{{ member.short_name }}",
+{%- endfor -%}
+    ]
 
     def __init__(self, value):
-        super().__init__(value, size_in_bytes={{ total_size  // 8 }})
+{%- set offset = namespace(value=0) -%}
+{%- for member in struct_members %}
+        self._{{ member.short_name }} = self.{{ "_MemberContainer" + class_name(member) }}(0, {{ offset.value }}, {{ member.size // 8 }} )
+{%- set offset.value = offset.value + (member.size // 8) %}
+{%- endfor %}
+        super().__init__(value)
 
-    {% set offset = namespace(value=0) %}
-    {% for field in struct_fields %}
-    {{ field.short_name }} = BitFieldMember(
-        "{{ field.short_name }}",
-        """
-        {{ strip_description(field.short_description) }}:
-        {{ strip_description(field.long_description) }}
-        """,
-        {{ offset.value }},
-        {{ field.size }}
-        {% set offset.value = offset.value + field.size %}
-    )
+{% for member in struct_members %}
+    @property
+    def {{ member.short_name }}(self):
+        return self._{{ member.short_name }}
 
-    {% endfor %}
+    @{{ member.short_name }}.setter
+    def {{ member.short_name }}(self, value):
+        return self._{{ member.short_name }}.set(value)
+{% endfor %}
 
-
+{% for definition in definitions %}
+    {{ definition }}
+{% endfor %}
