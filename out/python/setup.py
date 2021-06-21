@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ia32_python",
-    version="1.0.2",
+    version="1.0.3",
     description="x86-64 definitions for Python 2/3",
     author="guye1296",
     packages=find_packages(),

@@ -56,6 +56,8 @@ def to_bytes(value, minimal_width):
             "{0:x}".format(value).zfill(2 * size_in_bytes(value)),
             'hex'
         )
+        # Transfer to little endian
+        as_bytes = as_bytes[::-1]
     except TypeError:
         raise TypeError("invalid type: {}".format(type(value)))
 
