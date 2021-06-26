@@ -39,7 +39,6 @@ class DocProcessor(object):
     def run(self, doc_list: List[DocBase]) -> None:
         from contextlib import redirect_stdout
 
-        breakpoint()
         if self.opt.redirect_stdout:
             with open(self.opt.output_filename, 'w') as f:
                 with redirect_stdout(f):
