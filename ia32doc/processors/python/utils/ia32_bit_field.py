@@ -7,8 +7,9 @@ class Ia32BitFieldMember(object):
         # Create explicit attributes so that the metaclass will have access
         self.offset = offset
         self.width = width
-        self.byte_offset = 8 * offset
-        self.byte_width = 8 * width
+        self.byte_offset = offset // 8
+        # Round up
+        self.byte_width = width // 8 + 1 * (0 != width % 8)
         self.field = True
 
         self._name = name

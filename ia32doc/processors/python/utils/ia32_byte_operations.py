@@ -51,15 +51,16 @@ def to_bytes(value, minimal_width):
         as_bytes = b'\01' if value else b'\00'
     elif isinstance(value, (str, bytes)):
         as_bytes = value
-    try:
-        as_bytes = codecs.decode(
-            "{0:x}".format(value).zfill(2 * size_in_bytes(value)),
-            'hex'
-        )
-        # Transfer to little endian
-        as_bytes = as_bytes[::-1]
-    except TypeError:
-        raise TypeError("invalid type: {}".format(type(value)))
+    else:
+        try:
+            as_bytes = codecs.decode(
+                "{0:x}".format(value).zfill(2 * size_in_bytes(value)),
+                'hex'
+            )
+            # Transfer to little endian
+            as_bytes = as_bytes[::-1]
+        except TypeError:
+            raise TypeError("invalid type: {}".format(type(value)))
 
     return as_bytes + b'\x00' * (minimal_width - len(as_bytes))
 
