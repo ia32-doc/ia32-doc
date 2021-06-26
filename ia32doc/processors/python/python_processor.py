@@ -11,12 +11,12 @@ from ia32doc.doc import DocGroup,\
 
 
 class DocPythonProcessor(DocProcessor):
-    def __init__(self, out_dir):
+    def __init__(self, output_dir):
         super().__init__()
         directory = os.path.split(__file__)[0]
         self._templates_dir = os.path.join(directory, 'python-templates')
-        self._out_dir = out_dir
-        self._package_dir = os.path.join(out_dir, "ia32_python")
+        self._out_dir = output_dir
+        self._package_dir = os.path.join(self._out_dir, "ia32_python")
         os.makedirs(self._package_dir, exist_ok=True)
 
         # Create empty __init__.py
@@ -34,12 +34,12 @@ class DocPythonProcessor(DocProcessor):
             if os.path.isdir(file):
                 shutil.copytree(
                     os.path.join(src_additional_dir, file),
-                    os.path.join(out_dir, file)
+                    os.path.join(self._out_dir, file)
                 )
             else:
                 shutil.copy2(
                     os.path.join(src_additional_dir, file),
-                    os.path.join(out_dir, file)
+                    os.path.join(self._out_dir, file)
                 )
 
         self._current_group_file = None
