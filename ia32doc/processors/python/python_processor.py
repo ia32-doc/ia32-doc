@@ -74,12 +74,20 @@ class DocPythonProcessor(DocProcessor):
         return description_str
 
     @staticmethod
+    def member_name(document):
+        if document.short_name != '':
+            return document.short_name
+        else:
+            # TODO: aviod collisions
+            return "EMPTY"
+
+    @staticmethod
     def class_name(document):
         if document.long_name_raw != '':
             return humps.pascalize(document.long_name_raw.lower())
         else:
             # TODO: aviod collisions
-            return "Dummy"
+            return "Empty"
 
     def _generate_gemplate(self, doc, template_name, ident=0, name_prefix='', **kwargs):
         template = self._get_template(template_name)
@@ -88,6 +96,7 @@ class DocPythonProcessor(DocProcessor):
             doc=doc,
             get_description=self.get_description,
             class_name=self.class_name,
+            member_name=self.member_name,
             humps=humps,
             hex=hex,
             zip=zip,
@@ -140,6 +149,7 @@ class DocPythonProcessor(DocProcessor):
         self._current_group_file.write(
             "from future.utils import with_metaclass\n"
             "from ia32_python.utils.ia32_struct import *\n"
+            "from ia32_python.utils.ia32_enum import *\n"
             "from ia32_python.utils.ia32_bit_field import *\n\n\n"
         )
 

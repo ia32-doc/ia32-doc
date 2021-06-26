@@ -1,5 +1,6 @@
 from future.utils import with_metaclass
 from ia32_python.utils.ia32_struct import *
+from ia32_python.utils.ia32_enum import *
 from ia32_python.utils.ia32_bit_field import *
 
 
@@ -55,28 +56,70 @@ VMCS_HOST_SSP = 0x6c1a
 VMCS_HOST_INTERRUPT_SSP_TABLE_ADDR = 0x6c1c
 
 
-class InterruptType:
+class InterruptionType(with_metaclass(Ia32EnumMeta, Ia32Enum)):
     """
     @brief Valid interruption types
 
 Valid interruption types.
     """
 
-    
-      EXTERNAL = 0x0
-    
-      NMI = 0x2
-    
-      HARDWARE_EXCEPTION = 0x3
-    
-      SOFTWARE = 0x4
-    
-      PRIVILEGED_EXCEPTION = 0x5
-    
-      SOFTWARE_EXCEPTION = 0x6
-    
-      OTHER = 0x7
-    
+
+    EXTERNAL = Ia32EnumField(
+        "EXTERNAL",
+        0x0,
+        """@brief External interrupt
+
+External interrupt.""",
+   )
+
+    NMI = Ia32EnumField(
+        "NMI",
+        0x2,
+        """@brief Non-maskable interrupt (NMI)
+
+Non-maskable interrupt (NMI).""",
+   )
+
+    HARDWARE_EXCEPTION = Ia32EnumField(
+        "HARDWARE_EXCEPTION",
+        0x3,
+        """@brief Hardware exception (e.g,. \#PF)
+
+Hardware exception (e.g,. \#PF).""",
+   )
+
+    SOFTWARE = Ia32EnumField(
+        "SOFTWARE",
+        0x4,
+        """@brief Software interrupt (INT n)
+
+Software interrupt (INT n).""",
+   )
+
+    PRIVILEGED_EXCEPTION = Ia32EnumField(
+        "PRIVILEGED_EXCEPTION",
+        0x5,
+        """@brief Privileged software exception (INT1)
+
+Privileged software exception (INT1).""",
+   )
+
+    SOFTWARE_EXCEPTION = Ia32EnumField(
+        "SOFTWARE_EXCEPTION",
+        0x6,
+        """@brief Software exception (INT3 or INTO)
+
+Software exception (INT3 or INTO).""",
+   )
+
+    OTHER = Ia32EnumField(
+        "OTHER",
+        0x7,
+        """@brief Other event. This type is used for injection of events that are not delivered through the IDT
+
+Other event. This type is used for injection of events that are not delivered through the IDT.""",
+   )
+
 class VmentryInterruptInformation(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief VM entry can be configured to conclude by delivering an event through the IDT (after all guest state and MSRs have

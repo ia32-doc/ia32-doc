@@ -1,5 +1,6 @@
 from future.utils import with_metaclass
 from ia32_python.utils.ia32_struct import *
+from ia32_python.utils.ia32_enum import *
 from ia32_python.utils.ia32_bit_field import *
 
 
@@ -10,7 +11,7 @@ __doc__ = """
 """
 
 
-class ExceptionVector:
+class ExceptionVector(with_metaclass(Ia32EnumMeta, Ia32Enum)):
     """
     @brief Exceptions that can occur when the instruction is executed in protected mode.
 
@@ -25,47 +26,331 @@ sign (\#) followed by two letters and an optional error code in parentheses. For
 protection exception with an error code of 0.
     """
 
-    
-      DE = 0x0
-    
-      DB = 0x1
-    
-      NMI = 0x2
-    
-      BP = 0x3
-    
-      OF = 0x4
-    
-      BR = 0x5
-    
-      UD = 0x6
-    
-      NM = 0x7
-    
-      DF = 0x8
-    
-      CO = 0x9
-    
-      TS = 0xa
-    
-      NP = 0xb
-    
-      SS = 0xc
-    
-      GP = 0xd
-    
-      PF = 0xe
-    
-      MF = 0x10
-    
-      AC = 0x11
-    
-      MC = 0x12
-    
-      XM = 0x13
-    
-      VE = 0x14
-    
+
+    DE = Ia32EnumField(
+        "DE",
+        0x0,
+        """@brief #DE - Divide Error.
+
+Source: DIV and IDIV instructions.
+
+Error Code: No
+
+#DE - Divide Error.
+
+Source: DIV and IDIV instructions.
+
+Error Code: No.""",
+   )
+
+    DB = Ia32EnumField(
+        "DB",
+        0x1,
+        """@brief #DB - Debug.
+
+Source: Any code or data reference.
+
+Error Code: No
+
+#DB - Debug.
+
+Source: Any code or data reference.
+
+Error Code: No.""",
+   )
+
+    NMI = Ia32EnumField(
+        "NMI",
+        0x2,
+        """@brief Nonmaskable Interrupt.
+
+Source: Generated externally by asserting the processors NMI pin or
+
+        through an NMI request set by the I/O APIC to the local APIC.
+
+Error Code: No
+
+Nonmaskable Interrupt.
+
+Source: Generated externally by asserting the processors NMI pin or
+
+        through an NMI request set by the I/O APIC to the local APIC.
+
+Error Code: No.""",
+   )
+
+    BP = Ia32EnumField(
+        "BP",
+        0x3,
+        """@brief #BP - Breakpoint.
+
+Source: INT3 instruction.
+
+Error Code: No
+
+#BP - Breakpoint.
+
+Source: INT3 instruction.
+
+Error Code: No.""",
+   )
+
+    OF = Ia32EnumField(
+        "OF",
+        0x4,
+        """@brief #OF - Overflow.
+
+Source: INTO instruction.
+
+Error Code: No
+
+#OF - Overflow.
+
+Source: INTO instruction.
+
+Error Code: No.""",
+   )
+
+    BR = Ia32EnumField(
+        "BR",
+        0x5,
+        """@brief #BR - BOUND Range Exceeded.
+
+Source: BOUND instruction.
+
+Error Code: No
+
+#BR - BOUND Range Exceeded.
+
+Source: BOUND instruction.
+
+Error Code: No.""",
+   )
+
+    UD = Ia32EnumField(
+        "UD",
+        0x6,
+        """@brief #UD - Invalid Opcode (Undefined Opcode).
+
+Source: UD instruction or reserved opcode.
+
+Error Code: No
+
+#UD - Invalid Opcode (Undefined Opcode).
+
+Source: UD instruction or reserved opcode.
+
+Error Code: No.""",
+   )
+
+    NM = Ia32EnumField(
+        "NM",
+        0x7,
+        """@brief #NM - Device Not Available (No Math Coprocessor).
+
+Source: Floating-point or WAIT/FWAIT instruction.
+
+Error Code: No
+
+#NM - Device Not Available (No Math Coprocessor).
+
+Source: Floating-point or WAIT/FWAIT instruction.
+
+Error Code: No.""",
+   )
+
+    DF = Ia32EnumField(
+        "DF",
+        0x8,
+        """@brief #DF - Double Fault.
+
+Source: Any instruction that can generate an exception, an NMI, or an INTR.
+
+Error Code: Yes (zero)
+
+#DF - Double Fault.
+
+Source: Any instruction that can generate an exception, an NMI, or an INTR.
+
+Error Code: Yes (zero).""",
+   )
+
+    CO = Ia32EnumField(
+        "CO",
+        0x9,
+        """@brief #\## - Coprocessor Segment Overrun (reserved).
+
+Source: Floating-point instruction.
+
+Error Code: No
+
+#\## - Coprocessor Segment Overrun (reserved).
+
+Source: Floating-point instruction.
+
+Error Code: No.""",
+   )
+
+    TS = Ia32EnumField(
+        "TS",
+        0xa,
+        """@brief #TS - Invalid TSS.
+
+Source: Task switch or TSS access.
+
+Error Code: Yes
+
+#TS - Invalid TSS.
+
+Source: Task switch or TSS access.
+
+Error Code: Yes.""",
+   )
+
+    NP = Ia32EnumField(
+        "NP",
+        0xb,
+        """@brief #NP - Segment Not Present.
+
+Source: Loading segment registers or accessing system segments.
+
+Error Code: Yes
+
+#NP - Segment Not Present.
+
+Source: Loading segment registers or accessing system segments.
+
+Error Code: Yes.""",
+   )
+
+    SS = Ia32EnumField(
+        "SS",
+        0xc,
+        """@brief #SS - Stack Segment Fault.
+
+Source: Stack operations and SS register loads.
+
+Error Code: Yes
+
+#SS - Stack Segment Fault.
+
+Source: Stack operations and SS register loads.
+
+Error Code: Yes.""",
+   )
+
+    GP = Ia32EnumField(
+        "GP",
+        0xd,
+        """@brief #GP - General Protection.
+
+Source: Any memory reference and other protection checks.
+
+Error Code: Yes
+
+#GP - General Protection.
+
+Source: Any memory reference and other protection checks.
+
+Error Code: Yes.""",
+   )
+
+    PF = Ia32EnumField(
+        "PF",
+        0xe,
+        """@brief #PF - Page Fault.
+
+Source: Any memory reference.
+
+Error Code: Yes
+
+#PF - Page Fault.
+
+Source: Any memory reference.
+
+Error Code: Yes.""",
+   )
+
+    MF = Ia32EnumField(
+        "MF",
+        0x10,
+        """@brief #MF - Floating-Point Error (Math Fault).
+
+Source: Floating-point or WAIT/FWAIT instruction.
+
+Error Code: No
+
+#MF - Floating-Point Error (Math Fault).
+
+Source: Floating-point or WAIT/FWAIT instruction.
+
+Error Code: No.""",
+   )
+
+    AC = Ia32EnumField(
+        "AC",
+        0x11,
+        """@brief #AC - Alignment Check.
+
+Source: Any data reference in memory.
+
+Error Code: Yes
+
+#AC - Alignment Check.
+
+Source: Any data reference in memory.
+
+Error Code: Yes.""",
+   )
+
+    MC = Ia32EnumField(
+        "MC",
+        0x12,
+        """@brief #MC - Machine Check.
+
+Source: Model dependent machine check errors.
+
+Error Code: No
+
+#MC - Machine Check.
+
+Source: Model dependent machine check errors.
+
+Error Code: No.""",
+   )
+
+    XM = Ia32EnumField(
+        "XM",
+        0x13,
+        """@brief #XM - SIMD Floating-Point Numeric Error.
+
+Source: SSE/SSE2/SSE3 floating-point instructions.
+
+Error Code: No
+
+#XM - SIMD Floating-Point Numeric Error.
+
+Source: SSE/SSE2/SSE3 floating-point instructions.
+
+Error Code: No.""",
+   )
+
+    VE = Ia32EnumField(
+        "VE",
+        0x14,
+        """@brief #VE - Virtualization Exception.
+
+Source: EPT violations.
+
+Error Code: No
+
+#VE - Virtualization Exception.
+
+Source: EPT violations.
+
+Error Code: No.""",
+   )
+
 class ExceptionErrorCode(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief When an exception condition is related to a specific segment selector or IDT vector, the processor pushes an error

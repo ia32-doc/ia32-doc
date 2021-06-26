@@ -1,5 +1,6 @@
 from future.utils import with_metaclass
 from ia32_python.utils.ia32_struct import *
+from ia32_python.utils.ia32_enum import *
 from ia32_python.utils.ia32_bit_field import *
 
 
@@ -22,30 +23,104 @@ EPDE_ENTRY_COUNT = 0x200
 EPTE_ENTRY_COUNT = 0x200
 
 
-class InveptType:
+class InveptType(with_metaclass(Ia32EnumMeta, Ia32Enum)):
     """
     
     """
 
-    
-      INVEPT_SINGLE_CONTEXT = 0x1
-    
-      INVEPT_ALL_CONTEXT = 0x2
-    
-class InvvpidType:
+
+    INVEPT_SINGLE_CONTEXT = Ia32EnumField(
+        "INVEPT_SINGLE_CONTEXT",
+        0x1,
+        """@brief If the INVEPT type is 1, the logical processor invalidates all guest-physical mappings and
+combined mappings associated with the EP4TA specified in the INVEPT descriptor. Combined mappings for
+that EP4TA are invalidated for all VPIDs and all PCIDs. (The instruction may invalidate mappings associated
+with other EP4TAs.)
+
+If the INVEPT type is 1, the logical processor invalidates all guest-physical mappings and
+combined mappings associated with the EP4TA specified in the INVEPT descriptor. Combined mappings for
+that EP4TA are invalidated for all VPIDs and all PCIDs. (The instruction may invalidate mappings associated
+with other EP4TAs.)""",
+   )
+
+    INVEPT_ALL_CONTEXT = Ia32EnumField(
+        "INVEPT_ALL_CONTEXT",
+        0x2,
+        """@brief If the INVEPT type is 2, the logical processor invalidates guest-physical mappings and
+combined mappings associated with all EP4TAs (and, for combined mappings, for all VPIDs and PCIDs)
+
+If the INVEPT type is 2, the logical processor invalidates guest-physical mappings and
+combined mappings associated with all EP4TAs (and, for combined mappings, for all VPIDs and PCIDs).""",
+   )
+
+class InvvpidType(with_metaclass(Ia32EnumMeta, Ia32Enum)):
     """
     
     """
 
-    
-      INVVPID_INDIVIDUAL_ADDRESS = 0x0
-    
-      INVVPID_SINGLE_CONTEXT = 0x1
-    
-      INVVPID_ALL_CONTEXT = 0x2
-    
-      INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS = 0x3
-    
+
+    INVVPID_INDIVIDUAL_ADDRESS = Ia32EnumField(
+        "INVVPID_INDIVIDUAL_ADDRESS",
+        0x0,
+        """@brief If the INVVPID type is 0, the logical processor invalidates linear mappings and
+combined mappings associated with the VPID specified in the INVVPID descriptor and that would be used
+to translate the linear address specified in of the INVVPID descriptor. Linear mappings and combined
+mappings for that VPID and linear address are invalidated for all PCIDs and, for combined mappings, all
+EP4TAs. (The instruction may also invalidate mappings associated with other VPIDs and for other linear
+addresses)
+
+If the INVVPID type is 0, the logical processor invalidates linear mappings and
+combined mappings associated with the VPID specified in the INVVPID descriptor and that would be used
+to translate the linear address specified in of the INVVPID descriptor. Linear mappings and combined
+mappings for that VPID and linear address are invalidated for all PCIDs and, for combined mappings, all
+EP4TAs. (The instruction may also invalidate mappings associated with other VPIDs and for other linear
+addresses).""",
+   )
+
+    INVVPID_SINGLE_CONTEXT = Ia32EnumField(
+        "INVVPID_SINGLE_CONTEXT",
+        0x1,
+        """@brief If the INVVPID type is 1, the logical processor invalidates all linear mappings and
+combined mappings associated with the VPID specified in the INVVPID descriptor. Linear mappings and
+combined mappings for that VPID are invalidated for all PCIDs and, for combined mappings, all EP4TAs.
+(The instruction may also invalidate mappings associated with other VPIDs)
+
+If the INVVPID type is 1, the logical processor invalidates all linear mappings and
+combined mappings associated with the VPID specified in the INVVPID descriptor. Linear mappings and
+combined mappings for that VPID are invalidated for all PCIDs and, for combined mappings, all EP4TAs.
+(The instruction may also invalidate mappings associated with other VPIDs).""",
+   )
+
+    INVVPID_ALL_CONTEXT = Ia32EnumField(
+        "INVVPID_ALL_CONTEXT",
+        0x2,
+        """@brief If the INVVPID type is 2, the logical processor invalidates linear mappings and combined
+mappings associated with all VPIDs except VPID 0000H and with all PCIDs. (The instruction may also
+invalidate linear mappings with VPID 0000H.) Combined mappings are invalidated for all EP4TAs
+
+If the INVVPID type is 2, the logical processor invalidates linear mappings and combined
+mappings associated with all VPIDs except VPID 0000H and with all PCIDs. (The instruction may also
+invalidate linear mappings with VPID 0000H.) Combined mappings are invalidated for all EP4TAs.""",
+   )
+
+    INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS = Ia32EnumField(
+        "INVVPID_SINGLE_CONTEXT_RETAINING_GLOBALS",
+        0x3,
+        """@brief If the INVVPID type is 3, the logical processor invalidates linear
+mappings and combined mappings associated with the VPID specified in the INVVPID descriptor. Linear
+mappings and combined mappings for that VPID are invalidated for all PCIDs and, for combined mappings,
+all EP4TAs. The logical processor is not required to invalidate information that was used for global translations
+(although it may do so). (The instruction may also invalidate mappings associated with other VPIDs)
+
+If the INVVPID type is 3, the logical processor invalidates linear
+mappings and combined mappings associated with the VPID specified in the INVVPID descriptor. Linear
+mappings and combined mappings for that VPID are invalidated for all PCIDs and, for combined mappings,
+all EP4TAs. The logical processor is not required to invalidate information that was used for global translations
+(although it may do so). (The instruction may also invalidate mappings associated with other VPIDs).
+
+@see Vol3C[4.10(Caching Translation Information)]""",
+   )
+
 class InveptDescriptor(Ia32Struct):
     """"""
     class _MemberContainerEptPointer(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
@@ -200,12 +275,12 @@ and VMWRITE.
 
 A VMCS region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
 by consulting the VMX capability MSR IA32_VMX_BASIC."""
-    class _MemberContainerDummy(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
+    class _MemberContainerEmpty(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(Vmcs._MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Vmcs._MemberContainerEmpty, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
@@ -295,22 +370,22 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
         value = Ia32BitFieldMember('value', 'value', 0, 32704)
     
     
-    _members = ["","ABORT_INDICATOR","DATA",]
+    _members = ["EMPTY","ABORT_INDICATOR","DATA",]
 
     def __init__(self, value):
-        self._ = self._MemberContainerDummy(0, 0, 4 )
+        self._EMPTY = self._MemberContainerEmpty(0, 0, 4 )
         self._ABORT_INDICATOR = self._MemberContainerAbortIndicator(0, 4, 4 )
         self._DATA = self._MemberContainerData(0, 8, 4088 )
         super(Vmcs, self).__init__(value)
 
 
     @property
-    def (self):
-        return self._
+    def EMPTY(self):
+        return self._EMPTY
 
-    @.setter
-    def (self, value):
-        return self._.set(value)
+    @EMPTY.setter
+    def EMPTY(self, value):
+        return self._EMPTY.set(value)
 
     @property
     def ABORT_INDICATOR(self):
@@ -337,12 +412,12 @@ VMX operation. This region is called the VMXON region.
 
 A VMXON region comprises up to 4-KBytes. The exact size is implementation specific and can be determined
 by consulting the VMX capability MSR IA32_VMX_BASIC."""
-    class _MemberContainerDummy(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
+    class _MemberContainerEmpty(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
         """
         
         """
         def __init__(self, value=0, byte_offset=None, byte_width=None):
-            super(Vmxon._MemberContainerDummy, self).__init__(value, byte_offset, byte_width, max_bytes=4)
+            super(Vmxon._MemberContainerEmpty, self).__init__(value, byte_offset, byte_width, max_bytes=4)
     
     
     
@@ -402,21 +477,21 @@ by consulting the VMX capability MSR IA32_VMX_BASIC."""
         value = Ia32BitFieldMember('value', 'value', 0, 32736)
     
     
-    _members = ["","DATA",]
+    _members = ["EMPTY","DATA",]
 
     def __init__(self, value):
-        self._ = self._MemberContainerDummy(0, 0, 4 )
+        self._EMPTY = self._MemberContainerEmpty(0, 0, 4 )
         self._DATA = self._MemberContainerData(0, 4, 4092 )
         super(Vmxon, self).__init__(value)
 
 
     @property
-    def (self):
-        return self._
+    def EMPTY(self):
+        return self._EMPTY
 
-    @.setter
-    def (self, value):
-        return self._.set(value)
+    @EMPTY.setter
+    def EMPTY(self, value):
+        return self._EMPTY.set(value)
 
     @property
     def DATA(self):

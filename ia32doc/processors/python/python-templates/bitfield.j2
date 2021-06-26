@@ -10,8 +10,8 @@ class {{ name_prefix + class_name(doc) }}(with_metaclass(Ia32BitFieldMeta, Ia32B
 
 {%- endif %}
 {% for field in doc.fields %}
-    {{ field.short_name }} = Ia32BitFieldMember(
-        "{{ field.short_name }}",
+    {{ member_name(field) }} = Ia32BitFieldMember(
+        "{{ member_name(field) }}",
         """
         {{ get_description(field) }}
         """,

@@ -54,12 +54,13 @@ def to_bytes(value, minimal_width):
     else:
         try:
             as_bytes = codecs.decode(
-                "{0:x}".format(value).zfill(2 * size_in_bytes(value)),
+                "{0:x}".format(int(value)).zfill(2 * size_in_bytes(int(value))),
                 'hex'
             )
             # Transfer to little endian
             as_bytes = as_bytes[::-1]
         except TypeError:
+            breakpoint()
             raise TypeError("invalid type: {}".format(type(value)))
 
     return as_bytes + b'\x00' * (minimal_width - len(as_bytes))

@@ -1,5 +1,6 @@
 from future.utils import with_metaclass
 from ia32_python.utils.ia32_struct import *
+from ia32_python.utils.ia32_enum import *
 from ia32_python.utils.ia32_bit_field import *
 
 
@@ -1224,22 +1225,46 @@ A VM exit saves this bit as 1 to indicate that the VM exit was incident to encla
     )
 
 
-class VmxGuestActivityState:
+class VmxGuestActivityState(with_metaclass(Ia32EnumMeta, Ia32Enum)):
     """
     
 
 @see ACTIVITY_STATE of 32_BIT_GUEST_STATE_FIELDS
     """
 
-    
-      VMX_ACTIVE = 0x0
-    
-      VMX_HLT = 0x1
-    
-      VMX_SHUTDOWN = 0x2
-    
-      VMX_WAIT_FOR_SIPI = 0x3
-    
+
+    VMX_ACTIVE = Ia32EnumField(
+        "VMX_ACTIVE",
+        0x0,
+        """@brief The logical processor is executing instructions normally
+
+The logical processor is executing instructions normally.""",
+   )
+
+    VMX_HLT = Ia32EnumField(
+        "VMX_HLT",
+        0x1,
+        """@brief The logical processor is inactive because it executed the HLT instruction
+
+The logical processor is inactive because it executed the HLT instruction.""",
+   )
+
+    VMX_SHUTDOWN = Ia32EnumField(
+        "VMX_SHUTDOWN",
+        0x2,
+        """@brief The logical processor is inactive because it incurred a triple fault1 or some other serious error
+
+The logical processor is inactive because it incurred a triple fault1 or some other serious error.""",
+   )
+
+    VMX_WAIT_FOR_SIPI = Ia32EnumField(
+        "VMX_WAIT_FOR_SIPI",
+        0x3,
+        """@brief The logical processor is inactive because it is waiting for a startup-IPI (SIPI)
+
+The logical processor is inactive because it is waiting for a startup-IPI (SIPI).""",
+   )
+
 class VmxVmexitReason(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
     """
     @brief Format of Exit Reason
