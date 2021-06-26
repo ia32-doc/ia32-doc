@@ -1,0 +1,13 @@
+class {{ class_name(doc) }}(with_metaclass(Ia32EnumMeta, Ia32Enum)):
+    """
+    {{ get_description(doc) }}
+    """
+
+{% for field in doc.fields %}
+    {{ member_name(field) }} = Ia32EnumField(
+        "{{ member_name(field) }}",
+        {{ hex(field.value) }},
+        """{{ get_description(field) }}""",
+   )
+{% endfor %}
+

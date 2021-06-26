@@ -178,6 +178,7 @@ class DocProcessorOptions(object):
         self.output_prepend = ''
         self.output_append = ''
         self.output_filename = 'out'
+        self.redirect_stdout = True
 
         #
         # Default letter cases.

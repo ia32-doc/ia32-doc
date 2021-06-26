@@ -1,0 +1,32 @@
+class {{ class_name(doc) }}(Ia32Struct):
+    """{{ get_description(doc) }}"""
+{%- for container in member_containers %}
+{{container}}
+{%- endfor %}
+    _members = [
+{%- for member in struct_members -%}
+        "{{ member_name(member) }}",
+{%- endfor -%}
+    ]
+
+    def __init__(self, value):
+{%- set offset = namespace(value=0) -%}
+{%- for member in struct_members %}
+        self._{{ member_name(member) }} = self.{{ "_MemberContainer" + class_name(member) }}(0, {{ offset.value }}, {{ member.size // 8 }} )
+{%- set offset.value = offset.value + (member.size // 8) %}
+{%- endfor %}
+        super({{ class_name(doc) }}, self).__init__(value)
+
+{% for member in struct_members %}
+    @property
+    def {{ member_name(member) }}(self):
+        return self._{{ member_name(member) }}
+
+    @{{ member_name(member) }}.setter
+    def {{ member_name(member) }}(self, value):
+        return self._{{ member_name(member) }}.set(value)
+{% endfor %}
+
+{% for definition in definitions %}
+    {{ definition }}
+{% endfor %}

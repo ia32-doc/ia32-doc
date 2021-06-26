@@ -1,0 +1,28 @@
+class {{ name_prefix + class_name(doc) }}(with_metaclass(Ia32BitFieldMeta, Ia32BitField)):
+    """
+    {{ get_description(doc) }}
+    """
+    def __init__(self, value=0, byte_offset=None, byte_width=None):
+        super({{ container_class + name_prefix + class_name(doc) }}, self).__init__(value, byte_offset, byte_width, max_bytes={{ doc.size // 8 }})
+
+{% if 'struct_field' == doc.type %}
+    value = Ia32BitFieldMember('value', 'value', 0, {{ doc.size }})
+
+{%- endif %}
+{% for field in doc.fields %}
+    {{ member_name(field) }} = Ia32BitFieldMember(
+        "{{ member_name(field) }}",
+        """
+        {{ get_description(field) }}
+        """,
+{% if hasattr(field, "bit") %}
+        {{ field.bit[0] }},
+        {{ field.bit[1] - field.bit[0] }}
+{% else %}
+        0,
+        {{ field.size }}
+{% endif %}
+    )
+
+{% endfor %}
+
