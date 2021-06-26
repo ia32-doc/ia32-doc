@@ -17,14 +17,15 @@ TEST_FILE = 'yaml/Intel/VMX/index.yml'
 def process(processor_type, config, file):
     if 'c' == processor_type:
         processor = DocCProcessor()
+        options = DocProcessorOptions(file=config)
     elif 'python' == processor_type:
         # TODO: Create valid python options
         output_directory = os.path.join("out", "python")
         processor = DocPythonProcessor(output_directory)
+        options = DocProcessorOptions(file=config, redirect_stdout=False)
     else:
         raise ValueError(f"Unsupported processor {processor_type}")
 
-    options = DocProcessorOptions(file=config)
     with processor.opt.push(options):
         processor.run(Doc.parse(file))
 
