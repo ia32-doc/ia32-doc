@@ -174,6 +174,55 @@
       name: OSPKE
       description: If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
 
+    - bit: 5
+      name: WAITPKG
+      description: WAITPKG.
+
+    - bit: 6
+      name: AVX512_VBMI2
+      description: AVX512_VBMI2.
+
+    - bit: 7
+      name: CET_SS
+      description: |
+        Supports CET shadow stack features if 1. Processors that set this bit define bits
+        1:0 of the IA32_U_CET and IA32_S_CET MSRs. Enumerates support for the following MSRs:
+        IA32_INTERRUPT_SPP_TABLE_ADDR, IA32_PL3_SSP, IA32_PL2_SSP, IA32_PL1_SSP, and IA32_PL0_SSP.
+
+    - bit: 8
+      name: GFNI
+      description: GFNI.
+
+    - bit: 9
+      name: VAES
+      description: VAES.
+
+    - bit: 10
+      name: VPCLMULQDQ
+      description: VPCLMULQDQ.
+
+    - bit: 11
+      name: AVX512_VNNI
+      description: AVX512_VNNI.
+
+    - bit: 12
+      name: AVX512_BITALG
+      description: AVX512_BITALG.
+
+    - bit: 13
+      name: TME_EN
+      description: |
+        If 1, the following MSRs are supported: IA32_TME_CAPABILITY, IA32_TME_ACTIVATE,
+        IA32_TME_EXCLUDE_MASK, and IA32_TME_EXCLUDE_BASE.
+
+    - bit: 14
+      name: AVX512_VPOPCNTDQ
+      description: AVX512_VPOPCNTDQ.
+
+    - bit: 16
+      name: LA57
+      description: Supports 57-bit linear addresses and five-level paging if 1.
+
     - bit: 17-21
       name: MAWAU
       description: The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
@@ -182,14 +231,97 @@
       name: RDPID
       description: RDPID and IA32_TSC_AUX are available if 1.
 
+    - bit: 23
+      name: KL
+      description: KL. Supports Key Locker if 1.
+
+    - bit: 25
+      name: CLDEMOTE
+      description: Supports cache line demote if 1.
+
+    - bit: 27
+      name: MOVDIRI
+      description: Supports MOVDIRI if 1.
+
+    - bit: 28
+      name: MOVDIR64B
+      description: Supports MOVDIR64B if 1.
+
     - bit: 30
       name: SGX_LC
       description: Supports SGX Launch Configuration if 1.
+
+    - bit: 31
+      name: PKS
+      description: Supports protection keys for supervisor-mode pages if 1.
 
   - name: EDX
     type: bitfield
     size: 32
     fields:
-    - bit: 0-31
-      name: RESERVED
-      description: EDX is reserved.
+    - bit: 2
+      name: AVX512_4VNNIW
+      description: (Intel® Xeon Phi™ only.)
+
+    - bit: 3
+      name: AVX512_4FMAPS
+      description: (Intel® Xeon Phi™ only.)
+
+    - bit: 4
+      name: FAST_SHORT_REP_MOV
+      description: Fast Short REP MOV.
+
+    - bit: 8
+      name: AVX512_VP2INTERSECT
+      description: AVX512_VP2INTERSECT.
+
+    - bit: 10
+      name: MD_CLEAR
+      description: MD_CLEAR supported.
+
+    - bit: 15
+      name: HYBRID
+      description: If 1, the processor is identified as a hybrid part.
+
+    - bit: 18
+      name: PCONFIG
+      description: Supports PCONFIG if 1.
+
+    - bit: 20
+      name: CET_IBT
+      description: |
+        Supports CET indirect branch tracking features if 1. Processors that set this bit define
+        bits 5:2 and bits 63:10 of the IA32_U_CET and IA32_S_CET MSRs.
+
+    - bit: 26
+      name: IBRS_IBPB
+      description: |
+        Enumerates support for indirect branch restricted speculation (IBRS) and the indirect branch predictor barrier (IBPB). Processors that set this bit support the IA32_SPEC_CTRL MSR and the
+        IA32_PRED_CMD MSR. They allow software to set IA32_SPEC_CTRL[0] (IBRS) and IA32_PRED_CMD[0]
+        (IBPB).
+
+    - bit: 27
+      name: STIBP
+      description: |
+        Enumerates support for single thread indirect branch predictors (STIBP). Processors that set
+        this bit support the IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[1] (STIBP).
+
+    - bit: 28
+      name: L1D_FLUSH
+      description: |
+        Enumerates support for L1D_FLUSH. Processors that set this bit support the IA32_FLUSH_CMD
+        MSR. They allow software to set IA32_FLUSH_CMD[0] (L1D_FLUSH).
+
+    - bit: 29
+      name: IA32_ARCH_CAPABILITIES
+      description: Enumerates support for the IA32_ARCH_CAPABILITIES MSR.
+
+    - bit: 30
+      name: IA32_CORE_CAPABILITIES
+      description: Enumerates support for the IA32_CORE_CAPABILITIES MSR.
+
+    - bit: 31
+      name: SSBD
+      description: |
+        Enumerates support for Speculative Store Bypass Disable (SSBD). Processors that set this bit
+        support the IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[2] (SSBD).
