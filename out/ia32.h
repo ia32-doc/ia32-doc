@@ -491,7 +491,21 @@ typedef union
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_FLAG                     0x800
 #define CR4_USERMODE_INSTRUCTION_PREVENTION_MASK                     0x01
 #define CR4_USERMODE_INSTRUCTION_PREVENTION(_)                       (((_) >> 11) & 0x01)
-    UINT64 Reserved1                                               : 1;
+
+    /**
+     * @brief 57-bit Linear Addresses
+     *
+     * [Bit 12] When set in IA-32e mode, the processor uses 5-level paging to translate 57-bit linear addresses. When clear in
+     * IA-32e mode, the processor uses 4-level paging to translate 48-bit linear addresses. This bit cannot be modified in
+     * IA-32e mode.
+     *
+     * @see Vol3C[4(PAGING)]
+     */
+    UINT64 LinearAddresses57Bit                                    : 1;
+#define CR4_LINEAR_ADDRESSES_57_BIT_BIT                              12
+#define CR4_LINEAR_ADDRESSES_57_BIT_FLAG                             0x1000
+#define CR4_LINEAR_ADDRESSES_57_BIT_MASK                             0x01
+#define CR4_LINEAR_ADDRESSES_57_BIT(_)                               (((_) >> 12) & 0x01)
 
     /**
      * @brief VMX-Enable
@@ -518,7 +532,7 @@ typedef union
 #define CR4_SMX_ENABLE_FLAG                                          0x4000
 #define CR4_SMX_ENABLE_MASK                                          0x01
 #define CR4_SMX_ENABLE(_)                                            (((_) >> 14) & 0x01)
-    UINT64 Reserved2                                               : 1;
+    UINT64 Reserved1                                               : 1;
 
     /**
      * @brief FSGSBASE-Enable
@@ -562,7 +576,20 @@ typedef union
 #define CR4_OS_XSAVE_FLAG                                            0x40000
 #define CR4_OS_XSAVE_MASK                                            0x01
 #define CR4_OS_XSAVE(_)                                              (((_) >> 18) & 0x01)
-    UINT64 Reserved3                                               : 1;
+
+    /**
+     * @brief Key-Locker-Enable
+     *
+     * [Bit 19] When set, the LOADIWKEY instruction is enabled; in addition, if support for the AES Key Locker instructions has
+     * been activated by system firmware, CPUID.19H:EBX.AESKLE[bit 0] is enumerated as 1 and the AES Key Locker instructions
+     * are enabled. When clear, CPUID.19H:EBX.AESKLE[bit 0] is enumerated as 0 and execution of any Key Locker instruction
+     * causes an invalid-opcode exception (\#UD).
+     */
+    UINT64 KeyLockerEnable                                         : 1;
+#define CR4_KEY_LOCKER_ENABLE_BIT                                    19
+#define CR4_KEY_LOCKER_ENABLE_FLAG                                   0x80000
+#define CR4_KEY_LOCKER_ENABLE_MASK                                   0x01
+#define CR4_KEY_LOCKER_ENABLE(_)                                     (((_) >> 19) & 0x01)
 
     /**
      * @brief SMEP-Enable
@@ -602,7 +629,34 @@ typedef union
 #define CR4_PROTECTION_KEY_ENABLE_FLAG                               0x400000
 #define CR4_PROTECTION_KEY_ENABLE_MASK                               0x01
 #define CR4_PROTECTION_KEY_ENABLE(_)                                 (((_) >> 22) & 0x01)
-    UINT64 Reserved4                                               : 41;
+
+    /**
+     * @brief Control-flow Enforcement Technology
+     *
+     * [Bit 23] Enables control-flow enforcement technology when set. This flag can be set only if CR0.WP is set, and it must
+     * be clear before CR0.WP can be cleared.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 ControlFlowEnforcementEnable                            : 1;
+#define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE_BIT                      23
+#define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE_FLAG                     0x800000
+#define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE_MASK                     0x01
+#define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE(_)                       (((_) >> 23) & 0x01)
+
+    /**
+     * @brief Enable protection keys for supervisor-mode pages
+     *
+     * [Bit 24] 4-level paging and 5-level paging associate each supervisor-mode linear address with a protection key. When
+     * set, this flag allows use of the IA32_PKRS MSR to specify, for each protection key, whether supervisor-mode linear
+     * addresses with that protection key can be read or written.
+     */
+    UINT64 ProtectionKeyForSupervisorModeEnable                    : 1;
+#define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE_BIT            24
+#define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE_FLAG           0x1000000
+#define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE_MASK           0x01
+#define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE(_)             (((_) >> 24) & 0x01)
+    UINT64 Reserved2                                               : 39;
   };
 
   UINT64 Flags;
@@ -2814,7 +2868,109 @@ typedef struct
 #define CPUID_ECX_OSPKE_FLAG                                         0x10
 #define CPUID_ECX_OSPKE_MASK                                         0x01
 #define CPUID_ECX_OSPKE(_)                                           (((_) >> 4) & 0x01)
-      UINT32 Reserved1                                             : 12;
+
+      /**
+       * [Bit 5] WAITPKG.
+       */
+      UINT32 Waitpkg                                               : 1;
+#define CPUID_ECX_WAITPKG_BIT                                        5
+#define CPUID_ECX_WAITPKG_FLAG                                       0x20
+#define CPUID_ECX_WAITPKG_MASK                                       0x01
+#define CPUID_ECX_WAITPKG(_)                                         (((_) >> 5) & 0x01)
+
+      /**
+       * [Bit 6] AVX512_VBMI2.
+       */
+      UINT32 Avx512Vbmi2                                           : 1;
+#define CPUID_ECX_AVX512_VBMI2_BIT                                   6
+#define CPUID_ECX_AVX512_VBMI2_FLAG                                  0x40
+#define CPUID_ECX_AVX512_VBMI2_MASK                                  0x01
+#define CPUID_ECX_AVX512_VBMI2(_)                                    (((_) >> 6) & 0x01)
+
+      /**
+       * [Bit 7] Supports CET shadow stack features if 1. Processors that set this bit define bits 1:0 of the IA32_U_CET and
+       * IA32_S_CET MSRs. Enumerates support for the following MSRs: IA32_INTERRUPT_SPP_TABLE_ADDR, IA32_PL3_SSP, IA32_PL2_SSP,
+       * IA32_PL1_SSP, and IA32_PL0_SSP.
+       */
+      UINT32 CetSs                                                 : 1;
+#define CPUID_ECX_CET_SS_BIT                                         7
+#define CPUID_ECX_CET_SS_FLAG                                        0x80
+#define CPUID_ECX_CET_SS_MASK                                        0x01
+#define CPUID_ECX_CET_SS(_)                                          (((_) >> 7) & 0x01)
+
+      /**
+       * [Bit 8] GFNI.
+       */
+      UINT32 Gfni                                                  : 1;
+#define CPUID_ECX_GFNI_BIT                                           8
+#define CPUID_ECX_GFNI_FLAG                                          0x100
+#define CPUID_ECX_GFNI_MASK                                          0x01
+#define CPUID_ECX_GFNI(_)                                            (((_) >> 8) & 0x01)
+
+      /**
+       * [Bit 9] VAES.
+       */
+      UINT32 Vaes                                                  : 1;
+#define CPUID_ECX_VAES_BIT                                           9
+#define CPUID_ECX_VAES_FLAG                                          0x200
+#define CPUID_ECX_VAES_MASK                                          0x01
+#define CPUID_ECX_VAES(_)                                            (((_) >> 9) & 0x01)
+
+      /**
+       * [Bit 10] VPCLMULQDQ.
+       */
+      UINT32 Vpclmulqdq                                            : 1;
+#define CPUID_ECX_VPCLMULQDQ_BIT                                     10
+#define CPUID_ECX_VPCLMULQDQ_FLAG                                    0x400
+#define CPUID_ECX_VPCLMULQDQ_MASK                                    0x01
+#define CPUID_ECX_VPCLMULQDQ(_)                                      (((_) >> 10) & 0x01)
+
+      /**
+       * [Bit 11] AVX512_VNNI.
+       */
+      UINT32 Avx512Vnni                                            : 1;
+#define CPUID_ECX_AVX512_VNNI_BIT                                    11
+#define CPUID_ECX_AVX512_VNNI_FLAG                                   0x800
+#define CPUID_ECX_AVX512_VNNI_MASK                                   0x01
+#define CPUID_ECX_AVX512_VNNI(_)                                     (((_) >> 11) & 0x01)
+
+      /**
+       * [Bit 12] AVX512_BITALG.
+       */
+      UINT32 Avx512Bitalg                                          : 1;
+#define CPUID_ECX_AVX512_BITALG_BIT                                  12
+#define CPUID_ECX_AVX512_BITALG_FLAG                                 0x1000
+#define CPUID_ECX_AVX512_BITALG_MASK                                 0x01
+#define CPUID_ECX_AVX512_BITALG(_)                                   (((_) >> 12) & 0x01)
+
+      /**
+       * [Bit 13] If 1, the following MSRs are supported: IA32_TME_CAPABILITY, IA32_TME_ACTIVATE, IA32_TME_EXCLUDE_MASK, and
+       * IA32_TME_EXCLUDE_BASE.
+       */
+      UINT32 TmeEn                                                 : 1;
+#define CPUID_ECX_TME_EN_BIT                                         13
+#define CPUID_ECX_TME_EN_FLAG                                        0x2000
+#define CPUID_ECX_TME_EN_MASK                                        0x01
+#define CPUID_ECX_TME_EN(_)                                          (((_) >> 13) & 0x01)
+
+      /**
+       * [Bit 14] AVX512_VPOPCNTDQ.
+       */
+      UINT32 Avx512Vpopcntdq                                       : 1;
+#define CPUID_ECX_AVX512_VPOPCNTDQ_BIT                               14
+#define CPUID_ECX_AVX512_VPOPCNTDQ_FLAG                              0x4000
+#define CPUID_ECX_AVX512_VPOPCNTDQ_MASK                              0x01
+#define CPUID_ECX_AVX512_VPOPCNTDQ(_)                                (((_) >> 14) & 0x01)
+      UINT32 Reserved1                                             : 1;
+
+      /**
+       * [Bit 16] Supports 57-bit linear addresses and five-level paging if 1.
+       */
+      UINT32 La57                                                  : 1;
+#define CPUID_ECX_LA57_BIT                                           16
+#define CPUID_ECX_LA57_FLAG                                          0x10000
+#define CPUID_ECX_LA57_MASK                                          0x01
+#define CPUID_ECX_LA57(_)                                            (((_) >> 16) & 0x01)
 
       /**
        * [Bits 21:17] The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
@@ -2833,7 +2989,45 @@ typedef struct
 #define CPUID_ECX_RDPID_FLAG                                         0x400000
 #define CPUID_ECX_RDPID_MASK                                         0x01
 #define CPUID_ECX_RDPID(_)                                           (((_) >> 22) & 0x01)
-      UINT32 Reserved2                                             : 7;
+
+      /**
+       * [Bit 23] KL. Supports Key Locker if 1.
+       */
+      UINT32 Kl                                                    : 1;
+#define CPUID_ECX_KL_BIT                                             23
+#define CPUID_ECX_KL_FLAG                                            0x800000
+#define CPUID_ECX_KL_MASK                                            0x01
+#define CPUID_ECX_KL(_)                                              (((_) >> 23) & 0x01)
+      UINT32 Reserved2                                             : 1;
+
+      /**
+       * [Bit 25] Supports cache line demote if 1.
+       */
+      UINT32 Cldemote                                              : 1;
+#define CPUID_ECX_CLDEMOTE_BIT                                       25
+#define CPUID_ECX_CLDEMOTE_FLAG                                      0x2000000
+#define CPUID_ECX_CLDEMOTE_MASK                                      0x01
+#define CPUID_ECX_CLDEMOTE(_)                                        (((_) >> 25) & 0x01)
+      UINT32 Reserved3                                             : 1;
+
+      /**
+       * [Bit 27] Supports MOVDIRI if 1.
+       */
+      UINT32 Movdiri                                               : 1;
+#define CPUID_ECX_MOVDIRI_BIT                                        27
+#define CPUID_ECX_MOVDIRI_FLAG                                       0x8000000
+#define CPUID_ECX_MOVDIRI_MASK                                       0x01
+#define CPUID_ECX_MOVDIRI(_)                                         (((_) >> 27) & 0x01)
+
+      /**
+       * [Bit 28] Supports MOVDIR64B if 1.
+       */
+      UINT32 Movdir64B                                             : 1;
+#define CPUID_ECX_MOVDIR64B_BIT                                      28
+#define CPUID_ECX_MOVDIR64B_FLAG                                     0x10000000
+#define CPUID_ECX_MOVDIR64B_MASK                                     0x01
+#define CPUID_ECX_MOVDIR64B(_)                                       (((_) >> 28) & 0x01)
+      UINT32 Reserved4                                             : 1;
 
       /**
        * [Bit 30] Supports SGX Launch Configuration if 1.
@@ -2843,7 +3037,15 @@ typedef struct
 #define CPUID_ECX_SGX_LC_FLAG                                        0x40000000
 #define CPUID_ECX_SGX_LC_MASK                                        0x01
 #define CPUID_ECX_SGX_LC(_)                                          (((_) >> 30) & 0x01)
-      UINT32 Reserved3                                             : 1;
+
+      /**
+       * [Bit 31] Supports protection keys for supervisor-mode pages if 1.
+       */
+      UINT32 Pks                                                   : 1;
+#define CPUID_ECX_PKS_BIT                                            31
+#define CPUID_ECX_PKS_FLAG                                           0x80000000
+#define CPUID_ECX_PKS_MASK                                           0x01
+#define CPUID_ECX_PKS(_)                                             (((_) >> 31) & 0x01)
     };
 
     UINT32 Flags;
@@ -2853,14 +3055,145 @@ typedef struct
   {
     struct
     {
+      UINT32 Reserved1                                             : 2;
+
       /**
-       * [Bits 31:0] EDX is reserved.
+       * [Bit 2] (Intel(R) Xeon Phi(TM) only.)
        */
-      UINT32 Reserved                                              : 32;
-#define CPUID_EDX_RESERVED_BIT                                       0
-#define CPUID_EDX_RESERVED_FLAG                                      0xFFFFFFFF
-#define CPUID_EDX_RESERVED_MASK                                      0xFFFFFFFF
-#define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
+      UINT32 Avx5124Vnniw                                          : 1;
+#define CPUID_EDX_AVX512_4VNNIW_BIT                                  2
+#define CPUID_EDX_AVX512_4VNNIW_FLAG                                 0x04
+#define CPUID_EDX_AVX512_4VNNIW_MASK                                 0x01
+#define CPUID_EDX_AVX512_4VNNIW(_)                                   (((_) >> 2) & 0x01)
+
+      /**
+       * [Bit 3] (Intel(R) Xeon Phi(TM) only.)
+       */
+      UINT32 Avx5124Fmaps                                          : 1;
+#define CPUID_EDX_AVX512_4FMAPS_BIT                                  3
+#define CPUID_EDX_AVX512_4FMAPS_FLAG                                 0x08
+#define CPUID_EDX_AVX512_4FMAPS_MASK                                 0x01
+#define CPUID_EDX_AVX512_4FMAPS(_)                                   (((_) >> 3) & 0x01)
+
+      /**
+       * [Bit 4] Fast Short REP MOV.
+       */
+      UINT32 FastShortRepMov                                       : 1;
+#define CPUID_EDX_FAST_SHORT_REP_MOV_BIT                             4
+#define CPUID_EDX_FAST_SHORT_REP_MOV_FLAG                            0x10
+#define CPUID_EDX_FAST_SHORT_REP_MOV_MASK                            0x01
+#define CPUID_EDX_FAST_SHORT_REP_MOV(_)                              (((_) >> 4) & 0x01)
+      UINT32 Reserved2                                             : 3;
+
+      /**
+       * [Bit 8] AVX512_VP2INTERSECT.
+       */
+      UINT32 Avx512Vp2Intersect                                    : 1;
+#define CPUID_EDX_AVX512_VP2INTERSECT_BIT                            8
+#define CPUID_EDX_AVX512_VP2INTERSECT_FLAG                           0x100
+#define CPUID_EDX_AVX512_VP2INTERSECT_MASK                           0x01
+#define CPUID_EDX_AVX512_VP2INTERSECT(_)                             (((_) >> 8) & 0x01)
+      UINT32 Reserved3                                             : 1;
+
+      /**
+       * [Bit 10] MD_CLEAR supported.
+       */
+      UINT32 MdClear                                               : 1;
+#define CPUID_EDX_MD_CLEAR_BIT                                       10
+#define CPUID_EDX_MD_CLEAR_FLAG                                      0x400
+#define CPUID_EDX_MD_CLEAR_MASK                                      0x01
+#define CPUID_EDX_MD_CLEAR(_)                                        (((_) >> 10) & 0x01)
+      UINT32 Reserved4                                             : 4;
+
+      /**
+       * [Bit 15] If 1, the processor is identified as a hybrid part.
+       */
+      UINT32 Hybrid                                                : 1;
+#define CPUID_EDX_HYBRID_BIT                                         15
+#define CPUID_EDX_HYBRID_FLAG                                        0x8000
+#define CPUID_EDX_HYBRID_MASK                                        0x01
+#define CPUID_EDX_HYBRID(_)                                          (((_) >> 15) & 0x01)
+      UINT32 Reserved5                                             : 2;
+
+      /**
+       * [Bit 18] Supports PCONFIG if 1.
+       */
+      UINT32 Pconfig                                               : 1;
+#define CPUID_EDX_PCONFIG_BIT                                        18
+#define CPUID_EDX_PCONFIG_FLAG                                       0x40000
+#define CPUID_EDX_PCONFIG_MASK                                       0x01
+#define CPUID_EDX_PCONFIG(_)                                         (((_) >> 18) & 0x01)
+      UINT32 Reserved6                                             : 1;
+
+      /**
+       * [Bit 20] Supports CET indirect branch tracking features if 1. Processors that set this bit define bits 5:2 and bits
+       * 63:10 of the IA32_U_CET and IA32_S_CET MSRs.
+       */
+      UINT32 CetIbt                                                : 1;
+#define CPUID_EDX_CET_IBT_BIT                                        20
+#define CPUID_EDX_CET_IBT_FLAG                                       0x100000
+#define CPUID_EDX_CET_IBT_MASK                                       0x01
+#define CPUID_EDX_CET_IBT(_)                                         (((_) >> 20) & 0x01)
+      UINT32 Reserved7                                             : 5;
+
+      /**
+       * [Bit 26] Enumerates support for indirect branch restricted speculation (IBRS) and the indirect branch predictor barrier
+       * (IBPB). Processors that set this bit support the IA32_SPEC_CTRL MSR and the IA32_PRED_CMD MSR. They allow software to
+       * set IA32_SPEC_CTRL[0] (IBRS) and IA32_PRED_CMD[0] (IBPB).
+       */
+      UINT32 IbrsIbpb                                              : 1;
+#define CPUID_EDX_IBRS_IBPB_BIT                                      26
+#define CPUID_EDX_IBRS_IBPB_FLAG                                     0x4000000
+#define CPUID_EDX_IBRS_IBPB_MASK                                     0x01
+#define CPUID_EDX_IBRS_IBPB(_)                                       (((_) >> 26) & 0x01)
+
+      /**
+       * [Bit 27] Enumerates support for single thread indirect branch predictors (STIBP). Processors that set this bit support
+       * the IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[1] (STIBP).
+       */
+      UINT32 Stibp                                                 : 1;
+#define CPUID_EDX_STIBP_BIT                                          27
+#define CPUID_EDX_STIBP_FLAG                                         0x8000000
+#define CPUID_EDX_STIBP_MASK                                         0x01
+#define CPUID_EDX_STIBP(_)                                           (((_) >> 27) & 0x01)
+
+      /**
+       * [Bit 28] Enumerates support for L1D_FLUSH. Processors that set this bit support the IA32_FLUSH_CMD MSR. They allow
+       * software to set IA32_FLUSH_CMD[0] (L1D_FLUSH).
+       */
+      UINT32 L1DFlush                                              : 1;
+#define CPUID_EDX_L1D_FLUSH_BIT                                      28
+#define CPUID_EDX_L1D_FLUSH_FLAG                                     0x10000000
+#define CPUID_EDX_L1D_FLUSH_MASK                                     0x01
+#define CPUID_EDX_L1D_FLUSH(_)                                       (((_) >> 28) & 0x01)
+
+      /**
+       * [Bit 29] Enumerates support for the IA32_ARCH_CAPABILITIES MSR.
+       */
+      UINT32 Ia32ArchCapabilities                                  : 1;
+#define CPUID_EDX_IA32_ARCH_CAPABILITIES_BIT                         29
+#define CPUID_EDX_IA32_ARCH_CAPABILITIES_FLAG                        0x20000000
+#define CPUID_EDX_IA32_ARCH_CAPABILITIES_MASK                        0x01
+#define CPUID_EDX_IA32_ARCH_CAPABILITIES(_)                          (((_) >> 29) & 0x01)
+
+      /**
+       * [Bit 30] Enumerates support for the IA32_CORE_CAPABILITIES MSR.
+       */
+      UINT32 Ia32CoreCapabilities                                  : 1;
+#define CPUID_EDX_IA32_CORE_CAPABILITIES_BIT                         30
+#define CPUID_EDX_IA32_CORE_CAPABILITIES_FLAG                        0x40000000
+#define CPUID_EDX_IA32_CORE_CAPABILITIES_MASK                        0x01
+#define CPUID_EDX_IA32_CORE_CAPABILITIES(_)                          (((_) >> 30) & 0x01)
+
+      /**
+       * [Bit 31] Enumerates support for Speculative Store Bypass Disable (SSBD). Processors that set this bit support the
+       * IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[2] (SSBD).
+       */
+      UINT32 Ssbd                                                  : 1;
+#define CPUID_EDX_SSBD_BIT                                           31
+#define CPUID_EDX_SSBD_FLAG                                          0x80000000
+#define CPUID_EDX_SSBD_MASK                                          0x01
+#define CPUID_EDX_SSBD(_)                                            (((_) >> 31) & 0x01)
     };
 
     UINT32 Flags;
@@ -10582,7 +10915,39 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_FLAG                  0x1000000
 #define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT_MASK                  0x01
 #define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT(_)                    (((_) >> 24) & 0x01)
-    UINT64 Reserved6                                               : 39;
+
+    /**
+     * [Bit 25] This control determines whether the IA32_RTIT_CTL MSR is cleared on VM exit.
+     *
+     * @see Vol3C[35(INTEL(R) PROCESSOR TRACE)]
+     */
+    UINT64 ClearIa32RtitCtl                                        : 1;
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL_BIT                   25
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL_FLAG                  0x2000000
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL_MASK                  0x01
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL(_)                    (((_) >> 25) & 0x01)
+    UINT64 Reserved6                                               : 2;
+
+    /**
+     * [Bit 28] This control determines whether CET-related MSRs and SPP are loaded on VM exit.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 LoadIa32CetState                                        : 1;
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE_BIT                   28
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE_FLAG                  0x10000000
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE_MASK                  0x01
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE(_)                    (((_) >> 28) & 0x01)
+
+    /**
+     * [Bit 29] This control determines whether the IA32_PKRS MSR is loaded on VM exit.
+     */
+    UINT64 LoadIa32Pkrs                                            : 1;
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_BIT                        29
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_FLAG                       0x20000000
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_MASK                       0x01
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS(_)                         (((_) >> 29) & 0x01)
+    UINT64 Reserved7                                               : 34;
   };
 
   UINT64 Flags;
@@ -10729,7 +11094,17 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_FLAG                      0x100000
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_MASK                      0x01
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE(_)                        (((_) >> 20) & 0x01)
-    UINT64 Reserved5                                               : 43;
+    UINT64 Reserved5                                               : 1;
+
+    /**
+     * [Bit 22] This control determines whether the IA32_PKRS MSR is loaded on VM entry.
+     */
+    UINT64 LoadIa32Pkrs                                            : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_BIT                       22
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_FLAG                      0x400000
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_MASK                      0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS(_)                        (((_) >> 22) & 0x01)
+    UINT64 Reserved6                                               : 41;
   };
 
   UINT64 Flags;
@@ -12466,6 +12841,302 @@ typedef union
  * @see Vol3B[18.6.3.4(Debug Store (DS) Mechanism)]
  */
 #define IA32_DS_AREA                                                 0x00000600
+
+/**
+ * Configure User Mode CET
+ *
+ * @remarks - Bits 1:0 are defined if CPUID.(EAX=07H,ECX=0H):ECX.CET_SS[07] = 1. - Bits 5:2 and bits 63:10 are defined if
+ *          CPUID.(EAX=07H,ECX=0H):EDX.CET_IBT[20] = 1.
+ */
+#define IA32_U_CET                                                   0x000006A0
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] When set to 1, enable shadow stacks at CPL3.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 ShStkEn                                                 : 1;
+#define IA32_U_CET_SH_STK_EN_BIT                                     0
+#define IA32_U_CET_SH_STK_EN_FLAG                                    0x01
+#define IA32_U_CET_SH_STK_EN_MASK                                    0x01
+#define IA32_U_CET_SH_STK_EN(_)                                      (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] When set to 1, enables the WRSSD/WRSSQ instructions.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 WrShstkEn                                               : 1;
+#define IA32_U_CET_WR_SHSTK_EN_BIT                                   1
+#define IA32_U_CET_WR_SHSTK_EN_FLAG                                  0x02
+#define IA32_U_CET_WR_SHSTK_EN_MASK                                  0x01
+#define IA32_U_CET_WR_SHSTK_EN(_)                                    (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] When set to 1, enables indirect branch tracking
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 EndbrEn                                                 : 1;
+#define IA32_U_CET_ENDBR_EN_BIT                                      2
+#define IA32_U_CET_ENDBR_EN_FLAG                                     0x04
+#define IA32_U_CET_ENDBR_EN_MASK                                     0x01
+#define IA32_U_CET_ENDBR_EN(_)                                       (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] Enable legacy compatibility treatment for indirect branch tracking.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 LegIwEn                                                 : 1;
+#define IA32_U_CET_LEG_IW_EN_BIT                                     3
+#define IA32_U_CET_LEG_IW_EN_FLAG                                    0x08
+#define IA32_U_CET_LEG_IW_EN_MASK                                    0x01
+#define IA32_U_CET_LEG_IW_EN(_)                                      (((_) >> 3) & 0x01)
+
+    /**
+     * [Bit 4] When set to 1, enables use of no-track prefix for indirect branch tracking.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 NoTrackEn                                               : 1;
+#define IA32_U_CET_NO_TRACK_EN_BIT                                   4
+#define IA32_U_CET_NO_TRACK_EN_FLAG                                  0x10
+#define IA32_U_CET_NO_TRACK_EN_MASK                                  0x01
+#define IA32_U_CET_NO_TRACK_EN(_)                                    (((_) >> 4) & 0x01)
+
+    /**
+     * [Bit 5] When set to 1, disables suppression of CET indirect branch tracking on legacy compatibility.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 SuppressDis                                             : 1;
+#define IA32_U_CET_SUPPRESS_DIS_BIT                                  5
+#define IA32_U_CET_SUPPRESS_DIS_FLAG                                 0x20
+#define IA32_U_CET_SUPPRESS_DIS_MASK                                 0x01
+#define IA32_U_CET_SUPPRESS_DIS(_)                                   (((_) >> 5) & 0x01)
+    UINT64 Reserved1                                               : 4;
+
+    /**
+     * [Bit 10] When set to 1, indirect branch tracking is suppressed. This bit can be written to 1 only if TRACKER is written
+     * as IDLE.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 Suppress                                                : 1;
+#define IA32_U_CET_SUPPRESS_BIT                                      10
+#define IA32_U_CET_SUPPRESS_FLAG                                     0x400
+#define IA32_U_CET_SUPPRESS_MASK                                     0x01
+#define IA32_U_CET_SUPPRESS(_)                                       (((_) >> 10) & 0x01)
+
+    /**
+     * [Bit 11] Value of the indirect branch tracking state machine. Values: IDLE (0), WAIT_FOR_ENDBRANCH(1).
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 Tracker                                                 : 1;
+#define IA32_U_CET_TRACKER_BIT                                       11
+#define IA32_U_CET_TRACKER_FLAG                                      0x800
+#define IA32_U_CET_TRACKER_MASK                                      0x01
+#define IA32_U_CET_TRACKER(_)                                        (((_) >> 11) & 0x01)
+
+    /**
+     * [Bits 63:12] Linear address bits 63:12 of a legacy code page bitmap used for legacy compatibility when indirect branch
+     * tracking is enabled. If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32
+     * of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical
+     * address. In protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0
+     * must be 0 (hardware requires bits 1:0 to be 0).
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 EbLegBitmapBase                                         : 52;
+#define IA32_U_CET_EB_LEG_BITMAP_BASE_BIT                            12
+#define IA32_U_CET_EB_LEG_BITMAP_BASE_FLAG                           0xFFFFFFFFFFFFF000
+#define IA32_U_CET_EB_LEG_BITMAP_BASE_MASK                           0xFFFFFFFFFFFFF
+#define IA32_U_CET_EB_LEG_BITMAP_BASE(_)                             (((_) >> 12) & 0xFFFFFFFFFFFFF)
+  };
+
+  UINT64 Flags;
+} IA32_U_CET_REGISTER;
+
+
+/**
+ * Configure Supervisor Mode CET
+ *
+ * @remarks - Bits 1:0 are defined if CPUID.(EAX=07H,ECX=0H):ECX.CET_SS[07] = 1. - Bits 5:2 and bits 63:10 are defined if
+ *          CPUID.(EAX=07H,ECX=0H):EDX.CET_IBT[20] = 1.
+ */
+#define IA32_S_CET                                                   0x000006A2
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] When set to 1, enable shadow stacks at CPL3.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 ShStkEn                                                 : 1;
+#define IA32_S_CET_SH_STK_EN_BIT                                     0
+#define IA32_S_CET_SH_STK_EN_FLAG                                    0x01
+#define IA32_S_CET_SH_STK_EN_MASK                                    0x01
+#define IA32_S_CET_SH_STK_EN(_)                                      (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] When set to 1, enables the WRSSD/WRSSQ instructions.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 WrShstkEn                                               : 1;
+#define IA32_S_CET_WR_SHSTK_EN_BIT                                   1
+#define IA32_S_CET_WR_SHSTK_EN_FLAG                                  0x02
+#define IA32_S_CET_WR_SHSTK_EN_MASK                                  0x01
+#define IA32_S_CET_WR_SHSTK_EN(_)                                    (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] When set to 1, enables indirect branch tracking
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 EndbrEn                                                 : 1;
+#define IA32_S_CET_ENDBR_EN_BIT                                      2
+#define IA32_S_CET_ENDBR_EN_FLAG                                     0x04
+#define IA32_S_CET_ENDBR_EN_MASK                                     0x01
+#define IA32_S_CET_ENDBR_EN(_)                                       (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] Enable legacy compatibility treatment for indirect branch tracking.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 LegIwEn                                                 : 1;
+#define IA32_S_CET_LEG_IW_EN_BIT                                     3
+#define IA32_S_CET_LEG_IW_EN_FLAG                                    0x08
+#define IA32_S_CET_LEG_IW_EN_MASK                                    0x01
+#define IA32_S_CET_LEG_IW_EN(_)                                      (((_) >> 3) & 0x01)
+
+    /**
+     * [Bit 4] When set to 1, enables use of no-track prefix for indirect branch tracking.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 NoTrackEn                                               : 1;
+#define IA32_S_CET_NO_TRACK_EN_BIT                                   4
+#define IA32_S_CET_NO_TRACK_EN_FLAG                                  0x10
+#define IA32_S_CET_NO_TRACK_EN_MASK                                  0x01
+#define IA32_S_CET_NO_TRACK_EN(_)                                    (((_) >> 4) & 0x01)
+
+    /**
+     * [Bit 5] When set to 1, disables suppression of CET indirect branch tracking on legacy compatibility.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 SuppressDis                                             : 1;
+#define IA32_S_CET_SUPPRESS_DIS_BIT                                  5
+#define IA32_S_CET_SUPPRESS_DIS_FLAG                                 0x20
+#define IA32_S_CET_SUPPRESS_DIS_MASK                                 0x01
+#define IA32_S_CET_SUPPRESS_DIS(_)                                   (((_) >> 5) & 0x01)
+    UINT64 Reserved1                                               : 4;
+
+    /**
+     * [Bit 10] When set to 1, indirect branch tracking is suppressed. This bit can be written to 1 only if TRACKER is written
+     * as IDLE.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 Suppress                                                : 1;
+#define IA32_S_CET_SUPPRESS_BIT                                      10
+#define IA32_S_CET_SUPPRESS_FLAG                                     0x400
+#define IA32_S_CET_SUPPRESS_MASK                                     0x01
+#define IA32_S_CET_SUPPRESS(_)                                       (((_) >> 10) & 0x01)
+
+    /**
+     * [Bit 11] Value of the indirect branch tracking state machine. Values: IDLE (0), WAIT_FOR_ENDBRANCH(1).
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 Tracker                                                 : 1;
+#define IA32_S_CET_TRACKER_BIT                                       11
+#define IA32_S_CET_TRACKER_FLAG                                      0x800
+#define IA32_S_CET_TRACKER_MASK                                      0x01
+#define IA32_S_CET_TRACKER(_)                                        (((_) >> 11) & 0x01)
+
+    /**
+     * [Bits 63:12] Linear address bits 63:12 of a legacy code page bitmap used for legacy compatibility when indirect branch
+     * tracking is enabled. If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32
+     * of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical
+     * address. In protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0
+     * must be 0 (hardware requires bits 1:0 to be 0).
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT64 EbLegBitmapBase                                         : 52;
+#define IA32_S_CET_EB_LEG_BITMAP_BASE_BIT                            12
+#define IA32_S_CET_EB_LEG_BITMAP_BASE_FLAG                           0xFFFFFFFFFFFFF000
+#define IA32_S_CET_EB_LEG_BITMAP_BASE_MASK                           0xFFFFFFFFFFFFF
+#define IA32_S_CET_EB_LEG_BITMAP_BASE(_)                             (((_) >> 12) & 0xFFFFFFFFFFFFF)
+  };
+
+  UINT64 Flags;
+} IA32_S_CET_REGISTER;
+
+
+/**
+ * Linear address to be loaded into SSP on transition to privilege level 0.
+ * If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32 of the MSRs are
+ * reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical address. In
+ * protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must be 0
+ * (hardware requires bits 1:0 to be 0).
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+ */
+#define IA32_PL0_SSP                                                 0x000006A4
+
+/**
+ * Linear address to be loaded into SSP on transition to privilege level 1.
+ * If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32 of the MSRs are
+ * reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical address. In
+ * protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must be 0
+ * (hardware requires bits 1:0 to be 0).
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+ */
+#define IA32_PL1_SSP                                                 0x000006A5
+
+/**
+ * Linear address to be loaded into SSP on transition to privilege level 2.
+ * If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32 of the MSRs are
+ * reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical address. In
+ * protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must be 0
+ * (hardware requires bits 1:0 to be 0).
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+ */
+#define IA32_PL2_SSP                                                 0x000006A6
+
+/**
+ * Linear address to be loaded into SSP on transition to privilege level 3.
+ * If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits 63:32 of the MSRs are
+ * reserved. On processors that support Intel 64 architecture this value cannot represent a non-canonical address. In
+ * protected mode, only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must be 0
+ * (hardware requires bits 1:0 to be 0).
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+ */
+#define IA32_PL3_SSP                                                 0x000006A7
+
+/**
+ * Linear address of a table of seven shadow stack pointers that are selected in IA-32e mode using the IST index (when not
+ * 0) from the interrupt gate descriptor.
+ * This MSR is not present on processors that do not support Intel 64 architecture. This field cannot represent a
+ * non-canonical address.
+ *
+ * @remarks If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+ */
+#define IA32_INTERRUPT_SSP_TABLE_ADDR                                0x000006A8
 
 /**
  * TSC Target of Local APIC's TSC Deadline Mode.
@@ -18268,19 +18939,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPT_PML4_READ_ACCESS_BIT                                     0
-#define EPT_PML4_READ_ACCESS_FLAG                                    0x01
-#define EPT_PML4_READ_ACCESS_MASK                                    0x01
-#define EPT_PML4_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
+#define EPT_PML4E_READ_ACCESS_BIT                                    0
+#define EPT_PML4E_READ_ACCESS_FLAG                                   0x01
+#define EPT_PML4E_READ_ACCESS_MASK                                   0x01
+#define EPT_PML4E_READ_ACCESS(_)                                     (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 512-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPT_PML4_WRITE_ACCESS_BIT                                    1
-#define EPT_PML4_WRITE_ACCESS_FLAG                                   0x02
-#define EPT_PML4_WRITE_ACCESS_MASK                                   0x01
-#define EPT_PML4_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
+#define EPT_PML4E_WRITE_ACCESS_BIT                                   1
+#define EPT_PML4E_WRITE_ACCESS_FLAG                                  0x02
+#define EPT_PML4E_WRITE_ACCESS_MASK                                  0x01
+#define EPT_PML4E_WRITE_ACCESS(_)                                    (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18289,10 +18960,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 512-GByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPT_PML4_EXECUTE_ACCESS_BIT                                  2
-#define EPT_PML4_EXECUTE_ACCESS_FLAG                                 0x04
-#define EPT_PML4_EXECUTE_ACCESS_MASK                                 0x01
-#define EPT_PML4_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
+#define EPT_PML4E_EXECUTE_ACCESS_BIT                                 2
+#define EPT_PML4E_EXECUTE_ACCESS_FLAG                                0x04
+#define EPT_PML4E_EXECUTE_ACCESS_MASK                                0x01
+#define EPT_PML4E_EXECUTE_ACCESS(_)                                  (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -18302,10 +18973,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPT_PML4_ACCESSED_BIT                                        8
-#define EPT_PML4_ACCESSED_FLAG                                       0x100
-#define EPT_PML4_ACCESSED_MASK                                       0x01
-#define EPT_PML4_ACCESSED(_)                                         (((_) >> 8) & 0x01)
+#define EPT_PML4E_ACCESSED_BIT                                       8
+#define EPT_PML4E_ACCESSED_FLAG                                      0x100
+#define EPT_PML4E_ACCESSED_MASK                                      0x01
+#define EPT_PML4E_ACCESSED(_)                                        (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -18314,25 +18985,25 @@ typedef union
      * controlled by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPT_PML4_USER_MODE_EXECUTE_BIT                               10
-#define EPT_PML4_USER_MODE_EXECUTE_FLAG                              0x400
-#define EPT_PML4_USER_MODE_EXECUTE_MASK                              0x01
-#define EPT_PML4_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
+#define EPT_PML4E_USER_MODE_EXECUTE_BIT                              10
+#define EPT_PML4E_USER_MODE_EXECUTE_FLAG                             0x400
+#define EPT_PML4E_USER_MODE_EXECUTE_MASK                             0x01
+#define EPT_PML4E_USER_MODE_EXECUTE(_)                               (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define EPT_PML4_PAGE_FRAME_NUMBER_BIT                               12
-#define EPT_PML4_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFFFF000
-#define EPT_PML4_PAGE_FRAME_NUMBER_MASK                              0xFFFFFFFFF
-#define EPT_PML4_PAGE_FRAME_NUMBER(_)                                (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_PML4E_PAGE_FRAME_NUMBER_BIT                              12
+#define EPT_PML4E_PAGE_FRAME_NUMBER_FLAG                             0xFFFFFFFFF000
+#define EPT_PML4E_PAGE_FRAME_NUMBER_MASK                             0xFFFFFFFFF
+#define EPT_PML4E_PAGE_FRAME_NUMBER(_)                               (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} EPT_PML4;
+} EPT_PML4E;
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that Maps a 1-GByte Page
@@ -18345,19 +19016,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPDPTE_1GB_READ_ACCESS_BIT                                   0
-#define EPDPTE_1GB_READ_ACCESS_FLAG                                  0x01
-#define EPDPTE_1GB_READ_ACCESS_MASK                                  0x01
-#define EPDPTE_1GB_READ_ACCESS(_)                                    (((_) >> 0) & 0x01)
+#define EPT_PDPTE_1GB_READ_ACCESS_BIT                                0
+#define EPT_PDPTE_1GB_READ_ACCESS_FLAG                               0x01
+#define EPT_PDPTE_1GB_READ_ACCESS_MASK                               0x01
+#define EPT_PDPTE_1GB_READ_ACCESS(_)                                 (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 1-GByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPDPTE_1GB_WRITE_ACCESS_BIT                                  1
-#define EPDPTE_1GB_WRITE_ACCESS_FLAG                                 0x02
-#define EPDPTE_1GB_WRITE_ACCESS_MASK                                 0x01
-#define EPDPTE_1GB_WRITE_ACCESS(_)                                   (((_) >> 1) & 0x01)
+#define EPT_PDPTE_1GB_WRITE_ACCESS_BIT                               1
+#define EPT_PDPTE_1GB_WRITE_ACCESS_FLAG                              0x02
+#define EPT_PDPTE_1GB_WRITE_ACCESS_MASK                              0x01
+#define EPT_PDPTE_1GB_WRITE_ACCESS(_)                                (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18366,10 +19037,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 1-GByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPDPTE_1GB_EXECUTE_ACCESS_BIT                                2
-#define EPDPTE_1GB_EXECUTE_ACCESS_FLAG                               0x04
-#define EPDPTE_1GB_EXECUTE_ACCESS_MASK                               0x01
-#define EPDPTE_1GB_EXECUTE_ACCESS(_)                                 (((_) >> 2) & 0x01)
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS_BIT                             2
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS_FLAG                            0x04
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS_MASK                            0x01
+#define EPT_PDPTE_1GB_EXECUTE_ACCESS(_)                              (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 1-GByte page.
@@ -18377,10 +19048,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define EPDPTE_1GB_MEMORY_TYPE_BIT                                   3
-#define EPDPTE_1GB_MEMORY_TYPE_FLAG                                  0x38
-#define EPDPTE_1GB_MEMORY_TYPE_MASK                                  0x07
-#define EPDPTE_1GB_MEMORY_TYPE(_)                                    (((_) >> 3) & 0x07)
+#define EPT_PDPTE_1GB_MEMORY_TYPE_BIT                                3
+#define EPT_PDPTE_1GB_MEMORY_TYPE_FLAG                               0x38
+#define EPT_PDPTE_1GB_MEMORY_TYPE_MASK                               0x07
+#define EPT_PDPTE_1GB_MEMORY_TYPE(_)                                 (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 1-GByte page.
@@ -18388,19 +19059,19 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define EPDPTE_1GB_IGNORE_PAT_BIT                                    6
-#define EPDPTE_1GB_IGNORE_PAT_FLAG                                   0x40
-#define EPDPTE_1GB_IGNORE_PAT_MASK                                   0x01
-#define EPDPTE_1GB_IGNORE_PAT(_)                                     (((_) >> 6) & 0x01)
+#define EPT_PDPTE_1GB_IGNORE_PAT_BIT                                 6
+#define EPT_PDPTE_1GB_IGNORE_PAT_FLAG                                0x40
+#define EPT_PDPTE_1GB_IGNORE_PAT_MASK                                0x01
+#define EPT_PDPTE_1GB_IGNORE_PAT(_)                                  (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Must be 1 (otherwise, this entry references an EPT page directory).
      */
     UINT64 LargePage                                               : 1;
-#define EPDPTE_1GB_LARGE_PAGE_BIT                                    7
-#define EPDPTE_1GB_LARGE_PAGE_FLAG                                   0x80
-#define EPDPTE_1GB_LARGE_PAGE_MASK                                   0x01
-#define EPDPTE_1GB_LARGE_PAGE(_)                                     (((_) >> 7) & 0x01)
+#define EPT_PDPTE_1GB_LARGE_PAGE_BIT                                 7
+#define EPT_PDPTE_1GB_LARGE_PAGE_FLAG                                0x80
+#define EPT_PDPTE_1GB_LARGE_PAGE_MASK                                0x01
+#define EPT_PDPTE_1GB_LARGE_PAGE(_)                                  (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 1-GByte page
@@ -18409,10 +19080,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPDPTE_1GB_ACCESSED_BIT                                      8
-#define EPDPTE_1GB_ACCESSED_FLAG                                     0x100
-#define EPDPTE_1GB_ACCESSED_MASK                                     0x01
-#define EPDPTE_1GB_ACCESSED(_)                                       (((_) >> 8) & 0x01)
+#define EPT_PDPTE_1GB_ACCESSED_BIT                                   8
+#define EPT_PDPTE_1GB_ACCESSED_FLAG                                  0x100
+#define EPT_PDPTE_1GB_ACCESSED_MASK                                  0x01
+#define EPT_PDPTE_1GB_ACCESSED(_)                                    (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 1-GByte page referenced
@@ -18421,10 +19092,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define EPDPTE_1GB_DIRTY_BIT                                         9
-#define EPDPTE_1GB_DIRTY_FLAG                                        0x200
-#define EPDPTE_1GB_DIRTY_MASK                                        0x01
-#define EPDPTE_1GB_DIRTY(_)                                          (((_) >> 9) & 0x01)
+#define EPT_PDPTE_1GB_DIRTY_BIT                                      9
+#define EPT_PDPTE_1GB_DIRTY_FLAG                                     0x200
+#define EPT_PDPTE_1GB_DIRTY_MASK                                     0x01
+#define EPT_PDPTE_1GB_DIRTY(_)                                       (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -18432,20 +19103,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPDPTE_1GB_USER_MODE_EXECUTE_BIT                             10
-#define EPDPTE_1GB_USER_MODE_EXECUTE_FLAG                            0x400
-#define EPDPTE_1GB_USER_MODE_EXECUTE_MASK                            0x01
-#define EPDPTE_1GB_USER_MODE_EXECUTE(_)                              (((_) >> 10) & 0x01)
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE_BIT                          10
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE_FLAG                         0x400
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE_MASK                         0x01
+#define EPT_PDPTE_1GB_USER_MODE_EXECUTE(_)                           (((_) >> 10) & 0x01)
     UINT64 Reserved1                                               : 19;
 
     /**
      * [Bits 47:30] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 18;
-#define EPDPTE_1GB_PAGE_FRAME_NUMBER_BIT                             30
-#define EPDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                            0xFFFFC0000000
-#define EPDPTE_1GB_PAGE_FRAME_NUMBER_MASK                            0x3FFFF
-#define EPDPTE_1GB_PAGE_FRAME_NUMBER(_)                              (((_) >> 30) & 0x3FFFF)
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_BIT                          30
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                         0xFFFFC0000000
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_MASK                         0x3FFFF
+#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER(_)                           (((_) >> 30) & 0x3FFFF)
     UINT64 Reserved2                                               : 15;
 
     /**
@@ -18456,14 +19127,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define EPDPTE_1GB_SUPPRESS_VE_BIT                                   63
-#define EPDPTE_1GB_SUPPRESS_VE_FLAG                                  0x8000000000000000
-#define EPDPTE_1GB_SUPPRESS_VE_MASK                                  0x01
-#define EPDPTE_1GB_SUPPRESS_VE(_)                                    (((_) >> 63) & 0x01)
+#define EPT_PDPTE_1GB_SUPPRESS_VE_BIT                                63
+#define EPT_PDPTE_1GB_SUPPRESS_VE_FLAG                               0x8000000000000000
+#define EPT_PDPTE_1GB_SUPPRESS_VE_MASK                               0x01
+#define EPT_PDPTE_1GB_SUPPRESS_VE(_)                                 (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} EPDPTE_1GB;
+} EPT_PDPTE_1GB;
 
 /**
  * @brief Format of an EPT Page-Directory-Pointer-Table Entry (PDPTE) that References an EPT Page Directory
@@ -18476,19 +19147,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPDPTE_READ_ACCESS_BIT                                       0
-#define EPDPTE_READ_ACCESS_FLAG                                      0x01
-#define EPDPTE_READ_ACCESS_MASK                                      0x01
-#define EPDPTE_READ_ACCESS(_)                                        (((_) >> 0) & 0x01)
+#define EPT_PDPTE_READ_ACCESS_BIT                                    0
+#define EPT_PDPTE_READ_ACCESS_FLAG                                   0x01
+#define EPT_PDPTE_READ_ACCESS_MASK                                   0x01
+#define EPT_PDPTE_READ_ACCESS(_)                                     (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 1-GByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPDPTE_WRITE_ACCESS_BIT                                      1
-#define EPDPTE_WRITE_ACCESS_FLAG                                     0x02
-#define EPDPTE_WRITE_ACCESS_MASK                                     0x01
-#define EPDPTE_WRITE_ACCESS(_)                                       (((_) >> 1) & 0x01)
+#define EPT_PDPTE_WRITE_ACCESS_BIT                                   1
+#define EPT_PDPTE_WRITE_ACCESS_FLAG                                  0x02
+#define EPT_PDPTE_WRITE_ACCESS_MASK                                  0x01
+#define EPT_PDPTE_WRITE_ACCESS(_)                                    (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18497,10 +19168,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 1-GByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPDPTE_EXECUTE_ACCESS_BIT                                    2
-#define EPDPTE_EXECUTE_ACCESS_FLAG                                   0x04
-#define EPDPTE_EXECUTE_ACCESS_MASK                                   0x01
-#define EPDPTE_EXECUTE_ACCESS(_)                                     (((_) >> 2) & 0x01)
+#define EPT_PDPTE_EXECUTE_ACCESS_BIT                                 2
+#define EPT_PDPTE_EXECUTE_ACCESS_FLAG                                0x04
+#define EPT_PDPTE_EXECUTE_ACCESS_MASK                                0x01
+#define EPT_PDPTE_EXECUTE_ACCESS(_)                                  (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -18510,10 +19181,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPDPTE_ACCESSED_BIT                                          8
-#define EPDPTE_ACCESSED_FLAG                                         0x100
-#define EPDPTE_ACCESSED_MASK                                         0x01
-#define EPDPTE_ACCESSED(_)                                           (((_) >> 8) & 0x01)
+#define EPT_PDPTE_ACCESSED_BIT                                       8
+#define EPT_PDPTE_ACCESSED_FLAG                                      0x100
+#define EPT_PDPTE_ACCESSED_MASK                                      0x01
+#define EPT_PDPTE_ACCESSED(_)                                        (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -18522,25 +19193,25 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPDPTE_USER_MODE_EXECUTE_BIT                                 10
-#define EPDPTE_USER_MODE_EXECUTE_FLAG                                0x400
-#define EPDPTE_USER_MODE_EXECUTE_MASK                                0x01
-#define EPDPTE_USER_MODE_EXECUTE(_)                                  (((_) >> 10) & 0x01)
+#define EPT_PDPTE_USER_MODE_EXECUTE_BIT                              10
+#define EPT_PDPTE_USER_MODE_EXECUTE_FLAG                             0x400
+#define EPT_PDPTE_USER_MODE_EXECUTE_MASK                             0x01
+#define EPT_PDPTE_USER_MODE_EXECUTE(_)                               (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define EPDPTE_PAGE_FRAME_NUMBER_BIT                                 12
-#define EPDPTE_PAGE_FRAME_NUMBER_FLAG                                0xFFFFFFFFF000
-#define EPDPTE_PAGE_FRAME_NUMBER_MASK                                0xFFFFFFFFF
-#define EPDPTE_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_PDPTE_PAGE_FRAME_NUMBER_BIT                              12
+#define EPT_PDPTE_PAGE_FRAME_NUMBER_FLAG                             0xFFFFFFFFF000
+#define EPT_PDPTE_PAGE_FRAME_NUMBER_MASK                             0xFFFFFFFFF
+#define EPT_PDPTE_PAGE_FRAME_NUMBER(_)                               (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} EPDPTE;
+} EPT_PDPTE;
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that Maps a 2-MByte Page
@@ -18553,19 +19224,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPDE_2MB_READ_ACCESS_BIT                                     0
-#define EPDE_2MB_READ_ACCESS_FLAG                                    0x01
-#define EPDE_2MB_READ_ACCESS_MASK                                    0x01
-#define EPDE_2MB_READ_ACCESS(_)                                      (((_) >> 0) & 0x01)
+#define EPT_PDE_2MB_READ_ACCESS_BIT                                  0
+#define EPT_PDE_2MB_READ_ACCESS_FLAG                                 0x01
+#define EPT_PDE_2MB_READ_ACCESS_MASK                                 0x01
+#define EPT_PDE_2MB_READ_ACCESS(_)                                   (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 2-MByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPDE_2MB_WRITE_ACCESS_BIT                                    1
-#define EPDE_2MB_WRITE_ACCESS_FLAG                                   0x02
-#define EPDE_2MB_WRITE_ACCESS_MASK                                   0x01
-#define EPDE_2MB_WRITE_ACCESS(_)                                     (((_) >> 1) & 0x01)
+#define EPT_PDE_2MB_WRITE_ACCESS_BIT                                 1
+#define EPT_PDE_2MB_WRITE_ACCESS_FLAG                                0x02
+#define EPT_PDE_2MB_WRITE_ACCESS_MASK                                0x01
+#define EPT_PDE_2MB_WRITE_ACCESS(_)                                  (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18574,10 +19245,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 2-MByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPDE_2MB_EXECUTE_ACCESS_BIT                                  2
-#define EPDE_2MB_EXECUTE_ACCESS_FLAG                                 0x04
-#define EPDE_2MB_EXECUTE_ACCESS_MASK                                 0x01
-#define EPDE_2MB_EXECUTE_ACCESS(_)                                   (((_) >> 2) & 0x01)
+#define EPT_PDE_2MB_EXECUTE_ACCESS_BIT                               2
+#define EPT_PDE_2MB_EXECUTE_ACCESS_FLAG                              0x04
+#define EPT_PDE_2MB_EXECUTE_ACCESS_MASK                              0x01
+#define EPT_PDE_2MB_EXECUTE_ACCESS(_)                                (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 2-MByte page.
@@ -18585,10 +19256,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define EPDE_2MB_MEMORY_TYPE_BIT                                     3
-#define EPDE_2MB_MEMORY_TYPE_FLAG                                    0x38
-#define EPDE_2MB_MEMORY_TYPE_MASK                                    0x07
-#define EPDE_2MB_MEMORY_TYPE(_)                                      (((_) >> 3) & 0x07)
+#define EPT_PDE_2MB_MEMORY_TYPE_BIT                                  3
+#define EPT_PDE_2MB_MEMORY_TYPE_FLAG                                 0x38
+#define EPT_PDE_2MB_MEMORY_TYPE_MASK                                 0x07
+#define EPT_PDE_2MB_MEMORY_TYPE(_)                                   (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 2-MByte page.
@@ -18596,19 +19267,19 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define EPDE_2MB_IGNORE_PAT_BIT                                      6
-#define EPDE_2MB_IGNORE_PAT_FLAG                                     0x40
-#define EPDE_2MB_IGNORE_PAT_MASK                                     0x01
-#define EPDE_2MB_IGNORE_PAT(_)                                       (((_) >> 6) & 0x01)
+#define EPT_PDE_2MB_IGNORE_PAT_BIT                                   6
+#define EPT_PDE_2MB_IGNORE_PAT_FLAG                                  0x40
+#define EPT_PDE_2MB_IGNORE_PAT_MASK                                  0x01
+#define EPT_PDE_2MB_IGNORE_PAT(_)                                    (((_) >> 6) & 0x01)
 
     /**
      * [Bit 7] Must be 1 (otherwise, this entry references an EPT page table).
      */
     UINT64 LargePage                                               : 1;
-#define EPDE_2MB_LARGE_PAGE_BIT                                      7
-#define EPDE_2MB_LARGE_PAGE_FLAG                                     0x80
-#define EPDE_2MB_LARGE_PAGE_MASK                                     0x01
-#define EPDE_2MB_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
+#define EPT_PDE_2MB_LARGE_PAGE_BIT                                   7
+#define EPT_PDE_2MB_LARGE_PAGE_FLAG                                  0x80
+#define EPT_PDE_2MB_LARGE_PAGE_MASK                                  0x01
+#define EPT_PDE_2MB_LARGE_PAGE(_)                                    (((_) >> 7) & 0x01)
 
     /**
      * [Bit 8] If bit 6 of EPTP is 1, accessed flag for EPT; indicates whether software has accessed the 2-MByte page
@@ -18617,10 +19288,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPDE_2MB_ACCESSED_BIT                                        8
-#define EPDE_2MB_ACCESSED_FLAG                                       0x100
-#define EPDE_2MB_ACCESSED_MASK                                       0x01
-#define EPDE_2MB_ACCESSED(_)                                         (((_) >> 8) & 0x01)
+#define EPT_PDE_2MB_ACCESSED_BIT                                     8
+#define EPT_PDE_2MB_ACCESSED_FLAG                                    0x100
+#define EPT_PDE_2MB_ACCESSED_MASK                                    0x01
+#define EPT_PDE_2MB_ACCESSED(_)                                      (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 2-MByte page referenced
@@ -18629,10 +19300,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define EPDE_2MB_DIRTY_BIT                                           9
-#define EPDE_2MB_DIRTY_FLAG                                          0x200
-#define EPDE_2MB_DIRTY_MASK                                          0x01
-#define EPDE_2MB_DIRTY(_)                                            (((_) >> 9) & 0x01)
+#define EPT_PDE_2MB_DIRTY_BIT                                        9
+#define EPT_PDE_2MB_DIRTY_FLAG                                       0x200
+#define EPT_PDE_2MB_DIRTY_MASK                                       0x01
+#define EPT_PDE_2MB_DIRTY(_)                                         (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -18640,20 +19311,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPDE_2MB_USER_MODE_EXECUTE_BIT                               10
-#define EPDE_2MB_USER_MODE_EXECUTE_FLAG                              0x400
-#define EPDE_2MB_USER_MODE_EXECUTE_MASK                              0x01
-#define EPDE_2MB_USER_MODE_EXECUTE(_)                                (((_) >> 10) & 0x01)
+#define EPT_PDE_2MB_USER_MODE_EXECUTE_BIT                            10
+#define EPT_PDE_2MB_USER_MODE_EXECUTE_FLAG                           0x400
+#define EPT_PDE_2MB_USER_MODE_EXECUTE_MASK                           0x01
+#define EPT_PDE_2MB_USER_MODE_EXECUTE(_)                             (((_) >> 10) & 0x01)
     UINT64 Reserved1                                               : 10;
 
     /**
      * [Bits 47:21] Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 27;
-#define EPDE_2MB_PAGE_FRAME_NUMBER_BIT                               21
-#define EPDE_2MB_PAGE_FRAME_NUMBER_FLAG                              0xFFFFFFE00000
-#define EPDE_2MB_PAGE_FRAME_NUMBER_MASK                              0x7FFFFFF
-#define EPDE_2MB_PAGE_FRAME_NUMBER(_)                                (((_) >> 21) & 0x7FFFFFF)
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER_BIT                            21
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER_FLAG                           0xFFFFFFE00000
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER_MASK                           0x7FFFFFF
+#define EPT_PDE_2MB_PAGE_FRAME_NUMBER(_)                             (((_) >> 21) & 0x7FFFFFF)
     UINT64 Reserved2                                               : 15;
 
     /**
@@ -18664,14 +19335,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define EPDE_2MB_SUPPRESS_VE_BIT                                     63
-#define EPDE_2MB_SUPPRESS_VE_FLAG                                    0x8000000000000000
-#define EPDE_2MB_SUPPRESS_VE_MASK                                    0x01
-#define EPDE_2MB_SUPPRESS_VE(_)                                      (((_) >> 63) & 0x01)
+#define EPT_PDE_2MB_SUPPRESS_VE_BIT                                  63
+#define EPT_PDE_2MB_SUPPRESS_VE_FLAG                                 0x8000000000000000
+#define EPT_PDE_2MB_SUPPRESS_VE_MASK                                 0x01
+#define EPT_PDE_2MB_SUPPRESS_VE(_)                                   (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} EPDE_2MB;
+} EPT_PDE_2MB;
 
 /**
  * @brief Format of an EPT Page-Directory Entry (PDE) that References an EPT Page Table
@@ -18684,19 +19355,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPDE_READ_ACCESS_BIT                                         0
-#define EPDE_READ_ACCESS_FLAG                                        0x01
-#define EPDE_READ_ACCESS_MASK                                        0x01
-#define EPDE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
+#define EPT_PDE_READ_ACCESS_BIT                                      0
+#define EPT_PDE_READ_ACCESS_FLAG                                     0x01
+#define EPT_PDE_READ_ACCESS_MASK                                     0x01
+#define EPT_PDE_READ_ACCESS(_)                                       (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 2-MByte region controlled by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPDE_WRITE_ACCESS_BIT                                        1
-#define EPDE_WRITE_ACCESS_FLAG                                       0x02
-#define EPDE_WRITE_ACCESS_MASK                                       0x01
-#define EPDE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
+#define EPT_PDE_WRITE_ACCESS_BIT                                     1
+#define EPT_PDE_WRITE_ACCESS_FLAG                                    0x02
+#define EPT_PDE_WRITE_ACCESS_MASK                                    0x01
+#define EPT_PDE_WRITE_ACCESS(_)                                      (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18705,10 +19376,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 2-MByte region controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPDE_EXECUTE_ACCESS_BIT                                      2
-#define EPDE_EXECUTE_ACCESS_FLAG                                     0x04
-#define EPDE_EXECUTE_ACCESS_MASK                                     0x01
-#define EPDE_EXECUTE_ACCESS(_)                                       (((_) >> 2) & 0x01)
+#define EPT_PDE_EXECUTE_ACCESS_BIT                                   2
+#define EPT_PDE_EXECUTE_ACCESS_FLAG                                  0x04
+#define EPT_PDE_EXECUTE_ACCESS_MASK                                  0x01
+#define EPT_PDE_EXECUTE_ACCESS(_)                                    (((_) >> 2) & 0x01)
     UINT64 Reserved1                                               : 5;
 
     /**
@@ -18718,10 +19389,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPDE_ACCESSED_BIT                                            8
-#define EPDE_ACCESSED_FLAG                                           0x100
-#define EPDE_ACCESSED_MASK                                           0x01
-#define EPDE_ACCESSED(_)                                             (((_) >> 8) & 0x01)
+#define EPT_PDE_ACCESSED_BIT                                         8
+#define EPT_PDE_ACCESSED_FLAG                                        0x100
+#define EPT_PDE_ACCESSED_MASK                                        0x01
+#define EPT_PDE_ACCESSED(_)                                          (((_) >> 8) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
@@ -18730,25 +19401,25 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPDE_USER_MODE_EXECUTE_BIT                                   10
-#define EPDE_USER_MODE_EXECUTE_FLAG                                  0x400
-#define EPDE_USER_MODE_EXECUTE_MASK                                  0x01
-#define EPDE_USER_MODE_EXECUTE(_)                                    (((_) >> 10) & 0x01)
+#define EPT_PDE_USER_MODE_EXECUTE_BIT                                10
+#define EPT_PDE_USER_MODE_EXECUTE_FLAG                               0x400
+#define EPT_PDE_USER_MODE_EXECUTE_MASK                               0x01
+#define EPT_PDE_USER_MODE_EXECUTE(_)                                 (((_) >> 10) & 0x01)
     UINT64 Reserved3                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned EPT page table referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define EPDE_PAGE_FRAME_NUMBER_BIT                                   12
-#define EPDE_PAGE_FRAME_NUMBER_FLAG                                  0xFFFFFFFFF000
-#define EPDE_PAGE_FRAME_NUMBER_MASK                                  0xFFFFFFFFF
-#define EPDE_PAGE_FRAME_NUMBER(_)                                    (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_PDE_PAGE_FRAME_NUMBER_BIT                                12
+#define EPT_PDE_PAGE_FRAME_NUMBER_FLAG                               0xFFFFFFFFF000
+#define EPT_PDE_PAGE_FRAME_NUMBER_MASK                               0xFFFFFFFFF
+#define EPT_PDE_PAGE_FRAME_NUMBER(_)                                 (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved4                                               : 16;
   };
 
   UINT64 Flags;
-} EPDE;
+} EPT_PDE;
 
 /**
  * @brief Format of an EPT Page-Table Entry that Maps a 4-KByte Page
@@ -18761,19 +19432,19 @@ typedef union
      * [Bit 0] Read access; indicates whether reads are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 ReadAccess                                              : 1;
-#define EPTE_READ_ACCESS_BIT                                         0
-#define EPTE_READ_ACCESS_FLAG                                        0x01
-#define EPTE_READ_ACCESS_MASK                                        0x01
-#define EPTE_READ_ACCESS(_)                                          (((_) >> 0) & 0x01)
+#define EPT_PTE_READ_ACCESS_BIT                                      0
+#define EPT_PTE_READ_ACCESS_FLAG                                     0x01
+#define EPT_PTE_READ_ACCESS_MASK                                     0x01
+#define EPT_PTE_READ_ACCESS(_)                                       (((_) >> 0) & 0x01)
 
     /**
      * [Bit 1] Write access; indicates whether writes are allowed from the 4-KByte page referenced by this entry.
      */
     UINT64 WriteAccess                                             : 1;
-#define EPTE_WRITE_ACCESS_BIT                                        1
-#define EPTE_WRITE_ACCESS_FLAG                                       0x02
-#define EPTE_WRITE_ACCESS_MASK                                       0x01
-#define EPTE_WRITE_ACCESS(_)                                         (((_) >> 1) & 0x01)
+#define EPT_PTE_WRITE_ACCESS_BIT                                     1
+#define EPT_PTE_WRITE_ACCESS_FLAG                                    0x02
+#define EPT_PTE_WRITE_ACCESS_MASK                                    0x01
+#define EPT_PTE_WRITE_ACCESS(_)                                      (((_) >> 1) & 0x01)
 
     /**
      * [Bit 2] If the "mode-based execute control for EPT" VM-execution control is 0, execute access; indicates whether
@@ -18782,10 +19453,10 @@ typedef union
      * allowed from supervisor-mode linear addresses in the 4-KByte page controlled by this entry.
      */
     UINT64 ExecuteAccess                                           : 1;
-#define EPTE_EXECUTE_ACCESS_BIT                                      2
-#define EPTE_EXECUTE_ACCESS_FLAG                                     0x04
-#define EPTE_EXECUTE_ACCESS_MASK                                     0x01
-#define EPTE_EXECUTE_ACCESS(_)                                       (((_) >> 2) & 0x01)
+#define EPT_PTE_EXECUTE_ACCESS_BIT                                   2
+#define EPT_PTE_EXECUTE_ACCESS_FLAG                                  0x04
+#define EPT_PTE_EXECUTE_ACCESS_MASK                                  0x01
+#define EPT_PTE_EXECUTE_ACCESS(_)                                    (((_) >> 2) & 0x01)
 
     /**
      * [Bits 5:3] EPT memory type for this 4-KByte page.
@@ -18793,10 +19464,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 MemoryType                                              : 3;
-#define EPTE_MEMORY_TYPE_BIT                                         3
-#define EPTE_MEMORY_TYPE_FLAG                                        0x38
-#define EPTE_MEMORY_TYPE_MASK                                        0x07
-#define EPTE_MEMORY_TYPE(_)                                          (((_) >> 3) & 0x07)
+#define EPT_PTE_MEMORY_TYPE_BIT                                      3
+#define EPT_PTE_MEMORY_TYPE_FLAG                                     0x38
+#define EPT_PTE_MEMORY_TYPE_MASK                                     0x07
+#define EPT_PTE_MEMORY_TYPE(_)                                       (((_) >> 3) & 0x07)
 
     /**
      * [Bit 6] Ignore PAT memory type for this 4-KByte page.
@@ -18804,10 +19475,10 @@ typedef union
      * @see Vol3C[28.2.6(EPT and memory Typing)]
      */
     UINT64 IgnorePat                                               : 1;
-#define EPTE_IGNORE_PAT_BIT                                          6
-#define EPTE_IGNORE_PAT_FLAG                                         0x40
-#define EPTE_IGNORE_PAT_MASK                                         0x01
-#define EPTE_IGNORE_PAT(_)                                           (((_) >> 6) & 0x01)
+#define EPT_PTE_IGNORE_PAT_BIT                                       6
+#define EPT_PTE_IGNORE_PAT_FLAG                                      0x40
+#define EPT_PTE_IGNORE_PAT_MASK                                      0x01
+#define EPT_PTE_IGNORE_PAT(_)                                        (((_) >> 6) & 0x01)
     UINT64 Reserved1                                               : 1;
 
     /**
@@ -18817,10 +19488,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Accessed                                                : 1;
-#define EPTE_ACCESSED_BIT                                            8
-#define EPTE_ACCESSED_FLAG                                           0x100
-#define EPTE_ACCESSED_MASK                                           0x01
-#define EPTE_ACCESSED(_)                                             (((_) >> 8) & 0x01)
+#define EPT_PTE_ACCESSED_BIT                                         8
+#define EPT_PTE_ACCESSED_FLAG                                        0x100
+#define EPT_PTE_ACCESSED_MASK                                        0x01
+#define EPT_PTE_ACCESSED(_)                                          (((_) >> 8) & 0x01)
 
     /**
      * [Bit 9] If bit 6 of EPTP is 1, dirty flag for EPT; indicates whether software has written to the 4-KByte page referenced
@@ -18829,10 +19500,10 @@ typedef union
      * @see Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
      */
     UINT64 Dirty                                                   : 1;
-#define EPTE_DIRTY_BIT                                               9
-#define EPTE_DIRTY_FLAG                                              0x200
-#define EPTE_DIRTY_MASK                                              0x01
-#define EPTE_DIRTY(_)                                                (((_) >> 9) & 0x01)
+#define EPT_PTE_DIRTY_BIT                                            9
+#define EPT_PTE_DIRTY_FLAG                                           0x200
+#define EPT_PTE_DIRTY_MASK                                           0x01
+#define EPT_PTE_DIRTY(_)                                             (((_) >> 9) & 0x01)
 
     /**
      * [Bit 10] Execute access for user-mode linear addresses. If the "mode-based execute control for EPT" VM-execution control
@@ -18840,20 +19511,20 @@ typedef union
      * by this entry. If that control is 0, this bit is ignored.
      */
     UINT64 UserModeExecute                                         : 1;
-#define EPTE_USER_MODE_EXECUTE_BIT                                   10
-#define EPTE_USER_MODE_EXECUTE_FLAG                                  0x400
-#define EPTE_USER_MODE_EXECUTE_MASK                                  0x01
-#define EPTE_USER_MODE_EXECUTE(_)                                    (((_) >> 10) & 0x01)
+#define EPT_PTE_USER_MODE_EXECUTE_BIT                                10
+#define EPT_PTE_USER_MODE_EXECUTE_FLAG                               0x400
+#define EPT_PTE_USER_MODE_EXECUTE_MASK                               0x01
+#define EPT_PTE_USER_MODE_EXECUTE(_)                                 (((_) >> 10) & 0x01)
     UINT64 Reserved2                                               : 1;
 
     /**
      * [Bits 47:12] Physical address of the 4-KByte page referenced by this entry.
      */
     UINT64 PageFrameNumber                                         : 36;
-#define EPTE_PAGE_FRAME_NUMBER_BIT                                   12
-#define EPTE_PAGE_FRAME_NUMBER_FLAG                                  0xFFFFFFFFF000
-#define EPTE_PAGE_FRAME_NUMBER_MASK                                  0xFFFFFFFFF
-#define EPTE_PAGE_FRAME_NUMBER(_)                                    (((_) >> 12) & 0xFFFFFFFFF)
+#define EPT_PTE_PAGE_FRAME_NUMBER_BIT                                12
+#define EPT_PTE_PAGE_FRAME_NUMBER_FLAG                               0xFFFFFFFFF000
+#define EPT_PTE_PAGE_FRAME_NUMBER_MASK                               0xFFFFFFFFF
+#define EPT_PTE_PAGE_FRAME_NUMBER(_)                                 (((_) >> 12) & 0xFFFFFFFFF)
     UINT64 Reserved3                                               : 15;
 
     /**
@@ -18864,14 +19535,14 @@ typedef union
      * @see Vol3C[25.5.6.1(Convertible EPT Violations)]
      */
     UINT64 SuppressVe                                              : 1;
-#define EPTE_SUPPRESS_VE_BIT                                         63
-#define EPTE_SUPPRESS_VE_FLAG                                        0x8000000000000000
-#define EPTE_SUPPRESS_VE_MASK                                        0x01
-#define EPTE_SUPPRESS_VE(_)                                          (((_) >> 63) & 0x01)
+#define EPT_PTE_SUPPRESS_VE_BIT                                      63
+#define EPT_PTE_SUPPRESS_VE_FLAG                                     0x8000000000000000
+#define EPT_PTE_SUPPRESS_VE_MASK                                     0x01
+#define EPT_PTE_SUPPRESS_VE(_)                                       (((_) >> 63) & 0x01)
   };
 
   UINT64 Flags;
-} EPTE;
+} EPT_PTE;
 
 /**
  * @brief Format of a common EPT Entry
@@ -19539,9 +20210,24 @@ typedef union
 #define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
 
 /**
+ * Sub-page-permission-table pointer.
+ */
+#define VMCS_CTRL_SUB_PAGE_PERMISSION_TABLE_POINTER                  0x00002030
+
+/**
  * TSC multiplier.
  */
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
+
+/**
+ * Tertiary processor-based VM-execution controls.
+ */
+#define VMCS_CTRL_TERTIARY_PROCESSOR_BASED_VM_EXECUTION_CONTROLS     0x00002034
+
+/**
+ * ENCLV-exiting bitmap.
+ */
+#define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
 /**
  * @}
  */
@@ -19622,6 +20308,11 @@ typedef union
  * Guest IA32_RTIT_CTL.
  */
 #define VMCS_GUEST_RTIT_CTL                                          0x00002814
+
+/**
+ * Guest IA32_PKRS
+ */
+#define VMCS_GUEST_PKRS                                              0x00002818
 /**
  * @}
  */
@@ -19647,6 +20338,11 @@ typedef union
  * Host IA32_PERF_GLOBAL_CTRL.
  */
 #define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
+
+/**
+ * Host IA32_PKRS
+ */
+#define VMCS_HOST_PKRS                                               0x00002C06
 /**
  * @}
  */
