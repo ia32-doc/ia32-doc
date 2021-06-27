@@ -86,26 +86,32 @@ typedef union {
 #define CR4_OS_XMM_EXCEPTION_SUPPORT                                 0x400
     uint64_t usermode_instruction_prevention                         : 1;
 #define CR4_USERMODE_INSTRUCTION_PREVENTION                          0x800
-    uint64_t reserved_1                                              : 1;
+    uint64_t linear_addresses_57_bit                                 : 1;
+#define CR4_LINEAR_ADDRESSES_57_BIT                                  0x1000
     uint64_t vmx_enable                                              : 1;
 #define CR4_VMX_ENABLE                                               0x2000
     uint64_t smx_enable                                              : 1;
 #define CR4_SMX_ENABLE                                               0x4000
-    uint64_t reserved_2                                              : 1;
+    uint64_t reserved_1                                              : 1;
     uint64_t fsgsbase_enable                                         : 1;
 #define CR4_FSGSBASE_ENABLE                                          0x10000
     uint64_t pcid_enable                                             : 1;
 #define CR4_PCID_ENABLE                                              0x20000
     uint64_t os_xsave                                                : 1;
 #define CR4_OS_XSAVE                                                 0x40000
-    uint64_t reserved_3                                              : 1;
+    uint64_t key_locker_enable                                       : 1;
+#define CR4_KEY_LOCKER_ENABLE                                        0x80000
     uint64_t smep_enable                                             : 1;
 #define CR4_SMEP_ENABLE                                              0x100000
     uint64_t smap_enable                                             : 1;
 #define CR4_SMAP_ENABLE                                              0x200000
     uint64_t protection_key_enable                                   : 1;
 #define CR4_PROTECTION_KEY_ENABLE                                    0x400000
-    uint64_t reserved_4                                              : 41;
+    uint64_t control_flow_enforcement_enable                         : 1;
+#define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE                          0x800000
+    uint64_t protection_key_for_supervisor_mode_enable               : 1;
+#define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE                0x1000000
+    uint64_t reserved_2                                              : 39;
   };
 
   uint64_t Flags;
@@ -690,15 +696,48 @@ typedef struct {
 #define CPUID_ECX_PKU                                                0x08
       uint32_t ospke                                                 : 1;
 #define CPUID_ECX_OSPKE                                              0x10
-      uint32_t reserved_1                                            : 12;
+      uint32_t waitpkg                                               : 1;
+#define CPUID_ECX_WAITPKG                                            0x20
+      uint32_t avx512_vbmi2                                          : 1;
+#define CPUID_ECX_AVX512_VBMI2                                       0x40
+      uint32_t cet_ss                                                : 1;
+#define CPUID_ECX_CET_SS                                             0x80
+      uint32_t gfni                                                  : 1;
+#define CPUID_ECX_GFNI                                               0x100
+      uint32_t vaes                                                  : 1;
+#define CPUID_ECX_VAES                                               0x200
+      uint32_t vpclmulqdq                                            : 1;
+#define CPUID_ECX_VPCLMULQDQ                                         0x400
+      uint32_t avx512_vnni                                           : 1;
+#define CPUID_ECX_AVX512_VNNI                                        0x800
+      uint32_t avx512_bitalg                                         : 1;
+#define CPUID_ECX_AVX512_BITALG                                      0x1000
+      uint32_t tme_en                                                : 1;
+#define CPUID_ECX_TME_EN                                             0x2000
+      uint32_t avx512_vpopcntdq                                      : 1;
+#define CPUID_ECX_AVX512_VPOPCNTDQ                                   0x4000
+      uint32_t reserved_1                                            : 1;
+      uint32_t la57                                                  : 1;
+#define CPUID_ECX_LA57                                               0x10000
       uint32_t mawau                                                 : 5;
 #define CPUID_ECX_MAWAU                                              0x3E0000
       uint32_t rdpid                                                 : 1;
 #define CPUID_ECX_RDPID                                              0x400000
-      uint32_t reserved_2                                            : 7;
+      uint32_t kl                                                    : 1;
+#define CPUID_ECX_KL                                                 0x800000
+      uint32_t reserved_2                                            : 1;
+      uint32_t cldemote                                              : 1;
+#define CPUID_ECX_CLDEMOTE                                           0x2000000
+      uint32_t reserved_3                                            : 1;
+      uint32_t movdiri                                               : 1;
+#define CPUID_ECX_MOVDIRI                                            0x8000000
+      uint32_t movdir64b                                             : 1;
+#define CPUID_ECX_MOVDIR64B                                          0x10000000
+      uint32_t reserved_4                                            : 1;
       uint32_t sgx_lc                                                : 1;
 #define CPUID_ECX_SGX_LC                                             0x40000000
-      uint32_t reserved_3                                            : 1;
+      uint32_t pks                                                   : 1;
+#define CPUID_ECX_PKS                                                0x80000000
     };
 
     uint32_t Flags;
@@ -706,8 +745,41 @@ typedef struct {
 
   union {
     struct {
-      uint32_t reserved                                              : 32;
-#define CPUID_EDX_RESERVED                                           0xFFFFFFFF
+      uint32_t reserved_1                                            : 2;
+      uint32_t avx512_4vnniw                                         : 1;
+#define CPUID_EDX_AVX512_4VNNIW                                      0x04
+      uint32_t avx512_4fmaps                                         : 1;
+#define CPUID_EDX_AVX512_4FMAPS                                      0x08
+      uint32_t fast_short_rep_mov                                    : 1;
+#define CPUID_EDX_FAST_SHORT_REP_MOV                                 0x10
+      uint32_t reserved_2                                            : 3;
+      uint32_t avx512_vp2intersect                                   : 1;
+#define CPUID_EDX_AVX512_VP2INTERSECT                                0x100
+      uint32_t reserved_3                                            : 1;
+      uint32_t md_clear                                              : 1;
+#define CPUID_EDX_MD_CLEAR                                           0x400
+      uint32_t reserved_4                                            : 4;
+      uint32_t hybrid                                                : 1;
+#define CPUID_EDX_HYBRID                                             0x8000
+      uint32_t reserved_5                                            : 2;
+      uint32_t pconfig                                               : 1;
+#define CPUID_EDX_PCONFIG                                            0x40000
+      uint32_t reserved_6                                            : 1;
+      uint32_t cet_ibt                                               : 1;
+#define CPUID_EDX_CET_IBT                                            0x100000
+      uint32_t reserved_7                                            : 5;
+      uint32_t ibrs_ibpb                                             : 1;
+#define CPUID_EDX_IBRS_IBPB                                          0x4000000
+      uint32_t stibp                                                 : 1;
+#define CPUID_EDX_STIBP                                              0x8000000
+      uint32_t l1d_flush                                             : 1;
+#define CPUID_EDX_L1D_FLUSH                                          0x10000000
+      uint32_t ia32_arch_capabilities                                : 1;
+#define CPUID_EDX_IA32_ARCH_CAPABILITIES                             0x20000000
+      uint32_t ia32_core_capabilities                                : 1;
+#define CPUID_EDX_IA32_CORE_CAPABILITIES                             0x40000000
+      uint32_t ssbd                                                  : 1;
+#define CPUID_EDX_SSBD                                               0x80000000
     };
 
     uint32_t Flags;
@@ -3609,7 +3681,14 @@ typedef union {
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_BNDCFGS                        0x800000
     uint64_t conceal_vmx_from_pt                                     : 1;
 #define IA32_VMX_EXIT_CTLS_CONCEAL_VMX_FROM_PT                       0x1000000
-    uint64_t reserved_6                                              : 39;
+    uint64_t clear_ia32_rtit_ctl                                     : 1;
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL                       0x2000000
+    uint64_t reserved_6                                              : 2;
+    uint64_t load_ia32_cet_state                                     : 1;
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE                       0x10000000
+    uint64_t load_ia32_pkrs                                          : 1;
+#define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS                            0x20000000
+    uint64_t reserved_7                                              : 34;
   };
 
   uint64_t Flags;
@@ -3644,7 +3723,10 @@ typedef union {
     uint64_t reserved_4                                              : 1;
     uint64_t load_cet_state                                          : 1;
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE                           0x100000
-    uint64_t reserved_5                                              : 43;
+    uint64_t reserved_5                                              : 1;
+    uint64_t load_ia32_pkrs                                          : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS                           0x400000
+    uint64_t reserved_6                                              : 41;
   };
 
   uint64_t Flags;
@@ -4063,6 +4145,65 @@ typedef union {
  */
 
 #define IA32_DS_AREA                                                 0x00000600
+#define IA32_U_CET                                                   0x000006A0
+typedef union {
+  struct {
+    uint64_t sh_stk_en                                               : 1;
+#define IA32_U_CET_SH_STK_EN                                         0x01
+    uint64_t wr_shstk_en                                             : 1;
+#define IA32_U_CET_WR_SHSTK_EN                                       0x02
+    uint64_t endbr_en                                                : 1;
+#define IA32_U_CET_ENDBR_EN                                          0x04
+    uint64_t leg_iw_en                                               : 1;
+#define IA32_U_CET_LEG_IW_EN                                         0x08
+    uint64_t no_track_en                                             : 1;
+#define IA32_U_CET_NO_TRACK_EN                                       0x10
+    uint64_t suppress_dis                                            : 1;
+#define IA32_U_CET_SUPPRESS_DIS                                      0x20
+    uint64_t reserved_1                                              : 4;
+    uint64_t suppress                                                : 1;
+#define IA32_U_CET_SUPPRESS                                          0x400
+    uint64_t tracker                                                 : 1;
+#define IA32_U_CET_TRACKER                                           0x800
+    uint64_t eb_leg_bitmap_base                                      : 52;
+#define IA32_U_CET_EB_LEG_BITMAP_BASE                                0xFFFFFFFFFFFFF000
+  };
+
+  uint64_t Flags;
+} ia32_u_cet_register;
+
+#define IA32_S_CET                                                   0x000006A2
+typedef union {
+  struct {
+    uint64_t sh_stk_en                                               : 1;
+#define IA32_S_CET_SH_STK_EN                                         0x01
+    uint64_t wr_shstk_en                                             : 1;
+#define IA32_S_CET_WR_SHSTK_EN                                       0x02
+    uint64_t endbr_en                                                : 1;
+#define IA32_S_CET_ENDBR_EN                                          0x04
+    uint64_t leg_iw_en                                               : 1;
+#define IA32_S_CET_LEG_IW_EN                                         0x08
+    uint64_t no_track_en                                             : 1;
+#define IA32_S_CET_NO_TRACK_EN                                       0x10
+    uint64_t suppress_dis                                            : 1;
+#define IA32_S_CET_SUPPRESS_DIS                                      0x20
+    uint64_t reserved_1                                              : 4;
+    uint64_t suppress                                                : 1;
+#define IA32_S_CET_SUPPRESS                                          0x400
+    uint64_t tracker                                                 : 1;
+#define IA32_S_CET_TRACKER                                           0x800
+    uint64_t eb_leg_bitmap_base                                      : 52;
+#define IA32_S_CET_EB_LEG_BITMAP_BASE                                0xFFFFFFFFFFFFF000
+  };
+
+  uint64_t Flags;
+} ia32_s_cet_register;
+
+#define IA32_PL0_SSP                                                 0x000006A4
+#define IA32_PL1_SSP                                                 0x000006A5
+#define IA32_PL2_SSP                                                 0x000006A6
+#define IA32_PL3_SSP                                                 0x000006A7
+#define IA32_INTERRUPT_SSP_TABLE_ADDR                                0x000006A8
 #define IA32_TSC_DEADLINE                                            0x000006E0
 #define IA32_PM_ENABLE                                               0x00000770
 typedef union {
@@ -5672,140 +5813,140 @@ typedef union {
 typedef union {
   struct {
     uint64_t read_access                                             : 1;
-#define EPT_PDPTE_1GB_READ_ACCESS                                    0x01
+#define EPDPTE_1GB_READ_ACCESS                                       0x01
     uint64_t write_access                                            : 1;
-#define EPT_PDPTE_1GB_WRITE_ACCESS                                   0x02
+#define EPDPTE_1GB_WRITE_ACCESS                                      0x02
     uint64_t execute_access                                          : 1;
-#define EPT_PDPTE_1GB_EXECUTE_ACCESS                                 0x04
+#define EPDPTE_1GB_EXECUTE_ACCESS                                    0x04
     uint64_t memory_type                                             : 3;
-#define EPT_PDPTE_1GB_MEMORY_TYPE                                    0x38
+#define EPDPTE_1GB_MEMORY_TYPE                                       0x38
     uint64_t ignore_pat                                              : 1;
-#define EPT_PDPTE_1GB_IGNORE_PAT                                     0x40
+#define EPDPTE_1GB_IGNORE_PAT                                        0x40
     uint64_t large_page                                              : 1;
-#define EPT_PDPTE_1GB_LARGE_PAGE                                     0x80
+#define EPDPTE_1GB_LARGE_PAGE                                        0x80
     uint64_t accessed                                                : 1;
-#define EPT_PDPTE_1GB_ACCESSED                                       0x100
+#define EPDPTE_1GB_ACCESSED                                          0x100
     uint64_t dirty                                                   : 1;
-#define EPT_PDPTE_1GB_DIRTY                                          0x200
+#define EPDPTE_1GB_DIRTY                                             0x200
     uint64_t user_mode_execute                                       : 1;
-#define EPT_PDPTE_1GB_USER_MODE_EXECUTE                              0x400
+#define EPDPTE_1GB_USER_MODE_EXECUTE                                 0x400
     uint64_t reserved_1                                              : 19;
     uint64_t page_frame_number                                       : 18;
-#define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER                              0xFFFFC0000000
+#define EPDPTE_1GB_PAGE_FRAME_NUMBER                                 0xFFFFC0000000
     uint64_t reserved_2                                              : 15;
     uint64_t suppress_ve                                             : 1;
-#define EPT_PDPTE_1GB_SUPPRESS_VE                                    0x8000000000000000
+#define EPDPTE_1GB_SUPPRESS_VE                                       0x8000000000000000
   };
 
   uint64_t Flags;
-} ept_pdpte_1gb;
+} epdpte_1gb;
 
 typedef union {
   struct {
     uint64_t read_access                                             : 1;
-#define EPT_PDPTE_READ_ACCESS                                        0x01
+#define EPDPTE_READ_ACCESS                                           0x01
     uint64_t write_access                                            : 1;
-#define EPT_PDPTE_WRITE_ACCESS                                       0x02
+#define EPDPTE_WRITE_ACCESS                                          0x02
     uint64_t execute_access                                          : 1;
-#define EPT_PDPTE_EXECUTE_ACCESS                                     0x04
+#define EPDPTE_EXECUTE_ACCESS                                        0x04
     uint64_t reserved_1                                              : 5;
     uint64_t accessed                                                : 1;
-#define EPT_PDPTE_ACCESSED                                           0x100
+#define EPDPTE_ACCESSED                                              0x100
     uint64_t reserved_2                                              : 1;
     uint64_t user_mode_execute                                       : 1;
-#define EPT_PDPTE_USER_MODE_EXECUTE                                  0x400
+#define EPDPTE_USER_MODE_EXECUTE                                     0x400
     uint64_t reserved_3                                              : 1;
     uint64_t page_frame_number                                       : 36;
-#define EPT_PDPTE_PAGE_FRAME_NUMBER                                  0xFFFFFFFFF000
+#define EPDPTE_PAGE_FRAME_NUMBER                                     0xFFFFFFFFF000
     uint64_t reserved_4                                              : 16;
   };
 
   uint64_t Flags;
-} ept_pdpte;
+} epdpte;
 
 typedef union {
   struct {
     uint64_t read_access                                             : 1;
-#define EPT_PDE_2MB_READ_ACCESS                                      0x01
+#define EPDE_2MB_READ_ACCESS                                         0x01
     uint64_t write_access                                            : 1;
-#define EPT_PDE_2MB_WRITE_ACCESS                                     0x02
+#define EPDE_2MB_WRITE_ACCESS                                        0x02
     uint64_t execute_access                                          : 1;
-#define EPT_PDE_2MB_EXECUTE_ACCESS                                   0x04
+#define EPDE_2MB_EXECUTE_ACCESS                                      0x04
     uint64_t memory_type                                             : 3;
-#define EPT_PDE_2MB_MEMORY_TYPE                                      0x38
+#define EPDE_2MB_MEMORY_TYPE                                         0x38
     uint64_t ignore_pat                                              : 1;
-#define EPT_PDE_2MB_IGNORE_PAT                                       0x40
+#define EPDE_2MB_IGNORE_PAT                                          0x40
     uint64_t large_page                                              : 1;
-#define EPT_PDE_2MB_LARGE_PAGE                                       0x80
+#define EPDE_2MB_LARGE_PAGE                                          0x80
     uint64_t accessed                                                : 1;
-#define EPT_PDE_2MB_ACCESSED                                         0x100
+#define EPDE_2MB_ACCESSED                                            0x100
     uint64_t dirty                                                   : 1;
-#define EPT_PDE_2MB_DIRTY                                            0x200
+#define EPDE_2MB_DIRTY                                               0x200
     uint64_t user_mode_execute                                       : 1;
-#define EPT_PDE_2MB_USER_MODE_EXECUTE                                0x400
+#define EPDE_2MB_USER_MODE_EXECUTE                                   0x400
     uint64_t reserved_1                                              : 10;
     uint64_t page_frame_number                                       : 27;
-#define EPT_PDE_2MB_PAGE_FRAME_NUMBER                                0xFFFFFFE00000
+#define EPDE_2MB_PAGE_FRAME_NUMBER                                   0xFFFFFFE00000
     uint64_t reserved_2                                              : 15;
     uint64_t suppress_ve                                             : 1;
-#define EPT_PDE_2MB_SUPPRESS_VE                                      0x8000000000000000
+#define EPDE_2MB_SUPPRESS_VE                                         0x8000000000000000
   };
 
   uint64_t Flags;
-} ept_pde_2mb;
+} epde_2mb;
 
 typedef union {
   struct {
     uint64_t read_access                                             : 1;
-#define EPT_PDE_READ_ACCESS                                          0x01
+#define EPDE_READ_ACCESS                                             0x01
     uint64_t write_access                                            : 1;
-#define EPT_PDE_WRITE_ACCESS                                         0x02
+#define EPDE_WRITE_ACCESS                                            0x02
     uint64_t execute_access                                          : 1;
-#define EPT_PDE_EXECUTE_ACCESS                                       0x04
+#define EPDE_EXECUTE_ACCESS                                          0x04
     uint64_t reserved_1                                              : 5;
     uint64_t accessed                                                : 1;
-#define EPT_PDE_ACCESSED                                             0x100
+#define EPDE_ACCESSED                                                0x100
     uint64_t reserved_2                                              : 1;
     uint64_t user_mode_execute                                       : 1;
-#define EPT_PDE_USER_MODE_EXECUTE                                    0x400
+#define EPDE_USER_MODE_EXECUTE                                       0x400
     uint64_t reserved_3                                              : 1;
     uint64_t page_frame_number                                       : 36;
-#define EPT_PDE_PAGE_FRAME_NUMBER                                    0xFFFFFFFFF000
+#define EPDE_PAGE_FRAME_NUMBER                                       0xFFFFFFFFF000
     uint64_t reserved_4                                              : 16;
   };
 
   uint64_t Flags;
-} ept_pde;
+} epde;
 
 typedef union {
   struct {
     uint64_t read_access                                             : 1;
-#define EPT_PTE_READ_ACCESS                                          0x01
+#define EPTE_READ_ACCESS                                             0x01
     uint64_t write_access                                            : 1;
-#define EPT_PTE_WRITE_ACCESS                                         0x02
+#define EPTE_WRITE_ACCESS                                            0x02
     uint64_t execute_access                                          : 1;
-#define EPT_PTE_EXECUTE_ACCESS                                       0x04
+#define EPTE_EXECUTE_ACCESS                                          0x04
     uint64_t memory_type                                             : 3;
-#define EPT_PTE_MEMORY_TYPE                                          0x38
+#define EPTE_MEMORY_TYPE                                             0x38
     uint64_t ignore_pat                                              : 1;
-#define EPT_PTE_IGNORE_PAT                                           0x40
+#define EPTE_IGNORE_PAT                                              0x40
     uint64_t reserved_1                                              : 1;
     uint64_t accessed                                                : 1;
-#define EPT_PTE_ACCESSED                                             0x100
+#define EPTE_ACCESSED                                                0x100
     uint64_t dirty                                                   : 1;
-#define EPT_PTE_DIRTY                                                0x200
+#define EPTE_DIRTY                                                   0x200
     uint64_t user_mode_execute                                       : 1;
-#define EPT_PTE_USER_MODE_EXECUTE                                    0x400
+#define EPTE_USER_MODE_EXECUTE                                       0x400
     uint64_t reserved_2                                              : 1;
     uint64_t page_frame_number                                       : 36;
-#define EPT_PTE_PAGE_FRAME_NUMBER                                    0xFFFFFFFFF000
+#define EPTE_PAGE_FRAME_NUMBER                                       0xFFFFFFFFF000
     uint64_t reserved_3                                              : 15;
     uint64_t suppress_ve                                             : 1;
-#define EPT_PTE_SUPPRESS_VE                                          0x8000000000000000
+#define EPTE_SUPPRESS_VE                                             0x8000000000000000
   };
 
   uint64_t Flags;
-} ept_pte;
+} epte;
 
 typedef union {
   struct {
@@ -6026,7 +6167,10 @@ typedef union {
 #define VMCS_CTRL_VIRTXCPT_INFO_ADDR                                 0x0000202A
 #define VMCS_CTRL_XSS_EXITING_BITMAP                                 0x0000202C
 #define VMCS_CTRL_ENCLS_EXITING_BITMAP                               0x0000202E
+#define VMCS_CTRL_SPP_TABLE_POINTER                                  0x00002030
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
+#define VMCS_CTRL_PROC_EXEC3                                         0x00002034
+#define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
 /**
  * @}
  */
@@ -6057,6 +6201,7 @@ typedef union {
 #define VMCS_GUEST_PDPTE3                                            0x00002810
 #define VMCS_GUEST_BNDCFGS                                           0x00002812
 #define VMCS_GUEST_RTIT_CTL                                          0x00002814
+#define VMCS_GUEST_PKRS                                              0x00002818
 /**
  * @}
  */
@@ -6069,6 +6214,7 @@ typedef union {
 #define VMCS_HOST_PAT                                                0x00002C00
 #define VMCS_HOST_EFER                                               0x00002C02
 #define VMCS_HOST_PERF_GLOBAL_CTRL                                   0x00002C04
+#define VMCS_HOST_PKRS                                               0x00002C06
 /**
  * @}
  */
