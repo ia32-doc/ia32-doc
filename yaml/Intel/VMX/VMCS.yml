@@ -437,10 +437,25 @@
           long_name: ENCLS_EXITING_BITMAP
           description: ENCLS-exiting bitmap.
 
+        - value: 0x2030
+          short_name: SPP_TABLE_POINTER
+          long_name: SUB_PAGE_PERMISSION_TABLE_POINTER
+          description: Sub-page-permission-table pointer.
+
         - value: 0x2032
           short_name: TSC_MULTIPLIER
           long_name: TSC_MULTIPLIER
           description: TSC multiplier.
+
+        - value: 0x2034
+          short_name: PROC_EXEC3
+          long_name: TERTIARY_PROCESSOR_BASED_VM_EXECUTION_CONTROLS
+          description: Tertiary processor-based VM-execution controls.
+
+        - value: 0x2036
+          short_name: ENCLV_EXITING_BITMAP
+          long_name: ENCLV_EXITING_BITMAP
+          description: ENCLV-exiting bitmap.
 
       - name: 64_BIT_READ_ONLY_DATA_FIELDS
         description: 64-Bit Read-Only Data Field.
@@ -512,6 +527,11 @@
           long_name: RTIT_CTL
           description: Guest IA32_RTIT_CTL.
 
+        - value: 0x2818
+          short_name: PKRS
+          long_name: PKRS
+          description: Guest IA32_PKRS
+
       - name: 64_BIT_HOST_STATE_FIELDS
         description: 64-Bit Host-State Fields.
         children_name_with_prefix: HOST
@@ -531,6 +551,11 @@
           short_name: PERF_GLOBAL_CTRL
           long_name: PERF_GLOBAL_CTRL
           description: Host IA32_PERF_GLOBAL_CTRL.
+
+        - value: 0x2C06
+          short_name: PKRS
+          long_name: PKRS
+          description: Host IA32_PKRS
 
   - name: 32_BIT
     description: 32-Bit Fields.
