@@ -3205,13 +3205,11 @@
       short_description: Whether the guest IA32_PAT MSR is saved on VM-exit
       long_description: This control determines whether the IA32_PAT MSR is saved on VM exit.
 
-
     - bit: 19
       short_name: LOAD_HOST_PAT_MSR
       long_name: LOAD_IA32_PAT
       short_description: Whether the host IA32_PAT MSR is loaded on VM-exit
       long_description: This control determines whether the IA32_PAT MSR is loaded on VM exit.
-
 
     - bit: 20
       short_name: SAVE_GUEST_EFER_MSR
@@ -3219,13 +3217,11 @@
       short_description: Whether the guest IA32_EFER MSR is saved on VM-exit
       long_description: This control determines whether the IA32_EFER MSR is saved on VM exit.
 
-
     - bit: 21
       short_name: LOAD_HOST_EFER_MSR
       long_name: LOAD_IA32_EFER
       short_description: Whether the host IA32_EFER MSR is loaded on VM-exit
       long_description: This control determines whether the IA32_EFER MSR is loaded on VM exit.
-
 
     - bit: 22
       short_name: SAVE_VMX_PREEMPT_TIMER
@@ -3233,16 +3229,10 @@
       short_description: Whether the value of the VMX preemption timer is saved on every VM-exit
       long_description: This control determines whether the value of the VMX-preemption timer is saved on VM exit.
 
-    #
-    # Note:
-    # Bit 23 & Bit 24 is not in virtualbox's hm_vmx.h
-    #
-
     - bit: 23
       short_name: CLEAR_BNDCFGS
       long_name: CLEAR_IA32_BNDCFGS
       description: This control determines whether the IA32_BNDCFGS MSR is cleared on VM exit.
-
 
     - bit: 24
       name: CONCEAL_VMX_FROM_PT
@@ -3250,6 +3240,26 @@
         If this control is 1, Intel Processor Trace does not produce a paging information packet (PIP) on
         a VM exit or a VMCS packet on an SMM VM exit.
       see: Vol3C[35(INTEL® PROCESSOR TRACE)]
+
+    - bit: 25
+      short_name: CLEAR_RTIT_CTL
+      long_name: CLEAR_IA32_RTIT_CTL
+      description: |
+        This control determines whether the IA32_RTIT_CTL MSR is cleared on VM exit.
+      see: Vol3C[35(INTEL® PROCESSOR TRACE)]
+
+    - bit: 28
+      short_name: LOAD_HOST_CET_STATE
+      long_name: LOAD_IA32_CET_STATE
+      description: |
+        This control determines whether CET-related MSRs and SPP are loaded on VM exit.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 29
+      short_name: LOAD_HOST_PKRS
+      long_name: LOAD_IA32_PKRS
+      description: |
+        This control determines whether the IA32_PKRS MSR is loaded on VM exit.
 
 - value: 0x484
   name: VMX_ENTRY_CTLS
@@ -3340,6 +3350,11 @@
     - bit: 20
       name: LOAD_CET_STATE
       description: This control determines whether CET-related MSRs and SPP are loaded on VM entry.
+
+    - bit: 22
+      short_name: LOAD_GUEST_PKRS
+      long_name: LOAD_IA32_PKRS
+      description: This control determines whether the IA32_PKRS MSR is loaded on VM entry.
 
 - value: 0x485
   name: VMX_MISC
@@ -4665,6 +4680,202 @@
   remarks: |
     If CPUID.01H:EDX.DS[21] = 1
   see: Vol3B[18.6.3.4(Debug Store (DS) Mechanism)]
+
+- value: 0x6A0
+  name: U_CET
+  description: Configure User Mode CET
+  access: R/W
+  remarks: |
+    - Bits 1:0 are defined if CPUID.(EAX=07H,ECX=0H):ECX.CET_SS[07] = 1.
+    - Bits 5:2 and bits 63:10 are defined if CPUID.(EAX=07H,ECX=0H):EDX.CET_IBT[20] = 1.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: SH_STK_EN
+      description: When set to 1, enable shadow stacks at CPL3.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 1
+      name: WR_SHSTK_EN
+      description: When set to 1, enables the WRSSD/WRSSQ instructions.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 2
+      name: ENDBR_EN
+      description: When set to 1, enables indirect branch tracking
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 3
+      name: LEG_IW_EN
+      description: Enable legacy compatibility treatment for indirect branch tracking.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 4
+      name: NO_TRACK_EN
+      description: When set to 1, enables use of no-track prefix for indirect branch tracking.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 5
+      name: SUPPRESS_DIS
+      description: When set to 1, disables suppression of CET indirect branch tracking on legacy compatibility.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 10
+      name: SUPPRESS
+      description: |
+        When set to 1, indirect branch tracking is suppressed. This bit can be written to 1 only if
+        TRACKER is written as IDLE.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 11
+      name: TRACKER
+      description: |
+        Value of the indirect branch tracking state machine. Values: IDLE (0), WAIT_FOR_ENDBRANCH(1).
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 12-63
+      name: EB_LEG_BITMAP_BASE
+      description: |
+        Linear address bits 63:12 of a legacy code page bitmap used for legacy compatibility when
+        indirect branch tracking is enabled. If the processor does not support Intel 64 architecture,
+        these fields have only 32 bits; bits 63:32 of the MSRs are reserved. On processors that support
+        Intel 64 architecture this value cannot represent a non-canonical address. In protected mode,
+        only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must
+        be 0 (hardware requires bits 1:0 to be 0).
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+- value: 0x6A2
+  name: S_CET
+  description: Configure Supervisor Mode CET
+  access: R/W
+  remarks: |
+    - Bits 1:0 are defined if CPUID.(EAX=07H,ECX=0H):ECX.CET_SS[07] = 1.
+    - Bits 5:2 and bits 63:10 are defined if CPUID.(EAX=07H,ECX=0H):EDX.CET_IBT[20] = 1.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: SH_STK_EN
+      description: When set to 1, enable shadow stacks at CPL3.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 1
+      name: WR_SHSTK_EN
+      description: When set to 1, enables the WRSSD/WRSSQ instructions.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 2
+      name: ENDBR_EN
+      description: When set to 1, enables indirect branch tracking
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 3
+      name: LEG_IW_EN
+      description: Enable legacy compatibility treatment for indirect branch tracking.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 4
+      name: NO_TRACK_EN
+      description: When set to 1, enables use of no-track prefix for indirect branch tracking.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 5
+      name: SUPPRESS_DIS
+      description: When set to 1, disables suppression of CET indirect branch tracking on legacy compatibility.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 10
+      name: SUPPRESS
+      description: |
+        When set to 1, indirect branch tracking is suppressed. This bit can be written to 1 only if
+        TRACKER is written as IDLE.
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 11
+      name: TRACKER
+      description: |
+        Value of the indirect branch tracking state machine. Values: IDLE (0), WAIT_FOR_ENDBRANCH(1).
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+    - bit: 12-63
+      name: EB_LEG_BITMAP_BASE
+      description: |
+        Linear address bits 63:12 of a legacy code page bitmap used for legacy compatibility when
+        indirect branch tracking is enabled. If the processor does not support Intel 64 architecture,
+        these fields have only 32 bits; bits 63:32 of the MSRs are reserved. On processors that support
+        Intel 64 architecture this value cannot represent a non-canonical address. In protected mode,
+        only 31:0 are loaded. The linear address written must be aligned to 8 bytes and bits 2:0 must
+        be 0 (hardware requires bits 1:0 to be 0).
+      see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+
+- value: 0x6A4
+  name: PL0_SSP
+  description: |
+    Linear address to be loaded into SSP on transition to privilege level 0.
+
+    If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits
+    63:32 of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot
+    represent a non-canonical address. In protected mode, only 31:0 are loaded. The linear address
+    written must be aligned to 8 bytes and bits 2:0 must be 0 (hardware requires bits 1:0 to be 0).
+  access: R/W
+  remarks: |
+    If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+
+- value: 0x6A5
+  name: PL1_SSP
+  description: |
+    Linear address to be loaded into SSP on transition to privilege level 1.
+
+    If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits
+    63:32 of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot
+    represent a non-canonical address. In protected mode, only 31:0 are loaded. The linear address
+    written must be aligned to 8 bytes and bits 2:0 must be 0 (hardware requires bits 1:0 to be 0).
+  access: R/W
+  remarks: |
+    If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+
+- value: 0x6A6
+  name: PL2_SSP
+  description: |
+    Linear address to be loaded into SSP on transition to privilege level 2.
+
+    If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits
+    63:32 of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot
+    represent a non-canonical address. In protected mode, only 31:0 are loaded. The linear address
+    written must be aligned to 8 bytes and bits 2:0 must be 0 (hardware requires bits 1:0 to be 0).
+  access: R/W
+  remarks: |
+    If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+
+- value: 0x6A7
+  name: PL3_SSP
+  description: |
+    Linear address to be loaded into SSP on transition to privilege level 3.
+
+    If the processor does not support Intel 64 architecture, these fields have only 32 bits; bits
+    63:32 of the MSRs are reserved. On processors that support Intel 64 architecture this value cannot
+    represent a non-canonical address. In protected mode, only 31:0 are loaded. The linear address
+    written must be aligned to 8 bytes and bits 2:0 must be 0 (hardware requires bits 1:0 to be 0).
+  access: R/W
+  remarks: |
+    If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
+
+- value: 0x6A8
+  name: INTERRUPT_SSP_TABLE_ADDR
+  description: |
+    Linear address of a table of seven shadow stack pointers that are selected in IA-32e mode using
+    the IST index (when not 0) from the interrupt gate descriptor.
+
+    This MSR is not present on processors that do not support Intel 64 architecture. This field cannot
+    represent a non-canonical address.
+  access: R/W
+  remarks: |
+    If CPUID.(EAX=07H, ECX=0H):ECX.CET_SS[07] = 1
 
 - value: 0x6E0
   name: TSC_DEADLINE
