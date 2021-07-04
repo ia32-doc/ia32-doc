@@ -211,3 +211,13 @@
       Source: EPT violations.
 
       Error Code: No.
+
+  - value: 21
+    short_name: CP
+    long_name: CONTROL_PROTECTION_EXCEPTION
+    description: |
+      #CP - Control Protection Exception.
+
+      Source: Control flow transfer attempt violated the control flow enforcement technology constraints.
+
+      Error Code: Yes.

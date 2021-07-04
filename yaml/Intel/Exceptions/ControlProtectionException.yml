@@ -1,0 +1,27 @@
+- name: CONTROL_PROTECTION_EXCEPTION
+  description: Control Protection Exception.
+  type: bitfield
+  size: 32
+  reference: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+  fields:
+  - bit: 0-14
+    short_name: CPEC
+    long_name: CPEC
+    description: |
+      One of the following values:
+
+      1 - NEAR-RET: Indicates the #CP was caused by a near RET instruction.
+
+      2 - FAR-RET/IRET: Indicates the #CP was caused by a FAR RET or IRET instruction.
+
+      3 - ENDBRANCH: indicates the #CP was due to missing ENDBRANCH at target of an indirect call or jump instruction.
+
+      4 - RSTORSSP: Indicates the #CP was caused by a shadow-stack-restore token check failure in the RSTORSSP instruction.
+
+      5 - SETSSBSY: Indicates #CP was caused by a supervisor shadow stack token check failure in the SETSSBSY instruction.
+
+  - bit: 15
+    short_name: ENCL
+    long_name: ENCL
+    description: |
+      If set to 1, indicates the #CP occurred during enclave execution.
