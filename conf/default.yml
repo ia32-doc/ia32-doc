@@ -95,7 +95,7 @@ bitfield_field_reserved_prefix: 'Reserved'
 #     UINT64 Flags; //<<<<<<<<<<<<<
 #   }
 #
-bitfield_field_flags_name: 'Flags'
+bitfield_field_flags_name: 'AsUInt'
 
 #
 # Common option for:
