@@ -3,6 +3,7 @@
   todo: Long description
   type: group
   include:
+  - ControlProtectionException
   - ExceptionVector
   - ExceptionErrorCode
   - PageFaultException
