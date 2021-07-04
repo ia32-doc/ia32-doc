@@ -4761,7 +4761,7 @@
     fields:
     - bit: 0
       name: SH_STK_EN
-      description: When set to 1, enable shadow stacks at CPL3.
+      description: When set to 1, enable shadow stacks at CPL0.
       see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
 
     - bit: 1
