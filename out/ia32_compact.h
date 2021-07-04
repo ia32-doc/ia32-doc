@@ -5208,6 +5208,15 @@ typedef union {
  *           Exceptions
  * @{
  */
+typedef union {
+  struct {
+    uint32_t cpec                                                    : 15;
+    uint32_t encl                                                    : 1;
+  };
+
+  uint32_t flags;
+} control_protection_exception;
+
 typedef enum {
   divide_error                                                 = 0x00000000,
   debug                                                        = 0x00000001,
@@ -5229,6 +5238,7 @@ typedef enum {
   machine_check                                                = 0x00000012,
   simd_floating_point_error                                    = 0x00000013,
   virtualization_exception                                     = 0x00000014,
+  control_protection_exception                                 = 0x00000015,
 } exception_vector;
 
 typedef union {

@@ -6624,6 +6624,18 @@ typedef union {
  *           Exceptions
  * @{
  */
+typedef union {
+  struct {
+    uint32_t cpec                                                    : 15;
+#define CONTROL_PROTECTION_EXCEPTION_CPEC                            0x7FFF
+    uint32_t encl                                                    : 1;
+#define CONTROL_PROTECTION_EXCEPTION_ENCL                            0x8000
+    uint32_t reserved_1                                              : 16;
+  };
+
+  uint32_t Flags;
+} control_protection_exception;
+
 #define DIVIDE_ERROR                                                 0x00000000
 #define DEBUG                                                        0x00000001
 #define NMI                                                          0x00000002
@@ -6644,6 +6656,7 @@ typedef union {
 #define MACHINE_CHECK                                                0x00000012
 #define SIMD_FLOATING_POINT_ERROR                                    0x00000013
 #define VIRTUALIZATION_EXCEPTION                                     0x00000014
+#define CONTROL_PROTECTION_EXCEPTION                                 0x00000015
 /**
  * @}
  */
