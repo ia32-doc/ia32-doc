@@ -12975,7 +12975,7 @@ typedef union
   struct
   {
     /**
-     * [Bit 0] When set to 1, enable shadow stacks at CPL3.
+     * [Bit 0] When set to 1, enable shadow stacks at CPL0.
      *
      * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
      */
@@ -22213,7 +22213,20 @@ typedef union
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION_FLAG           0x20
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION_MASK           0x01
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION(_)             (((_) >> 5) & 0x01)
-    uint32_t reserved1                                               : 9;
+
+    /**
+     * [Bit 6] If the access causing the page-fault exception was a shadow-stack access (including shadow-stack accesses in
+     * enclave mode), this flag is 1; otherwise, it is 0. This flag describes the access causing the page-fault exception, not
+     * the access rights specified by paging.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    uint32_t shadow_stack                                            : 1;
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_BIT                        6
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_FLAG                       0x40
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_MASK                       0x01
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK(_)                         (((_) >> 6) & 0x01)
+    uint32_t reserved1                                               : 8;
 
     /**
      * [Bit 15] This flag is 1 if the exception is unrelated to paging and resulted from violation of SGX-specific

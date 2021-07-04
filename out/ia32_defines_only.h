@@ -6678,7 +6678,9 @@ typedef union {
 #define PAGE_FAULT_EXCEPTION_EXECUTE                                 0x10
     uint32_t protection_key_violation                                : 1;
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION                0x20
-    uint32_t reserved_1                                              : 9;
+    uint32_t shadow_stack                                            : 1;
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK                            0x40
+    uint32_t reserved_1                                              : 8;
     uint32_t sgx                                                     : 1;
 #define PAGE_FAULT_EXCEPTION_SGX                                     0x8000
     uint32_t reserved_2                                              : 16;

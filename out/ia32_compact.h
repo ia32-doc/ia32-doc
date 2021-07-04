@@ -5250,7 +5250,8 @@ typedef union {
     uint32_t reserved_bit_violation                                  : 1;
     uint32_t execute                                                 : 1;
     uint32_t protection_key_violation                                : 1;
-    uint32_t reserved_1                                              : 9;
+    uint32_t shadow_stack                                            : 1;
+    uint32_t reserved_1                                              : 8;
     uint32_t sgx                                                     : 1;
   };
 
