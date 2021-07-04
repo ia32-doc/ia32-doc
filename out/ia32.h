@@ -21918,6 +21918,43 @@ typedef union
  * @{
  */
 /**
+ * @brief Control Protection Exception
+ *
+ * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))] (reference)
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bits 14:0] One of the following values:
+     * 1 - NEAR-RET: Indicates the \#CP was caused by a near RET instruction.
+     * 2 - FAR-RET/IRET: Indicates the \#CP was caused by a FAR RET or IRET instruction.
+     * 3 - ENDBRANCH: indicates the \#CP was due to missing ENDBRANCH at target of an indirect call or jump instruction.
+     * 4 - RSTORSSP: Indicates the \#CP was caused by a shadow-stack-restore token check failure in the RSTORSSP instruction.
+     * 5 - SETSSBSY: Indicates \#CP was caused by a supervisor shadow stack token check failure in the SETSSBSY instruction.
+     */
+    UINT32 Cpec                                                    : 15;
+#define CONTROL_PROTECTION_EXCEPTION_CPEC_BIT                        0
+#define CONTROL_PROTECTION_EXCEPTION_CPEC_FLAG                       0x7FFF
+#define CONTROL_PROTECTION_EXCEPTION_CPEC_MASK                       0x7FFF
+#define CONTROL_PROTECTION_EXCEPTION_CPEC(_)                         (((_) >> 0) & 0x7FFF)
+
+    /**
+     * [Bit 15] If set to 1, indicates the \#CP occurred during enclave execution.
+     */
+    UINT32 Encl                                                    : 1;
+#define CONTROL_PROTECTION_EXCEPTION_ENCL_BIT                        15
+#define CONTROL_PROTECTION_EXCEPTION_ENCL_FLAG                       0x8000
+#define CONTROL_PROTECTION_EXCEPTION_ENCL_MASK                       0x01
+#define CONTROL_PROTECTION_EXCEPTION_ENCL(_)                         (((_) >> 15) & 0x01)
+    UINT32 Reserved1                                               : 16;
+  };
+
+  UINT32 AsUInt;
+} CONTROL_PROTECTION_EXCEPTION;
+
+/**
  * @brief Exceptions that can occur when the instruction is executed in protected mode.
  *        Each exception is given a mnemonic that consists of a pound sign (\#) followed by two letters and an optional error code
  *        in parentheses. For example, \#GP(0) denotes a general protection exception with an error code of 0
@@ -22069,6 +22106,13 @@ typedef enum
    * Error Code: No.
    */
   VirtualizationException                                      = 0x00000014,
+
+  /**
+   * #CP - Control Protection Exception.
+   * Source: Control flow transfer attempt violated the control flow enforcement technology constraints.
+   * Error Code: Yes.
+   */
+  ControlProtectionException                                   = 0x00000015,
 } EXCEPTION_VECTOR;
 
 /**
