@@ -246,7 +246,7 @@ typedef union
     UINT64 Reserved4                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } CR0;
 
 typedef union
@@ -301,7 +301,7 @@ typedef union
     UINT64 Reserved3                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } CR3;
 
 typedef union
@@ -659,7 +659,7 @@ typedef union
     UINT64 Reserved2                                               : 39;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } CR4;
 
 typedef union
@@ -691,7 +691,7 @@ typedef union
 #define CR8_RESERVED(_)                                              (((_) >> 4) & 0xFFFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } CR8;
 
 /**
@@ -797,7 +797,7 @@ typedef union
     UINT64 Reserved2                                               : 47;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } DR6;
 
 typedef union
@@ -988,7 +988,7 @@ typedef union
     UINT64 Reserved4                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } DR7;
 
 /**
@@ -1113,7 +1113,7 @@ typedef struct
       UINT32 Reserved2                                             : 4;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } CpuidVersionInformation;
 
   /**
@@ -1169,7 +1169,7 @@ typedef struct
 #define CPUID_ADDITIONAL_INFORMATION_INITIAL_APIC_ID(_)              (((_) >> 24) & 0xFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } CpuidAdditionalInformation;
 
   /**
@@ -1523,7 +1523,7 @@ typedef struct
       UINT32 Reserved2                                             : 1;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } CpuidFeatureInformationEcx;
 
   /**
@@ -1884,7 +1884,7 @@ typedef struct
 #define CPUID_FEATURE_INFORMATION_EDX_PENDING_BREAK_ENABLE(_)        (((_) >> 31) & 0x01)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } CpuidFeatureInformationEdx;
 
 } CPUID_EAX_01;
@@ -1984,7 +1984,7 @@ typedef struct
 #define CPUID_EAX_MAX_ADDRESSABLE_IDS_FOR_PROCESSOR_CORES_IN_PHYSICAL_PACKAGE(_) (((_) >> 26) & 0x3F)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -2025,7 +2025,7 @@ typedef struct
 #define CPUID_EBX_WAYS_OF_ASSOCIATIVITY(_)                           (((_) >> 22) & 0x3FF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -2044,7 +2044,7 @@ typedef struct
 #define CPUID_ECX_NUMBER_OF_SETS(_)                                  (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -2089,7 +2089,7 @@ typedef struct
       UINT32 Reserved1                                             : 29;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_04;
@@ -2120,7 +2120,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -2138,7 +2138,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -2165,7 +2165,7 @@ typedef struct
       UINT32 Reserved1                                             : 30;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -2245,7 +2245,7 @@ typedef struct
 #define CPUID_EDX_NUMBER_OF_C7_SUB_C_STATES(_)                       (((_) >> 28) & 0x0F)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_05;
@@ -2431,7 +2431,7 @@ typedef struct
       UINT32 Reserved4                                             : 11;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -2449,7 +2449,7 @@ typedef struct
       UINT32 Reserved1                                             : 28;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -2480,7 +2480,7 @@ typedef struct
       UINT32 Reserved2                                             : 28;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -2497,7 +2497,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_06;
@@ -2529,7 +2529,7 @@ typedef struct
 #define CPUID_EAX_NUMBER_OF_SUB_LEAVES(_)                            (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -2817,7 +2817,7 @@ typedef struct
 #define CPUID_EBX_AVX512VL(_)                                        (((_) >> 31) & 0x01)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3048,7 +3048,7 @@ typedef struct
 #define CPUID_ECX_PKS(_)                                             (((_) >> 31) & 0x01)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3196,7 +3196,7 @@ typedef struct
 #define CPUID_EDX_SSBD(_)                                            (((_) >> 31) & 0x01)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_07;
@@ -3224,7 +3224,7 @@ typedef struct
 #define CPUID_EAX_IA32_PLATFORM_DCA_CAP(_)                           (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3241,7 +3241,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3258,7 +3258,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3275,7 +3275,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_09;
@@ -3335,7 +3335,7 @@ typedef struct
 #define CPUID_EAX_EBX_BIT_VECTOR_LENGTH(_)                           (((_) >> 24) & 0xFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3407,7 +3407,7 @@ typedef struct
       UINT32 Reserved1                                             : 25;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3424,7 +3424,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3461,7 +3461,7 @@ typedef struct
       UINT32 Reserved2                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0A;
@@ -3502,7 +3502,7 @@ typedef struct
       UINT32 Reserved1                                             : 27;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3525,7 +3525,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3559,7 +3559,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3576,7 +3576,7 @@ typedef struct
 #define CPUID_EDX_X2APIC_ID(_)                                       (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0B;
@@ -3684,7 +3684,7 @@ typedef struct
       UINT32 Reserved2                                             : 18;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3702,7 +3702,7 @@ typedef struct
 #define CPUID_EBX_MAX_SIZE_REQUIRED_BY_ENABLED_FEATURES_IN_XCR0(_)   (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3720,7 +3720,7 @@ typedef struct
 #define CPUID_ECX_MAX_SIZE_OF_XSAVE_XRSTOR_SAVE_AREA(_)              (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3737,7 +3737,7 @@ typedef struct
 #define CPUID_EDX_XCR0_SUPPORTED_BITS(_)                             (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0D_ECX_00;
@@ -3782,7 +3782,7 @@ typedef struct
       UINT32 Reserved2                                             : 28;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3799,7 +3799,7 @@ typedef struct
 #define CPUID_EBX_SIZE_OF_XSAVE_AREAD(_)                             (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3845,7 +3845,7 @@ typedef struct
       UINT32 Reserved2                                             : 18;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3862,7 +3862,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0D_ECX_01;
@@ -3893,7 +3893,7 @@ typedef struct
 #define CPUID_EAX_IA32_PLATFORM_DCA_CAP(_)                           (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -3912,7 +3912,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -3942,7 +3942,7 @@ typedef struct
       UINT32 Reserved1                                             : 30;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -3959,7 +3959,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0D_ECX_N;
@@ -4004,7 +4004,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4021,7 +4021,7 @@ typedef struct
 #define CPUID_EBX_RMID_MAX_RANGE(_)                                  (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4038,7 +4038,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4058,7 +4058,7 @@ typedef struct
       UINT32 Reserved2                                             : 30;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0F_ECX_00;
@@ -4084,7 +4084,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4101,7 +4101,7 @@ typedef struct
 #define CPUID_EBX_CONVERSION_FACTOR(_)                               (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4118,7 +4118,7 @@ typedef struct
 #define CPUID_ECX_RMID_MAX_RANGE(_)                                  (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4154,7 +4154,7 @@ typedef struct
       UINT32 Reserved1                                             : 29;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_0F_ECX_01;
@@ -4199,7 +4199,7 @@ typedef struct
 #define CPUID_EAX_IA32_PLATFORM_DCA_CAP(_)                           (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4237,7 +4237,7 @@ typedef struct
       UINT32 Reserved2                                             : 28;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4254,7 +4254,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4271,7 +4271,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_10_ECX_00;
@@ -4298,7 +4298,7 @@ typedef struct
       UINT32 Reserved1                                             : 27;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4315,7 +4315,7 @@ typedef struct
 #define CPUID_EBX_EBX_0(_)                                           (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4335,7 +4335,7 @@ typedef struct
       UINT32 Reserved2                                             : 29;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4353,7 +4353,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_10_ECX_01;
@@ -4380,7 +4380,7 @@ typedef struct
       UINT32 Reserved1                                             : 27;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4397,7 +4397,7 @@ typedef struct
 #define CPUID_EBX_EBX_0(_)                                           (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4414,7 +4414,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4432,7 +4432,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_10_ECX_02;
@@ -4459,7 +4459,7 @@ typedef struct
       UINT32 Reserved1                                             : 20;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4476,7 +4476,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4496,7 +4496,7 @@ typedef struct
       UINT32 Reserved2                                             : 29;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4514,7 +4514,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_10_ECX_03;
@@ -4584,7 +4584,7 @@ typedef struct
       UINT32 Reserved2                                             : 25;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4601,7 +4601,7 @@ typedef struct
 #define CPUID_EBX_MISCSELECT(_)                                      (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4618,7 +4618,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4645,7 +4645,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_12_ECX_00;
@@ -4671,7 +4671,7 @@ typedef struct
 #define CPUID_EAX_VALID_SECS_ATTRIBUTES_0(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4688,7 +4688,7 @@ typedef struct
 #define CPUID_EBX_VALID_SECS_ATTRIBUTES_1(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4705,7 +4705,7 @@ typedef struct
 #define CPUID_ECX_VALID_SECS_ATTRIBUTES_2(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4722,7 +4722,7 @@ typedef struct
 #define CPUID_EDX_VALID_SECS_ATTRIBUTES_3(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_12_ECX_01;
@@ -4750,7 +4750,7 @@ typedef struct
       UINT32 Reserved1                                             : 28;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4767,7 +4767,7 @@ typedef struct
 #define CPUID_EBX_ZERO(_)                                            (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4784,7 +4784,7 @@ typedef struct
 #define CPUID_ECX_ZERO(_)                                            (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4801,7 +4801,7 @@ typedef struct
 #define CPUID_EDX_ZERO(_)                                            (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_12_ECX_02P_SLT_0;
@@ -4839,7 +4839,7 @@ typedef struct
 #define CPUID_EAX_EPC_BASE_PHYSICAL_ADDRESS_1(_)                     (((_) >> 12) & 0xFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -4857,7 +4857,7 @@ typedef struct
       UINT32 Reserved1                                             : 12;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -4887,7 +4887,7 @@ typedef struct
 #define CPUID_ECX_EPC_SIZE_1(_)                                      (((_) >> 12) & 0xFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -4905,7 +4905,7 @@ typedef struct
       UINT32 Reserved1                                             : 12;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_12_ECX_02P_SLT_1;
@@ -4946,7 +4946,7 @@ typedef struct
 #define CPUID_EAX_MAX_SUB_LEAF(_)                                    (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5012,7 +5012,7 @@ typedef struct
       UINT32 Reserved1                                             : 26;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5068,7 +5068,7 @@ typedef struct
 #define CPUID_ECX_FLAG31(_)                                          (((_) >> 31) & 0x01)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5085,7 +5085,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_14_ECX_00;
@@ -5119,7 +5119,7 @@ typedef struct
 #define CPUID_EAX_BITMAP_OF_SUPPORTED_MTC_PERIOD_ENCODINGS(_)        (((_) >> 16) & 0xFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5145,7 +5145,7 @@ typedef struct
 #define CPUID_EBX_BITMAP_OF_SUPPORTED_CONFIGURABLE_PSB_FREQUENCY_ENCODINGS(_) (((_) >> 16) & 0xFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5162,7 +5162,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5179,7 +5179,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_14_ECX_01;
@@ -5217,7 +5217,7 @@ typedef struct
 #define CPUID_EAX_DENOMINATOR(_)                                     (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5234,7 +5234,7 @@ typedef struct
 #define CPUID_EBX_NUMERATOR(_)                                       (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5251,7 +5251,7 @@ typedef struct
 #define CPUID_ECX_NOMINAL_FREQUENCY(_)                               (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5268,7 +5268,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_15;
@@ -5305,7 +5305,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5323,7 +5323,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5341,7 +5341,7 @@ typedef struct
       UINT32 Reserved1                                             : 16;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5358,7 +5358,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_16;
@@ -5394,7 +5394,7 @@ typedef struct
 #define CPUID_EAX_MAX_SOC_ID_INDEX(_)                                (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5422,7 +5422,7 @@ typedef struct
       UINT32 Reserved1                                             : 15;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5439,7 +5439,7 @@ typedef struct
 #define CPUID_ECX_PROJECT_ID(_)                                      (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5456,7 +5456,7 @@ typedef struct
 #define CPUID_EDX_STEPPING_ID(_)                                     (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_17_ECX_00;
@@ -5484,7 +5484,7 @@ typedef struct
 #define CPUID_EAX_SOC_VENDOR_BRAND_STRING(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5501,7 +5501,7 @@ typedef struct
 #define CPUID_EBX_SOC_VENDOR_BRAND_STRING(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5518,7 +5518,7 @@ typedef struct
 #define CPUID_ECX_SOC_VENDOR_BRAND_STRING(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5535,7 +5535,7 @@ typedef struct
 #define CPUID_EDX_SOC_VENDOR_BRAND_STRING(_)                         (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_17_ECX_01_03;
@@ -5561,7 +5561,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5578,7 +5578,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5595,7 +5595,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5612,7 +5612,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_17_ECX_N;
@@ -5655,7 +5655,7 @@ typedef struct
 #define CPUID_EAX_MAX_SUB_LEAF(_)                                    (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5719,7 +5719,7 @@ typedef struct
 #define CPUID_EBX_WAYS_OF_ASSOCIATIVITY_00(_)                        (((_) >> 16) & 0xFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5736,7 +5736,7 @@ typedef struct
 #define CPUID_ECX_NUMBER_OF_SETS(_)                                  (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5793,7 +5793,7 @@ typedef struct
       UINT32 Reserved2                                             : 6;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_18_ECX_00;
@@ -5823,7 +5823,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -5887,7 +5887,7 @@ typedef struct
 #define CPUID_EBX_WAYS_OF_ASSOCIATIVITY_01(_)                        (((_) >> 16) & 0xFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -5904,7 +5904,7 @@ typedef struct
 #define CPUID_ECX_NUMBER_OF_SETS(_)                                  (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -5961,7 +5961,7 @@ typedef struct
       UINT32 Reserved2                                             : 6;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_18_ECX_01P;
@@ -5994,7 +5994,7 @@ typedef struct
 #define CPUID_EAX_MAX_EXTENDED_FUNCTIONS(_)                          (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6011,7 +6011,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6028,7 +6028,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6045,7 +6045,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000000;
@@ -6071,7 +6071,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6088,7 +6088,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6126,7 +6126,7 @@ typedef struct
       UINT32 Reserved3                                             : 23;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6185,7 +6185,7 @@ typedef struct
       UINT32 Reserved5                                             : 2;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000001;
@@ -6221,7 +6221,7 @@ typedef struct
 #define CPUID_EAX_PROCESSOR_BRAND_STRING_1(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6238,7 +6238,7 @@ typedef struct
 #define CPUID_EBX_PROCESSOR_BRAND_STRING_2(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6255,7 +6255,7 @@ typedef struct
 #define CPUID_ECX_PROCESSOR_BRAND_STRING_3(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6272,7 +6272,7 @@ typedef struct
 #define CPUID_EDX_PROCESSOR_BRAND_STRING_4(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000002;
@@ -6296,7 +6296,7 @@ typedef struct
 #define CPUID_EAX_PROCESSOR_BRAND_STRING_5(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6313,7 +6313,7 @@ typedef struct
 #define CPUID_EBX_PROCESSOR_BRAND_STRING_6(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6330,7 +6330,7 @@ typedef struct
 #define CPUID_ECX_PROCESSOR_BRAND_STRING_7(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6347,7 +6347,7 @@ typedef struct
 #define CPUID_EDX_PROCESSOR_BRAND_STRING_8(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000003;
@@ -6371,7 +6371,7 @@ typedef struct
 #define CPUID_EAX_PROCESSOR_BRAND_STRING_9(_)                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6388,7 +6388,7 @@ typedef struct
 #define CPUID_EBX_PROCESSOR_BRAND_STRING_10(_)                       (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6405,7 +6405,7 @@ typedef struct
 #define CPUID_ECX_PROCESSOR_BRAND_STRING_11(_)                       (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6422,7 +6422,7 @@ typedef struct
 #define CPUID_EDX_PROCESSOR_BRAND_STRING_12(_)                       (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000004;
@@ -6446,7 +6446,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6463,7 +6463,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6480,7 +6480,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6497,7 +6497,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000005;
@@ -6523,7 +6523,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6540,7 +6540,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6584,7 +6584,7 @@ typedef struct
 #define CPUID_ECX_CACHE_SIZE_IN_1K_UNITS(_)                          (((_) >> 16) & 0xFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6601,7 +6601,7 @@ typedef struct
 #define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000006;
@@ -6627,7 +6627,7 @@ typedef struct
 #define CPUID_EAX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Eax;
 
   union
@@ -6644,7 +6644,7 @@ typedef struct
 #define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ebx;
 
   union
@@ -6661,7 +6661,7 @@ typedef struct
 #define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Ecx;
 
   union
@@ -6681,7 +6681,7 @@ typedef struct
       UINT32 Reserved2                                             : 23;
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } Edx;
 
 } CPUID_EAX_80000007;
@@ -6783,7 +6783,7 @@ typedef union
     UINT64 Reserved2                                               : 11;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PLATFORM_ID_REGISTER;
 
 
@@ -6840,7 +6840,7 @@ typedef union
     UINT64 Reserved3                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_APIC_BASE_REGISTER;
 
 
@@ -6972,7 +6972,7 @@ typedef union
     UINT64 Reserved4                                               : 43;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_FEATURE_CONTROL_REGISTER;
 
 
@@ -7042,7 +7042,7 @@ typedef union
 #define IA32_BIOS_UPDATE_SIGNATURE_MICROCODE_UPDATE_SIGNATURE(_)     (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_BIOS_UPDATE_SIGNATURE_REGISTER;
 
 /**
@@ -7124,7 +7124,7 @@ typedef union
     UINT64 Reserved3                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_SMM_MONITOR_CTL_REGISTER;
 
 typedef struct
@@ -7294,7 +7294,7 @@ typedef union
     UINT64 Reserved2                                               : 52;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MTRR_CAPABILITIES_REGISTER;
 
 
@@ -7344,7 +7344,7 @@ typedef union
 #define IA32_SYSENTER_CS_NOT_USED_2(_)                               (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_SYSENTER_CS_REGISTER;
 
 
@@ -7474,7 +7474,7 @@ typedef union
     UINT64 Reserved3                                               : 36;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MCG_CAP_REGISTER;
 
 
@@ -7532,7 +7532,7 @@ typedef union
     UINT64 Reserved1                                               : 60;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MCG_STATUS_REGISTER;
 
 
@@ -7663,7 +7663,7 @@ typedef union
     UINT64 Reserved1                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERFEVTSEL_REGISTER;
 
 /**
@@ -7693,7 +7693,7 @@ typedef union
     UINT64 Reserved1                                               : 48;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_STATUS_REGISTER;
 
 
@@ -7733,7 +7733,7 @@ typedef union
     UINT64 Reserved2                                               : 31;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_CTL_REGISTER;
 
 
@@ -7787,7 +7787,7 @@ typedef union
     UINT64 Reserved1                                               : 59;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_CLOCK_MODULATION_REGISTER;
 
 
@@ -7918,7 +7918,7 @@ typedef union
     UINT64 Reserved2                                               : 39;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_THERM_INTERRUPT_REGISTER;
 
 
@@ -8148,7 +8148,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_THERM_STATUS_REGISTER;
 
 
@@ -8326,7 +8326,7 @@ typedef union
     UINT64 Reserved8                                               : 29;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MISC_ENABLE_REGISTER;
 
 
@@ -8354,7 +8354,7 @@ typedef union
     UINT64 Reserved1                                               : 60;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_ENERGY_PERF_BIAS_REGISTER;
 
 
@@ -8491,7 +8491,7 @@ typedef union
     UINT64 Reserved2                                               : 41;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PACKAGE_THERM_STATUS_REGISTER;
 
 
@@ -8594,7 +8594,7 @@ typedef union
     UINT64 Reserved3                                               : 39;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PACKAGE_THERM_INTERRUPT_REGISTER;
 
 
@@ -8746,7 +8746,7 @@ typedef union
     UINT64 Reserved2                                               : 48;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_DEBUGCTL_REGISTER;
 
 
@@ -8785,7 +8785,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_SMRR_PHYSBASE_REGISTER;
 
 
@@ -8823,7 +8823,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_SMRR_PHYSMASK_REGISTER;
 
 
@@ -8919,7 +8919,7 @@ typedef union
     UINT64 Reserved4                                               : 37;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_DCA_0_CAP_REGISTER;
 
 /**
@@ -8959,7 +8959,7 @@ typedef union
     UINT64 Reserved2                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MTRR_PHYSBASE_REGISTER;
 
 #define IA32_MTRR_PHYSBASE0                                          0x00000200
@@ -9029,7 +9029,7 @@ typedef union
     UINT64 Reserved2                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MTRR_PHYSMASK_REGISTER;
 
 #define IA32_MTRR_PHYSMASK0                                          0x00000201
@@ -9216,7 +9216,7 @@ typedef union
     UINT64 Reserved8                                               : 5;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PAT_REGISTER;
 
 /**
@@ -9286,7 +9286,7 @@ typedef union
     UINT64 Reserved2                                               : 33;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MC_CTL2_REGISTER;
 
 /**
@@ -9334,7 +9334,7 @@ typedef union
     UINT64 Reserved2                                               : 52;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MTRR_DEF_TYPE_REGISTER;
 
 /**
@@ -9431,7 +9431,7 @@ typedef union
     UINT64 Reserved1                                               : 50;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_CAPABILITIES_REGISTER;
 
 
@@ -9568,7 +9568,7 @@ typedef union
     UINT64 Reserved1                                               : 52;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_FIXED_CTR_CTRL_REGISTER;
 
 
@@ -9745,7 +9745,7 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_COND_CHGD(_)                         (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_GLOBAL_STATUS_REGISTER;
 
 
@@ -9889,7 +9889,7 @@ typedef union
 #define IA32_PERF_GLOBAL_STATUS_RESET_CLEAR_COND_CHGD(_)             (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_GLOBAL_STATUS_RESET_REGISTER;
 
 
@@ -9996,7 +9996,7 @@ typedef union
     UINT64 Reserved3                                               : 1;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_GLOBAL_STATUS_SET_REGISTER;
 
 
@@ -10041,7 +10041,7 @@ typedef union
 #define IA32_PERF_GLOBAL_INUSE_PMI_IN_USE(_)                         (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PERF_GLOBAL_INUSE_REGISTER;
 
 
@@ -10087,7 +10087,7 @@ typedef union
     UINT64 Reserved2                                               : 28;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PEBS_ENABLE_REGISTER;
 
 /**
@@ -10388,7 +10388,7 @@ typedef union
     UINT64 Reserved2                                               : 8;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_BASIC_REGISTER;
 
 
@@ -10478,7 +10478,7 @@ typedef union
     UINT64 Reserved3                                               : 56;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_PINBASED_CTLS_REGISTER;
 
 
@@ -10766,7 +10766,7 @@ typedef union
     UINT64 Reserved7                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_PROCBASED_CTLS_REGISTER;
 
 
@@ -10950,7 +10950,7 @@ typedef union
     UINT64 Reserved7                                               : 34;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_EXIT_CTLS_REGISTER;
 
 
@@ -11107,7 +11107,7 @@ typedef union
     UINT64 Reserved6                                               : 41;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_ENTRY_CTLS_REGISTER;
 
 
@@ -11271,7 +11271,7 @@ typedef union
 #define IA32_VMX_MISC_MSEG_ID(_)                                     (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_MISC_REGISTER;
 
 
@@ -11362,7 +11362,7 @@ typedef union
     UINT64 Reserved2                                               : 49;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_VMCS_ENUM_REGISTER;
 
 
@@ -11724,7 +11724,7 @@ typedef union
     UINT64 Reserved3                                               : 35;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_PROCBASED_CTLS2_REGISTER;
 
 
@@ -11917,7 +11917,7 @@ typedef union
     UINT64 Reserved9                                               : 20;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_EPT_VPID_CAP_REGISTER;
 
 /**
@@ -11967,7 +11967,7 @@ typedef union
 #define IA32_VMX_TRUE_CTLS_ALLOWED_1_SETTINGS(_)                     (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_TRUE_CTLS_REGISTER;
 
 /**
@@ -12000,7 +12000,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_VMX_VMFUNC_REGISTER;
 
 /**
@@ -12044,7 +12044,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_MCG_EXT_CTL_REGISTER;
 
 
@@ -12097,7 +12097,7 @@ typedef union
     UINT64 Reserved2                                               : 40;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_SGX_SVN_STATUS_REGISTER;
 
 
@@ -12137,7 +12137,7 @@ typedef union
     UINT64 Reserved2                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_OUTPUT_BASE_REGISTER;
 
 
@@ -12206,7 +12206,7 @@ typedef union
 #define IA32_RTIT_OUTPUT_MASK_PTRS_OUTPUT_OFFSET(_)                  (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_OUTPUT_MASK_PTRS_REGISTER;
 
 
@@ -12578,7 +12578,7 @@ typedef union
     UINT64 Reserved5                                               : 7;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_CTL_REGISTER;
 
 
@@ -12718,7 +12718,7 @@ typedef union
     UINT64 Reserved3                                               : 15;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_STATUS_REGISTER;
 
 
@@ -12749,7 +12749,7 @@ typedef union
 #define IA32_RTIT_CR3_MATCH_CR3_VALUE_TO_MATCH(_)                    (((_) >> 5) & 0x7FFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_CR3_MATCH_REGISTER;
 
 /**
@@ -12821,7 +12821,7 @@ typedef union
 #define IA32_RTIT_ADDR_SIGN_EXT_VA(_)                                (((_) >> 48) & 0xFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_RTIT_ADDR_REGISTER;
 
 /**
@@ -12959,7 +12959,7 @@ typedef union
 #define IA32_U_CET_EB_LEG_BITMAP_BASE(_)                             (((_) >> 12) & 0xFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_U_CET_REGISTER;
 
 
@@ -12975,7 +12975,7 @@ typedef union
   struct
   {
     /**
-     * [Bit 0] When set to 1, enable shadow stacks at CPL3.
+     * [Bit 0] When set to 1, enable shadow stacks at CPL0.
      *
      * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
      */
@@ -13080,7 +13080,7 @@ typedef union
 #define IA32_S_CET_EB_LEG_BITMAP_BASE(_)                             (((_) >> 12) & 0xFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_S_CET_REGISTER;
 
 
@@ -13169,7 +13169,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PM_ENABLE_REGISTER;
 
 
@@ -13233,7 +13233,7 @@ typedef union
     UINT64 Reserved1                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_HWP_CAPABILITIES_REGISTER;
 
 
@@ -13309,7 +13309,7 @@ typedef union
     UINT64 Reserved1                                               : 22;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_HWP_REQUEST_PKG_REGISTER;
 
 
@@ -13349,7 +13349,7 @@ typedef union
     UINT64 Reserved1                                               : 62;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_HWP_INTERRUPT_REGISTER;
 
 
@@ -13437,7 +13437,7 @@ typedef union
     UINT64 Reserved1                                               : 21;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_HWP_REQUEST_REGISTER;
 
 
@@ -13478,7 +13478,7 @@ typedef union
     UINT64 Reserved2                                               : 61;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_HWP_STATUS_REGISTER;
 
 
@@ -13739,7 +13739,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_DEBUG_INTERFACE_REGISTER;
 
 
@@ -13766,7 +13766,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_L3_QOS_CFG_REGISTER;
 
 
@@ -13793,7 +13793,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_L2_QOS_CFG_REGISTER;
 
 
@@ -13833,7 +13833,7 @@ typedef union
 #define IA32_QM_EVTSEL_RESOURCE_MONITORING_ID(_)                     (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_QM_EVTSEL_REGISTER;
 
 
@@ -13879,7 +13879,7 @@ typedef union
 #define IA32_QM_CTR_ERROR(_)                                         (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_QM_CTR_REGISTER;
 
 
@@ -13920,7 +13920,7 @@ typedef union
 #define IA32_PQR_ASSOC_COS(_)                                        (((_) >> 32) & 0xFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PQR_ASSOC_REGISTER;
 
 
@@ -13963,7 +13963,7 @@ typedef union
 #define IA32_BNDCFGS_BOUND_DIRECTORY_BASE_ADDRESS(_)                 (((_) >> 12) & 0xFFFFFFFFFFFFF)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_BNDCFGS_REGISTER;
 
 
@@ -13990,7 +13990,7 @@ typedef union
     UINT64 Reserved2                                               : 55;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_XSS_REGISTER;
 
 
@@ -14020,7 +14020,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PKG_HDC_CTL_REGISTER;
 
 
@@ -14050,7 +14050,7 @@ typedef union
     UINT64 Reserved1                                               : 63;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_PM_CTL1_REGISTER;
 
 
@@ -14130,7 +14130,7 @@ typedef union
     UINT64 Reserved3                                               : 52;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_EFER_REGISTER;
 
 
@@ -14208,7 +14208,7 @@ typedef union
     UINT64 Reserved1                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } IA32_TSC_AUX_REGISTER;
 
 /**
@@ -14378,7 +14378,7 @@ typedef union
 #define PDE_4MB_32_PAGE_FRAME_NUMBER_HIGH(_)                         (((_) >> 22) & 0x3FF)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } PDE_4MB_32;
 
 /**
@@ -14491,7 +14491,7 @@ typedef union
 #define PDE_32_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFF)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } PDE_32;
 
 /**
@@ -14619,7 +14619,7 @@ typedef union
 #define PTE_32_PAGE_FRAME_NUMBER(_)                                  (((_) >> 12) & 0xFFFFF)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } PTE_32;
 
 /**
@@ -14694,7 +14694,7 @@ typedef union
 #define PT_ENTRY_32_PAGE_FRAME_NUMBER(_)                             (((_) >> 12) & 0xFFFFF)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } PT_ENTRY_32;
 
 /**
@@ -14853,7 +14853,7 @@ typedef union
 #define PML4E_64_EXECUTE_DISABLE(_)                                  (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PML4E_64;
 
 /**
@@ -15025,7 +15025,7 @@ typedef union
 #define PDPTE_1GB_64_EXECUTE_DISABLE(_)                              (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PDPTE_1GB_64;
 
 /**
@@ -15152,7 +15152,7 @@ typedef union
 #define PDPTE_64_EXECUTE_DISABLE(_)                                  (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PDPTE_64;
 
 /**
@@ -15324,7 +15324,7 @@ typedef union
 #define PDE_2MB_64_EXECUTE_DISABLE(_)                                (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PDE_2MB_64;
 
 /**
@@ -15451,7 +15451,7 @@ typedef union
 #define PDE_64_EXECUTE_DISABLE(_)                                    (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PDE_64;
 
 /**
@@ -15612,7 +15612,7 @@ typedef union
 #define PTE_64_EXECUTE_DISABLE(_)                                    (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PTE_64;
 
 /**
@@ -15707,7 +15707,7 @@ typedef union
 #define PT_ENTRY_64_EXECUTE_DISABLE(_)                               (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } PT_ENTRY_64;
 
 /**
@@ -15971,7 +15971,7 @@ typedef union
     UINT32 Reserved3                                               : 8;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } SEGMENT_ACCESS_RIGHTS;
 
 /**
@@ -16179,7 +16179,7 @@ typedef struct
 #define SEGMENT__BASE_ADDRESS_HIGH(_)                                (((_) >> 24) & 0xFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } ;
 
 } SEGMENT_DESCRIPTOR_32;
@@ -16381,7 +16381,7 @@ typedef struct
 #define SEGMENT__BASE_ADDRESS_HIGH(_)                                (((_) >> 24) & 0xFF)
     };
 
-    UINT32 Flags;
+    UINT32 AsUInt;
   } ;
 
 
@@ -16658,7 +16658,7 @@ typedef union
 #define SEGMENT_SELECTOR_INDEX(_)                                    (((_) >> 3) & 0x1FFF)
   };
 
-  UINT16 Flags;
+  UINT16 AsUInt;
 } SEGMENT_SELECTOR;
 
 /**
@@ -17427,7 +17427,7 @@ typedef union
     UINT64 Reserved2                                               : 49;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_DEBUG_EXCEPTION;
 
 /**
@@ -17462,7 +17462,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_TASK_SWITCH;
 
 /**
@@ -17549,7 +17549,7 @@ typedef union
     UINT64 Reserved3                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_MOV_CR;
 
 /**
@@ -17598,7 +17598,7 @@ typedef union
     UINT64 Reserved3                                               : 52;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_MOV_DR;
 
 /**
@@ -17676,7 +17676,7 @@ typedef union
     UINT64 Reserved2                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_IO_INSTRUCTION;
 
 /**
@@ -17736,7 +17736,7 @@ typedef union
     UINT64 Reserved1                                               : 48;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_APIC_ACCESS;
 
 /**
@@ -17892,7 +17892,7 @@ typedef union
     UINT64 Reserved1                                               : 51;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_EXIT_QUALIFICATION_EPT_VIOLATION;
 
 /**
@@ -17951,7 +17951,7 @@ typedef union
     UINT64 Reserved3                                               : 46;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_INS_OUTS;
 
 /**
@@ -18057,7 +18057,7 @@ typedef union
     UINT64 Reserved3                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_INVALIDATE;
 
 /**
@@ -18182,7 +18182,7 @@ typedef union
     UINT64 Reserved4                                               : 34;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_GDTR_IDTR_ACCESS;
 
 /**
@@ -18312,7 +18312,7 @@ typedef union
     UINT64 Reserved3                                               : 34;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_LDTR_TR_ACCESS;
 
 /**
@@ -18350,7 +18350,7 @@ typedef union
     UINT64 Reserved3                                               : 51;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_RDRAND_RDSEED;
 
 /**
@@ -18447,7 +18447,7 @@ typedef union
     UINT64 Reserved3                                               : 36;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_VMX_AND_XSAVES;
 
 /**
@@ -18573,7 +18573,7 @@ typedef union
     UINT64 Reserved3                                               : 32;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } VMX_VMEXIT_INSTRUCTION_INFO_VMREAD_VMWRITE;
 
 /**
@@ -18684,7 +18684,7 @@ typedef union
     UINT32 Reserved2                                               : 15;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } VMX_SEGMENT_ACCESS_RIGHTS;
 
 /**
@@ -18763,7 +18763,7 @@ typedef union
     UINT32 Reserved1                                               : 27;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } VMX_INTERRUPTIBILITY_STATE;
 
 typedef enum
@@ -18872,7 +18872,7 @@ typedef union
 #define VMX_VMEXIT_REASON_VM_ENTRY_FAILURE(_)                        (((_) >> 31) & 0x01)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } VMX_VMEXIT_REASON;
 
 typedef struct
@@ -18971,7 +18971,7 @@ typedef union
     UINT64 Reserved2                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_POINTER;
 
 /**
@@ -19060,7 +19060,7 @@ typedef union
     UINT64 Reserved4                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PML4E;
 
 /**
@@ -19191,7 +19191,7 @@ typedef union
 #define EPT_PDPTE_1GB_SUPPRESS_VE(_)                                 (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PDPTE_1GB;
 
 /**
@@ -19268,7 +19268,7 @@ typedef union
     UINT64 Reserved4                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PDPTE;
 
 /**
@@ -19399,7 +19399,7 @@ typedef union
 #define EPT_PDE_2MB_SUPPRESS_VE(_)                                   (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PDE_2MB;
 
 /**
@@ -19476,7 +19476,7 @@ typedef union
     UINT64 Reserved4                                               : 16;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PDE;
 
 /**
@@ -19599,7 +19599,7 @@ typedef union
 #define EPT_PTE_SUPPRESS_VE(_)                                       (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_PTE;
 
 /**
@@ -19668,7 +19668,7 @@ typedef union
 #define EPT_ENTRY_SUPPRESS_VE(_)                                     (((_) >> 63) & 0x01)
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } EPT_ENTRY;
 
 /**
@@ -19972,7 +19972,7 @@ typedef union
     UINT16 Reserved1                                               : 1;
   };
 
-  UINT16 Flags;
+  UINT16 AsUInt;
 } VMCS_COMPONENT_ENCODING;
 
 /**
@@ -21127,7 +21127,7 @@ typedef union
 #define VMENTRY_INTERRUPT_INFORMATION_VALID(_)                       (((_) >> 31) & 0x01)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } VMENTRY_INTERRUPT_INFORMATION;
 
 /**
@@ -21187,7 +21187,7 @@ typedef union
 #define VMEXIT_INTERRUPT_INFORMATION_VALID(_)                        (((_) >> 31) & 0x01)
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } VMEXIT_INTERRUPT_INFORMATION;
 
 /**
@@ -21692,7 +21692,7 @@ typedef union
     UINT32 Reserved4                                               : 10;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } EFLAGS;
 
 /**
@@ -21909,7 +21909,7 @@ typedef union
     UINT64 Reserved4                                               : 42;
   };
 
-  UINT64 Flags;
+  UINT64 AsUInt;
 } RFLAGS;
 
 /**
@@ -22130,7 +22130,7 @@ typedef union
     UINT32 Reserved1                                               : 16;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } EXCEPTION_ERROR_CODE;
 
 /**
@@ -22213,7 +22213,20 @@ typedef union
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION_FLAG           0x20
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION_MASK           0x01
 #define PAGE_FAULT_EXCEPTION_PROTECTION_KEY_VIOLATION(_)             (((_) >> 5) & 0x01)
-    UINT32 Reserved1                                               : 9;
+
+    /**
+     * [Bit 6] If the access causing the page-fault exception was a shadow-stack access (including shadow-stack accesses in
+     * enclave mode), this flag is 1; otherwise, it is 0. This flag describes the access causing the page-fault exception, not
+     * the access rights specified by paging.
+     *
+     * @see Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
+     */
+    UINT32 ShadowStack                                             : 1;
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_BIT                        6
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_FLAG                       0x40
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK_MASK                       0x01
+#define PAGE_FAULT_EXCEPTION_SHADOW_STACK(_)                         (((_) >> 6) & 0x01)
+    UINT32 Reserved1                                               : 8;
 
     /**
      * [Bit 15] This flag is 1 if the exception is unrelated to paging and resulted from violation of SGX-specific
@@ -22228,7 +22241,7 @@ typedef union
     UINT32 Reserved2                                               : 16;
   };
 
-  UINT32 Flags;
+  UINT32 AsUInt;
 } PAGE_FAULT_EXCEPTION;
 
 /**

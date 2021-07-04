@@ -4,7 +4,7 @@ from ia32doc.doc import Doc
 from ia32doc.processors.c_processor import DocCProcessor
 from ia32doc.options import DocProcessorOptions
 
-ALL = False
+ALL = True
 
 TEST = False
 TEST_CONFIG = 'conf/default.yml'
