@@ -1831,8 +1831,10 @@
   - name: MTRR_VARIABLE_COUNT
     description: |
       Architecture defined number of variable range MTRRs.
+      See: Table 2-2. IA-32 Architectural MSRs
+    see: Vol3A[2.1(ARCHITECTURAL MSRS)]
     tag: Custom
-    value: 255
+    value: 10
 
   - name: MTRR_COUNT
     description: |
