@@ -1707,10 +1707,6 @@
     size: 64
     reference: Vol3A[11.11.2.3(Variable Range MTRRs)]
     fields:
-    - bit: 0-7
-      name: TYPE
-      description: Specifies the memory type for the range.
-
     - bit: 11
       name: VALID
       description: Enables the register pair when set; disables register pair when clear.
