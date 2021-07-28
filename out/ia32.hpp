@@ -9104,9 +9104,11 @@ typedef union
 #define IA32_MTRR_FIX_COUNT                                          ((1 + 2 + 8) * 8)
 
 /**
- * Architecture defined number of variable range MTRRs.
+ * Architecture defined number of variable range MTRRs. See: Table 2-2. IA-32 Architectural MSRs
+ *
+ * @see Vol3A[2.1(ARCHITECTURAL MSRS)]
  */
-#define IA32_MTRR_VARIABLE_COUNT                                     0x000000FF
+#define IA32_MTRR_VARIABLE_COUNT                                     0x0000000A
 
 /**
  * A size of array to store all possible MTRRs.
