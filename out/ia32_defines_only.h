@@ -1,6 +1,11 @@
 #pragma once
 #include <stdint.h>
 
+#if defined(_MSC_EXTENSIONS)
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#endif
+
 /**
  * @defgroup intel_manual \
  *           Intel Manual
@@ -2446,6 +2451,32 @@ typedef struct {
   uint64_t thread_adjust;
 } ia32_tsc_adjust_register;
 
+#define IA32_SPEC_CTRL                                               0x00000048
+typedef union {
+  struct {
+    uint64_t ibrs                                                    : 1;
+#define IA32_SPEC_CTRL_IBRS                                          0x01
+    uint64_t stibp                                                   : 1;
+#define IA32_SPEC_CTRL_STIBP                                         0x02
+    uint64_t ssbd                                                    : 1;
+#define IA32_SPEC_CTRL_SSBD                                          0x04
+    uint64_t reserved_1                                              : 61;
+  };
+
+  uint64_t Flags;
+} ia32_spec_ctrl_register;
+
+#define IA32_PRED_CMD                                                0x00000049
+typedef union {
+  struct {
+    uint64_t ibpb                                                    : 1;
+#define IA32_PRED_CMD_IBPB                                           0x01
+    uint64_t reserved_1                                              : 63;
+  };
+
+  uint64_t Flags;
+} ia32_pred_cmd_register;
+
 #define IA32_BIOS_UPDT_TRIG                                          0x00000079
 #define IA32_BIOS_SIGN_ID                                            0x0000008B
 typedef union {
@@ -2547,6 +2578,57 @@ typedef union {
 
   uint64_t Flags;
 } ia32_mtrrcap_register;
+
+#define IA32_ARCH_CAPABILITIES                                       0x0000010A
+typedef union {
+  struct {
+    uint64_t rdcl_no                                                 : 1;
+#define IA32_ARCH_CAPABILITIES_RDCL_NO                               0x01
+    uint64_t ibrs_all                                                : 1;
+#define IA32_ARCH_CAPABILITIES_IBRS_ALL                              0x02
+    uint64_t rsba                                                    : 1;
+#define IA32_ARCH_CAPABILITIES_RSBA                                  0x04
+    uint64_t skip_l1dfl_vmentry                                      : 1;
+#define IA32_ARCH_CAPABILITIES_SKIP_L1DFL_VMENTRY                    0x08
+    uint64_t ssb_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_SSB_NO                                0x10
+    uint64_t mds_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_MDS_NO                                0x20
+    uint64_t if_pschange_mc_no                                       : 1;
+#define IA32_ARCH_CAPABILITIES_IF_PSCHANGE_MC_NO                     0x40
+    uint64_t tsx_ctrl                                                : 1;
+#define IA32_ARCH_CAPABILITIES_TSX_CTRL                              0x80
+    uint64_t taa_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_TAA_NO                                0x100
+    uint64_t reserved_1                                              : 55;
+  };
+
+  uint64_t Flags;
+} ia32_arch_capabilities_register;
+
+#define IA32_FLUSH_CMD                                               0x0000010B
+typedef union {
+  struct {
+    uint64_t l1d_flush                                               : 1;
+#define IA32_FLUSH_CMD_L1D_FLUSH                                     0x01
+    uint64_t reserved_1                                              : 63;
+  };
+
+  uint64_t Flags;
+} ia32_flush_cmd_register;
+
+#define IA32_TSX_CTRL                                                0x00000122
+typedef union {
+  struct {
+    uint64_t rtm_disable                                             : 1;
+#define IA32_TSX_CTRL_RTM_DISABLE                                    0x01
+    uint64_t tsx_cpuid_clear                                         : 1;
+#define IA32_TSX_CTRL_TSX_CPUID_CLEAR                                0x02
+    uint64_t reserved_1                                              : 62;
+  };
+
+  uint64_t Flags;
+} ia32_tsx_ctrl_register;
 
 #define IA32_SYSENTER_CS                                             0x00000174
 typedef union {
@@ -6724,4 +6806,7 @@ typedef union {
  * @}
  */
 
+#if defined(_MSC_EXTENSIONS)
+#pragma warning(pop)
+#endif
 
