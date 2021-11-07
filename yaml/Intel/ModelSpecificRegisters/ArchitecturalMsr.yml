@@ -250,6 +250,57 @@
         write to IA32_TSC will modify the local offset in IA32_TSC_ADJUST and the
         content of IA32_TSC, but does not affect the internal invariant TSC hardware.
 
+- value: 0x48
+  name: SPEC_CTRL
+  description: |
+    Speculation Control. The MSR bits are defined as logical processor scope. On some core
+    implementations, the bits may impact sibling logical processors on the same core. This
+    MSR has a value of 0 after reset and is unaffected by INIT# or SIPI#.
+  access: R/W
+  remarks: If any one of the enumeration conditions for defined bit field positions holds.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: IBRS
+      description: |
+        IBRS: Indirect Branch Restricted Speculation (IBRS). Restricts speculation of indirect branch.
+      remarks: If CPUID.(EAX=07H,ECX=0):EDX[26]=1
+
+    - bit: 1
+      name: STIBP
+      description: |
+        STIBP: Single Thread Indirect Branch Predictors (STIBP). Prevents indirect branch predictions
+        on all logical processors on the core from being controlled by any sibling logical
+        processor in the same core.
+      remarks: If CPUID.(EAX=07H,ECX=0):EDX[27]=1
+
+    - bit: 2
+      name: SSBD
+      description: |
+        SSBD: Speculative Store Bypass Disable (SSBD). Delays speculative execution of a load until
+        the addresses for all older stores are known.
+      remarks: If CPUID.(EAX=07H,ECX=0):EDX[31]=1
+
+- value: 0x49
+  name: PRED_CMD
+  description: |
+    Prediction Command. Gives software a way to issue commands that affect the state of predictors.
+  access: WO
+  remarks: If any one of the enumeration conditions for defined bit field positions holds.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: IBPB
+      description: |
+        IBPB: Indirect Branch Prediction Barrier (IBPB).
+      remarks: If CPUID.(EAX=07H,ECX=0):EDX[26]=1
+
 - value: 0x79
   short_name: BIOS_UPDT_TRIG
   long_name: BIOS_UPDATE_TRIGGER
@@ -542,6 +593,108 @@
 # ######################################################################################### #
 #                                                                                           #
 
+- value: 0x10A
+  name: ARCH_CAPABILITIES
+  description: Enumeration of Architectural Features.
+  access: RO
+  remarks: If CPUID.(EAX=07H,ECX=0):EDX[29]=1
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: RDCL_NO
+      description: |
+        RDCL_NO: The processor is not susceptible to Rogue Data Cache Load (RDCL).
+
+    - bit: 1
+      name: IBRS_ALL
+      description: |
+        IBRS_ALL: The processor supports enhanced IBRS.
+
+    - bit: 2
+      name: RSBA
+      description: |
+        RSBA: The processor supports RSB Alternate. Alternative branch predictors may be used
+        by RET instructions when the RSB is empty. SW using retpoline may be affected by
+        this behavior.
+
+    - bit: 3
+      name: SKIP_L1DFL_VMENTRY
+      description: |
+        SKIP_L1DFL_VMENTRY: A value of 1 indicates the hypervisor need not flush the L1D on VM entry.
+
+    - bit: 4
+      name: SSB_NO
+      description: |
+        SSB_NO: Processor is not susceptible to Speculative Store Bypass.
+
+    - bit: 5
+      name: MDS_NO
+      description: |
+        MDS_NO: Processor is not susceptible to Microarchitectural Data Sampling (MDS).
+
+    - bit: 6
+      name: IF_PSCHANGE_MC_NO
+      description: |
+        IF_PSCHANGE_MC_NO: The processor is not susceptible to a machine check error due to modifying
+        the size of a code page without TLB invalidation.
+
+    - bit: 7
+      name: TSX_CTRL
+      description: |
+        TSX_CTRL: If 1, indicates presence of IA32_TSX_CTRL MSR.
+
+    - bit: 8
+      name: TAA_NO
+      description: |
+        TAA_NO: If 1, processor is not affected by TAA.
+
+- value: 0x10B
+  name: FLUSH_CMD
+  description: |
+    Flush Command. Gives software a way to invalidate structures with finer granularity
+    than other architectural methods.
+  access: WO
+  remarks: If any one of the enumeration conditions for defined bit field positions holds.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: L1D_FLUSH
+      description: |
+        L1D_FLUSH: Writeback and invalidate the L1 data cache.
+      remarks: If CPUID.(EAX=07H,ECX=0):EDX[28]=1
+
+- value: 0x122
+  name: TSX_CTRL
+  description: |
+    Flush Command. Gives software a way to invalidate structures with finer granularity
+    than other architectural methods.
+  access: WO
+  remarks: |
+    Thread scope. Not architecturally serializing.
+
+    Available when CPUID.ARCH_CAP(EAX=7H,ECX = 0):EDX[29] = 1 and IA32_ARCH_CAPABILITIES.bit 7 = 1.
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      name: RTM_DISABLE
+      description: |
+        RTM_DISABLE: When set to 1, XBEGIN will always abort with EAX code 0.
+
+    - bit: 1
+      name: TSX_CPUID_CLEAR
+      description: |
+        TSX_CPUID_CLEAR: When set to 1, CPUID.07H.EBX.RTM [bit 11] and CPUID.07H.EBX.HLE [bit 4]
+        report 0. When set to 0 and the SKU supports TSX, these bits will return 1.
+
 - value: 0x174
   name: SYSENTER_CS
   short_description: SYSENTER_CS_MSR
@@ -593,7 +746,6 @@
   access: R/W
   remarks: 06_01H
   reference: Vol2B[4.3(Instructions (M-U) | SYSCALL - Fast System Call)]
-
 
 - value: 0x179
   name: MCG_CAP
