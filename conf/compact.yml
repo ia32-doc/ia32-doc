@@ -47,5 +47,13 @@ output_prepend: |
   #pragma once
   #include <stdint.h>
 
-output_append: ''
+  #if defined(_MSC_EXTENSIONS)
+  #pragma warning(push)
+  #pragma warning(disable: 4201)
+  #endif
+
+output_append: |
+  #if defined(_MSC_EXTENSIONS)
+  #pragma warning(pop)
+  #endif
 output_filename: out/ia32_compact.h

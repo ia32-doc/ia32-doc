@@ -273,13 +273,20 @@ output_prepend: |
   using uint32_t  = unsigned int      ;
   using uint64_t  = unsigned long long;
 
+  #if defined(_MSC_EXTENSIONS)
+  #pragma warning(push)
+  #pragma warning(disable: 4201)
+  #endif
+
 #
 # Text appended to the output file.
 #
-output_append: ''
+output_append: |
+  #if defined(_MSC_EXTENSIONS)
+  #pragma warning(pop)
+  #endif
 
 #
 # Output filename.
 #
 output_filename: out/ia32.hpp
-#output_filename: C:\Users\benesp\Documents\Visual Studio 2017\Projects\avmext\src\avmext\hv\ia32.h
