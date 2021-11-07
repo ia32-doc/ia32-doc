@@ -5,6 +5,11 @@ using uint16_t  = unsigned short    ;
 using uint32_t  = unsigned int      ;
 using uint64_t  = unsigned long long;
 
+#if defined(_MSC_EXTENSIONS)
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#endif
+
 /**
  * @defgroup intel_manual \
  *           Intel Manual
@@ -6993,6 +6998,86 @@ typedef struct
 
 
 /**
+ * Speculation Control. The MSR bits are defined as logical processor scope. On some core implementations, the bits may
+ * impact sibling logical processors on the same core. This MSR has a value of 0 after reset and is unaffected by INIT\# or
+ * SIPI\#.
+ *
+ * @remarks If any one of the enumeration conditions for defined bit field positions holds.
+ */
+#define IA32_SPEC_CTRL                                               0x00000048
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] IBRS: Indirect Branch Restricted Speculation (IBRS). Restricts speculation of indirect branch.
+     *
+     * @remarks If CPUID.(EAX=07H,ECX=0):EDX[26]=1
+     */
+    uint64_t ibrs                                                    : 1;
+#define IA32_SPEC_CTRL_IBRS_BIT                                      0
+#define IA32_SPEC_CTRL_IBRS_FLAG                                     0x01
+#define IA32_SPEC_CTRL_IBRS_MASK                                     0x01
+#define IA32_SPEC_CTRL_IBRS(_)                                       (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] STIBP: Single Thread Indirect Branch Predictors (STIBP). Prevents indirect branch predictions on all logical
+     * processors on the core from being controlled by any sibling logical processor in the same core.
+     *
+     * @remarks If CPUID.(EAX=07H,ECX=0):EDX[27]=1
+     */
+    uint64_t stibp                                                   : 1;
+#define IA32_SPEC_CTRL_STIBP_BIT                                     1
+#define IA32_SPEC_CTRL_STIBP_FLAG                                    0x02
+#define IA32_SPEC_CTRL_STIBP_MASK                                    0x01
+#define IA32_SPEC_CTRL_STIBP(_)                                      (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] SSBD: Speculative Store Bypass Disable (SSBD). Delays speculative execution of a load until the addresses for
+     * all older stores are known.
+     *
+     * @remarks If CPUID.(EAX=07H,ECX=0):EDX[31]=1
+     */
+    uint64_t ssbd                                                    : 1;
+#define IA32_SPEC_CTRL_SSBD_BIT                                      2
+#define IA32_SPEC_CTRL_SSBD_FLAG                                     0x04
+#define IA32_SPEC_CTRL_SSBD_MASK                                     0x01
+#define IA32_SPEC_CTRL_SSBD(_)                                       (((_) >> 2) & 0x01)
+    uint64_t reserved1                                               : 61;
+  };
+
+  uint64_t flags;
+} ia32_spec_ctrl_register;
+
+
+/**
+ * Prediction Command. Gives software a way to issue commands that affect the state of predictors.
+ *
+ * @remarks If any one of the enumeration conditions for defined bit field positions holds.
+ */
+#define IA32_PRED_CMD                                                0x00000049
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] IBPB: Indirect Branch Prediction Barrier (IBPB).
+     *
+     * @remarks If CPUID.(EAX=07H,ECX=0):EDX[26]=1
+     */
+    uint64_t ibpb                                                    : 1;
+#define IA32_PRED_CMD_IBPB_BIT                                       0
+#define IA32_PRED_CMD_IBPB_FLAG                                      0x01
+#define IA32_PRED_CMD_IBPB_MASK                                      0x01
+#define IA32_PRED_CMD_IBPB(_)                                        (((_) >> 0) & 0x01)
+    uint64_t reserved1                                               : 63;
+  };
+
+  uint64_t flags;
+} ia32_pred_cmd_register;
+
+
+/**
  * @brief BIOS Update Trigger <b>(W)</b>
  *
  * Executing a WRMSR instruction to this MSR causes a microcode update to be loaded into the processor. A processor may
@@ -7296,6 +7381,168 @@ typedef union
 
   uint64_t flags;
 } ia32_mtrr_capabilities_register;
+
+
+/**
+ * Enumeration of Architectural Features.
+ *
+ * @remarks If CPUID.(EAX=07H,ECX=0):EDX[29]=1
+ */
+#define IA32_ARCH_CAPABILITIES                                       0x0000010A
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] RDCL_NO: The processor is not susceptible to Rogue Data Cache Load (RDCL).
+     */
+    uint64_t rdcl_no                                                 : 1;
+#define IA32_ARCH_CAPABILITIES_RDCL_NO_BIT                           0
+#define IA32_ARCH_CAPABILITIES_RDCL_NO_FLAG                          0x01
+#define IA32_ARCH_CAPABILITIES_RDCL_NO_MASK                          0x01
+#define IA32_ARCH_CAPABILITIES_RDCL_NO(_)                            (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] IBRS_ALL: The processor supports enhanced IBRS.
+     */
+    uint64_t ibrs_all                                                : 1;
+#define IA32_ARCH_CAPABILITIES_IBRS_ALL_BIT                          1
+#define IA32_ARCH_CAPABILITIES_IBRS_ALL_FLAG                         0x02
+#define IA32_ARCH_CAPABILITIES_IBRS_ALL_MASK                         0x01
+#define IA32_ARCH_CAPABILITIES_IBRS_ALL(_)                           (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] RSBA: The processor supports RSB Alternate. Alternative branch predictors may be used by RET instructions when
+     * the RSB is empty. SW using retpoline may be affected by this behavior.
+     */
+    uint64_t rsba                                                    : 1;
+#define IA32_ARCH_CAPABILITIES_RSBA_BIT                              2
+#define IA32_ARCH_CAPABILITIES_RSBA_FLAG                             0x04
+#define IA32_ARCH_CAPABILITIES_RSBA_MASK                             0x01
+#define IA32_ARCH_CAPABILITIES_RSBA(_)                               (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] SKIP_L1DFL_VMENTRY: A value of 1 indicates the hypervisor need not flush the L1D on VM entry.
+     */
+    uint64_t skip_l1dfl_vmentry                                      : 1;
+#define IA32_ARCH_CAPABILITIES_SKIP_L1DFL_VMENTRY_BIT                3
+#define IA32_ARCH_CAPABILITIES_SKIP_L1DFL_VMENTRY_FLAG               0x08
+#define IA32_ARCH_CAPABILITIES_SKIP_L1DFL_VMENTRY_MASK               0x01
+#define IA32_ARCH_CAPABILITIES_SKIP_L1DFL_VMENTRY(_)                 (((_) >> 3) & 0x01)
+
+    /**
+     * [Bit 4] SSB_NO: Processor is not susceptible to Speculative Store Bypass.
+     */
+    uint64_t ssb_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_SSB_NO_BIT                            4
+#define IA32_ARCH_CAPABILITIES_SSB_NO_FLAG                           0x10
+#define IA32_ARCH_CAPABILITIES_SSB_NO_MASK                           0x01
+#define IA32_ARCH_CAPABILITIES_SSB_NO(_)                             (((_) >> 4) & 0x01)
+
+    /**
+     * [Bit 5] MDS_NO: Processor is not susceptible to Microarchitectural Data Sampling (MDS).
+     */
+    uint64_t mds_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_MDS_NO_BIT                            5
+#define IA32_ARCH_CAPABILITIES_MDS_NO_FLAG                           0x20
+#define IA32_ARCH_CAPABILITIES_MDS_NO_MASK                           0x01
+#define IA32_ARCH_CAPABILITIES_MDS_NO(_)                             (((_) >> 5) & 0x01)
+
+    /**
+     * [Bit 6] IF_PSCHANGE_MC_NO: The processor is not susceptible to a machine check error due to modifying the size of a code
+     * page without TLB invalidation.
+     */
+    uint64_t if_pschange_mc_no                                       : 1;
+#define IA32_ARCH_CAPABILITIES_IF_PSCHANGE_MC_NO_BIT                 6
+#define IA32_ARCH_CAPABILITIES_IF_PSCHANGE_MC_NO_FLAG                0x40
+#define IA32_ARCH_CAPABILITIES_IF_PSCHANGE_MC_NO_MASK                0x01
+#define IA32_ARCH_CAPABILITIES_IF_PSCHANGE_MC_NO(_)                  (((_) >> 6) & 0x01)
+
+    /**
+     * [Bit 7] TSX_CTRL: If 1, indicates presence of IA32_TSX_CTRL MSR.
+     */
+    uint64_t tsx_ctrl                                                : 1;
+#define IA32_ARCH_CAPABILITIES_TSX_CTRL_BIT                          7
+#define IA32_ARCH_CAPABILITIES_TSX_CTRL_FLAG                         0x80
+#define IA32_ARCH_CAPABILITIES_TSX_CTRL_MASK                         0x01
+#define IA32_ARCH_CAPABILITIES_TSX_CTRL(_)                           (((_) >> 7) & 0x01)
+
+    /**
+     * [Bit 8] TAA_NO: If 1, processor is not affected by TAA.
+     */
+    uint64_t taa_no                                                  : 1;
+#define IA32_ARCH_CAPABILITIES_TAA_NO_BIT                            8
+#define IA32_ARCH_CAPABILITIES_TAA_NO_FLAG                           0x100
+#define IA32_ARCH_CAPABILITIES_TAA_NO_MASK                           0x01
+#define IA32_ARCH_CAPABILITIES_TAA_NO(_)                             (((_) >> 8) & 0x01)
+    uint64_t reserved1                                               : 55;
+  };
+
+  uint64_t flags;
+} ia32_arch_capabilities_register;
+
+
+/**
+ * Flush Command. Gives software a way to invalidate structures with finer granularity than other architectural methods.
+ *
+ * @remarks If any one of the enumeration conditions for defined bit field positions holds.
+ */
+#define IA32_FLUSH_CMD                                               0x0000010B
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] L1D_FLUSH: Writeback and invalidate the L1 data cache.
+     *
+     * @remarks If CPUID.(EAX=07H,ECX=0):EDX[28]=1
+     */
+    uint64_t l1d_flush                                               : 1;
+#define IA32_FLUSH_CMD_L1D_FLUSH_BIT                                 0
+#define IA32_FLUSH_CMD_L1D_FLUSH_FLAG                                0x01
+#define IA32_FLUSH_CMD_L1D_FLUSH_MASK                                0x01
+#define IA32_FLUSH_CMD_L1D_FLUSH(_)                                  (((_) >> 0) & 0x01)
+    uint64_t reserved1                                               : 63;
+  };
+
+  uint64_t flags;
+} ia32_flush_cmd_register;
+
+
+/**
+ * Flush Command. Gives software a way to invalidate structures with finer granularity than other architectural methods.
+ *
+ * @remarks Thread scope. Not architecturally serializing.
+ *          Available when CPUID.ARCH_CAP(EAX=7H,ECX = 0):EDX[29] = 1 and IA32_ARCH_CAPABILITIES.bit 7 = 1.
+ */
+#define IA32_TSX_CTRL                                                0x00000122
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] RTM_DISABLE: When set to 1, XBEGIN will always abort with EAX code 0.
+     */
+    uint64_t rtm_disable                                             : 1;
+#define IA32_TSX_CTRL_RTM_DISABLE_BIT                                0
+#define IA32_TSX_CTRL_RTM_DISABLE_FLAG                               0x01
+#define IA32_TSX_CTRL_RTM_DISABLE_MASK                               0x01
+#define IA32_TSX_CTRL_RTM_DISABLE(_)                                 (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] TSX_CPUID_CLEAR: When set to 1, CPUID.07H.EBX.RTM [bit 11] and CPUID.07H.EBX.HLE [bit 4] report 0. When set to 0
+     * and the SKU supports TSX, these bits will return 1.
+     */
+    uint64_t tsx_cpuid_clear                                         : 1;
+#define IA32_TSX_CTRL_TSX_CPUID_CLEAR_BIT                            1
+#define IA32_TSX_CTRL_TSX_CPUID_CLEAR_FLAG                           0x02
+#define IA32_TSX_CTRL_TSX_CPUID_CLEAR_MASK                           0x01
+#define IA32_TSX_CTRL_TSX_CPUID_CLEAR(_)                             (((_) >> 1) & 0x01)
+    uint64_t reserved1                                               : 62;
+  };
+
+  uint64_t flags;
+} ia32_tsx_ctrl_register;
 
 
 /**
@@ -22379,4 +22626,7 @@ typedef union
  * @}
  */
 
+#if defined(_MSC_EXTENSIONS)
+#pragma warning(pop)
+#endif
 
