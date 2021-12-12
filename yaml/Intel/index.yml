@@ -2,7 +2,8 @@
   short_description: Intel Manual
   remarks: |
     All references are based on <b>Intel® 64 and IA-32 architectures software developer’s manual
-    combined volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4</b> (May 2018).
+    combined volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4</b> (June 2021) and <b>Intel® Virtualization
+    Technology for Directed I/O</b> (April 2021)
   todo: Long description
   type: group
   include:
@@ -17,3 +18,4 @@
   - EFLAGS
   - Exceptions
   - MemoryType
+  - VT-d

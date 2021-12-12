@@ -1,0 +1,1935 @@
+- name: VTD
+  short_description: VTD
+  children_name_with_prefix: VTD
+  type: group
+  fields:
+  - name: ROOT_ENTRY
+    description: |
+      The Root Table Address Register points to a
+      table of root-entries, when the Translation Table Mode (TTM) field in the register is 00b.
+    type: struct
+    size: 128
+    see: VTd[9.1(Root Entry)]
+    fields:
+    - size: 64
+      type: bitfield
+      name: 'Lower64'
+      fields:
+      - bit: 0
+        short_name: P
+        long_name: PRESENT
+        description: |
+          This field indicates whether the root-entry is present.
+
+          • 0: Indicates the root-entry is not present. All other fields are ignored by
+          hardware.
+
+          • 1: Indicates the root-entry is present.
+
+      - bit: 12-63
+        short_name: CTP
+        long_name: CONTEXT_TABLE_POINTER
+        description: |
+          Pointer to Context-table for this bus. The Context-table is 4KB in size and size aligned.
+          Hardware treats bits 63:HAW as reserved (0), where HAW is the host address width
+          of the platform.
+
+    - size: 64
+      type: bitfield
+      name: 'Upper64'
+      fields:
+      - bit: 0-63
+        short_name: R
+        long_name: RESERVED
+        description: |
+          Reserved. Must be 0.
+
+  - name: CONTEXT_ENTRY
+    description: |
+      Context-entries support translation of
+      requests-without-PASID. Context-entries are referenced through root-entries
+    type: struct
+    size: 128
+    see: VTd[9.3(Context Entry)]
+    fields:
+    - size: 64
+      type: bitfield
+      name: 'Lower64'
+      fields:
+      - bit: 0
+        short_name: P
+        long_name: PRESENT
+        description: |
+
+
+          • 0: Indicates the context-entry is not present. All other fields except Fault Processing
+          Disable (FPD) field are ignored by hardware.
+
+          • 1: Indicates the context-entry is present.
+
+      - bit: 1
+        short_name: FPD
+        long_name: FAULT_PROCESSING_DISABLE
+        description: |
+          Enables or disables recording/reporting of qualified non-recoverable faults.
+
+          • 0: Qualified non-recoverable faults are recorded/reported for requests processed through
+          this context-entry.
+
+          • 1: Qualified non-recoverable faults are not recorded/reported for requests processed
+          through this context-entry.
+
+          This field is evaluated by hardware irrespective of the setting of the present (P) field.
+
+      - bit: 2-3
+        short_name: TT
+        long_name: TRANSLATION_TYPE
+        description: |
+          This field is applicable only for requests-without-PASID, as hardware blocks all requests-with-
+          PASID in legacy mode before they can use context table.
+
+          • 00b: Untranslated requests are translated using second-level paging structures
+          referenced through SLPTPTR field. Translated requests and Translation Requests are
+          blocked.
+
+          • 01b: Untranslated, Translated and Translation Requests are supported. This encoding is
+          treated as reserved by hardware implementations not supporting Device-TLBs (DT=0 in
+          Extended Capability Register).
+
+          • 10b: Untranslated requests are processed as pass-through. SLPTPTR field is ignored by
+          hardware. Translated and Translation Requests are blocked. This encoding is treated by
+          hardware as reserved for hardware implementations not supporting Pass Through (PT=0
+          in Extended Capability Register).
+
+          • 11b: Reserved.
+
+      - bit: 12-63
+        short_name: SLPTPTR
+        long_name: SECOND_LEVEL_PAGE_TRANSLATION_POINTER
+        description: |
+          When the Translation-Type (TT) field is 00b or 01b, this field points to the base of second level
+          paging entries (described in Section 9.8).
+
+          Hardware treats bits 63:HAW as reserved (0), where HAW is the host address width of the
+          platform.
+
+          This field is ignored by hardware when Translation-Type (TT) field is 10b (pass-through).
+
+    - size: 64
+      type: bitfield
+      name: 'Upper64'
+      fields:
+      - bit: 0-2
+        short_name: AW
+        long_name: ADDRESS_WIDTH
+        description: |
+          When the Translation-type (TT) field is 00b or 01b, this field indicates the adjusted guest address-
+          width (AGAW) to be used by hardware for the second-level page-table walk. The
+          following encodings are defined for this field:
+
+          • 000b: Reserved
+
+          • 001b: 39-bit AGAW (3-level page table)
+
+          • 010b: 48-bit AGAW (4-level page table)
+
+          • 011b: 57-bit AGAW (5-level page table)
+
+          • 100b-111b: Reserved
+
+          The value specified in this field must match an AGAW value supported by hardware (as
+          reported in the SAGAW field in the Capability Register).
+
+          When the Translation-type (TT) field indicates pass-through processing (10b), this field must
+          be programmed to indicate the largest AGAW value supported by hardware.
+
+          Untranslated requests-without-PASID processed through this context-entry and accessing
+          addresses above 2X-1 (where X is the AGAW value indicated by this field) are blocked and
+          treated as translation faults.
+
+      - bit: 3-6
+        short_name: IGN
+        long_name: IGNORED
+        description: |
+          Hardware ignores the programming of this field.
+
+      - bit: 8-17
+        short_name: DID
+        long_name: DOMAIN_IDENTIFIER
+        description: |
+          Identifier for the domain to which this context-entry maps. Hardware may use the domain
+          identifier to tag its internal caches.
+
+          The Capability Register reports the domain-id width supported by hardware. For
+          implementations supporting less than 16-bit domain-ids, unused bits of this field are treated
+          as reserved by hardware. For example, for implementation supporting 8-bit domain-ids, bits
+          87:80 of this field are treated as reserved.
+
+          Context-entries programmed with the same domain identifier must always reference same
+          address translation (SLPTPTR field). Context-entries referencing same address translation are
+          recommended to be programmed with same domain id for hardware efficiency.
+
+          When Caching Mode (CM) field in Capability Register is reported as Set, the domain-id value
+          of zero is architecturally reserved. Software must not use domain-id value of zero when CM is
+          Set.
+
+  - name: ENTRY_COUNT
+    description: Table entry counts.
+    type: group
+    fields:
+    - value: 256
+      name: ROOT_ENTRY_COUNT
+
+    - value: 256
+      name: CONTEXT_ENTRY_COUNT
+
+  - value: 0x0
+    name: VERSION
+    description: |
+      Register to report the implementation version. Backward compatibility for the architecture is maintained
+      with new revision numbers, allowing software to load remapping hardware drivers written for prior
+      versions.
+    remarks: VER_REG
+    see: VTd[10.4.1(Version Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 32
+      fields:
+      - bit: 0-3
+        short_name: MIN
+        long_name: MINOR
+        access: RO
+        short_description: Minor Version number
+        long_description: |
+          Indicates Minor Version of Implementation.
+
+      - bit: 4-7
+        short_name: MIN
+        long_name: MAJOR
+        access: RO
+        short_description: Major Version number
+        long_description: |
+          Indicates Major Version of Implementation.
+
+  - value: 0x8
+    name: CAPABILITY
+    description: |
+      Register to report general remapping hardware capabilities.
+    remarks: CAP_REG
+    see: VTd[10.4.2(Capability Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 0-2
+        short_name: ND
+        long_name: NUMBER_OF_DOMAINS_SUPPORTED
+        access: RO
+        short_description: Number of domains supported
+        long_description: |
+
+
+          • 000b: Hardware supports 4-bit domain-ids with support for up to 16 domains.
+
+          • 001b: Hardware supports 6-bit domain-ids with support for up to 64 domains.
+
+          • 010b: Hardware supports 8-bit domain-ids with support for up to 256 domains.
+
+          • 011b: Hardware supports 10-bit domain-ids with support for up to 1024 domains.
+
+          • 100b: Hardware supports 12-bit domain-ids with support for up to 4K domains.
+
+          • 101b: Hardware supports 14-bit domain-ids with support for up to 16K domains.
+
+          • 110b: Hardware supports 16-bit domain-ids with support for up to 64K domains.
+
+          • 111b: Reserved.
+
+      - bit: 3
+        short_name: AFL
+        long_name: ADVANCED_FAULT_LOGGING
+        access: RO
+        short_description: Advanced Fault Logging
+        long_description: |
+
+
+          • 0: Indicates advanced fault logging is not supported. Only primary fault logging is supported.
+
+          • 1: Indicates advanced fault logging is supported.
+
+      - bit: 4
+        short_name: RWBF
+        long_name: REQUIRED_WRITE_BUFFER_FLUSHING
+        access: RO
+        short_description: Required Write-Buffer Flushing
+        long_description: |
+
+
+          • 0: Indicates no write-buffer flushing is needed to ensure changes to memory-resident
+          structures are visible to hardware.
+
+          • 1: Indicates software must explicitly flush the write buffers to ensure updates made to
+          memory-resident remapping structures are visible to hardware.
+
+      - bit: 5
+        short_name: PLMR
+        long_name: PROTECTED_LOW_MEMORY_REGION
+        access: RO
+        short_description: Protected Low-Memory Region
+        long_description: |
+
+
+          • 0: Indicates protected low-memory region is not supported.
+
+          • 1: Indicates protected low-memory region is supported.
+
+      - bit: 6
+        short_name: PHMR
+        long_name: PROTECTED_HIGH_MEMORY_REGION
+        access: RO
+        short_description: Protected High-Memory Region
+        long_description: |
+
+
+          • 0: Indicates protected high-memory region is not supported.
+
+          • 1: Indicates protected high-memory region is supported.
+
+      - bit: 7
+        short_name: CM
+        long_name: CACHING_MODE
+        access: RO
+        short_description: Caching Mode
+        long_description: |
+          This field applies to all DMA and Interrupt remap tables except FLtables.
+          Hardware will not cache faulting FL-only translations in IOTLB
+          or FL-paging-structure caches.
+
+          • 0: Not-present and erroneous entries are not cached in any of
+          the remapping caches. Invalidations are not required for
+          modifications to individual not present or invalid entries.
+          However, any modifications that result in decreasing the effective
+          permissions or partial permission increases require invalidations
+          for them to be effective.
+
+          • 1: Not-present and erroneous mappings may be cached in the
+          remapping caches. Any software updates to the remapping
+          structures (including updates to “not-present” or erroneous
+          entries) require explicit invalidation.
+
+      - bit: 8-12
+        short_name: SAGAW
+        long_name: SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS
+        access: RO
+        short_description: Supported Adjusted Guest Address Widths
+        long_description: |
+          This 5-bit field indicates the supported adjusted guest address widths
+          (which in turn represents the levels of page-table walks for the 4KB
+          base page size) supported by the hardware implementation.
+
+          A value of 1 in any of these bits indicates the corresponding adjusted
+          guest address width is supported. The adjusted guest address widths
+          corresponding to various bit positions within this field are:
+
+          • 0: Reserved
+
+          • 1: 39-bit AGAW (3-level page-table)
+
+          • 2: 48-bit AGAW (4-level page-table)
+
+          • 3: 57-bit AGAW (5-level page-table)
+
+          • 4: Reserved
+
+          Software must ensure that the adjusted guest address width used to
+          set up the page tables is one of the supported guest address widths
+          reported in this field.
+
+          Hardware implementations reporting second-level translation support
+          (SLTS) field as Clear also report this field as 0.
+
+      - bit: 16-21
+        short_name: MGAW
+        long_name: MAXIMUM_GUEST_ADDRESS_WIDTH
+        access: RO
+        short_description: Maximum Guest Address Width
+        long_description: |
+          This field indicates the maximum guest physical address width
+          supported by second-level translation in remapping hardware. The
+          Maximum Guest Address Width (MGAW) is computed as (N+1),
+          where N is the valued reported in this field. For example, a hardware
+          implementation supporting 48-bit MGAW reports a value of 47
+          (101111b) in this field.
+
+          If the value in this field is X, untranslated DMA requests with
+          addresses above 2(X+1)-1 that are subjected to second-level
+          translation are blocked by hardware. Device-TLB translation requests
+          to addresses above 2(X+1)-1 that are subjected to second-level
+          translation from allowed devices return a null Translation-Completion
+          Data with R=W=0.
+
+          Guest addressability for a given DMA request is limited to the
+          minimum of the value reported through this field and the adjusted
+          guest address width of the corresponding page-table structure.
+          (Adjusted guest address widths supported by hardware are reported
+          through the SAGAW field).
+
+          Implementations must support MGAW at least equal to the physical
+          addressability (host address width) of the platform.
+
+      - bit: 22
+        short_name: ZLR
+        long_name: ZERO_LENGTH_READ
+        access: RO
+        short_description: Zero Length Read
+        long_description: |
+
+
+          • 0: Indicates the remapping hardware unit blocks (and treats as
+          fault) zero length DMA read requests to write-only pages.
+
+          • 1: Indicates the remapping hardware unit supports zero length
+          DMA read requests to write-only pages.
+
+          DMA remapping hardware implementations are recommended to
+          report ZLR field as Set.
+
+      - bit: 23
+        short_name: DEP
+        long_name: DEPRECATED
+        access: RO
+        short_description: Deprecated
+        long_description: |
+          This field must be reported as 0 to ensure backward
+          compatibility with older software.
+
+      - bit: 24-33
+        short_name: FRO
+        long_name: FAULT_RECORDING_REGISTER_OFFSET
+        access: RO
+        short_description: Fault-recording Register offset
+        long_description: |
+          This field specifies the offset of the first fault recording register
+          relative to the register base address of this remapping hardware unit.
+          If the register base address is X, and the value reported in this field
+          is Y, the address for the first fault recording register is calculated as
+          X+(16*Y).
+
+      - bit: 34-37
+        short_name: SLLPS
+        long_name: SECOND_LEVEL_LARGE_PAGE_SUPPORT
+        access: RO
+        short_description: Second Level Large Page Support
+        long_description: |
+          This field indicates the large page sizes supported by hardware.
+
+          A value of 1 in any of these bits indicates the corresponding large page
+          size is supported. The large-page sizes corresponding to
+          various bit positions within this field are:
+
+          • 0: 21-bit offset to page frame (2MB)
+
+          • 1: 30-bit offset to page frame (1GB)
+
+          • 2: Reserved
+
+          • 3: Reserved
+
+          Hardware implementations supporting a specific large-page size
+          must support all smaller large-page sizes. i.e., only valid values for
+          this field are 0000b, 0001b, 0011b.
+
+      - bit: 39
+        short_name: PSI
+        long_name: PAGE_SELECTIVE_INVALIDATION
+        access: RO
+        short_description: Page Selective Invalidation
+        long_description: |
+
+
+          • 0: Hardware supports only global and domain-selective
+          invalidates for IOTLB.
+
+          • 1: Hardware supports page-selective, domain-selective, and
+          global invalidates for IOTLB.
+
+          Hardware implementations reporting this field as Set are
+          recommended to support a Maximum Address Mask Value (MAMV)
+          value of at least 9 (or 18 if supporting 1GB pages with second level
+          translation).
+
+          This field is applicable only for IOTLB invalidations for second-level
+          translation. Irrespective of value reported in this field,
+          implementations supporting SMTS must support page/address
+          selective IOTLB invalidation for first-level translation.
+
+      - bit: 40-47
+        short_name: NFR
+        long_name: NUMBER_OF_FAULT_RECORDING_REGISTERS
+        access: RO
+        short_description: Number of Fault-recording Registers
+        long_description: |
+          Number of fault recording registers is computed as N+1, where N is
+          the value reported in this field.
+
+          Implementations must support at least one fault recording register
+          (NFR = 0) for each remapping hardware unit in the platform.
+
+          The maximum number of fault recording registers per remapping
+          hardware unit is 256.
+
+      - bit: 48-53
+        short_name: MAMV
+        long_name: MAXIMUM_ADDRESS_MASK_VALUE
+        access: RO
+        short_description: Maximum Address Mask Value
+        long_description: |
+          The value in this field indicates the maximum supported value for the
+          Address Mask (AM) field in the Invalidation Address register
+          (IVA_REG), and IOTLB Invalidation Descriptor (iotlb_inv_dsc) used
+          for invalidations of second-level translation.
+
+          This field is valid when the PSI field in Capability register is reported
+          as Set.
+
+          Independent of value reported in this field, implementations
+          supporting SMTS must support address-selective PASID-based IOTLB
+          invalidations (p_iotlb_inv_dsc) with any defined address mask.
+
+      - bit: 54
+        short_name: DWD
+        long_name: WRITE_DRAINING
+        access: RO
+        short_description: Write Draining
+        long_description: |
+
+
+          • 0: Hardware does not support draining of write requests on
+          IOTLB Invalidation.
+
+          • 1: Hardware supports draining of write requests on IOTLB
+          Invalidation.
+
+          Hardware implementation with Major Version 2 or higher (VER_REG),
+          always performs required drain without software explicitly requesting
+          a drain in IOTLB invalidation. This field is deprecated and hardware
+          will always report it as 1 to maintain backward compatibility with
+          software.
+
+      - bit: 55
+        short_name: DRD
+        long_name: READ_DRAINING
+        access: RO
+        short_description: Read Draining
+        long_description: |
+
+
+          • 0: Hardware does not support draining of read requests on
+          IOTLB Invalidation.
+
+          • 1: Hardware supports draining of read requests on IOTLB
+          Invalidation.
+
+          Hardware implementation with Major Version 2 or higher (VER_REG),
+          always performs required drain without software explicitly requesting
+          a drain in IOTLB invalidation. This field is deprecated and hardware
+          will always report it as 1 to maintain backward compatibility with
+          software.
+
+      - bit: 56
+        short_name: FL1GP
+        long_name: FIRST_LEVEL_1GBYTE_PAGE_SUPPORT
+        access: RO
+        short_description: First Level 1-GByte Page Support
+        long_description: |
+          A value of 1 in this field indicates 1-GByte page size is supported for
+          first-level translation.
+
+          Hardware implementation reporting First-level Translation Support
+          (FLTS) as Clear also report this field as Clear.
+
+      - bit: 59
+        short_name: PI
+        long_name: POSTED_INTERRUPTS_SUPPORT
+        access: RO
+        short_description: Posted Interrupts Support
+        long_description: |
+
+
+          • 0: Hardware does not support Posting of Interrupts.
+
+          • 1: Hardware supports Posting of Interrupts.
+
+          Hardware implementation reporting Interrupt Remapping support
+          (IR) field in Extended Capability Register as Clear also report this
+          field as Clear.
+
+      - bit: 60
+        short_name: FL5LP
+        long_name: FIRST_LEVEL_5LEVEL_PAGING_SUPPORT
+        access: RO
+        short_description: First Level 5-level Paging Support
+        long_description: |
+
+
+          • 0: Hardware does not support 5-level paging for first-level
+          translation.
+
+          • 1: Hardware supports 5-level paging for first-level translation.
+
+          Hardware implementation reporting First-level Translation Support
+          (FLTS) as Clear also report this field as Clear.
+
+
+      - bit: 62
+        short_name: ESIRTPS
+        long_name: ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT
+        access: RO
+        short_description: Enhanced Set Interrupt Remap Table Pointer Support
+        long_description: |
+
+
+          • 0: Hardware does not invalidate all Interrupt remapping
+          hardware translation caches as part of SIRTP flow.
+
+          • 1: Hardware invalidates all Interrupt remapping hardware
+          translation caches as part of SIRTP flow.
+
+      - bit: 63
+        short_name: ESRTPS
+        long_name: ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT
+        access: RO
+        short_description: Enhanced Set Root Table Pointer Support
+        long_description: |
+
+
+          • 0: Hardware does not invalidate all DMA remapping hardware
+          translation caches as part of SRTP flow.
+
+          • 1: Hardware invalidates all DMA remapping hardware translation
+          caches as part of SRTP flow.
+
+  - value: 0x10
+    name: EXTENDED_CAPABILITY
+    description: |
+      Register to report remapping hardware extended capabilities
+    remarks: ECAP_REG
+    see: VTd[10.4.3(Extended Capability Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 0
+        short_name: C
+        long_name: PAGE_WALK_COHERENCY
+        access: RO
+        short_description: Page-walk Coherency
+        long_description: |
+          This field indicates if hardware access to the root, scalable-mode
+          root, context, scalable-mode-context, scalable-mode PASIDdirectory,
+          scalable-mode PASID-table, and interrupt-remap
+          tables, and legacy-mode second-level paging structures are
+          coherent (snooped) or not.
+
+          • 0:Indicates hardware accesses to remapping structures are
+          non-coherent.
+
+          • 1:Indicates hardware accesses to remapping structures are
+          coherent.
+
+          Hardware access to advanced fault log, invalidation queue,
+          invalidation semaphore, page-request queue are always snooped.
+
+      - bit: 1
+        short_name: QI
+        long_name: QUEUED_INVALIDATION_SUPPORT
+        access: RO
+        short_description: Queued Invalidation support
+        long_description: |
+
+
+          • 0: Hardware does not support queued invalidations.
+
+          • 1: Hardware supports queued invalidations.
+
+      - bit: 2
+        short_name: DT
+        long_name: DEVICE_TLB_SUPPORT
+        access: RO
+        short_description: Device-TLB support
+        long_description: |
+
+
+          • 0: Hardware does not support Device-TLBs.
+
+          • 1: Hardware supports Device-TLBs.
+
+          Hardware implementation reporting Queued Invalidation support
+          (QI) field as Clear also report this field as Clear.
+
+      - bit: 3
+        short_name: IR
+        long_name: INTERRUPT_REMAPPING_SUPPORT
+        access: RO
+        short_description: Interrupt Remapping support
+        long_description: |
+
+
+          • 0: Hardware does not support interrupt remapping.
+
+          • 1: Hardware supports interrupt remapping.
+
+          Hardware implementation reporting Queued Invalidation support
+          (QI) field as Clear also report this field as Clear.
+
+      - bit: 4
+        short_name: EIM
+        long_name: EXTENDED_INTERRUPT_MODE
+        access: RO
+        short_description: Extended Interrupt Mode
+        long_description: |
+
+
+          • 0: On Intel® 64 platforms, hardware supports only 8-bit
+          APIC-IDs (xAPIC Mode).
+
+          • 1: On Intel® 64 platforms, hardware supports 32-bit APICIDs
+          (x2APIC mode).
+
+          Hardware implementation reporting Interrupt Remapping support
+          (IR) field as Clear also report this field as Clear.
+
+      - bit: 5
+        short_name: DEP1
+        long_name: DEPRECATED1
+        access: RO
+        short_description: Deprecated1
+        long_description: |
+          This field must be reported as 0 to ensure backward
+          compatibility with older software.
+
+      - bit: 6
+        short_name: PT
+        long_name: PASS_THROUGH
+        access: RO
+        short_description: Pass Through
+        long_description: |
+
+
+          • 0: Hardware does not support pass-through translation type
+          in context-entries and scalable-mode-pasid-table-entries.
+
+          • 1: Hardware supports pass-through translation type in
+          context and scalable-mode-pasid-table-entries.
+
+      - bit: 7
+        short_name: SC
+        long_name: SNOOP_CONTROL
+        access: RO
+        short_description: Snoop Control
+        long_description: |
+
+
+          • 0: Hardware does not support 1-setting of the SNP field in
+          the page-table entries.
+
+          • 1: Hardware supports the 1-setting of the SNP field in the
+          page-table entries.
+
+          Implementations are recommended to support Snoop Control to
+          support software usages that require Snoop Control for
+          assignment of devices behind a remapping hardware unit.
+
+      - bit: 8-17
+        short_name: IRO
+        long_name: IOTLB_REGISTER_OFFSET
+        access: RO
+        short_description: IOTLB Register Offset
+        long_description: |
+          This field specifies the offset to the IOTLB registers relative to the
+          register base address of this remapping hardware unit.
+
+          If the register base address is X, and the value reported in this
+          field is Y, the address for the IOTLB registers is calculated as
+          X+(16*Y).
+
+      - bit: 20-23
+        short_name: MHMV
+        long_name: MAXIMUM_HANDLE_MASK_VALUE
+        access: RO
+        short_description: Maximum Handle Mask Value
+        long_description: |
+          The value in this field indicates the maximum supported value for
+          the Interrupt Mask (IM) field in the Interrupt Entry Cache
+          Invalidation Descriptor (iec_inv_dsc).
+
+          This field is unused and is reported as 0 if Interrupt Remapping
+          support (IR) field is Clear.
+
+      - bit: 24
+        short_name: DEP2
+        long_name: DEPRECATED2
+        access: RO
+        short_description: Deprecated2
+        long_description: |
+          In prior versions of this specification this bit was used to
+          enumerate “Extended mode address translation” which is now
+          deprecated. This field must be reported as 0 to ensure backward
+          compatibility with any software that enables extended mode
+          address translation.
+
+      - bit: 25
+        short_name: MTS
+        long_name: MEMORY_TYPE_SUPPORT
+        access: RO
+        short_description: Memory Type Support
+        long_description: |
+
+
+          • 0: Hardware does not support Memory Type in first-level
+          translation and Extended Memory type in second-level
+          translation.
+
+          • 1: Hardware supports Memory Type in first-level translation
+          and Extended Memory type in second-level translation.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) field as Clear also report this field as Clear.
+          Remapping hardware units with, one or more devices that
+          operate in processor coherency domain, under its scope must
+          report this field as Set.
+
+      - bit: 26
+        short_name: NEST
+        long_name: NESTED_TRANSLATION_SUPPORT
+        access: RO
+        short_description: Nested Translation Support
+        long_description: |
+
+
+          • 0: Hardware does not support nested translations.
+
+          • 1: Hardware supports nested translations.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) field as Clear or First-level Translation Support
+          (FLTS) field as Clear or Second-level Translation Support (SLTS)
+          field as Clear also report this field as Clear.
+
+      - bit: 28
+        short_name: DEP3
+        long_name: DEPRECATED3
+        access: RO
+        short_description: Deprecated3
+        long_description: |
+          This field must be reported as 0 to ensure backward
+          compatibility with older software.
+
+      - bit: 29
+        short_name: PRS
+        long_name: PAGE_REQUEST_SUPPORT
+        access: RO
+        short_description: Page Request Support
+        long_description: |
+
+
+          • 0: Hardware does not support page requests.
+
+          • 1: Hardware supports page requests.
+
+          Hardware implementation reporting Device-TLB support (DT) field
+          as Clear or Scalable Mode Translation Support (SMTS) field as
+          Clear also report this field as Clear.
+
+      - bit: 30
+        short_name: ERS
+        long_name: EXECUTE_REQUEST_SUPPORT
+        access: RO
+        short_description: Execute Request Support
+        long_description: |
+
+
+          • 0: Hardware does not support requests-with-PASID seeking
+          execute permission.
+
+          • 1: Hardware supports requests-with-PASID seeking execute
+          permission.
+
+          Hardware implementations reporting Process Address Space ID
+          support (PASID) field as Clear must report this field as Clear.
+
+      - bit: 33
+        short_name: NWFS
+        long_name: NO_WRITE_FLAG_SUPPORT
+        access: RO
+        short_description: No Write Flag Support
+        long_description: |
+
+
+          • 0: Hardware ignores the 'No Write' (NW) flag in Device-TLB
+          translation-requests, and behaves as if NW is always 0.
+
+          • 1: Hardware supports the 'No Write' (NW) flag in Device-TLB
+          translation-requests.
+
+          Hardware implementations reporting Device-TLB support (DT)
+          field as Clear also report this field as Clear.
+
+      - bit: 34
+        short_name: EAFS
+        long_name: EXTENDED_ACCESSED_FLAG_SUPPORT
+        access: RO
+        short_description: Extended Accessed Flag Support
+        long_description: |
+
+
+          • 0: Hardware does not support the extended-accessed (EA)
+          bit in first-level paging-structure entries.
+
+          • 1: Hardware supports the extended-accessed (EA) bit in
+          first-level paging-structure entries.
+
+          Hardware implementations reporting Scalable-Mode Page-walk
+          Coherency Support (SWPWCS) as Clear also report this field as
+          Clear.
+
+      - bit: 35-39
+        short_name: PSS
+        long_name: PASID_SIZE_SUPPORTED
+        access: RO
+        short_description: PASID Size Supported
+        long_description: |
+          This field reports the PASID size supported by the remapping
+          hardware for requests-with-PASID. A value of N in this field
+          indicates hardware supports PASID field of N+1 bits (For
+          example, value of 7 in this field, indicates 8-bit PASIDs are
+          supported).
+
+          Requests-with-PASID with PASID value beyond the limit specified
+          by this field are treated as error by the remapping hardware.
+          This field is unused and reported as 0 if Scalable Mode Translation
+          Support (SMTS) field is Clear.
+
+      - bit: 40
+        short_name: PASID
+        long_name: PROCESS_ADDRESS_SPACE_ID_SUPPORT
+        access: RO
+        short_description: Process Address Space ID Support
+        long_description: |
+
+
+          • 0: Hardware does not support requests tagged with Process
+          Address Space IDs.
+
+          • 1: Hardware supports requests tagged with Process Address
+          Space IDs.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) field as Clear also report this field as Clear.
+
+      - bit: 41
+        short_name: DIT
+        long_name: DEVICE_TLB_INVALIDATION_THROTTLE
+        access: RO
+        short_description: Device-TLB Invalidation Throttle
+        long_description: |
+
+
+          • 0: Hardware does not support Device-TLB Invalidation
+          Throttling.
+
+          • 1: Hardware supports Device-TLB Invalidation Throttling.
+
+          Hardware implementations reporting Device-TLB support (DT) as
+          Clear also report this field as Clear.
+
+      - bit: 42
+        short_name: PDS
+        long_name: PAGE_REQUEST_DRAIN_SUPPORT
+        access: RO
+        short_description: Page-request Drain Support
+        long_description: |
+
+
+          • 0: Hardware does not support Page-request Drain (PD) flag
+          in inv_wait_dsc.
+
+          • 1: Hardware supports Page-request Drain (PD) flag in
+          inv_wait_dsc.
+
+          Hardware implementations reporting Device-TLB support (DT) as
+          Clear also report this field as Clear.
+
+      - bit: 43
+        short_name: SMTS
+        long_name: SCALABLE_MODE_TRANSLATION_SUPPORT
+        access: RO
+        short_description: Scalable Mode Translation Support
+        long_description: |
+
+
+          • 0: Hardware does not support Scalable Mode DMA
+          Remapping.
+
+          • 1: Hardware supports Scalable Mode DMA Remapping
+          through scalable-mode context-table and PASID-table
+          structures.
+
+          Hardware implementation reporting Queued Invalidation (QI)
+          field as Clear also report this field as Clear.
+
+          Hardware implementation reporting First-Level Translation
+          Support (FLTS), Second-level Translation Support (SLTS) and
+          Pass-through Support (PT) as Clear also report this field as Clear.
+
+      - bit: 44
+        short_name: VCS
+        long_name: VIRTUAL_COMMAND_SUPPORT
+        access: RO
+        short_description: Virtual Command Support
+        long_description: |
+
+
+          • 0: Hardware does not support command submission to
+          virtual-DMA Remapping hardware.
+
+          • 1: Hardware does support command submission to virtual-
+          DMA Remapping hardware.
+
+          Hardware implementations of this architecture report a value of 0
+          in this field. Software implementations (emulation) of this
+          architecture may report VCS=1.
+
+          Software managing remapping hardware should be written to
+          handle both values of VCS.
+
+      - bit: 45
+        short_name: SLADS
+        long_name: SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT
+        access: RO
+        short_description: Second-Level Accessed/Dirty Support
+        long_description: |
+
+
+          • 0: Hardware does not support Accessed/Dirty bits in Second-
+          Level translation.
+
+          • 1: Hardware supports Accessed/Dirty bits in Second-Level
+          translation.
+
+          Hardware implementations reporting Scalable-Mode Page-walk
+          Coherency Support (SMPWCS) as Clear also report this field as
+          Clear.
+
+      - bit: 46
+        short_name: SLTS
+        long_name: SECOND_LEVEL_TRANSLATION_SUPPORT
+        access: RO
+        short_description: Second-level Translation Support
+        long_description: |
+
+
+          • 0: Hardware does not support PASID Granular Translation
+          Type of second-level (PGTT=010b) in scalable-mode PASIDTable
+          entry.
+
+          • 1: Hardware supports PASID Granular Translation Type of
+          second-level (PGTT=010b) in scalable-mode PASID-Table
+          entry.
+
+      - bit: 47
+        short_name: FLTS
+        long_name: FIRST_LEVEL_TRANSLATION_SUPPORT
+        access: RO
+        short_description: First-level Translation Support
+        long_description: |
+
+
+          • 0: Hardware does not support PASID Granular Translation
+          Type of first-level (PGTT=001b) in scalable-mode PASIDTable
+          entry.
+
+          • 1: Hardware supports PASID Granular Translation Type of
+          first-level (PGTT=001b) in scalable-mode PASID-Table entry.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) as Clear also report this field as Clear
+
+      - bit: 48
+        short_name: SMPWCS
+        long_name: SCALABLE_MODE_PAGE_WALK_COHERENCY
+        access: RO
+        short_description: Scalable-Mode Page-walk Coherency
+        long_description: |
+
+
+          • 0: Hardware access to paging structures accessed through
+          PASID-table entry are not snooped.
+
+          • 1: Hardware access to paging structures accessed through
+          PASID-table entry are snooped if PWSNP field in PASID-table
+          entry is Set. Paging-structures accessed through PASID-table
+          entry are not snooped if PWSNP field in PASID-table entry is
+          Clear.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) as Clear also report this field as Clear.
+
+      - bit: 49
+        short_name: RPS
+        long_name: RID_PASID_SUPPORT
+        access: RO
+        short_description: RID-PASID Support
+        long_description: |
+
+
+          • 0: Hardware does not support RID_PASID field in scalable mode
+          context-entry. It uses the value of 0 for RID_PASID.
+
+          • 1: Hardware supports the RID_PASID field in scalable-mode
+          context-entry.
+
+          Hardware implementations reporting Scalable Mode Translation
+          Support (SMTS) as Clear also report this field as Clear.
+
+      - bit: 52
+        short_name: ADMS
+        long_name: ABORT_DMA_MODE_SUPPORT
+        access: RO
+        short_description: Abort DMA Mode Support
+        long_description: |
+
+
+          • 0: Hardware does not support Abort DMA Mode.
+
+          • 1: Hardware supports Abort DMA Mode.
+
+      - bit: 53
+        short_name: RPRIVS
+        long_name: RID_PRIV_SUPPORT
+        access: RO
+        short_description: RID_PRIV Support
+        long_description: |
+
+
+          • 0: Hardware does not support the RID_PRIV field in the
+          scalable-mode context-entry. It uses the value of 0 for
+          RID_PRIV.
+
+          • 1: Hardware supports the RID_PRIV field in the scalable mode
+          context-entry.
+
+          Hardware implementations reporting Supervisor Request Support
+          (SRS) as Clear also report this field as Clear.
+
+  - value: 0x18
+    name: GLOBAL_COMMAND
+    description: |
+      Register to control remapping hardware. If multiple control fields in this register need to be modified,
+      software must serialize the modifications through multiple writes to this register.
+
+      For example, to update a bit field in this register at offset X with value of Y, software must follow below
+      steps:
+
+      1. Tmp = Read GSTS_REG
+
+      2. Status = (Tmp & 96FFFFFFh) // Reset the one-shot bits
+
+      3. if (Y) {Command = (Status | (1 << X))} else {Command = (Status & ~(1 << X))}
+
+      4. Write Command to GCMD_REG
+
+      5. Wait until GSTS_REG[X] indicates command is serviced.
+    remarks: GCMD_REG
+    see: VTd[10.4.4(Global Command Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 32
+      fields:
+      - bit: 23
+        short_name: CFI
+        long_name: COMPATIBILITY_FORMAT_INTERRUPT
+        access: WO
+        short_description: Compatibility Format Interrupt
+        long_description: |
+          This field is valid only for Intel® 64 implementations supporting interrupt remapping.
+
+          Software writes to this field to enable or disable Compatibility Format
+          interrupts on Intel® 64 platforms. The value in this field is effective only
+          when interrupt-remapping is enabled and Extended Interrupt Mode
+          (x2APIC mode) is not enabled.
+
+          • 0: Block Compatibility format interrupts.
+
+          • 1: Process Compatibility format interrupts as pass-through (bypass
+          interrupt remapping).
+
+          Hardware reports the status of updating this field through the CFIS field
+          in the Global Status register.
+
+          The value returned on a read of this field is undefined.
+
+      - bit: 24
+        short_name: SIRTP
+        long_name: SET_INTERRUPT_REMAP_TABLE_POINTER
+        access: WO
+        short_description: Set Interrupt Remap Table Pointer
+        long_description: |
+          This field is valid only for implementations supporting interrupt remapping.
+
+          Software sets this field to set/update the interrupt remapping table
+          pointer used by hardware. The interrupt remapping table pointer is
+          specified through the Interrupt Remapping Table Address (IRTA_REG)
+          register.
+
+          Hardware reports the status of the 'Set Interrupt Remap Table Pointer'
+          operation through the IRTPS field in the Global Status register.
+
+          The 'Set Interrupt Remap Table Pointer' operation must be performed
+          before enabling or re-enabling (after disabling) interrupt-remapping
+          hardware through the IRE field.
+
+          Clearing this bit has no effect. The value returned on a read of this field is
+          undefined.
+
+      - bit: 25
+        short_name: IRE
+        long_name: INTERRUPT_REMAPPING_ENABLE
+        access: WO
+        short_description: Interrupt Remapping Enable
+        long_description: |
+          This field is valid only for implementations supporting interrupt
+          remapping.
+
+          • 0: Disable interrupt-remapping hardware
+
+          • 1: Enable interrupt-remapping hardware
+
+          Hardware reports the status of the interrupt remapping enable operation
+          through the IRES field in the Global Status register.
+
+          There may be active interrupt requests in the platform when software
+          updates this field. Hardware must enable or disable interrupt-remapping
+          logic only at deterministic transaction boundaries, so that any in-flight
+          interrupts are either subject to remapping or not at all.
+
+          For implementations reporting the Enhanced Set Interrupt Remap Table
+          Pointer Support (ESIRTPS) field as Set, hardware performs global
+          invalidation on all Interrupt remapping caches as part of Interrupt
+          Remapping Disable operation.
+
+          Hardware implementations must drain any in-flight interrupts requests
+          queued in the Root-Complex before completing the interrupt-remapping
+          enable command and reflecting the status of the command through the
+          IRES field in the Global Status register.
+
+          The value returned on a read of this field is undefined.
+
+      - bit: 26
+        short_name: QIE
+        long_name: QUEUED_INVALIDATION_ENABLE
+        access: WO
+        short_description: Queued Invalidation Enable
+        long_description: |
+          This field is valid only for implementations supporting queued
+          invalidations.
+
+          Software writes to this field to enable or disable queued invalidations.
+
+          • 0: Disable queued invalidations.
+
+          • 1: Enable use of queued invalidations.
+
+          Hardware reports the status of queued invalidation enable operation
+          through QIES field in the Global Status register.
+
+          The value returned on a read of this field is undefined.
+
+      - bit: 27
+        short_name: WBF
+        long_name: WRITE_BUFFER_FLUSH
+        access: WO
+        short_description: Write Buffer Flush
+        long_description: |
+          This bit is valid only for implementations requiring write buffer flushing.
+
+          Software sets this field to request that hardware flush the Root-Complex
+          internal write buffers. This is done to ensure any updates to the memory resident
+          remapping structures are not held in any internal write posting
+          buffers.
+
+          Hardware reports the status of the write buffer flushing operation
+          through the WBFS field in the Global Status register.
+
+          Clearing this bit has no effect. The value returned on a read of this field is
+          undefined.
+
+      - bit: 28
+        short_name: EAFL
+        long_name: ENABLE_ADVANCED_FAULT_LOGGING
+        access: WO
+        short_description: Enable Advanced Fault Logging
+        long_description: |
+          This field is valid only for implementations supporting advanced fault
+          logging.
+
+          Software writes to this field to request hardware to enable or disable
+          advanced fault logging:
+
+          • 0: Disable advanced fault logging. In this case, translation faults are
+          reported through the Fault Recording registers.
+
+          • 1: Enable use of memory-resident fault log. When enabled,
+          translation faults are recorded in the memory-resident log. The fault
+          log pointer must be set in hardware (through the SFL field) before
+          enabling advanced fault logging. Hardware reports the status of the
+          advanced fault logging enable operation through the AFLS field in the
+          Global Status register.
+
+          The value returned on read of this field is undefined.
+
+      - bit: 29
+        short_name: SFL
+        long_name: SET_FAULT_LOG
+        access: WO
+        short_description: Set Fault Log
+        long_description: |
+          This field is valid only for implementations supporting advanced fault
+          logging.
+
+          Software sets this field to request hardware to set/update the fault-log
+          pointer used by hardware. The fault-log pointer is specified through
+          Advanced Fault Log register.
+
+          Hardware reports the status of the 'Set Fault Log' operation through the
+          FLS field in the Global Status register.
+
+          The fault log pointer must be set before enabling advanced fault logging
+          (through EAFL field). Once advanced fault logging is enabled, the fault
+          log pointer may be updated through this field while DMA remapping is
+          active.
+
+          Clearing this bit has no effect. The value returned on read of this field is
+          undefined.
+
+      - bit: 30
+        short_name: SRTP
+        long_name: SET_ROOT_TABLE_POINTER
+        access: WO
+        short_description: Set Root Table Pointer
+        long_description: |
+          Software sets this field to set/update the root-table pointer (and
+          translation table mode) used by hardware. The root-table pointer (and
+          translation table mode) is specified through the Root Table Address
+          (RTADDR_REG) register.
+
+          Hardware reports the status of the 'Set Root Table Pointer' operation
+          through the RTPS field in the Global Status register.
+
+          The 'Set Root Table Pointer' operation must be performed before enabling
+          or re-enabling (after disabling) DMA remapping through the TE field.
+          For details on invalidation that software may have to perform after the
+
+          Clearing this bit has no effect. The value returned on a read of this field is
+          undefined.
+
+      - bit: 31
+        short_name: TE
+        long_name: TRANSLATION_ENABLE
+        access: WO
+        short_description: Translation Enable
+        long_description: |
+          Software writes to this field to request hardware to enable/disable DMA
+          remapping:
+
+          • 0: Disable DMA remapping
+
+          • 1: Enable DMA remapping
+
+          Hardware reports the status of the translation enable operation through
+          the TES field in the Global Status register.
+
+          There may be active DMA requests in the platform when software
+          updates this field. Hardware must enable or disable remapping logic only
+          at deterministic transaction boundaries, so that any in-flight transaction
+          is either subject to remapping or not at all.
+
+          Hardware implementations supporting DMA draining must drain any inflight
+          DMA read/write requests queued within the Root-Complex before
+          completing the translation enable command and reflecting the status of
+          the command through the TES field in the Global Status register.
+
+          For implementations reporting Scalable Mode Translation Support (SMTS)
+          field as Set, hardware performs global invalidation on all DMA remapping
+          translation caches as part of Translation Disable operation.
+
+          The value returned on a read of this field is undefined.
+
+  - value: 0x1C
+    name: GLOBAL_STATUS
+    description: |
+      Register to report general remapping hardware status.
+    remarks: GSTS_REG
+    see: VTd[10.4.5(Global Status Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 32
+      fields:
+      - bit: 23
+        short_name: CFIS
+        long_name: COMPATIBILITY_FORMAT_INTERRUPT_STATUS
+        access: RO
+        short_description: Compatibility Format Interrupt Status
+        long_description: |
+          This field indicates the status of Compatibility format interrupts on Intel®
+          64 implementations supporting interrupt-remapping. The value reported
+          in this field is applicable only when interrupt-remapping is enabled and
+          extended interrupt mode (x2APIC mode) is not enabled.
+
+          • 0: Compatibility format interrupts are blocked.
+
+          • 1: Compatibility format interrupts are processed as pass-through
+          (bypassing interrupt remapping).
+
+      - bit: 24
+        short_name: IRTPS
+        long_name: INTERRUPT_REMAPPING_TABLE_POINTER_STATUS
+        access: RO
+        short_description: Interrupt Remapping Table Pointer Status
+        long_description: |
+          This field indicates the status of the interrupt remapping table pointer in
+          hardware.
+
+          This field is cleared by hardware when software sets the SIRTP field in the
+          Global Command register. This field is Set by hardware when hardware
+          completes the 'Set Interrupt Remap Table Pointer' operation using the
+          value provided in the Interrupt Remapping Table Address register.
+
+      - bit: 25
+        short_name: IRES
+        long_name: INTERRUPT_REMAPPING_ENABLE_STATUS
+        access: RO
+        short_description: Interrupt Remapping Enable Status
+        long_description: |
+          This field indicates the status of Interrupt-remapping hardware.
+
+          • 0: Interrupt-remapping hardware is not enabled
+
+          • 1: Interrupt-remapping hardware is enabled
+
+      - bit: 26
+        short_name: QIES
+        long_name: QUEUED_INVALIDATION_ENABLE_STATUS
+        access: RO
+        short_description: Queued Invalidation Enable Status
+        long_description: |
+          This field indicates queued invalidation enable status.
+
+          • 0: queued invalidation is not enabled
+
+          • 1: queued invalidation is enabled
+
+      - bit: 27
+        short_name: WBFS
+        long_name: WRITE_BUFFER_FLUSH_STATUS
+        access: RO
+        short_description: Write Buffer Flush Status
+        long_description: |
+          This field is valid only for implementations requiring write buffer flushing.
+          This field indicates the status of the write buffer flush command. It is
+
+          • Set by hardware when software sets the WBF field in the Global
+          Command register.
+
+          • Cleared by hardware when hardware completes the write buffer
+          flushing operation.
+
+      - bit: 28
+        short_name: AFLS
+        long_name: ADVANCED_FAULT_LOGGING_STATUS
+        access: RO
+        short_description: Advanced Fault Logging Status
+        long_description: |
+          This field is valid only for implementations supporting advanced fault
+          logging. It indicates the advanced fault logging status:
+
+          • 0: Advanced Fault Logging is not enabled
+
+          • 1: Advanced Fault Logging is enabled
+
+      - bit: 29
+        short_name: FLS
+        long_name: FAULT_LOG_STATUS
+        access: RO
+        short_description: Fault Log Status
+        long_description: |
+          This field:
+
+          • Is cleared by hardware when software Sets the SFL field in the Global
+          Command register.
+
+          • Is Set by hardware when hardware completes the 'Set Fault Log
+          Pointer' operation using the value provided in the Advanced Fault Log
+          register.
+
+      - bit: 30
+        short_name: RTPS
+        long_name: ROOT_TABLE_POINTER_STATUS
+        access: RO
+        short_description: Root Table Pointer Status
+        long_description: |
+          This field indicates the status of the root-table pointer in hardware.
+
+          This field is cleared by hardware when software sets the SRTP field in the
+          Global Command register. This field is set by hardware when hardware
+          completes the 'Set Root Table Pointer' operation using the value provided
+          in the Root Table Address register.
+
+      - bit: 31
+        short_name: TES
+        long_name: TRANSLATION_ENABLE_STATUS
+        access: RO
+        short_description: Translation Enable Status
+        long_description: |
+          This field indicates the status of DMA-remapping hardware.
+
+          • 0: DMA remapping is not enabled
+
+          • 1: DMA remapping is enabled
+
+  - value: 0x20
+    name: ROOT_TABLE_ADDRESS
+    description: |
+      Register providing the base address of root-table and the translation table mode. Software programs the
+      desired values in this register but these values take effect only after software executes Set Root Table
+      Pointer command through the SRTP field in the Global Command Register (GCMD_REG).
+    remarks: RTADDR_REG
+    see: VTd[10.4.6(Root Table Address Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 10-11
+        short_name: TTM
+        long_name: TRANSLATION_TABLE_MODE
+        access: RW
+        short_description: Translation Table Mode
+        long_description: |
+          This field specifies the translation mode used for DMA remapping.
+
+          • 00: legacy mode - uses root tables and context tables.
+
+          • 01: scalable mode - uses scalable-mode root tables and scalable mode
+          context tables.
+
+          • 10: reserved - in prior version of this specification, this encoding was
+          used to enable extended mode which is no longer supported.
+
+          • 11: abort-dma mode.
+
+          For implementations reporting Enhanced SRTP Support (ESRTPS) field as
+          Clear in the Capability register, software must not modify this field while
+          DMA remapping is active (TES=1 in Global Status register).
+
+          The value of this field takes effect only after software executes Set Root
+          Table Pointer command.
+
+      - bit: 12-63
+        short_name: RTA
+        long_name: ROOT_TABLE_ADDRESS
+        access: RW
+        short_description: Root Table Address
+        long_description: |
+          This field points to the base of the page-aligned, 4KB-sized root-table in
+          system memory. Hardware may ignore and not implement bits 63:HAW,
+          where HAW is the host address width.
+
+          The value of this field takes effect only after software executes Set Root
+          Table Pointer command.
+
+  - value: 0x28
+    name: CONTEXT_COMMAND
+    description: |
+      Register to manage context-cache.The act of writing the uppermost byte of the CCMD_REG with the ICC
+      field Set causes the hardware to perform the context-cache invalidation.
+    remarks: CCMD_RE
+    see: VTd[10.4.7(Context Command Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 0-15
+        short_name: DID
+        long_name: DOMAIN_ID
+        access: RW
+        short_description: Domain-ID
+        long_description: |
+          Indicates the id of the domain whose context-entries need to be selectively
+          invalidated. This field must be programmed by software for both domain selective
+          and device-selective invalidation requests.
+
+          The Capability register reports the domain-id width supported by hardware.
+          Software must ensure that the value written to this field is within this limit.
+          Hardware ignores (and may not implement) bits 15:N, where N is the
+          supported domain-id width reported in the Capability register.
+
+      - bit: 16-31
+        short_name: SID
+        long_name: SOURCE_ID
+        access: WO
+        short_description: Source-ID
+        long_description: |
+          Indicates the source-id of the device whose corresponding context-entry
+          needs to be selectively invalidated.This field along with the FM field must
+          be programmed by software for device-selective invalidation requests.
+
+          The value returned on a read of this field is undefined.
+
+      - bit: 32-33
+        short_name: FM
+        long_name: FUNCTION_MASK
+        access: WO
+        short_description: Function Mask
+        long_description: |
+          Software may use the Function Mask to perform device-selective
+          invalidations on behalf of devices supporting PCI Express Phantom
+          Functions.
+
+          This field specifies which bits of the function number portion (least
+          significant three bits) of the SID field to mask when performing device selective
+          invalidations.The following encodings are defined for this field:
+
+          • 00: No bits in the SID field masked
+
+          • 01: Mask bit 2 in the SID field
+
+          • 10: Mask bits 2:1 in the SID field
+
+          • 11: Mask bits 2:0 in the SID field
+
+          The context-entries corresponding to the source-ids specified through the
+          SID and FM fields must have the domain-id specified in the DID field.
+
+          The value returned on a read of this field is undefined.
+
+      - bit: 59-60
+        short_name: CAIG
+        long_name: CONTEXT_ACTUAL_INVALIDATION_GRANULARITY
+        access: RO
+        short_description: Context Actual Invalidation Granularity
+        long_description: |
+          Hardware reports the granularity at which an invalidation request was
+          processed through the CAIG field at the time of reporting invalidation
+          completion (by clearing the ICC field).
+
+          The following are the encodings for this field:
+
+          • 00: Error. This indicates hardware detected an incorrect invalidation
+          request and ignored the request, e.g., register based invalidation when
+          Translation Table Mode (TTM) in Root Table Address Register is not
+          programmed to legacy mode (RTADDR_REG.TTM!=00b).
+
+          On hardware implementations with Major Version 6 or higher
+          (VER_REG), all invalidation requests through this register are treated
+          as incorrect invalidation requests. Software should use the Queued
+          Invalidation interface to perform context-cache invalidations for such
+          hardware implementations. Refer to Section 6.5 for more details.
+
+          • 01: Global Invalidation performed. This could be in response to a
+          global, domain-selective, or device-selective invalidation request.
+
+          • 10: Domain-selective invalidation performed using the domain-id
+          specified by software in the DID field. This could be in response to a
+          domain-selective or device-selective invalidation request.
+
+          • 11: Device-selective invalidation performed using the source-id and
+          domain-id specified by software in the SID and FM fields. This can only
+          be in response to a device-selective invalidation request.
+
+      - bit: 61-62
+        short_name: CIRG
+        long_name: CONTEXT_INVALIDATION_REQUEST_GRANULARITY
+        access: RW
+        short_description: Context Invalidation Request Granularity
+        long_description: |
+          Software provides the requested invalidation granularity through this field
+          when setting the ICC field:
+
+          • 00: Reserved.
+
+          • 01: Global Invalidation request.
+
+          • 10: Domain-selective invalidation request. The target domain-id must
+          be specified in the DID field.
+
+          • 11: Device-selective invalidation request. The target source-id(s) must
+          be specified through the SID and FM fields, and the domain-id [that
+          was programmed in the context-entry for these device(s)] must be
+          provided in the DID field.
+
+          Hardware implementations may process an invalidation request by
+          performing invalidation at a coarser granularity than requested. Hardware
+          indicates completion of the invalidation request by clearing the ICC field. At
+          this time, hardware also indicates the granularity at which the actual
+          invalidation was performed through the CAIG field.
+
+      - bit: 63
+        short_name: ICC
+        long_name: INVALIDATE_CONTEXT_CACHE
+        access: RW
+        short_description: Invalidate Context-Cache
+        long_description: |
+          Software requests invalidation of context-cache by setting this field.
+          Software must also set the requested invalidation granularity by
+          programming the CIRG field. Software must read back and check the ICC
+          field is Clear to confirm the invalidation is complete. Software must not
+          update this register when this field is Set.
+
+          Hardware clears the ICC field to indicate the invalidation request is
+          complete.Hardware also indicates the granularity at which the invalidation
+          operation was performed through the CAIG field.
+
+          Software must submit a context-cache invalidation request through this
+          field only when there are no invalidation requests pending at this
+          remapping hardware unit.
+
+          Since information from the context-cache may be used by hardware to tag
+          IOTLB entries, software must perform domain-selective (or global)
+          invalidation of IOTLB after the context-cache invalidation has completed.
+
+          Hardware implementations reporting a write-buffer flushing requirement
+          (RWBF=1 in the Capability register) must implicitly perform a write buffer
+          flush before invalidating the context-cache.
+
+          When Translation Table Mode field in Root Table Address register is not
+          setup as legacy mode (RTADDR_REG.TTM!=00b), hardware will ignore the
+          value provided by software in this register, treat it as an incorrect
+          invalidation request, and report a value of 00b in CAIG field.
+
+  - value: 0x0
+    name: INVALIDATE_ADDRESS
+    description: |
+      Register to provide the DMA address whose corresponding IOTLB entry needs to be invalidated through
+      the corresponding IOTLB Invalidate register. This register is a write-only register. A value returned on a
+      read of this register is undefined.
+    remarks: IVA_REG
+    see: VTd[10.4.8.2(Invalidate Address Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 0-5
+        short_name: AM
+        long_name: ADDRESS_MASK
+        access: WO
+        short_description: Address Mask
+        long_description: |
+          The value in this field specifies the number of low order bits of the ADDR
+          field that must be masked for the invalidation operation. This field enables
+          software to request invalidation of contiguous mappings for size-aligned
+          regions.
+
+          When invalidating mappings for large-pages, software must specify the
+          appropriate mask value. For example, when invalidating mapping for a
+          2MB page, software must specify an address mask value of at least 9.
+          Hardware implementations report the maximum supported address mask
+          value through the Capability register.
+
+          A value returned on a read of this field is undefined.
+
+      - bit: 6
+        short_name: IH
+        long_name: INVALIDATION_HINT
+        access: WO
+        short_description: Invalidation Hint
+        long_description: |
+          The field provides hints to hardware about preserving or flushing the nonleaf
+          (context-entry) entries that may be cached in hardware:
+
+          • 0: Software may have modified both leaf and non-leaf second-level
+          paging-structure entries corresponding to mappings specified in the
+          ADDR and AM fields. On a page-selective-within-domain invalidation
+          request, hardware must invalidate the cached entries associated with
+          the mappings specified by DID, ADDR and AM fields, in both IOTLB
+          and paging-structure caches.
+
+          • 1: Software has not modified any second-level non-leaf paging entries
+          associated with the mappings specified by the ADDR and AM fields. On
+          a page-selective-within-domain invalidation request, hardware may
+          preserve the cached second-level mappings in paging-structurecaches.
+
+          A value returned on a read of this field is undefined.
+
+      - bit: 12-63
+        short_name: ADDR
+        long_name: PAGE_ADDRESS
+        access: WO
+        short_description: Address
+        long_description: |
+          Software provides the second-level-input-address that needs to be page selectively
+          invalidated. To make a page-selective-within-domain
+          invalidation request to hardware, software must first write the appropriate
+          fields in this register, and then issue the page-selective-within-domain
+          invalidate command through the IOTLB_REG. Hardware ignores bits 63:N,
+          where N is the maximum guest address width (MGAW) supported.
+
+          A value returned on a read of this field is undefined.
+
+  - value: 0x8
+    name: IOTLB_INVALIDATE
+    description: |
+      Register to invalidate IOTLB. The act of writing the upper byte of the IOTLB_REG with the IVT field Set
+      causes the hardware to perform the IOTLB invalidation.
+    remarks: IOTLB_REG
+    see: VTd[10.4.8.1(IOTLB Invalidate Register)]
+    fields:
+    - name_with_suffix: REGISTER
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 32-47
+        short_name: DID
+        long_name: DOMAIN_ID
+        access: RW
+        short_description: Domain-ID
+        long_description: |
+          Indicates the ID of the domain whose IOTLB entries need to be selectively
+          invalidated. This field must be programmed by software for domainselective
+          and page-selective invalidation requests.
+
+          The Capability register reports the domain-id width supported by hardware.
+          Software must ensure that the value written to this field is within this limit.
+          Hardware may ignore and not implement bits 47:(32+N), where N is the
+          supported domain-id width reported in the Capability register.
+
+      - bit: 48
+        short_name: DW
+        long_name: DRAIN_WRITES
+        access: RW
+        short_description: Drain Writes
+        long_description: |
+          This field is ignored by hardware if the DWD field is reported as Clear in the
+          Capability register. When the DWD field is reported as Set in the Capability
+          register, the following encodings are supported for this field:
+
+          • 0: Hardware may complete the IOTLB invalidation without draining
+          DMA write requests.
+
+          • 1: Hardware must drain relevant translated DMA write requests.
+
+      - bit: 49
+        short_name: DR
+        long_name: DRAIN_READS
+        access: RW
+        short_description: Drain Reads
+        long_description: |
+          This field is ignored by hardware if the DRD field is reported as Clear in the
+          Capability register. When the DRD field is reported as Set in the Capability
+          register, the following encodings are supported for this field:
+
+          • 0: Hardware may complete the IOTLB invalidation without draining
+          DMA read requests.
+
+          • 1: Hardware must drain DMA read requests.
+
+      - bit: 57-58
+        short_name: IAIG
+        long_name: IOTLB_ACTUAL_INVALIDATION_GRANULARITY
+        access: RO
+        short_description: IOTLB Actual Invalidation Granularity
+        long_description: |
+          Hardware reports the granularity at which an invalidation request was
+          processed through this field when reporting invalidation completion (by
+          clearing the IVT field).
+
+          The following are the encodings for this field.
+
+          • 00: Error. This indicates hardware detected an incorrect invalidation
+          request and ignored the request, e.g., register based invalidation when
+          Translation Table Mode (TTM) in Root Table Address Register is not
+          programmed to legacy mode (RTADDR_REG.TTM!=00b), detected an
+          unsupported address mask value in Invalidate Address register for
+          page-selective invalidation requests.
+
+          On hardware implementations with Major Version 6 or higher
+          (VER_REG), all invalidation requests through this register are treated
+          as incorrect invalidation requests. Software should use the Queued
+          Invalidation interface to perform IOTLB invalidations for such hardware
+          implementations. Refer to Section 6.5 for more details.
+
+          • 01: Global Invalidation performed. This could be in response to a
+          global, domain-selective, or page-selective invalidation request.
+
+          • 10: Domain-selective invalidation performed using the domain-id
+          specified by software in the DID field. This could be in response to a
+          domain-selective or a page-selective invalidation request.
+
+          • 11: Page-selective-within-domain invalidation performed using the
+          address, mask and hint specified by software in the Invalidate Address
+          register and domain-id specified in DID field. This can be in response to
+          a page-selective-within-domain invalidation request.
+
+      - bit: 60-61
+        short_name: IIRG
+        long_name: IOTLB_INVALIDATION_REQUEST_GRANULARITY
+        access: RW
+        short_description: IOTLB Invalidation Request Granularity
+        long_description: |
+          When requesting hardware to invalidate the IOTLB (by setting the IVT
+          field), software writes the requested invalidation granularity through this
+          field. The following are the encodings for the field.
+
+          • 00: Reserved.
+
+          • 01: Global invalidation request.
+
+          • 10: Domain-selective invalidation request. The target domain-id must
+          be specified in the DID field.
+
+          • 11: Page-selective-within-domain invalidation request. The target
+          address, mask, and invalidation hint must be specified in the Invalidate
+          Address register, and the domain-id must be provided in the DID field.
+
+          Hardware implementations may process an invalidation request by
+          performing invalidation at a coarser granularity than requested. Hardware
+          indicates completion of the invalidation request by clearing the IVT field. At
+          that time, the granularity at which actual invalidation was performed is
+          reported through the IAIG field.
+
+      - bit: 63
+        short_name: IVT
+        long_name: INVALIDATE_IOTLB
+        access: RW
+        short_description: Invalidate IOTLB
+        long_description: |
+          Software requests IOTLB invalidation by setting this field. Software must
+          also set the requested invalidation granularity by programming the IIRG
+          field.
+
+          Hardware clears the IVT field to indicate the invalidation request is
+          complete. Hardware also indicates the granularity at which the invalidation
+          operation was performed through the IAIG field. Software must not submit
+          another invalidation request through this register while the IVT field is Set,
+          nor update the associated Invalidate Address register.
+
+          Software must not submit IOTLB invalidation requests when there is a
+          context-cache invalidation request pending at this remapping hardware
+          unit.
+
+          Hardware implementations reporting a write-buffer flushing requirement
+          (RWBF=1 in Capability register) must implicitly perform a write buffer
+          flushing before invalidating the IOTLB. Refer to Section 6.8 for write buffer
+          flushing requirements.
+
+          When Translation Table Mode field in Root Table Address registers is not
+          setup as legacy mode (RTADDR_REG.TTM!=00b), hardware will ignore the
+          value provided by software in this register, treat it as an incorrect
+          invalidation request, and report a value of 00b in IAIG field.
