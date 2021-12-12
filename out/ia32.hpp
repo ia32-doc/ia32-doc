@@ -15,7 +15,8 @@ using uint64_t  = unsigned long long;
  *           Intel Manual
  *
  * @remarks All references are based on <b>Intel(R) 64 and IA-32 architectures software developer's manual combined volumes:
- *          1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4</b> (May 2018).
+ *          1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4</b> (June 2021) and <b>Intel(R) Virtualization Technology for Directed I/O</b>
+ *          (April 2021)
  * @{
  */
 /**
@@ -22618,6 +22619,1805 @@ typedef union
  */
 #define MEMORY_TYPE_UNCACHEABLE_MINUS                                0x00000007
 #define MEMORY_TYPE_INVALID                                          0x000000FF
+/**
+ * @}
+ */
+
+/**
+ * @defgroup vtd \
+ *           VTD
+ * @{
+ */
+/**
+ * @brief The Root Table Address Register points to a table of root-entries, when the Translation Table Mode (TTM) field in
+ *        the register is 00b
+ *
+ * @see VTd[9.1(Root Entry)]
+ */
+typedef struct
+{
+  union
+  {
+    struct
+    {
+      /**
+       * [Bit 0] This field indicates whether the root-entry is present.
+       * * 0: Indicates the root-entry is not present. All other fields are ignored by hardware.
+       * * 1: Indicates the root-entry is present.
+       */
+      uint64_t present                                               : 1;
+#define VTD_Lower64_PRESENT_BIT                                      0
+#define VTD_Lower64_PRESENT_FLAG                                     0x01
+#define VTD_Lower64_PRESENT_MASK                                     0x01
+#define VTD_Lower64_PRESENT(_)                                       (((_) >> 0) & 0x01)
+      uint64_t reserved1                                             : 11;
+
+      /**
+       * [Bits 63:12] Pointer to Context-table for this bus. The Context-table is 4KB in size and size aligned. Hardware treats
+       * bits 63:HAW as reserved (0), where HAW is the host address width of the platform.
+       */
+      uint64_t context_table_pointer                                 : 52;
+#define VTD_Lower64_CONTEXT_TABLE_POINTER_BIT                        12
+#define VTD_Lower64_CONTEXT_TABLE_POINTER_FLAG                       0xFFFFFFFFFFFFF000
+#define VTD_Lower64_CONTEXT_TABLE_POINTER_MASK                       0xFFFFFFFFFFFFF
+#define VTD_Lower64_CONTEXT_TABLE_POINTER(_)                         (((_) >> 12) & 0xFFFFFFFFFFFFF)
+    };
+
+    uint64_t flags;
+  } lower64;
+
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 63:0] Reserved. Must be 0.
+       */
+      uint64_t reserved                                              : 64;
+#define VTD_Upper64_RESERVED_BIT                                     0
+#define VTD_Upper64_RESERVED_FLAG                                    0xFFFFFFFFFFFFFFFF
+#define VTD_Upper64_RESERVED_MASK                                    0xFFFFFFFFFFFFFFFF
+#define VTD_Upper64_RESERVED(_)                                      (((_) >> 0) & 0xFFFFFFFFFFFFFFFF)
+    };
+
+    uint64_t flags;
+  } upper64;
+
+} vtd_root_entry;
+
+/**
+ * @brief Context-entries support translation of requests-without-PASID. Context-entries are referenced through
+ *        root-entries
+ *
+ * @see VTd[9.3(Context Entry)]
+ */
+typedef struct
+{
+  union
+  {
+    struct
+    {
+      /**
+       * [Bit 0]
+       * * 0: Indicates the context-entry is not present. All other fields except Fault Processing Disable (FPD) field are
+       * ignored by hardware.
+       * * 1: Indicates the context-entry is present.
+       */
+      uint64_t present                                               : 1;
+#define VTD_Lower64_PRESENT_BIT                                      0
+#define VTD_Lower64_PRESENT_FLAG                                     0x01
+#define VTD_Lower64_PRESENT_MASK                                     0x01
+#define VTD_Lower64_PRESENT(_)                                       (((_) >> 0) & 0x01)
+
+      /**
+       * [Bit 1] Enables or disables recording/reporting of qualified non-recoverable faults.
+       * * 0: Qualified non-recoverable faults are recorded/reported for requests processed through this context-entry.
+       * * 1: Qualified non-recoverable faults are not recorded/reported for requests processed through this context-entry.
+       * This field is evaluated by hardware irrespective of the setting of the present (P) field.
+       */
+      uint64_t fault_processing_disable                              : 1;
+#define VTD_Lower64_FAULT_PROCESSING_DISABLE_BIT                     1
+#define VTD_Lower64_FAULT_PROCESSING_DISABLE_FLAG                    0x02
+#define VTD_Lower64_FAULT_PROCESSING_DISABLE_MASK                    0x01
+#define VTD_Lower64_FAULT_PROCESSING_DISABLE(_)                      (((_) >> 1) & 0x01)
+
+      /**
+       * [Bits 3:2] This field is applicable only for requests-without-PASID, as hardware blocks all requests-with- PASID in
+       * legacy mode before they can use context table.
+       * * 00b: Untranslated requests are translated using second-level paging structures referenced through SLPTPTR field.
+       * Translated requests and Translation Requests are blocked.
+       * * 01b: Untranslated, Translated and Translation Requests are supported. This encoding is treated as reserved by hardware
+       * implementations not supporting Device-TLBs (DT=0 in Extended Capability Register).
+       * * 10b: Untranslated requests are processed as pass-through. SLPTPTR field is ignored by hardware. Translated and
+       * Translation Requests are blocked. This encoding is treated by hardware as reserved for hardware implementations not
+       * supporting Pass Through (PT=0 in Extended Capability Register).
+       * * 11b: Reserved.
+       */
+      uint64_t translation_type                                      : 2;
+#define VTD_Lower64_TRANSLATION_TYPE_BIT                             2
+#define VTD_Lower64_TRANSLATION_TYPE_FLAG                            0x0C
+#define VTD_Lower64_TRANSLATION_TYPE_MASK                            0x03
+#define VTD_Lower64_TRANSLATION_TYPE(_)                              (((_) >> 2) & 0x03)
+      uint64_t reserved1                                             : 8;
+
+      /**
+       * [Bits 63:12] When the Translation-Type (TT) field is 00b or 01b, this field points to the base of second level paging
+       * entries (described in Section 9.8).
+       * Hardware treats bits 63:HAW as reserved (0), where HAW is the host address width of the platform.
+       * This field is ignored by hardware when Translation-Type (TT) field is 10b (pass-through).
+       */
+      uint64_t second_level_page_translation_pointer                 : 52;
+#define VTD_Lower64_SECOND_LEVEL_PAGE_TRANSLATION_POINTER_BIT        12
+#define VTD_Lower64_SECOND_LEVEL_PAGE_TRANSLATION_POINTER_FLAG       0xFFFFFFFFFFFFF000
+#define VTD_Lower64_SECOND_LEVEL_PAGE_TRANSLATION_POINTER_MASK       0xFFFFFFFFFFFFF
+#define VTD_Lower64_SECOND_LEVEL_PAGE_TRANSLATION_POINTER(_)         (((_) >> 12) & 0xFFFFFFFFFFFFF)
+    };
+
+    uint64_t flags;
+  } lower64;
+
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 2:0] When the Translation-type (TT) field is 00b or 01b, this field indicates the adjusted guest address- width
+       * (AGAW) to be used by hardware for the second-level page-table walk. The following encodings are defined for this field:
+       * * 000b: Reserved
+       * * 001b: 39-bit AGAW (3-level page table)
+       * * 010b: 48-bit AGAW (4-level page table)
+       * * 011b: 57-bit AGAW (5-level page table)
+       * * 100b-111b: Reserved
+       * The value specified in this field must match an AGAW value supported by hardware (as reported in the SAGAW field in the
+       * Capability Register).
+       * When the Translation-type (TT) field indicates pass-through processing (10b), this field must be programmed to indicate
+       * the largest AGAW value supported by hardware.
+       * Untranslated requests-without-PASID processed through this context-entry and accessing addresses above 2X-1 (where X is
+       * the AGAW value indicated by this field) are blocked and treated as translation faults.
+       */
+      uint64_t address_width                                         : 3;
+#define VTD_Upper64_ADDRESS_WIDTH_BIT                                0
+#define VTD_Upper64_ADDRESS_WIDTH_FLAG                               0x07
+#define VTD_Upper64_ADDRESS_WIDTH_MASK                               0x07
+#define VTD_Upper64_ADDRESS_WIDTH(_)                                 (((_) >> 0) & 0x07)
+
+      /**
+       * [Bits 6:3] Hardware ignores the programming of this field.
+       */
+      uint64_t ignored                                               : 4;
+#define VTD_Upper64_IGNORED_BIT                                      3
+#define VTD_Upper64_IGNORED_FLAG                                     0x78
+#define VTD_Upper64_IGNORED_MASK                                     0x0F
+#define VTD_Upper64_IGNORED(_)                                       (((_) >> 3) & 0x0F)
+      uint64_t reserved1                                             : 1;
+
+      /**
+       * [Bits 17:8] Identifier for the domain to which this context-entry maps. Hardware may use the domain identifier to tag
+       * its internal caches.
+       * The Capability Register reports the domain-id width supported by hardware. For implementations supporting less than
+       * 16-bit domain-ids, unused bits of this field are treated as reserved by hardware. For example, for implementation
+       * supporting 8-bit domain-ids, bits 87:80 of this field are treated as reserved.
+       * Context-entries programmed with the same domain identifier must always reference same address translation (SLPTPTR
+       * field). Context-entries referencing same address translation are recommended to be programmed with same domain id for
+       * hardware efficiency.
+       * When Caching Mode (CM) field in Capability Register is reported as Set, the domain-id value of zero is architecturally
+       * reserved. Software must not use domain-id value of zero when CM is Set.
+       */
+      uint64_t domain_identifier                                     : 10;
+#define VTD_Upper64_DOMAIN_IDENTIFIER_BIT                            8
+#define VTD_Upper64_DOMAIN_IDENTIFIER_FLAG                           0x3FF00
+#define VTD_Upper64_DOMAIN_IDENTIFIER_MASK                           0x3FF
+#define VTD_Upper64_DOMAIN_IDENTIFIER(_)                             (((_) >> 8) & 0x3FF)
+      uint64_t reserved2                                             : 46;
+    };
+
+    uint64_t flags;
+  } upper64;
+
+} vtd_context_entry;
+
+/**
+ * @defgroup vtd_entry_count \
+ *           Table entry counts
+ *
+ * Table entry counts.
+ * @{
+ */
+#define VTD_ROOT_ENTRY_COUNT                                         0x00000100
+#define VTD_CONTEXT_ENTRY_COUNT                                      0x00000100
+/**
+ * @}
+ */
+
+/**
+ * Register to report the implementation version. Backward compatibility for the architecture is maintained with new
+ * revision numbers, allowing software to load remapping hardware drivers written for prior versions.
+ *
+ * @remarks VER_REG
+ * @see VTd[10.4.1(Version Register)]
+ */
+#define VTD_VERSION                                                  0x00000000
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Minor Version number <b>(RO)</b>
+     *
+     * [Bits 3:0] Indicates Minor Version of Implementation.
+     */
+    uint32_t minor                                                   : 4;
+#define VTD_VERSION_MINOR_BIT                                        0
+#define VTD_VERSION_MINOR_FLAG                                       0x0F
+#define VTD_VERSION_MINOR_MASK                                       0x0F
+#define VTD_VERSION_MINOR(_)                                         (((_) >> 0) & 0x0F)
+
+    /**
+     * @brief Major Version number <b>(RO)</b>
+     *
+     * [Bits 7:4] Indicates Major Version of Implementation.
+     */
+    uint32_t major                                                   : 4;
+#define VTD_VERSION_MAJOR_BIT                                        4
+#define VTD_VERSION_MAJOR_FLAG                                       0xF0
+#define VTD_VERSION_MAJOR_MASK                                       0x0F
+#define VTD_VERSION_MAJOR(_)                                         (((_) >> 4) & 0x0F)
+    uint32_t reserved1                                               : 24;
+  };
+
+  uint32_t flags;
+} vtd_version_register;
+
+
+/**
+ * Register to report general remapping hardware capabilities.
+ *
+ * @remarks CAP_REG
+ * @see VTd[10.4.2(Capability Register)]
+ */
+#define VTD_CAPABILITY                                               0x00000008
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Number of domains supported <b>(RO)</b>
+     *
+     * [Bits 2:0]
+     * * 000b: Hardware supports 4-bit domain-ids with support for up to 16 domains.
+     * * 001b: Hardware supports 6-bit domain-ids with support for up to 64 domains.
+     * * 010b: Hardware supports 8-bit domain-ids with support for up to 256 domains.
+     * * 011b: Hardware supports 10-bit domain-ids with support for up to 1024 domains.
+     * * 100b: Hardware supports 12-bit domain-ids with support for up to 4K domains.
+     * * 101b: Hardware supports 14-bit domain-ids with support for up to 16K domains.
+     * * 110b: Hardware supports 16-bit domain-ids with support for up to 64K domains.
+     * * 111b: Reserved.
+     */
+    uint64_t number_of_domains_supported                             : 3;
+#define VTD_CAPABILITY_NUMBER_OF_DOMAINS_SUPPORTED_BIT               0
+#define VTD_CAPABILITY_NUMBER_OF_DOMAINS_SUPPORTED_FLAG              0x07
+#define VTD_CAPABILITY_NUMBER_OF_DOMAINS_SUPPORTED_MASK              0x07
+#define VTD_CAPABILITY_NUMBER_OF_DOMAINS_SUPPORTED(_)                (((_) >> 0) & 0x07)
+
+    /**
+     * @brief Advanced Fault Logging <b>(RO)</b>
+     *
+     * [Bit 3]
+     * * 0: Indicates advanced fault logging is not supported. Only primary fault logging is supported.
+     * * 1: Indicates advanced fault logging is supported.
+     */
+    uint64_t advanced_fault_logging                                  : 1;
+#define VTD_CAPABILITY_ADVANCED_FAULT_LOGGING_BIT                    3
+#define VTD_CAPABILITY_ADVANCED_FAULT_LOGGING_FLAG                   0x08
+#define VTD_CAPABILITY_ADVANCED_FAULT_LOGGING_MASK                   0x01
+#define VTD_CAPABILITY_ADVANCED_FAULT_LOGGING(_)                     (((_) >> 3) & 0x01)
+
+    /**
+     * @brief Required Write-Buffer Flushing <b>(RO)</b>
+     *
+     * [Bit 4]
+     * * 0: Indicates no write-buffer flushing is needed to ensure changes to memory-resident structures are visible to
+     * hardware.
+     * * 1: Indicates software must explicitly flush the write buffers to ensure updates made to memory-resident remapping
+     * structures are visible to hardware.
+     */
+    uint64_t required_write_buffer_flushing                          : 1;
+#define VTD_CAPABILITY_REQUIRED_WRITE_BUFFER_FLUSHING_BIT            4
+#define VTD_CAPABILITY_REQUIRED_WRITE_BUFFER_FLUSHING_FLAG           0x10
+#define VTD_CAPABILITY_REQUIRED_WRITE_BUFFER_FLUSHING_MASK           0x01
+#define VTD_CAPABILITY_REQUIRED_WRITE_BUFFER_FLUSHING(_)             (((_) >> 4) & 0x01)
+
+    /**
+     * @brief Protected Low-Memory Region <b>(RO)</b>
+     *
+     * [Bit 5]
+     * * 0: Indicates protected low-memory region is not supported.
+     * * 1: Indicates protected low-memory region is supported.
+     */
+    uint64_t protected_low_memory_region                             : 1;
+#define VTD_CAPABILITY_PROTECTED_LOW_MEMORY_REGION_BIT               5
+#define VTD_CAPABILITY_PROTECTED_LOW_MEMORY_REGION_FLAG              0x20
+#define VTD_CAPABILITY_PROTECTED_LOW_MEMORY_REGION_MASK              0x01
+#define VTD_CAPABILITY_PROTECTED_LOW_MEMORY_REGION(_)                (((_) >> 5) & 0x01)
+
+    /**
+     * @brief Protected High-Memory Region <b>(RO)</b>
+     *
+     * [Bit 6]
+     * * 0: Indicates protected high-memory region is not supported.
+     * * 1: Indicates protected high-memory region is supported.
+     */
+    uint64_t protected_high_memory_region                            : 1;
+#define VTD_CAPABILITY_PROTECTED_HIGH_MEMORY_REGION_BIT              6
+#define VTD_CAPABILITY_PROTECTED_HIGH_MEMORY_REGION_FLAG             0x40
+#define VTD_CAPABILITY_PROTECTED_HIGH_MEMORY_REGION_MASK             0x01
+#define VTD_CAPABILITY_PROTECTED_HIGH_MEMORY_REGION(_)               (((_) >> 6) & 0x01)
+
+    /**
+     * @brief Caching Mode <b>(RO)</b>
+     *
+     * [Bit 7] This field applies to all DMA and Interrupt remap tables except FLtables. Hardware will not cache faulting
+     * FL-only translations in IOTLB or FL-paging-structure caches.
+     * * 0: Not-present and erroneous entries are not cached in any of the remapping caches. Invalidations are not required for
+     * modifications to individual not present or invalid entries. However, any modifications that result in decreasing the
+     * effective permissions or partial permission increases require invalidations for them to be effective.
+     * * 1: Not-present and erroneous mappings may be cached in the remapping caches. Any software updates to the remapping
+     * structures (including updates to "not-present" or erroneous entries) require explicit invalidation.
+     */
+    uint64_t caching_mode                                            : 1;
+#define VTD_CAPABILITY_CACHING_MODE_BIT                              7
+#define VTD_CAPABILITY_CACHING_MODE_FLAG                             0x80
+#define VTD_CAPABILITY_CACHING_MODE_MASK                             0x01
+#define VTD_CAPABILITY_CACHING_MODE(_)                               (((_) >> 7) & 0x01)
+
+    /**
+     * @brief Supported Adjusted Guest Address Widths <b>(RO)</b>
+     *
+     * [Bits 12:8] This 5-bit field indicates the supported adjusted guest address widths (which in turn represents the levels
+     * of page-table walks for the 4KB base page size) supported by the hardware implementation.
+     * A value of 1 in any of these bits indicates the corresponding adjusted guest address width is supported. The adjusted
+     * guest address widths corresponding to various bit positions within this field are:
+     * * 0: Reserved
+     * * 1: 39-bit AGAW (3-level page-table)
+     * * 2: 48-bit AGAW (4-level page-table)
+     * * 3: 57-bit AGAW (5-level page-table)
+     * * 4: Reserved
+     * Software must ensure that the adjusted guest address width used to set up the page tables is one of the supported guest
+     * address widths reported in this field.
+     * Hardware implementations reporting second-level translation support (SLTS) field as Clear also report this field as 0.
+     */
+    uint64_t supported_adjusted_guest_address_widths                 : 5;
+#define VTD_CAPABILITY_SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS_BIT   8
+#define VTD_CAPABILITY_SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS_FLAG  0x1F00
+#define VTD_CAPABILITY_SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS_MASK  0x1F
+#define VTD_CAPABILITY_SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS(_)    (((_) >> 8) & 0x1F)
+    uint64_t reserved1                                               : 3;
+
+    /**
+     * @brief Maximum Guest Address Width <b>(RO)</b>
+     *
+     * [Bits 21:16] This field indicates the maximum guest physical address width supported by second-level translation in
+     * remapping hardware. The Maximum Guest Address Width (MGAW) is computed as (N+1), where N is the valued reported in this
+     * field. For example, a hardware implementation supporting 48-bit MGAW reports a value of 47 (101111b) in this field.
+     * If the value in this field is X, untranslated DMA requests with addresses above 2(X+1)-1 that are subjected to
+     * second-level translation are blocked by hardware. Device-TLB translation requests to addresses above 2(X+1)-1 that are
+     * subjected to second-level translation from allowed devices return a null Translation-Completion Data with R=W=0.
+     * Guest addressability for a given DMA request is limited to the minimum of the value reported through this field and the
+     * adjusted guest address width of the corresponding page-table structure. (Adjusted guest address widths supported by
+     * hardware are reported through the SAGAW field).
+     * Implementations must support MGAW at least equal to the physical addressability (host address width) of the platform.
+     */
+    uint64_t maximum_guest_address_width                             : 6;
+#define VTD_CAPABILITY_MAXIMUM_GUEST_ADDRESS_WIDTH_BIT               16
+#define VTD_CAPABILITY_MAXIMUM_GUEST_ADDRESS_WIDTH_FLAG              0x3F0000
+#define VTD_CAPABILITY_MAXIMUM_GUEST_ADDRESS_WIDTH_MASK              0x3F
+#define VTD_CAPABILITY_MAXIMUM_GUEST_ADDRESS_WIDTH(_)                (((_) >> 16) & 0x3F)
+
+    /**
+     * @brief Zero Length Read <b>(RO)</b>
+     *
+     * [Bit 22]
+     * * 0: Indicates the remapping hardware unit blocks (and treats as fault) zero length DMA read requests to write-only
+     * pages.
+     * * 1: Indicates the remapping hardware unit supports zero length DMA read requests to write-only pages.
+     * DMA remapping hardware implementations are recommended to report ZLR field as Set.
+     */
+    uint64_t zero_length_read                                        : 1;
+#define VTD_CAPABILITY_ZERO_LENGTH_READ_BIT                          22
+#define VTD_CAPABILITY_ZERO_LENGTH_READ_FLAG                         0x400000
+#define VTD_CAPABILITY_ZERO_LENGTH_READ_MASK                         0x01
+#define VTD_CAPABILITY_ZERO_LENGTH_READ(_)                           (((_) >> 22) & 0x01)
+
+    /**
+     * @brief Deprecated <b>(RO)</b>
+     *
+     * [Bit 23] This field must be reported as 0 to ensure backward compatibility with older software.
+     */
+    uint64_t deprecated                                              : 1;
+#define VTD_CAPABILITY_DEPRECATED_BIT                                23
+#define VTD_CAPABILITY_DEPRECATED_FLAG                               0x800000
+#define VTD_CAPABILITY_DEPRECATED_MASK                               0x01
+#define VTD_CAPABILITY_DEPRECATED(_)                                 (((_) >> 23) & 0x01)
+
+    /**
+     * @brief Fault-recording Register offset <b>(RO)</b>
+     *
+     * [Bits 33:24] This field specifies the offset of the first fault recording register relative to the register base address
+     * of this remapping hardware unit. If the register base address is X, and the value reported in this field is Y, the
+     * address for the first fault recording register is calculated as X+(16*Y).
+     */
+    uint64_t fault_recording_register_offset                         : 10;
+#define VTD_CAPABILITY_FAULT_RECORDING_REGISTER_OFFSET_BIT           24
+#define VTD_CAPABILITY_FAULT_RECORDING_REGISTER_OFFSET_FLAG          0x3FF000000
+#define VTD_CAPABILITY_FAULT_RECORDING_REGISTER_OFFSET_MASK          0x3FF
+#define VTD_CAPABILITY_FAULT_RECORDING_REGISTER_OFFSET(_)            (((_) >> 24) & 0x3FF)
+
+    /**
+     * @brief Second Level Large Page Support <b>(RO)</b>
+     *
+     * [Bits 37:34] This field indicates the large page sizes supported by hardware.
+     * A value of 1 in any of these bits indicates the corresponding large page size is supported. The large-page sizes
+     * corresponding to various bit positions within this field are:
+     * * 0: 21-bit offset to page frame (2MB)
+     * * 1: 30-bit offset to page frame (1GB)
+     * * 2: Reserved
+     * * 3: Reserved
+     * Hardware implementations supporting a specific large-page size must support all smaller large-page sizes. i.e., only
+     * valid values for this field are 0000b, 0001b, 0011b.
+     */
+    uint64_t second_level_large_page_support                         : 4;
+#define VTD_CAPABILITY_SECOND_LEVEL_LARGE_PAGE_SUPPORT_BIT           34
+#define VTD_CAPABILITY_SECOND_LEVEL_LARGE_PAGE_SUPPORT_FLAG          0x3C00000000
+#define VTD_CAPABILITY_SECOND_LEVEL_LARGE_PAGE_SUPPORT_MASK          0x0F
+#define VTD_CAPABILITY_SECOND_LEVEL_LARGE_PAGE_SUPPORT(_)            (((_) >> 34) & 0x0F)
+    uint64_t reserved2                                               : 1;
+
+    /**
+     * @brief Page Selective Invalidation <b>(RO)</b>
+     *
+     * [Bit 39]
+     * * 0: Hardware supports only global and domain-selective invalidates for IOTLB.
+     * * 1: Hardware supports page-selective, domain-selective, and global invalidates for IOTLB.
+     * Hardware implementations reporting this field as Set are recommended to support a Maximum Address Mask Value (MAMV)
+     * value of at least 9 (or 18 if supporting 1GB pages with second level translation).
+     * This field is applicable only for IOTLB invalidations for second-level translation. Irrespective of value reported in
+     * this field, implementations supporting SMTS must support page/address selective IOTLB invalidation for first-level
+     * translation.
+     */
+    uint64_t page_selective_invalidation                             : 1;
+#define VTD_CAPABILITY_PAGE_SELECTIVE_INVALIDATION_BIT               39
+#define VTD_CAPABILITY_PAGE_SELECTIVE_INVALIDATION_FLAG              0x8000000000
+#define VTD_CAPABILITY_PAGE_SELECTIVE_INVALIDATION_MASK              0x01
+#define VTD_CAPABILITY_PAGE_SELECTIVE_INVALIDATION(_)                (((_) >> 39) & 0x01)
+
+    /**
+     * @brief Number of Fault-recording Registers <b>(RO)</b>
+     *
+     * [Bits 47:40] Number of fault recording registers is computed as N+1, where N is the value reported in this field.
+     * Implementations must support at least one fault recording register (NFR = 0) for each remapping hardware unit in the
+     * platform.
+     * The maximum number of fault recording registers per remapping hardware unit is 256.
+     */
+    uint64_t number_of_fault_recording_registers                     : 8;
+#define VTD_CAPABILITY_NUMBER_OF_FAULT_RECORDING_REGISTERS_BIT       40
+#define VTD_CAPABILITY_NUMBER_OF_FAULT_RECORDING_REGISTERS_FLAG      0xFF0000000000
+#define VTD_CAPABILITY_NUMBER_OF_FAULT_RECORDING_REGISTERS_MASK      0xFF
+#define VTD_CAPABILITY_NUMBER_OF_FAULT_RECORDING_REGISTERS(_)        (((_) >> 40) & 0xFF)
+
+    /**
+     * @brief Maximum Address Mask Value <b>(RO)</b>
+     *
+     * [Bits 53:48] The value in this field indicates the maximum supported value for the Address Mask (AM) field in the
+     * Invalidation Address register (IVA_REG), and IOTLB Invalidation Descriptor (iotlb_inv_dsc) used for invalidations of
+     * second-level translation.
+     * This field is valid when the PSI field in Capability register is reported as Set.
+     * Independent of value reported in this field, implementations supporting SMTS must support address-selective PASID-based
+     * IOTLB invalidations (p_iotlb_inv_dsc) with any defined address mask.
+     */
+    uint64_t maximum_address_mask_value                              : 6;
+#define VTD_CAPABILITY_MAXIMUM_ADDRESS_MASK_VALUE_BIT                48
+#define VTD_CAPABILITY_MAXIMUM_ADDRESS_MASK_VALUE_FLAG               0x3F000000000000
+#define VTD_CAPABILITY_MAXIMUM_ADDRESS_MASK_VALUE_MASK               0x3F
+#define VTD_CAPABILITY_MAXIMUM_ADDRESS_MASK_VALUE(_)                 (((_) >> 48) & 0x3F)
+
+    /**
+     * @brief Write Draining <b>(RO)</b>
+     *
+     * [Bit 54]
+     * * 0: Hardware does not support draining of write requests on IOTLB Invalidation.
+     * * 1: Hardware supports draining of write requests on IOTLB Invalidation.
+     * Hardware implementation with Major Version 2 or higher (VER_REG), always performs required drain without software
+     * explicitly requesting a drain in IOTLB invalidation. This field is deprecated and hardware will always report it as 1 to
+     * maintain backward compatibility with software.
+     */
+    uint64_t write_draining                                          : 1;
+#define VTD_CAPABILITY_WRITE_DRAINING_BIT                            54
+#define VTD_CAPABILITY_WRITE_DRAINING_FLAG                           0x40000000000000
+#define VTD_CAPABILITY_WRITE_DRAINING_MASK                           0x01
+#define VTD_CAPABILITY_WRITE_DRAINING(_)                             (((_) >> 54) & 0x01)
+
+    /**
+     * @brief Read Draining <b>(RO)</b>
+     *
+     * [Bit 55]
+     * * 0: Hardware does not support draining of read requests on IOTLB Invalidation.
+     * * 1: Hardware supports draining of read requests on IOTLB Invalidation.
+     * Hardware implementation with Major Version 2 or higher (VER_REG), always performs required drain without software
+     * explicitly requesting a drain in IOTLB invalidation. This field is deprecated and hardware will always report it as 1 to
+     * maintain backward compatibility with software.
+     */
+    uint64_t read_draining                                           : 1;
+#define VTD_CAPABILITY_READ_DRAINING_BIT                             55
+#define VTD_CAPABILITY_READ_DRAINING_FLAG                            0x80000000000000
+#define VTD_CAPABILITY_READ_DRAINING_MASK                            0x01
+#define VTD_CAPABILITY_READ_DRAINING(_)                              (((_) >> 55) & 0x01)
+
+    /**
+     * @brief First Level 1-GByte Page Support <b>(RO)</b>
+     *
+     * [Bit 56] A value of 1 in this field indicates 1-GByte page size is supported for first-level translation.
+     * Hardware implementation reporting First-level Translation Support (FLTS) as Clear also report this field as Clear.
+     */
+    uint64_t first_level_1gbyte_page_support                         : 1;
+#define VTD_CAPABILITY_FIRST_LEVEL_1GBYTE_PAGE_SUPPORT_BIT           56
+#define VTD_CAPABILITY_FIRST_LEVEL_1GBYTE_PAGE_SUPPORT_FLAG          0x100000000000000
+#define VTD_CAPABILITY_FIRST_LEVEL_1GBYTE_PAGE_SUPPORT_MASK          0x01
+#define VTD_CAPABILITY_FIRST_LEVEL_1GBYTE_PAGE_SUPPORT(_)            (((_) >> 56) & 0x01)
+    uint64_t reserved3                                               : 2;
+
+    /**
+     * @brief Posted Interrupts Support <b>(RO)</b>
+     *
+     * [Bit 59]
+     * * 0: Hardware does not support Posting of Interrupts.
+     * * 1: Hardware supports Posting of Interrupts.
+     * Hardware implementation reporting Interrupt Remapping support (IR) field in Extended Capability Register as Clear also
+     * report this field as Clear.
+     */
+    uint64_t posted_interrupts_support                               : 1;
+#define VTD_CAPABILITY_POSTED_INTERRUPTS_SUPPORT_BIT                 59
+#define VTD_CAPABILITY_POSTED_INTERRUPTS_SUPPORT_FLAG                0x800000000000000
+#define VTD_CAPABILITY_POSTED_INTERRUPTS_SUPPORT_MASK                0x01
+#define VTD_CAPABILITY_POSTED_INTERRUPTS_SUPPORT(_)                  (((_) >> 59) & 0x01)
+
+    /**
+     * @brief First Level 5-level Paging Support <b>(RO)</b>
+     *
+     * [Bit 60]
+     * * 0: Hardware does not support 5-level paging for first-level translation.
+     * * 1: Hardware supports 5-level paging for first-level translation.
+     * Hardware implementation reporting First-level Translation Support (FLTS) as Clear also report this field as Clear.
+     */
+    uint64_t first_level_5level_paging_support                       : 1;
+#define VTD_CAPABILITY_FIRST_LEVEL_5LEVEL_PAGING_SUPPORT_BIT         60
+#define VTD_CAPABILITY_FIRST_LEVEL_5LEVEL_PAGING_SUPPORT_FLAG        0x1000000000000000
+#define VTD_CAPABILITY_FIRST_LEVEL_5LEVEL_PAGING_SUPPORT_MASK        0x01
+#define VTD_CAPABILITY_FIRST_LEVEL_5LEVEL_PAGING_SUPPORT(_)          (((_) >> 60) & 0x01)
+    uint64_t reserved4                                               : 1;
+
+    /**
+     * @brief Enhanced Set Interrupt Remap Table Pointer Support <b>(RO)</b>
+     *
+     * [Bit 62]
+     * * 0: Hardware does not invalidate all Interrupt remapping hardware translation caches as part of SIRTP flow.
+     * * 1: Hardware invalidates all Interrupt remapping hardware translation caches as part of SIRTP flow.
+     */
+    uint64_t enhanced_set_interrupt_remap_table_pointer_support      : 1;
+#define VTD_CAPABILITY_ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT_BIT 62
+#define VTD_CAPABILITY_ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT_FLAG 0x4000000000000000
+#define VTD_CAPABILITY_ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT_MASK 0x01
+#define VTD_CAPABILITY_ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT(_) (((_) >> 62) & 0x01)
+
+    /**
+     * @brief Enhanced Set Root Table Pointer Support <b>(RO)</b>
+     *
+     * [Bit 63]
+     * * 0: Hardware does not invalidate all DMA remapping hardware translation caches as part of SRTP flow.
+     * * 1: Hardware invalidates all DMA remapping hardware translation caches as part of SRTP flow.
+     */
+    uint64_t enhanced_set_root_table_pointer_support                 : 1;
+#define VTD_CAPABILITY_ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT_BIT   63
+#define VTD_CAPABILITY_ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT_FLAG  0x8000000000000000
+#define VTD_CAPABILITY_ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT_MASK  0x01
+#define VTD_CAPABILITY_ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT(_)    (((_) >> 63) & 0x01)
+  };
+
+  uint64_t flags;
+} vtd_capability_register;
+
+
+/**
+ * Register to report remapping hardware extended capabilities
+ *
+ * @remarks ECAP_REG
+ * @see VTd[10.4.3(Extended Capability Register)]
+ */
+#define VTD_EXTENDED_CAPABILITY                                      0x00000010
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Page-walk Coherency <b>(RO)</b>
+     *
+     * [Bit 0] This field indicates if hardware access to the root, scalable-mode root, context, scalable-mode-context,
+     * scalable-mode PASIDdirectory, scalable-mode PASID-table, and interrupt-remap tables, and legacy-mode second-level paging
+     * structures are coherent (snooped) or not.
+     * * 0:Indicates hardware accesses to remapping structures are non-coherent.
+     * * 1:Indicates hardware accesses to remapping structures are coherent.
+     * Hardware access to advanced fault log, invalidation queue, invalidation semaphore, page-request queue are always
+     * snooped.
+     */
+    uint64_t page_walk_coherency                                     : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_WALK_COHERENCY_BIT              0
+#define VTD_EXTENDED_CAPABILITY_PAGE_WALK_COHERENCY_FLAG             0x01
+#define VTD_EXTENDED_CAPABILITY_PAGE_WALK_COHERENCY_MASK             0x01
+#define VTD_EXTENDED_CAPABILITY_PAGE_WALK_COHERENCY(_)               (((_) >> 0) & 0x01)
+
+    /**
+     * @brief Queued Invalidation support <b>(RO)</b>
+     *
+     * [Bit 1]
+     * * 0: Hardware does not support queued invalidations.
+     * * 1: Hardware supports queued invalidations.
+     */
+    uint64_t queued_invalidation_support                             : 1;
+#define VTD_EXTENDED_CAPABILITY_QUEUED_INVALIDATION_SUPPORT_BIT      1
+#define VTD_EXTENDED_CAPABILITY_QUEUED_INVALIDATION_SUPPORT_FLAG     0x02
+#define VTD_EXTENDED_CAPABILITY_QUEUED_INVALIDATION_SUPPORT_MASK     0x01
+#define VTD_EXTENDED_CAPABILITY_QUEUED_INVALIDATION_SUPPORT(_)       (((_) >> 1) & 0x01)
+
+    /**
+     * @brief Device-TLB support <b>(RO)</b>
+     *
+     * [Bit 2]
+     * * 0: Hardware does not support Device-TLBs.
+     * * 1: Hardware supports Device-TLBs.
+     * Hardware implementation reporting Queued Invalidation support (QI) field as Clear also report this field as Clear.
+     */
+    uint64_t device_tlb_support                                      : 1;
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_SUPPORT_BIT               2
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_SUPPORT_FLAG              0x04
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_SUPPORT_MASK              0x01
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_SUPPORT(_)                (((_) >> 2) & 0x01)
+
+    /**
+     * @brief Interrupt Remapping support <b>(RO)</b>
+     *
+     * [Bit 3]
+     * * 0: Hardware does not support interrupt remapping.
+     * * 1: Hardware supports interrupt remapping.
+     * Hardware implementation reporting Queued Invalidation support (QI) field as Clear also report this field as Clear.
+     */
+    uint64_t interrupt_remapping_support                             : 1;
+#define VTD_EXTENDED_CAPABILITY_INTERRUPT_REMAPPING_SUPPORT_BIT      3
+#define VTD_EXTENDED_CAPABILITY_INTERRUPT_REMAPPING_SUPPORT_FLAG     0x08
+#define VTD_EXTENDED_CAPABILITY_INTERRUPT_REMAPPING_SUPPORT_MASK     0x01
+#define VTD_EXTENDED_CAPABILITY_INTERRUPT_REMAPPING_SUPPORT(_)       (((_) >> 3) & 0x01)
+
+    /**
+     * @brief Extended Interrupt Mode <b>(RO)</b>
+     *
+     * [Bit 4]
+     * * 0: On Intel(R) 64 platforms, hardware supports only 8-bit APIC-IDs (xAPIC Mode).
+     * * 1: On Intel(R) 64 platforms, hardware supports 32-bit APICIDs (x2APIC mode).
+     * Hardware implementation reporting Interrupt Remapping support (IR) field as Clear also report this field as Clear.
+     */
+    uint64_t extended_interrupt_mode                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_INTERRUPT_MODE_BIT          4
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_INTERRUPT_MODE_FLAG         0x10
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_INTERRUPT_MODE_MASK         0x01
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_INTERRUPT_MODE(_)           (((_) >> 4) & 0x01)
+
+    /**
+     * @brief Deprecated1 <b>(RO)</b>
+     *
+     * [Bit 5] This field must be reported as 0 to ensure backward compatibility with older software.
+     */
+    uint64_t deprecated1                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED1_BIT                      5
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED1_FLAG                     0x20
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED1_MASK                     0x01
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED1(_)                       (((_) >> 5) & 0x01)
+
+    /**
+     * @brief Pass Through <b>(RO)</b>
+     *
+     * [Bit 6]
+     * * 0: Hardware does not support pass-through translation type in context-entries and scalable-mode-pasid-table-entries.
+     * * 1: Hardware supports pass-through translation type in context and scalable-mode-pasid-table-entries.
+     */
+    uint64_t pass_through                                            : 1;
+#define VTD_EXTENDED_CAPABILITY_PASS_THROUGH_BIT                     6
+#define VTD_EXTENDED_CAPABILITY_PASS_THROUGH_FLAG                    0x40
+#define VTD_EXTENDED_CAPABILITY_PASS_THROUGH_MASK                    0x01
+#define VTD_EXTENDED_CAPABILITY_PASS_THROUGH(_)                      (((_) >> 6) & 0x01)
+
+    /**
+     * @brief Snoop Control <b>(RO)</b>
+     *
+     * [Bit 7]
+     * * 0: Hardware does not support 1-setting of the SNP field in the page-table entries.
+     * * 1: Hardware supports the 1-setting of the SNP field in the page-table entries.
+     * Implementations are recommended to support Snoop Control to support software usages that require Snoop Control for
+     * assignment of devices behind a remapping hardware unit.
+     */
+    uint64_t snoop_control                                           : 1;
+#define VTD_EXTENDED_CAPABILITY_SNOOP_CONTROL_BIT                    7
+#define VTD_EXTENDED_CAPABILITY_SNOOP_CONTROL_FLAG                   0x80
+#define VTD_EXTENDED_CAPABILITY_SNOOP_CONTROL_MASK                   0x01
+#define VTD_EXTENDED_CAPABILITY_SNOOP_CONTROL(_)                     (((_) >> 7) & 0x01)
+
+    /**
+     * @brief IOTLB Register Offset <b>(RO)</b>
+     *
+     * [Bits 17:8] This field specifies the offset to the IOTLB registers relative to the register base address of this
+     * remapping hardware unit.
+     * If the register base address is X, and the value reported in this field is Y, the address for the IOTLB registers is
+     * calculated as X+(16*Y).
+     */
+    uint64_t iotlb_register_offset                                   : 10;
+#define VTD_EXTENDED_CAPABILITY_IOTLB_REGISTER_OFFSET_BIT            8
+#define VTD_EXTENDED_CAPABILITY_IOTLB_REGISTER_OFFSET_FLAG           0x3FF00
+#define VTD_EXTENDED_CAPABILITY_IOTLB_REGISTER_OFFSET_MASK           0x3FF
+#define VTD_EXTENDED_CAPABILITY_IOTLB_REGISTER_OFFSET(_)             (((_) >> 8) & 0x3FF)
+    uint64_t reserved1                                               : 2;
+
+    /**
+     * @brief Maximum Handle Mask Value <b>(RO)</b>
+     *
+     * [Bits 23:20] The value in this field indicates the maximum supported value for the Interrupt Mask (IM) field in the
+     * Interrupt Entry Cache Invalidation Descriptor (iec_inv_dsc).
+     * This field is unused and is reported as 0 if Interrupt Remapping support (IR) field is Clear.
+     */
+    uint64_t maximum_handle_mask_value                               : 4;
+#define VTD_EXTENDED_CAPABILITY_MAXIMUM_HANDLE_MASK_VALUE_BIT        20
+#define VTD_EXTENDED_CAPABILITY_MAXIMUM_HANDLE_MASK_VALUE_FLAG       0xF00000
+#define VTD_EXTENDED_CAPABILITY_MAXIMUM_HANDLE_MASK_VALUE_MASK       0x0F
+#define VTD_EXTENDED_CAPABILITY_MAXIMUM_HANDLE_MASK_VALUE(_)         (((_) >> 20) & 0x0F)
+
+    /**
+     * @brief Deprecated2 <b>(RO)</b>
+     *
+     * [Bit 24] In prior versions of this specification this bit was used to enumerate "Extended mode address translation"
+     * which is now deprecated. This field must be reported as 0 to ensure backward compatibility with any software that
+     * enables extended mode address translation.
+     */
+    uint64_t deprecated2                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED2_BIT                      24
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED2_FLAG                     0x1000000
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED2_MASK                     0x01
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED2(_)                       (((_) >> 24) & 0x01)
+
+    /**
+     * @brief Memory Type Support <b>(RO)</b>
+     *
+     * [Bit 25]
+     * * 0: Hardware does not support Memory Type in first-level translation and Extended Memory type in second-level
+     * translation.
+     * * 1: Hardware supports Memory Type in first-level translation and Extended Memory type in second-level translation.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) field as Clear also report this field as
+     * Clear. Remapping hardware units with, one or more devices that operate in processor coherency domain, under its scope
+     * must report this field as Set.
+     */
+    uint64_t memory_type_support                                     : 1;
+#define VTD_EXTENDED_CAPABILITY_MEMORY_TYPE_SUPPORT_BIT              25
+#define VTD_EXTENDED_CAPABILITY_MEMORY_TYPE_SUPPORT_FLAG             0x2000000
+#define VTD_EXTENDED_CAPABILITY_MEMORY_TYPE_SUPPORT_MASK             0x01
+#define VTD_EXTENDED_CAPABILITY_MEMORY_TYPE_SUPPORT(_)               (((_) >> 25) & 0x01)
+
+    /**
+     * @brief Nested Translation Support <b>(RO)</b>
+     *
+     * [Bit 26]
+     * * 0: Hardware does not support nested translations.
+     * * 1: Hardware supports nested translations.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) field as Clear or First-level Translation
+     * Support (FLTS) field as Clear or Second-level Translation Support (SLTS) field as Clear also report this field as Clear.
+     */
+    uint64_t nested_translation_support                              : 1;
+#define VTD_EXTENDED_CAPABILITY_NESTED_TRANSLATION_SUPPORT_BIT       26
+#define VTD_EXTENDED_CAPABILITY_NESTED_TRANSLATION_SUPPORT_FLAG      0x4000000
+#define VTD_EXTENDED_CAPABILITY_NESTED_TRANSLATION_SUPPORT_MASK      0x01
+#define VTD_EXTENDED_CAPABILITY_NESTED_TRANSLATION_SUPPORT(_)        (((_) >> 26) & 0x01)
+    uint64_t reserved2                                               : 1;
+
+    /**
+     * @brief Deprecated3 <b>(RO)</b>
+     *
+     * [Bit 28] This field must be reported as 0 to ensure backward compatibility with older software.
+     */
+    uint64_t deprecated3                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED3_BIT                      28
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED3_FLAG                     0x10000000
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED3_MASK                     0x01
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED3(_)                       (((_) >> 28) & 0x01)
+
+    /**
+     * @brief Page Request Support <b>(RO)</b>
+     *
+     * [Bit 29]
+     * * 0: Hardware does not support page requests.
+     * * 1: Hardware supports page requests.
+     * Hardware implementation reporting Device-TLB support (DT) field as Clear or Scalable Mode Translation Support (SMTS)
+     * field as Clear also report this field as Clear.
+     */
+    uint64_t page_request_support                                    : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_SUPPORT_BIT             29
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_SUPPORT_FLAG            0x20000000
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_SUPPORT_MASK            0x01
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_SUPPORT(_)              (((_) >> 29) & 0x01)
+
+    /**
+     * @brief Execute Request Support <b>(RO)</b>
+     *
+     * [Bit 30]
+     * * 0: Hardware does not support requests-with-PASID seeking execute permission.
+     * * 1: Hardware supports requests-with-PASID seeking execute permission.
+     * Hardware implementations reporting Process Address Space ID support (PASID) field as Clear must report this field as
+     * Clear.
+     */
+    uint64_t execute_request_support                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_EXECUTE_REQUEST_SUPPORT_BIT          30
+#define VTD_EXTENDED_CAPABILITY_EXECUTE_REQUEST_SUPPORT_FLAG         0x40000000
+#define VTD_EXTENDED_CAPABILITY_EXECUTE_REQUEST_SUPPORT_MASK         0x01
+#define VTD_EXTENDED_CAPABILITY_EXECUTE_REQUEST_SUPPORT(_)           (((_) >> 30) & 0x01)
+    uint64_t reserved3                                               : 2;
+
+    /**
+     * @brief No Write Flag Support <b>(RO)</b>
+     *
+     * [Bit 33]
+     * * 0: Hardware ignores the 'No Write' (NW) flag in Device-TLB translation-requests, and behaves as if NW is always 0.
+     * * 1: Hardware supports the 'No Write' (NW) flag in Device-TLB translation-requests.
+     * Hardware implementations reporting Device-TLB support (DT) field as Clear also report this field as Clear.
+     */
+    uint64_t no_write_flag_support                                   : 1;
+#define VTD_EXTENDED_CAPABILITY_NO_WRITE_FLAG_SUPPORT_BIT            33
+#define VTD_EXTENDED_CAPABILITY_NO_WRITE_FLAG_SUPPORT_FLAG           0x200000000
+#define VTD_EXTENDED_CAPABILITY_NO_WRITE_FLAG_SUPPORT_MASK           0x01
+#define VTD_EXTENDED_CAPABILITY_NO_WRITE_FLAG_SUPPORT(_)             (((_) >> 33) & 0x01)
+
+    /**
+     * @brief Extended Accessed Flag Support <b>(RO)</b>
+     *
+     * [Bit 34]
+     * * 0: Hardware does not support the extended-accessed (EA) bit in first-level paging-structure entries.
+     * * 1: Hardware supports the extended-accessed (EA) bit in first-level paging-structure entries.
+     * Hardware implementations reporting Scalable-Mode Page-walk Coherency Support (SWPWCS) as Clear also report this field as
+     * Clear.
+     */
+    uint64_t extended_accessed_flag_support                          : 1;
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_ACCESSED_FLAG_SUPPORT_BIT   34
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_ACCESSED_FLAG_SUPPORT_FLAG  0x400000000
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_ACCESSED_FLAG_SUPPORT_MASK  0x01
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_ACCESSED_FLAG_SUPPORT(_)    (((_) >> 34) & 0x01)
+
+    /**
+     * @brief PASID Size Supported <b>(RO)</b>
+     *
+     * [Bits 39:35] This field reports the PASID size supported by the remapping hardware for requests-with-PASID. A value of N
+     * in this field indicates hardware supports PASID field of N+1 bits (For example, value of 7 in this field, indicates
+     * 8-bit PASIDs are supported).
+     * Requests-with-PASID with PASID value beyond the limit specified by this field are treated as error by the remapping
+     * hardware. This field is unused and reported as 0 if Scalable Mode Translation Support (SMTS) field is Clear.
+     */
+    uint64_t pasid_size_supported                                    : 5;
+#define VTD_EXTENDED_CAPABILITY_PASID_SIZE_SUPPORTED_BIT             35
+#define VTD_EXTENDED_CAPABILITY_PASID_SIZE_SUPPORTED_FLAG            0xF800000000
+#define VTD_EXTENDED_CAPABILITY_PASID_SIZE_SUPPORTED_MASK            0x1F
+#define VTD_EXTENDED_CAPABILITY_PASID_SIZE_SUPPORTED(_)              (((_) >> 35) & 0x1F)
+
+    /**
+     * @brief Process Address Space ID Support <b>(RO)</b>
+     *
+     * [Bit 40]
+     * * 0: Hardware does not support requests tagged with Process Address Space IDs.
+     * * 1: Hardware supports requests tagged with Process Address Space IDs.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) field as Clear also report this field as
+     * Clear.
+     */
+    uint64_t process_address_space_id_support                        : 1;
+#define VTD_EXTENDED_CAPABILITY_PROCESS_ADDRESS_SPACE_ID_SUPPORT_BIT 40
+#define VTD_EXTENDED_CAPABILITY_PROCESS_ADDRESS_SPACE_ID_SUPPORT_FLAG 0x10000000000
+#define VTD_EXTENDED_CAPABILITY_PROCESS_ADDRESS_SPACE_ID_SUPPORT_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_PROCESS_ADDRESS_SPACE_ID_SUPPORT(_)  (((_) >> 40) & 0x01)
+
+    /**
+     * @brief Device-TLB Invalidation Throttle <b>(RO)</b>
+     *
+     * [Bit 41]
+     * * 0: Hardware does not support Device-TLB Invalidation Throttling.
+     * * 1: Hardware supports Device-TLB Invalidation Throttling.
+     * Hardware implementations reporting Device-TLB support (DT) as Clear also report this field as Clear.
+     */
+    uint64_t device_tlb_invalidation_throttle                        : 1;
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_INVALIDATION_THROTTLE_BIT 41
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_INVALIDATION_THROTTLE_FLAG 0x20000000000
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_INVALIDATION_THROTTLE_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_INVALIDATION_THROTTLE(_)  (((_) >> 41) & 0x01)
+
+    /**
+     * @brief Page-request Drain Support <b>(RO)</b>
+     *
+     * [Bit 42]
+     * * 0: Hardware does not support Page-request Drain (PD) flag in inv_wait_dsc.
+     * * 1: Hardware supports Page-request Drain (PD) flag in inv_wait_dsc.
+     * Hardware implementations reporting Device-TLB support (DT) as Clear also report this field as Clear.
+     */
+    uint64_t page_request_drain_support                              : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_DRAIN_SUPPORT_BIT       42
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_DRAIN_SUPPORT_FLAG      0x40000000000
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_DRAIN_SUPPORT_MASK      0x01
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_DRAIN_SUPPORT(_)        (((_) >> 42) & 0x01)
+
+    /**
+     * @brief Scalable Mode Translation Support <b>(RO)</b>
+     *
+     * [Bit 43]
+     * * 0: Hardware does not support Scalable Mode DMA Remapping.
+     * * 1: Hardware supports Scalable Mode DMA Remapping through scalable-mode context-table and PASID-table structures.
+     * Hardware implementation reporting Queued Invalidation (QI) field as Clear also report this field as Clear.
+     * Hardware implementation reporting First-Level Translation Support (FLTS), Second-level Translation Support (SLTS) and
+     * Pass-through Support (PT) as Clear also report this field as Clear.
+     */
+    uint64_t scalable_mode_translation_support                       : 1;
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_TRANSLATION_SUPPORT_BIT 43
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_TRANSLATION_SUPPORT_FLAG 0x80000000000
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_TRANSLATION_SUPPORT_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_TRANSLATION_SUPPORT(_) (((_) >> 43) & 0x01)
+
+    /**
+     * @brief Virtual Command Support <b>(RO)</b>
+     *
+     * [Bit 44]
+     * * 0: Hardware does not support command submission to virtual-DMA Remapping hardware.
+     * * 1: Hardware does support command submission to virtual- DMA Remapping hardware.
+     * Hardware implementations of this architecture report a value of 0 in this field. Software implementations (emulation) of
+     * this architecture may report VCS=1.
+     * Software managing remapping hardware should be written to handle both values of VCS.
+     */
+    uint64_t virtual_command_support                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_VIRTUAL_COMMAND_SUPPORT_BIT          44
+#define VTD_EXTENDED_CAPABILITY_VIRTUAL_COMMAND_SUPPORT_FLAG         0x100000000000
+#define VTD_EXTENDED_CAPABILITY_VIRTUAL_COMMAND_SUPPORT_MASK         0x01
+#define VTD_EXTENDED_CAPABILITY_VIRTUAL_COMMAND_SUPPORT(_)           (((_) >> 44) & 0x01)
+
+    /**
+     * @brief Second-Level Accessed/Dirty Support <b>(RO)</b>
+     *
+     * [Bit 45]
+     * * 0: Hardware does not support Accessed/Dirty bits in Second- Level translation.
+     * * 1: Hardware supports Accessed/Dirty bits in Second-Level translation.
+     * Hardware implementations reporting Scalable-Mode Page-walk Coherency Support (SMPWCS) as Clear also report this field as
+     * Clear.
+     */
+    uint64_t second_level_accessed_dirty_support                     : 1;
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT_BIT 45
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT_FLAG 0x200000000000
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT(_) (((_) >> 45) & 0x01)
+
+    /**
+     * @brief Second-level Translation Support <b>(RO)</b>
+     *
+     * [Bit 46]
+     * * 0: Hardware does not support PASID Granular Translation Type of second-level (PGTT=010b) in scalable-mode PASIDTable
+     * entry.
+     * * 1: Hardware supports PASID Granular Translation Type of second-level (PGTT=010b) in scalable-mode PASID-Table entry.
+     */
+    uint64_t second_level_translation_support                        : 1;
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_TRANSLATION_SUPPORT_BIT 46
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_TRANSLATION_SUPPORT_FLAG 0x400000000000
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_TRANSLATION_SUPPORT_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_TRANSLATION_SUPPORT(_)  (((_) >> 46) & 0x01)
+
+    /**
+     * @brief First-level Translation Support <b>(RO)</b>
+     *
+     * [Bit 47]
+     * * 0: Hardware does not support PASID Granular Translation Type of first-level (PGTT=001b) in scalable-mode PASIDTable
+     * entry.
+     * * 1: Hardware supports PASID Granular Translation Type of first-level (PGTT=001b) in scalable-mode PASID-Table entry.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) as Clear also report this field as Clear
+     */
+    uint64_t first_level_translation_support                         : 1;
+#define VTD_EXTENDED_CAPABILITY_FIRST_LEVEL_TRANSLATION_SUPPORT_BIT  47
+#define VTD_EXTENDED_CAPABILITY_FIRST_LEVEL_TRANSLATION_SUPPORT_FLAG 0x800000000000
+#define VTD_EXTENDED_CAPABILITY_FIRST_LEVEL_TRANSLATION_SUPPORT_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_FIRST_LEVEL_TRANSLATION_SUPPORT(_)   (((_) >> 47) & 0x01)
+
+    /**
+     * @brief Scalable-Mode Page-walk Coherency <b>(RO)</b>
+     *
+     * [Bit 48]
+     * * 0: Hardware access to paging structures accessed through PASID-table entry are not snooped.
+     * * 1: Hardware access to paging structures accessed through PASID-table entry are snooped if PWSNP field in PASID-table
+     * entry is Set. Paging-structures accessed through PASID-table entry are not snooped if PWSNP field in PASID-table entry
+     * is Clear.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) as Clear also report this field as Clear.
+     */
+    uint64_t scalable_mode_page_walk_coherency                       : 1;
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_PAGE_WALK_COHERENCY_BIT 48
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_PAGE_WALK_COHERENCY_FLAG 0x1000000000000
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_PAGE_WALK_COHERENCY_MASK 0x01
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_PAGE_WALK_COHERENCY(_) (((_) >> 48) & 0x01)
+
+    /**
+     * @brief RID-PASID Support <b>(RO)</b>
+     *
+     * [Bit 49]
+     * * 0: Hardware does not support RID_PASID field in scalable mode context-entry. It uses the value of 0 for RID_PASID.
+     * * 1: Hardware supports the RID_PASID field in scalable-mode context-entry.
+     * Hardware implementations reporting Scalable Mode Translation Support (SMTS) as Clear also report this field as Clear.
+     */
+    uint64_t rid_pasid_support                                       : 1;
+#define VTD_EXTENDED_CAPABILITY_RID_PASID_SUPPORT_BIT                49
+#define VTD_EXTENDED_CAPABILITY_RID_PASID_SUPPORT_FLAG               0x2000000000000
+#define VTD_EXTENDED_CAPABILITY_RID_PASID_SUPPORT_MASK               0x01
+#define VTD_EXTENDED_CAPABILITY_RID_PASID_SUPPORT(_)                 (((_) >> 49) & 0x01)
+    uint64_t reserved4                                               : 2;
+
+    /**
+     * @brief Abort DMA Mode Support <b>(RO)</b>
+     *
+     * [Bit 52]
+     * * 0: Hardware does not support Abort DMA Mode.
+     * * 1: Hardware supports Abort DMA Mode.
+     */
+    uint64_t abort_dma_mode_support                                  : 1;
+#define VTD_EXTENDED_CAPABILITY_ABORT_DMA_MODE_SUPPORT_BIT           52
+#define VTD_EXTENDED_CAPABILITY_ABORT_DMA_MODE_SUPPORT_FLAG          0x10000000000000
+#define VTD_EXTENDED_CAPABILITY_ABORT_DMA_MODE_SUPPORT_MASK          0x01
+#define VTD_EXTENDED_CAPABILITY_ABORT_DMA_MODE_SUPPORT(_)            (((_) >> 52) & 0x01)
+
+    /**
+     * @brief RID_PRIV Support <b>(RO)</b>
+     *
+     * [Bit 53]
+     * * 0: Hardware does not support the RID_PRIV field in the scalable-mode context-entry. It uses the value of 0 for
+     * RID_PRIV.
+     * * 1: Hardware supports the RID_PRIV field in the scalable mode context-entry.
+     * Hardware implementations reporting Supervisor Request Support (SRS) as Clear also report this field as Clear.
+     */
+    uint64_t rid_priv_support                                        : 1;
+#define VTD_EXTENDED_CAPABILITY_RID_PRIV_SUPPORT_BIT                 53
+#define VTD_EXTENDED_CAPABILITY_RID_PRIV_SUPPORT_FLAG                0x20000000000000
+#define VTD_EXTENDED_CAPABILITY_RID_PRIV_SUPPORT_MASK                0x01
+#define VTD_EXTENDED_CAPABILITY_RID_PRIV_SUPPORT(_)                  (((_) >> 53) & 0x01)
+    uint64_t reserved5                                               : 10;
+  };
+
+  uint64_t flags;
+} vtd_extended_capability_register;
+
+
+/**
+ * Register to control remapping hardware. If multiple control fields in this register need to be modified, software must
+ * serialize the modifications through multiple writes to this register.
+ * For example, to update a bit field in this register at offset X with value of Y, software must follow below steps:
+ * 1. Tmp = Read GSTS_REG
+ * 2. Status = (Tmp & 96FFFFFFh) // Reset the one-shot bits
+ * 3. if (Y) {Command = (Status | (1 << X))} else {Command = (Status & ~(1 << X))}
+ * 4. Write Command to GCMD_REG
+ * 5. Wait until GSTS_REG[X] indicates command is serviced.
+ *
+ * @remarks GCMD_REG
+ * @see VTd[10.4.4(Global Command Register)]
+ */
+#define VTD_GLOBAL_COMMAND                                           0x00000018
+typedef union
+{
+  struct
+  {
+    uint32_t reserved1                                               : 23;
+
+    /**
+     * @brief Compatibility Format Interrupt <b>(WO)</b>
+     *
+     * [Bit 23] This field is valid only for Intel(R) 64 implementations supporting interrupt remapping.
+     * Software writes to this field to enable or disable Compatibility Format interrupts on Intel(R) 64 platforms. The value in
+     * this field is effective only when interrupt-remapping is enabled and Extended Interrupt Mode (x2APIC mode) is not
+     * enabled.
+     * * 0: Block Compatibility format interrupts.
+     * * 1: Process Compatibility format interrupts as pass-through (bypass interrupt remapping).
+     * Hardware reports the status of updating this field through the CFIS field in the Global Status register.
+     * The value returned on a read of this field is undefined.
+     */
+    uint32_t compatibility_format_interrupt                          : 1;
+#define VTD_GLOBAL_COMMAND_COMPATIBILITY_FORMAT_INTERRUPT_BIT        23
+#define VTD_GLOBAL_COMMAND_COMPATIBILITY_FORMAT_INTERRUPT_FLAG       0x800000
+#define VTD_GLOBAL_COMMAND_COMPATIBILITY_FORMAT_INTERRUPT_MASK       0x01
+#define VTD_GLOBAL_COMMAND_COMPATIBILITY_FORMAT_INTERRUPT(_)         (((_) >> 23) & 0x01)
+
+    /**
+     * @brief Set Interrupt Remap Table Pointer <b>(WO)</b>
+     *
+     * [Bit 24] This field is valid only for implementations supporting interrupt remapping.
+     * Software sets this field to set/update the interrupt remapping table pointer used by hardware. The interrupt remapping
+     * table pointer is specified through the Interrupt Remapping Table Address (IRTA_REG) register.
+     * Hardware reports the status of the 'Set Interrupt Remap Table Pointer' operation through the IRTPS field in the Global
+     * Status register.
+     * The 'Set Interrupt Remap Table Pointer' operation must be performed before enabling or re-enabling (after disabling)
+     * interrupt-remapping hardware through the IRE field.
+     * Clearing this bit has no effect. The value returned on a read of this field is undefined.
+     */
+    uint32_t set_interrupt_remap_table_pointer                       : 1;
+#define VTD_GLOBAL_COMMAND_SET_INTERRUPT_REMAP_TABLE_POINTER_BIT     24
+#define VTD_GLOBAL_COMMAND_SET_INTERRUPT_REMAP_TABLE_POINTER_FLAG    0x1000000
+#define VTD_GLOBAL_COMMAND_SET_INTERRUPT_REMAP_TABLE_POINTER_MASK    0x01
+#define VTD_GLOBAL_COMMAND_SET_INTERRUPT_REMAP_TABLE_POINTER(_)      (((_) >> 24) & 0x01)
+
+    /**
+     * @brief Interrupt Remapping Enable <b>(WO)</b>
+     *
+     * [Bit 25] This field is valid only for implementations supporting interrupt remapping.
+     * * 0: Disable interrupt-remapping hardware
+     * * 1: Enable interrupt-remapping hardware
+     * Hardware reports the status of the interrupt remapping enable operation through the IRES field in the Global Status
+     * register.
+     * There may be active interrupt requests in the platform when software updates this field. Hardware must enable or disable
+     * interrupt-remapping logic only at deterministic transaction boundaries, so that any in-flight interrupts are either
+     * subject to remapping or not at all.
+     * For implementations reporting the Enhanced Set Interrupt Remap Table Pointer Support (ESIRTPS) field as Set, hardware
+     * performs global invalidation on all Interrupt remapping caches as part of Interrupt Remapping Disable operation.
+     * Hardware implementations must drain any in-flight interrupts requests queued in the Root-Complex before completing the
+     * interrupt-remapping enable command and reflecting the status of the command through the IRES field in the Global Status
+     * register.
+     * The value returned on a read of this field is undefined.
+     */
+    uint32_t interrupt_remapping_enable                              : 1;
+#define VTD_GLOBAL_COMMAND_INTERRUPT_REMAPPING_ENABLE_BIT            25
+#define VTD_GLOBAL_COMMAND_INTERRUPT_REMAPPING_ENABLE_FLAG           0x2000000
+#define VTD_GLOBAL_COMMAND_INTERRUPT_REMAPPING_ENABLE_MASK           0x01
+#define VTD_GLOBAL_COMMAND_INTERRUPT_REMAPPING_ENABLE(_)             (((_) >> 25) & 0x01)
+
+    /**
+     * @brief Queued Invalidation Enable <b>(WO)</b>
+     *
+     * [Bit 26] This field is valid only for implementations supporting queued invalidations.
+     * Software writes to this field to enable or disable queued invalidations.
+     * * 0: Disable queued invalidations.
+     * * 1: Enable use of queued invalidations.
+     * Hardware reports the status of queued invalidation enable operation through QIES field in the Global Status register.
+     * The value returned on a read of this field is undefined.
+     */
+    uint32_t queued_invalidation_enable                              : 1;
+#define VTD_GLOBAL_COMMAND_QUEUED_INVALIDATION_ENABLE_BIT            26
+#define VTD_GLOBAL_COMMAND_QUEUED_INVALIDATION_ENABLE_FLAG           0x4000000
+#define VTD_GLOBAL_COMMAND_QUEUED_INVALIDATION_ENABLE_MASK           0x01
+#define VTD_GLOBAL_COMMAND_QUEUED_INVALIDATION_ENABLE(_)             (((_) >> 26) & 0x01)
+
+    /**
+     * @brief Write Buffer Flush <b>(WO)</b>
+     *
+     * [Bit 27] This bit is valid only for implementations requiring write buffer flushing.
+     * Software sets this field to request that hardware flush the Root-Complex internal write buffers. This is done to ensure
+     * any updates to the memory resident remapping structures are not held in any internal write posting buffers.
+     * Hardware reports the status of the write buffer flushing operation through the WBFS field in the Global Status register.
+     * Clearing this bit has no effect. The value returned on a read of this field is undefined.
+     */
+    uint32_t write_buffer_flush                                      : 1;
+#define VTD_GLOBAL_COMMAND_WRITE_BUFFER_FLUSH_BIT                    27
+#define VTD_GLOBAL_COMMAND_WRITE_BUFFER_FLUSH_FLAG                   0x8000000
+#define VTD_GLOBAL_COMMAND_WRITE_BUFFER_FLUSH_MASK                   0x01
+#define VTD_GLOBAL_COMMAND_WRITE_BUFFER_FLUSH(_)                     (((_) >> 27) & 0x01)
+
+    /**
+     * @brief Enable Advanced Fault Logging <b>(WO)</b>
+     *
+     * [Bit 28] This field is valid only for implementations supporting advanced fault logging.
+     * Software writes to this field to request hardware to enable or disable advanced fault logging:
+     * * 0: Disable advanced fault logging. In this case, translation faults are reported through the Fault Recording
+     * registers.
+     * * 1: Enable use of memory-resident fault log. When enabled, translation faults are recorded in the memory-resident log.
+     * The fault log pointer must be set in hardware (through the SFL field) before enabling advanced fault logging. Hardware
+     * reports the status of the advanced fault logging enable operation through the AFLS field in the Global Status register.
+     * The value returned on read of this field is undefined.
+     */
+    uint32_t enable_advanced_fault_logging                           : 1;
+#define VTD_GLOBAL_COMMAND_ENABLE_ADVANCED_FAULT_LOGGING_BIT         28
+#define VTD_GLOBAL_COMMAND_ENABLE_ADVANCED_FAULT_LOGGING_FLAG        0x10000000
+#define VTD_GLOBAL_COMMAND_ENABLE_ADVANCED_FAULT_LOGGING_MASK        0x01
+#define VTD_GLOBAL_COMMAND_ENABLE_ADVANCED_FAULT_LOGGING(_)          (((_) >> 28) & 0x01)
+
+    /**
+     * @brief Set Fault Log <b>(WO)</b>
+     *
+     * [Bit 29] This field is valid only for implementations supporting advanced fault logging.
+     * Software sets this field to request hardware to set/update the fault-log pointer used by hardware. The fault-log pointer
+     * is specified through Advanced Fault Log register.
+     * Hardware reports the status of the 'Set Fault Log' operation through the FLS field in the Global Status register.
+     * The fault log pointer must be set before enabling advanced fault logging (through EAFL field). Once advanced fault
+     * logging is enabled, the fault log pointer may be updated through this field while DMA remapping is active.
+     * Clearing this bit has no effect. The value returned on read of this field is undefined.
+     */
+    uint32_t set_fault_log                                           : 1;
+#define VTD_GLOBAL_COMMAND_SET_FAULT_LOG_BIT                         29
+#define VTD_GLOBAL_COMMAND_SET_FAULT_LOG_FLAG                        0x20000000
+#define VTD_GLOBAL_COMMAND_SET_FAULT_LOG_MASK                        0x01
+#define VTD_GLOBAL_COMMAND_SET_FAULT_LOG(_)                          (((_) >> 29) & 0x01)
+
+    /**
+     * @brief Set Root Table Pointer <b>(WO)</b>
+     *
+     * [Bit 30] Software sets this field to set/update the root-table pointer (and translation table mode) used by hardware.
+     * The root-table pointer (and translation table mode) is specified through the Root Table Address (RTADDR_REG) register.
+     * Hardware reports the status of the 'Set Root Table Pointer' operation through the RTPS field in the Global Status
+     * register.
+     * The 'Set Root Table Pointer' operation must be performed before enabling or re-enabling (after disabling) DMA remapping
+     * through the TE field. For details on invalidation that software may have to perform after the
+     * Clearing this bit has no effect. The value returned on a read of this field is undefined.
+     */
+    uint32_t set_root_table_pointer                                  : 1;
+#define VTD_GLOBAL_COMMAND_SET_ROOT_TABLE_POINTER_BIT                30
+#define VTD_GLOBAL_COMMAND_SET_ROOT_TABLE_POINTER_FLAG               0x40000000
+#define VTD_GLOBAL_COMMAND_SET_ROOT_TABLE_POINTER_MASK               0x01
+#define VTD_GLOBAL_COMMAND_SET_ROOT_TABLE_POINTER(_)                 (((_) >> 30) & 0x01)
+
+    /**
+     * @brief Translation Enable <b>(WO)</b>
+     *
+     * [Bit 31] Software writes to this field to request hardware to enable/disable DMA remapping:
+     * * 0: Disable DMA remapping
+     * * 1: Enable DMA remapping
+     * Hardware reports the status of the translation enable operation through the TES field in the Global Status register.
+     * There may be active DMA requests in the platform when software updates this field. Hardware must enable or disable
+     * remapping logic only at deterministic transaction boundaries, so that any in-flight transaction is either subject to
+     * remapping or not at all.
+     * Hardware implementations supporting DMA draining must drain any inflight DMA read/write requests queued within the
+     * Root-Complex before completing the translation enable command and reflecting the status of the command through the TES
+     * field in the Global Status register.
+     * For implementations reporting Scalable Mode Translation Support (SMTS) field as Set, hardware performs global
+     * invalidation on all DMA remapping translation caches as part of Translation Disable operation.
+     * The value returned on a read of this field is undefined.
+     */
+    uint32_t translation_enable                                      : 1;
+#define VTD_GLOBAL_COMMAND_TRANSLATION_ENABLE_BIT                    31
+#define VTD_GLOBAL_COMMAND_TRANSLATION_ENABLE_FLAG                   0x80000000
+#define VTD_GLOBAL_COMMAND_TRANSLATION_ENABLE_MASK                   0x01
+#define VTD_GLOBAL_COMMAND_TRANSLATION_ENABLE(_)                     (((_) >> 31) & 0x01)
+  };
+
+  uint32_t flags;
+} vtd_global_command_register;
+
+
+/**
+ * Register to report general remapping hardware status.
+ *
+ * @remarks GSTS_REG
+ * @see VTd[10.4.5(Global Status Register)]
+ */
+#define VTD_GLOBAL_STATUS                                            0x0000001C
+typedef union
+{
+  struct
+  {
+    uint32_t reserved1                                               : 23;
+
+    /**
+     * @brief Compatibility Format Interrupt Status <b>(RO)</b>
+     *
+     * [Bit 23] This field indicates the status of Compatibility format interrupts on Intel(R) 64 implementations supporting
+     * interrupt-remapping. The value reported in this field is applicable only when interrupt-remapping is enabled and
+     * extended interrupt mode (x2APIC mode) is not enabled.
+     * * 0: Compatibility format interrupts are blocked.
+     * * 1: Compatibility format interrupts are processed as pass-through (bypassing interrupt remapping).
+     */
+    uint32_t compatibility_format_interrupt_status                   : 1;
+#define VTD_GLOBAL_STATUS_COMPATIBILITY_FORMAT_INTERRUPT_STATUS_BIT  23
+#define VTD_GLOBAL_STATUS_COMPATIBILITY_FORMAT_INTERRUPT_STATUS_FLAG 0x800000
+#define VTD_GLOBAL_STATUS_COMPATIBILITY_FORMAT_INTERRUPT_STATUS_MASK 0x01
+#define VTD_GLOBAL_STATUS_COMPATIBILITY_FORMAT_INTERRUPT_STATUS(_)   (((_) >> 23) & 0x01)
+
+    /**
+     * @brief Interrupt Remapping Table Pointer Status <b>(RO)</b>
+     *
+     * [Bit 24] This field indicates the status of the interrupt remapping table pointer in hardware.
+     * This field is cleared by hardware when software sets the SIRTP field in the Global Command register. This field is Set
+     * by hardware when hardware completes the 'Set Interrupt Remap Table Pointer' operation using the value provided in the
+     * Interrupt Remapping Table Address register.
+     */
+    uint32_t interrupt_remapping_table_pointer_status                : 1;
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_TABLE_POINTER_STATUS_BIT 24
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_TABLE_POINTER_STATUS_FLAG 0x1000000
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_TABLE_POINTER_STATUS_MASK 0x01
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_TABLE_POINTER_STATUS(_) (((_) >> 24) & 0x01)
+
+    /**
+     * @brief Interrupt Remapping Enable Status <b>(RO)</b>
+     *
+     * [Bit 25] This field indicates the status of Interrupt-remapping hardware.
+     * * 0: Interrupt-remapping hardware is not enabled
+     * * 1: Interrupt-remapping hardware is enabled
+     */
+    uint32_t interrupt_remapping_enable_status                       : 1;
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_ENABLE_STATUS_BIT      25
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_ENABLE_STATUS_FLAG     0x2000000
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_ENABLE_STATUS_MASK     0x01
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_ENABLE_STATUS(_)       (((_) >> 25) & 0x01)
+
+    /**
+     * @brief Queued Invalidation Enable Status <b>(RO)</b>
+     *
+     * [Bit 26] This field indicates queued invalidation enable status.
+     * * 0: queued invalidation is not enabled
+     * * 1: queued invalidation is enabled
+     */
+    uint32_t queued_invalidation_enable_status                       : 1;
+#define VTD_GLOBAL_STATUS_QUEUED_INVALIDATION_ENABLE_STATUS_BIT      26
+#define VTD_GLOBAL_STATUS_QUEUED_INVALIDATION_ENABLE_STATUS_FLAG     0x4000000
+#define VTD_GLOBAL_STATUS_QUEUED_INVALIDATION_ENABLE_STATUS_MASK     0x01
+#define VTD_GLOBAL_STATUS_QUEUED_INVALIDATION_ENABLE_STATUS(_)       (((_) >> 26) & 0x01)
+
+    /**
+     * @brief Write Buffer Flush Status <b>(RO)</b>
+     *
+     * [Bit 27] This field is valid only for implementations requiring write buffer flushing. This field indicates the status
+     * of the write buffer flush command. It is
+     * * Set by hardware when software sets the WBF field in the Global Command register.
+     * * Cleared by hardware when hardware completes the write buffer flushing operation.
+     */
+    uint32_t write_buffer_flush_status                               : 1;
+#define VTD_GLOBAL_STATUS_WRITE_BUFFER_FLUSH_STATUS_BIT              27
+#define VTD_GLOBAL_STATUS_WRITE_BUFFER_FLUSH_STATUS_FLAG             0x8000000
+#define VTD_GLOBAL_STATUS_WRITE_BUFFER_FLUSH_STATUS_MASK             0x01
+#define VTD_GLOBAL_STATUS_WRITE_BUFFER_FLUSH_STATUS(_)               (((_) >> 27) & 0x01)
+
+    /**
+     * @brief Advanced Fault Logging Status <b>(RO)</b>
+     *
+     * [Bit 28] This field is valid only for implementations supporting advanced fault logging. It indicates the advanced fault
+     * logging status:
+     * * 0: Advanced Fault Logging is not enabled
+     * * 1: Advanced Fault Logging is enabled
+     */
+    uint32_t advanced_fault_logging_status                           : 1;
+#define VTD_GLOBAL_STATUS_ADVANCED_FAULT_LOGGING_STATUS_BIT          28
+#define VTD_GLOBAL_STATUS_ADVANCED_FAULT_LOGGING_STATUS_FLAG         0x10000000
+#define VTD_GLOBAL_STATUS_ADVANCED_FAULT_LOGGING_STATUS_MASK         0x01
+#define VTD_GLOBAL_STATUS_ADVANCED_FAULT_LOGGING_STATUS(_)           (((_) >> 28) & 0x01)
+
+    /**
+     * @brief Fault Log Status <b>(RO)</b>
+     *
+     * [Bit 29] This field:
+     * * Is cleared by hardware when software Sets the SFL field in the Global Command register.
+     * * Is Set by hardware when hardware completes the 'Set Fault Log Pointer' operation using the value provided in the
+     * Advanced Fault Log register.
+     */
+    uint32_t fault_log_status                                        : 1;
+#define VTD_GLOBAL_STATUS_FAULT_LOG_STATUS_BIT                       29
+#define VTD_GLOBAL_STATUS_FAULT_LOG_STATUS_FLAG                      0x20000000
+#define VTD_GLOBAL_STATUS_FAULT_LOG_STATUS_MASK                      0x01
+#define VTD_GLOBAL_STATUS_FAULT_LOG_STATUS(_)                        (((_) >> 29) & 0x01)
+
+    /**
+     * @brief Root Table Pointer Status <b>(RO)</b>
+     *
+     * [Bit 30] This field indicates the status of the root-table pointer in hardware.
+     * This field is cleared by hardware when software sets the SRTP field in the Global Command register. This field is set by
+     * hardware when hardware completes the 'Set Root Table Pointer' operation using the value provided in the Root Table
+     * Address register.
+     */
+    uint32_t root_table_pointer_status                               : 1;
+#define VTD_GLOBAL_STATUS_ROOT_TABLE_POINTER_STATUS_BIT              30
+#define VTD_GLOBAL_STATUS_ROOT_TABLE_POINTER_STATUS_FLAG             0x40000000
+#define VTD_GLOBAL_STATUS_ROOT_TABLE_POINTER_STATUS_MASK             0x01
+#define VTD_GLOBAL_STATUS_ROOT_TABLE_POINTER_STATUS(_)               (((_) >> 30) & 0x01)
+
+    /**
+     * @brief Translation Enable Status <b>(RO)</b>
+     *
+     * [Bit 31] This field indicates the status of DMA-remapping hardware.
+     * * 0: DMA remapping is not enabled
+     * * 1: DMA remapping is enabled
+     */
+    uint32_t translation_enable_status                               : 1;
+#define VTD_GLOBAL_STATUS_TRANSLATION_ENABLE_STATUS_BIT              31
+#define VTD_GLOBAL_STATUS_TRANSLATION_ENABLE_STATUS_FLAG             0x80000000
+#define VTD_GLOBAL_STATUS_TRANSLATION_ENABLE_STATUS_MASK             0x01
+#define VTD_GLOBAL_STATUS_TRANSLATION_ENABLE_STATUS(_)               (((_) >> 31) & 0x01)
+  };
+
+  uint32_t flags;
+} vtd_global_status_register;
+
+
+/**
+ * Register providing the base address of root-table and the translation table mode. Software programs the desired values
+ * in this register but these values take effect only after software executes Set Root Table Pointer command through the
+ * SRTP field in the Global Command Register (GCMD_REG).
+ *
+ * @remarks RTADDR_REG
+ * @see VTd[10.4.6(Root Table Address Register)]
+ */
+#define VTD_ROOT_TABLE_ADDRESS                                       0x00000020
+typedef union
+{
+  struct
+  {
+    uint64_t reserved1                                               : 10;
+
+    /**
+     * @brief Translation Table Mode <b>(RW)</b>
+     *
+     * [Bits 11:10] This field specifies the translation mode used for DMA remapping.
+     * * 00: legacy mode - uses root tables and context tables.
+     * * 01: scalable mode - uses scalable-mode root tables and scalable mode context tables.
+     * * 10: reserved - in prior version of this specification, this encoding was used to enable extended mode which is no
+     * longer supported.
+     * * 11: abort-dma mode.
+     * For implementations reporting Enhanced SRTP Support (ESRTPS) field as Clear in the Capability register, software must
+     * not modify this field while DMA remapping is active (TES=1 in Global Status register).
+     * The value of this field takes effect only after software executes Set Root Table Pointer command.
+     */
+    uint64_t translation_table_mode                                  : 2;
+#define VTD_ROOT_TABLE_ADDRESS_TRANSLATION_TABLE_MODE_BIT            10
+#define VTD_ROOT_TABLE_ADDRESS_TRANSLATION_TABLE_MODE_FLAG           0xC00
+#define VTD_ROOT_TABLE_ADDRESS_TRANSLATION_TABLE_MODE_MASK           0x03
+#define VTD_ROOT_TABLE_ADDRESS_TRANSLATION_TABLE_MODE(_)             (((_) >> 10) & 0x03)
+
+    /**
+     * @brief Root Table Address <b>(RW)</b>
+     *
+     * [Bits 63:12] This field points to the base of the page-aligned, 4KB-sized root-table in system memory. Hardware may
+     * ignore and not implement bits 63:HAW, where HAW is the host address width.
+     * The value of this field takes effect only after software executes Set Root Table Pointer command.
+     */
+    uint64_t root_table_address                                      : 52;
+#define VTD_ROOT_TABLE_ADDRESS_ROOT_TABLE_ADDRESS_BIT                12
+#define VTD_ROOT_TABLE_ADDRESS_ROOT_TABLE_ADDRESS_FLAG               0xFFFFFFFFFFFFF000
+#define VTD_ROOT_TABLE_ADDRESS_ROOT_TABLE_ADDRESS_MASK               0xFFFFFFFFFFFFF
+#define VTD_ROOT_TABLE_ADDRESS_ROOT_TABLE_ADDRESS(_)                 (((_) >> 12) & 0xFFFFFFFFFFFFF)
+  };
+
+  uint64_t flags;
+} vtd_root_table_address_register;
+
+
+/**
+ * Register to manage context-cache.The act of writing the uppermost byte of the CCMD_REG with the ICC field Set causes the
+ * hardware to perform the context-cache invalidation.
+ *
+ * @remarks CCMD_RE
+ * @see VTd[10.4.7(Context Command Register)]
+ */
+#define VTD_CONTEXT_COMMAND                                          0x00000028
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Domain-ID <b>(RW)</b>
+     *
+     * [Bits 15:0] Indicates the id of the domain whose context-entries need to be selectively invalidated. This field must be
+     * programmed by software for both domain selective and device-selective invalidation requests.
+     * The Capability register reports the domain-id width supported by hardware. Software must ensure that the value written
+     * to this field is within this limit. Hardware ignores (and may not implement) bits 15:N, where N is the supported
+     * domain-id width reported in the Capability register.
+     */
+    uint64_t domain_id                                               : 16;
+#define VTD_CONTEXT_COMMAND_DOMAIN_ID_BIT                            0
+#define VTD_CONTEXT_COMMAND_DOMAIN_ID_FLAG                           0xFFFF
+#define VTD_CONTEXT_COMMAND_DOMAIN_ID_MASK                           0xFFFF
+#define VTD_CONTEXT_COMMAND_DOMAIN_ID(_)                             (((_) >> 0) & 0xFFFF)
+
+    /**
+     * @brief Source-ID <b>(WO)</b>
+     *
+     * [Bits 31:16] Indicates the source-id of the device whose corresponding context-entry needs to be selectively
+     * invalidated.This field along with the FM field must be programmed by software for device-selective invalidation
+     * requests.
+     * The value returned on a read of this field is undefined.
+     */
+    uint64_t source_id                                               : 16;
+#define VTD_CONTEXT_COMMAND_SOURCE_ID_BIT                            16
+#define VTD_CONTEXT_COMMAND_SOURCE_ID_FLAG                           0xFFFF0000
+#define VTD_CONTEXT_COMMAND_SOURCE_ID_MASK                           0xFFFF
+#define VTD_CONTEXT_COMMAND_SOURCE_ID(_)                             (((_) >> 16) & 0xFFFF)
+
+    /**
+     * @brief Function Mask <b>(WO)</b>
+     *
+     * [Bits 33:32] Software may use the Function Mask to perform device-selective invalidations on behalf of devices
+     * supporting PCI Express Phantom Functions.
+     * This field specifies which bits of the function number portion (least significant three bits) of the SID field to mask
+     * when performing device selective invalidations.The following encodings are defined for this field:
+     * * 00: No bits in the SID field masked
+     * * 01: Mask bit 2 in the SID field
+     * * 10: Mask bits 2:1 in the SID field
+     * * 11: Mask bits 2:0 in the SID field
+     * The context-entries corresponding to the source-ids specified through the SID and FM fields must have the domain-id
+     * specified in the DID field.
+     * The value returned on a read of this field is undefined.
+     */
+    uint64_t function_mask                                           : 2;
+#define VTD_CONTEXT_COMMAND_FUNCTION_MASK_BIT                        32
+#define VTD_CONTEXT_COMMAND_FUNCTION_MASK_FLAG                       0x300000000
+#define VTD_CONTEXT_COMMAND_FUNCTION_MASK_MASK                       0x03
+#define VTD_CONTEXT_COMMAND_FUNCTION_MASK(_)                         (((_) >> 32) & 0x03)
+    uint64_t reserved1                                               : 25;
+
+    /**
+     * @brief Context Actual Invalidation Granularity <b>(RO)</b>
+     *
+     * [Bits 60:59] Hardware reports the granularity at which an invalidation request was processed through the CAIG field at
+     * the time of reporting invalidation completion (by clearing the ICC field).
+     * The following are the encodings for this field:
+     * * 00: Error. This indicates hardware detected an incorrect invalidation request and ignored the request, e.g., register
+     * based invalidation when Translation Table Mode (TTM) in Root Table Address Register is not programmed to legacy mode
+     * (RTADDR_REG.TTM!=00b).
+     * On hardware implementations with Major Version 6 or higher (VER_REG), all invalidation requests through this register
+     * are treated as incorrect invalidation requests. Software should use the Queued Invalidation interface to perform
+     * context-cache invalidations for such hardware implementations. Refer to Section 6.5 for more details.
+     * * 01: Global Invalidation performed. This could be in response to a global, domain-selective, or device-selective
+     * invalidation request.
+     * * 10: Domain-selective invalidation performed using the domain-id specified by software in the DID field. This could be
+     * in response to a domain-selective or device-selective invalidation request.
+     * * 11: Device-selective invalidation performed using the source-id and domain-id specified by software in the SID and FM
+     * fields. This can only be in response to a device-selective invalidation request.
+     */
+    uint64_t context_actual_invalidation_granularity                 : 2;
+#define VTD_CONTEXT_COMMAND_CONTEXT_ACTUAL_INVALIDATION_GRANULARITY_BIT 59
+#define VTD_CONTEXT_COMMAND_CONTEXT_ACTUAL_INVALIDATION_GRANULARITY_FLAG 0x1800000000000000
+#define VTD_CONTEXT_COMMAND_CONTEXT_ACTUAL_INVALIDATION_GRANULARITY_MASK 0x03
+#define VTD_CONTEXT_COMMAND_CONTEXT_ACTUAL_INVALIDATION_GRANULARITY(_) (((_) >> 59) & 0x03)
+
+    /**
+     * @brief Context Invalidation Request Granularity <b>(RW)</b>
+     *
+     * [Bits 62:61] Software provides the requested invalidation granularity through this field when setting the ICC field:
+     * * 00: Reserved.
+     * * 01: Global Invalidation request.
+     * * 10: Domain-selective invalidation request. The target domain-id must be specified in the DID field.
+     * * 11: Device-selective invalidation request. The target source-id(s) must be specified through the SID and FM fields,
+     * and the domain-id [that was programmed in the context-entry for these device(s)] must be provided in the DID field.
+     * Hardware implementations may process an invalidation request by performing invalidation at a coarser granularity than
+     * requested. Hardware indicates completion of the invalidation request by clearing the ICC field. At this time, hardware
+     * also indicates the granularity at which the actual invalidation was performed through the CAIG field.
+     */
+    uint64_t context_invalidation_request_granularity                : 2;
+#define VTD_CONTEXT_COMMAND_CONTEXT_INVALIDATION_REQUEST_GRANULARITY_BIT 61
+#define VTD_CONTEXT_COMMAND_CONTEXT_INVALIDATION_REQUEST_GRANULARITY_FLAG 0x6000000000000000
+#define VTD_CONTEXT_COMMAND_CONTEXT_INVALIDATION_REQUEST_GRANULARITY_MASK 0x03
+#define VTD_CONTEXT_COMMAND_CONTEXT_INVALIDATION_REQUEST_GRANULARITY(_) (((_) >> 61) & 0x03)
+
+    /**
+     * @brief Invalidate Context-Cache <b>(RW)</b>
+     *
+     * [Bit 63] Software requests invalidation of context-cache by setting this field. Software must also set the requested
+     * invalidation granularity by programming the CIRG field. Software must read back and check the ICC field is Clear to
+     * confirm the invalidation is complete. Software must not update this register when this field is Set.
+     * Hardware clears the ICC field to indicate the invalidation request is complete.Hardware also indicates the granularity
+     * at which the invalidation operation was performed through the CAIG field.
+     * Software must submit a context-cache invalidation request through this field only when there are no invalidation
+     * requests pending at this remapping hardware unit.
+     * Since information from the context-cache may be used by hardware to tag IOTLB entries, software must perform
+     * domain-selective (or global) invalidation of IOTLB after the context-cache invalidation has completed.
+     * Hardware implementations reporting a write-buffer flushing requirement (RWBF=1 in the Capability register) must
+     * implicitly perform a write buffer flush before invalidating the context-cache.
+     * When Translation Table Mode field in Root Table Address register is not setup as legacy mode (RTADDR_REG.TTM!=00b),
+     * hardware will ignore the value provided by software in this register, treat it as an incorrect invalidation request, and
+     * report a value of 00b in CAIG field.
+     */
+    uint64_t invalidate_context_cache                                : 1;
+#define VTD_CONTEXT_COMMAND_INVALIDATE_CONTEXT_CACHE_BIT             63
+#define VTD_CONTEXT_COMMAND_INVALIDATE_CONTEXT_CACHE_FLAG            0x8000000000000000
+#define VTD_CONTEXT_COMMAND_INVALIDATE_CONTEXT_CACHE_MASK            0x01
+#define VTD_CONTEXT_COMMAND_INVALIDATE_CONTEXT_CACHE(_)              (((_) >> 63) & 0x01)
+  };
+
+  uint64_t flags;
+} vtd_context_command_register;
+
+
+/**
+ * Register to provide the DMA address whose corresponding IOTLB entry needs to be invalidated through the corresponding
+ * IOTLB Invalidate register. This register is a write-only register. A value returned on a read of this register is
+ * undefined.
+ *
+ * @remarks IVA_REG
+ * @see VTd[10.4.8.2(Invalidate Address Register)]
+ */
+#define VTD_INVALIDATE_ADDRESS                                       0x00000000
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Address Mask <b>(WO)</b>
+     *
+     * [Bits 5:0] The value in this field specifies the number of low order bits of the ADDR field that must be masked for the
+     * invalidation operation. This field enables software to request invalidation of contiguous mappings for size-aligned
+     * regions.
+     * When invalidating mappings for large-pages, software must specify the appropriate mask value. For example, when
+     * invalidating mapping for a 2MB page, software must specify an address mask value of at least 9. Hardware implementations
+     * report the maximum supported address mask value through the Capability register.
+     * A value returned on a read of this field is undefined.
+     */
+    uint64_t address_mask                                            : 6;
+#define VTD_INVALIDATE_ADDRESS_ADDRESS_MASK_BIT                      0
+#define VTD_INVALIDATE_ADDRESS_ADDRESS_MASK_FLAG                     0x3F
+#define VTD_INVALIDATE_ADDRESS_ADDRESS_MASK_MASK                     0x3F
+#define VTD_INVALIDATE_ADDRESS_ADDRESS_MASK(_)                       (((_) >> 0) & 0x3F)
+
+    /**
+     * @brief Invalidation Hint <b>(WO)</b>
+     *
+     * [Bit 6] The field provides hints to hardware about preserving or flushing the nonleaf (context-entry) entries that may
+     * be cached in hardware:
+     * * 0: Software may have modified both leaf and non-leaf second-level paging-structure entries corresponding to mappings
+     * specified in the ADDR and AM fields. On a page-selective-within-domain invalidation request, hardware must invalidate
+     * the cached entries associated with the mappings specified by DID, ADDR and AM fields, in both IOTLB and paging-structure
+     * caches.
+     * * 1: Software has not modified any second-level non-leaf paging entries associated with the mappings specified by the
+     * ADDR and AM fields. On a page-selective-within-domain invalidation request, hardware may preserve the cached
+     * second-level mappings in paging-structurecaches.
+     * A value returned on a read of this field is undefined.
+     */
+    uint64_t invalidation_hint                                       : 1;
+#define VTD_INVALIDATE_ADDRESS_INVALIDATION_HINT_BIT                 6
+#define VTD_INVALIDATE_ADDRESS_INVALIDATION_HINT_FLAG                0x40
+#define VTD_INVALIDATE_ADDRESS_INVALIDATION_HINT_MASK                0x01
+#define VTD_INVALIDATE_ADDRESS_INVALIDATION_HINT(_)                  (((_) >> 6) & 0x01)
+    uint64_t reserved1                                               : 5;
+
+    /**
+     * @brief Address <b>(WO)</b>
+     *
+     * [Bits 63:12] Software provides the second-level-input-address that needs to be page selectively invalidated. To make a
+     * page-selective-within-domain invalidation request to hardware, software must first write the appropriate fields in this
+     * register, and then issue the page-selective-within-domain invalidate command through the IOTLB_REG. Hardware ignores
+     * bits 63:N, where N is the maximum guest address width (MGAW) supported.
+     * A value returned on a read of this field is undefined.
+     */
+    uint64_t page_address                                            : 52;
+#define VTD_INVALIDATE_ADDRESS_PAGE_ADDRESS_BIT                      12
+#define VTD_INVALIDATE_ADDRESS_PAGE_ADDRESS_FLAG                     0xFFFFFFFFFFFFF000
+#define VTD_INVALIDATE_ADDRESS_PAGE_ADDRESS_MASK                     0xFFFFFFFFFFFFF
+#define VTD_INVALIDATE_ADDRESS_PAGE_ADDRESS(_)                       (((_) >> 12) & 0xFFFFFFFFFFFFF)
+  };
+
+  uint64_t flags;
+} vtd_invalidate_address_register;
+
+
+/**
+ * Register to invalidate IOTLB. The act of writing the upper byte of the IOTLB_REG with the IVT field Set causes the
+ * hardware to perform the IOTLB invalidation.
+ *
+ * @remarks IOTLB_REG
+ * @see VTd[10.4.8.1(IOTLB Invalidate Register)]
+ */
+#define VTD_IOTLB_INVALIDATE                                         0x00000008
+typedef union
+{
+  struct
+  {
+    uint64_t reserved1                                               : 32;
+
+    /**
+     * @brief Domain-ID <b>(RW)</b>
+     *
+     * [Bits 47:32] Indicates the ID of the domain whose IOTLB entries need to be selectively invalidated. This field must be
+     * programmed by software for domainselective and page-selective invalidation requests.
+     * The Capability register reports the domain-id width supported by hardware. Software must ensure that the value written
+     * to this field is within this limit. Hardware may ignore and not implement bits 47:(32+N), where N is the supported
+     * domain-id width reported in the Capability register.
+     */
+    uint64_t domain_id                                               : 16;
+#define VTD_IOTLB_INVALIDATE_DOMAIN_ID_BIT                           32
+#define VTD_IOTLB_INVALIDATE_DOMAIN_ID_FLAG                          0xFFFF00000000
+#define VTD_IOTLB_INVALIDATE_DOMAIN_ID_MASK                          0xFFFF
+#define VTD_IOTLB_INVALIDATE_DOMAIN_ID(_)                            (((_) >> 32) & 0xFFFF)
+
+    /**
+     * @brief Drain Writes <b>(RW)</b>
+     *
+     * [Bit 48] This field is ignored by hardware if the DWD field is reported as Clear in the Capability register. When the
+     * DWD field is reported as Set in the Capability register, the following encodings are supported for this field:
+     * * 0: Hardware may complete the IOTLB invalidation without draining DMA write requests.
+     * * 1: Hardware must drain relevant translated DMA write requests.
+     */
+    uint64_t drain_writes                                            : 1;
+#define VTD_IOTLB_INVALIDATE_DRAIN_WRITES_BIT                        48
+#define VTD_IOTLB_INVALIDATE_DRAIN_WRITES_FLAG                       0x1000000000000
+#define VTD_IOTLB_INVALIDATE_DRAIN_WRITES_MASK                       0x01
+#define VTD_IOTLB_INVALIDATE_DRAIN_WRITES(_)                         (((_) >> 48) & 0x01)
+
+    /**
+     * @brief Drain Reads <b>(RW)</b>
+     *
+     * [Bit 49] This field is ignored by hardware if the DRD field is reported as Clear in the Capability register. When the
+     * DRD field is reported as Set in the Capability register, the following encodings are supported for this field:
+     * * 0: Hardware may complete the IOTLB invalidation without draining DMA read requests.
+     * * 1: Hardware must drain DMA read requests.
+     */
+    uint64_t drain_reads                                             : 1;
+#define VTD_IOTLB_INVALIDATE_DRAIN_READS_BIT                         49
+#define VTD_IOTLB_INVALIDATE_DRAIN_READS_FLAG                        0x2000000000000
+#define VTD_IOTLB_INVALIDATE_DRAIN_READS_MASK                        0x01
+#define VTD_IOTLB_INVALIDATE_DRAIN_READS(_)                          (((_) >> 49) & 0x01)
+    uint64_t reserved2                                               : 7;
+
+    /**
+     * @brief IOTLB Actual Invalidation Granularity <b>(RO)</b>
+     *
+     * [Bits 58:57] Hardware reports the granularity at which an invalidation request was processed through this field when
+     * reporting invalidation completion (by clearing the IVT field).
+     * The following are the encodings for this field.
+     * * 00: Error. This indicates hardware detected an incorrect invalidation request and ignored the request, e.g., register
+     * based invalidation when Translation Table Mode (TTM) in Root Table Address Register is not programmed to legacy mode
+     * (RTADDR_REG.TTM!=00b), detected an unsupported address mask value in Invalidate Address register for page-selective
+     * invalidation requests.
+     * On hardware implementations with Major Version 6 or higher (VER_REG), all invalidation requests through this register
+     * are treated as incorrect invalidation requests. Software should use the Queued Invalidation interface to perform IOTLB
+     * invalidations for such hardware implementations. Refer to Section 6.5 for more details.
+     * * 01: Global Invalidation performed. This could be in response to a global, domain-selective, or page-selective
+     * invalidation request.
+     * * 10: Domain-selective invalidation performed using the domain-id specified by software in the DID field. This could be
+     * in response to a domain-selective or a page-selective invalidation request.
+     * * 11: Page-selective-within-domain invalidation performed using the address, mask and hint specified by software in the
+     * Invalidate Address register and domain-id specified in DID field. This can be in response to a
+     * page-selective-within-domain invalidation request.
+     */
+    uint64_t iotlb_actual_invalidation_granularity                   : 2;
+#define VTD_IOTLB_INVALIDATE_IOTLB_ACTUAL_INVALIDATION_GRANULARITY_BIT 57
+#define VTD_IOTLB_INVALIDATE_IOTLB_ACTUAL_INVALIDATION_GRANULARITY_FLAG 0x600000000000000
+#define VTD_IOTLB_INVALIDATE_IOTLB_ACTUAL_INVALIDATION_GRANULARITY_MASK 0x03
+#define VTD_IOTLB_INVALIDATE_IOTLB_ACTUAL_INVALIDATION_GRANULARITY(_) (((_) >> 57) & 0x03)
+    uint64_t reserved3                                               : 1;
+
+    /**
+     * @brief IOTLB Invalidation Request Granularity <b>(RW)</b>
+     *
+     * [Bits 61:60] When requesting hardware to invalidate the IOTLB (by setting the IVT field), software writes the requested
+     * invalidation granularity through this field. The following are the encodings for the field.
+     * * 00: Reserved.
+     * * 01: Global invalidation request.
+     * * 10: Domain-selective invalidation request. The target domain-id must be specified in the DID field.
+     * * 11: Page-selective-within-domain invalidation request. The target address, mask, and invalidation hint must be
+     * specified in the Invalidate Address register, and the domain-id must be provided in the DID field.
+     * Hardware implementations may process an invalidation request by performing invalidation at a coarser granularity than
+     * requested. Hardware indicates completion of the invalidation request by clearing the IVT field. At that time, the
+     * granularity at which actual invalidation was performed is reported through the IAIG field.
+     */
+    uint64_t iotlb_invalidation_request_granularity                  : 2;
+#define VTD_IOTLB_INVALIDATE_IOTLB_INVALIDATION_REQUEST_GRANULARITY_BIT 60
+#define VTD_IOTLB_INVALIDATE_IOTLB_INVALIDATION_REQUEST_GRANULARITY_FLAG 0x3000000000000000
+#define VTD_IOTLB_INVALIDATE_IOTLB_INVALIDATION_REQUEST_GRANULARITY_MASK 0x03
+#define VTD_IOTLB_INVALIDATE_IOTLB_INVALIDATION_REQUEST_GRANULARITY(_) (((_) >> 60) & 0x03)
+    uint64_t reserved4                                               : 1;
+
+    /**
+     * @brief Invalidate IOTLB <b>(RW)</b>
+     *
+     * [Bit 63] Software requests IOTLB invalidation by setting this field. Software must also set the requested invalidation
+     * granularity by programming the IIRG field.
+     * Hardware clears the IVT field to indicate the invalidation request is complete. Hardware also indicates the granularity
+     * at which the invalidation operation was performed through the IAIG field. Software must not submit another invalidation
+     * request through this register while the IVT field is Set, nor update the associated Invalidate Address register.
+     * Software must not submit IOTLB invalidation requests when there is a context-cache invalidation request pending at this
+     * remapping hardware unit.
+     * Hardware implementations reporting a write-buffer flushing requirement (RWBF=1 in Capability register) must implicitly
+     * perform a write buffer flushing before invalidating the IOTLB. Refer to Section 6.8 for write buffer flushing
+     * requirements.
+     * When Translation Table Mode field in Root Table Address registers is not setup as legacy mode (RTADDR_REG.TTM!=00b),
+     * hardware will ignore the value provided by software in this register, treat it as an incorrect invalidation request, and
+     * report a value of 00b in IAIG field.
+     */
+    uint64_t invalidate_iotlb                                        : 1;
+#define VTD_IOTLB_INVALIDATE_INVALIDATE_IOTLB_BIT                    63
+#define VTD_IOTLB_INVALIDATE_INVALIDATE_IOTLB_FLAG                   0x8000000000000000
+#define VTD_IOTLB_INVALIDATE_INVALIDATE_IOTLB_MASK                   0x01
+#define VTD_IOTLB_INVALIDATE_INVALIDATE_IOTLB(_)                     (((_) >> 63) & 0x01)
+  };
+
+  uint64_t flags;
+} vtd_iotlb_invalidate_register;
+
 /**
  * @}
  */

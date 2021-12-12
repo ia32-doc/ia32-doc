@@ -6803,6 +6803,355 @@ typedef union {
  */
 
 /**
+ * @defgroup vtd \
+ *           VTD
+ * @{
+ */
+typedef struct {
+  union {
+    struct {
+      uint64_t present                                               : 1;
+#define VTD_Lower64_PRESENT                                          0x01
+      uint64_t reserved_1                                            : 11;
+      uint64_t context_table_pointer                                 : 52;
+#define VTD_Lower64_CONTEXT_TABLE_POINTER                            0xFFFFFFFFFFFFF000
+    };
+
+    uint64_t Flags;
+  } lower64;
+
+  union {
+    struct {
+      uint64_t reserved                                              : 64;
+#define VTD_Upper64_RESERVED                                         0xFFFFFFFFFFFFFFFF
+    };
+
+    uint64_t Flags;
+  } upper64;
+
+} vtd_root_entry;
+
+typedef struct {
+  union {
+    struct {
+      uint64_t present                                               : 1;
+#define VTD_Lower64_PRESENT                                          0x01
+      uint64_t fault_processing_disable                              : 1;
+#define VTD_Lower64_FAULT_PROCESSING_DISABLE                         0x02
+      uint64_t translation_type                                      : 2;
+#define VTD_Lower64_TRANSLATION_TYPE                                 0x0C
+      uint64_t reserved_1                                            : 8;
+      uint64_t second_level_page_translation_pointer                 : 52;
+#define VTD_Lower64_SECOND_LEVEL_PAGE_TRANSLATION_POINTER            0xFFFFFFFFFFFFF000
+    };
+
+    uint64_t Flags;
+  } lower64;
+
+  union {
+    struct {
+      uint64_t address_width                                         : 3;
+#define VTD_Upper64_ADDRESS_WIDTH                                    0x07
+      uint64_t ignored                                               : 4;
+#define VTD_Upper64_IGNORED                                          0x78
+      uint64_t reserved_1                                            : 1;
+      uint64_t domain_identifier                                     : 10;
+#define VTD_Upper64_DOMAIN_IDENTIFIER                                0x3FF00
+      uint64_t reserved_2                                            : 46;
+    };
+
+    uint64_t Flags;
+  } upper64;
+
+} vtd_context_entry;
+
+/**
+ * @defgroup vtd_entry_count \
+ *           Table entry counts
+ * @{
+ */
+#define VTD_ROOT_ENTRY_COUNT                                         0x00000100
+#define VTD_CONTEXT_ENTRY_COUNT                                      0x00000100
+/**
+ * @}
+ */
+
+#define VTD_VERSION                                                  0x00000000
+typedef union {
+  struct {
+    uint32_t minor                                                   : 4;
+#define VTD_VERSION_MINOR                                            0x0F
+    uint32_t major                                                   : 4;
+#define VTD_VERSION_MAJOR                                            0xF0
+    uint32_t reserved_1                                              : 24;
+  };
+
+  uint32_t Flags;
+} vtd_version_register;
+
+#define VTD_CAPABILITY                                               0x00000008
+typedef union {
+  struct {
+    uint64_t number_of_domains_supported                             : 3;
+#define VTD_CAPABILITY_NUMBER_OF_DOMAINS_SUPPORTED                   0x07
+    uint64_t advanced_fault_logging                                  : 1;
+#define VTD_CAPABILITY_ADVANCED_FAULT_LOGGING                        0x08
+    uint64_t required_write_buffer_flushing                          : 1;
+#define VTD_CAPABILITY_REQUIRED_WRITE_BUFFER_FLUSHING                0x10
+    uint64_t protected_low_memory_region                             : 1;
+#define VTD_CAPABILITY_PROTECTED_LOW_MEMORY_REGION                   0x20
+    uint64_t protected_high_memory_region                            : 1;
+#define VTD_CAPABILITY_PROTECTED_HIGH_MEMORY_REGION                  0x40
+    uint64_t caching_mode                                            : 1;
+#define VTD_CAPABILITY_CACHING_MODE                                  0x80
+    uint64_t supported_adjusted_guest_address_widths                 : 5;
+#define VTD_CAPABILITY_SUPPORTED_ADJUSTED_GUEST_ADDRESS_WIDTHS       0x1F00
+    uint64_t reserved_1                                              : 3;
+    uint64_t maximum_guest_address_width                             : 6;
+#define VTD_CAPABILITY_MAXIMUM_GUEST_ADDRESS_WIDTH                   0x3F0000
+    uint64_t zero_length_read                                        : 1;
+#define VTD_CAPABILITY_ZERO_LENGTH_READ                              0x400000
+    uint64_t deprecated                                              : 1;
+#define VTD_CAPABILITY_DEPRECATED                                    0x800000
+    uint64_t fault_recording_register_offset                         : 10;
+#define VTD_CAPABILITY_FAULT_RECORDING_REGISTER_OFFSET               0x3FF000000
+    uint64_t second_level_large_page_support                         : 4;
+#define VTD_CAPABILITY_SECOND_LEVEL_LARGE_PAGE_SUPPORT               0x3C00000000
+    uint64_t reserved_2                                              : 1;
+    uint64_t page_selective_invalidation                             : 1;
+#define VTD_CAPABILITY_PAGE_SELECTIVE_INVALIDATION                   0x8000000000
+    uint64_t number_of_fault_recording_registers                     : 8;
+#define VTD_CAPABILITY_NUMBER_OF_FAULT_RECORDING_REGISTERS           0xFF0000000000
+    uint64_t maximum_address_mask_value                              : 6;
+#define VTD_CAPABILITY_MAXIMUM_ADDRESS_MASK_VALUE                    0x3F000000000000
+    uint64_t write_draining                                          : 1;
+#define VTD_CAPABILITY_WRITE_DRAINING                                0x40000000000000
+    uint64_t read_draining                                           : 1;
+#define VTD_CAPABILITY_READ_DRAINING                                 0x80000000000000
+    uint64_t first_level_1gbyte_page_support                         : 1;
+#define VTD_CAPABILITY_FIRST_LEVEL_1GBYTE_PAGE_SUPPORT               0x100000000000000
+    uint64_t reserved_3                                              : 2;
+    uint64_t posted_interrupts_support                               : 1;
+#define VTD_CAPABILITY_POSTED_INTERRUPTS_SUPPORT                     0x800000000000000
+    uint64_t first_level_5level_paging_support                       : 1;
+#define VTD_CAPABILITY_FIRST_LEVEL_5LEVEL_PAGING_SUPPORT             0x1000000000000000
+    uint64_t reserved_4                                              : 1;
+    uint64_t enhanced_set_interrupt_remap_table_pointer_support      : 1;
+#define VTD_CAPABILITY_ENHANCED_SET_INTERRUPT_REMAP_TABLE_POINTER_SUPPORT 0x4000000000000000
+    uint64_t enhanced_set_root_table_pointer_support                 : 1;
+#define VTD_CAPABILITY_ENHANCED_SET_ROOT_TABLE_POINTER_SUPPORT       0x8000000000000000
+  };
+
+  uint64_t Flags;
+} vtd_capability_register;
+
+#define VTD_EXTENDED_CAPABILITY                                      0x00000010
+typedef union {
+  struct {
+    uint64_t page_walk_coherency                                     : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_WALK_COHERENCY                  0x01
+    uint64_t queued_invalidation_support                             : 1;
+#define VTD_EXTENDED_CAPABILITY_QUEUED_INVALIDATION_SUPPORT          0x02
+    uint64_t device_tlb_support                                      : 1;
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_SUPPORT                   0x04
+    uint64_t interrupt_remapping_support                             : 1;
+#define VTD_EXTENDED_CAPABILITY_INTERRUPT_REMAPPING_SUPPORT          0x08
+    uint64_t extended_interrupt_mode                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_INTERRUPT_MODE              0x10
+    uint64_t deprecated1                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED1                          0x20
+    uint64_t pass_through                                            : 1;
+#define VTD_EXTENDED_CAPABILITY_PASS_THROUGH                         0x40
+    uint64_t snoop_control                                           : 1;
+#define VTD_EXTENDED_CAPABILITY_SNOOP_CONTROL                        0x80
+    uint64_t iotlb_register_offset                                   : 10;
+#define VTD_EXTENDED_CAPABILITY_IOTLB_REGISTER_OFFSET                0x3FF00
+    uint64_t reserved_1                                              : 2;
+    uint64_t maximum_handle_mask_value                               : 4;
+#define VTD_EXTENDED_CAPABILITY_MAXIMUM_HANDLE_MASK_VALUE            0xF00000
+    uint64_t deprecated2                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED2                          0x1000000
+    uint64_t memory_type_support                                     : 1;
+#define VTD_EXTENDED_CAPABILITY_MEMORY_TYPE_SUPPORT                  0x2000000
+    uint64_t nested_translation_support                              : 1;
+#define VTD_EXTENDED_CAPABILITY_NESTED_TRANSLATION_SUPPORT           0x4000000
+    uint64_t reserved_2                                              : 1;
+    uint64_t deprecated3                                             : 1;
+#define VTD_EXTENDED_CAPABILITY_DEPRECATED3                          0x10000000
+    uint64_t page_request_support                                    : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_SUPPORT                 0x20000000
+    uint64_t execute_request_support                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_EXECUTE_REQUEST_SUPPORT              0x40000000
+    uint64_t reserved_3                                              : 2;
+    uint64_t no_write_flag_support                                   : 1;
+#define VTD_EXTENDED_CAPABILITY_NO_WRITE_FLAG_SUPPORT                0x200000000
+    uint64_t extended_accessed_flag_support                          : 1;
+#define VTD_EXTENDED_CAPABILITY_EXTENDED_ACCESSED_FLAG_SUPPORT       0x400000000
+    uint64_t pasid_size_supported                                    : 5;
+#define VTD_EXTENDED_CAPABILITY_PASID_SIZE_SUPPORTED                 0xF800000000
+    uint64_t process_address_space_id_support                        : 1;
+#define VTD_EXTENDED_CAPABILITY_PROCESS_ADDRESS_SPACE_ID_SUPPORT     0x10000000000
+    uint64_t device_tlb_invalidation_throttle                        : 1;
+#define VTD_EXTENDED_CAPABILITY_DEVICE_TLB_INVALIDATION_THROTTLE     0x20000000000
+    uint64_t page_request_drain_support                              : 1;
+#define VTD_EXTENDED_CAPABILITY_PAGE_REQUEST_DRAIN_SUPPORT           0x40000000000
+    uint64_t scalable_mode_translation_support                       : 1;
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_TRANSLATION_SUPPORT    0x80000000000
+    uint64_t virtual_command_support                                 : 1;
+#define VTD_EXTENDED_CAPABILITY_VIRTUAL_COMMAND_SUPPORT              0x100000000000
+    uint64_t second_level_accessed_dirty_support                     : 1;
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_ACCESSED_DIRTY_SUPPORT  0x200000000000
+    uint64_t second_level_translation_support                        : 1;
+#define VTD_EXTENDED_CAPABILITY_SECOND_LEVEL_TRANSLATION_SUPPORT     0x400000000000
+    uint64_t first_level_translation_support                         : 1;
+#define VTD_EXTENDED_CAPABILITY_FIRST_LEVEL_TRANSLATION_SUPPORT      0x800000000000
+    uint64_t scalable_mode_page_walk_coherency                       : 1;
+#define VTD_EXTENDED_CAPABILITY_SCALABLE_MODE_PAGE_WALK_COHERENCY    0x1000000000000
+    uint64_t rid_pasid_support                                       : 1;
+#define VTD_EXTENDED_CAPABILITY_RID_PASID_SUPPORT                    0x2000000000000
+    uint64_t reserved_4                                              : 2;
+    uint64_t abort_dma_mode_support                                  : 1;
+#define VTD_EXTENDED_CAPABILITY_ABORT_DMA_MODE_SUPPORT               0x10000000000000
+    uint64_t rid_priv_support                                        : 1;
+#define VTD_EXTENDED_CAPABILITY_RID_PRIV_SUPPORT                     0x20000000000000
+    uint64_t reserved_5                                              : 10;
+  };
+
+  uint64_t Flags;
+} vtd_extended_capability_register;
+
+#define VTD_GLOBAL_COMMAND                                           0x00000018
+typedef union {
+  struct {
+    uint32_t reserved_1                                              : 23;
+    uint32_t compatibility_format_interrupt                          : 1;
+#define VTD_GLOBAL_COMMAND_COMPATIBILITY_FORMAT_INTERRUPT            0x800000
+    uint32_t set_interrupt_remap_table_pointer                       : 1;
+#define VTD_GLOBAL_COMMAND_SET_INTERRUPT_REMAP_TABLE_POINTER         0x1000000
+    uint32_t interrupt_remapping_enable                              : 1;
+#define VTD_GLOBAL_COMMAND_INTERRUPT_REMAPPING_ENABLE                0x2000000
+    uint32_t queued_invalidation_enable                              : 1;
+#define VTD_GLOBAL_COMMAND_QUEUED_INVALIDATION_ENABLE                0x4000000
+    uint32_t write_buffer_flush                                      : 1;
+#define VTD_GLOBAL_COMMAND_WRITE_BUFFER_FLUSH                        0x8000000
+    uint32_t enable_advanced_fault_logging                           : 1;
+#define VTD_GLOBAL_COMMAND_ENABLE_ADVANCED_FAULT_LOGGING             0x10000000
+    uint32_t set_fault_log                                           : 1;
+#define VTD_GLOBAL_COMMAND_SET_FAULT_LOG                             0x20000000
+    uint32_t set_root_table_pointer                                  : 1;
+#define VTD_GLOBAL_COMMAND_SET_ROOT_TABLE_POINTER                    0x40000000
+    uint32_t translation_enable                                      : 1;
+#define VTD_GLOBAL_COMMAND_TRANSLATION_ENABLE                        0x80000000
+  };
+
+  uint32_t Flags;
+} vtd_global_command_register;
+
+#define VTD_GLOBAL_STATUS                                            0x0000001C
+typedef union {
+  struct {
+    uint32_t reserved_1                                              : 23;
+    uint32_t compatibility_format_interrupt_status                   : 1;
+#define VTD_GLOBAL_STATUS_COMPATIBILITY_FORMAT_INTERRUPT_STATUS      0x800000
+    uint32_t interrupt_remapping_table_pointer_status                : 1;
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_TABLE_POINTER_STATUS   0x1000000
+    uint32_t interrupt_remapping_enable_status                       : 1;
+#define VTD_GLOBAL_STATUS_INTERRUPT_REMAPPING_ENABLE_STATUS          0x2000000
+    uint32_t queued_invalidation_enable_status                       : 1;
+#define VTD_GLOBAL_STATUS_QUEUED_INVALIDATION_ENABLE_STATUS          0x4000000
+    uint32_t write_buffer_flush_status                               : 1;
+#define VTD_GLOBAL_STATUS_WRITE_BUFFER_FLUSH_STATUS                  0x8000000
+    uint32_t advanced_fault_logging_status                           : 1;
+#define VTD_GLOBAL_STATUS_ADVANCED_FAULT_LOGGING_STATUS              0x10000000
+    uint32_t fault_log_status                                        : 1;
+#define VTD_GLOBAL_STATUS_FAULT_LOG_STATUS                           0x20000000
+    uint32_t root_table_pointer_status                               : 1;
+#define VTD_GLOBAL_STATUS_ROOT_TABLE_POINTER_STATUS                  0x40000000
+    uint32_t translation_enable_status                               : 1;
+#define VTD_GLOBAL_STATUS_TRANSLATION_ENABLE_STATUS                  0x80000000
+  };
+
+  uint32_t Flags;
+} vtd_global_status_register;
+
+#define VTD_ROOT_TABLE_ADDRESS                                       0x00000020
+typedef union {
+  struct {
+    uint64_t reserved_1                                              : 10;
+    uint64_t translation_table_mode                                  : 2;
+#define VTD_ROOT_TABLE_ADDRESS_TRANSLATION_TABLE_MODE                0xC00
+    uint64_t root_table_address                                      : 52;
+#define VTD_ROOT_TABLE_ADDRESS_ROOT_TABLE_ADDRESS                    0xFFFFFFFFFFFFF000
+  };
+
+  uint64_t Flags;
+} vtd_root_table_address_register;
+
+#define VTD_CONTEXT_COMMAND                                          0x00000028
+typedef union {
+  struct {
+    uint64_t domain_id                                               : 16;
+#define VTD_CONTEXT_COMMAND_DOMAIN_ID                                0xFFFF
+    uint64_t source_id                                               : 16;
+#define VTD_CONTEXT_COMMAND_SOURCE_ID                                0xFFFF0000
+    uint64_t function_mask                                           : 2;
+#define VTD_CONTEXT_COMMAND_FUNCTION_MASK                            0x300000000
+    uint64_t reserved_1                                              : 25;
+    uint64_t context_actual_invalidation_granularity                 : 2;
+#define VTD_CONTEXT_COMMAND_CONTEXT_ACTUAL_INVALIDATION_GRANULARITY  0x1800000000000000
+    uint64_t context_invalidation_request_granularity                : 2;
+#define VTD_CONTEXT_COMMAND_CONTEXT_INVALIDATION_REQUEST_GRANULARITY 0x6000000000000000
+    uint64_t invalidate_context_cache                                : 1;
+#define VTD_CONTEXT_COMMAND_INVALIDATE_CONTEXT_CACHE                 0x8000000000000000
+  };
+
+  uint64_t Flags;
+} vtd_context_command_register;
+
+#define VTD_INVALIDATE_ADDRESS                                       0x00000000
+typedef union {
+  struct {
+    uint64_t address_mask                                            : 6;
+#define VTD_INVALIDATE_ADDRESS_ADDRESS_MASK                          0x3F
+    uint64_t invalidation_hint                                       : 1;
+#define VTD_INVALIDATE_ADDRESS_INVALIDATION_HINT                     0x40
+    uint64_t reserved_1                                              : 5;
+    uint64_t page_address                                            : 52;
+#define VTD_INVALIDATE_ADDRESS_PAGE_ADDRESS                          0xFFFFFFFFFFFFF000
+  };
+
+  uint64_t Flags;
+} vtd_invalidate_address_register;
+
+#define VTD_IOTLB_INVALIDATE                                         0x00000008
+typedef union {
+  struct {
+    uint64_t reserved_1                                              : 32;
+    uint64_t domain_id                                               : 16;
+#define VTD_IOTLB_INVALIDATE_DOMAIN_ID                               0xFFFF00000000
+    uint64_t drain_writes                                            : 1;
+#define VTD_IOTLB_INVALIDATE_DRAIN_WRITES                            0x1000000000000
+    uint64_t drain_reads                                             : 1;
+#define VTD_IOTLB_INVALIDATE_DRAIN_READS                             0x2000000000000
+    uint64_t reserved_2                                              : 7;
+    uint64_t iotlb_actual_invalidation_granularity                   : 2;
+#define VTD_IOTLB_INVALIDATE_IOTLB_ACTUAL_INVALIDATION_GRANULARITY   0x600000000000000
+    uint64_t reserved_3                                              : 1;
+    uint64_t iotlb_invalidation_request_granularity                  : 2;
+#define VTD_IOTLB_INVALIDATE_IOTLB_INVALIDATION_REQUEST_GRANULARITY  0x3000000000000000
+    uint64_t reserved_4                                              : 1;
+    uint64_t invalidate_iotlb                                        : 1;
+#define VTD_IOTLB_INVALIDATE_INVALIDATE_IOTLB                        0x8000000000000000
+  };
+
+  uint64_t Flags;
+} vtd_iotlb_invalidate_register;
+
+/**
+ * @}
+ */
+
+/**
  * @}
  */
 
