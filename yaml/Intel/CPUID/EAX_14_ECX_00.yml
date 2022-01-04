@@ -47,6 +47,24 @@
       description: |
         If 1, indicates support of Power Event Trace. Writes can set IA32_RTIT_CTL[4] (PwrEvtEn), enabling Power Event Trace packet generation.
 
+    - bit: 6
+      name: Flag6
+      description: |
+        If 1, indicates support for PSB and PH preservation. Writes can set IA32_RTIT CTL[56] (InjectPsb-PmiOnEnable),
+        enabling the processor to setIA32_12TIT STATUS[7] (PendTopaPMI) and/or IA32_RTIT_STATUS[6] (PendPSB)
+        in order to preserve ToPA PMIs and/or PSBs otherwise lost due to Intel PT disable. Writes can also set
+        PendToPAPMI and PendPSB.
+
+    - bit: 7
+      name: Flag7
+      description: |
+        If 1, writes can set IA32_RTIT_CTL[31] (EventEn), enabling Event Trace packet generation.
+
+    - bit: 8
+      name: Flag8
+      description: |
+        If 1, writes can set IA32_RTIT_CTL[55] (DisTNT), disabling TNT packet generation.
+
   - name: ECX
     type: bitfield
     size: 32

@@ -93,6 +93,10 @@
       name: IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST
       description: Ignoring Idle Logical Processor HWP request is supported if set.
 
+    - bit: 23
+      name: INTEL_THREAD_DIRECTOR
+      description: Intel Thread Director supported if set. IA32_HW_FEEDBACK_CHAR and IA32_HW_FEEDBACK_THREAD_CONFIG MSRs are supported if set.
+
   - name: EBX
     type: bitfield
     size: 32
@@ -114,6 +118,12 @@
         a percentage of the expected processor performance when running at the TSC frequency.
 
     - bit: 3
+      name: NUMBER_OF_INTEL_THREAD_DIRECTOR_CLASSES
+      description: |
+        Number of Intel Thread Director classes supported by the processor. Information for that many
+        classes is written into the Intel Thread Director Table by the hardware.
+
+    - bit: 8-15
       name: PERFORMANCE_ENERGY_BIAS_PREFERENCE
       description: |
         The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set

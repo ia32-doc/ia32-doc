@@ -203,6 +203,13 @@
         remarks: |
           This field exists only on processors that support the 1-setting of the “EPT-violation #VE” VM-execution control.
 
+      - value: 0x0006
+        short_name: HLAT_PREFIX_SIZE
+        long_name: HLAT_PREFIX_SIZE
+        description: HLAT prefix size.
+        remarks: |
+          This field exists only on processors that support the 1-setting of the “enable HLAT” VM-execution control.
+
     - name: 16_BIT_GUEST_STATE_FIELDS
       description: 16-Bit Guest-State Fields.
       children_name_with_prefix: GUEST
@@ -457,6 +464,16 @@
           long_name: ENCLV_EXITING_BITMAP
           description: ENCLV-exiting bitmap.
 
+        - value: 0x2040
+          short_name: HLATP
+          long_name: HLAT_POINTER
+          description: Hypervisor-managed linear-address translation pointer.
+
+        - value: 0x2044
+          short_name: SECONDARY_EXIT
+          long_name: SECONDARY_VMEXIT_CONTROLS
+          description: Secondary VM-exit controls.
+
       - name: 64_BIT_READ_ONLY_DATA_FIELDS
         description: 64-Bit Read-Only Data Field.
         # children_name_with_prefix: RO
@@ -526,6 +543,11 @@
           short_name: RTIT_CTL
           long_name: RTIT_CTL
           description: Guest IA32_RTIT_CTL.
+
+        - value: 0x2816
+          short_name: LBR_CTL
+          long_name: LBR_CTL
+          description: Guest IA32_LBR_CTL.
 
         - value: 0x2818
           short_name: PKRS
@@ -599,9 +621,9 @@
           description: CR3-target count.
 
         - value: 0x400C
-          short_name: EXIT
-          long_name: VMEXIT_CONTROLS
-          description: VM-exit controls.
+          short_name: PRIMARY_EXIT
+          long_name: PRIMARY_VMEXIT_CONTROLS
+          description: Primary VM-exit controls.
 
         - value: 0x400E
           short_name: EXIT_MSR_STORE_COUNT

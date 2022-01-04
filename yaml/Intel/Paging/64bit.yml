@@ -63,9 +63,17 @@
       long_name: MUST_BE_ZERO
       description: Reserved (must be 0).
 
-    - bit: 8-11
+    - bit: 8-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN
@@ -145,9 +153,17 @@
       description: Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
       see: Vol3A[4.10(Caching Translation Information)]
 
-    - bit: 9-11
+    - bit: 9-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12
       short_name: PAT
@@ -227,9 +243,17 @@
       long_name: LARGE_PAGE
       description: Page size; must be 0 (otherwise, this entry maps a 1-GByte page).
 
-    - bit: 8-11
+    - bit: 8-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN
@@ -309,9 +333,17 @@
       description: Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
       see: Vol3A[4.10(Caching Translation Information)]
 
-    - bit: 9-11
+    - bit: 9-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12
       short_name: PAT
@@ -391,9 +423,17 @@
       long_name: LARGE_PAGE
       description: Page size; must be 0 (otherwise, this entry maps a 2-MByte page).
 
-    - bit: 8-11
+    - bit: 8-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN
@@ -474,9 +514,17 @@
       description: Global; if CR4.PGE = 1, determines whether the translation is global; ignored otherwise.
       see: Vol3A[4.10(Caching Translation Information)]
 
-    - bit: 9-11
+    - bit: 9-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
+      description: |
+        For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation
+        is restarted with ordinary paging)
+      see: Vol3A[4.5.5(Restart of HLAT Paging)]
 
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN
@@ -541,9 +589,13 @@
       short_name: G
       long_name: GLOBAL
 
-    - bit: 9-11
+    - bit: 9-10
       name: IGNORED_1
       description: Ignored.
+
+    - bit: 11
+      short_name: R
+      long_name: RESTART
 
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN

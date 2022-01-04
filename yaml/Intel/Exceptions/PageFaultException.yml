@@ -65,6 +65,17 @@
       not the access rights specified by paging.
     see: Vol1[18(CONTROL-FLOW ENFORCEMENT TECHNOLOGY (CET))]
 
+  - bit: 7
+    short_name: HLAT
+    long_name: HLAT
+    description: |
+      This flag is 1 if there is no translation for the linear address using HLAT paging because, in one of the paging-
+      structure entries used to translate that address, either the P flag was 0 or a reserved bit was set. An error code
+      will set this flag only if it clears bit o or sets bit 3. This flag will not be set by a page fault resulting from a
+      violation of access rights, nor for one encountered during ordinary paging, including the case in which there has
+      been a restart of HLAT paging.
+    see: Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
+
   - bit: 15
     short_name: SGX
     long_name: SGX

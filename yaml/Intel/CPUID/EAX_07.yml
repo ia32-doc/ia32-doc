@@ -279,6 +279,10 @@
       name: MD_CLEAR
       description: MD_CLEAR supported.
 
+    - bit: 14
+      name: SERIALIZE
+      description: SERIALIZE supported.
+
     - bit: 15
       name: HYBRID
       description: If 1, the processor is identified as a hybrid part.

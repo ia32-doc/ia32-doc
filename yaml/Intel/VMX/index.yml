@@ -1171,6 +1171,32 @@
           description: |
             NMI unblocking due to IRET.
 
+        - bit: 13
+          name: SHADOW_STACK_ACCESS
+          description: |
+             Set if the access causing the EPT violation was a shadow-stack access.
+
+        - bit: 14
+          name: SUPERVISOR_SHADOW_STACK
+          description: |
+            If supervisor shadow-stack control is enabled (by setting bit 7 of EPTP), this bit is the
+            same as bit 60 in the EPT paging-structure entry that maps the page of the guest-physical
+            address of the access causing the EPT violation. Otherwise (or if translation of the
+            guest-physical address terminates before reaching an EPT paging-structure entry that maps a page),
+            this bit is undefined.
+
+        - bit: 15
+          name: GUEST_PAGING_VERIFICATION
+          description: |
+            This bit is set if the EPT violation was caused as a result of guest-paging verification.
+
+        - bit: 16
+          name: ASYNCHRONOUS_TO_INSTRUCTION
+          description: |
+            This bit is set if the access was asynchronous to instruction execution not the result of event delivery.
+            (The bit is set if the access is related to trace output by Intel PT; see Section 25.5.4.)
+            Otherwise, this bit is cleared.
+
     - name: VMEXIT_INSTRUCTION_INFORMATION
       description: Information for VM Exits Due to Instruction Execution.
       children_name_with_prefix: VMEXIT_INSTRUCTION_INFO

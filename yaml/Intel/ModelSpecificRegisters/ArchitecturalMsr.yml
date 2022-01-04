@@ -3201,6 +3201,15 @@
         The first processors to support the virtual-machine extensions supported only the 1-setting
         of this control.
 
+    - bit: 17
+      short_name: USE_TERTIARY_EXEC_CTRL
+      long_name: ACTIVATE_TERTIARY_CONTROLS
+      short_description: Determines whether the tertiary processor based VM-execution controls are used
+      long_description: |
+        This control determines whether the tertiary processor-based VM-execution controls are
+        used. If this control is 0, the logical processor operates as if all the tertiary processor-based
+        VM-execution controls were also 0.
+
     - bit: 19
       short_name: CR8_LOAD_EXIT
       long_name: CR8_LOAD_EXITING
@@ -3298,11 +3307,11 @@
 
 - value: 0x483
   name: VMX_EXIT_CTLS
-  description: Capability Reporting Register of VM-Exit Controls.
+  description: Capability Reporting Register of Primaryr VM-Exit Controls.
   access: R/O
   remarks: |
     If CPUID.01H:ECX.[5] = 1
-  see: Vol3D[A.4(VM-EXIT CONTROLS)]
+  see: Vol3D[A.4.1(Primaryr VM-Exit Controls)]
   reference: Vol3C[24.7.1(VM-Exit Controls)]
   fields:
   - name_with_suffix: REGISTER
@@ -3398,6 +3407,11 @@
         This control determines whether the IA32_RTIT_CTL MSR is cleared on VM exit.
       see: Vol3C[35(INTEL® PROCESSOR TRACE)]
 
+    - bit: 26
+      short_name: CLEAR_LBR_CTL
+      long_name: CLEAR_IA32_LBR_CTL
+      description: This control determines whether the IA32_LBR_CTL MSR is cleared on VM exit.
+
     - bit: 28
       short_name: LOAD_HOST_CET_STATE
       long_name: LOAD_IA32_CET_STATE
@@ -3410,6 +3424,14 @@
       long_name: LOAD_IA32_PKRS
       description: |
         This control determines whether the IA32_PKRS MSR is loaded on VM exit.
+
+    - bit: 31
+      short_name: USE_SECONDARY_CONTROLS
+      long_name: ACTIVATE_SECONDARY_CONTROLS
+      description: |
+        This control determines whether the secondary VM-exit controls
+        are used. If this control is 0, the logical processor operates as if all the secondary
+        VM-exit controls were also 0.
 
 - value: 0x484
   name: VMX_ENTRY_CTLS
@@ -3500,6 +3522,11 @@
     - bit: 20
       name: LOAD_CET_STATE
       description: This control determines whether CET-related MSRs and SPP are loaded on VM entry.
+
+    - bit: 21
+      short_name: LOAD_GUEST_LBR_CTL
+      long_name: LOAD_IA32_LBR_CTL
+      description: This control determines whether the IA32_LBR_CTL MSR is loaded on VM entry.
 
     - bit: 22
       short_name: LOAD_GUEST_PKRS
@@ -4012,6 +4039,13 @@
         This reporting is done only if this bit is read as 1.
       see: Vol3C[27.2.1(Basic VM-Exit Information)]
 
+    - bit: 23
+      short_name: SUPERVISOR_SHADOW_STACK
+      long_name: SUPERVISOR_SHADOW_STACK
+      description: |
+        If bit 23 is read as 1, supervisor shadow-stack control is supported.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
     - bit: 25
       short_name: INVEPT_SINGLE_CONTEXT
       long_name: INVEPT_SINGLE_CONTEXT
@@ -4054,6 +4088,14 @@
       short_name: INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS
       long_name: INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS
       description: When set to 1, the single-context-retaining-globals INVVPID type is supported.
+
+    - bit: 48-53
+      short_name: MAX_HLAT_PREFIX_SIZE
+      long_name: MAX_HLAT_PREFIX_SIZE
+      description: |
+        Enumerate the maximum HLAT prefix size. It is expected that any processor that supports the
+        1-setting of the "enable HLAT" VM-execution control will enumerate this value as 1.
+      see: Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
 
 - name: VMX_TRUE_CTLS
   short_description: IA32_VMX_TRUE_(x)_CTLS
@@ -4122,6 +4164,70 @@
       name: EPTP_SWITCHING
       description: The EPTP-switching VM function changes the EPT pointer to a value chosen from the EPTP list.
       see: Vol3C[25.5.5.3(EPTP Switching)]
+
+- value: 0x492
+  name: VMX_PROCBASED_CTLS3
+  description: Capability Reporting Register of Tertiary Processor-Based VM-Execution Controls.
+  access: R/O
+  remarks: |
+    If ( CPUID.01H:ECX.[5] && IA32_VMX_PROCBASED_CTLS[49] )
+  see: Vol3D[A.3.4(Tertiary Processor-Based VM-Execution Controls)]
+  reference: Vol3D[24.6.2(Processor-Based VM-Execution Controls)]
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0
+      short_name: LOADIWKEY
+      long_name: LOADIWKEY_EXITING
+      short_description: Executions of LOADIWKEY cause VM exits.
+      long_description: |
+        This control determines whether executions of LOADIWKEY cause VM exits.
+
+    - bit: 1
+      short_name: HLAT
+      long_name: ENABLE_HLAT
+      short_description: Enables hypervisor-managed linear-address translation
+      long_description: |
+        This control enables hypervisor-managed linear-address translation.
+      see: Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
+
+    - bit: 2
+      short_name: EPT_PAGING_WRITE
+      long_name: EPT_PAGING_WRITE
+      short_description: |
+        If this control is 1, EPT permissions can be specified to allow writes only for paging-related control updates
+      long_description: |
+        If this control is 1, EPT permissions can be specified to allow writes only for paging-related control updates.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 3
+      short_name: GUEST_PAGING
+      long_name: GUEST_PAGING
+      short_description: |
+        If this control is 1, EPT permissions can be specified to prevent accesses using linear addresses
+        verification whose translation has certain properties.
+      long_description: |
+        If this control is 1, EPT permissions can be specified to prevent accesses using linear addresses
+        verification whose translation has certain properties.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+- value: 0x493
+  name: VMX_EXIT_CTLS2
+  description: Capability Reporting Register of Secondary VM-Exit Controls.
+  access: R/O
+  remarks: |
+    If ( CPUID.01H:ECX.[5] && IA32_VMX_EXIT_CTLS[63] )
+  see: Vol3D[A.4.2(Secondary VM-Exit Controls)]
+  reference: Vol3C[24.7.1(VM-Exit Controls)]
+  fields:
+  - name_with_suffix: REGISTER
+    type: bitfield
+    size: 64
+    fields:
+    - bit: 0-63
+      name: RESERVED
 
 #
 # END-OF-VMX
