@@ -380,6 +380,8 @@ typedef struct {
       uint32_t fast_access_mode_for_hwp_request_msr                  : 1;
       uint32_t reserved_3                                            : 1;
       uint32_t ignoring_idle_logical_processor_hwp_request           : 1;
+      uint32_t reserved_4                                            : 2;
+      uint32_t intel_thread_director                                 : 1;
     };
 
     uint32_t flags;
@@ -397,7 +399,9 @@ typedef struct {
     struct {
       uint32_t hardware_coordination_feedback_capability             : 1;
       uint32_t reserved_1                                            : 2;
-      uint32_t performance_energy_bias_preference                    : 1;
+      uint32_t number_of_intel_thread_director_classes               : 1;
+      uint32_t reserved_2                                            : 4;
+      uint32_t performance_energy_bias_preference                    : 8;
     };
 
     uint32_t flags;
@@ -507,7 +511,8 @@ typedef struct {
       uint32_t avx512_vp2intersect                                   : 1;
       uint32_t reserved_3                                            : 1;
       uint32_t md_clear                                              : 1;
-      uint32_t reserved_4                                            : 4;
+      uint32_t reserved_4                                            : 3;
+      uint32_t serialize                                             : 1;
       uint32_t hybrid                                                : 1;
       uint32_t reserved_5                                            : 2;
       uint32_t pconfig                                               : 1;
@@ -722,7 +727,12 @@ typedef struct {
       uint32_t used_for_xcr0_1                                       : 8;
       uint32_t pt_state                                              : 1;
       uint32_t used_for_xcr0_2                                       : 1;
-      uint32_t reserved_1                                            : 3;
+      uint32_t reserved_1                                            : 1;
+      uint32_t cet_user_state                                        : 1;
+      uint32_t cet_supervisor_state                                  : 1;
+      uint32_t hdc_state                                             : 1;
+      uint32_t reserved_2                                            : 1;
+      uint32_t lbr_state                                             : 1;
       uint32_t hwp_state                                             : 1;
     };
 
@@ -731,7 +741,7 @@ typedef struct {
 
   union {
     struct {
-      uint32_t reserved                                              : 32;
+      uint32_t supported_upper_ia32_xss_bits                         : 32;
     };
 
     uint32_t flags;
@@ -1199,6 +1209,9 @@ typedef struct {
       uint32_t flag3                                                 : 1;
       uint32_t flag4                                                 : 1;
       uint32_t flag5                                                 : 1;
+      uint32_t flag6                                                 : 1;
+      uint32_t flag7                                                 : 1;
+      uint32_t flag8                                                 : 1;
     };
 
     uint32_t flags;
@@ -2909,7 +2922,8 @@ typedef union {
     uint64_t reserved_4                                              : 2;
     uint64_t cr3_load_exiting                                        : 1;
     uint64_t cr3_store_exiting                                       : 1;
-    uint64_t reserved_5                                              : 2;
+    uint64_t activate_tertiary_controls                              : 1;
+    uint64_t reserved_5                                              : 1;
     uint64_t cr8_load_exiting                                        : 1;
     uint64_t cr8_store_exiting                                       : 1;
     uint64_t use_tpr_shadow                                          : 1;
@@ -2948,9 +2962,12 @@ typedef union {
     uint64_t clear_ia32_bndcfgs                                      : 1;
     uint64_t conceal_vmx_from_pt                                     : 1;
     uint64_t clear_ia32_rtit_ctl                                     : 1;
-    uint64_t reserved_6                                              : 2;
+    uint64_t clear_ia32_lbr_ctl                                      : 1;
+    uint64_t reserved_6                                              : 1;
     uint64_t load_ia32_cet_state                                     : 1;
     uint64_t load_ia32_pkrs                                          : 1;
+    uint64_t reserved_7                                              : 1;
+    uint64_t activate_secondary_controls                             : 1;
   };
 
   uint64_t flags;
@@ -2974,7 +2991,7 @@ typedef union {
     uint64_t load_ia32_rtit_ctl                                      : 1;
     uint64_t reserved_4                                              : 1;
     uint64_t load_cet_state                                          : 1;
-    uint64_t reserved_5                                              : 1;
+    uint64_t load_ia32_lbr_ctl                                       : 1;
     uint64_t load_ia32_pkrs                                          : 1;
   };
 
@@ -3073,7 +3090,8 @@ typedef union {
     uint64_t invept                                                  : 1;
     uint64_t ept_accessed_and_dirty_flags                            : 1;
     uint64_t advanced_vmexit_ept_violations_information              : 1;
-    uint64_t reserved_6                                              : 2;
+    uint64_t supervisor_shadow_stack                                 : 1;
+    uint64_t reserved_6                                              : 1;
     uint64_t invept_single_context                                   : 1;
     uint64_t invept_all_contexts                                     : 1;
     uint64_t reserved_7                                              : 5;
@@ -3083,6 +3101,8 @@ typedef union {
     uint64_t invvpid_single_context                                  : 1;
     uint64_t invvpid_all_contexts                                    : 1;
     uint64_t invvpid_single_context_retain_globals                   : 1;
+    uint64_t reserved_9                                              : 4;
+    uint64_t max_hlat_prefix_size                                    : 6;
   };
 
   uint64_t flags;
@@ -3118,6 +3138,27 @@ typedef union {
 
   uint64_t flags;
 } ia32_vmx_vmfunc_register;
+
+#define IA32_VMX_PROCBASED_CTLS3                                     0x00000492
+typedef union {
+  struct {
+    uint64_t loadiwkey_exiting                                       : 1;
+    uint64_t enable_hlat                                             : 1;
+    uint64_t ept_paging_write                                        : 1;
+    uint64_t guest_paging                                            : 1;
+  };
+
+  uint64_t flags;
+} ia32_vmx_procbased_ctls3_register;
+
+#define IA32_VMX_EXIT_CTLS2                                          0x00000493
+typedef union {
+  struct {
+    uint64_t reserved                                                : 64;
+  };
+
+  uint64_t flags;
+} ia32_vmx_exit_ctls2_register;
 
 /**
  * @defgroup ia32_a_pmc \
@@ -3721,7 +3762,8 @@ typedef union {
     uint64_t accessed                                                : 1;
     uint64_t reserved_1                                              : 1;
     uint64_t must_be_zero                                            : 1;
-    uint64_t ignored_1                                               : 4;
+    uint64_t ignored_1                                               : 3;
+    uint64_t restart                                                 : 1;
     uint64_t page_frame_number                                       : 36;
     uint64_t reserved_2                                              : 4;
     uint64_t ignored_2                                               : 11;
@@ -3742,7 +3784,8 @@ typedef union {
     uint64_t dirty                                                   : 1;
     uint64_t large_page                                              : 1;
     uint64_t global                                                  : 1;
-    uint64_t ignored_1                                               : 3;
+    uint64_t ignored_1                                               : 2;
+    uint64_t restart                                                 : 1;
     uint64_t pat                                                     : 1;
     uint64_t reserved_1                                              : 17;
     uint64_t page_frame_number                                       : 18;
@@ -3765,7 +3808,8 @@ typedef union {
     uint64_t accessed                                                : 1;
     uint64_t reserved_1                                              : 1;
     uint64_t large_page                                              : 1;
-    uint64_t ignored_1                                               : 4;
+    uint64_t ignored_1                                               : 3;
+    uint64_t restart                                                 : 1;
     uint64_t page_frame_number                                       : 36;
     uint64_t reserved_2                                              : 4;
     uint64_t ignored_2                                               : 11;
@@ -3786,7 +3830,8 @@ typedef union {
     uint64_t dirty                                                   : 1;
     uint64_t large_page                                              : 1;
     uint64_t global                                                  : 1;
-    uint64_t ignored_1                                               : 3;
+    uint64_t ignored_1                                               : 2;
+    uint64_t restart                                                 : 1;
     uint64_t pat                                                     : 1;
     uint64_t reserved_1                                              : 8;
     uint64_t page_frame_number                                       : 27;
@@ -3809,7 +3854,8 @@ typedef union {
     uint64_t accessed                                                : 1;
     uint64_t reserved_1                                              : 1;
     uint64_t large_page                                              : 1;
-    uint64_t ignored_1                                               : 4;
+    uint64_t ignored_1                                               : 3;
+    uint64_t restart                                                 : 1;
     uint64_t page_frame_number                                       : 36;
     uint64_t reserved_2                                              : 4;
     uint64_t ignored_2                                               : 11;
@@ -3830,7 +3876,8 @@ typedef union {
     uint64_t dirty                                                   : 1;
     uint64_t pat                                                     : 1;
     uint64_t global                                                  : 1;
-    uint64_t ignored_1                                               : 3;
+    uint64_t ignored_1                                               : 2;
+    uint64_t restart                                                 : 1;
     uint64_t page_frame_number                                       : 36;
     uint64_t reserved_1                                              : 4;
     uint64_t ignored_2                                               : 7;
@@ -3852,7 +3899,8 @@ typedef union {
     uint64_t dirty                                                   : 1;
     uint64_t large_page                                              : 1;
     uint64_t global                                                  : 1;
-    uint64_t ignored_1                                               : 3;
+    uint64_t ignored_1                                               : 2;
+    uint64_t restart                                                 : 1;
     uint64_t page_frame_number                                       : 36;
     uint64_t reserved_1                                              : 4;
     uint64_t ignored_2                                               : 7;
@@ -4328,6 +4376,10 @@ typedef union {
     uint64_t readable_writable_page                                  : 1;
     uint64_t execute_disable_page                                    : 1;
     uint64_t nmi_unblocking                                          : 1;
+    uint64_t shadow_stack_access                                     : 1;
+    uint64_t supervisor_shadow_stack                                 : 1;
+    uint64_t guest_paging_verification                               : 1;
+    uint64_t asynchronous_to_instruction                             : 1;
   };
 
   uint64_t flags;
@@ -4580,7 +4632,12 @@ typedef union {
     uint64_t user_mode_execute                                       : 1;
     uint64_t reserved_1                                              : 19;
     uint64_t page_frame_number                                       : 18;
-    uint64_t reserved_2                                              : 15;
+    uint64_t reserved_2                                              : 9;
+    uint64_t verify_guest_paging                                     : 1;
+    uint64_t paging_write_access                                     : 1;
+    uint64_t reserved_3                                              : 1;
+    uint64_t supervisor_shadow_stack                                 : 1;
+    uint64_t reserved_4                                              : 2;
     uint64_t suppress_ve                                             : 1;
   };
 
@@ -4616,7 +4673,12 @@ typedef union {
     uint64_t user_mode_execute                                       : 1;
     uint64_t reserved_1                                              : 10;
     uint64_t page_frame_number                                       : 27;
-    uint64_t reserved_2                                              : 15;
+    uint64_t reserved_2                                              : 9;
+    uint64_t verify_guest_paging                                     : 1;
+    uint64_t paging_write_access                                     : 1;
+    uint64_t reserved_3                                              : 1;
+    uint64_t supervisor_shadow_stack                                 : 1;
+    uint64_t reserved_4                                              : 2;
     uint64_t suppress_ve                                             : 1;
   };
 
@@ -4652,7 +4714,13 @@ typedef union {
     uint64_t user_mode_execute                                       : 1;
     uint64_t reserved_2                                              : 1;
     uint64_t page_frame_number                                       : 36;
-    uint64_t reserved_3                                              : 15;
+    uint64_t reserved_3                                              : 9;
+    uint64_t verify_guest_paging                                     : 1;
+    uint64_t paging_write_access                                     : 1;
+    uint64_t reserved_4                                              : 1;
+    uint64_t supervisor_shadow_stack                                 : 1;
+    uint64_t sub_page_write_permissions                              : 1;
+    uint64_t reserved_5                                              : 1;
     uint64_t suppress_ve                                             : 1;
   };
 
@@ -4733,6 +4801,18 @@ typedef struct {
   uint64_t linear_address;
 } invvpid_descriptor;
 
+typedef union {
+  struct {
+    uint64_t reserved_1                                              : 3;
+    uint64_t page_level_write_through                                : 1;
+    uint64_t page_level_cache_disable                                : 1;
+    uint64_t reserved_2                                              : 7;
+    uint64_t page_frame_number                                       : 36;
+  };
+
+  uint64_t flags;
+} hlatp;
+
 typedef struct {
   struct {
     uint32_t revision_id                                             : 31;
@@ -4782,6 +4862,7 @@ typedef union {
 #define VMCS_CTRL_VPID                                               0x00000000
 #define VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                          0x00000002
 #define VMCS_CTRL_EPTP_INDEX                                         0x00000004
+#define VMCS_CTRL_HLAT_PREFIX_SIZE                                   0x00000006
 /**
  * @}
  */
@@ -4863,6 +4944,8 @@ typedef union {
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
 #define VMCS_CTRL_PROC_EXEC3                                         0x00002034
 #define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
+#define VMCS_CTRL_HLATP                                              0x00002040
+#define VMCS_CTRL_SECONDARY_EXIT                                     0x00002044
 /**
  * @}
  */
@@ -4893,6 +4976,7 @@ typedef union {
 #define VMCS_GUEST_PDPTE3                                            0x00002810
 #define VMCS_GUEST_BNDCFGS                                           0x00002812
 #define VMCS_GUEST_RTIT_CTL                                          0x00002814
+#define VMCS_GUEST_LBR_CTL                                           0x00002816
 #define VMCS_GUEST_PKRS                                              0x00002818
 /**
  * @}
@@ -4931,7 +5015,7 @@ typedef union {
 #define VMCS_CTRL_PAGEFAULT_ERROR_MASK                               0x00004006
 #define VMCS_CTRL_PAGEFAULT_ERROR_MATCH                              0x00004008
 #define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
-#define VMCS_CTRL_EXIT                                               0x0000400C
+#define VMCS_CTRL_PRIMARY_EXIT                                       0x0000400C
 #define VMCS_CTRL_EXIT_MSR_STORE_COUNT                               0x0000400E
 #define VMCS_CTRL_EXIT_MSR_LOAD_COUNT                                0x00004010
 #define VMCS_CTRL_ENTRY                                              0x00004012
@@ -5321,7 +5405,8 @@ typedef union {
     uint32_t execute                                                 : 1;
     uint32_t protection_key_violation                                : 1;
     uint32_t shadow_stack                                            : 1;
-    uint32_t reserved_1                                              : 8;
+    uint32_t hlat                                                    : 1;
+    uint32_t reserved_1                                              : 7;
     uint32_t sgx                                                     : 1;
   };
 
