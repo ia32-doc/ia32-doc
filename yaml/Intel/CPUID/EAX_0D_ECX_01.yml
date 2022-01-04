@@ -44,7 +44,23 @@
       name: USED_FOR_XCR0_2
       description: Used for XCR0.
 
+    - bit: 11
+      name: CET_USER_STATE
+      description: CET user state.
+
+    - bit: 12
+      name: CET_SUPERVISOR_STATE
+      description: CET supervisor state.
+
     - bit: 13
+      name: HDC_STATE
+      description: HDC state.
+
+    - bit: 15
+      name: LBR_STATE
+      description: LBR state.
+
+    - bit: 16
       name: HWP_STATE
       description: HWP state.
 
@@ -53,5 +69,7 @@
     size: 32
     fields:
     - bit: 0-31
-      name: RESERVED
-      description: EDX is reserved.
+      name: SUPPORTED_UPPER_IA32_XSS_BITS
+      description: |
+        Reports the supported bits of the upper 32 bits of the IA32_XSS MSR.
+        IA32_XSS[n+32] can be set to 1 only if EDX[n] is 1

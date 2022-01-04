@@ -190,6 +190,32 @@
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
+    - bit: 57
+      short_name: VERIFY_GUEST_PAGING
+      long_name: VERIFY_GUEST_PAGING
+      description: |
+        Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+        guest paging structures used to access the 1-GByte page controlled by this entry (see Section 28.3.3.2).
+        If that control is 0, this bit is ignored.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 58
+      short_name: PAGING_WRITE_ACCESS
+      long_name: PAGING_WRITE_ACCESS
+      description: |
+        Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+        may update the 1-GByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit
+        is ignored
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 60
+      short_name: SUPERVISOR_SHADOW_STACK
+      long_name: SUPERVISOR_SHADOW_STACK
+      description: |
+        Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+        to guest-physical addresses in the 1-GByte page mapped by this entry (see Section 28.3.3.2)
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
     - bit: 63
       short_name: SUPPRESS_VE
       long_name: SUPPRESS_VE
@@ -319,6 +345,32 @@
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of 4-KByte aligned EPT page-directory-pointer table referenced by this entry.
 
+    - bit: 57
+      short_name: VERIFY_GUEST_PAGING
+      long_name: VERIFY_GUEST_PAGING
+      description: |
+        Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+        guest paging structures used to access the 2-MByte page controlled by this entry (see Section 28.3.3.2).
+        If that control is 0, this bit is ignored.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 58
+      short_name: PAGING_WRITE_ACCESS
+      long_name: PAGING_WRITE_ACCESS
+      description: |
+        Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+        may update the 2-MByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit
+        is ignored
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 60
+      short_name: SUPERVISOR_SHADOW_STACK
+      long_name: SUPERVISOR_SHADOW_STACK
+      description: |
+        Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+        to guest-physical addresses in the 2-MByte page mapped by this entry (see Section 28.3.3.2)
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
     - bit: 63
       short_name: SUPPRESS_VE
       long_name: SUPPRESS_VE
@@ -441,6 +493,42 @@
       short_name: PFN
       long_name: PAGE_FRAME_NUMBER
       description: Physical address of the 4-KByte page referenced by this entry.
+
+    - bit: 57
+      short_name: VERIFY_GUEST_PAGING
+      long_name: VERIFY_GUEST_PAGING
+      description: |
+        Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+        guest paging structures used to access the 4-KByte page controlled by this entry (see Section 28.3.3.2).
+        If that control is 0, this bit is ignored.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 58
+      short_name: PAGING_WRITE_ACCESS
+      long_name: PAGING_WRITE_ACCESS
+      description: |
+        Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+        may update the 4-KByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit
+        is ignored
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 60
+      short_name: SUPERVISOR_SHADOW_STACK
+      long_name: SUPERVISOR_SHADOW_STACK
+      description: |
+        Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+        to guest-physical addresses in the 4-KByte page mapped by this entry (see Section 28.3.3.2)
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
+    - bit: 61
+      short_name: SUB_PAGE_WRITE_PERMISSIONS
+      long_name: SUB_PAGE_WRITE_PERMISSIONS
+      description: |
+        Sub-page write permissions. If the "sub-page write permissions for EPT" VM-execution control is 1, writes to
+        individual 128-byte regions of the 4-KByte page referenced by this entry may be allowed even if the page would
+        normally not be writable (see Section 28.3.4). If "sub-page write permissions for EPT" VM-execution control is 0,
+        this bit is ignored.
+      see: Vol3C[28.3.4(Sub-Page Write Permissions)]
 
     - bit: 63
       short_name: SUPPRESS_VE
@@ -700,3 +788,32 @@
 
   - size: 64
     name: LINEAR_ADDRESS
+
+- short_name: HLATP
+  long_name: HLAT_POINTER
+  short_description: Hypervisor-Managed linear-Address Translation Pointer (HLATP)
+  long_description: |
+    The hypervisor-managed linear-address translation pointer (HLAT pointer or HLATP) is used by
+    HLAT paging to locate and access the first paging structure used for linear-address translation.
+  type: bitfield
+  size: 64
+  see: Vol3A[4.5(4-LEVEL PAGING AND 5-LEVEL PAGING)]
+  fields:
+  - bit: 3
+    short_name: PWT
+    long_name: PAGE_LEVEL_WRITE_THROUGH
+    description: |
+      Page-level write-through; indirectly determines the memory type used to access the first HLAT
+      paging structure during linear-address translation.
+
+  - bit: 4
+    short_name: PCD
+    long_name: PAGE_LEVEL_CACHE_DISABLE
+    description: |
+      Page-level cache disable; indirectly determines the memory type used to access the first HLAT
+      paging structure during linear-address translation.
+
+  - bit: 12-(MAXPHYADDR-1)
+    short_name: PFN
+    long_name: PAGE_FRAME_NUMBER
+    description: Guest-physical address (4KB-aligned) of the first HLAT paging structure during linear-address translation)
