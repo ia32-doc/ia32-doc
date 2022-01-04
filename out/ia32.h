@@ -2434,7 +2434,18 @@ typedef struct
 #define CPUID_EAX_IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST_FLAG   0x100000
 #define CPUID_EAX_IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST_MASK   0x01
 #define CPUID_EAX_IGNORING_IDLE_LOGICAL_PROCESSOR_HWP_REQUEST(_)     (((_) >> 20) & 0x01)
-      UINT32 Reserved4                                             : 11;
+      UINT32 Reserved4                                             : 2;
+
+      /**
+       * [Bit 23] Intel Thread Director supported if set. IA32_HW_FEEDBACK_CHAR and IA32_HW_FEEDBACK_THREAD_CONFIG MSRs are
+       * supported if set.
+       */
+      UINT32 IntelThreadDirector                                   : 1;
+#define CPUID_EAX_INTEL_THREAD_DIRECTOR_BIT                          23
+#define CPUID_EAX_INTEL_THREAD_DIRECTOR_FLAG                         0x800000
+#define CPUID_EAX_INTEL_THREAD_DIRECTOR_MASK                         0x01
+#define CPUID_EAX_INTEL_THREAD_DIRECTOR(_)                           (((_) >> 23) & 0x01)
+      UINT32 Reserved5                                             : 8;
     };
 
     UINT32 AsUInt;
@@ -2475,15 +2486,26 @@ typedef struct
       UINT32 Reserved1                                             : 2;
 
       /**
-       * [Bit 3] The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set and it also
+       * [Bit 3] Number of Intel Thread Director classes supported by the processor. Information for that many classes is written
+       * into the Intel Thread Director Table by the hardware.
+       */
+      UINT32 NumberOfIntelThreadDirectorClasses                    : 1;
+#define CPUID_ECX_NUMBER_OF_INTEL_THREAD_DIRECTOR_CLASSES_BIT        3
+#define CPUID_ECX_NUMBER_OF_INTEL_THREAD_DIRECTOR_CLASSES_FLAG       0x08
+#define CPUID_ECX_NUMBER_OF_INTEL_THREAD_DIRECTOR_CLASSES_MASK       0x01
+#define CPUID_ECX_NUMBER_OF_INTEL_THREAD_DIRECTOR_CLASSES(_)         (((_) >> 3) & 0x01)
+      UINT32 Reserved2                                             : 4;
+
+      /**
+       * [Bits 15:8] The processor supports performance-energy bias preference if CPUID.06H:ECX.SETBH[bit 3] is set and it also
        * implies the presence of a new architectural MSR called IA32_ENERGY_PERF_BIAS (1B0H).
        */
-      UINT32 PerformanceEnergyBiasPreference                       : 1;
-#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_BIT             3
-#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_FLAG            0x08
-#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_MASK            0x01
-#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE(_)              (((_) >> 3) & 0x01)
-      UINT32 Reserved2                                             : 28;
+      UINT32 PerformanceEnergyBiasPreference                       : 8;
+#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_BIT             8
+#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_FLAG            0xFF00
+#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE_MASK            0xFF
+#define CPUID_ECX_PERFORMANCE_ENERGY_BIAS_PREFERENCE(_)              (((_) >> 8) & 0xFF)
+      UINT32 Reserved3                                             : 16;
     };
 
     UINT32 AsUInt;
@@ -3109,7 +3131,16 @@ typedef struct
 #define CPUID_EDX_MD_CLEAR_FLAG                                      0x400
 #define CPUID_EDX_MD_CLEAR_MASK                                      0x01
 #define CPUID_EDX_MD_CLEAR(_)                                        (((_) >> 10) & 0x01)
-      UINT32 Reserved4                                             : 4;
+      UINT32 Reserved4                                             : 3;
+
+      /**
+       * [Bit 14] SERIALIZE supported.
+       */
+      UINT32 Serialize                                             : 1;
+#define CPUID_EDX_SERIALIZE_BIT                                      14
+#define CPUID_EDX_SERIALIZE_FLAG                                     0x4000
+#define CPUID_EDX_SERIALIZE_MASK                                     0x01
+#define CPUID_EDX_SERIALIZE(_)                                       (((_) >> 14) & 0x01)
 
       /**
        * [Bit 15] If 1, the processor is identified as a hybrid part.
@@ -3838,17 +3869,54 @@ typedef struct
 #define CPUID_ECX_USED_FOR_XCR0_2_FLAG                               0x200
 #define CPUID_ECX_USED_FOR_XCR0_2_MASK                               0x01
 #define CPUID_ECX_USED_FOR_XCR0_2(_)                                 (((_) >> 9) & 0x01)
-      UINT32 Reserved1                                             : 3;
+      UINT32 Reserved1                                             : 1;
 
       /**
-       * [Bit 13] HWP state.
+       * [Bit 11] CET user state.
+       */
+      UINT32 CetUserState                                          : 1;
+#define CPUID_ECX_CET_USER_STATE_BIT                                 11
+#define CPUID_ECX_CET_USER_STATE_FLAG                                0x800
+#define CPUID_ECX_CET_USER_STATE_MASK                                0x01
+#define CPUID_ECX_CET_USER_STATE(_)                                  (((_) >> 11) & 0x01)
+
+      /**
+       * [Bit 12] CET supervisor state.
+       */
+      UINT32 CetSupervisorState                                    : 1;
+#define CPUID_ECX_CET_SUPERVISOR_STATE_BIT                           12
+#define CPUID_ECX_CET_SUPERVISOR_STATE_FLAG                          0x1000
+#define CPUID_ECX_CET_SUPERVISOR_STATE_MASK                          0x01
+#define CPUID_ECX_CET_SUPERVISOR_STATE(_)                            (((_) >> 12) & 0x01)
+
+      /**
+       * [Bit 13] HDC state.
+       */
+      UINT32 HdcState                                              : 1;
+#define CPUID_ECX_HDC_STATE_BIT                                      13
+#define CPUID_ECX_HDC_STATE_FLAG                                     0x2000
+#define CPUID_ECX_HDC_STATE_MASK                                     0x01
+#define CPUID_ECX_HDC_STATE(_)                                       (((_) >> 13) & 0x01)
+      UINT32 Reserved2                                             : 1;
+
+      /**
+       * [Bit 15] LBR state.
+       */
+      UINT32 LbrState                                              : 1;
+#define CPUID_ECX_LBR_STATE_BIT                                      15
+#define CPUID_ECX_LBR_STATE_FLAG                                     0x8000
+#define CPUID_ECX_LBR_STATE_MASK                                     0x01
+#define CPUID_ECX_LBR_STATE(_)                                       (((_) >> 15) & 0x01)
+
+      /**
+       * [Bit 16] HWP state.
        */
       UINT32 HwpState                                              : 1;
-#define CPUID_ECX_HWP_STATE_BIT                                      13
-#define CPUID_ECX_HWP_STATE_FLAG                                     0x2000
+#define CPUID_ECX_HWP_STATE_BIT                                      16
+#define CPUID_ECX_HWP_STATE_FLAG                                     0x10000
 #define CPUID_ECX_HWP_STATE_MASK                                     0x01
-#define CPUID_ECX_HWP_STATE(_)                                       (((_) >> 13) & 0x01)
-      UINT32 Reserved2                                             : 18;
+#define CPUID_ECX_HWP_STATE(_)                                       (((_) >> 16) & 0x01)
+      UINT32 Reserved3                                             : 15;
     };
 
     UINT32 AsUInt;
@@ -3859,13 +3927,14 @@ typedef struct
     struct
     {
       /**
-       * [Bits 31:0] EDX is reserved.
+       * [Bits 31:0] Reports the supported bits of the upper 32 bits of the IA32_XSS MSR. IA32_XSS[n+32] can be set to 1 only if
+       * EDX[n] is 1
        */
-      UINT32 Reserved                                              : 32;
-#define CPUID_EDX_RESERVED_BIT                                       0
-#define CPUID_EDX_RESERVED_FLAG                                      0xFFFFFFFF
-#define CPUID_EDX_RESERVED_MASK                                      0xFFFFFFFF
-#define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
+      UINT32 SupportedUpperIa32XssBits                             : 32;
+#define CPUID_EDX_SUPPORTED_UPPER_IA32_XSS_BITS_BIT                  0
+#define CPUID_EDX_SUPPORTED_UPPER_IA32_XSS_BITS_FLAG                 0xFFFFFFFF
+#define CPUID_EDX_SUPPORTED_UPPER_IA32_XSS_BITS_MASK                 0xFFFFFFFF
+#define CPUID_EDX_SUPPORTED_UPPER_IA32_XSS_BITS(_)                   (((_) >> 0) & 0xFFFFFFFF)
     };
 
     UINT32 AsUInt;
@@ -5015,7 +5084,36 @@ typedef struct
 #define CPUID_EBX_FLAG5_FLAG                                         0x20
 #define CPUID_EBX_FLAG5_MASK                                         0x01
 #define CPUID_EBX_FLAG5(_)                                           (((_) >> 5) & 0x01)
-      UINT32 Reserved1                                             : 26;
+
+      /**
+       * [Bit 6] If 1, indicates support for PSB and PH preservation. Writes can set IA32_RTIT CTL[56] (InjectPsb-PmiOnEnable),
+       * enabling the processor to setIA32_12TIT STATUS[7] (PendTopaPMI) and/or IA32_RTIT_STATUS[6] (PendPSB) in order to
+       * preserve ToPA PMIs and/or PSBs otherwise lost due to Intel PT disable. Writes can also set PendToPAPMI and PendPSB.
+       */
+      UINT32 Flag6                                                 : 1;
+#define CPUID_EBX_FLAG6_BIT                                          6
+#define CPUID_EBX_FLAG6_FLAG                                         0x40
+#define CPUID_EBX_FLAG6_MASK                                         0x01
+#define CPUID_EBX_FLAG6(_)                                           (((_) >> 6) & 0x01)
+
+      /**
+       * [Bit 7] If 1, writes can set IA32_RTIT_CTL[31] (EventEn), enabling Event Trace packet generation.
+       */
+      UINT32 Flag7                                                 : 1;
+#define CPUID_EBX_FLAG7_BIT                                          7
+#define CPUID_EBX_FLAG7_FLAG                                         0x80
+#define CPUID_EBX_FLAG7_MASK                                         0x01
+#define CPUID_EBX_FLAG7(_)                                           (((_) >> 7) & 0x01)
+
+      /**
+       * [Bit 8] If 1, writes can set IA32_RTIT_CTL[55] (DisTNT), disabling TNT packet generation.
+       */
+      UINT32 Flag8                                                 : 1;
+#define CPUID_EBX_FLAG8_BIT                                          8
+#define CPUID_EBX_FLAG8_FLAG                                         0x100
+#define CPUID_EBX_FLAG8_MASK                                         0x01
+#define CPUID_EBX_FLAG8(_)                                           (((_) >> 8) & 0x01)
+      UINT32 Reserved1                                             : 23;
     };
 
     UINT32 AsUInt;
@@ -10853,7 +10951,19 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_FLAG               0x10000
 #define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING_MASK               0x01
 #define IA32_VMX_PROCBASED_CTLS_CR3_STORE_EXITING(_)                 (((_) >> 16) & 0x01)
-    UINT64 Reserved5                                               : 2;
+
+    /**
+     * @brief Determines whether the tertiary processor based VM-execution controls are used
+     *
+     * [Bit 17] This control determines whether the tertiary processor-based VM-execution controls are used. If this control is
+     * 0, the logical processor operates as if all the tertiary processor-based VM-execution controls were also 0.
+     */
+    UINT64 ActivateTertiaryControls                                : 1;
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_TERTIARY_CONTROLS_BIT       17
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_TERTIARY_CONTROLS_FLAG      0x20000
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_TERTIARY_CONTROLS_MASK      0x01
+#define IA32_VMX_PROCBASED_CTLS_ACTIVATE_TERTIARY_CONTROLS(_)        (((_) >> 17) & 0x01)
+    UINT64 Reserved5                                               : 1;
 
     /**
      * @brief VM-exit on CR8 loads
@@ -11013,10 +11123,10 @@ typedef union
 
 
 /**
- * Capability Reporting Register of VM-Exit Controls.
+ * Capability Reporting Register of Primaryr VM-Exit Controls.
  *
  * @remarks If CPUID.01H:ECX.[5] = 1
- * @see Vol3D[A.4(VM-EXIT CONTROLS)]
+ * @see Vol3D[A.4.1(Primaryr VM-Exit Controls)]
  * @see Vol3C[24.7.1(VM-Exit Controls)] (reference)
  */
 #define IA32_VMX_EXIT_CTLS                                           0x00000483
@@ -11168,7 +11278,16 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL_FLAG                  0x2000000
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL_MASK                  0x01
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL(_)                    (((_) >> 25) & 0x01)
-    UINT64 Reserved6                                               : 2;
+
+    /**
+     * [Bit 26] This control determines whether the IA32_LBR_CTL MSR is cleared on VM exit.
+     */
+    UINT64 ClearIa32LbrCtl                                         : 1;
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL_BIT                    26
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL_FLAG                   0x4000000
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL_MASK                   0x01
+#define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL(_)                     (((_) >> 26) & 0x01)
+    UINT64 Reserved6                                               : 1;
 
     /**
      * [Bit 28] This control determines whether CET-related MSRs and SPP are loaded on VM exit.
@@ -11189,7 +11308,18 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_FLAG                       0x20000000
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_MASK                       0x01
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS(_)                         (((_) >> 29) & 0x01)
-    UINT64 Reserved7                                               : 34;
+    UINT64 Reserved7                                               : 1;
+
+    /**
+     * [Bit 31] This control determines whether the secondary VM-exit controls are used. If this control is 0, the logical
+     * processor operates as if all the secondary VM-exit controls were also 0.
+     */
+    UINT64 ActivateSecondaryControls                               : 1;
+#define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS_BIT           31
+#define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS_FLAG          0x80000000
+#define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS_MASK          0x01
+#define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS(_)            (((_) >> 31) & 0x01)
+    UINT64 Reserved8                                               : 32;
   };
 
   UINT64 AsUInt;
@@ -11336,7 +11466,15 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_FLAG                      0x100000
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE_MASK                      0x01
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE(_)                        (((_) >> 20) & 0x01)
-    UINT64 Reserved5                                               : 1;
+
+    /**
+     * [Bit 21] This control determines whether the IA32_LBR_CTL MSR is loaded on VM entry.
+     */
+    UINT64 LoadIa32LbrCtl                                          : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_LBR_CTL_BIT                    21
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_LBR_CTL_FLAG                   0x200000
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_LBR_CTL_MASK                   0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_IA32_LBR_CTL(_)                     (((_) >> 21) & 0x01)
 
     /**
      * [Bit 22] This control determines whether the IA32_PKRS MSR is loaded on VM entry.
@@ -11346,7 +11484,7 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_FLAG                      0x400000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_MASK                      0x01
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS(_)                        (((_) >> 22) & 0x01)
-    UINT64 Reserved6                                               : 41;
+    UINT64 Reserved5                                               : 41;
   };
 
   UINT64 AsUInt;
@@ -12084,7 +12222,18 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_FLAG 0x400000
 #define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION_MASK 0x01
 #define IA32_VMX_EPT_VPID_CAP_ADVANCED_VMEXIT_EPT_VIOLATIONS_INFORMATION(_) (((_) >> 22) & 0x01)
-    UINT64 Reserved6                                               : 2;
+
+    /**
+     * [Bit 23] If bit 23 is read as 1, supervisor shadow-stack control is supported.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 SupervisorShadowStack                                   : 1;
+#define IA32_VMX_EPT_VPID_CAP_SUPERVISOR_SHADOW_STACK_BIT            23
+#define IA32_VMX_EPT_VPID_CAP_SUPERVISOR_SHADOW_STACK_FLAG           0x800000
+#define IA32_VMX_EPT_VPID_CAP_SUPERVISOR_SHADOW_STACK_MASK           0x01
+#define IA32_VMX_EPT_VPID_CAP_SUPERVISOR_SHADOW_STACK(_)             (((_) >> 23) & 0x01)
+    UINT64 Reserved6                                               : 1;
 
     /**
      * [Bit 25] When set to 1, the single-context INVEPT type is supported.
@@ -12156,7 +12305,20 @@ typedef union
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_FLAG 0x80000000000
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS_MASK 0x01
 #define IA32_VMX_EPT_VPID_CAP_INVVPID_SINGLE_CONTEXT_RETAIN_GLOBALS(_) (((_) >> 43) & 0x01)
-    UINT64 Reserved9                                               : 20;
+    UINT64 Reserved9                                               : 4;
+
+    /**
+     * [Bits 53:48] Enumerate the maximum HLAT prefix size. It is expected that any processor that supports the 1-setting of
+     * the "enable HLAT" VM-execution control will enumerate this value as 1.
+     *
+     * @see Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
+     */
+    UINT64 MaxHlatPrefixSize                                       : 6;
+#define IA32_VMX_EPT_VPID_CAP_MAX_HLAT_PREFIX_SIZE_BIT               48
+#define IA32_VMX_EPT_VPID_CAP_MAX_HLAT_PREFIX_SIZE_FLAG              0x3F000000000000
+#define IA32_VMX_EPT_VPID_CAP_MAX_HLAT_PREFIX_SIZE_MASK              0x3F
+#define IA32_VMX_EPT_VPID_CAP_MAX_HLAT_PREFIX_SIZE(_)                (((_) >> 48) & 0x3F)
+    UINT64 Reserved10                                              : 10;
   };
 
   UINT64 AsUInt;
@@ -12244,6 +12406,96 @@ typedef union
 
   UINT64 AsUInt;
 } IA32_VMX_VMFUNC_REGISTER;
+
+
+/**
+ * Capability Reporting Register of Tertiary Processor-Based VM-Execution Controls.
+ *
+ * @remarks If ( CPUID.01H:ECX.[5] && IA32_VMX_PROCBASED_CTLS[49] )
+ * @see Vol3D[A.3.4(Tertiary Processor-Based VM-Execution Controls)]
+ * @see Vol3D[24.6.2(Processor-Based VM-Execution Controls)] (reference)
+ */
+#define IA32_VMX_PROCBASED_CTLS3                                     0x00000492
+typedef union
+{
+  struct
+  {
+    /**
+     * @brief Executions of LOADIWKEY cause VM exits
+     *
+     * [Bit 0] This control determines whether executions of LOADIWKEY cause VM exits.
+     */
+    UINT64 LoadiwkeyExiting                                        : 1;
+#define IA32_VMX_PROCBASED_CTLS3_LOADIWKEY_EXITING_BIT               0
+#define IA32_VMX_PROCBASED_CTLS3_LOADIWKEY_EXITING_FLAG              0x01
+#define IA32_VMX_PROCBASED_CTLS3_LOADIWKEY_EXITING_MASK              0x01
+#define IA32_VMX_PROCBASED_CTLS3_LOADIWKEY_EXITING(_)                (((_) >> 0) & 0x01)
+
+    /**
+     * @brief Enables hypervisor-managed linear-address translation
+     *
+     * [Bit 1] This control enables hypervisor-managed linear-address translation.
+     *
+     * @see Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
+     */
+    UINT64 EnableHlat                                              : 1;
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_HLAT_BIT                     1
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_HLAT_FLAG                    0x02
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_HLAT_MASK                    0x01
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_HLAT(_)                      (((_) >> 1) & 0x01)
+
+    /**
+     * @brief If this control is 1, EPT permissions can be specified to allow writes only for paging-related control updates
+     *
+     * [Bit 2] If this control is 1, EPT permissions can be specified to allow writes only for paging-related control updates.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 EptPagingWrite                                          : 1;
+#define IA32_VMX_PROCBASED_CTLS3_EPT_PAGING_WRITE_BIT                2
+#define IA32_VMX_PROCBASED_CTLS3_EPT_PAGING_WRITE_FLAG               0x04
+#define IA32_VMX_PROCBASED_CTLS3_EPT_PAGING_WRITE_MASK               0x01
+#define IA32_VMX_PROCBASED_CTLS3_EPT_PAGING_WRITE(_)                 (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] If this control is 1, EPT permissions can be specified to prevent accesses using linear addresses verification
+     * whose translation has certain properties.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 GuestPaging                                             : 1;
+#define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING_BIT                    3
+#define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING_FLAG                   0x08
+#define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING_MASK                   0x01
+#define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING(_)                     (((_) >> 3) & 0x01)
+    UINT64 Reserved1                                               : 60;
+  };
+
+  UINT64 AsUInt;
+} IA32_VMX_PROCBASED_CTLS3_REGISTER;
+
+
+/**
+ * Capability Reporting Register of Secondary VM-Exit Controls.
+ *
+ * @remarks If ( CPUID.01H:ECX.[5] && IA32_VMX_EXIT_CTLS[63] )
+ * @see Vol3D[A.4.2(Secondary VM-Exit Controls)]
+ * @see Vol3C[24.7.1(VM-Exit Controls)] (reference)
+ */
+#define IA32_VMX_EXIT_CTLS2                                          0x00000493
+typedef union
+{
+  struct
+  {
+    UINT64 Reserved                                                : 64;
+#define IA32_VMX_EXIT_CTLS2_RESERVED_BIT                             0
+#define IA32_VMX_EXIT_CTLS2_RESERVED_FLAG                            0xFFFFFFFFFFFFFFFF
+#define IA32_VMX_EXIT_CTLS2_RESERVED_MASK                            0xFFFFFFFFFFFFFFFF
+#define IA32_VMX_EXIT_CTLS2_RESERVED(_)                              (((_) >> 0) & 0xFFFFFFFFFFFFFFFF)
+  };
+
+  UINT64 AsUInt;
+} IA32_VMX_EXIT_CTLS2_REGISTER;
 
 /**
  * @defgroup IA32_A_PMC \
@@ -15055,13 +15307,25 @@ typedef union
 #define PML4E_64_MUST_BE_ZERO(_)                                     (((_) >> 7) & 0x01)
 
     /**
-     * [Bits 11:8] Ignored.
+     * [Bits 10:8] Ignored.
      */
-    UINT64 Ignored1                                                : 4;
+    UINT64 Ignored1                                                : 3;
 #define PML4E_64_IGNORED_1_BIT                                       8
-#define PML4E_64_IGNORED_1_FLAG                                      0xF00
-#define PML4E_64_IGNORED_1_MASK                                      0x0F
-#define PML4E_64_IGNORED_1(_)                                        (((_) >> 8) & 0x0F)
+#define PML4E_64_IGNORED_1_FLAG                                      0x700
+#define PML4E_64_IGNORED_1_MASK                                      0x07
+#define PML4E_64_IGNORED_1(_)                                        (((_) >> 8) & 0x07)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PML4E_64_RESTART_BIT                                         11
+#define PML4E_64_RESTART_FLAG                                        0x800
+#define PML4E_64_RESTART_MASK                                        0x01
+#define PML4E_64_RESTART(_)                                          (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned page-directory-pointer table referenced by this entry.
@@ -15203,13 +15467,25 @@ typedef union
 #define PDPTE_1GB_64_GLOBAL(_)                                       (((_) >> 8) & 0x01)
 
     /**
-     * [Bits 11:9] Ignored.
+     * [Bits 10:9] Ignored.
      */
-    UINT64 Ignored1                                                : 3;
+    UINT64 Ignored1                                                : 2;
 #define PDPTE_1GB_64_IGNORED_1_BIT                                   9
-#define PDPTE_1GB_64_IGNORED_1_FLAG                                  0xE00
-#define PDPTE_1GB_64_IGNORED_1_MASK                                  0x07
-#define PDPTE_1GB_64_IGNORED_1(_)                                    (((_) >> 9) & 0x07)
+#define PDPTE_1GB_64_IGNORED_1_FLAG                                  0x600
+#define PDPTE_1GB_64_IGNORED_1_MASK                                  0x03
+#define PDPTE_1GB_64_IGNORED_1(_)                                    (((_) >> 9) & 0x03)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PDPTE_1GB_64_RESTART_BIT                                     11
+#define PDPTE_1GB_64_RESTART_FLAG                                    0x800
+#define PDPTE_1GB_64_RESTART_MASK                                    0x01
+#define PDPTE_1GB_64_RESTART(_)                                      (((_) >> 11) & 0x01)
 
     /**
      * [Bit 12] Indirectly determines the memory type used to access the 1-GByte page referenced by this entry.
@@ -15354,13 +15630,25 @@ typedef union
 #define PDPTE_64_LARGE_PAGE(_)                                       (((_) >> 7) & 0x01)
 
     /**
-     * [Bits 11:8] Ignored.
+     * [Bits 10:8] Ignored.
      */
-    UINT64 Ignored1                                                : 4;
+    UINT64 Ignored1                                                : 3;
 #define PDPTE_64_IGNORED_1_BIT                                       8
-#define PDPTE_64_IGNORED_1_FLAG                                      0xF00
-#define PDPTE_64_IGNORED_1_MASK                                      0x0F
-#define PDPTE_64_IGNORED_1(_)                                        (((_) >> 8) & 0x0F)
+#define PDPTE_64_IGNORED_1_FLAG                                      0x700
+#define PDPTE_64_IGNORED_1_MASK                                      0x07
+#define PDPTE_64_IGNORED_1(_)                                        (((_) >> 8) & 0x07)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PDPTE_64_RESTART_BIT                                         11
+#define PDPTE_64_RESTART_FLAG                                        0x800
+#define PDPTE_64_RESTART_MASK                                        0x01
+#define PDPTE_64_RESTART(_)                                          (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned page directory referenced by this entry.
@@ -15502,13 +15790,25 @@ typedef union
 #define PDE_2MB_64_GLOBAL(_)                                         (((_) >> 8) & 0x01)
 
     /**
-     * [Bits 11:9] Ignored.
+     * [Bits 10:9] Ignored.
      */
-    UINT64 Ignored1                                                : 3;
+    UINT64 Ignored1                                                : 2;
 #define PDE_2MB_64_IGNORED_1_BIT                                     9
-#define PDE_2MB_64_IGNORED_1_FLAG                                    0xE00
-#define PDE_2MB_64_IGNORED_1_MASK                                    0x07
-#define PDE_2MB_64_IGNORED_1(_)                                      (((_) >> 9) & 0x07)
+#define PDE_2MB_64_IGNORED_1_FLAG                                    0x600
+#define PDE_2MB_64_IGNORED_1_MASK                                    0x03
+#define PDE_2MB_64_IGNORED_1(_)                                      (((_) >> 9) & 0x03)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PDE_2MB_64_RESTART_BIT                                       11
+#define PDE_2MB_64_RESTART_FLAG                                      0x800
+#define PDE_2MB_64_RESTART_MASK                                      0x01
+#define PDE_2MB_64_RESTART(_)                                        (((_) >> 11) & 0x01)
 
     /**
      * [Bit 12] Indirectly determines the memory type used to access the 2-MByte page referenced by this entry.
@@ -15653,13 +15953,25 @@ typedef union
 #define PDE_64_LARGE_PAGE(_)                                         (((_) >> 7) & 0x01)
 
     /**
-     * [Bits 11:8] Ignored.
+     * [Bits 10:8] Ignored.
      */
-    UINT64 Ignored1                                                : 4;
+    UINT64 Ignored1                                                : 3;
 #define PDE_64_IGNORED_1_BIT                                         8
-#define PDE_64_IGNORED_1_FLAG                                        0xF00
-#define PDE_64_IGNORED_1_MASK                                        0x0F
-#define PDE_64_IGNORED_1(_)                                          (((_) >> 8) & 0x0F)
+#define PDE_64_IGNORED_1_FLAG                                        0x700
+#define PDE_64_IGNORED_1_MASK                                        0x07
+#define PDE_64_IGNORED_1(_)                                          (((_) >> 8) & 0x07)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PDE_64_RESTART_BIT                                           11
+#define PDE_64_RESTART_FLAG                                          0x800
+#define PDE_64_RESTART_MASK                                          0x01
+#define PDE_64_RESTART(_)                                            (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] Physical address of 4-KByte aligned page table referenced by this entry.
@@ -15803,13 +16115,25 @@ typedef union
 #define PTE_64_GLOBAL(_)                                             (((_) >> 8) & 0x01)
 
     /**
-     * [Bits 11:9] Ignored.
+     * [Bits 10:9] Ignored.
      */
-    UINT64 Ignored1                                                : 3;
+    UINT64 Ignored1                                                : 2;
 #define PTE_64_IGNORED_1_BIT                                         9
-#define PTE_64_IGNORED_1_FLAG                                        0xE00
-#define PTE_64_IGNORED_1_MASK                                        0x07
-#define PTE_64_IGNORED_1(_)                                          (((_) >> 9) & 0x07)
+#define PTE_64_IGNORED_1_FLAG                                        0x600
+#define PTE_64_IGNORED_1_MASK                                        0x03
+#define PTE_64_IGNORED_1(_)                                          (((_) >> 9) & 0x03)
+
+    /**
+     * [Bit 11] For ordinary paging, ignored; for HLAT paging, restart (if 1, linear-address translation is restarted with
+     * ordinary paging)
+     *
+     * @see Vol3A[4.5.5(Restart of HLAT Paging)]
+     */
+    UINT64 Restart                                                 : 1;
+#define PTE_64_RESTART_BIT                                           11
+#define PTE_64_RESTART_FLAG                                          0x800
+#define PTE_64_RESTART_MASK                                          0x01
+#define PTE_64_RESTART(_)                                            (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] Physical address of the 4-KByte page referenced by this entry.
@@ -15911,13 +16235,18 @@ typedef union
 #define PT_ENTRY_64_GLOBAL(_)                                        (((_) >> 8) & 0x01)
 
     /**
-     * [Bits 11:9] Ignored.
+     * [Bits 10:9] Ignored.
      */
-    UINT64 Ignored1                                                : 3;
+    UINT64 Ignored1                                                : 2;
 #define PT_ENTRY_64_IGNORED_1_BIT                                    9
-#define PT_ENTRY_64_IGNORED_1_FLAG                                   0xE00
-#define PT_ENTRY_64_IGNORED_1_MASK                                   0x07
-#define PT_ENTRY_64_IGNORED_1(_)                                     (((_) >> 9) & 0x07)
+#define PT_ENTRY_64_IGNORED_1_FLAG                                   0x600
+#define PT_ENTRY_64_IGNORED_1_MASK                                   0x03
+#define PT_ENTRY_64_IGNORED_1(_)                                     (((_) >> 9) & 0x03)
+    UINT64 Restart                                                 : 1;
+#define PT_ENTRY_64_RESTART_BIT                                      11
+#define PT_ENTRY_64_RESTART_FLAG                                     0x800
+#define PT_ENTRY_64_RESTART_MASK                                     0x01
+#define PT_ENTRY_64_RESTART(_)                                       (((_) >> 11) & 0x01)
 
     /**
      * [Bits 47:12] Physical address of the 4-KByte page referenced by this entry.
@@ -18131,7 +18460,47 @@ typedef union
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_FLAG     0x1000
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING_MASK     0x01
 #define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_NMI_UNBLOCKING(_)       (((_) >> 12) & 0x01)
-    UINT64 Reserved1                                               : 51;
+
+    /**
+     * [Bit 13] Set if the access causing the EPT violation was a shadow-stack access.
+     */
+    UINT64 ShadowStackAccess                                       : 1;
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SHADOW_STACK_ACCESS_BIT 13
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SHADOW_STACK_ACCESS_FLAG 0x2000
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SHADOW_STACK_ACCESS_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SHADOW_STACK_ACCESS(_)  (((_) >> 13) & 0x01)
+
+    /**
+     * [Bit 14] If supervisor shadow-stack control is enabled (by setting bit 7 of EPTP), this bit is the same as bit 60 in the
+     * EPT paging-structure entry that maps the page of the guest-physical address of the access causing the EPT violation.
+     * Otherwise (or if translation of the guest-physical address terminates before reaching an EPT paging-structure entry that
+     * maps a page), this bit is undefined.
+     */
+    UINT64 SupervisorShadowStack                                   : 1;
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SUPERVISOR_SHADOW_STACK_BIT 14
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SUPERVISOR_SHADOW_STACK_FLAG 0x4000
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SUPERVISOR_SHADOW_STACK_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_SUPERVISOR_SHADOW_STACK(_) (((_) >> 14) & 0x01)
+
+    /**
+     * [Bit 15] This bit is set if the EPT violation was caused as a result of guest-paging verification.
+     */
+    UINT64 GuestPagingVerification                                 : 1;
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_GUEST_PAGING_VERIFICATION_BIT 15
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_GUEST_PAGING_VERIFICATION_FLAG 0x8000
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_GUEST_PAGING_VERIFICATION_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_GUEST_PAGING_VERIFICATION(_) (((_) >> 15) & 0x01)
+
+    /**
+     * [Bit 16] This bit is set if the access was asynchronous to instruction execution not the result of event delivery. (The
+     * bit is set if the access is related to trace output by Intel PT; see Section 25.5.4.) Otherwise, this bit is cleared.
+     */
+    UINT64 AsynchronousToInstruction                               : 1;
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ASYNCHRONOUS_TO_INSTRUCTION_BIT 16
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ASYNCHRONOUS_TO_INSTRUCTION_FLAG 0x10000
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ASYNCHRONOUS_TO_INSTRUCTION_MASK 0x01
+#define VMX_EXIT_QUALIFICATION_EPT_VIOLATION_ASYNCHRONOUS_TO_INSTRUCTION(_) (((_) >> 16) & 0x01)
+    UINT64 Reserved1                                               : 47;
   };
 
   UINT64 AsUInt;
@@ -19417,7 +19786,46 @@ typedef union
 #define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_FLAG                         0xFFFFC0000000
 #define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER_MASK                         0x3FFFF
 #define EPT_PDPTE_1GB_PAGE_FRAME_NUMBER(_)                           (((_) >> 30) & 0x3FFFF)
-    UINT64 Reserved2                                               : 15;
+    UINT64 Reserved2                                               : 9;
+
+    /**
+     * [Bit 57] Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+     * guest paging structures used to access the 1-GByte page controlled by this entry (see Section 28.3.3.2). If that control
+     * is 0, this bit is ignored.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 VerifyGuestPaging                                       : 1;
+#define EPT_PDPTE_1GB_VERIFY_GUEST_PAGING_BIT                        57
+#define EPT_PDPTE_1GB_VERIFY_GUEST_PAGING_FLAG                       0x200000000000000
+#define EPT_PDPTE_1GB_VERIFY_GUEST_PAGING_MASK                       0x01
+#define EPT_PDPTE_1GB_VERIFY_GUEST_PAGING(_)                         (((_) >> 57) & 0x01)
+
+    /**
+     * [Bit 58] Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+     * may update the 1-GByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit is ignored
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 PagingWriteAccess                                       : 1;
+#define EPT_PDPTE_1GB_PAGING_WRITE_ACCESS_BIT                        58
+#define EPT_PDPTE_1GB_PAGING_WRITE_ACCESS_FLAG                       0x400000000000000
+#define EPT_PDPTE_1GB_PAGING_WRITE_ACCESS_MASK                       0x01
+#define EPT_PDPTE_1GB_PAGING_WRITE_ACCESS(_)                         (((_) >> 58) & 0x01)
+    UINT64 Reserved3                                               : 1;
+
+    /**
+     * [Bit 60] Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+     * to guest-physical addresses in the 1-GByte page mapped by this entry (see Section 28.3.3.2)
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 SupervisorShadowStack                                   : 1;
+#define EPT_PDPTE_1GB_SUPERVISOR_SHADOW_STACK_BIT                    60
+#define EPT_PDPTE_1GB_SUPERVISOR_SHADOW_STACK_FLAG                   0x1000000000000000
+#define EPT_PDPTE_1GB_SUPERVISOR_SHADOW_STACK_MASK                   0x01
+#define EPT_PDPTE_1GB_SUPERVISOR_SHADOW_STACK(_)                     (((_) >> 60) & 0x01)
+    UINT64 Reserved4                                               : 2;
 
     /**
      * [Bit 63] Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
@@ -19625,7 +20033,46 @@ typedef union
 #define EPT_PDE_2MB_PAGE_FRAME_NUMBER_FLAG                           0xFFFFFFE00000
 #define EPT_PDE_2MB_PAGE_FRAME_NUMBER_MASK                           0x7FFFFFF
 #define EPT_PDE_2MB_PAGE_FRAME_NUMBER(_)                             (((_) >> 21) & 0x7FFFFFF)
-    UINT64 Reserved2                                               : 15;
+    UINT64 Reserved2                                               : 9;
+
+    /**
+     * [Bit 57] Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+     * guest paging structures used to access the 2-MByte page controlled by this entry (see Section 28.3.3.2). If that control
+     * is 0, this bit is ignored.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 VerifyGuestPaging                                       : 1;
+#define EPT_PDE_2MB_VERIFY_GUEST_PAGING_BIT                          57
+#define EPT_PDE_2MB_VERIFY_GUEST_PAGING_FLAG                         0x200000000000000
+#define EPT_PDE_2MB_VERIFY_GUEST_PAGING_MASK                         0x01
+#define EPT_PDE_2MB_VERIFY_GUEST_PAGING(_)                           (((_) >> 57) & 0x01)
+
+    /**
+     * [Bit 58] Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+     * may update the 2-MByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit is ignored
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 PagingWriteAccess                                       : 1;
+#define EPT_PDE_2MB_PAGING_WRITE_ACCESS_BIT                          58
+#define EPT_PDE_2MB_PAGING_WRITE_ACCESS_FLAG                         0x400000000000000
+#define EPT_PDE_2MB_PAGING_WRITE_ACCESS_MASK                         0x01
+#define EPT_PDE_2MB_PAGING_WRITE_ACCESS(_)                           (((_) >> 58) & 0x01)
+    UINT64 Reserved3                                               : 1;
+
+    /**
+     * [Bit 60] Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+     * to guest-physical addresses in the 2-MByte page mapped by this entry (see Section 28.3.3.2)
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 SupervisorShadowStack                                   : 1;
+#define EPT_PDE_2MB_SUPERVISOR_SHADOW_STACK_BIT                      60
+#define EPT_PDE_2MB_SUPERVISOR_SHADOW_STACK_FLAG                     0x1000000000000000
+#define EPT_PDE_2MB_SUPERVISOR_SHADOW_STACK_MASK                     0x01
+#define EPT_PDE_2MB_SUPERVISOR_SHADOW_STACK(_)                       (((_) >> 60) & 0x01)
+    UINT64 Reserved4                                               : 2;
 
     /**
      * [Bit 63] Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
@@ -19825,7 +20272,60 @@ typedef union
 #define EPT_PTE_PAGE_FRAME_NUMBER_FLAG                               0xFFFFFFFFF000
 #define EPT_PTE_PAGE_FRAME_NUMBER_MASK                               0xFFFFFFFFF
 #define EPT_PTE_PAGE_FRAME_NUMBER(_)                                 (((_) >> 12) & 0xFFFFFFFFF)
-    UINT64 Reserved3                                               : 15;
+    UINT64 Reserved3                                               : 9;
+
+    /**
+     * [Bit 57] Verify guest paging. If the "guest-paging verification" VM-execution control is 1, indicates limits on the
+     * guest paging structures used to access the 4-KByte page controlled by this entry (see Section 28.3.3.2). If that control
+     * is 0, this bit is ignored.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 VerifyGuestPaging                                       : 1;
+#define EPT_PTE_VERIFY_GUEST_PAGING_BIT                              57
+#define EPT_PTE_VERIFY_GUEST_PAGING_FLAG                             0x200000000000000
+#define EPT_PTE_VERIFY_GUEST_PAGING_MASK                             0x01
+#define EPT_PTE_VERIFY_GUEST_PAGING(_)                               (((_) >> 57) & 0x01)
+
+    /**
+     * [Bit 58] Paging-write access. If the "EPT paging-write control" VM-execution control is 1, indicates that guest paging
+     * may update the 4-KByte page controlled by this entry (see Section 28.3.3.2). If that control is 0, this bit is ignored
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 PagingWriteAccess                                       : 1;
+#define EPT_PTE_PAGING_WRITE_ACCESS_BIT                              58
+#define EPT_PTE_PAGING_WRITE_ACCESS_FLAG                             0x400000000000000
+#define EPT_PTE_PAGING_WRITE_ACCESS_MASK                             0x01
+#define EPT_PTE_PAGING_WRITE_ACCESS(_)                               (((_) >> 58) & 0x01)
+    UINT64 Reserved4                                               : 1;
+
+    /**
+     * [Bit 60] Supervisor shadow stack. If bit 7 of EPTP is 1, indicates whether supervisor shadow stack accesses are allowed
+     * to guest-physical addresses in the 4-KByte page mapped by this entry (see Section 28.3.3.2)
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    UINT64 SupervisorShadowStack                                   : 1;
+#define EPT_PTE_SUPERVISOR_SHADOW_STACK_BIT                          60
+#define EPT_PTE_SUPERVISOR_SHADOW_STACK_FLAG                         0x1000000000000000
+#define EPT_PTE_SUPERVISOR_SHADOW_STACK_MASK                         0x01
+#define EPT_PTE_SUPERVISOR_SHADOW_STACK(_)                           (((_) >> 60) & 0x01)
+
+    /**
+     * [Bit 61] Sub-page write permissions. If the "sub-page write permissions for EPT" VM-execution control is 1, writes to
+     * individual 128-byte regions of the 4-KByte page referenced by this entry may be allowed even if the page would normally
+     * not be writable (see Section 28.3.4). If "sub-page write permissions for EPT" VM-execution control is 0, this bit is
+     * ignored.
+     *
+     * @see Vol3C[28.3.4(Sub-Page Write Permissions)]
+     */
+    UINT64 SubPageWritePermissions                                 : 1;
+#define EPT_PTE_SUB_PAGE_WRITE_PERMISSIONS_BIT                       61
+#define EPT_PTE_SUB_PAGE_WRITE_PERMISSIONS_FLAG                      0x2000000000000000
+#define EPT_PTE_SUB_PAGE_WRITE_PERMISSIONS_MASK                      0x01
+#define EPT_PTE_SUB_PAGE_WRITE_PERMISSIONS(_)                        (((_) >> 61) & 0x01)
+    UINT64 Reserved5                                               : 1;
 
     /**
      * [Bit 63] Suppress \#VE. If the "EPT-violation \#VE" VM-execution control is 1, EPT violations caused by accesses to this
@@ -20026,6 +20526,55 @@ typedef struct
   UINT32 Reserved2;
   UINT64 LinearAddress;
 } INVVPID_DESCRIPTOR;
+
+/**
+ * @brief Hypervisor-Managed linear-Address Translation Pointer (HLATP)
+ *
+ * The hypervisor-managed linear-address translation pointer (HLAT pointer or HLATP) is used by HLAT paging to locate and
+ * access the first paging structure used for linear-address translation.
+ *
+ * @see Vol3A[4.5(4-LEVEL PAGING AND 5-LEVEL PAGING)]
+ */
+typedef union
+{
+  struct
+  {
+    UINT64 Reserved1                                               : 3;
+
+    /**
+     * [Bit 3] Page-level write-through; indirectly determines the memory type used to access the first HLAT paging structure
+     * during linear-address translation.
+     */
+    UINT64 PageLevelWriteThrough                                   : 1;
+#define HLAT_POINTER_PAGE_LEVEL_WRITE_THROUGH_BIT                    3
+#define HLAT_POINTER_PAGE_LEVEL_WRITE_THROUGH_FLAG                   0x08
+#define HLAT_POINTER_PAGE_LEVEL_WRITE_THROUGH_MASK                   0x01
+#define HLAT_POINTER_PAGE_LEVEL_WRITE_THROUGH(_)                     (((_) >> 3) & 0x01)
+
+    /**
+     * [Bit 4] Page-level cache disable; indirectly determines the memory type used to access the first HLAT paging structure
+     * during linear-address translation.
+     */
+    UINT64 PageLevelCacheDisable                                   : 1;
+#define HLAT_POINTER_PAGE_LEVEL_CACHE_DISABLE_BIT                    4
+#define HLAT_POINTER_PAGE_LEVEL_CACHE_DISABLE_FLAG                   0x10
+#define HLAT_POINTER_PAGE_LEVEL_CACHE_DISABLE_MASK                   0x01
+#define HLAT_POINTER_PAGE_LEVEL_CACHE_DISABLE(_)                     (((_) >> 4) & 0x01)
+    UINT64 Reserved2                                               : 7;
+
+    /**
+     * [Bits 47:12] Guest-physical address (4KB-aligned) of the first HLAT paging structure during linear-address translation)
+     */
+    UINT64 PageFrameNumber                                         : 36;
+#define HLAT_POINTER_PAGE_FRAME_NUMBER_BIT                           12
+#define HLAT_POINTER_PAGE_FRAME_NUMBER_FLAG                          0xFFFFFFFFF000
+#define HLAT_POINTER_PAGE_FRAME_NUMBER_MASK                          0xFFFFFFFFF
+#define HLAT_POINTER_PAGE_FRAME_NUMBER(_)                            (((_) >> 12) & 0xFFFFFFFFF)
+    UINT64 Reserved3                                               : 16;
+  };
+
+  UINT64 AsUInt;
+} HLAT_POINTER;
 
 /**
  * @brief Format of the VMCS Region
@@ -20255,6 +20804,13 @@ typedef union
  *          control.
  */
 #define VMCS_CTRL_EPTP_INDEX                                         0x00000004
+
+/**
+ * HLAT prefix size.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "enable HLAT" VM-execution control.
+ */
+#define VMCS_CTRL_HLAT_PREFIX_SIZE                                   0x00000006
 /**
  * @}
  */
@@ -20528,6 +21084,16 @@ typedef union
  * ENCLV-exiting bitmap.
  */
 #define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
+
+/**
+ * Hypervisor-managed linear-address translation pointer.
+ */
+#define VMCS_CTRL_HLAT_POINTER                                       0x00002040
+
+/**
+ * Secondary VM-exit controls.
+ */
+#define VMCS_CTRL_SECONDARY_VMEXIT_CONTROLS                          0x00002044
 /**
  * @}
  */
@@ -20608,6 +21174,11 @@ typedef union
  * Guest IA32_RTIT_CTL.
  */
 #define VMCS_GUEST_RTIT_CTL                                          0x00002814
+
+/**
+ * Guest IA32_LBR_CTL.
+ */
+#define VMCS_GUEST_LBR_CTL                                           0x00002816
 
 /**
  * Guest IA32_PKRS
@@ -20698,9 +21269,9 @@ typedef union
 #define VMCS_CTRL_CR3_TARGET_COUNT                                   0x0000400A
 
 /**
- * VM-exit controls.
+ * Primary VM-exit controls.
  */
-#define VMCS_CTRL_VMEXIT_CONTROLS                                    0x0000400C
+#define VMCS_CTRL_PRIMARY_VMEXIT_CONTROLS                            0x0000400C
 
 /**
  * VM-exit MSR-store count.
@@ -22512,7 +23083,22 @@ typedef union
 #define PAGE_FAULT_EXCEPTION_SHADOW_STACK_FLAG                       0x40
 #define PAGE_FAULT_EXCEPTION_SHADOW_STACK_MASK                       0x01
 #define PAGE_FAULT_EXCEPTION_SHADOW_STACK(_)                         (((_) >> 6) & 0x01)
-    UINT32 Reserved1                                               : 8;
+
+    /**
+     * [Bit 7] This flag is 1 if there is no translation for the linear address using HLAT paging because, in one of the
+     * paging- structure entries used to translate that address, either the P flag was 0 or a reserved bit was set. An error
+     * code will set this flag only if it clears bit o or sets bit 3. This flag will not be set by a page fault resulting from
+     * a violation of access rights, nor for one encountered during ordinary paging, including the case in which there has been
+     * a restart of HLAT paging.
+     *
+     * @see Vol3A[4.5.1(Ordinary Paging and HLAT Paging)]
+     */
+    UINT32 Hlat                                                    : 1;
+#define PAGE_FAULT_EXCEPTION_HLAT_BIT                                7
+#define PAGE_FAULT_EXCEPTION_HLAT_FLAG                               0x80
+#define PAGE_FAULT_EXCEPTION_HLAT_MASK                               0x01
+#define PAGE_FAULT_EXCEPTION_HLAT(_)                                 (((_) >> 7) & 0x01)
+    UINT32 Reserved1                                               : 7;
 
     /**
      * [Bit 15] This flag is 1 if the exception is unrelated to paging and resulted from violation of SGX-specific
