@@ -914,40 +914,6 @@
           long_name: GP_REGISTER
           alternative_name: GENERAL_PURPOSE_REGISTER
           description: General-purpose register.
-#          children_name_with_prefix: $
-#          fields:
-#          - value: 0
-#            name: RAX
-#          - value: 1
-#            name: RCX
-#          - value: 2
-#            name: RDX
-#          - value: 3
-#            name: RBX
-#          - value: 4
-#            name: RSP
-#          - value: 5
-#            name: RBP
-#          - value: 6
-#            name: RSI
-#          - value: 7
-#            name: RDI
-#          - value: 8
-#            name: R8
-#          - value: 9
-#            name: R9
-#          - value: 10
-#            name: R10
-#          - value: 11
-#            name: R11
-#          - value: 12
-#            name: R12
-#          - value: 13
-#            name: R13
-#          - value: 14
-#            name: R14
-#          - value: 15
-#            name: R15
 
       - short_name: IO_INST
         long_name: IO_INSTRUCTION
@@ -1781,7 +1747,7 @@
     - name: INTERRUPTIBILITY_STATE
       description: |
         The IA-32 architecture includes features that permit certain events to be
-        blocked for a period of time. This field contains information about such blocking
+        blocked for a period of time. This field contains information about such blocking.
       see: INTERRUPTIBILITY_STATE of 32_BIT_GUEST_STATE_FIELDS
       reference: Vol3C[24.4.2(Guest Non-Register State)]
       type: bitfield
@@ -1848,6 +1814,58 @@
       - value: 3
         name: WAIT_FOR_SIPI
         description: The logical processor is inactive because it is waiting for a startup-IPI (SIPI).
+
+    - name: PENDING_DEBUG_EXCEPTIONS
+      description: |
+        IA-32 processors may recognize one or more debug exceptions without
+        immediately delivering them. This field contains information about
+        such exceptions.
+      reference: Vol3C[24.4.2(Guest Non-Register State)]
+      type: bitfield
+      size: 64
+      fields:
+      - bit: 0
+        name: B0
+        description: |
+          When set, indicates that the corresponding breakpoint condition was met.
+          May be set even if the corresponding enabling bit in DR7 is not set.
+      
+      - bit: 1
+        name: B1
+        description: |
+          When set, indicates that the corresponding breakpoint condition was met.
+          May be set even if the corresponding enabling bit in DR7 is not set.
+      
+      - bit: 2
+        name: B2
+        description: |
+          When set, indicates that the corresponding breakpoint condition was met.
+          May be set even if the corresponding enabling bit in DR7 is not set.
+
+      - bit: 3
+        name: B3
+        description: |
+          When set, indicates that the corresponding breakpoint condition was met.
+          May be set even if the corresponding enabling bit in DR7 is not set.
+
+      - bit: 12
+        name: ENABLED_BREAKPOINT
+        description: |
+          When set, this bit indicates that at least one data or I/O breakpoint
+          was met and was enabled in DR7.
+      
+      - bit: 14
+        name: BS
+        description: |
+          When set, this bit indicates that a debug exception would have been
+          triggered by single-step execution mode.
+
+      - bit: 16
+        name: RTM
+        description: |
+          When set, this bit indicates that a debug exception (#DB) or a
+          breakpoint exception (#BP) occurred inside an RTM region while
+          advanced debugging of RTM transactional regions was enabled.
 
   #
   # Without VMX prefix.

@@ -4546,6 +4546,23 @@ typedef enum {
   vmx_wait_for_sipi                                            = 0x00000003,
 } vmx_guest_activity_state;
 
+typedef union {
+  struct {
+    uint64_t b0                                                      : 1;
+    uint64_t b1                                                      : 1;
+    uint64_t b2                                                      : 1;
+    uint64_t b3                                                      : 1;
+    uint64_t reserved_1                                              : 8;
+    uint64_t enabled_breakpoint                                      : 1;
+    uint64_t reserved_2                                              : 1;
+    uint64_t bs                                                      : 1;
+    uint64_t reserved_3                                              : 1;
+    uint64_t rtm                                                     : 1;
+  };
+
+  uint64_t flags;
+} vmx_pending_debug_exceptions;
+
 /**
  * @}
  */

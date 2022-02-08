@@ -5882,6 +5882,31 @@ typedef union {
  * @}
  */
 
+typedef union {
+  struct {
+    uint64_t b0                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B0                              0x01
+    uint64_t b1                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B1                              0x02
+    uint64_t b2                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B2                              0x04
+    uint64_t b3                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B3                              0x08
+    uint64_t reserved_1                                              : 8;
+    uint64_t enabled_breakpoint                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_ENABLED_BREAKPOINT              0x1000
+    uint64_t reserved_2                                              : 1;
+    uint64_t bs                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_BS                              0x4000
+    uint64_t reserved_3                                              : 1;
+    uint64_t rtm                                                     : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_RTM                             0x10000
+    uint64_t reserved_4                                              : 47;
+  };
+
+  uint64_t Flags;
+} vmx_pending_debug_exceptions;
+
 /**
  * @}
  */
