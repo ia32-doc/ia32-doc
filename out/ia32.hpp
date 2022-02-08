@@ -18119,6 +18119,92 @@ typedef enum
 } vmx_guest_activity_state;
 
 /**
+ * @brief IA-32 processors may recognize one or more debug exceptions without immediately delivering them. This field
+ *        contains information about such exceptions
+ *
+ * @see Vol3C[24.4.2(Guest Non-Register State)] (reference)
+ */
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] When set, indicates that the corresponding breakpoint condition was met. May be set even if the corresponding
+     * enabling bit in DR7 is not set.
+     */
+    uint64_t b0                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B0_BIT                          0
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B0_FLAG                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B0_MASK                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B0(_)                           (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] When set, indicates that the corresponding breakpoint condition was met. May be set even if the corresponding
+     * enabling bit in DR7 is not set.
+     */
+    uint64_t b1                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B1_BIT                          1
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B1_FLAG                         0x02
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B1_MASK                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B1(_)                           (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] When set, indicates that the corresponding breakpoint condition was met. May be set even if the corresponding
+     * enabling bit in DR7 is not set.
+     */
+    uint64_t b2                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B2_BIT                          2
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B2_FLAG                         0x04
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B2_MASK                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B2(_)                           (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] When set, indicates that the corresponding breakpoint condition was met. May be set even if the corresponding
+     * enabling bit in DR7 is not set.
+     */
+    uint64_t b3                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B3_BIT                          3
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B3_FLAG                         0x08
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B3_MASK                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_B3(_)                           (((_) >> 3) & 0x01)
+    uint64_t reserved1                                               : 8;
+
+    /**
+     * [Bit 12] When set, this bit indicates that at least one data or I/O breakpoint was met and was enabled in DR7.
+     */
+    uint64_t enabled_breakpoint                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_ENABLED_BREAKPOINT_BIT          12
+#define VMX_PENDING_DEBUG_EXCEPTIONS_ENABLED_BREAKPOINT_FLAG         0x1000
+#define VMX_PENDING_DEBUG_EXCEPTIONS_ENABLED_BREAKPOINT_MASK         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_ENABLED_BREAKPOINT(_)           (((_) >> 12) & 0x01)
+    uint64_t reserved2                                               : 1;
+
+    /**
+     * [Bit 14] When set, this bit indicates that a debug exception would have been triggered by single-step execution mode.
+     */
+    uint64_t bs                                                      : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_BS_BIT                          14
+#define VMX_PENDING_DEBUG_EXCEPTIONS_BS_FLAG                         0x4000
+#define VMX_PENDING_DEBUG_EXCEPTIONS_BS_MASK                         0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_BS(_)                           (((_) >> 14) & 0x01)
+    uint64_t reserved3                                               : 1;
+
+    /**
+     * [Bit 16] When set, this bit indicates that a debug exception (\#DB) or a breakpoint exception (\#BP) occurred inside an
+     * RTM region while advanced debugging of RTM transactional regions was enabled.
+     */
+    uint64_t rtm                                                     : 1;
+#define VMX_PENDING_DEBUG_EXCEPTIONS_RTM_BIT                         16
+#define VMX_PENDING_DEBUG_EXCEPTIONS_RTM_FLAG                        0x10000
+#define VMX_PENDING_DEBUG_EXCEPTIONS_RTM_MASK                        0x01
+#define VMX_PENDING_DEBUG_EXCEPTIONS_RTM(_)                          (((_) >> 16) & 0x01)
+    uint64_t reserved4                                               : 47;
+  };
+
+  uint64_t flags;
+} vmx_pending_debug_exceptions;
+
+/**
  * @}
  */
 
