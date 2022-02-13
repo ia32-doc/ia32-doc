@@ -107,11 +107,9 @@
       offset against the segment limit. For example, when the granularity flag is set, a limit of 0 results in
       valid offsets from 0 to 4095.
 
-
 #
 # Used for GDT/LDT/IDT/TSS.
 #
-
 
 - name: DESCRIPTOR_32
   short_description: General Segment Descriptor (32-bit)
@@ -485,9 +483,64 @@
   - size: 32
     short_name: MUST_BE_ZERO
     long_name: MUST_BE_ZERO
-    description: |
-      Base address field (32:63); see description of $BASE_LOW for more details.
+    description: This field must be set to zero.
 
+#
+# Used for IDT
+#
+
+- name: DESCRIPTOR_INTERRUPT_GATE_64
+  description: Interrupt Gate Descriptor (64-bit)
+  reference: Vol3A[6.14.1(64-Bit Mode IDT)]
+  type: struct
+  size: 128
+  fields:
+  - size: 16
+    name: OFFSET_LOW
+    description: Offset to procedure entry point (15:00).
+
+  - size: 16
+    name: SEGMENT_SELECTOR
+    description: Segment selector for destination code segment.
+
+  - size: 32
+    name: ''
+    type: bitfield
+    fields:
+    - bit: 0-2
+      name: INTERRUPT_STACK_TABLE
+      description: Index into the TSS Interrupt Stack Table.
+    
+    - bit: 3-7
+      name: MUST_BE_ZERO_0
+      description: This field must be set to zero.
+      
+    - bit: 8-11
+      name: TYPE
+      description: Indicates the segment or gate type.
+
+    - bit: 12
+      name: MUST_BE_ZERO_1
+      description: This field must be set to zero.
+    
+    - bit: 13-14
+      name: DESCRIPTOR_PRIVILEGE_LEVEL
+      description: Specifies the segment privilege level.
+
+    - bit: 15
+      name: PRESENT
+      description: Indicates whether the segment is present in memory (set) or not present (clear).
+    
+    - bit: 16-31
+      name: OFFSET_MIDDLE
+      description: Offset to procedure entry point (31:16).
+
+  - size: 32
+    name: OFFSET_HIGH
+    description: Offset to procedure entry point (63:32).
+  
+  - size: 32
+    name: RESERVED
 
 #
 # DESCRIPTOR_TYPE values.

@@ -5249,6 +5249,34 @@ typedef struct {
   uint32_t must_be_zero;
 } segment_descriptor_64;
 
+typedef struct {
+  uint16_t offset_low;
+  uint16_t segment_selector;
+  union {
+    struct {
+      uint32_t interrupt_stack_table                                 : 3;
+#define SEGMENT__INTERRUPT_STACK_TABLE                               0x07
+      uint32_t must_be_zero_0                                        : 5;
+#define SEGMENT__MUST_BE_ZERO_0                                      0xF8
+      uint32_t type                                                  : 4;
+#define SEGMENT__TYPE                                                0xF00
+      uint32_t must_be_zero_1                                        : 1;
+#define SEGMENT__MUST_BE_ZERO_1                                      0x1000
+      uint32_t descriptor_privilege_level                            : 2;
+#define SEGMENT__DESCRIPTOR_PRIVILEGE_LEVEL                          0x6000
+      uint32_t present                                               : 1;
+#define SEGMENT__PRESENT                                             0x8000
+      uint32_t offset_middle                                         : 16;
+#define SEGMENT__OFFSET_MIDDLE                                       0xFFFF0000
+    };
+
+    uint32_t Flags;
+  } ;
+
+  uint32_t offset_high;
+  uint32_t reserved;
+} segment_descriptor_interrupt_gate_64;
+
 #define SEGMENT_DESCRIPTOR_TYPE_SYSTEM                               0x00000000
 #define SEGMENT_DESCRIPTOR_TYPE_CODE_OR_DATA                         0x00000001
 /**
