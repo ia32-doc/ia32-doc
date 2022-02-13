@@ -3838,6 +3838,27 @@ typedef struct {
   uint32_t must_be_zero;
 } segment_descriptor_64;
 
+typedef struct {
+  uint16_t offset_low;
+  uint16_t segment_selector;
+  union {
+    struct {
+      uint32_t interrupt_stack_table                                 : 3;
+      uint32_t must_be_zero_0                                        : 5;
+      uint32_t type                                                  : 4;
+      uint32_t must_be_zero_1                                        : 1;
+      uint32_t descriptor_privilege_level                            : 2;
+      uint32_t present                                               : 1;
+      uint32_t offset_middle                                         : 16;
+    };
+
+    uint32_t flags;
+  } ;
+
+  uint32_t offset_high;
+  uint32_t reserved;
+} segment_descriptor_interrupt_gate_64;
+
 #define SEGMENT_DESCRIPTOR_TYPE_SYSTEM                               0x00000000
 #define SEGMENT_DESCRIPTOR_TYPE_CODE_OR_DATA                         0x00000001
 /**

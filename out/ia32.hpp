@@ -15720,10 +15720,105 @@ typedef struct
   uint32_t base_address_upper;
 
   /**
-   * Base address field (32:63); see description of $BASE_LOW for more details.
+   * This field must be set to zero.
    */
   uint32_t must_be_zero;
 } segment_descriptor_64;
+
+/**
+ * @brief Interrupt Gate Descriptor (64-bit)
+ *
+ * @see Vol3A[6.14.1(64-Bit Mode IDT)] (reference)
+ */
+typedef struct
+{
+  /**
+   * Offset to procedure entry point (15:00).
+   */
+  uint16_t offset_low;
+
+  /**
+   * Segment selector for destination code segment.
+   */
+  uint16_t segment_selector;
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 2:0] Index into the TSS Interrupt Stack Table.
+       */
+      uint32_t interrupt_stack_table                                 : 3;
+#define SEGMENT__INTERRUPT_STACK_TABLE_BIT                           0
+#define SEGMENT__INTERRUPT_STACK_TABLE_FLAG                          0x07
+#define SEGMENT__INTERRUPT_STACK_TABLE_MASK                          0x07
+#define SEGMENT__INTERRUPT_STACK_TABLE(_)                            (((_) >> 0) & 0x07)
+
+      /**
+       * [Bits 7:3] This field must be set to zero.
+       */
+      uint32_t must_be_zero_0                                        : 5;
+#define SEGMENT__MUST_BE_ZERO_0_BIT                                  3
+#define SEGMENT__MUST_BE_ZERO_0_FLAG                                 0xF8
+#define SEGMENT__MUST_BE_ZERO_0_MASK                                 0x1F
+#define SEGMENT__MUST_BE_ZERO_0(_)                                   (((_) >> 3) & 0x1F)
+
+      /**
+       * [Bits 11:8] Indicates the segment or gate type.
+       */
+      uint32_t type                                                  : 4;
+#define SEGMENT__TYPE_BIT                                            8
+#define SEGMENT__TYPE_FLAG                                           0xF00
+#define SEGMENT__TYPE_MASK                                           0x0F
+#define SEGMENT__TYPE(_)                                             (((_) >> 8) & 0x0F)
+
+      /**
+       * [Bit 12] This field must be set to zero.
+       */
+      uint32_t must_be_zero_1                                        : 1;
+#define SEGMENT__MUST_BE_ZERO_1_BIT                                  12
+#define SEGMENT__MUST_BE_ZERO_1_FLAG                                 0x1000
+#define SEGMENT__MUST_BE_ZERO_1_MASK                                 0x01
+#define SEGMENT__MUST_BE_ZERO_1(_)                                   (((_) >> 12) & 0x01)
+
+      /**
+       * [Bits 14:13] Specifies the segment privilege level.
+       */
+      uint32_t descriptor_privilege_level                            : 2;
+#define SEGMENT__DESCRIPTOR_PRIVILEGE_LEVEL_BIT                      13
+#define SEGMENT__DESCRIPTOR_PRIVILEGE_LEVEL_FLAG                     0x6000
+#define SEGMENT__DESCRIPTOR_PRIVILEGE_LEVEL_MASK                     0x03
+#define SEGMENT__DESCRIPTOR_PRIVILEGE_LEVEL(_)                       (((_) >> 13) & 0x03)
+
+      /**
+       * [Bit 15] Indicates whether the segment is present in memory (set) or not present (clear).
+       */
+      uint32_t present                                               : 1;
+#define SEGMENT__PRESENT_BIT                                         15
+#define SEGMENT__PRESENT_FLAG                                        0x8000
+#define SEGMENT__PRESENT_MASK                                        0x01
+#define SEGMENT__PRESENT(_)                                          (((_) >> 15) & 0x01)
+
+      /**
+       * [Bits 31:16] Offset to procedure entry point (31:16).
+       */
+      uint32_t offset_middle                                         : 16;
+#define SEGMENT__OFFSET_MIDDLE_BIT                                   16
+#define SEGMENT__OFFSET_MIDDLE_FLAG                                  0xFFFF0000
+#define SEGMENT__OFFSET_MIDDLE_MASK                                  0xFFFF
+#define SEGMENT__OFFSET_MIDDLE(_)                                    (((_) >> 16) & 0xFFFF)
+    };
+
+    uint32_t flags;
+  } ;
+
+
+  /**
+   * Offset to procedure entry point (63:32).
+   */
+  uint32_t offset_high;
+  uint32_t reserved;
+} segment_descriptor_interrupt_gate_64;
 
 #define SEGMENT_DESCRIPTOR_TYPE_SYSTEM                               0x00000000
 #define SEGMENT_DESCRIPTOR_TYPE_CODE_OR_DATA                         0x00000001
