@@ -8,3 +8,73 @@
   - Descriptor
   - DescriptorTypes
   - Selector
+
+#
+# Used for TSS
+#
+- name: TASK_STATE_SEGMENT_64
+  description: Task State Segment (64-bit)
+  reference: Vol3C[7.7(Task Management in 64-bit Mode)]
+  type: struct
+  tag: Packed
+  size: 832
+  fields:
+  - name: RESERVED_0
+    size: 32
+    description: Reserved bits. Set to 0.
+  
+  - name: RSP0
+    size: 64
+    description: Stack pointer for privilege level 0.
+
+  - name: RSP1
+    size: 64
+    description: Stack pointer for privilege level 1.
+
+  - name: RSP2
+    size: 64
+    description: Stack pointer for privilege level 2.
+
+  - name: RESERVED_1
+    size: 64
+    description: Reserved bits. Set to 0.
+  
+  - name: IST1
+    size: 64
+    description: Interrupt stack table pointer (1).
+  
+  - name: IST2
+    size: 64
+    description: Interrupt stack table pointer (2).
+  
+  - name: IST3
+    size: 64
+    description: Interrupt stack table pointer (3).
+  
+  - name: IST4
+    size: 64
+    description: Interrupt stack table pointer (4).
+  
+  - name: IST5
+    size: 64
+    description: Interrupt stack table pointer (5).
+  
+  - name: IST6
+    size: 64
+    description: Interrupt stack table pointer (6).
+  
+  - name: IST7
+    size: 64
+    description: Interrupt stack table pointer (7).
+  
+  - name: RESERVED_2
+    size: 64
+    description: Reserved bits. Set to 0.
+
+  - name: RESERVED_3
+    size: 16
+    description: Reserved bits. Set to 0.
+  
+  - name: IO_MAP_BASE
+    size: 16
+    description: The 16-bit offset to the I/O permission bit map from the 64-bit TSS base.

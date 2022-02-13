@@ -16090,6 +16090,91 @@ typedef union
  */
 
 /**
+ * @brief Task State Segment (64-bit)
+ *
+ * @see Vol3C[7.7(Task Management in 64-bit Mode)] (reference)
+ */
+#pragma pack(push, 1)
+typedef struct
+{
+  /**
+   * Reserved bits. Set to 0.
+   */
+  UINT32 Reserved0;
+
+  /**
+   * Stack pointer for privilege level 0.
+   */
+  UINT64 Rsp0;
+
+  /**
+   * Stack pointer for privilege level 1.
+   */
+  UINT64 Rsp1;
+
+  /**
+   * Stack pointer for privilege level 2.
+   */
+  UINT64 Rsp2;
+
+  /**
+   * Reserved bits. Set to 0.
+   */
+  UINT64 Reserved1;
+
+  /**
+   * Interrupt stack table pointer (1).
+   */
+  UINT64 Ist1;
+
+  /**
+   * Interrupt stack table pointer (2).
+   */
+  UINT64 Ist2;
+
+  /**
+   * Interrupt stack table pointer (3).
+   */
+  UINT64 Ist3;
+
+  /**
+   * Interrupt stack table pointer (4).
+   */
+  UINT64 Ist4;
+
+  /**
+   * Interrupt stack table pointer (5).
+   */
+  UINT64 Ist5;
+
+  /**
+   * Interrupt stack table pointer (6).
+   */
+  UINT64 Ist6;
+
+  /**
+   * Interrupt stack table pointer (7).
+   */
+  UINT64 Ist7;
+
+  /**
+   * Reserved bits. Set to 0.
+   */
+  UINT64 Reserved2;
+
+  /**
+   * Reserved bits. Set to 0.
+   */
+  UINT16 Reserved3;
+
+  /**
+   * The 16-bit offset to the I/O permission bit map from the 64-bit TSS base.
+   */
+  UINT16 IoMapBase;
+} TASK_STATE_SEGMENT_64;
+#pragma pack(pop)
+
+/**
  * @defgroup VMX \
  *           VMX
  * @{
