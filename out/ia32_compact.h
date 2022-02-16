@@ -1875,6 +1875,43 @@ typedef struct {
 
 } cpuid_eax_80000007;
 
+#define CPUID_EXTENDED_VIRT_PHYS_ADDRESS_SIZE                        0x80000008
+typedef struct {
+  union {
+    struct {
+      uint32_t number_of_physical_address_bits                       : 8;
+      uint32_t number_of_linear_address_bits                         : 8;
+    };
+
+    uint32_t flags;
+  } eax;
+
+  union {
+    struct {
+      uint32_t reserved                                              : 32;
+    };
+
+    uint32_t flags;
+  } ebx;
+
+  union {
+    struct {
+      uint32_t reserved                                              : 32;
+    };
+
+    uint32_t flags;
+  } ecx;
+
+  union {
+    struct {
+      uint32_t reserved                                              : 32;
+    };
+
+    uint32_t flags;
+  } edx;
+
+} cpuid_eax_80000008;
+
 /**
  * @}
  */
