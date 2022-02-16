@@ -6353,6 +6353,96 @@ typedef struct
 
 } CPUID_EAX_80000007;
 
+
+/**
+ * Extended Function CPUID Information.
+ */
+#define CPUID_EXTENDED_VIRTUAL_PHYSICAL_ADDRESS_SIZE                 0x80000008
+typedef struct
+{
+  /**
+   * @brief Linear/Physical Address size
+   */
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 7:0] Number of Physical Address Bits.
+       */
+      UINT32 NumberOfPhysicalAddressBits                           : 8;
+#define CPUID_EAX_NUMBER_OF_PHYSICAL_ADDRESS_BITS_BIT                0
+#define CPUID_EAX_NUMBER_OF_PHYSICAL_ADDRESS_BITS_FLAG               0xFF
+#define CPUID_EAX_NUMBER_OF_PHYSICAL_ADDRESS_BITS_MASK               0xFF
+#define CPUID_EAX_NUMBER_OF_PHYSICAL_ADDRESS_BITS(_)                 (((_) >> 0) & 0xFF)
+
+      /**
+       * [Bits 15:8] Number of Linear Address Bits.
+       */
+      UINT32 NumberOfLinearAddressBits                             : 8;
+#define CPUID_EAX_NUMBER_OF_LINEAR_ADDRESS_BITS_BIT                  8
+#define CPUID_EAX_NUMBER_OF_LINEAR_ADDRESS_BITS_FLAG                 0xFF00
+#define CPUID_EAX_NUMBER_OF_LINEAR_ADDRESS_BITS_MASK                 0xFF
+#define CPUID_EAX_NUMBER_OF_LINEAR_ADDRESS_BITS(_)                   (((_) >> 8) & 0xFF)
+      UINT32 Reserved1                                             : 16;
+    };
+
+    UINT32 Flags;
+  } Eax;
+
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 31:0] EBX is reserved.
+       */
+      UINT32 Reserved                                              : 32;
+#define CPUID_EBX_RESERVED_BIT                                       0
+#define CPUID_EBX_RESERVED_FLAG                                      0xFFFFFFFF
+#define CPUID_EBX_RESERVED_MASK                                      0xFFFFFFFF
+#define CPUID_EBX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
+    };
+
+    UINT32 Flags;
+  } Ebx;
+
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 31:0] ECX is reserved.
+       */
+      UINT32 Reserved                                              : 32;
+#define CPUID_ECX_RESERVED_BIT                                       0
+#define CPUID_ECX_RESERVED_FLAG                                      0xFFFFFFFF
+#define CPUID_ECX_RESERVED_MASK                                      0xFFFFFFFF
+#define CPUID_ECX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
+    };
+
+    UINT32 Flags;
+  } Ecx;
+
+  union
+  {
+    struct
+    {
+      /**
+       * [Bits 31:0] EDX is reserved.
+       */
+      UINT32 Reserved                                              : 32;
+#define CPUID_EDX_RESERVED_BIT                                       0
+#define CPUID_EDX_RESERVED_FLAG                                      0xFFFFFFFF
+#define CPUID_EDX_RESERVED_MASK                                      0xFFFFFFFF
+#define CPUID_EDX_RESERVED(_)                                        (((_) >> 0) & 0xFFFFFFFF)
+    };
+
+    UINT32 Flags;
+  } Edx;
+
+} CPUID_EAX_80000008;
+
 /**
  * @}
  */
