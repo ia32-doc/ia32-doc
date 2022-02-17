@@ -86,26 +86,32 @@ typedef union {
 #define CR4_OS_XMM_EXCEPTION_SUPPORT                                 0x400
     uint64_t usermode_instruction_prevention                         : 1;
 #define CR4_USERMODE_INSTRUCTION_PREVENTION                          0x800
-    uint64_t reserved_1                                              : 1;
+    uint64_t la57_enable                                             : 1;
+#define CR4_LA57_ENABLE                                              0x1000
     uint64_t vmx_enable                                              : 1;
 #define CR4_VMX_ENABLE                                               0x2000
     uint64_t smx_enable                                              : 1;
 #define CR4_SMX_ENABLE                                               0x4000
-    uint64_t reserved_2                                              : 1;
+    uint64_t reserved_1                                              : 1;
     uint64_t fsgsbase_enable                                         : 1;
 #define CR4_FSGSBASE_ENABLE                                          0x10000
     uint64_t pcid_enable                                             : 1;
 #define CR4_PCID_ENABLE                                              0x20000
     uint64_t os_xsave                                                : 1;
 #define CR4_OS_XSAVE                                                 0x40000
-    uint64_t reserved_3                                              : 1;
+    uint64_t kl_enable                                               : 1;
+#define CR4_KL_ENABLE                                                0x80000
     uint64_t smep_enable                                             : 1;
 #define CR4_SMEP_ENABLE                                              0x100000
     uint64_t smap_enable                                             : 1;
 #define CR4_SMAP_ENABLE                                              0x200000
     uint64_t protection_key_enable                                   : 1;
 #define CR4_PROTECTION_KEY_ENABLE                                    0x400000
-    uint64_t reserved_4                                              : 41;
+    uint64_t cet_enable                                              : 1;
+#define CR4_CET_ENABLE                                               0x800000
+    uint64_t pks_enable                                              : 1;
+#define CR4_PKS_ENABLE                                               0x1000000
+    uint64_t reserved_2                                              : 39;
   };
 
   uint64_t Flags;

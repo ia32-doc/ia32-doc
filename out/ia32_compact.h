@@ -58,17 +58,19 @@ typedef union {
     uint64_t os_fxsave_fxrstor_support                               : 1;
     uint64_t os_xmm_exception_support                                : 1;
     uint64_t usermode_instruction_prevention                         : 1;
-    uint64_t reserved_1                                              : 1;
+    uint64_t la57_enable                                             : 1;
     uint64_t vmx_enable                                              : 1;
     uint64_t smx_enable                                              : 1;
-    uint64_t reserved_2                                              : 1;
+    uint64_t reserved_1                                              : 1;
     uint64_t fsgsbase_enable                                         : 1;
     uint64_t pcid_enable                                             : 1;
     uint64_t os_xsave                                                : 1;
-    uint64_t reserved_3                                              : 1;
+    uint64_t kl_enable                                               : 1;
     uint64_t smep_enable                                             : 1;
     uint64_t smap_enable                                             : 1;
     uint64_t protection_key_enable                                   : 1;
+    uint64_t cet_enable                                              : 1;
+    uint64_t pks_enable                                              : 1;
   };
 
   uint64_t flags;
