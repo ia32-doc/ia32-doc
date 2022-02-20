@@ -5528,6 +5528,23 @@ typedef union {
  * @}
  */
 
+typedef union {
+  struct {
+    uint64_t x87                                                     : 1;
+    uint64_t sse                                                     : 1;
+    uint64_t avx                                                     : 1;
+    uint64_t bndreg                                                  : 1;
+    uint64_t bndcsr                                                  : 1;
+    uint64_t opmask                                                  : 1;
+    uint64_t zmm_hi256                                               : 1;
+    uint64_t zmm_hi16                                                : 1;
+    uint64_t reserved_1                                              : 1;
+    uint64_t pkru                                                    : 1;
+  };
+
+  uint64_t flags;
+} xcr0;
+
 /**
  * @defgroup vtd \
  *           VTD
