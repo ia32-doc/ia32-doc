@@ -1,0 +1,54 @@
+- name: XCR0
+  type: bitfield
+  size: 64
+  fields:
+  - bit: 0
+    name: X87
+    long_description: |
+      This bit 0 must be 1. An attempt to write 0 to this bit causes a general-protection exception.
+  
+  - bit: 1
+    name: SSE
+    long_description: |
+      If 1, the XSAVE feature set can be used to manage MXCSR and the XMM registers (XMM0-XMM15 in
+      64-bit mode; otherwise XMM0-XMM7).
+  
+  - bit: 2
+    name: AVX
+    long_description: |
+      If 1, AVX instructions can be executed and the XSAVE feature set can be used to manage the
+      upper halves of the YMM registers (YMM0-YMM15 in 64-bit mode; otherwise YMM0-YMM7).
+  
+  - bit: 3
+    name: BNDREG
+    long_description: |
+      If 1, MPX instructions can be executed and the XSAVE feature set can be used to manage the
+      bounds registers BND0-BND3.
+  
+  - bit: 4
+    name: BNDCSR
+    long_description: |
+      If 1, MPX instructions can be executed and the XSAVE feature set can be used to manage the
+      BNDCFGU and BNDSTATUS registers.
+  
+  - bit: 5
+    name: OPMASK
+    long_description: |
+      If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage
+      the opmask registers k0-k7.
+  
+  - bit: 6
+    name: ZMM_HI256
+    long_description: |
+      If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage
+      the upper halves of the lower ZMM registers (ZMM0-ZMM15 in 64-bit mode; otherwise ZMM0-ZMM7).
+  
+  - bit: 7
+    name: ZMM_HI16
+    long_description: |
+      If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage
+      the upper ZMM registers (ZMM16-ZMM31, oonly in 64-bit mode).
+  
+  - bit: 9
+    name: PKRU
+    description: If 1, the XSAVE feature set can be used to manage the PKRU register.

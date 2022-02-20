@@ -6683,6 +6683,33 @@ typedef union {
  * @}
  */
 
+typedef union {
+  struct {
+    uint64_t x87                                                     : 1;
+#define XCR0_X87                                                     0x01
+    uint64_t sse                                                     : 1;
+#define XCR0_SSE                                                     0x02
+    uint64_t avx                                                     : 1;
+#define XCR0_AVX                                                     0x04
+    uint64_t bndreg                                                  : 1;
+#define XCR0_BNDREG                                                  0x08
+    uint64_t bndcsr                                                  : 1;
+#define XCR0_BNDCSR                                                  0x10
+    uint64_t opmask                                                  : 1;
+#define XCR0_OPMASK                                                  0x20
+    uint64_t zmm_hi256                                               : 1;
+#define XCR0_ZMM_HI256                                               0x40
+    uint64_t zmm_hi16                                                : 1;
+#define XCR0_ZMM_HI16                                                0x80
+    uint64_t reserved_1                                              : 1;
+    uint64_t pkru                                                    : 1;
+#define XCR0_PKRU                                                    0x200
+    uint64_t reserved_2                                              : 54;
+  };
+
+  uint64_t Flags;
+} xcr0;
+
 /**
  * @}
  */

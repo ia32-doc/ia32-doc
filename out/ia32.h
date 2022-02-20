@@ -22035,6 +22035,104 @@ typedef union
  * @}
  */
 
+typedef union
+{
+  struct
+  {
+    /**
+     * [Bit 0] This bit 0 must be 1. An attempt to write 0 to this bit causes a general-protection exception.
+     */
+    UINT64 X87                                                     : 1;
+#define XCR0_X87_BIT                                                 0
+#define XCR0_X87_FLAG                                                0x01
+#define XCR0_X87_MASK                                                0x01
+#define XCR0_X87(_)                                                  (((_) >> 0) & 0x01)
+
+    /**
+     * [Bit 1] If 1, the XSAVE feature set can be used to manage MXCSR and the XMM registers (XMM0-XMM15 in 64-bit mode;
+     * otherwise XMM0-XMM7).
+     */
+    UINT64 Sse                                                     : 1;
+#define XCR0_SSE_BIT                                                 1
+#define XCR0_SSE_FLAG                                                0x02
+#define XCR0_SSE_MASK                                                0x01
+#define XCR0_SSE(_)                                                  (((_) >> 1) & 0x01)
+
+    /**
+     * [Bit 2] If 1, AVX instructions can be executed and the XSAVE feature set can be used to manage the upper halves of the
+     * YMM registers (YMM0-YMM15 in 64-bit mode; otherwise YMM0-YMM7).
+     */
+    UINT64 Avx                                                     : 1;
+#define XCR0_AVX_BIT                                                 2
+#define XCR0_AVX_FLAG                                                0x04
+#define XCR0_AVX_MASK                                                0x01
+#define XCR0_AVX(_)                                                  (((_) >> 2) & 0x01)
+
+    /**
+     * [Bit 3] If 1, MPX instructions can be executed and the XSAVE feature set can be used to manage the bounds registers
+     * BND0-BND3.
+     */
+    UINT64 Bndreg                                                  : 1;
+#define XCR0_BNDREG_BIT                                              3
+#define XCR0_BNDREG_FLAG                                             0x08
+#define XCR0_BNDREG_MASK                                             0x01
+#define XCR0_BNDREG(_)                                               (((_) >> 3) & 0x01)
+
+    /**
+     * [Bit 4] If 1, MPX instructions can be executed and the XSAVE feature set can be used to manage the BNDCFGU and BNDSTATUS
+     * registers.
+     */
+    UINT64 Bndcsr                                                  : 1;
+#define XCR0_BNDCSR_BIT                                              4
+#define XCR0_BNDCSR_FLAG                                             0x10
+#define XCR0_BNDCSR_MASK                                             0x01
+#define XCR0_BNDCSR(_)                                               (((_) >> 4) & 0x01)
+
+    /**
+     * [Bit 5] If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage the opmask registers
+     * k0-k7.
+     */
+    UINT64 Opmask                                                  : 1;
+#define XCR0_OPMASK_BIT                                              5
+#define XCR0_OPMASK_FLAG                                             0x20
+#define XCR0_OPMASK_MASK                                             0x01
+#define XCR0_OPMASK(_)                                               (((_) >> 5) & 0x01)
+
+    /**
+     * [Bit 6] If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage the upper halves of
+     * the lower ZMM registers (ZMM0-ZMM15 in 64-bit mode; otherwise ZMM0-ZMM7).
+     */
+    UINT64 ZmmHi256                                                : 1;
+#define XCR0_ZMM_HI256_BIT                                           6
+#define XCR0_ZMM_HI256_FLAG                                          0x40
+#define XCR0_ZMM_HI256_MASK                                          0x01
+#define XCR0_ZMM_HI256(_)                                            (((_) >> 6) & 0x01)
+
+    /**
+     * [Bit 7] If 1, AVX-512 instructions can be executed and the XSAVE feature set can be used to manage the upper ZMM
+     * registers (ZMM16-ZMM31, oonly in 64-bit mode).
+     */
+    UINT64 ZmmHi16                                                 : 1;
+#define XCR0_ZMM_HI16_BIT                                            7
+#define XCR0_ZMM_HI16_FLAG                                           0x80
+#define XCR0_ZMM_HI16_MASK                                           0x01
+#define XCR0_ZMM_HI16(_)                                             (((_) >> 7) & 0x01)
+    UINT64 Reserved1                                               : 1;
+
+    /**
+     * [Bit 9] If 1, the XSAVE feature set can be used to manage the PKRU register.
+     */
+    UINT64 Pkru                                                    : 1;
+#define XCR0_PKRU_BIT                                                9
+#define XCR0_PKRU_FLAG                                               0x200
+#define XCR0_PKRU_MASK                                               0x01
+#define XCR0_PKRU(_)                                                 (((_) >> 9) & 0x01)
+    UINT64 Reserved2                                               : 54;
+  };
+
+  UINT64 Flags;
+} XCR0;
+
 /**
  * @}
  */
