@@ -4691,7 +4691,8 @@ typedef union {
     uint64_t page_walk_length                                        : 3;
 #define EPT_PAGE_WALK_LENGTH_4                                       0x00000003
     uint64_t enable_access_and_dirty_flags                           : 1;
-    uint64_t reserved_1                                              : 5;
+    uint64_t enable_supervisor_shadow_stack_pages                    : 1;
+    uint64_t reserved_1                                              : 4;
     uint64_t page_frame_number                                       : 36;
   };
 
