@@ -19925,7 +19925,18 @@ typedef union
 #define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_FLAG               0x40
 #define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS_MASK               0x01
 #define EPT_POINTER_ENABLE_ACCESS_AND_DIRTY_FLAGS(_)                 (((_) >> 6) & 0x01)
-    uint64_t reserved1                                               : 5;
+
+    /**
+     * [Bit 7] Setting this control to 1 enables enforcement of access rights for supervisor shadow-stack pages.
+     *
+     * @see Vol3C[28.3.3.2(EPT Violations)]
+     */
+    uint64_t enable_supervisor_shadow_stack_pages                    : 1;
+#define EPT_POINTER_ENABLE_SUPERVISOR_SHADOW_STACK_PAGES_BIT         7
+#define EPT_POINTER_ENABLE_SUPERVISOR_SHADOW_STACK_PAGES_FLAG        0x80
+#define EPT_POINTER_ENABLE_SUPERVISOR_SHADOW_STACK_PAGES_MASK        0x01
+#define EPT_POINTER_ENABLE_SUPERVISOR_SHADOW_STACK_PAGES(_)          (((_) >> 7) & 0x01)
+    uint64_t reserved1                                               : 4;
 
     /**
      * [Bits 47:12] Bits N-1:12 of the physical address of the 4-KByte aligned EPT PML4 table.
