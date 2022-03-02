@@ -48,6 +48,14 @@
       description: Setting this control to 1 enables accessed and dirty flags for EPT.
       see: Vol3C[28.2.4(Accessed and Dirty Flags for EPT)]
 
+    - bit: 7
+      short_name: ENABLE_SUPERVISOR_SHADOW_STACK_PAGES
+      long_name: ENABLE_SUPERVISOR_SHADOW_STACK_PAGES
+      description: |
+        Setting this control to 1 enables enforcement of access rights for supervisor
+        shadow-stack pages.
+      see: Vol3C[28.3.3.2(EPT Violations)]
+
     - bit: 12-(MAXPHYADDR-1)
       short_name: PFN
       long_name: PAGE_FRAME_NUMBER
