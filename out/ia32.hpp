@@ -8798,15 +8798,7 @@ typedef union
 {
   struct
   {
-    /**
-     * [Bits 7:0] Specifies the memory type for the range.
-     */
-    uint64_t type                                                    : 8;
-#define IA32_MTRR_PHYSMASK_TYPE_BIT                                  0
-#define IA32_MTRR_PHYSMASK_TYPE_FLAG                                 0xFF
-#define IA32_MTRR_PHYSMASK_TYPE_MASK                                 0xFF
-#define IA32_MTRR_PHYSMASK_TYPE(_)                                   (((_) >> 0) & 0xFF)
-    uint64_t reserved1                                               : 3;
+    uint64_t reserved1                                               : 11;
 
     /**
      * [Bit 11] Enables the register pair when set; disables register pair when clear.

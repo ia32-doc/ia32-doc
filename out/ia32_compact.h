@@ -2345,8 +2345,7 @@ typedef union {
  */
 typedef union {
   struct {
-    uint64_t type                                                    : 8;
-    uint64_t reserved_1                                              : 3;
+    uint64_t reserved_1                                              : 11;
     uint64_t valid                                                   : 1;
     uint64_t physical_addres_mask                                    : 36;
   };

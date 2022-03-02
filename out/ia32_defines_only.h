@@ -2990,9 +2990,7 @@ typedef union {
  */
 typedef union {
   struct {
-    uint64_t type                                                    : 8;
-#define IA32_MTRR_PHYSMASK_TYPE                                      0xFF
-    uint64_t reserved_1                                              : 3;
+    uint64_t reserved_1                                              : 11;
     uint64_t valid                                                   : 1;
 #define IA32_MTRR_PHYSMASK_VALID                                     0x800
     uint64_t physical_addres_mask                                    : 36;
