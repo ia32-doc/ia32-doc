@@ -6676,7 +6676,7 @@ typedef union {
  */
 #define VMCS_EXIT_QUALIFICATION                                      0x00006400
 #define VMCS_IO_RCX                                                  0x00006402
-#define VMCS_IO_RSX                                                  0x00006404
+#define VMCS_IO_RSI                                                  0x00006404
 #define VMCS_IO_RDI                                                  0x00006406
 #define VMCS_IO_RIP                                                  0x00006408
 #define VMCS_EXIT_GUEST_LINEAR_ADDR                                  0x0000640A

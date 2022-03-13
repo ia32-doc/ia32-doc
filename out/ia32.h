@@ -21971,7 +21971,7 @@ typedef union
 /**
  * I/O RSI.
  */
-#define VMCS_IO_RSX                                                  0x00006404
+#define VMCS_IO_RSI                                                  0x00006404
 
 /**
  * I/O RDI.
