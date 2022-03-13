@@ -922,8 +922,8 @@
           description: I/O RCX.
 
         - value: 0x6404
-          short_name: IO_RSX
-          long_name: IO_RSX
+          short_name: IO_RSI
+          long_name: IO_RSI
           description: I/O RSI.
 
         - value: 0x6406
