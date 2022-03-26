@@ -10188,21 +10188,34 @@ typedef union
  * @remarks If CPUID.0AH: EAX[7:0] > 0
  */
 #define IA32_PERF_GLOBAL_CTRL                                        0x0000038F
-typedef struct
+typedef union
 {
-  /**
-   * EN_PMC(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
-   *
-   * @remarks If CPUID.0AH: EAX[15:8] > n
-   */
-  uint32_t en_pmcn;
+  struct
+  {
+    /**
+     * [Bits 31:0] EN_PMC(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EAX[15:8] > n
+     */
+    uint64_t en_pmcn                                                 : 32;
+#define IA32_PERF_GLOBAL_CTRL_EN_PMCN_BIT                            0
+#define IA32_PERF_GLOBAL_CTRL_EN_PMCN_FLAG                           0xFFFFFFFF
+#define IA32_PERF_GLOBAL_CTRL_EN_PMCN_MASK                           0xFFFFFFFF
+#define IA32_PERF_GLOBAL_CTRL_EN_PMCN(_)                             (((_) >> 0) & 0xFFFFFFFF)
 
-  /**
-   * EN_FIXED_CTR(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
-   *
-   * @remarks If CPUID.0AH: EDX[4:0] > n
-   */
-  uint32_t en_fixed_ctrn;
+    /**
+     * [Bits 63:32] EN_FIXED_CTR(n). Enable bitmask. Only the first n-1 bits are valid. Bits 31:n are reserved.
+     *
+     * @remarks If CPUID.0AH: EDX[4:0] > n
+     */
+    uint64_t en_fixed_ctrn                                           : 32;
+#define IA32_PERF_GLOBAL_CTRL_EN_FIXED_CTRN_BIT                      32
+#define IA32_PERF_GLOBAL_CTRL_EN_FIXED_CTRN_FLAG                     0xFFFFFFFF00000000
+#define IA32_PERF_GLOBAL_CTRL_EN_FIXED_CTRN_MASK                     0xFFFFFFFF
+#define IA32_PERF_GLOBAL_CTRL_EN_FIXED_CTRN(_)                       (((_) >> 32) & 0xFFFFFFFF)
+  };
+
+  uint64_t flags;
 } ia32_perf_global_ctrl_register;
 
 

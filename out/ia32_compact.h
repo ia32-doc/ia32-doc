@@ -2693,9 +2693,13 @@ typedef union {
 } ia32_perf_global_status_register;
 
 #define IA32_PERF_GLOBAL_CTRL                                        0x0000038F
-typedef struct {
-  uint32_t en_pmcn;
-  uint32_t en_fixed_ctrn;
+typedef union {
+  struct {
+    uint64_t en_pmcn                                                 : 32;
+    uint64_t en_fixed_ctrn                                           : 32;
+  };
+
+  uint64_t flags;
 } ia32_perf_global_ctrl_register;
 
 #define IA32_PERF_GLOBAL_STATUS_RESET                                0x00000390
