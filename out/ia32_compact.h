@@ -5482,7 +5482,7 @@ typedef enum {
   machine_check                                                = 0x00000012,
   simd_floating_point_error                                    = 0x00000013,
   virtualization_exception                                     = 0x00000014,
-  control_protection_exception                                 = 0x00000015,
+  control_protection                                           = 0x00000015,
 } exception_vector;
 
 typedef union {

@@ -23305,7 +23305,7 @@ typedef enum
    * Source: Control flow transfer attempt violated the control flow enforcement technology constraints.
    * Error Code: Yes.
    */
-  ControlProtectionException                                   = 0x00000015,
+  ControlProtection                                            = 0x00000015,
 } EXCEPTION_VECTOR;
 
 /**
