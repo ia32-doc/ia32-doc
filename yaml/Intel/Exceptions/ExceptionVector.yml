@@ -214,7 +214,7 @@
 
   - value: 21
     short_name: CP
-    long_name: CONTROL_PROTECTION_EXCEPTION
+    long_name: CONTROL_PROTECTION
     description: |
       #CP - Control Protection Exception.
 

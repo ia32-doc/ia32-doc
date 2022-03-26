@@ -6991,7 +6991,7 @@ typedef union {
 #define MACHINE_CHECK                                                0x00000012
 #define SIMD_FLOATING_POINT_ERROR                                    0x00000013
 #define VIRTUALIZATION_EXCEPTION                                     0x00000014
-#define CONTROL_PROTECTION_EXCEPTION                                 0x00000015
+#define CONTROL_PROTECTION                                           0x00000015
 /**
  * @}
  */
