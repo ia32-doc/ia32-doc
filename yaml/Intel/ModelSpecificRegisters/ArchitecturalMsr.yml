@@ -2452,10 +2452,10 @@
     If CPUID.0AH: EAX[7:0] > 0
   fields:
   - name_with_suffix: REGISTER
-    type: struct
+    type: bitfield
     size: 64
     fields:
-    - size: 32
+    - bit: 0-31
       name: EN_PMC(n)
       description: |
         EN_PMC(n). Enable bitmask. Only the first n-1 bits are valid.
@@ -2463,7 +2463,7 @@
       remarks: |
         If CPUID.0AH: EAX[15:8] > n
 
-    - size: 32
+    - bit: 32-63
       name: EN_FIXED_CTR(n)
       description: |
         EN_FIXED_CTR(n). Enable bitmask. Only the first n-1 bits are valid.
