@@ -48,7 +48,7 @@ class Doc(object):
             doc_list = Doc.doc_cache[path]
         else:
             print(f'Parsing "{path}"...', file=sys.stderr)
-            doc_list = yaml.load(open(path, encoding='utf-8').read())
+            doc_list = yaml.load(open(path, encoding='utf-8').read(), yaml.FullLoader)
 
             for doc in doc_list:
                 doc['path'] = path
