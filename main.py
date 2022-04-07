@@ -4,7 +4,6 @@ from ia32doc.doc import Doc
 from ia32doc.processors.c_processor import DocCProcessor
 from ia32doc.options import DocProcessorOptions
 
-ALL = True
 
 TEST = False
 TEST_CONFIG = 'conf/default.yml'
@@ -39,17 +38,18 @@ def main():
                         help='Configuration file')
 
     parser.add_argument('-f', '--file',
-                        type=str, required=True,
-                        help='YAML file to process')
+                        type=str, required=False,
+                        help='YAML file to process. If not specified, all known files are processed')
 
     args = parser.parse_args()
-    process(args.config, args.file)
+    if args.file:
+        process(args.config, args.file)
+    else:
+        process_all()
 
 
 if __name__ == '__main__':
-    if ALL:
-        process_all()
-    elif TEST:
+    if TEST:
         test()
     else:
         main()
