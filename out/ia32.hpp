@@ -11390,7 +11390,15 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL_FLAG                   0x4000000
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL_MASK                   0x01
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL(_)                     (((_) >> 26) & 0x01)
-    uint64_t reserved6                                               : 1;
+
+    /**
+     * [Bit 27] This control determines whether UINV is cleared on VM exit.
+     */
+    uint64_t clear_uinv                                              : 1;
+#define IA32_VMX_EXIT_CTLS_CLEAR_UINV_BIT                            27
+#define IA32_VMX_EXIT_CTLS_CLEAR_UINV_FLAG                           0x8000000
+#define IA32_VMX_EXIT_CTLS_CLEAR_UINV_MASK                           0x01
+#define IA32_VMX_EXIT_CTLS_CLEAR_UINV(_)                             (((_) >> 27) & 0x01)
 
     /**
      * [Bit 28] This control determines whether CET-related MSRs and SPP are loaded on VM exit.
@@ -11411,7 +11419,15 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_FLAG                       0x20000000
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS_MASK                       0x01
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS(_)                         (((_) >> 29) & 0x01)
-    uint64_t reserved7                                               : 1;
+
+    /**
+     * [Bit 30] This control determines whether the IA32_PERF_GLOBAL_CTL MSR is saved on VM exit.
+     */
+    uint64_t save_ia32_perf_global_ctl                               : 1;
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PERF_GLOBAL_CTL_BIT             30
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PERF_GLOBAL_CTL_FLAG            0x40000000
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PERF_GLOBAL_CTL_MASK            0x01
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PERF_GLOBAL_CTL(_)              (((_) >> 30) & 0x01)
 
     /**
      * [Bit 31] This control determines whether the secondary VM-exit controls are used. If this control is 0, the logical
@@ -11422,7 +11438,7 @@ typedef union
 #define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS_FLAG          0x80000000
 #define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS_MASK          0x01
 #define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS(_)            (((_) >> 31) & 0x01)
-    uint64_t reserved8                                               : 32;
+    uint64_t reserved6                                               : 32;
   };
 
   uint64_t flags;
@@ -11559,7 +11575,15 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL_FLAG                  0x40000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL_MASK                  0x01
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL(_)                    (((_) >> 18) & 0x01)
-    uint64_t reserved4                                               : 1;
+
+    /**
+     * [Bit 19] This control determines whether UINV is loaded on VM entry.
+     */
+    uint64_t load_uinv                                               : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_UINV_BIT                            19
+#define IA32_VMX_ENTRY_CTLS_LOAD_UINV_FLAG                           0x80000
+#define IA32_VMX_ENTRY_CTLS_LOAD_UINV_MASK                           0x01
+#define IA32_VMX_ENTRY_CTLS_LOAD_UINV(_)                             (((_) >> 19) & 0x01)
 
     /**
      * [Bit 20] This control determines whether CET-related MSRs and SPP are loaded on VM entry.
@@ -11587,7 +11611,7 @@ typedef union
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_FLAG                      0x400000
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS_MASK                      0x01
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS(_)                        (((_) >> 22) & 0x01)
-    uint64_t reserved5                                               : 41;
+    uint64_t reserved4                                               : 41;
   };
 
   uint64_t flags;
@@ -12126,7 +12150,17 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_FLAG                  0x100000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES_MASK                  0x01
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES(_)                    (((_) >> 20) & 0x01)
-    uint64_t reserved1                                               : 1;
+
+    /**
+     * [Bit 21] If this control is 1, PASID translation is performed for executions of ENQCMD and ENQCMDS.
+     *
+     * @see Vol3C[27.5.8(PASID Translation)]
+     */
+    uint64_t enable_pasid_translation                                : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PASID_TRANSLATION_BIT        21
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PASID_TRANSLATION_FLAG       0x200000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PASID_TRANSLATION_MASK       0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PASID_TRANSLATION(_)         (((_) >> 21) & 0x01)
 
     /**
      * [Bit 22] If this control is 1, EPT execute permissions are based on whether the linear address being accessed is
@@ -12188,7 +12222,17 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE_FLAG         0x4000000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE_MASK         0x01
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE(_)           (((_) >> 26) & 0x01)
-    uint64_t reserved2                                               : 1;
+
+    /**
+     * @brief Enables the PCONFIG instruction
+     *
+     * [Bit 27] If this control is 0, any execution of PCONFIG causes a \#UD.
+     */
+    uint64_t enable_pconfig                                          : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PCONFIG_BIT                  27
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PCONFIG_FLAG                 0x8000000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PCONFIG_MASK                 0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PCONFIG(_)                   (((_) >> 27) & 0x01)
 
     /**
      * @brief Enables ENCLV VM-exits
@@ -12204,7 +12248,36 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING_FLAG           0x10000000
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING_MASK           0x01
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING(_)             (((_) >> 28) & 0x01)
-    uint64_t reserved3                                               : 35;
+    uint64_t reserved1                                               : 1;
+
+    /**
+     * @brief Enables VM-exits on bus lock assertions
+     *
+     * [Bit 30] This control determines whether assertion of a bus lock causes a VM exit.
+     *
+     * @see Vol3C[27.2(OTHER CAUSES OF VM EXIT)]
+     */
+    uint64_t enable_vmm_bus_lock_detection                           : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VMM_BUS_LOCK_DETECTION_BIT   30
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VMM_BUS_LOCK_DETECTION_FLAG  0x40000000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VMM_BUS_LOCK_DETECTION_MASK  0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VMM_BUS_LOCK_DETECTION(_)    (((_) >> 30) & 0x01)
+
+    /**
+     * @brief Enables VM-exits on instructions that block for a certain amount of time
+     *
+     * [Bit 31] If this control is 1, a VM exit occurs if certain operations prevent the processor from reaching an instruction
+     * boundary within a specified amount of time.
+     *
+     * @see Vol3C[26.6.25(Instruction-Timeout Contro)]
+     * @see Vol3C[27.2(OTHER CAUSES OF VM EXIT)]
+     */
+    uint64_t enable_instruction_timeout_exit                         : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INSTRUCTION_TIMEOUT_EXIT_BIT 31
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INSTRUCTION_TIMEOUT_EXIT_FLAG 0x80000000
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INSTRUCTION_TIMEOUT_EXIT_MASK 0x01
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INSTRUCTION_TIMEOUT_EXIT(_)  (((_) >> 31) & 0x01)
+    uint64_t reserved2                                               : 32;
   };
 
   uint64_t flags;
@@ -12571,7 +12644,47 @@ typedef union
 #define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING_FLAG                   0x08
 #define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING_MASK                   0x01
 #define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING(_)                     (((_) >> 3) & 0x01)
-    uint64_t reserved1                                               : 60;
+
+    /**
+     * @brief Enables virtualization of IPIs
+     *
+     * [Bit 4] If this control is 1, virtualization of interprocessor interrupts (IPIs) is enabled.
+     *
+     * @see Vol3C[31.1.6(IPI Virtualization)]
+     */
+    uint64_t enable_ipi_virtualization                               : 1;
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_IPI_VIRTUALIZATION_BIT       4
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_IPI_VIRTUALIZATION_FLAG      0x10
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_IPI_VIRTUALIZATION_MASK      0x01
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_IPI_VIRTUALIZATION(_)        (((_) >> 4) & 0x01)
+    uint64_t reserved1                                               : 1;
+
+    /**
+     * @brief Enables RDMSRLIST/WRMSRLIST instructions
+     *
+     * [Bit 6] If this control is 0, any execution of RDMSRLIST or WRMSRLIST causes a \#UD.
+     */
+    uint64_t enable_rdmsrlist_wrmsrlist                              : 1;
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_RDMSRLIST_WRMSRLIST_BIT      6
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_RDMSRLIST_WRMSRLIST_FLAG     0x40
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_RDMSRLIST_WRMSRLIST_MASK     0x01
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_RDMSRLIST_WRMSRLIST(_)       (((_) >> 6) & 0x01)
+
+    /**
+     * @brief Changes access to the IA32_SPEC_CTRL MSR
+     *
+     * [Bit 7] If this control is 1, the operation of the RDMSR and WRMSR instructions is changed when accessing the
+     * IA32_SPEC_CTRL MSR.
+     *
+     * @see Vol3C[26.6.26(Fields Controlling Virtualization of the IA32_SPEC_CTRL MSR)]
+     * @see Vol3C[27.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
+     */
+    uint64_t virtualize_ia32_spec_ctrl                               : 1;
+#define IA32_VMX_PROCBASED_CTLS3_VIRTUALIZE_IA32_SPEC_CTRL_BIT       7
+#define IA32_VMX_PROCBASED_CTLS3_VIRTUALIZE_IA32_SPEC_CTRL_FLAG      0x80
+#define IA32_VMX_PROCBASED_CTLS3_VIRTUALIZE_IA32_SPEC_CTRL_MASK      0x01
+#define IA32_VMX_PROCBASED_CTLS3_VIRTUALIZE_IA32_SPEC_CTRL(_)        (((_) >> 7) & 0x01)
+    uint64_t reserved2                                               : 56;
   };
 
   uint64_t flags;
@@ -12590,11 +12703,22 @@ typedef union
 {
   struct
   {
-    uint64_t reserved                                                : 64;
-#define IA32_VMX_EXIT_CTLS2_RESERVED_BIT                             0
-#define IA32_VMX_EXIT_CTLS2_RESERVED_FLAG                            0xFFFFFFFFFFFFFFFF
-#define IA32_VMX_EXIT_CTLS2_RESERVED_MASK                            0xFFFFFFFFFFFFFFFF
-#define IA32_VMX_EXIT_CTLS2_RESERVED(_)                              (((_) >> 0) & 0xFFFFFFFFFFFFFFFF)
+    uint64_t reserved1                                               : 3;
+
+    /**
+     * @brief Enables indication of when a VM-exit causes a shadow stack to become prematurely busy
+     *
+     * [Bit 3] If this control is 1, VM exits that cause a shadow stack to become prematurely busy indicate this fact and save
+     * additional information into the VMCS.
+     *
+     * @see Vol1[18.2.3(Supervisor Shadow Stack Token)]
+     */
+    uint64_t enable_prematurely_busy_shadow_stack_indication         : 1;
+#define IA32_VMX_EXIT_CTLS2_ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION_BIT 3
+#define IA32_VMX_EXIT_CTLS2_ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION_FLAG 0x08
+#define IA32_VMX_EXIT_CTLS2_ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION_MASK 0x01
+#define IA32_VMX_EXIT_CTLS2_ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION(_) (((_) >> 3) & 0x01)
+    uint64_t reserved2                                               : 60;
   };
 
   uint64_t flags;
@@ -18032,6 +18156,128 @@ typedef struct
  * the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
  */
 #define VMX_EXIT_REASON_EXECUTE_XRSTORS                              0x00000040
+
+/**
+ * @brief PCONFIG
+ *
+ * Guest software attempted to execute PCONFIG, "enable PCONFIG" VM-execution control was 1, and either (1) EAX < 63 and
+ * the corresponding bit in the PCONFIG-exiting bitmap is 1; or (2) EAX ? 63 and bit 63 in the PCONFIG-exiting bitmap is 1.
+ */
+#define VMX_EXIT_REASON_EXECUTE_PCONFIG                              0x00000041
+
+/**
+ * @brief SPP-related event
+ *
+ * SPP-related event. The processor attempted to determine an access's sub-page write permission and encountered an SPP
+ * miss or an SPP misconfiguration.
+ *
+ * @see Vol3C[30.3.4.2(Determining an Access's Sub-Page Write Permission)]
+ */
+#define VMX_EXIT_REASON_SPP_RELATED_EVENT                            0x00000042
+
+/**
+ * @brief UMWAIT
+ *
+ * Guest software attempted to execute UMWAIT and the "enable user wait and pause" and "RDTSC exiting" VM-execution
+ * controls were both 1.
+ */
+#define VMX_EXIT_REASON_EXECUTE_UMWAIT                               0x00000043
+
+/**
+ * @brief TPAUSE
+ *
+ * Guest software attempted to execute TPAUSE and the "enable user wait and pause" and "RDTSC exiting" VM-execution
+ * controls were both 1.
+ */
+#define VMX_EXIT_REASON_EXECUTE_TPAUSE                               0x00000044
+
+/**
+ * @brief LOADIWKEY
+ *
+ * Guest software attempted to execute LOADIWKEY and the "LOADIWKEY exiting" VM-execution control was 1.
+ */
+#define VMX_EXIT_REASON_EXECUTE_LOADIWKEY                            0x00000045
+
+/**
+ * @brief ENCLV
+ *
+ * Guest software attempted to execute ENCLV, the "enable ENCLV exiting" VM-execution control was 1, and either (1) EAX <
+ * 63 and the corresponding bit in the ENCLV-exiting bitmap is 1; or (2) EAX ? 63 and bit 63 in the ENCLV-exiting bitmap is
+ * 1.
+ */
+#define VMX_EXIT_REASON_EXECUTE_ENCLV                                0x00000046
+
+/**
+ * @brief ENQCMD PASID translation failure
+ *
+ * A VM exit occurred during PASID translation because the present bit was clear in a PASID-directory entry, the valid bit
+ * was clear in a PASID-table entry, or one of the entries set a reserved bit.
+ */
+#define VMX_EXIT_REASON_EXECUTE_ENQCMD                               0x00000048
+
+/**
+ * @brief ENQCMDS PASID translation failure
+ *
+ * A VM exit occurred during PASID translation because the present bit was clear in a PASID-directory entry, the valid bit
+ * was clear in a PASID-table entry, or one of the entries set a reserved bit.
+ */
+#define VMX_EXIT_REASON_EXECUTE_ENQCMDS                              0x00000049
+
+/**
+ * @brief Bus lock
+ *
+ * The processor asserted a bus lock while the "bus-lock detection" VM-execution control was 1. (Such VM exits will also
+ * set bit 26 of the exit-reason field.)
+ */
+#define VMX_EXIT_REASON_BUS_LOCK_ASSERTION                           0x0000004A
+
+/**
+ * @brief Instruction timeout
+ *
+ * The "instruction timeout" VM-execution control was 1 and certain operations prevented the processor from reaching an
+ * instruction boundary within the amount of time specified by the instruction-timeout control.
+ */
+#define VMX_EXIT_REASON_INSTRUCTION_TIMEOUT                          0x0000004B
+
+/**
+ * @brief SEAMCALL
+ *
+ * Guest software attempted to execute SEAMCALL.
+ */
+#define VMX_EXIT_REASON_EXECUTE_SEAMCALL                             0x0000004C
+
+/**
+ * @brief TDCALL
+ *
+ * Guest software attempted to execute TDCALL.
+ */
+#define VMX_EXIT_REASON_EXECUTE_TDCALL                               0x0000004D
+
+/**
+ * @brief RDMSRLIST
+ *
+ * Guest software attempted to execute RDMSRLIST and either the "use MSR bitmaps" VM-execution control was 0 or any of the
+ * following holds for the index an MSR being accessed:
+ * * The index is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
+ * * The index is in the range 00000000H - 00001FFFH and the nth bit in read bitmap for low MSRs is 1, where n is the
+ * index.
+ * * The index is in the range C0000000H - C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where n is the
+ * logical AND of the index and the value 00001FFFH.
+ */
+#define VMX_EXIT_REASON_EXECUTE_RDMSRLIST                            0x0000004E
+
+/**
+ * @brief WRMSRLIST
+ *
+ * Guest software attempted to execute WRMSRLIST and either the "use MSR bitmaps" VM-execution control was 0 or any of the
+ * following holds for the index an MSR being accessed:
+ * * The index is neither in the range 00000000H - 00001FFFH nor in the range C0000000H - C0001FFFH.
+ * * The index is in the range 00000000H - 00001FFFH and the nth bit in write bitmap for low MSRs is 1, where n is the
+ * index.
+ * * The index is in the range C0000000H - C0001FFFH and the nth bit in write bitmap for high MSRs is 1, where n is the
+ * logical AND of the index and the value 00001FFFH.
+ */
+#define VMX_EXIT_REASON_EXECUTE_WRMSRLIST                            0x0000004F
 /**
  * @}
  */
@@ -21191,6 +21437,14 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "enable HLAT" VM-execution control.
  */
 #define VMCS_CTRL_HLAT_PREFIX_SIZE                                   0x00000006
+
+/**
+ * Last PID-pointer index.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of the "IPI virtualization" VM-execution
+ *          control
+ */
+#define VMCS_CTRL_LAST_PID_POINTER_INDEX                             0x00000008
 /**
  * @}
  */
@@ -21256,6 +21510,14 @@ typedef union
  * @remarks This field exists only on processors that support the 1-setting of the "enable PML" VM-execution control.
  */
 #define VMCS_GUEST_PML_INDEX                                         0x00000812
+
+/**
+ * UINV.
+ *
+ * @remarks This field exists only on processors that support the 1-setting of either the "clear UINV" VM-exit control or
+ *          the "load UINV" VM-entry control.
+ */
+#define VMCS_GUEST_UINV                                              0x00000814
 /**
  * @}
  */
@@ -21466,14 +21728,49 @@ typedef union
 #define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
 
 /**
+ * Low PASID directory address.
+ */
+#define VMCS_CTRL_LOW_PASID_DIRECTORY_ADDRESS                        0x00002038
+
+/**
+ * High PASID directory address.
+ */
+#define VMCS_CTRL_HIGH_PASID_DIRECTORY_ADDRESS                       0x0000203A
+
+/**
+ * Shared EPT pointer.
+ */
+#define VMCS_CTRL_SHARED_EPT_POINTER                                 0x0000203C
+
+/**
+ * PCONFIG-exiting bitmap.
+ */
+#define VMCS_CTRL_PCONFIG_EXITING_BITMAP                             0x0000203E
+
+/**
  * Hypervisor-managed linear-address translation pointer.
  */
 #define VMCS_CTRL_HLAT_POINTER                                       0x00002040
 
 /**
+ * PID-pointer table address.
+ */
+#define VMCS_CTRL_PID_POINTER_TABLE_ADDRESS                          0x00002042
+
+/**
  * Secondary VM-exit controls.
  */
 #define VMCS_CTRL_SECONDARY_VMEXIT_CONTROLS                          0x00002044
+
+/**
+ * IA32_SPEC_CTRL mask.
+ */
+#define VMCS_CTRL_IA32_SPEC_CTRL_MASK                                0x0000204A
+
+/**
+ * IA32_SPEC_CTRL shadow.
+ */
+#define VMCS_CTRL_IA32_SPEC_CTRL_SHADOW                              0x0000204C
 /**
  * @}
  */
@@ -22114,17 +22411,17 @@ typedef union
 /**
  * Guest IA32_S_CET.
  */
-#define VMCS_GUEST_S_CET                                             0x00006C28
+#define VMCS_GUEST_S_CET                                             0x00006828
 
 /**
  * Guest SSP.
  */
-#define VMCS_GUEST_SSP                                               0x00006C2A
+#define VMCS_GUEST_SSP                                               0x0000682A
 
 /**
  * Guest IA32_INTERRUPT_SSP_TABLE_ADDR.
  */
-#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x00006C2C
+#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x0000682C
 /**
  * @}
  */
