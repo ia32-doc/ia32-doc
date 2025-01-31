@@ -209,6 +209,13 @@
         description: HLAT prefix size.
         remarks: |
           This field exists only on processors that support the 1-setting of the “enable HLAT” VM-execution control.
+      
+      - value: 0x0008
+        short_name: LAST_PID_PTR_INDEX
+        long_name: LAST_PID_POINTER_INDEX
+        description: Last PID-pointer index.
+        remarks: |
+          This field exists only on processors that support the 1-setting of the “IPI virtualization” VM-execution control
 
     - name: 16_BIT_GUEST_STATE_FIELDS
       description: 16-Bit Guest-State Fields.
@@ -268,6 +275,14 @@
         description: PML index.
         remarks: |
           This field exists only on processors that support the 1-setting of the “enable PML” VM-execution control.
+      
+      - value: 0x0814
+        short_name: UINV
+        long_name: UINV
+        description: UINV.
+        remarks: |
+          This field exists only on processors that support the 1-setting of either the “clear UINV” VM-exit control or the “load UINV” VM-entry
+          control.
 
     - name: 16_BIT_HOST_STATE_FIELDS
       description: 16-Bit Host-State Fields.
@@ -463,16 +478,51 @@
           short_name: ENCLV_EXITING_BITMAP
           long_name: ENCLV_EXITING_BITMAP
           description: ENCLV-exiting bitmap.
+        
+        - value: 0x2038
+          short_name: LOW_PASID_DIR_ADDR
+          long_name: LOW_PASID_DIRECTORY_ADDRESS
+          description: Low PASID directory address.
+        
+        - value: 0x203A
+          short_name: HIGH_PASID_DIR_ADDR
+          long_name: HIGH_PASID_DIRECTORY_ADDRESS
+          description: High PASID directory address.
+        
+        - value: 0x203C
+          short_name: SHARED_EPTP
+          long_name: SHARED_EPT_POINTER
+          description: Shared EPT pointer.
+        
+        - value: 0x203E
+          short_name: PCONFIG_BITMAP
+          long_name: PCONFIG_EXITING_BITMAP
+          description: PCONFIG-exiting bitmap.
 
         - value: 0x2040
           short_name: HLATP
           long_name: HLAT_POINTER
           description: Hypervisor-managed linear-address translation pointer.
+        
+        - value: 0x2042
+          short_name: PID_PTR_TABLE
+          long_name: PID_POINTER_TABLE_ADDRESS
+          description: PID-pointer table address.
 
         - value: 0x2044
           short_name: SECONDARY_EXIT
           long_name: SECONDARY_VMEXIT_CONTROLS
           description: Secondary VM-exit controls.
+        
+        - value: 0x204A
+          short_name: SPEC_CTRL_MASK
+          long_name: IA32_SPEC_CTRL_MASK
+          description: IA32_SPEC_CTRL mask.
+        
+        - value: 0x204C
+          short_name: SPEC_CTRL_SHADOW
+          long_name: IA32_SPEC_CTRL_SHADOW
+          description: IA32_SPEC_CTRL shadow.
 
       - name: 64_BIT_READ_ONLY_DATA_FIELDS
         description: 64-Bit Read-Only Data Field.
