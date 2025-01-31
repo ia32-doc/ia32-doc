@@ -3924,6 +3924,13 @@
       long_description: |
         If this control is 0, any execution of XSAVES or XRSTORS causes a #UD.
 
+    - bit: 21
+      short_name: PASID_TRANSLATION
+      long_name: ENABLE_PASID_TRANSLATION
+      description: |
+        If this control is 1, PASID translation is performed for executions of ENQCMD and ENQCMDS.
+      see: Vol3C[27.5.8(PASID Translation)]
+
     - bit: 22
       short_name: MB_EXEC_CTL_EPT
       long_name: MODE_BASED_EXECUTE_CONTROL_FOR_EPT
@@ -3966,6 +3973,13 @@
       long_description: |
         If this control is 0, any execution of TPAUSE, UMONITOR, or UMWAIT causes a #UD.
 
+    - bit: 27
+      short_name: PCONFIG
+      long_name: ENABLE_PCONFIG
+      short_description: Enables the PCONFIG instruction.
+      long_description: |
+        If this control is 0, any execution of PCONFIG causes a #UD.
+
     - bit: 28
       short_name: ENCLV_EXIT
       long_name: ENABLE_ENCLV_EXITING
@@ -3976,6 +3990,26 @@
       see:
         - Vol3C[24.6.17(ENCLV-Exiting Bitmap)]
         - Vol3C[25.1.3(Instructions That Cause VM Exits Conditionally)]
+    
+    - bit: 30
+      short_name: BUS_LOCK_EXIT
+      long_name: ENABLE_VMM_BUS_LOCK_DETECTION
+      short_description: Enables VM-exits on bus lock assertions.
+      long_description: |
+        This control determines whether assertion of a bus lock causes a VM exit.
+      see:
+        - Vol3C[27.2(OTHER CAUSES OF VM EXIT)]
+    
+    - bit: 31
+      short_name: INSTRUCTION_TIMEOUT
+      long_name: ENABLE_INSTRUCTION_TIMEOUT_EXIT
+      short_description: Enables VM-exits on instructions that block for a certain amount of time.
+      long_description: |
+        If this control is 1, a VM exit occurs if certain operations prevent the processor from reaching an
+        instruction boundary within a specified amount of time.
+      see:
+        - Vol3C[26.6.25(Instruction-Timeout Contro)]
+        - Vol3C[27.2(OTHER CAUSES OF VM EXIT)]
 
 - value: 0x48C
   name: VMX_EPT_VPID_CAP
@@ -4228,6 +4262,35 @@
         If this control is 1, EPT permissions can be specified to prevent accesses using linear addresses
         verification whose translation has certain properties.
       see: Vol3C[28.3.3.2(EPT Violations)]
+    
+    - bit: 4
+      short_name: IPI_VIRTUALIZATION
+      long_name: ENABLE_IPI_VIRTUALIZATION
+      short_description: |
+        Enables virtualization of IPIs.
+      long_description: |
+        If this control is 1, virtualization of interprocessor interrupts (IPIs) is enabled.
+      see: Vol3C[31.1.6(IPI Virtualization)]
+
+    - bit: 6
+      short_name: MSRLIST
+      long_name: ENABLE_RDMSRLIST_WRMSRLIST
+      short_description: |
+        Enables RDMSRLIST/WRMSRLIST instructions.
+      long_description: |
+        If this control is 0, any execution of RDMSRLIST or WRMSRLIST causes a #UD.
+    
+    - bit: 7
+      short_name: VIRTUALIZE_SPEC_CTRL
+      long_name: VIRTUALIZE_IA32_SPEC_CTRL
+      short_description: |
+        Changes access to the IA32_SPEC_CTRL MSR.
+      long_description: |
+        If this control is 1, the operation of the RDMSR and WRMSR instructions is changed when
+        accessing the IA32_SPEC_CTRL MSR.
+      see: 
+        - Vol3C[26.6.26(Fields Controlling Virtualization of the IA32_SPEC_CTRL MSR)]
+        - Vol3C[27.3(CHANGES TO INSTRUCTION BEHAVIOR IN VMX NON-ROOT OPERATION)]
 
 - value: 0x493
   name: VMX_EXIT_CTLS2
