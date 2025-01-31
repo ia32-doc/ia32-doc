@@ -3531,6 +3531,10 @@
       long_name: LOAD_IA32_RTIT_CTL
       description: This control determines whether the IA32_RTIT_CTL MSR is loaded on VM entry.
 
+    - bit: 19
+      name: LOAD_UINV
+      description: This control determines whether UINV is loaded on VM entry.
+
     - bit: 20
       name: LOAD_CET_STATE
       description: This control determines whether CET-related MSRs and SPP are loaded on VM entry.
