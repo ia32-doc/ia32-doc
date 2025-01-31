@@ -1046,17 +1046,17 @@
           long_name: SYSENTER_EIP
           description: Guest IA32_SYSENTER_EIP.
 
-        - value: 0x6C28
+        - value: 0x6828
           short_name: S_CET
           long_name: S_CET
           description: Guest IA32_S_CET.
 
-        - value: 0x6C2A
+        - value: 0x682A
           short_name: SSP
           long_name: SSP
           description: Guest SSP.
 
-        - value: 0x6C2C
+        - value: 0x682C
           short_name: INTERRUPT_SSP_TABLE_ADDR
           long_name: INTERRUPT_SSP_TABLE_ADDR
           description: Guest IA32_INTERRUPT_SSP_TABLE_ADDR.
