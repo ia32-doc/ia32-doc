@@ -3412,6 +3412,11 @@
       long_name: CLEAR_IA32_LBR_CTL
       description: This control determines whether the IA32_LBR_CTL MSR is cleared on VM exit.
 
+    - bit: 27
+      short_name: CLEAR_UINV
+      long_name: CLEAR_UINV
+      description: This control determines whether UINV is cleared on VM exit.
+
     - bit: 28
       short_name: LOAD_HOST_CET_STATE
       long_name: LOAD_IA32_CET_STATE
@@ -3424,6 +3429,13 @@
       long_name: LOAD_IA32_PKRS
       description: |
         This control determines whether the IA32_PKRS MSR is loaded on VM exit.
+    
+    - bit: 30
+      short_name: SAVE_PERF_GLOBAL_CTL
+      long_name: SAVE_IA32_PERF_GLOBAL_CTL
+      description: |
+        This control determines whether the IA32_PERF_GLOBAL_CTL MSR is saved on VM
+        exit.
 
     - bit: 31
       short_name: USE_SECONDARY_CONTROLS
@@ -4226,8 +4238,14 @@
     type: bitfield
     size: 64
     fields:
-    - bit: 0-63
-      name: RESERVED
+    - bit: 3
+      short_name: PREMATURELY_BUSY_SHADOW_STACK
+      long_name: ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION
+      short_description: Enables indication of when a VM-exit causes a shadow stack to become prematurely busy.
+      long_description: |
+        If this control is 1, VM exits that cause a shadow stack to become prematurely busy
+        indicate this fact and save additional information into the VMCS.
+      see: Vol1[18.2.3(Supervisor Shadow Stack Token)]
 
 #
 # END-OF-VMX
