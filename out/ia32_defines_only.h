@@ -3839,15 +3839,17 @@ typedef union {
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_RTIT_CTL                       0x2000000
     uint64_t clear_ia32_lbr_ctl                                      : 1;
 #define IA32_VMX_EXIT_CTLS_CLEAR_IA32_LBR_CTL                        0x4000000
-    uint64_t reserved_6                                              : 1;
+    uint64_t clear_uinv                                              : 1;
+#define IA32_VMX_EXIT_CTLS_CLEAR_UINV                                0x8000000
     uint64_t load_ia32_cet_state                                     : 1;
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_CET_STATE                       0x10000000
     uint64_t load_ia32_pkrs                                          : 1;
 #define IA32_VMX_EXIT_CTLS_LOAD_IA32_PKRS                            0x20000000
-    uint64_t reserved_7                                              : 1;
+    uint64_t save_ia32_perf_global_ctl                               : 1;
+#define IA32_VMX_EXIT_CTLS_SAVE_IA32_PERF_GLOBAL_CTL                 0x40000000
     uint64_t activate_secondary_controls                             : 1;
 #define IA32_VMX_EXIT_CTLS_ACTIVATE_SECONDARY_CONTROLS               0x80000000
-    uint64_t reserved_8                                              : 32;
+    uint64_t reserved_6                                              : 32;
   };
 
   uint64_t Flags;
@@ -3879,14 +3881,15 @@ typedef union {
 #define IA32_VMX_ENTRY_CTLS_CONCEAL_VMX_FROM_PT                      0x20000
     uint64_t load_ia32_rtit_ctl                                      : 1;
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_RTIT_CTL                       0x40000
-    uint64_t reserved_4                                              : 1;
+    uint64_t load_uinv                                               : 1;
+#define IA32_VMX_ENTRY_CTLS_LOAD_UINV                                0x80000
     uint64_t load_cet_state                                          : 1;
 #define IA32_VMX_ENTRY_CTLS_LOAD_CET_STATE                           0x100000
     uint64_t load_ia32_lbr_ctl                                       : 1;
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_LBR_CTL                        0x200000
     uint64_t load_ia32_pkrs                                          : 1;
 #define IA32_VMX_ENTRY_CTLS_LOAD_IA32_PKRS                           0x400000
-    uint64_t reserved_5                                              : 41;
+    uint64_t reserved_4                                              : 41;
   };
 
   uint64_t Flags;
@@ -3991,7 +3994,8 @@ typedef union {
 #define IA32_VMX_PROCBASED_CTLS2_CONCEAL_VMX_FROM_PT                 0x80000
     uint64_t enable_xsaves                                           : 1;
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_XSAVES                       0x100000
-    uint64_t reserved_1                                              : 1;
+    uint64_t enable_pasid_translation                                : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PASID_TRANSLATION            0x200000
     uint64_t mode_based_execute_control_for_ept                      : 1;
 #define IA32_VMX_PROCBASED_CTLS2_MODE_BASED_EXECUTE_CONTROL_FOR_EPT  0x400000
     uint64_t sub_page_write_permissions_for_ept                      : 1;
@@ -4002,10 +4006,16 @@ typedef union {
 #define IA32_VMX_PROCBASED_CTLS2_USE_TSC_SCALING                     0x2000000
     uint64_t enable_user_wait_pause                                  : 1;
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_USER_WAIT_PAUSE              0x4000000
-    uint64_t reserved_2                                              : 1;
+    uint64_t enable_pconfig                                          : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_PCONFIG                      0x8000000
     uint64_t enable_enclv_exiting                                    : 1;
 #define IA32_VMX_PROCBASED_CTLS2_ENABLE_ENCLV_EXITING                0x10000000
-    uint64_t reserved_3                                              : 35;
+    uint64_t reserved_1                                              : 1;
+    uint64_t enable_vmm_bus_lock_detection                           : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_VMM_BUS_LOCK_DETECTION       0x40000000
+    uint64_t enable_instruction_timeout_exit                         : 1;
+#define IA32_VMX_PROCBASED_CTLS2_ENABLE_INSTRUCTION_TIMEOUT_EXIT     0x80000000
+    uint64_t reserved_2                                              : 32;
   };
 
   uint64_t Flags;
@@ -4111,7 +4121,14 @@ typedef union {
 #define IA32_VMX_PROCBASED_CTLS3_EPT_PAGING_WRITE                    0x04
     uint64_t guest_paging                                            : 1;
 #define IA32_VMX_PROCBASED_CTLS3_GUEST_PAGING                        0x08
-    uint64_t reserved_1                                              : 60;
+    uint64_t enable_ipi_virtualization                               : 1;
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_IPI_VIRTUALIZATION           0x10
+    uint64_t reserved_1                                              : 1;
+    uint64_t enable_rdmsrlist_wrmsrlist                              : 1;
+#define IA32_VMX_PROCBASED_CTLS3_ENABLE_RDMSRLIST_WRMSRLIST          0x40
+    uint64_t virtualize_ia32_spec_ctrl                               : 1;
+#define IA32_VMX_PROCBASED_CTLS3_VIRTUALIZE_IA32_SPEC_CTRL           0x80
+    uint64_t reserved_2                                              : 56;
   };
 
   uint64_t Flags;
@@ -4120,8 +4137,10 @@ typedef union {
 #define IA32_VMX_EXIT_CTLS2                                          0x00000493
 typedef union {
   struct {
-    uint64_t reserved                                                : 64;
-#define IA32_VMX_EXIT_CTLS2_RESERVED                                 0xFFFFFFFFFFFFFFFF
+    uint64_t reserved_1                                              : 3;
+    uint64_t enable_prematurely_busy_shadow_stack_indication         : 1;
+#define IA32_VMX_EXIT_CTLS2_ENABLE_PREMATURELY_BUSY_SHADOW_STACK_INDICATION 0x08
+    uint64_t reserved_2                                              : 60;
   };
 
   uint64_t Flags;
@@ -5490,6 +5509,20 @@ typedef struct {
 #define VMX_EXIT_REASON_PML_FULL                                     0x0000003E
 #define VMX_EXIT_REASON_XSAVES                                       0x0000003F
 #define VMX_EXIT_REASON_XRSTORS                                      0x00000040
+#define VMX_EXIT_REASON_PCONFIG                                      0x00000041
+#define VMX_EXIT_REASON_SPP_EVENT                                    0x00000042
+#define VMX_EXIT_REASON_UMWAIT                                       0x00000043
+#define VMX_EXIT_REASON_TPAUSE                                       0x00000044
+#define VMX_EXIT_REASON_LOADIWKEY                                    0x00000045
+#define VMX_EXIT_REASON_ENCLV                                        0x00000046
+#define VMX_EXIT_REASON_ENQCMD                                       0x00000048
+#define VMX_EXIT_REASON_ENQCMDS                                      0x00000049
+#define VMX_EXIT_REASON_BUS_LOCK                                     0x0000004A
+#define VMX_EXIT_REASON_INSTRUCTION_TIMEOUT                          0x0000004B
+#define VMX_EXIT_REASON_SEAMCALL                                     0x0000004C
+#define VMX_EXIT_REASON_TDCALL                                       0x0000004D
+#define VMX_EXIT_REASON_RDMSRLIST                                    0x0000004E
+#define VMX_EXIT_REASON_WRMSRLIST                                    0x0000004F
 /**
  * @}
  */
@@ -6422,6 +6455,7 @@ typedef union {
 #define VMCS_CTRL_POSTED_INTR_NOTIFY_VECTOR                          0x00000002
 #define VMCS_CTRL_EPTP_INDEX                                         0x00000004
 #define VMCS_CTRL_HLAT_PREFIX_SIZE                                   0x00000006
+#define VMCS_CTRL_LAST_PID_PTR_INDEX                                 0x00000008
 /**
  * @}
  */
@@ -6441,6 +6475,7 @@ typedef union {
 #define VMCS_GUEST_TR_SEL                                            0x0000080E
 #define VMCS_GUEST_INTR_STATUS                                       0x00000810
 #define VMCS_GUEST_PML_INDEX                                         0x00000812
+#define VMCS_GUEST_UINV                                              0x00000814
 /**
  * @}
  */
@@ -6503,8 +6538,15 @@ typedef union {
 #define VMCS_CTRL_TSC_MULTIPLIER                                     0x00002032
 #define VMCS_CTRL_PROC_EXEC3                                         0x00002034
 #define VMCS_CTRL_ENCLV_EXITING_BITMAP                               0x00002036
+#define VMCS_CTRL_LOW_PASID_DIR_ADDR                                 0x00002038
+#define VMCS_CTRL_HIGH_PASID_DIR_ADDR                                0x0000203A
+#define VMCS_CTRL_SHARED_EPTP                                        0x0000203C
+#define VMCS_CTRL_PCONFIG_BITMAP                                     0x0000203E
 #define VMCS_CTRL_HLATP                                              0x00002040
+#define VMCS_CTRL_PID_PTR_TABLE                                      0x00002042
 #define VMCS_CTRL_SECONDARY_EXIT                                     0x00002044
+#define VMCS_CTRL_SPEC_CTRL_MASK                                     0x0000204A
+#define VMCS_CTRL_SPEC_CTRL_SHADOW                                   0x0000204C
 /**
  * @}
  */
@@ -6715,9 +6757,9 @@ typedef union {
 #define VMCS_GUEST_PENDING_DEBUG_EXCEPTIONS                          0x00006822
 #define VMCS_GUEST_SYSENTER_ESP                                      0x00006824
 #define VMCS_GUEST_SYSENTER_EIP                                      0x00006826
-#define VMCS_GUEST_S_CET                                             0x00006C28
-#define VMCS_GUEST_SSP                                               0x00006C2A
-#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x00006C2C
+#define VMCS_GUEST_S_CET                                             0x00006828
+#define VMCS_GUEST_SSP                                               0x0000682A
+#define VMCS_GUEST_INTERRUPT_SSP_TABLE_ADDR                          0x0000682C
 /**
  * @}
  */
