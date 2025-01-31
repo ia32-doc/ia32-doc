@@ -524,6 +524,135 @@
         long_description: |
           Guest software attempted to execute XRSTORS, the “enable XSAVES/XRSTORS” was 1, and a bit was set
           in the logical-AND of the following three values: EDX:EAX, the IA32_XSS MSR, and the XSS-exiting bitmap.
+      
+      - value: 65
+        short_name: PCONFIG
+        long_name: EXECUTE_PCONFIG
+        short_description: PCONFIG
+        long_description: |
+          Guest software attempted to execute PCONFIG, “enable PCONFIG” VM-execution control was 1, and either
+          (1) EAX < 63 and the corresponding bit in the PCONFIG-exiting bitmap is 1; or (2) EAX ? 63 and bit 63 in the
+          PCONFIG-exiting bitmap is 1.
+
+      - value: 66
+        short_name: SPP_EVENT
+        long_name: SPP_RELATED_EVENT
+        short_description: SPP-related event.
+        long_description: |
+          SPP-related event. The processor attempted to determine an access’s sub-page write permission and encountered
+          an SPP miss or an SPP misconfiguration.
+        see: Vol3C[30.3.4.2(Determining an Access’s Sub-Page Write Permission)]
+
+      - value: 67
+        short_name: UMWAIT
+        long_name: EXECUTE_UMWAIT
+        short_description: UMWAIT
+        long_description: |
+          Guest software attempted to execute UMWAIT and the “enable user wait and pause” and “RDTSC exiting”
+          VM-execution controls were both 1.
+
+      - value: 68
+        short_name: TPAUSE
+        long_name: EXECUTE_TPAUSE
+        short_description: TPAUSE
+        long_description: |
+          Guest software attempted to execute TPAUSE and the “enable user wait and pause” and “RDTSC exiting”
+          VM-execution controls were both 1.
+
+      - value: 69
+        short_name: LOADIWKEY
+        long_name: EXECUTE_LOADIWKEY
+        short_description: LOADIWKEY
+        long_description: |
+          Guest software attempted to execute LOADIWKEY and the “LOADIWKEY exiting” VM-execution control
+          was 1.
+
+      - value: 70
+        short_name: ENCLV
+        long_name: EXECUTE_ENCLV
+        short_description: ENCLV
+        long_description: |
+          Guest software attempted to execute ENCLV, the “enable ENCLV exiting” VM-execution control was 1, and
+          either (1) EAX < 63 and the corresponding bit in the ENCLV-exiting bitmap is 1; or (2) EAX ? 63 and bit 63 in the
+          ENCLV-exiting bitmap is 1.
+
+      - value: 72
+        short_name: ENQCMD
+        long_name: EXECUTE_ENQCMD
+        short_description: ENQCMD PASID translation failure.
+        long_description: |
+          A VM exit occurred during PASID translation because the present bit was clear in a PASID-directory entry, the valid
+          bit was clear in a PASID-table entry, or one of the entries set a reserved bit.
+
+      - value: 73
+        short_name: ENQCMDS
+        long_name: EXECUTE_ENQCMDS
+        short_description: ENQCMDS PASID translation failure.
+        long_description: |
+          A VM exit occurred during PASID translation because the present bit was clear in a PASID-directory entry, the valid
+          bit was clear in a PASID-table entry, or one of the entries set a reserved bit.
+
+      - value: 74
+        short_name: BUS_LOCK
+        long_name: BUS_LOCK_ASSERTION
+        short_description: Bus lock
+        long_description: |
+          The processor asserted a bus lock while the “bus-lock detection” VM-execution control was 1. (Such VM exits will also
+          set bit 26 of the exit-reason field.)
+
+      - value: 75
+        short_name: INSTRUCTION_TIMEOUT
+        long_name: INSTRUCTION_TIMEOUT
+        short_description: Instruction timeout.
+        long_description: |
+          The “instruction timeout” VM-execution control was 1 and certain operations prevented the processor from reaching an
+          instruction boundary within the amount of time specified by the instruction-timeout control.
+
+      - value: 76
+        short_name: SEAMCALL
+        long_name: EXECUTE_SEAMCALL
+        short_description: SEAMCALL
+        long_description: |
+          Guest software attempted to execute SEAMCALL.
+
+      - value: 77
+        short_name: TDCALL
+        long_name: EXECUTE_TDCALL
+        short_description: TDCALL
+        long_description: |
+          Guest software attempted to execute TDCALL.
+
+      - value: 78
+        short_name: RDMSRLIST
+        long_name: EXECUTE_RDMSRLIST
+        short_description: RDMSRLIST
+        long_description: |
+          Guest software attempted to execute RDMSRLIST and either the “use MSR bitmaps” VM-execution
+          control was 0 or any of the following holds for the index an MSR being accessed:
+
+          • The index is neither in the range 00000000H – 00001FFFH nor in the range C0000000H – C0001FFFH.
+
+          • The index is in the range 00000000H – 00001FFFH and the nth bit in read bitmap for low MSRs is 1, where n is
+          the index.
+
+          • The index is in the range C0000000H – C0001FFFH and the nth bit in read bitmap for high MSRs is 1, where n is
+          the logical AND of the index and the value 00001FFFH.
+
+      - value: 79
+        short_name: WRMSRLIST
+        long_name: EXECUTE_WRMSRLIST
+        short_description: WRMSRLIST
+        long_description: |
+          Guest software attempted to execute WRMSRLIST and either the “use MSR bitmaps” VM-execution
+          control was 0 or any of the following holds for the index an MSR being accessed:
+
+          • The index is neither in the range 00000000H – 00001FFFH nor in the range C0000000H – C0001FFFH.
+
+          • The index is in the range 00000000H – 00001FFFH and the nth bit in write bitmap for low MSRs is 1, where n is
+          the index.
+          
+          • The index is in the range C0000000H – C0001FFFH and the nth bit in write bitmap for high MSRs is 1, where n is
+          the logical AND of the index and the value 00001FFFH.
 
     - name: INSTRUCTION_ERROR_NUMBERS
       description: VM-Instruction Error Numbers.
