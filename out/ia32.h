@@ -662,7 +662,54 @@ typedef union
 #define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE_FLAG           0x1000000
 #define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE_MASK           0x01
 #define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE(_)             (((_) >> 24) & 0x01)
-    UINT64 Reserved2                                               : 39;
+
+    /**
+     * @brief Enable user interrupts
+     *
+     * [Bit 25] Enables user interrupts when set, including user-interrupt delivery, user-interrupt notification
+     * identification, and the user-interrupt instructions.
+     */
+    UINT64 UserInterruptsEnable                                    : 1;
+#define CR4_USER_INTERRUPTS_ENABLE_BIT                               25
+#define CR4_USER_INTERRUPTS_ENABLE_FLAG                              0x2000000
+#define CR4_USER_INTERRUPTS_ENABLE_MASK                              0x01
+#define CR4_USER_INTERRUPTS_ENABLE(_)                                (((_) >> 25) & 0x01)
+    UINT64 Reserved2                                               : 1;
+
+    /**
+     * @brief Enable linear address space seperation
+     *
+     * [Bit 27] When set, enables LASS (linear-address-space separation).
+     */
+    UINT64 LinearAddressSpaceSeperation                            : 1;
+#define CR4_LINEAR_ADDRESS_SPACE_SEPERATION_BIT                      27
+#define CR4_LINEAR_ADDRESS_SPACE_SEPERATION_FLAG                     0x8000000
+#define CR4_LINEAR_ADDRESS_SPACE_SEPERATION_MASK                     0x01
+#define CR4_LINEAR_ADDRESS_SPACE_SEPERATION(_)                       (((_) >> 27) & 0x01)
+
+    /**
+     * @brief Enable LAM for supervisor pointers
+     *
+     * [Bit 28] When set, enables LAM (linear-address masking) for supervisor pointers.
+     */
+    UINT64 SupervisorLamEnable                                     : 1;
+#define CR4_SUPERVISOR_LAM_ENABLE_BIT                                28
+#define CR4_SUPERVISOR_LAM_ENABLE_FLAG                               0x10000000
+#define CR4_SUPERVISOR_LAM_ENABLE_MASK                               0x01
+#define CR4_SUPERVISOR_LAM_ENABLE(_)                                 (((_) >> 28) & 0x01)
+    UINT64 Reserved3                                               : 3;
+
+    /**
+     * @brief Enable FRED transitions
+     *
+     * [Bit 32] When set, enables FRED (flexible return and event delivery) transitions.
+     */
+    UINT64 FredTransitionEnable                                    : 1;
+#define CR4_FRED_TRANSITION_ENABLE_BIT                               32
+#define CR4_FRED_TRANSITION_ENABLE_FLAG                              0x100000000
+#define CR4_FRED_TRANSITION_ENABLE_MASK                              0x01
+#define CR4_FRED_TRANSITION_ENABLE(_)                                (((_) >> 32) & 0x01)
+    UINT64 Reserved4                                               : 31;
   };
 
   UINT64 AsUInt;

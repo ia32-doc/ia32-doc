@@ -263,3 +263,32 @@
       4-level paging and 5-level paging associate each supervisor-mode linear address with a protection
       key. When set, this flag allows use of the IA32_PKRS MSR to specify, for each protection key,
       whether supervisor-mode linear addresses with that protection key can be read or written.
+
+  - bit: 25
+    short_name: UINTR
+    long_name: USER_INTERRUPTS_ENABLE
+    short_description: Enable user interrupts
+    long_description: |
+      Enables user interrupts when set, including user-interrupt delivery, user-interrupt notification 
+      identification, and the user-interrupt instructions.
+      
+  - bit: 27
+    short_name: LASS
+    long_name: LINEAR_ADDRESS_SPACE_SEPERATION
+    short_description: Enable linear address space seperation
+    long_description: |
+      When set, enables LASS (linear-address-space separation).
+      
+  - bit: 28
+    short_name: LAM_SUP
+    long_name: SUPERVISOR_LAM_ENABLE
+    short_description: Enable LAM for supervisor pointers
+    long_description: |
+      When set, enables LAM (linear-address masking) for supervisor pointers.
+      
+  - bit: 32
+    short_name: FRED
+    long_name: FRED_TRANSITION_ENABLE
+    short_description: Enable FRED transitions
+    long_description: |
+      When set, enables FRED (flexible return and event delivery) transitions.

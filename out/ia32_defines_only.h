@@ -116,7 +116,17 @@ typedef union {
 #define CR4_CONTROL_FLOW_ENFORCEMENT_ENABLE                          0x800000
     uint64_t protection_key_for_supervisor_mode_enable               : 1;
 #define CR4_PROTECTION_KEY_FOR_SUPERVISOR_MODE_ENABLE                0x1000000
-    uint64_t reserved_2                                              : 39;
+    uint64_t user_interrupts_enable                                  : 1;
+#define CR4_USER_INTERRUPTS_ENABLE                                   0x2000000
+    uint64_t reserved_2                                              : 1;
+    uint64_t linear_address_space_seperation                         : 1;
+#define CR4_LINEAR_ADDRESS_SPACE_SEPERATION                          0x8000000
+    uint64_t supervisor_lam_enable                                   : 1;
+#define CR4_SUPERVISOR_LAM_ENABLE                                    0x10000000
+    uint64_t reserved_3                                              : 3;
+    uint64_t fred_transition_enable                                  : 1;
+#define CR4_FRED_TRANSITION_ENABLE                                   0x100000000
+    uint64_t reserved_4                                              : 31;
   };
 
   uint64_t Flags;
