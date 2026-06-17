@@ -76,6 +76,12 @@ typedef union {
     uint64_t protection_key_enable                                   : 1;
     uint64_t control_flow_enforcement_enable                         : 1;
     uint64_t protection_key_for_supervisor_mode_enable               : 1;
+    uint64_t user_interrupts_enable                                  : 1;
+    uint64_t reserved_2                                              : 1;
+    uint64_t linear_address_space_seperation                         : 1;
+    uint64_t supervisor_lam_enable                                   : 1;
+    uint64_t reserved_3                                              : 3;
+    uint64_t fred_transition_enable                                  : 1;
   };
 
   uint64_t flags;
