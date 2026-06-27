@@ -1,0 +1,134 @@
+- short_name: EAX_07_ECX_01
+  long_name: EAX_07_ECX_01
+  description: Structured Extended Feature Flags Sub-Leaf 1.
+  todo: Names
+  type: struct
+
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: SHA512
+      description: If 1, supports the SHA512 instructions.
+    - bit: 1
+      name: SM3
+      description: If 1, supports the SM3 instructions.
+    - bit: 2
+      name: SM4
+      description: If 1, supports the SM4 instructions.
+    - bit: 4
+      name: AVX_VNNI
+      description: If 1, supports the VEX-encoded versions of the Vector Neural Network Instructions.
+    - bit: 5
+      name: AVX512_BF16
+      description: If 1, supports BFLOAT16 vector neural network instructions.
+    - bit: 6
+      name: LASS
+      description: If 1, supports Linear Address Space Separation.
+    - bit: 7
+      name: CMPCCXADD
+      description: If 1, supports the CMPCCXADD instruction.
+    - bit: 8
+      name: ARCH_PERFMON_EXT
+      description: If 1, indicates Architectural Performance Monitoring Extended Leaf is valid.
+    - bit: 10
+      name: FAST_REP_MOVSB
+      description: If 1, supports fast zero-length REP MOVSB.
+    - bit: 11
+      name: FAST_REP_STOSB
+      description: If 1, supports fast short REP STOSB.
+    - bit: 12
+      name: FAST_REP_CMPSB_SCASB
+      description: If 1, supports fast short REP CMPSB / SCASB.
+    - bit: 17
+      name: FRED
+      description: If 1, supports Flexible Return and Event Delivery.
+    - bit: 18
+      name: LKGS
+      description: If 1, supports LKGS (load IA32_KERNEL_GS_BASE).
+    - bit: 19
+      name: WRMSRNS
+      description: If 1, supports WRMSRNS instruction.
+    - bit: 21
+      name: AMX_FP16
+      description: If 1, supports AMX FP16 tile operations.
+    - bit: 22
+      name: HRESET
+      description: If 1, supports history reset via HRESET instruction.
+    - bit: 23
+      name: AVX_IFMA
+      description: If 1, supports AVX-IFMA instructions.
+    - bit: 26
+      name: LAM
+      description: If 1, supports Linear Address Masking.
+    - bit: 27
+      name: MSRLIST
+      description: If 1, supports RDMSRLIST / WRMSRLIST and IA32_BARRIER MSR.
+    - bit: 30
+      name: INVD_DISABLE_POST_BIOS_DONE
+      description: If 1, supports INVD execution prevention after BIOS Done.
+
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: PPIN
+      description: If 1, supports IA32_PPIN and IA32_PPIN_CTL MSRs.
+    - bit: 1
+      name: PBNDKB
+      description: If 1, supports PBNDKB instruction and IA32_TSE_CAPABILITY MSR.
+    - bit: 3
+      name: CPUIDMAXVAL_LIM_RMV
+      description: If 1, IA32_MISC_ENABLE[22] limits CPUID.00H:EAX[7:0].
+
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: RDT_M_ASYM
+      description: If 1, supports Asymmetrical Intel RDT Monitoring capability.
+    - bit: 1
+      name: RDT_A_ASYM
+      description: If 1, supports Asymmetrical Intel RDT Allocation capability.
+
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 4
+      name: AVX_VNNI_INT8
+      description: If 1, supports AVX-VNNI-INT8 instructions.
+    - bit: 5
+      name: AVX_NE_CONVERT
+      description: If 1, supports AVX-NE-CONVERT instructions.
+    - bit: 8
+      name: AMX_COMPLEX
+      description: If 1, supports AMX_COMPLEX instructions.
+    - bit: 10
+      name: AVX_VNNI_INT16
+      description: If 1, supports AVX-VNNI-INT16 instructions.
+    - bit: 14
+      name: PREFETCHI
+      description: If 1, supports PREFETCHIT0/1 instructions.
+    - bit: 17
+      name: UIRET_UIF
+      description: If 1, UIRET sets UIF from RFLAGS image.
+    - bit: 18
+      name: CET_SSS
+      description: If 1, supports CET supervisor shadow stack.
+    - bit: 19
+      name: AVX10
+      description: If 1, supports AVX10 instructions.
+    - bit: 22
+      name: SEC_TEE_ATTESTATION
+      description: If 1, supports secure TEE attestation.
+    - bit: 23
+      name: MWAIT
+      description: If 1, supports MWAIT instruction.
+    - bit: 24
+      name: SLSM
+      description: If 1, supports Static LSM (IA32_INTEGRITY_STATUS available).

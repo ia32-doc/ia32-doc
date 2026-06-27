@@ -1,0 +1,320 @@
+- short_name: EAX_07
+  long_name: EAX_07
+  todo: Long names
+  type: struct
+  fields:
+  - name: EAX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0-31
+      name: NUMBER_OF_SUB_LEAVES
+      description: Reports the maximum input value for supported leaf 7 sub-leaves.
+
+  - name: EBX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: FSGSBASE
+      description: Supports RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE if 1.
+
+    - bit: 1
+      name: IA32_TSC_ADJUST_MSR
+      description: IA32_TSC_ADJUST MSR is supported if 1.
+
+    - bit: 2
+      name: SGX
+      description: Supports Intel® Software Guard Extensions (Intel® SGX Extensions) if 1.
+
+    - bit: 3
+      name: BMI1
+      description: BMI1.
+
+    - bit: 4
+      name: HLE
+      description: HLE.
+
+    - bit: 5
+      name: AVX2
+      description: AVX2.
+
+    - bit: 6
+      name: FDP_EXCPTN_ONLY
+      description: x87 FPU Data Pointer updated only on x87 exceptions if 1.
+
+    - bit: 7
+      name: SMEP
+      description: Supports Supervisor-Mode Execution Prevention if 1.
+
+    - bit: 8
+      name: BMI2
+      description: BMI2.
+
+    - bit: 9
+      name: ENHANCED_REP_MOVSB_STOSB
+      description: Supports Enhanced REP MOVSB/STOSB if 1.
+
+    - bit: 10
+      name: INVPCID
+      description: If 1, supports INVPCID instruction for system software that manages process-context identifiers.
+
+    - bit: 11
+      name: RTM
+      description: RTM.
+
+    - bit: 12
+      name: RDT_M
+      description: Supports Intel® Resource Director Technology (Intel® RDT) Monitoring capability if 1.
+
+    - bit: 13
+      name: Deprecates
+      description: Deprecates FPU CS and FPU DS values if 1.
+
+    - bit: 14
+      name: MPX
+      description: Supports Intel® Memory Protection Extensions if 1.
+
+    - bit: 15
+      name: RDT
+      description: Supports Intel® Resource Director Technology (Intel® RDT) Allocation capability if 1.
+
+    - bit: 16
+      name: AVX512F
+      description: AVX512F.
+
+    - bit: 17
+      name: AVX512DQ
+      description: AVX512DQ.
+
+    - bit: 18
+      name: RDSEED
+      description: RDSEED.
+
+    - bit: 19
+      name: ADX
+      description: ADX.
+
+    - bit: 20
+      name: SMAP
+      description: Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions) if 1.
+
+    - bit: 21
+      name: AVX512_IFMA
+      description: AVX512_IFMA.
+
+    - bit: 23
+      name: CLFLUSHOPT
+      description: CLFLUSHOPT.
+
+    - bit: 24
+      name: CLWB
+      description: CLWB.
+
+    - bit: 25
+      name: Intel
+      description: Intel Processor Trace.
+
+    - bit: 26
+      name: AVX512PF
+      description: (Intel® Xeon Phi™ only).
+
+    - bit: 27
+      name: AVX512ER
+      description: (Intel® Xeon Phi™ only).
+
+    - bit: 28
+      name: AVX512CD
+      description: AVX512CD.
+
+    - bit: 29
+      name: SHA
+      description: Supports Intel® Secure Hash Algorithm Extensions (Intel® SHA Extensions) if 1.
+
+    - bit: 30
+      name: AVX512BW
+      description: AVX512BW.
+
+    - bit: 31
+      name: AVX512VL
+      description: AVX512VL.
+
+  - name: ECX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 0
+      name: PREFETCHWT1
+      description: (Intel® Xeon Phi™ only).
+
+    - bit: 1
+      name: AVX512_VBMI
+      description: AVX512_VBMI.
+
+    - bit: 2
+      name: UMIP
+      description: Supports user-mode instruction prevention if 1.
+
+    - bit: 3
+      name: PKU
+      description: Supports protection keys for user-mode pages if 1.
+
+    - bit: 4
+      name: OSPKE
+      description: If 1, OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions).
+
+    - bit: 5
+      name: WAITPKG
+      description: WAITPKG.
+
+    - bit: 6
+      name: AVX512_VBMI2
+      description: AVX512_VBMI2.
+
+    - bit: 7
+      name: CET_SS
+      description: |
+        Supports CET shadow stack features if 1. Processors that set this bit define bits
+        1:0 of the IA32_U_CET and IA32_S_CET MSRs. Enumerates support for the following MSRs:
+        IA32_INTERRUPT_SPP_TABLE_ADDR, IA32_PL3_SSP, IA32_PL2_SSP, IA32_PL1_SSP, and IA32_PL0_SSP.
+
+    - bit: 8
+      name: GFNI
+      description: GFNI.
+
+    - bit: 9
+      name: VAES
+      description: VAES.
+
+    - bit: 10
+      name: VPCLMULQDQ
+      description: VPCLMULQDQ.
+
+    - bit: 11
+      name: AVX512_VNNI
+      description: AVX512_VNNI.
+
+    - bit: 12
+      name: AVX512_BITALG
+      description: AVX512_BITALG.
+
+    - bit: 13
+      name: TME_EN
+      description: |
+        If 1, the following MSRs are supported: IA32_TME_CAPABILITY, IA32_TME_ACTIVATE,
+        IA32_TME_EXCLUDE_MASK, and IA32_TME_EXCLUDE_BASE.
+
+    - bit: 14
+      name: AVX512_VPOPCNTDQ
+      description: AVX512_VPOPCNTDQ.
+
+    - bit: 16
+      name: LA57
+      description: Supports 57-bit linear addresses and five-level paging if 1.
+
+    - bit: 17-21
+      name: MAWAU
+      description: The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode.
+
+    - bit: 22
+      name: RDPID
+      description: RDPID and IA32_TSC_AUX are available if 1.
+
+    - bit: 23
+      name: KL
+      description: KL. Supports Key Locker if 1.
+
+    - bit: 25
+      name: CLDEMOTE
+      description: Supports cache line demote if 1.
+
+    - bit: 27
+      name: MOVDIRI
+      description: Supports MOVDIRI if 1.
+
+    - bit: 28
+      name: MOVDIR64B
+      description: Supports MOVDIR64B if 1.
+
+    - bit: 30
+      name: SGX_LC
+      description: Supports SGX Launch Configuration if 1.
+
+    - bit: 31
+      name: PKS
+      description: Supports protection keys for supervisor-mode pages if 1.
+
+  - name: EDX
+    type: bitfield
+    size: 32
+    fields:
+    - bit: 2
+      name: AVX512_4VNNIW
+      description: (Intel® Xeon Phi™ only.)
+
+    - bit: 3
+      name: AVX512_4FMAPS
+      description: (Intel® Xeon Phi™ only.)
+
+    - bit: 4
+      name: FAST_SHORT_REP_MOV
+      description: Fast Short REP MOV.
+
+    - bit: 8
+      name: AVX512_VP2INTERSECT
+      description: AVX512_VP2INTERSECT.
+
+    - bit: 10
+      name: MD_CLEAR
+      description: MD_CLEAR supported.
+
+    - bit: 14
+      name: SERIALIZE
+      description: SERIALIZE supported.
+
+    - bit: 15
+      name: HYBRID
+      description: If 1, the processor is identified as a hybrid part.
+
+    - bit: 18
+      name: PCONFIG
+      description: Supports PCONFIG if 1.
+
+    - bit: 20
+      name: CET_IBT
+      description: |
+        Supports CET indirect branch tracking features if 1. Processors that set this bit define
+        bits 5:2 and bits 63:10 of the IA32_U_CET and IA32_S_CET MSRs.
+
+    - bit: 26
+      name: IBRS_IBPB
+      description: |
+        Enumerates support for indirect branch restricted speculation (IBRS) and the indirect branch predictor barrier (IBPB). Processors that set this bit support the IA32_SPEC_CTRL MSR and the
+        IA32_PRED_CMD MSR. They allow software to set IA32_SPEC_CTRL[0] (IBRS) and IA32_PRED_CMD[0]
+        (IBPB).
+
+    - bit: 27
+      name: STIBP
+      description: |
+        Enumerates support for single thread indirect branch predictors (STIBP). Processors that set
+        this bit support the IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[1] (STIBP).
+
+    - bit: 28
+      name: L1D_FLUSH
+      description: |
+        Enumerates support for L1D_FLUSH. Processors that set this bit support the IA32_FLUSH_CMD
+        MSR. They allow software to set IA32_FLUSH_CMD[0] (L1D_FLUSH).
+
+    - bit: 29
+      name: IA32_ARCH_CAPABILITIES
+      description: Enumerates support for the IA32_ARCH_CAPABILITIES MSR.
+
+    - bit: 30
+      name: IA32_CORE_CAPABILITIES
+      description: Enumerates support for the IA32_CORE_CAPABILITIES MSR.
+
+    - bit: 31
+      name: SSBD
+      description: |
+        Enumerates support for Speculative Store Bypass Disable (SSBD). Processors that set this bit
+        support the IA32_SPEC_CTRL MSR. They allow software to set IA32_SPEC_CTRL[2] (SSBD).
