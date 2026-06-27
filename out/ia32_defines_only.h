@@ -624,6 +624,11 @@ typedef struct {
 
 } cpuid_eax_06;
 
+/**
+ * @defgroup cpuid_eax_07 \
+ *           EAX = 0x07
+ * @{
+ */
 #define CPUID_STRUCTURED_EXTENDED_FEATURE_FLAGS                      0x00000007
 typedef struct {
   union {
@@ -809,6 +814,130 @@ typedef struct {
   } edx;
 
 } cpuid_eax_07;
+
+typedef struct {
+  union {
+    struct {
+      uint32_t sha512                                                : 1;
+#define CPUID_EAX_SHA512                                             0x01
+      uint32_t sm3                                                   : 1;
+#define CPUID_EAX_SM3                                                0x02
+      uint32_t sm4                                                   : 1;
+#define CPUID_EAX_SM4                                                0x04
+      uint32_t reserved_1                                            : 1;
+      uint32_t avx_vnni                                              : 1;
+#define CPUID_EAX_AVX_VNNI                                           0x10
+      uint32_t avx512_bf16                                           : 1;
+#define CPUID_EAX_AVX512_BF16                                        0x20
+      uint32_t lass                                                  : 1;
+#define CPUID_EAX_LASS                                               0x40
+      uint32_t cmpccxadd                                             : 1;
+#define CPUID_EAX_CMPCCXADD                                          0x80
+      uint32_t arch_perfmon_ext                                      : 1;
+#define CPUID_EAX_ARCH_PERFMON_EXT                                   0x100
+      uint32_t reserved_2                                            : 1;
+      uint32_t fast_rep_movsb                                        : 1;
+#define CPUID_EAX_FAST_REP_MOVSB                                     0x400
+      uint32_t fast_rep_stosb                                        : 1;
+#define CPUID_EAX_FAST_REP_STOSB                                     0x800
+      uint32_t fast_rep_cmpsb_scasb                                  : 1;
+#define CPUID_EAX_FAST_REP_CMPSB_SCASB                               0x1000
+      uint32_t reserved_3                                            : 4;
+      uint32_t fred                                                  : 1;
+#define CPUID_EAX_FRED                                               0x20000
+      uint32_t lkgs                                                  : 1;
+#define CPUID_EAX_LKGS                                               0x40000
+      uint32_t wrmsrns                                               : 1;
+#define CPUID_EAX_WRMSRNS                                            0x80000
+      uint32_t reserved_4                                            : 1;
+      uint32_t amx_fp16                                              : 1;
+#define CPUID_EAX_AMX_FP16                                           0x200000
+      uint32_t hreset                                                : 1;
+#define CPUID_EAX_HRESET                                             0x400000
+      uint32_t avx_ifma                                              : 1;
+#define CPUID_EAX_AVX_IFMA                                           0x800000
+      uint32_t reserved_5                                            : 2;
+      uint32_t lam                                                   : 1;
+#define CPUID_EAX_LAM                                                0x4000000
+      uint32_t msrlist                                               : 1;
+#define CPUID_EAX_MSRLIST                                            0x8000000
+      uint32_t reserved_6                                            : 2;
+      uint32_t invd_disable_post_bios_done                           : 1;
+#define CPUID_EAX_INVD_DISABLE_POST_BIOS_DONE                        0x40000000
+      uint32_t reserved_7                                            : 1;
+    };
+
+    uint32_t Flags;
+  } eax;
+
+  union {
+    struct {
+      uint32_t ppin                                                  : 1;
+#define CPUID_EBX_PPIN                                               0x01
+      uint32_t pbndkb                                                : 1;
+#define CPUID_EBX_PBNDKB                                             0x02
+      uint32_t reserved_1                                            : 1;
+      uint32_t cpuidmaxval_lim_rmv                                   : 1;
+#define CPUID_EBX_CPUIDMAXVAL_LIM_RMV                                0x08
+      uint32_t reserved_2                                            : 28;
+    };
+
+    uint32_t Flags;
+  } ebx;
+
+  union {
+    struct {
+      uint32_t rdt_m_asym                                            : 1;
+#define CPUID_ECX_RDT_M_ASYM                                         0x01
+      uint32_t rdt_a_asym                                            : 1;
+#define CPUID_ECX_RDT_A_ASYM                                         0x02
+      uint32_t reserved_1                                            : 30;
+    };
+
+    uint32_t Flags;
+  } ecx;
+
+  union {
+    struct {
+      uint32_t reserved_1                                            : 4;
+      uint32_t avx_vnni_int8                                         : 1;
+#define CPUID_EDX_AVX_VNNI_INT8                                      0x10
+      uint32_t avx_ne_convert                                        : 1;
+#define CPUID_EDX_AVX_NE_CONVERT                                     0x20
+      uint32_t reserved_2                                            : 2;
+      uint32_t amx_complex                                           : 1;
+#define CPUID_EDX_AMX_COMPLEX                                        0x100
+      uint32_t reserved_3                                            : 1;
+      uint32_t avx_vnni_int16                                        : 1;
+#define CPUID_EDX_AVX_VNNI_INT16                                     0x400
+      uint32_t reserved_4                                            : 3;
+      uint32_t prefetchi                                             : 1;
+#define CPUID_EDX_PREFETCHI                                          0x4000
+      uint32_t reserved_5                                            : 2;
+      uint32_t uiret_uif                                             : 1;
+#define CPUID_EDX_UIRET_UIF                                          0x20000
+      uint32_t cet_sss                                               : 1;
+#define CPUID_EDX_CET_SSS                                            0x40000
+      uint32_t avx10                                                 : 1;
+#define CPUID_EDX_AVX10                                              0x80000
+      uint32_t reserved_6                                            : 2;
+      uint32_t sec_tee_attestation                                   : 1;
+#define CPUID_EDX_SEC_TEE_ATTESTATION                                0x400000
+      uint32_t mwait                                                 : 1;
+#define CPUID_EDX_MWAIT                                              0x800000
+      uint32_t slsm                                                  : 1;
+#define CPUID_EDX_SLSM                                               0x1000000
+      uint32_t reserved_7                                            : 7;
+    };
+
+    uint32_t Flags;
+  } edx;
+
+} cpuid_eax_07_ecx_01;
+
+/**
+ * @}
+ */
 
 #define CPUID_DIRECT_CACHE_ACCESS_INFO                               0x00000009
 typedef struct {
